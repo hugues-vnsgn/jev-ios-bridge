@@ -1,0 +1,810 @@
+{
+  "owned199": [
+    {
+      "case": 1,
+      "displayName": "pure legacy and public fixture maps isolate /"
+    },
+    {
+      "case": 2,
+      "displayName": "pure legacy and public fixture maps isolate /Library"
+    },
+    {
+      "case": 3,
+      "displayName": "pure legacy and public fixture maps isolate /Library/Developer/CoreSimulator/Volumes"
+    },
+    {
+      "case": 4,
+      "displayName": "pure legacy and public fixture maps isolate /Library/Developer/CoreSimulator/Volumes/iOS_22G86"
+    },
+    {
+      "case": 5,
+      "displayName": "pure legacy and public fixture maps isolate /Library/Developer/CoreSimulator/Volumes/iOS_22G86/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.0.simruntime/Contents/Info.plist"
+    },
+    {
+      "case": 6,
+      "displayName": "pure legacy and public fixture maps isolate /private"
+    },
+    {
+      "case": 7,
+      "displayName": "pure legacy and public fixture maps isolate /usr/sbin/diskutil"
+    },
+    {
+      "case": 8,
+      "displayName": "pure legacy map preserves owned temporary /private/tmp/legacy-pure-fixture"
+    },
+    {
+      "case": 9,
+      "displayName": "pure legacy map preserves owned temporary /private/tmp/legacy-pure-fixture/home"
+    },
+    {
+      "case": 10,
+      "displayName": "pure legacy map preserves owned temporary /private/tmp/legacy-pure-fixture/owned/Info.plist"
+    },
+    {
+      "case": 11,
+      "displayName": "pure legacy map refuses unsupported \"/opt/outside\""
+    },
+    {
+      "case": 12,
+      "displayName": "pure legacy map refuses unsupported \"relative\""
+    },
+    {
+      "case": 13,
+      "displayName": "pure legacy map refuses unsupported \"/Library/../usr\""
+    },
+    {
+      "case": 14,
+      "displayName": "pure legacy map refuses unsupported \"/Library\\u0000bad\""
+    },
+    {
+      "case": 15,
+      "displayName": "injected observed legacy group modes accept exact iOS_22G86 after fresh proofs"
+    },
+    {
+      "case": 16,
+      "displayName": "production observed legacy group modes accept exact iOS_22G86 after fresh proofs"
+    },
+    {
+      "case": 17,
+      "displayName": "injected observed legacy group modes accept exact iOS_23E254a after fresh proofs"
+    },
+    {
+      "case": 18,
+      "displayName": "production observed legacy group modes accept exact iOS_23E254a after fresh proofs"
+    },
+    {
+      "case": 19,
+      "displayName": "recognized strict-mode legacy mounts still require readonly proof and never use the strict fallback"
+    },
+    {
+      "case": 20,
+      "displayName": "recognized strict-mode legacy refuses Writable true proof"
+    },
+    {
+      "case": 21,
+      "displayName": "recognized strict-mode legacy refuses WritableMedia true proof"
+    },
+    {
+      "case": 22,
+      "displayName": "recognized strict-mode legacy refuses WritableVolume true proof"
+    },
+    {
+      "case": 23,
+      "displayName": "recognized strict-mode legacy refuses string false proof"
+    },
+    {
+      "case": 24,
+      "displayName": "recognized strict-mode legacy refuses wrong mount point proof"
+    },
+    {
+      "case": 25,
+      "displayName": "recognized strict-mode legacy refuses missing field proof"
+    },
+    {
+      "case": 26,
+      "displayName": "recognized strict-mode legacy refuses duplicate field proof"
+    },
+    {
+      "case": 27,
+      "displayName": "recognized strict-mode legacy refuses malformed XML proof"
+    },
+    {
+      "case": 28,
+      "displayName": "recognized strict-mode legacy refuses oversized output proof"
+    },
+    {
+      "case": 29,
+      "displayName": "recognized strict-mode legacy refuses mount exit 1"
+    },
+    {
+      "case": 30,
+      "displayName": "recognized strict-mode legacy refuses mount exit null"
+    },
+    {
+      "case": 31,
+      "displayName": "injected legacy refuses root uid without weakening the valid mounted precondition"
+    },
+    {
+      "case": 32,
+      "displayName": "production legacy refuses root uid without weakening the valid mounted precondition"
+    },
+    {
+      "case": 33,
+      "displayName": "injected legacy refuses Library uid without weakening the valid mounted precondition"
+    },
+    {
+      "case": 34,
+      "displayName": "production legacy refuses Library uid without weakening the valid mounted precondition"
+    },
+    {
+      "case": 35,
+      "displayName": "injected legacy refuses namespace uid without weakening the valid mounted precondition"
+    },
+    {
+      "case": 36,
+      "displayName": "production legacy refuses namespace uid without weakening the valid mounted precondition"
+    },
+    {
+      "case": 37,
+      "displayName": "injected legacy refuses namespace group write without weakening the valid mounted precondition"
+    },
+    {
+      "case": 38,
+      "displayName": "production legacy refuses namespace group write without weakening the valid mounted precondition"
+    },
+    {
+      "case": 39,
+      "displayName": "injected legacy refuses ancestor group write without weakening the valid mounted precondition"
+    },
+    {
+      "case": 40,
+      "displayName": "production legacy refuses ancestor group write without weakening the valid mounted precondition"
+    },
+    {
+      "case": 41,
+      "displayName": "injected legacy refuses ancestor symlink without weakening the valid mounted precondition"
+    },
+    {
+      "case": 42,
+      "displayName": "production legacy refuses ancestor symlink without weakening the valid mounted precondition"
+    },
+    {
+      "case": 43,
+      "displayName": "injected legacy refuses mount uid without weakening the valid mounted precondition"
+    },
+    {
+      "case": 44,
+      "displayName": "production legacy refuses mount uid without weakening the valid mounted precondition"
+    },
+    {
+      "case": 45,
+      "displayName": "injected legacy refuses mount gid without weakening the valid mounted precondition"
+    },
+    {
+      "case": 46,
+      "displayName": "production legacy refuses mount gid without weakening the valid mounted precondition"
+    },
+    {
+      "case": 47,
+      "displayName": "injected legacy refuses mount world write without weakening the valid mounted precondition"
+    },
+    {
+      "case": 48,
+      "displayName": "production legacy refuses mount world write without weakening the valid mounted precondition"
+    },
+    {
+      "case": 49,
+      "displayName": "injected legacy refuses mount setgid without weakening the valid mounted precondition"
+    },
+    {
+      "case": 50,
+      "displayName": "production legacy refuses mount setgid without weakening the valid mounted precondition"
+    },
+    {
+      "case": 51,
+      "displayName": "injected legacy refuses mount symlink without weakening the valid mounted precondition"
+    },
+    {
+      "case": 52,
+      "displayName": "production legacy refuses mount symlink without weakening the valid mounted precondition"
+    },
+    {
+      "case": 53,
+      "displayName": "injected legacy refuses mount type without weakening the valid mounted precondition"
+    },
+    {
+      "case": 54,
+      "displayName": "production legacy refuses mount type without weakening the valid mounted precondition"
+    },
+    {
+      "case": 55,
+      "displayName": "injected legacy refuses inner directory uid without weakening the valid mounted precondition"
+    },
+    {
+      "case": 56,
+      "displayName": "production legacy refuses inner directory uid without weakening the valid mounted precondition"
+    },
+    {
+      "case": 57,
+      "displayName": "injected legacy refuses inner directory gid without weakening the valid mounted precondition"
+    },
+    {
+      "case": 58,
+      "displayName": "production legacy refuses inner directory gid without weakening the valid mounted precondition"
+    },
+    {
+      "case": 59,
+      "displayName": "injected legacy refuses inner directory world write without weakening the valid mounted precondition"
+    },
+    {
+      "case": 60,
+      "displayName": "production legacy refuses inner directory world write without weakening the valid mounted precondition"
+    },
+    {
+      "case": 61,
+      "displayName": "injected legacy refuses inner directory sticky without weakening the valid mounted precondition"
+    },
+    {
+      "case": 62,
+      "displayName": "production legacy refuses inner directory sticky without weakening the valid mounted precondition"
+    },
+    {
+      "case": 63,
+      "displayName": "injected legacy refuses RuntimeRoot setgid without weakening the valid mounted precondition"
+    },
+    {
+      "case": 64,
+      "displayName": "production legacy refuses RuntimeRoot setgid without weakening the valid mounted precondition"
+    },
+    {
+      "case": 65,
+      "displayName": "injected legacy refuses leaf sticky without weakening the valid mounted precondition"
+    },
+    {
+      "case": 66,
+      "displayName": "production legacy refuses leaf sticky without weakening the valid mounted precondition"
+    },
+    {
+      "case": 67,
+      "displayName": "injected legacy refuses leaf uid without weakening the valid mounted precondition"
+    },
+    {
+      "case": 68,
+      "displayName": "production legacy refuses leaf uid without weakening the valid mounted precondition"
+    },
+    {
+      "case": 69,
+      "displayName": "injected legacy refuses leaf gid without weakening the valid mounted precondition"
+    },
+    {
+      "case": 70,
+      "displayName": "production legacy refuses leaf gid without weakening the valid mounted precondition"
+    },
+    {
+      "case": 71,
+      "displayName": "injected legacy refuses leaf world write without weakening the valid mounted precondition"
+    },
+    {
+      "case": 72,
+      "displayName": "production legacy refuses leaf world write without weakening the valid mounted precondition"
+    },
+    {
+      "case": 73,
+      "displayName": "injected legacy refuses leaf setuid without weakening the valid mounted precondition"
+    },
+    {
+      "case": 74,
+      "displayName": "production legacy refuses leaf setuid without weakening the valid mounted precondition"
+    },
+    {
+      "case": 75,
+      "displayName": "injected legacy refuses leaf executable without weakening the valid mounted precondition"
+    },
+    {
+      "case": 76,
+      "displayName": "production legacy refuses leaf executable without weakening the valid mounted precondition"
+    },
+    {
+      "case": 77,
+      "displayName": "injected legacy refuses leaf symlink without weakening the valid mounted precondition"
+    },
+    {
+      "case": 78,
+      "displayName": "production legacy refuses leaf symlink without weakening the valid mounted precondition"
+    },
+    {
+      "case": 79,
+      "displayName": "injected legacy refuses leaf wrong type without weakening the valid mounted precondition"
+    },
+    {
+      "case": 80,
+      "displayName": "production legacy refuses leaf wrong type without weakening the valid mounted precondition"
+    },
+    {
+      "case": 81,
+      "displayName": "injected legacy refuses hardlink without weakening the valid mounted precondition"
+    },
+    {
+      "case": 82,
+      "displayName": "production legacy refuses hardlink without weakening the valid mounted precondition"
+    },
+    {
+      "case": 83,
+      "displayName": "injected legacy refuses large file without weakening the valid mounted precondition"
+    },
+    {
+      "case": 84,
+      "displayName": "production legacy refuses large file without weakening the valid mounted precondition"
+    },
+    {
+      "case": 85,
+      "displayName": "injected legacy refuses negative size without weakening the valid mounted precondition"
+    },
+    {
+      "case": 86,
+      "displayName": "production legacy refuses negative size without weakening the valid mounted precondition"
+    },
+    {
+      "case": 87,
+      "displayName": "injected legacy refuses nested directory device without weakening the valid mounted precondition"
+    },
+    {
+      "case": 88,
+      "displayName": "production legacy refuses nested directory device without weakening the valid mounted precondition"
+    },
+    {
+      "case": 89,
+      "displayName": "injected legacy refuses leaf device without weakening the valid mounted precondition"
+    },
+    {
+      "case": 90,
+      "displayName": "production legacy refuses leaf device without weakening the valid mounted precondition"
+    },
+    {
+      "case": 91,
+      "displayName": "legacy refuses unsafe numeric dev rather than recovering rounded identity"
+    },
+    {
+      "case": 92,
+      "displayName": "legacy refuses unsafe numeric ino rather than recovering rounded identity"
+    },
+    {
+      "case": 93,
+      "displayName": "legacy refuses unsafe numeric uid rather than recovering rounded identity"
+    },
+    {
+      "case": 94,
+      "displayName": "legacy refuses unsafe numeric gid rather than recovering rounded identity"
+    },
+    {
+      "case": 95,
+      "displayName": "legacy refuses unsafe numeric mode rather than recovering rounded identity"
+    },
+    {
+      "case": 96,
+      "displayName": "legacy refuses unsafe numeric size rather than recovering rounded identity"
+    },
+    {
+      "case": 97,
+      "displayName": "legacy refuses unsafe numeric nlink rather than recovering rounded identity"
+    },
+    {
+      "case": 98,
+      "displayName": "distinct large integer identities colliding under Number remain distinguishable"
+    },
+    {
+      "case": 99,
+      "displayName": "legacy accepts exact large bigint identity and detects its one-unit replacement"
+    },
+    {
+      "case": 100,
+      "displayName": "legacy detects ctimeNs changes below supplied millisecond precision"
+    },
+    {
+      "case": 101,
+      "displayName": "legacy detects mtimeNs changes below supplied millisecond precision"
+    },
+    {
+      "case": 102,
+      "displayName": "legacy final binding refuses namespace appearance"
+    },
+    {
+      "case": 103,
+      "displayName": "legacy final binding refuses namespace disappearance"
+    },
+    {
+      "case": 104,
+      "displayName": "legacy final binding refuses entry addition"
+    },
+    {
+      "case": 105,
+      "displayName": "legacy final binding refuses entry removal"
+    },
+    {
+      "case": 106,
+      "displayName": "legacy final binding refuses candidate replacement"
+    },
+    {
+      "case": 107,
+      "displayName": "legacy final binding refuses namespace replacement"
+    },
+    {
+      "case": 108,
+      "displayName": "stable absent legacy namespace preserves the ordinary explicit runtime proof"
+    },
+    {
+      "case": 109,
+      "displayName": "an older recognized iOS_22G86 cannot be skipped for a different identifier"
+    },
+    {
+      "case": 110,
+      "displayName": "an older recognized iOS_23E254a cannot be skipped for a different identifier"
+    },
+    {
+      "case": 111,
+      "displayName": "duplicate explicit identifiers across legacy and default refuse"
+    },
+    {
+      "case": 112,
+      "displayName": "duplicate explicit identifiers across legacy and legacy refuse"
+    },
+    {
+      "case": 113,
+      "displayName": "duplicate explicit identifiers across legacy and cryptex refuse"
+    },
+    {
+      "case": 114,
+      "displayName": "artifact roots cannot authorize an invalid recognized legacy target /Library/Developer/CoreSimulator/Volumes/iOS_22G86/arbitrary/Info.plist"
+    },
+    {
+      "case": 115,
+      "displayName": "artifact roots cannot authorize an invalid recognized legacy target /Library/Developer/CoreSimulator/Volumes/iOS_22G86/Contents/Info.plist"
+    },
+    {
+      "case": 116,
+      "displayName": "artifact roots cannot authorize an invalid recognized legacy target /Library/Developer/CoreSimulator/Volumes/iOS_22G86/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.0.simruntime/../Contents/Info.plist"
+    },
+    {
+      "case": 117,
+      "displayName": "legacy refuses more than 64 recognized immediate candidates before any mount query"
+    },
+    {
+      "case": 118,
+      "displayName": "legacy bounded listing refuses /Library/Developer/CoreSimulator/Volumes with 1001 entries and invalid/overflow names"
+    },
+    {
+      "case": 119,
+      "displayName": "legacy bounded listing refuses /Library/Developer/CoreSimulator/Volumes/iOS_22G86/Library/Developer/CoreSimulator/Profiles/Runtimes with 1001 entries and invalid/overflow names"
+    },
+    {
+      "case": 120,
+      "displayName": "legacy bounded listing refuses /Library/Developer/CoreSimulator/Volumes with 1 entries and invalid/overflow names"
+    },
+    {
+      "case": 121,
+      "displayName": "legacy bounded listing refuses /Library/Developer/CoreSimulator/Volumes/iOS_22G86/Library/Developer/CoreSimulator/Profiles/Runtimes with 1 entries and invalid/overflow names"
+    },
+    {
+      "case": 122,
+      "displayName": "legacy bounded listing refuses /Library/Developer/CoreSimulator/Volumes with 1 entries and invalid/overflow names"
+    },
+    {
+      "case": 123,
+      "displayName": "legacy shared abort dispatches no filesystem or source effect"
+    },
+    {
+      "case": 124,
+      "displayName": "legacy metadata bytes are checked again after conversion"
+    },
+    {
+      "case": 125,
+      "displayName": "legacy readonly proof can change during a metadata conversion only by refusing the result"
+    },
+    {
+      "case": 126,
+      "displayName": "legacy initial entry set cannot be aliased by an injected mutable listing array"
+    },
+    {
+      "case": 127,
+      "displayName": "legacy full identity detects ino at convert"
+    },
+    {
+      "case": 128,
+      "displayName": "legacy full identity detects ino at opened-stat"
+    },
+    {
+      "case": 129,
+      "displayName": "legacy full identity detects ino at final-opened-stat"
+    },
+    {
+      "case": 130,
+      "displayName": "legacy full identity detects gid at convert"
+    },
+    {
+      "case": 131,
+      "displayName": "legacy full identity detects gid at opened-stat"
+    },
+    {
+      "case": 132,
+      "displayName": "legacy full identity detects gid at final-opened-stat"
+    },
+    {
+      "case": 133,
+      "displayName": "legacy full identity detects mode at convert"
+    },
+    {
+      "case": 134,
+      "displayName": "legacy full identity detects mode at opened-stat"
+    },
+    {
+      "case": 135,
+      "displayName": "legacy full identity detects mode at final-opened-stat"
+    },
+    {
+      "case": 136,
+      "displayName": "legacy full identity detects size at convert"
+    },
+    {
+      "case": 137,
+      "displayName": "legacy full identity detects size at opened-stat"
+    },
+    {
+      "case": 138,
+      "displayName": "legacy full identity detects size at final-opened-stat"
+    },
+    {
+      "case": 139,
+      "displayName": "legacy full identity detects nlink at convert"
+    },
+    {
+      "case": 140,
+      "displayName": "legacy full identity detects nlink at opened-stat"
+    },
+    {
+      "case": 141,
+      "displayName": "legacy full identity detects nlink at final-opened-stat"
+    },
+    {
+      "case": 142,
+      "displayName": "legacy full identity detects ctimeNs at convert"
+    },
+    {
+      "case": 143,
+      "displayName": "legacy full identity detects ctimeNs at opened-stat"
+    },
+    {
+      "case": 144,
+      "displayName": "legacy full identity detects ctimeNs at final-opened-stat"
+    },
+    {
+      "case": 145,
+      "displayName": "legacy full identity detects mtimeNs at convert"
+    },
+    {
+      "case": 146,
+      "displayName": "legacy full identity detects mtimeNs at opened-stat"
+    },
+    {
+      "case": 147,
+      "displayName": "legacy full identity detects mtimeNs at final-opened-stat"
+    },
+    {
+      "case": 148,
+      "displayName": "legacy candidate binding detects allowed-value mount ino replacement"
+    },
+    {
+      "case": 149,
+      "displayName": "legacy candidate binding detects allowed-value mount gid replacement"
+    },
+    {
+      "case": 150,
+      "displayName": "legacy candidate binding detects allowed-value mount mode replacement"
+    },
+    {
+      "case": 151,
+      "displayName": "legacy candidate binding detects allowed-value mount mtimeNs replacement"
+    },
+    {
+      "case": 152,
+      "displayName": "legacy candidate binding detects allowed-value mount ctimeNs replacement"
+    },
+    {
+      "case": 153,
+      "displayName": "legacy detects identity change during /Library/Developer/CoreSimulator/Volumes listing"
+    },
+    {
+      "case": 154,
+      "displayName": "legacy detects identity change during /Library/Developer/CoreSimulator/Volumes/iOS_22G86/Library/Developer/CoreSimulator/Profiles/Runtimes listing"
+    },
+    {
+      "case": 155,
+      "displayName": "legacy refuses uncertain numeric nanosecond rounding"
+    },
+    {
+      "case": 156,
+      "displayName": "legacy refuses uncertain mixed precision"
+    },
+    {
+      "case": 157,
+      "displayName": "legacy refuses uncertain nonfinite milliseconds"
+    },
+    {
+      "case": 158,
+      "displayName": "legacy refuses uncertain unsafe millisecond integer"
+    },
+    {
+      "case": 159,
+      "displayName": "legacy refuses uncertain numeric string integer"
+    },
+    {
+      "case": 160,
+      "displayName": "legacy refuses uncertain fractional identity"
+    },
+    {
+      "case": 161,
+      "displayName": "legacy preserves fractional safe millisecond timestamps supplied by an injected stat adapter"
+    },
+    {
+      "case": 162,
+      "displayName": "legacy accepts exact leaf group 0 mode 100444"
+    },
+    {
+      "case": 163,
+      "displayName": "legacy accepts exact leaf group 0 mode 100644"
+    },
+    {
+      "case": 164,
+      "displayName": "legacy accepts exact leaf group 0 mode 100664"
+    },
+    {
+      "case": 165,
+      "displayName": "legacy accepts exact leaf group 80 mode 100444"
+    },
+    {
+      "case": 166,
+      "displayName": "legacy accepts exact leaf group 80 mode 100644"
+    },
+    {
+      "case": 167,
+      "displayName": "legacy accepts exact leaf group 80 mode 100664"
+    },
+    {
+      "case": 168,
+      "displayName": "legacy refuses conversion exit/output/shape 1/2/0"
+    },
+    {
+      "case": 169,
+      "displayName": "legacy refuses conversion exit/output/shape 0/65537/0"
+    },
+    {
+      "case": 170,
+      "displayName": "legacy refuses conversion exit/output/shape 0/2/65535"
+    },
+    {
+      "case": 171,
+      "displayName": "legacy refuses conversion exit/output/shape 0/2/0"
+    },
+    {
+      "case": 172,
+      "displayName": "legacy refuses conversion exit/output/shape 0/4/0"
+    },
+    {
+      "case": 173,
+      "displayName": "legacy actual byte input cannot escape 64KiB through an understated stat size"
+    },
+    {
+      "case": 174,
+      "displayName": "legacy fixed command bounds reject /Library/Developer/CoreSimulator/Volumes/iOS_22G86/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.0.simruntime/Contents/Info.plist options before launch"
+    },
+    {
+      "case": 175,
+      "displayName": "legacy fixed command bounds reject /Library/Developer/CoreSimulator/Volumes/iOS_22G86 options before launch"
+    },
+    {
+      "case": 176,
+      "displayName": "legacy total runtime bundles share the 1000 bound with ordinary roots"
+    },
+    {
+      "case": 177,
+      "displayName": "legacy refuses duplicate namespace entry aliases"
+    },
+    {
+      "case": 178,
+      "displayName": "legacy recognized mount grammar does not infer a runtime from a build name"
+    },
+    {
+      "case": 179,
+      "displayName": "unrecognized iOS_fixture retains strict account ownership allowance false"
+    },
+    {
+      "case": 180,
+      "displayName": "unrecognized iOS_fixture retains strict account ownership allowance true"
+    },
+    {
+      "case": 181,
+      "displayName": "stable empty legacy presence remains distinct from stable absence and preserves default lookup"
+    },
+    {
+      "case": 182,
+      "displayName": "absent legacy namespace still binds the identity of its observed existing ancestor prefix"
+    },
+    {
+      "case": 183,
+      "displayName": "legacy refuses unsafe numeric dev in ancestor /"
+    },
+    {
+      "case": 184,
+      "displayName": "legacy refuses unsafe numeric dev in ancestor /Library"
+    },
+    {
+      "case": 185,
+      "displayName": "legacy refuses unsafe numeric dev in ancestor /Library/Developer/CoreSimulator/Volumes/iOS_22G86"
+    },
+    {
+      "case": 186,
+      "displayName": "legacy refuses unsafe numeric ino in ancestor /"
+    },
+    {
+      "case": 187,
+      "displayName": "legacy refuses unsafe numeric ino in ancestor /Library"
+    },
+    {
+      "case": 188,
+      "displayName": "legacy refuses unsafe numeric ino in ancestor /Library/Developer/CoreSimulator/Volumes/iOS_22G86"
+    },
+    {
+      "case": 189,
+      "displayName": "legacy checks shared cancellation at convert without a later conversion"
+    },
+    {
+      "case": 190,
+      "displayName": "legacy checks shared cancellation at opened-stat without a later conversion"
+    },
+    {
+      "case": 191,
+      "displayName": "legacy mount termination waits for actual close after deadline and bounded escalation"
+    },
+    {
+      "case": 192,
+      "displayName": "legacy recognizes only bounded exact build grammar iOS_1A1"
+    },
+    {
+      "case": 193,
+      "displayName": "legacy recognizes only bounded exact build grammar iOS_999ZZZ999999z"
+    },
+    {
+      "case": 194,
+      "displayName": "unrecognized iOS_1000A1 retains strict permissions and receives no mounted exception"
+    },
+    {
+      "case": 195,
+      "displayName": "unrecognized iOS_1AAAA1 retains strict permissions and receives no mounted exception"
+    },
+    {
+      "case": 196,
+      "displayName": "unrecognized iOS_1A1000000 retains strict permissions and receives no mounted exception"
+    },
+    {
+      "case": 197,
+      "displayName": "unrecognized iOS_1A1zz retains strict permissions and receives no mounted exception"
+    },
+    {
+      "case": 198,
+      "displayName": "unrecognized iOS_1a1 retains strict permissions and receives no mounted exception"
+    },
+    {
+      "case": 199,
+      "displayName": "unrecognized prefix_iOS_22G86 retains strict permissions and receives no mounted exception"
+    }
+  ],
+  "distinctDisplayNames": 198,
+  "bothFinalFocusedReceipts": [
+    "focused-node26",
+    "focused-node24"
+  ],
+  "bothFinalCoverageReceipts": [
+    "coverage-node26",
+    "coverage-node24"
+  ],
+  "rawNamesAuthoritative": true
+}

@@ -1,0 +1,19 @@
+# Policy v3 to regression evidence
+
+Normative proposal SHA256: 14dd5566f99845a4ee6562404c16610c732795f311b7df1e95ecb306dd599492. Source locations refer to the frozen candidate. Exact case names and ordinals are in owned-case-matrix.json; complete raw names/results are authoritative.
+
+| Clause | Source | Owned regressions / inherited unchanged coverage |
+| --- | --- | --- |
+| Closed namespace, exact bounded Apple build grammar, no artifact bypass | allocation-config.ts:86–110, 217–240, 301 | Valid grammar bounds, six invalid forms, invalid mounted metadata with artifact roots, no launch; pure temporary-path mapping precedes FS/public child tests |
+| Legacy UID0 strict ancestry, mounted UID0/GID0 or80 exact modes | allocation-config.ts:139–170 | 30 invalid stats in both authorization layers; observed 0775/0664 positives, 01775 only RuntimeRoot, leaf0444/0644/0664 and GID0/80 positives |
+| Full lossless identity and timestamps | allocation-config.ts:112–137, 183–211 | Unsafe dev/ino/uid/gid/mode/size/nlink; colliding rounded Numbers; exact large BigInts and one-unit replacement; ns changes, fractional ms, uncertain precision refusal; ancestor and opened/final/conversion changes |
+| Same device, no symlink/alias/hardlink, bounded bytes | allocation-config.ts:139–195 | Nested/leaf device differences, symlink/type, nlink2, size/actual byte overflow despite understated stat, bytes after conversion |
+| Fresh exact three typed false mount fields, no recursive bootstrap | allocation-config.ts:173–211, 235–279, 367–378 | Fixed exact diskutil argv counts on both layers, true/string/missing/duplicate/malformed/mismatched/oversized proofs and exits, proof changes during conversion; accepted parser cases unchanged |
+| Stable namespace presence, complete sorted entry set and candidates through return | allocation-config.ts:325–365, 417–446 | Appearance/disappearance, additions/removals, empty versus absent, observed missing-prefix identity, namespace/candidate replacements, listing races, mutable-array genuine red→green |
+| Unrecognized legacy roots preserve old strict behavior | allocation-config.ts:95–98, 139–170, 419–426 | iOS_fixture account-owned strict positives on both layers without mount queries; invalid grammar forms receive no exception |
+| Explicit CFBundleIdentifier uniqueness, no older skip/fallback | allocation-config.ts:417–446 | Duplicate IDs across default/legacy/Cryptex; older recognized different ID still must prove readonly; build names do not select runtime |
+| Aggregate64 per namespace, immediate1000/runtime1000/total1000, path/input/output bounds | allocation-config.ts:217–244, 325–378, 419–430 | Legacy65-candidate refusal, 1001 listing/name bounds, duplicate entry alias, total with ordinary roots, 64KiB input/output and timeout options; unchanged Cryptex cases cover its64/8192 actual child bound and common command restrictions |
+| Shared cancellation/deadline and bounded mount-only termination, actual close | allocation-config.ts:239–279 | Shared abort before effects and during opened-stat/conversion; fake deadline TERM then250ms KILL remains unsettled until actual close; unchanged process/env/8192 cases retained |
+| Preserve original host/Xcode/parser/default/store behavior | protected440 manifest | Focused unchanged allocation/config/artifact/installed-plist/Cryptex suites; unmodified actual defaults follow frozen candidate. Root separately holds original15 host audit. No production native compatibility claim |
+
+Before production edits, the corrected hermetic fixture yielded genuine domain red126/25pass/101fail on each exact Node with baseline Source unchanged. The mutable entry-array defect has separate one-case pre-fix reds on both Nodes. Final combined focused704 and coverage553 each pass on both Nodes; the expanded owned199 matrix is supplementary green coverage, not retroactively claimed as an initial red run.

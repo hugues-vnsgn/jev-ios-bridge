@@ -1,0 +1,11 @@
+{
+  "phase": "first-green-node26",
+  "counts": {
+    "tests": 126,
+    "pass": 125,
+    "fail": 1
+  },
+  "cause": "The strict-mode control inherited temporary-file0600 rather than the approved mounted0644; recognized strict-mode positive correctly refused that unsupported mode.",
+  "fix": "Make strict mounted fixture leaves0644 and directories0755; preserve ordinary executable raw permissions, mounted observed modes, Source and all assertions.",
+  "firstAttemptArchived": "first-green-attempt-bytes/"
+}

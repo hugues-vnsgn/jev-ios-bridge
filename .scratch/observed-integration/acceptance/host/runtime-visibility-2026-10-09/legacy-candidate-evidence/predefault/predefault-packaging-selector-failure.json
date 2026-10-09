@@ -1,0 +1,12 @@
+{
+  "failure": "unique case-name assertion",
+  "actual191Count": 191,
+  "actualUniqueNameCount": 190,
+  "duplicateNames": {
+    "legacy bounded listing refuses /Library/Developer/CoreSimulator/Volumes with 1 entries and invalid/overflow names": 2
+  },
+  "cause": "Two parameter rows intentionally share a display name. Count/index must distinguish cases instead of requiring unique labels.",
+  "sourceOrGateChange": false,
+  "originalScript": "freeze-audit-original.py",
+  "rawFailureRetained": "predefault-packaging-selector-failure.txt"
+}

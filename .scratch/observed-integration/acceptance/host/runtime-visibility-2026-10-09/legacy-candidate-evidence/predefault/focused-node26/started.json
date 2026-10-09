@@ -1,0 +1,19 @@
+{
+  "startedAtUtc": "2026-10-09T08:04:28.532847+00:00",
+  "childPid": 75775,
+  "childProcessGroup": 75775,
+  "argv": [
+    "/opt/homebrew/Cellar/node/26.8.1/bin/node",
+    "--import",
+    "tsx",
+    "--test",
+    "tests/observed-legacy-volume-runtime.test.ts",
+    "tests/observed-cryptex-runtime.test.ts",
+    "tests/observed-allocation-config.test.ts",
+    "tests/installed-plist.test.ts",
+    "tests/observed-allocation.test.ts",
+    "tests/observed-artifact.test.ts"
+  ],
+  "cwd": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime",
+  "serializedByLock": true
+}

@@ -1,0 +1,24 @@
+(node:15823) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ pure legacy and public fixture maps isolate / (0.919458ms)
+✔ pure legacy and public fixture maps isolate /Library (0.256167ms)
+✔ pure legacy and public fixture maps isolate /Library/Developer/CoreSimulator/Volumes (0.050125ms)
+✔ pure legacy and public fixture maps isolate /Library/Developer/CoreSimulator/Volumes/iOS_22G86 (0.033167ms)
+✔ pure legacy and public fixture maps isolate /Library/Developer/CoreSimulator/Volumes/iOS_22G86/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.0.simruntime/Contents/Info.plist (0.037459ms)
+✔ pure legacy and public fixture maps isolate /private (0.040417ms)
+✔ pure legacy and public fixture maps isolate /usr/sbin/diskutil (0.02425ms)
+✔ pure legacy map preserves owned temporary /private/tmp/legacy-pure-fixture (0.02575ms)
+✔ pure legacy map preserves owned temporary /private/tmp/legacy-pure-fixture/home (0.113042ms)
+✔ pure legacy map preserves owned temporary /private/tmp/legacy-pure-fixture/owned/Info.plist (0.173791ms)
+✔ pure legacy map refuses unsupported "/opt/outside" (0.082334ms)
+✔ pure legacy map refuses unsupported "relative" (0.037083ms)
+✔ pure legacy map refuses unsupported "/Library/../usr" (0.02725ms)
+✔ pure legacy map refuses unsupported "/Library\u0000bad" (0.027708ms)
+ℹ tests 14
+ℹ suites 0
+ℹ pass 14
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 198.656375

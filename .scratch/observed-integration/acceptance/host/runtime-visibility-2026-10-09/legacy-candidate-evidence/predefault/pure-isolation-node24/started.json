@@ -1,0 +1,15 @@
+{
+  "startedAtUtc": "2026-10-09T07:40:55.437002+00:00",
+  "childPid": 15822,
+  "childProcessGroup": 15822,
+  "argv": [
+    "/Users/hugues_mini/.npm/_npx/2c6eebc6231f3284/node_modules/node/bin/node",
+    "--import",
+    "tsx",
+    "--test",
+    "--test-name-pattern=^pure legacy",
+    "tests/observed-legacy-volume-runtime.test.ts"
+  ],
+  "cwd": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime",
+  "serializedByLock": true
+}

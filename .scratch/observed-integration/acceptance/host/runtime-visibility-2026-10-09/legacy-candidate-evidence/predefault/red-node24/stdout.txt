@@ -1,0 +1,950 @@
+(node:18264) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ pure legacy and public fixture maps isolate / (0.67275ms)
+✔ pure legacy and public fixture maps isolate /Library (0.110208ms)
+✔ pure legacy and public fixture maps isolate /Library/Developer/CoreSimulator/Volumes (0.039375ms)
+✔ pure legacy and public fixture maps isolate /Library/Developer/CoreSimulator/Volumes/iOS_22G86 (0.027625ms)
+✔ pure legacy and public fixture maps isolate /Library/Developer/CoreSimulator/Volumes/iOS_22G86/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.0.simruntime/Contents/Info.plist (0.03425ms)
+✔ pure legacy and public fixture maps isolate /private (0.036083ms)
+✔ pure legacy and public fixture maps isolate /usr/sbin/diskutil (0.024666ms)
+✔ pure legacy map preserves owned temporary /private/tmp/legacy-pure-fixture (0.023125ms)
+✔ pure legacy map preserves owned temporary /private/tmp/legacy-pure-fixture/home (0.116709ms)
+✔ pure legacy map preserves owned temporary /private/tmp/legacy-pure-fixture/owned/Info.plist (0.171708ms)
+✔ pure legacy map refuses unsupported "/opt/outside" (0.0895ms)
+✔ pure legacy map refuses unsupported "relative" (0.0315ms)
+✔ pure legacy map refuses unsupported "/Library/../usr" (0.0275ms)
+✔ pure legacy map refuses unsupported "/Library\u0000bad" (0.026083ms)
+✖ injected observed legacy group modes accept exact iOS_22G86 after fresh proofs (47.544208ms)
+✖ production observed legacy group modes accept exact iOS_22G86 after fresh proofs (33.826834ms)
+✖ injected observed legacy group modes accept exact iOS_23E254a after fresh proofs (29.077458ms)
+✖ production observed legacy group modes accept exact iOS_23E254a after fresh proofs (27.409959ms)
+✖ recognized strict-mode legacy mounts still require readonly proof and never use the strict fallback (31.4165ms)
+✔ recognized strict-mode legacy refuses Writable true proof (30.30625ms)
+✔ recognized strict-mode legacy refuses WritableMedia true proof (30.436459ms)
+✔ recognized strict-mode legacy refuses WritableVolume true proof (27.817792ms)
+✔ recognized strict-mode legacy refuses string false proof (29.2065ms)
+✔ recognized strict-mode legacy refuses wrong mount point proof (34.002625ms)
+✔ recognized strict-mode legacy refuses missing field proof (29.728ms)
+✔ recognized strict-mode legacy refuses duplicate field proof (29.61925ms)
+✔ recognized strict-mode legacy refuses malformed XML proof (28.57825ms)
+✔ recognized strict-mode legacy refuses oversized output proof (31.737875ms)
+✔ recognized strict-mode legacy refuses mount exit 1 (29.250417ms)
+✔ recognized strict-mode legacy refuses mount exit null (28.425583ms)
+✖ injected legacy refuses root uid without weakening the valid mounted precondition (31.343083ms)
+✖ production legacy refuses root uid without weakening the valid mounted precondition (26.383416ms)
+✖ injected legacy refuses Library uid without weakening the valid mounted precondition (27.431959ms)
+✖ production legacy refuses Library uid without weakening the valid mounted precondition (29.358333ms)
+✖ injected legacy refuses namespace uid without weakening the valid mounted precondition (30.562167ms)
+✖ production legacy refuses namespace uid without weakening the valid mounted precondition (28.131416ms)
+✖ injected legacy refuses namespace group write without weakening the valid mounted precondition (29.997167ms)
+✖ production legacy refuses namespace group write without weakening the valid mounted precondition (31.015666ms)
+✖ injected legacy refuses ancestor group write without weakening the valid mounted precondition (33.030542ms)
+✖ production legacy refuses ancestor group write without weakening the valid mounted precondition (29.853209ms)
+✖ injected legacy refuses ancestor symlink without weakening the valid mounted precondition (28.147666ms)
+✖ production legacy refuses ancestor symlink without weakening the valid mounted precondition (26.061333ms)
+✖ injected legacy refuses mount uid without weakening the valid mounted precondition (34.017375ms)
+✖ production legacy refuses mount uid without weakening the valid mounted precondition (28.808291ms)
+✖ injected legacy refuses mount gid without weakening the valid mounted precondition (36.716209ms)
+✖ production legacy refuses mount gid without weakening the valid mounted precondition (33.38225ms)
+✖ injected legacy refuses mount world write without weakening the valid mounted precondition (28.066875ms)
+✖ production legacy refuses mount world write without weakening the valid mounted precondition (26.434291ms)
+✖ injected legacy refuses mount setgid without weakening the valid mounted precondition (27.67ms)
+✖ production legacy refuses mount setgid without weakening the valid mounted precondition (27.792708ms)
+✖ injected legacy refuses mount symlink without weakening the valid mounted precondition (32.966875ms)
+✖ production legacy refuses mount symlink without weakening the valid mounted precondition (27.950375ms)
+✖ injected legacy refuses mount type without weakening the valid mounted precondition (29.421333ms)
+✖ production legacy refuses mount type without weakening the valid mounted precondition (27.625958ms)
+✖ injected legacy refuses inner directory uid without weakening the valid mounted precondition (28.166875ms)
+✖ production legacy refuses inner directory uid without weakening the valid mounted precondition (27.6225ms)
+✖ injected legacy refuses inner directory gid without weakening the valid mounted precondition (29.857958ms)
+✖ production legacy refuses inner directory gid without weakening the valid mounted precondition (30.841667ms)
+✖ injected legacy refuses inner directory world write without weakening the valid mounted precondition (32.337542ms)
+✖ production legacy refuses inner directory world write without weakening the valid mounted precondition (28.98475ms)
+✖ injected legacy refuses inner directory sticky without weakening the valid mounted precondition (33.899625ms)
+✖ production legacy refuses inner directory sticky without weakening the valid mounted precondition (29.531875ms)
+✖ injected legacy refuses RuntimeRoot setgid without weakening the valid mounted precondition (29.502125ms)
+✖ production legacy refuses RuntimeRoot setgid without weakening the valid mounted precondition (27.387625ms)
+✖ injected legacy refuses leaf sticky without weakening the valid mounted precondition (30.644417ms)
+✖ production legacy refuses leaf sticky without weakening the valid mounted precondition (30.963167ms)
+✖ injected legacy refuses leaf uid without weakening the valid mounted precondition (41.34725ms)
+✖ production legacy refuses leaf uid without weakening the valid mounted precondition (30.067209ms)
+✖ injected legacy refuses leaf gid without weakening the valid mounted precondition (29.946667ms)
+✖ production legacy refuses leaf gid without weakening the valid mounted precondition (27.100791ms)
+✖ injected legacy refuses leaf world write without weakening the valid mounted precondition (27.779333ms)
+✖ production legacy refuses leaf world write without weakening the valid mounted precondition (25.9825ms)
+✖ injected legacy refuses leaf setuid without weakening the valid mounted precondition (27.173875ms)
+✖ production legacy refuses leaf setuid without weakening the valid mounted precondition (28.068667ms)
+✖ injected legacy refuses leaf executable without weakening the valid mounted precondition (28.961125ms)
+✖ production legacy refuses leaf executable without weakening the valid mounted precondition (28.232708ms)
+✖ injected legacy refuses leaf symlink without weakening the valid mounted precondition (29.892958ms)
+✖ production legacy refuses leaf symlink without weakening the valid mounted precondition (28.056708ms)
+✖ injected legacy refuses leaf wrong type without weakening the valid mounted precondition (27.137042ms)
+✖ production legacy refuses leaf wrong type without weakening the valid mounted precondition (28.023791ms)
+✖ injected legacy refuses hardlink without weakening the valid mounted precondition (27.460791ms)
+✖ production legacy refuses hardlink without weakening the valid mounted precondition (26.785333ms)
+✖ injected legacy refuses large file without weakening the valid mounted precondition (28.949583ms)
+✖ production legacy refuses large file without weakening the valid mounted precondition (24.66925ms)
+✖ injected legacy refuses negative size without weakening the valid mounted precondition (29.825375ms)
+✖ production legacy refuses negative size without weakening the valid mounted precondition (26.622042ms)
+✖ injected legacy refuses nested directory device without weakening the valid mounted precondition (28.988667ms)
+✖ production legacy refuses nested directory device without weakening the valid mounted precondition (30.116042ms)
+✖ injected legacy refuses leaf device without weakening the valid mounted precondition (29.318209ms)
+✖ production legacy refuses leaf device without weakening the valid mounted precondition (28.174708ms)
+✔ legacy refuses unsafe numeric dev rather than recovering rounded identity (33.993375ms)
+✔ legacy refuses unsafe numeric ino rather than recovering rounded identity (31.641375ms)
+✔ legacy refuses unsafe numeric uid rather than recovering rounded identity (32.88875ms)
+✔ legacy refuses unsafe numeric gid rather than recovering rounded identity (31.995208ms)
+✔ legacy refuses unsafe numeric mode rather than recovering rounded identity (29.438334ms)
+✔ legacy refuses unsafe numeric size rather than recovering rounded identity (30.671042ms)
+✔ legacy refuses unsafe numeric nlink rather than recovering rounded identity (33.253833ms)
+✔ distinct large integer identities colliding under Number remain distinguishable (28.735792ms)
+✖ legacy accepts exact large bigint identity and detects its one-unit replacement (33.3095ms)
+✔ legacy detects ctimeNs changes below supplied millisecond precision (33.777667ms)
+✔ legacy detects mtimeNs changes below supplied millisecond precision (35.75325ms)
+✔ legacy final binding refuses namespace appearance (26.684375ms)
+✔ legacy final binding refuses namespace disappearance (30.296916ms)
+✔ legacy final binding refuses entry addition (27.966875ms)
+✔ legacy final binding refuses entry removal (28.449334ms)
+✔ legacy final binding refuses candidate replacement (30.835125ms)
+✔ legacy final binding refuses namespace replacement (31.676875ms)
+✖ stable absent legacy namespace preserves the ordinary explicit runtime proof (25.567625ms)
+✔ an older recognized iOS_22G86 cannot be skipped for a different identifier (29.927459ms)
+✔ an older recognized iOS_23E254a cannot be skipped for a different identifier (29.037333ms)
+✔ duplicate explicit identifiers across legacy and default refuse (29.797416ms)
+✔ duplicate explicit identifiers across legacy and legacy refuse (31.664291ms)
+✔ duplicate explicit identifiers across legacy and cryptex refuse (32.880458ms)
+✔ artifact roots cannot authorize an invalid recognized legacy target /Library/Developer/CoreSimulator/Volumes/iOS_22G86/arbitrary/Info.plist (28.747625ms)
+✔ artifact roots cannot authorize an invalid recognized legacy target /Library/Developer/CoreSimulator/Volumes/iOS_22G86/Contents/Info.plist (36.186958ms)
+✔ artifact roots cannot authorize an invalid recognized legacy target /Library/Developer/CoreSimulator/Volumes/iOS_22G86/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.0.simruntime/../Contents/Info.plist (27.982667ms)
+✔ legacy refuses more than 64 recognized immediate candidates before any mount query (29.543917ms)
+✖ legacy bounded listing refuses /Library/Developer/CoreSimulator/Volumes with 1001 entries and invalid/overflow names (28.455125ms)
+✖ legacy bounded listing refuses /Library/Developer/CoreSimulator/Volumes/iOS_22G86/Library/Developer/CoreSimulator/Profiles/Runtimes with 1001 entries and invalid/overflow names (30.136375ms)
+✖ legacy bounded listing refuses /Library/Developer/CoreSimulator/Volumes with 1 entries and invalid/overflow names (29.814625ms)
+✖ legacy bounded listing refuses /Library/Developer/CoreSimulator/Volumes/iOS_22G86/Library/Developer/CoreSimulator/Profiles/Runtimes with 1 entries and invalid/overflow names (33.862209ms)
+✖ legacy bounded listing refuses /Library/Developer/CoreSimulator/Volumes with 1 entries and invalid/overflow names (36.300209ms)
+✔ legacy shared abort dispatches no filesystem or source effect (30.166125ms)
+✖ legacy metadata bytes are checked again after conversion (29.182333ms)
+✔ legacy readonly proof can change during a metadata conversion only by refusing the result (26.6495ms)
+✖ legacy mount termination waits for actual close after deadline and bounded escalation (37.984583ms)
+ℹ tests 126
+ℹ suites 0
+ℹ pass 52
+ℹ fail 74
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 3591.212625
+
+✖ failing tests:
+
+test at tests/observed-legacy-volume-runtime.test.ts:1:2350
+✖ injected observed legacy group modes accept exact iOS_22G86 after fresh proofs (47.544208ms)
+  Error: HOST_PREREQUISITE_MISSING
+      at verifyInstalledCompatibility (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime/src/observed/allocation-config.ts:385:19)
+      at async TestContext.<anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime/tests/observed-legacy-volume-runtime.test.ts:45:21)
+      at async Test.run (node:internal/test_runner/test:1069:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:752:7) {
+    reason: 'HOST_PREREQUISITE_MISSING'
+  }
+
+test at tests/observed-legacy-volume-runtime.test.ts:1:2350
+✖ production observed legacy group modes accept exact iOS_22G86 after fresh proofs (33.826834ms)
+  Error: HOST_PREREQUISITE_MISSING
+      at verifyInstalledCompatibility (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime/src/observed/allocation-config.ts:385:19)
+      at async TestContext.<anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime/tests/observed-legacy-volume-runtime.test.ts:45:21)
+      at async Test.run (node:internal/test_runner/test:1069:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:752:7) {
+    reason: 'HOST_PREREQUISITE_MISSING'
+  }
+
+test at tests/observed-legacy-volume-runtime.test.ts:1:2350
+✖ injected observed legacy group modes accept exact iOS_23E254a after fresh proofs (29.077458ms)
+  Error: HOST_PREREQUISITE_MISSING
+      at verifyInstalledCompatibility (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime/src/observed/allocation-config.ts:385:19)
+      at async TestContext.<anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime/tests/observed-legacy-volume-runtime.test.ts:45:21)
+      at async Test.run (node:internal/test_runner/test:1069:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:752:7) {
+    reason: 'HOST_PREREQUISITE_MISSING'
+  }
+
+test at tests/observed-legacy-volume-runtime.test.ts:1:2350
+✖ production observed legacy group modes accept exact iOS_23E254a after fresh proofs (27.409959ms)
+  Error: HOST_PREREQUISITE_MISSING
+      at verifyInstalledCompatibility (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime/src/observed/allocation-config.ts:385:19)
+      at async TestContext.<anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime/tests/observed-legacy-volume-runtime.test.ts:45:21)
+      at async Test.run (node:internal/test_runner/test:1069:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:752:7) {
+    reason: 'HOST_PREREQUISITE_MISSING'
+  }
+
+test at tests/observed-legacy-volume-runtime.test.ts:1:2982
+✖ recognized strict-mode legacy mounts still require readonly proof and never use the strict fallback (31.4165ms)
+  Error: HOST_PREREQUISITE_MISSING
+      at verifyInstalledCompatibility (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime/src/observed/allocation-config.ts:385:19)
+      at async TestContext.<anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime/tests/observed-legacy-volume-runtime.test.ts:54:9)
+      at async Test.run (node:internal/test_runner/test:1069:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:752:7) {
+    reason: 'HOST_PREREQUISITE_MISSING'
+  }
+
+test at tests/observed-legacy-volume-runtime.test.ts:1:6222
+✖ injected legacy refuses root uid without weakening the valid mounted precondition (31.343083ms)
+  Error: HOST_PREREQUISITE_MISSING
+      at verifyInstalledCompatibility (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime/src/observed/allocation-config.ts:385:19)
+      at async refuses (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime/tests/observed-legacy-volume-runtime.test.ts:37:3)
+      at async TestContext.<anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime/tests/observed-legacy-volume-runtime.test.ts:100:11)
+      at async Test.run (node:internal/test_runner/test:1069:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:752:7) {
+    reason: 'HOST_PREREQUISITE_MISSING'
+  }
+
+test at tests/observed-legacy-volume-runtime.test.ts:1:6222
+✖ production legacy refuses root uid without weakening the valid mounted precondition (26.383416ms)
+  Error: HOST_PREREQUISITE_MISSING
+      at verifyInstalledCompatibility (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime/src/observed/allocation-config.ts:385:19)
+      at async refuses (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime/tests/observed-legacy-volume-runtime.test.ts:37:3)
+      at async TestContext.<anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime/tests/observed-legacy-volume-runtime.test.ts:100:11)
+      at async Test.run (node:internal/test_runner/test:1069:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:752:7) {
+    reason: 'HOST_PREREQUISITE_MISSING'
+  }
+
+test at tests/observed-legacy-volume-runtime.test.ts:1:6222
+✖ injected legacy refuses Library uid without weakening the valid mounted precondition (27.431959ms)
+  Error: HOST_PREREQUISITE_MISSING
+      at verifyInstalledCompatibility (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime/src/observed/allocation-config.ts:385:19)
+      at async refuses (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime/tests/observed-legacy-volume-runtime.test.ts:37:3)
+      at async TestContext.<anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime/tests/observed-legacy-volume-runtime.test.ts:100:11)
+      at async Test.run (node:internal/test_runner/test:1069:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:752:7) {
+    reason: 'HOST_PREREQUISITE_MISSING'
+  }
+
+test at tests/observed-legacy-volume-runtime.test.ts:1:6222
+✖ production legacy refuses Library uid without weakening the valid mounted precondition (29.358333ms)
+  Error: HOST_PREREQUISITE_MISSING
+      at verifyInstalledCompatibility (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime/src/observed/allocation-config.ts:385:19)
+      at async refuses (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime/tests/observed-legacy-volume-runtime.test.ts:37:3)
+      at async TestContext.<anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime/tests/observed-legacy-volume-runtime.test.ts:100:11)
+      at async Test.run (node:internal/test_runner/test:1069:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:752:7) {
+    reason: 'HOST_PREREQUISITE_MISSING'
+  }
+
+test at tests/observed-legacy-volume-runtime.test.ts:1:6222
+✖ injected legacy refuses namespace uid without weakening the valid mounted precondition (30.562167ms)
+  Error: HOST_PREREQUISITE_MISSING
+      at verifyInstalledCompatibility (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime/src/observed/allocation-config.ts:385:19)
+      at async refuses (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime/tests/observed-legacy-volume-runtime.test.ts:37:3)
+      at async TestContext.<anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime/tests/observed-legacy-volume-runtime.test.ts:100:11)
+      at async Test.run (node:internal/test_runner/test:1069:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:752:7) {
+    reason: 'HOST_PREREQUISITE_MISSING'
+  }
+
+test at tests/observed-legacy-volume-runtime.test.ts:1:6222
+✖ production legacy refuses namespace uid without weakening the valid mounted precondition (28.131416ms)
+  Error: HOST_PREREQUISITE_MISSING
+      at verifyInstalledCompatibility (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime/src/observed/allocation-config.ts:385:19)
+      at async refuses (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime/tests/observed-legacy-volume-runtime.test.ts:37:3)
+      at async TestContext.<anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime/tests/observed-legacy-volume-runtime.test.ts:100:11)
+      at async Test.run (node:internal/test_runner/test:1069:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:752:7) {
+    reason: 'HOST_PREREQUISITE_MISSING'
+  }
+
+test at tests/observed-legacy-volume-runtime.test.ts:1:6222
+✖ injected legacy refuses namespace group write without weakening the valid mounted precondition (29.997167ms)
+  Error: HOST_PREREQUISITE_MISSING
+      at verifyInstalledCompatibility (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime/src/observed/allocation-config.ts:385:19)
+      at async refuses (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime/tests/observed-legacy-volume-runtime.test.ts:37:3)
+      at async TestContext.<anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime/tests/observed-legacy-volume-runtime.test.ts:100:11)
+      at async Test.run (node:internal/test_runner/test:1069:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:752:7) {
+    reason: 'HOST_PREREQUISITE_MISSING'
+  }
+
+test at tests/observed-legacy-volume-runtime.test.ts:1:6222
+✖ production legacy refuses namespace group write without weakening the valid mounted precondition (31.015666ms)
+  Error: HOST_PREREQUISITE_MISSING
+      at verifyInstalledCompatibility (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime/src/observed/allocation-config.ts:385:19)
+      at async refuses (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime/tests/observed-legacy-volume-runtime.test.ts:37:3)
+      at async TestContext.<anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime/tests/observed-legacy-volume-runtime.test.ts:100:11)
+      at async Test.run (node:internal/test_runner/test:1069:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:752:7) {
+    reason: 'HOST_PREREQUISITE_MISSING'
+  }
+
+test at tests/observed-legacy-volume-runtime.test.ts:1:6222
+✖ injected legacy refuses ancestor group write without weakening the valid mounted precondition (33.030542ms)
+  Error: HOST_PREREQUISITE_MISSING
+      at verifyInstalledCompatibility (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime/src/observed/allocation-config.ts:385:19)
+      at async refuses (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime/tests/observed-legacy-volume-runtime.test.ts:37:3)
+      at async TestContext.<anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime/tests/observed-legacy-volume-runtime.test.ts:100:11)
+      at async Test.run (node:internal/test_runner/test:1069:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:752:7) {
+    reason: 'HOST_PREREQUISITE_MISSING'
+  }
+
+test at tests/observed-legacy-volume-runtime.test.ts:1:6222
+✖ production legacy refuses ancestor group write without weakening the valid mounted precondition (29.853209ms)
+  Error: HOST_PREREQUISITE_MISSING
+      at verifyInstalledCompatibility (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime/src/observed/allocation-config.ts:385:19)
+      at async refuses (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime/tests/observed-legacy-volume-runtime.test.ts:37:3)
+      at async TestContext.<anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime/tests/observed-legacy-volume-runtime.test.ts:100:11)
+      at async Test.run (node:internal/test_runner/test:1069:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:752:7) {
+    reason: 'HOST_PREREQUISITE_MISSING'
+  }
+
+test at tests/observed-legacy-volume-runtime.test.ts:1:6222
+✖ injected legacy refuses ancestor symlink without weakening the valid mounted precondition (28.147666ms)
+  Error: HOST_PREREQUISITE_MISSING
+      at verifyInstalledCompatibility (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime/src/observed/allocation-config.ts:385:19)
+      at async refuses (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime/tests/observed-legacy-volume-runtime.test.ts:37:3)
+      at async TestContext.<anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime/tests/observed-legacy-volume-runtime.test.ts:100:11)
+      at async Test.run (node:internal/test_runner/test:1069:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:752:7) {
+    reason: 'HOST_PREREQUISITE_MISSING'
+  }
+
+test at tests/observed-legacy-volume-runtime.test.ts:1:6222
+✖ production legacy refuses ancestor symlink without weakening the valid mounted precondition (26.061333ms)
+  Error: HOST_PREREQUISITE_MISSING
+      at verifyInstalledCompatibility (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime/src/observed/allocation-config.ts:385:19)
+      at async refuses (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime/tests/observed-legacy-volume-runtime.test.ts:37:3)
+      at async TestContext.<anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime/tests/observed-legacy-volume-runtime.test.ts:100:11)
+      at async Test.run (node:internal/test_runner/test:1069:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:752:7) {
+    reason: 'HOST_PREREQUISITE_MISSING'
+  }
+
+test at tests/observed-legacy-volume-runtime.test.ts:1:6222
+✖ injected legacy refuses mount uid without weakening the valid mounted precondition (34.017375ms)
+  Error: HOST_PREREQUISITE_MISSING
+      at verifyInstalledCompatibility (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime/src/observed/allocation-config.ts:385:19)
+      at async refuses (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime/tests/observed-legacy-volume-runtime.test.ts:37:3)
+      at async TestContext.<anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime/tests/observed-legacy-volume-runtime.test.ts:100:11)
+      at async Test.run (node:internal/test_runner/test:1069:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:752:7) {
+    reason: 'HOST_PREREQUISITE_MISSING'
+  }
+
+test at tests/observed-legacy-volume-runtime.test.ts:1:6222
+✖ production legacy refuses mount uid without weakening the valid mounted precondition (28.808291ms)
+  Error: HOST_PREREQUISITE_MISSING
+      at verifyInstalledCompatibility (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime/src/observed/allocation-config.ts:385:19)
+      at async refuses (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime/tests/observed-legacy-volume-runtime.test.ts:37:3)
+      at async TestContext.<anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime/tests/observed-legacy-volume-runtime.test.ts:100:11)
+      at async Test.run (node:internal/test_runner/test:1069:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:752:7) {
+    reason: 'HOST_PREREQUISITE_MISSING'
+  }
+
+test at tests/observed-legacy-volume-runtime.test.ts:1:6222
+✖ injected legacy refuses mount gid without weakening the valid mounted precondition (36.716209ms)
+  Error: HOST_PREREQUISITE_MISSING
+      at verifyInstalledCompatibility (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime/src/observed/allocation-config.ts:385:19)
+      at async refuses (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime/tests/observed-legacy-volume-runtime.test.ts:37:3)
+      at async TestContext.<anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime/tests/observed-legacy-volume-runtime.test.ts:100:11)
+      at async Test.run (node:internal/test_runner/test:1069:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:752:7) {
+    reason: 'HOST_PREREQUISITE_MISSING'
+  }
+
+test at tests/observed-legacy-volume-runtime.test.ts:1:6222
+✖ production legacy refuses mount gid without weakening the valid mounted precondition (33.38225ms)
+  Error: HOST_PREREQUISITE_MISSING
+      at verifyInstalledCompatibility (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime/src/observed/allocation-config.ts:385:19)
+      at async refuses (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime/tests/observed-legacy-volume-runtime.test.ts:37:3)
+      at async TestContext.<anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime/tests/observed-legacy-volume-runtime.test.ts:100:11)
+      at async Test.run (node:internal/test_runner/test:1069:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:752:7) {
+    reason: 'HOST_PREREQUISITE_MISSING'
+  }
+
+test at tests/observed-legacy-volume-runtime.test.ts:1:6222
+✖ injected legacy refuses mount world write without weakening the valid mounted precondition (28.066875ms)
+  Error: HOST_PREREQUISITE_MISSING
+      at verifyInstalledCompatibility (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime/src/observed/allocation-config.ts:385:19)
+      at async refuses (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime/tests/observed-legacy-volume-runtime.test.ts:37:3)
+      at async TestContext.<anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime/tests/observed-legacy-volume-runtime.test.ts:100:11)
+      at async Test.run (node:internal/test_runner/test:1069:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:752:7) {
+    reason: 'HOST_PREREQUISITE_MISSING'
+  }
+
+test at tests/observed-legacy-volume-runtime.test.ts:1:6222
+✖ production legacy refuses mount world write without weakening the valid mounted precondition (26.434291ms)
+  Error: HOST_PREREQUISITE_MISSING
+      at verifyInstalledCompatibility (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime/src/observed/allocation-config.ts:385:19)
+      at async refuses (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime/tests/observed-legacy-volume-runtime.test.ts:37:3)
+      at async TestContext.<anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime/tests/observed-legacy-volume-runtime.test.ts:100:11)
+      at async Test.run (node:internal/test_runner/test:1069:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:752:7) {
+    reason: 'HOST_PREREQUISITE_MISSING'
+  }
+
+test at tests/observed-legacy-volume-runtime.test.ts:1:6222
+✖ injected legacy refuses mount setgid without weakening the valid mounted precondition (27.67ms)
+  Error: HOST_PREREQUISITE_MISSING
+      at verifyInstalledCompatibility (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime/src/observed/allocation-config.ts:385:19)
+      at async refuses (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime/tests/observed-legacy-volume-runtime.test.ts:37:3)
+      at async TestContext.<anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime/tests/observed-legacy-volume-runtime.test.ts:100:11)
+      at async Test.run (node:internal/test_runner/test:1069:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:752:7) {
+    reason: 'HOST_PREREQUISITE_MISSING'
+  }
+
+test at tests/observed-legacy-volume-runtime.test.ts:1:6222
+✖ production legacy refuses mount setgid without weakening the valid mounted precondition (27.792708ms)
+  Error: HOST_PREREQUISITE_MISSING
+      at verifyInstalledCompatibility (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime/src/observed/allocation-config.ts:385:19)
+      at async refuses (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime/tests/observed-legacy-volume-runtime.test.ts:37:3)
+      at async TestContext.<anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime/tests/observed-legacy-volume-runtime.test.ts:100:11)
+      at async Test.run (node:internal/test_runner/test:1069:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:752:7) {
+    reason: 'HOST_PREREQUISITE_MISSING'
+  }
+
+test at tests/observed-legacy-volume-runtime.test.ts:1:6222
+✖ injected legacy refuses mount symlink without weakening the valid mounted precondition (32.966875ms)
+  Error: HOST_PREREQUISITE_MISSING
+      at verifyInstalledCompatibility (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime/src/observed/allocation-config.ts:385:19)
+      at async refuses (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime/tests/observed-legacy-volume-runtime.test.ts:37:3)
+      at async TestContext.<anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime/tests/observed-legacy-volume-runtime.test.ts:100:11)
+      at async Test.run (node:internal/test_runner/test:1069:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:752:7) {
+    reason: 'HOST_PREREQUISITE_MISSING'
+  }
+
+test at tests/observed-legacy-volume-runtime.test.ts:1:6222
+✖ production legacy refuses mount symlink without weakening the valid mounted precondition (27.950375ms)
+  Error: HOST_PREREQUISITE_MISSING
+      at verifyInstalledCompatibility (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime/src/observed/allocation-config.ts:385:19)
+      at async refuses (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime/tests/observed-legacy-volume-runtime.test.ts:37:3)
+      at async TestContext.<anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime/tests/observed-legacy-volume-runtime.test.ts:100:11)
+      at async Test.run (node:internal/test_runner/test:1069:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:752:7) {
+    reason: 'HOST_PREREQUISITE_MISSING'
+  }
+
+test at tests/observed-legacy-volume-runtime.test.ts:1:6222
+✖ injected legacy refuses mount type without weakening the valid mounted precondition (29.421333ms)
+  Error: HOST_PREREQUISITE_MISSING
+      at verifyInstalledCompatibility (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime/src/observed/allocation-config.ts:385:19)
+      at async refuses (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime/tests/observed-legacy-volume-runtime.test.ts:37:3)
+      at async TestContext.<anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime/tests/observed-legacy-volume-runtime.test.ts:100:11)
+      at async Test.run (node:internal/test_runner/test:1069:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:752:7) {
+    reason: 'HOST_PREREQUISITE_MISSING'
+  }
+
+test at tests/observed-legacy-volume-runtime.test.ts:1:6222
+✖ production legacy refuses mount type without weakening the valid mounted precondition (27.625958ms)
+  Error: HOST_PREREQUISITE_MISSING
+      at verifyInstalledCompatibility (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime/src/observed/allocation-config.ts:385:19)
+      at async refuses (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime/tests/observed-legacy-volume-runtime.test.ts:37:3)
+      at async TestContext.<anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime/tests/observed-legacy-volume-runtime.test.ts:100:11)
+      at async Test.run (node:internal/test_runner/test:1069:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:752:7) {
+    reason: 'HOST_PREREQUISITE_MISSING'
+  }
+
+test at tests/observed-legacy-volume-runtime.test.ts:1:6222
+✖ injected legacy refuses inner directory uid without weakening the valid mounted precondition (28.166875ms)
+  Error: HOST_PREREQUISITE_MISSING
+      at verifyInstalledCompatibility (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime/src/observed/allocation-config.ts:385:19)
+      at async refuses (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime/tests/observed-legacy-volume-runtime.test.ts:37:3)
+      at async TestContext.<anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime/tests/observed-legacy-volume-runtime.test.ts:100:11)
+      at async Test.run (node:internal/test_runner/test:1069:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:752:7) {
+    reason: 'HOST_PREREQUISITE_MISSING'
+  }
+
+test at tests/observed-legacy-volume-runtime.test.ts:1:6222
+✖ production legacy refuses inner directory uid without weakening the valid mounted precondition (27.6225ms)
+  Error: HOST_PREREQUISITE_MISSING
+      at verifyInstalledCompatibility (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime/src/observed/allocation-config.ts:385:19)
+      at async refuses (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime/tests/observed-legacy-volume-runtime.test.ts:37:3)
+      at async TestContext.<anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime/tests/observed-legacy-volume-runtime.test.ts:100:11)
+      at async Test.run (node:internal/test_runner/test:1069:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:752:7) {
+    reason: 'HOST_PREREQUISITE_MISSING'
+  }
+
+test at tests/observed-legacy-volume-runtime.test.ts:1:6222
+✖ injected legacy refuses inner directory gid without weakening the valid mounted precondition (29.857958ms)
+  Error: HOST_PREREQUISITE_MISSING
+      at verifyInstalledCompatibility (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime/src/observed/allocation-config.ts:385:19)
+      at async refuses (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime/tests/observed-legacy-volume-runtime.test.ts:37:3)
+      at async TestContext.<anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime/tests/observed-legacy-volume-runtime.test.ts:100:11)
+      at async Test.run (node:internal/test_runner/test:1069:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:752:7) {
+    reason: 'HOST_PREREQUISITE_MISSING'
+  }
+
+test at tests/observed-legacy-volume-runtime.test.ts:1:6222
+✖ production legacy refuses inner directory gid without weakening the valid mounted precondition (30.841667ms)
+  Error: HOST_PREREQUISITE_MISSING
+      at verifyInstalledCompatibility (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime/src/observed/allocation-config.ts:385:19)
+      at async refuses (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime/tests/observed-legacy-volume-runtime.test.ts:37:3)
+      at async TestContext.<anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime/tests/observed-legacy-volume-runtime.test.ts:100:11)
+      at async Test.run (node:internal/test_runner/test:1069:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:752:7) {
+    reason: 'HOST_PREREQUISITE_MISSING'
+  }
+
+test at tests/observed-legacy-volume-runtime.test.ts:1:6222
+✖ injected legacy refuses inner directory world write without weakening the valid mounted precondition (32.337542ms)
+  Error: HOST_PREREQUISITE_MISSING
+      at verifyInstalledCompatibility (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime/src/observed/allocation-config.ts:385:19)
+      at async refuses (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime/tests/observed-legacy-volume-runtime.test.ts:37:3)
+      at async TestContext.<anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime/tests/observed-legacy-volume-runtime.test.ts:100:11)
+      at async Test.run (node:internal/test_runner/test:1069:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:752:7) {
+    reason: 'HOST_PREREQUISITE_MISSING'
+  }
+
+test at tests/observed-legacy-volume-runtime.test.ts:1:6222
+✖ production legacy refuses inner directory world write without weakening the valid mounted precondition (28.98475ms)
+  Error: HOST_PREREQUISITE_MISSING
+      at verifyInstalledCompatibility (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime/src/observed/allocation-config.ts:385:19)
+      at async refuses (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime/tests/observed-legacy-volume-runtime.test.ts:37:3)
+      at async TestContext.<anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime/tests/observed-legacy-volume-runtime.test.ts:100:11)
+      at async Test.run (node:internal/test_runner/test:1069:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:752:7) {
+    reason: 'HOST_PREREQUISITE_MISSING'
+  }
+
+test at tests/observed-legacy-volume-runtime.test.ts:1:6222
+✖ injected legacy refuses inner directory sticky without weakening the valid mounted precondition (33.899625ms)
+  Error: HOST_PREREQUISITE_MISSING
+      at verifyInstalledCompatibility (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime/src/observed/allocation-config.ts:385:19)
+      at async refuses (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime/tests/observed-legacy-volume-runtime.test.ts:37:3)
+      at async TestContext.<anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime/tests/observed-legacy-volume-runtime.test.ts:100:11)
+      at async Test.run (node:internal/test_runner/test:1069:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:752:7) {
+    reason: 'HOST_PREREQUISITE_MISSING'
+  }
+
+test at tests/observed-legacy-volume-runtime.test.ts:1:6222
+✖ production legacy refuses inner directory sticky without weakening the valid mounted precondition (29.531875ms)
+  Error: HOST_PREREQUISITE_MISSING
+      at verifyInstalledCompatibility (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime/src/observed/allocation-config.ts:385:19)
+      at async refuses (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime/tests/observed-legacy-volume-runtime.test.ts:37:3)
+      at async TestContext.<anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime/tests/observed-legacy-volume-runtime.test.ts:100:11)
+      at async Test.run (node:internal/test_runner/test:1069:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:752:7) {
+    reason: 'HOST_PREREQUISITE_MISSING'
+  }
+
+test at tests/observed-legacy-volume-runtime.test.ts:1:6222
+✖ injected legacy refuses RuntimeRoot setgid without weakening the valid mounted precondition (29.502125ms)
+  Error: HOST_PREREQUISITE_MISSING
+      at verifyInstalledCompatibility (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime/src/observed/allocation-config.ts:385:19)
+      at async refuses (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime/tests/observed-legacy-volume-runtime.test.ts:37:3)
+      at async TestContext.<anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime/tests/observed-legacy-volume-runtime.test.ts:100:11)
+      at async Test.run (node:internal/test_runner/test:1069:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:752:7) {
+    reason: 'HOST_PREREQUISITE_MISSING'
+  }
+
+test at tests/observed-legacy-volume-runtime.test.ts:1:6222
+✖ production legacy refuses RuntimeRoot setgid without weakening the valid mounted precondition (27.387625ms)
+  Error: HOST_PREREQUISITE_MISSING
+      at verifyInstalledCompatibility (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime/src/observed/allocation-config.ts:385:19)
+      at async refuses (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime/tests/observed-legacy-volume-runtime.test.ts:37:3)
+      at async TestContext.<anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime/tests/observed-legacy-volume-runtime.test.ts:100:11)
+      at async Test.run (node:internal/test_runner/test:1069:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:752:7) {
+    reason: 'HOST_PREREQUISITE_MISSING'
+  }
+
+test at tests/observed-legacy-volume-runtime.test.ts:1:6222
+✖ injected legacy refuses leaf sticky without weakening the valid mounted precondition (30.644417ms)
+  Error: HOST_PREREQUISITE_MISSING
+      at verifyInstalledCompatibility (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime/src/observed/allocation-config.ts:385:19)
+      at async refuses (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime/tests/observed-legacy-volume-runtime.test.ts:37:3)
+      at async TestContext.<anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime/tests/observed-legacy-volume-runtime.test.ts:100:11)
+      at async Test.run (node:internal/test_runner/test:1069:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:752:7) {
+    reason: 'HOST_PREREQUISITE_MISSING'
+  }
+
+test at tests/observed-legacy-volume-runtime.test.ts:1:6222
+✖ production legacy refuses leaf sticky without weakening the valid mounted precondition (30.963167ms)
+  Error: HOST_PREREQUISITE_MISSING
+      at verifyInstalledCompatibility (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime/src/observed/allocation-config.ts:385:19)
+      at async refuses (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime/tests/observed-legacy-volume-runtime.test.ts:37:3)
+      at async TestContext.<anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime/tests/observed-legacy-volume-runtime.test.ts:100:11)
+      at async Test.run (node:internal/test_runner/test:1069:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:752:7) {
+    reason: 'HOST_PREREQUISITE_MISSING'
+  }
+
+test at tests/observed-legacy-volume-runtime.test.ts:1:6222
+✖ injected legacy refuses leaf uid without weakening the valid mounted precondition (41.34725ms)
+  Error: HOST_PREREQUISITE_MISSING
+      at verifyInstalledCompatibility (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime/src/observed/allocation-config.ts:385:19)
+      at async refuses (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime/tests/observed-legacy-volume-runtime.test.ts:37:3)
+      at async TestContext.<anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime/tests/observed-legacy-volume-runtime.test.ts:100:11)
+      at async Test.run (node:internal/test_runner/test:1069:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:752:7) {
+    reason: 'HOST_PREREQUISITE_MISSING'
+  }
+
+test at tests/observed-legacy-volume-runtime.test.ts:1:6222
+✖ production legacy refuses leaf uid without weakening the valid mounted precondition (30.067209ms)
+  Error: HOST_PREREQUISITE_MISSING
+      at verifyInstalledCompatibility (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime/src/observed/allocation-config.ts:385:19)
+      at async refuses (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime/tests/observed-legacy-volume-runtime.test.ts:37:3)
+      at async TestContext.<anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime/tests/observed-legacy-volume-runtime.test.ts:100:11)
+      at async Test.run (node:internal/test_runner/test:1069:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:752:7) {
+    reason: 'HOST_PREREQUISITE_MISSING'
+  }
+
+test at tests/observed-legacy-volume-runtime.test.ts:1:6222
+✖ injected legacy refuses leaf gid without weakening the valid mounted precondition (29.946667ms)
+  Error: HOST_PREREQUISITE_MISSING
+      at verifyInstalledCompatibility (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime/src/observed/allocation-config.ts:385:19)
+      at async refuses (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime/tests/observed-legacy-volume-runtime.test.ts:37:3)
+      at async TestContext.<anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime/tests/observed-legacy-volume-runtime.test.ts:100:11)
+      at async Test.run (node:internal/test_runner/test:1069:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:752:7) {
+    reason: 'HOST_PREREQUISITE_MISSING'
+  }
+
+test at tests/observed-legacy-volume-runtime.test.ts:1:6222
+✖ production legacy refuses leaf gid without weakening the valid mounted precondition (27.100791ms)
+  Error: HOST_PREREQUISITE_MISSING
+      at verifyInstalledCompatibility (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime/src/observed/allocation-config.ts:385:19)
+      at async refuses (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime/tests/observed-legacy-volume-runtime.test.ts:37:3)
+      at async TestContext.<anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime/tests/observed-legacy-volume-runtime.test.ts:100:11)
+      at async Test.run (node:internal/test_runner/test:1069:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:752:7) {
+    reason: 'HOST_PREREQUISITE_MISSING'
+  }
+
+test at tests/observed-legacy-volume-runtime.test.ts:1:6222
+✖ injected legacy refuses leaf world write without weakening the valid mounted precondition (27.779333ms)
+  Error: HOST_PREREQUISITE_MISSING
+      at verifyInstalledCompatibility (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime/src/observed/allocation-config.ts:385:19)
+      at async refuses (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime/tests/observed-legacy-volume-runtime.test.ts:37:3)
+      at async TestContext.<anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime/tests/observed-legacy-volume-runtime.test.ts:100:11)
+      at async Test.run (node:internal/test_runner/test:1069:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:752:7) {
+    reason: 'HOST_PREREQUISITE_MISSING'
+  }
+
+test at tests/observed-legacy-volume-runtime.test.ts:1:6222
+✖ production legacy refuses leaf world write without weakening the valid mounted precondition (25.9825ms)
+  Error: HOST_PREREQUISITE_MISSING
+      at verifyInstalledCompatibility (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime/src/observed/allocation-config.ts:385:19)
+      at async refuses (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime/tests/observed-legacy-volume-runtime.test.ts:37:3)
+      at async TestContext.<anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime/tests/observed-legacy-volume-runtime.test.ts:100:11)
+      at async Test.run (node:internal/test_runner/test:1069:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:752:7) {
+    reason: 'HOST_PREREQUISITE_MISSING'
+  }
+
+test at tests/observed-legacy-volume-runtime.test.ts:1:6222
+✖ injected legacy refuses leaf setuid without weakening the valid mounted precondition (27.173875ms)
+  Error: HOST_PREREQUISITE_MISSING
+      at verifyInstalledCompatibility (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime/src/observed/allocation-config.ts:385:19)
+      at async refuses (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime/tests/observed-legacy-volume-runtime.test.ts:37:3)
+      at async TestContext.<anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime/tests/observed-legacy-volume-runtime.test.ts:100:11)
+      at async Test.run (node:internal/test_runner/test:1069:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:752:7) {
+    reason: 'HOST_PREREQUISITE_MISSING'
+  }
+
+test at tests/observed-legacy-volume-runtime.test.ts:1:6222
+✖ production legacy refuses leaf setuid without weakening the valid mounted precondition (28.068667ms)
+  Error: HOST_PREREQUISITE_MISSING
+      at verifyInstalledCompatibility (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime/src/observed/allocation-config.ts:385:19)
+      at async refuses (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime/tests/observed-legacy-volume-runtime.test.ts:37:3)
+      at async TestContext.<anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime/tests/observed-legacy-volume-runtime.test.ts:100:11)
+      at async Test.run (node:internal/test_runner/test:1069:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:752:7) {
+    reason: 'HOST_PREREQUISITE_MISSING'
+  }
+
+test at tests/observed-legacy-volume-runtime.test.ts:1:6222
+✖ injected legacy refuses leaf executable without weakening the valid mounted precondition (28.961125ms)
+  Error: HOST_PREREQUISITE_MISSING
+      at verifyInstalledCompatibility (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime/src/observed/allocation-config.ts:385:19)
+      at async refuses (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime/tests/observed-legacy-volume-runtime.test.ts:37:3)
+      at async TestContext.<anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime/tests/observed-legacy-volume-runtime.test.ts:100:11)
+      at async Test.run (node:internal/test_runner/test:1069:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:752:7) {
+    reason: 'HOST_PREREQUISITE_MISSING'
+  }
+
+test at tests/observed-legacy-volume-runtime.test.ts:1:6222
+✖ production legacy refuses leaf executable without weakening the valid mounted precondition (28.232708ms)
+  Error: HOST_PREREQUISITE_MISSING
+      at verifyInstalledCompatibility (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime/src/observed/allocation-config.ts:385:19)
+      at async refuses (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime/tests/observed-legacy-volume-runtime.test.ts:37:3)
+      at async TestContext.<anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime/tests/observed-legacy-volume-runtime.test.ts:100:11)
+      at async Test.run (node:internal/test_runner/test:1069:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:752:7) {
+    reason: 'HOST_PREREQUISITE_MISSING'
+  }
+
+test at tests/observed-legacy-volume-runtime.test.ts:1:6222
+✖ injected legacy refuses leaf symlink without weakening the valid mounted precondition (29.892958ms)
+  Error: HOST_PREREQUISITE_MISSING
+      at verifyInstalledCompatibility (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime/src/observed/allocation-config.ts:385:19)
+      at async refuses (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime/tests/observed-legacy-volume-runtime.test.ts:37:3)
+      at async TestContext.<anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime/tests/observed-legacy-volume-runtime.test.ts:100:11)
+      at async Test.run (node:internal/test_runner/test:1069:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:752:7) {
+    reason: 'HOST_PREREQUISITE_MISSING'
+  }
+
+test at tests/observed-legacy-volume-runtime.test.ts:1:6222
+✖ production legacy refuses leaf symlink without weakening the valid mounted precondition (28.056708ms)
+  Error: HOST_PREREQUISITE_MISSING
+      at verifyInstalledCompatibility (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime/src/observed/allocation-config.ts:385:19)
+      at async refuses (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime/tests/observed-legacy-volume-runtime.test.ts:37:3)
+      at async TestContext.<anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime/tests/observed-legacy-volume-runtime.test.ts:100:11)
+      at async Test.run (node:internal/test_runner/test:1069:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:752:7) {
+    reason: 'HOST_PREREQUISITE_MISSING'
+  }
+
+test at tests/observed-legacy-volume-runtime.test.ts:1:6222
+✖ injected legacy refuses leaf wrong type without weakening the valid mounted precondition (27.137042ms)
+  Error: HOST_PREREQUISITE_MISSING
+      at verifyInstalledCompatibility (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime/src/observed/allocation-config.ts:385:19)
+      at async refuses (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime/tests/observed-legacy-volume-runtime.test.ts:37:3)
+      at async TestContext.<anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime/tests/observed-legacy-volume-runtime.test.ts:100:11)
+      at async Test.run (node:internal/test_runner/test:1069:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:752:7) {
+    reason: 'HOST_PREREQUISITE_MISSING'
+  }
+
+test at tests/observed-legacy-volume-runtime.test.ts:1:6222
+✖ production legacy refuses leaf wrong type without weakening the valid mounted precondition (28.023791ms)
+  Error: HOST_PREREQUISITE_MISSING
+      at verifyInstalledCompatibility (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime/src/observed/allocation-config.ts:385:19)
+      at async refuses (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime/tests/observed-legacy-volume-runtime.test.ts:37:3)
+      at async TestContext.<anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime/tests/observed-legacy-volume-runtime.test.ts:100:11)
+      at async Test.run (node:internal/test_runner/test:1069:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:752:7) {
+    reason: 'HOST_PREREQUISITE_MISSING'
+  }
+
+test at tests/observed-legacy-volume-runtime.test.ts:1:6222
+✖ injected legacy refuses hardlink without weakening the valid mounted precondition (27.460791ms)
+  Error: HOST_PREREQUISITE_MISSING
+      at verifyInstalledCompatibility (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime/src/observed/allocation-config.ts:385:19)
+      at async refuses (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime/tests/observed-legacy-volume-runtime.test.ts:37:3)
+      at async TestContext.<anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime/tests/observed-legacy-volume-runtime.test.ts:100:11)
+      at async Test.run (node:internal/test_runner/test:1069:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:752:7) {
+    reason: 'HOST_PREREQUISITE_MISSING'
+  }
+
+test at tests/observed-legacy-volume-runtime.test.ts:1:6222
+✖ production legacy refuses hardlink without weakening the valid mounted precondition (26.785333ms)
+  Error: HOST_PREREQUISITE_MISSING
+      at verifyInstalledCompatibility (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime/src/observed/allocation-config.ts:385:19)
+      at async refuses (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime/tests/observed-legacy-volume-runtime.test.ts:37:3)
+      at async TestContext.<anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime/tests/observed-legacy-volume-runtime.test.ts:100:11)
+      at async Test.run (node:internal/test_runner/test:1069:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:752:7) {
+    reason: 'HOST_PREREQUISITE_MISSING'
+  }
+
+test at tests/observed-legacy-volume-runtime.test.ts:1:6222
+✖ injected legacy refuses large file without weakening the valid mounted precondition (28.949583ms)
+  Error: HOST_PREREQUISITE_MISSING
+      at verifyInstalledCompatibility (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime/src/observed/allocation-config.ts:385:19)
+      at async refuses (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime/tests/observed-legacy-volume-runtime.test.ts:37:3)
+      at async TestContext.<anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime/tests/observed-legacy-volume-runtime.test.ts:100:11)
+      at async Test.run (node:internal/test_runner/test:1069:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:752:7) {
+    reason: 'HOST_PREREQUISITE_MISSING'
+  }
+
+test at tests/observed-legacy-volume-runtime.test.ts:1:6222
+✖ production legacy refuses large file without weakening the valid mounted precondition (24.66925ms)
+  Error: HOST_PREREQUISITE_MISSING
+      at verifyInstalledCompatibility (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime/src/observed/allocation-config.ts:385:19)
+      at async refuses (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime/tests/observed-legacy-volume-runtime.test.ts:37:3)
+      at async TestContext.<anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime/tests/observed-legacy-volume-runtime.test.ts:100:11)
+      at async Test.run (node:internal/test_runner/test:1069:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:752:7) {
+    reason: 'HOST_PREREQUISITE_MISSING'
+  }
+
+test at tests/observed-legacy-volume-runtime.test.ts:1:6222
+✖ injected legacy refuses negative size without weakening the valid mounted precondition (29.825375ms)
+  Error: HOST_PREREQUISITE_MISSING
+      at verifyInstalledCompatibility (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime/src/observed/allocation-config.ts:385:19)
+      at async refuses (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime/tests/observed-legacy-volume-runtime.test.ts:37:3)
+      at async TestContext.<anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime/tests/observed-legacy-volume-runtime.test.ts:100:11)
+      at async Test.run (node:internal/test_runner/test:1069:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:752:7) {
+    reason: 'HOST_PREREQUISITE_MISSING'
+  }
+
+test at tests/observed-legacy-volume-runtime.test.ts:1:6222
+✖ production legacy refuses negative size without weakening the valid mounted precondition (26.622042ms)
+  Error: HOST_PREREQUISITE_MISSING
+      at verifyInstalledCompatibility (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime/src/observed/allocation-config.ts:385:19)
+      at async refuses (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime/tests/observed-legacy-volume-runtime.test.ts:37:3)
+      at async TestContext.<anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime/tests/observed-legacy-volume-runtime.test.ts:100:11)
+      at async Test.run (node:internal/test_runner/test:1069:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:752:7) {
+    reason: 'HOST_PREREQUISITE_MISSING'
+  }
+
+test at tests/observed-legacy-volume-runtime.test.ts:1:6222
+✖ injected legacy refuses nested directory device without weakening the valid mounted precondition (28.988667ms)
+  Error: HOST_PREREQUISITE_MISSING
+      at verifyInstalledCompatibility (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime/src/observed/allocation-config.ts:385:19)
+      at async refuses (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime/tests/observed-legacy-volume-runtime.test.ts:37:3)
+      at async TestContext.<anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime/tests/observed-legacy-volume-runtime.test.ts:100:11)
+      at async Test.run (node:internal/test_runner/test:1069:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:752:7) {
+    reason: 'HOST_PREREQUISITE_MISSING'
+  }
+
+test at tests/observed-legacy-volume-runtime.test.ts:1:6222
+✖ production legacy refuses nested directory device without weakening the valid mounted precondition (30.116042ms)
+  Error: HOST_PREREQUISITE_MISSING
+      at verifyInstalledCompatibility (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime/src/observed/allocation-config.ts:385:19)
+      at async refuses (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime/tests/observed-legacy-volume-runtime.test.ts:37:3)
+      at async TestContext.<anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime/tests/observed-legacy-volume-runtime.test.ts:100:11)
+      at async Test.run (node:internal/test_runner/test:1069:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:752:7) {
+    reason: 'HOST_PREREQUISITE_MISSING'
+  }
+
+test at tests/observed-legacy-volume-runtime.test.ts:1:6222
+✖ injected legacy refuses leaf device without weakening the valid mounted precondition (29.318209ms)
+  Error: HOST_PREREQUISITE_MISSING
+      at verifyInstalledCompatibility (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime/src/observed/allocation-config.ts:385:19)
+      at async refuses (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime/tests/observed-legacy-volume-runtime.test.ts:37:3)
+      at async TestContext.<anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime/tests/observed-legacy-volume-runtime.test.ts:100:11)
+      at async Test.run (node:internal/test_runner/test:1069:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:752:7) {
+    reason: 'HOST_PREREQUISITE_MISSING'
+  }
+
+test at tests/observed-legacy-volume-runtime.test.ts:1:6222
+✖ production legacy refuses leaf device without weakening the valid mounted precondition (28.174708ms)
+  Error: HOST_PREREQUISITE_MISSING
+      at verifyInstalledCompatibility (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime/src/observed/allocation-config.ts:385:19)
+      at async refuses (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime/tests/observed-legacy-volume-runtime.test.ts:37:3)
+      at async TestContext.<anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime/tests/observed-legacy-volume-runtime.test.ts:100:11)
+      at async Test.run (node:internal/test_runner/test:1069:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:752:7) {
+    reason: 'HOST_PREREQUISITE_MISSING'
+  }
+
+test at tests/observed-legacy-volume-runtime.test.ts:1:7260
+✖ legacy accepts exact large bigint identity and detects its one-unit replacement (33.3095ms)
+  Error: HOST_PREREQUISITE_MISSING
+      at verifyInstalledCompatibility (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime/src/observed/allocation-config.ts:385:19)
+      at async TestContext.<anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime/tests/observed-legacy-volume-runtime.test.ts:121:50)
+      at async Test.run (node:internal/test_runner/test:1069:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:752:7) {
+    reason: 'HOST_PREREQUISITE_MISSING'
+  }
+
+test at tests/observed-legacy-volume-runtime.test.ts:1:9037
+✖ stable absent legacy namespace preserves the ordinary explicit runtime proof (25.567625ms)
+  Error: HOST_PREREQUISITE_MISSING
+      at verifyInstalledCompatibility (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime/src/observed/allocation-config.ts:385:19)
+      at async TestContext.<anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime/tests/observed-legacy-volume-runtime.test.ts:150:23)
+      at async Test.run (node:internal/test_runner/test:1069:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:752:7) {
+    reason: 'HOST_PREREQUISITE_MISSING'
+  }
+
+test at tests/observed-legacy-volume-runtime.test.ts:1:11469
+✖ legacy bounded listing refuses /Library/Developer/CoreSimulator/Volumes with 1001 entries and invalid/overflow names (28.455125ms)
+  Error: HOST_PREREQUISITE_MISSING
+      at verifyInstalledCompatibility (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime/src/observed/allocation-config.ts:385:19)
+      at async refuses (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime/tests/observed-legacy-volume-runtime.test.ts:37:3)
+      at async TestContext.<anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime/tests/observed-legacy-volume-runtime.test.ts:180:11)
+      at async Test.run (node:internal/test_runner/test:1069:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:752:7) {
+    reason: 'HOST_PREREQUISITE_MISSING'
+  }
+
+test at tests/observed-legacy-volume-runtime.test.ts:1:11469
+✖ legacy bounded listing refuses /Library/Developer/CoreSimulator/Volumes/iOS_22G86/Library/Developer/CoreSimulator/Profiles/Runtimes with 1001 entries and invalid/overflow names (30.136375ms)
+  Error: HOST_PREREQUISITE_MISSING
+      at verifyInstalledCompatibility (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime/src/observed/allocation-config.ts:385:19)
+      at async refuses (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime/tests/observed-legacy-volume-runtime.test.ts:37:3)
+      at async TestContext.<anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime/tests/observed-legacy-volume-runtime.test.ts:180:11)
+      at async Test.run (node:internal/test_runner/test:1069:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:752:7) {
+    reason: 'HOST_PREREQUISITE_MISSING'
+  }
+
+test at tests/observed-legacy-volume-runtime.test.ts:1:11469
+✖ legacy bounded listing refuses /Library/Developer/CoreSimulator/Volumes with 1 entries and invalid/overflow names (29.814625ms)
+  Error: HOST_PREREQUISITE_MISSING
+      at verifyInstalledCompatibility (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime/src/observed/allocation-config.ts:385:19)
+      at async refuses (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime/tests/observed-legacy-volume-runtime.test.ts:37:3)
+      at async TestContext.<anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime/tests/observed-legacy-volume-runtime.test.ts:180:11)
+      at async Test.run (node:internal/test_runner/test:1069:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:752:7) {
+    reason: 'HOST_PREREQUISITE_MISSING'
+  }
+
+test at tests/observed-legacy-volume-runtime.test.ts:1:11469
+✖ legacy bounded listing refuses /Library/Developer/CoreSimulator/Volumes/iOS_22G86/Library/Developer/CoreSimulator/Profiles/Runtimes with 1 entries and invalid/overflow names (33.862209ms)
+  Error: HOST_PREREQUISITE_MISSING
+      at verifyInstalledCompatibility (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime/src/observed/allocation-config.ts:385:19)
+      at async refuses (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime/tests/observed-legacy-volume-runtime.test.ts:37:3)
+      at async TestContext.<anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime/tests/observed-legacy-volume-runtime.test.ts:180:11)
+      at async Test.run (node:internal/test_runner/test:1069:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:752:7) {
+    reason: 'HOST_PREREQUISITE_MISSING'
+  }
+
+test at tests/observed-legacy-volume-runtime.test.ts:1:11469
+✖ legacy bounded listing refuses /Library/Developer/CoreSimulator/Volumes with 1 entries and invalid/overflow names (36.300209ms)
+  Error: HOST_PREREQUISITE_MISSING
+      at verifyInstalledCompatibility (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime/src/observed/allocation-config.ts:385:19)
+      at async refuses (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime/tests/observed-legacy-volume-runtime.test.ts:37:3)
+      at async TestContext.<anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime/tests/observed-legacy-volume-runtime.test.ts:180:11)
+      at async Test.run (node:internal/test_runner/test:1069:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:752:7) {
+    reason: 'HOST_PREREQUISITE_MISSING'
+  }
+
+test at tests/observed-legacy-volume-runtime.test.ts:1:12042
+✖ legacy metadata bytes are checked again after conversion (29.182333ms)
+  Error: HOST_PREREQUISITE_MISSING
+      at verifyInstalledCompatibility (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime/src/observed/allocation-config.ts:385:19)
+      at async refuses (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime/tests/observed-legacy-volume-runtime.test.ts:37:3)
+      at async TestContext.<anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime/tests/observed-legacy-volume-runtime.test.ts:191:9)
+      at async Test.run (node:internal/test_runner/test:1069:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:752:7) {
+    reason: 'HOST_PREREQUISITE_MISSING'
+  }
+
+test at tests/observed-legacy-volume-runtime.test.ts:1:12801
+✖ legacy mount termination waits for actual close after deadline and bounded escalation (37.984583ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  false !== true
+  
+      at TestContext.<anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime/tests/observed-legacy-volume-runtime.test.ts:208:84)
+      at async Test.run (node:internal/test_runner/test:1069:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:752:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: 'strictEqual'
+  }

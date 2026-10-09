@@ -1,0 +1,13 @@
+{
+  "originalPhase": "red-node26/red-node24",
+  "countsEach": {
+    "tests": 126,
+    "pass": 52,
+    "fail": 74
+  },
+  "cause": "Ordinary executable permissions were masked to0644 by the owned new fixture. This made first-generation strict-mode proof/race/precision controls refuse before their clause.",
+  "fix": "Preserve ordinary raw file permission bits; mounted modes and namespace virtual rules unchanged.",
+  "productionSourceUnchanged": true,
+  "assertionsUnchanged": true,
+  "originalBytesArchive": "initial-red-bytes/"
+}

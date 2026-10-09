@@ -1,0 +1,22 @@
+✔ pure legacy and public fixture maps isolate / (0.663208ms)
+✔ pure legacy and public fixture maps isolate /Library (0.074291ms)
+✔ pure legacy and public fixture maps isolate /Library/Developer/CoreSimulator/Volumes (0.035292ms)
+✔ pure legacy and public fixture maps isolate /Library/Developer/CoreSimulator/Volumes/iOS_22G86 (0.029208ms)
+✔ pure legacy and public fixture maps isolate /Library/Developer/CoreSimulator/Volumes/iOS_22G86/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.0.simruntime/Contents/Info.plist (0.032417ms)
+✔ pure legacy and public fixture maps isolate /private (0.024166ms)
+✔ pure legacy and public fixture maps isolate /usr/sbin/diskutil (0.024667ms)
+✔ pure legacy map preserves owned temporary /private/tmp/legacy-pure-fixture (0.024334ms)
+✔ pure legacy map preserves owned temporary /private/tmp/legacy-pure-fixture/home (0.029583ms)
+✔ pure legacy map preserves owned temporary /private/tmp/legacy-pure-fixture/owned/Info.plist (0.054875ms)
+✔ pure legacy map refuses unsupported "/opt/outside" (0.077125ms)
+✔ pure legacy map refuses unsupported "relative" (0.033125ms)
+✔ pure legacy map refuses unsupported "/Library/../usr" (0.030583ms)
+✔ pure legacy map refuses unsupported "/Library\u0000bad" (0.024458ms)
+ℹ tests 14
+ℹ suites 0
+ℹ pass 14
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 314.361417

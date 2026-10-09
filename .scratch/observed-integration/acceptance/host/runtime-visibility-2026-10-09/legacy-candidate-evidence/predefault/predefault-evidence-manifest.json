@@ -1,0 +1,1639 @@
+{
+  "atUtc": "2026-10-09T08:18:36.232279+00:00",
+  "candidateCommit": "4fa9cc99a94ebb8c79e6d1fe347ccb83745da13d",
+  "root": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime/.scratch/installed-legacy-volume-runtime",
+  "immutableEvidenceFiles": {
+    "base-allocation-config.ts": {
+      "sha256": "7d5798570970ca8de9fcca980b39662c4cf2b9be939e1ad31f23e9383e82fe62",
+      "bytes": 31610,
+      "mode": "0600"
+    },
+    "baseline.json": {
+      "sha256": "00e51f7d27c92833dc77e08af58fa1a9e35979107ee69595dfd3fe678c3ac598",
+      "bytes": 109598,
+      "mode": "0600"
+    },
+    "build-node24/command.json": {
+      "sha256": "571d7898aaf3e1b737381e6700a551beebe3545524d5b8d5a9bd3af07f7b8ec0",
+      "bytes": 54148,
+      "mode": "0600"
+    },
+    "build-node24/compiled/dist/capture.js": {
+      "sha256": "c4a0a4776605a3b1c72b2795fd97f1230184bd9134f4c343ba58aaefea31974f",
+      "bytes": 5452,
+      "mode": "0600"
+    },
+    "build-node24/compiled/dist/cli.js": {
+      "sha256": "3f3d41ee2687846dc939f502e7df5ad8aca3ea473a6d291d5652a5230b8ae2df",
+      "bytes": 17295,
+      "mode": "0600"
+    },
+    "build-node24/compiled/dist/contracts/index.js": {
+      "sha256": "dec6d2a8cea84e02493a041e74a15f36d80ce8f37e9dc6f43b82520570580864",
+      "bytes": 589,
+      "mode": "0600"
+    },
+    "build-node24/compiled/dist/device/admission-allocation.js": {
+      "sha256": "ba6f8ad883ec2d0edd08bbcbb216a02283eb13a74645a65e3cca94c7d1215c27",
+      "bytes": 2380,
+      "mode": "0600"
+    },
+    "build-node24/compiled/dist/device/admission-maintenance.js": {
+      "sha256": "c8d4451bb348ce01efc79ac9effc2bf0b83a545b4ca87edd4c12fbc46dc26965",
+      "bytes": 3657,
+      "mode": "0600"
+    },
+    "build-node24/compiled/dist/device/admission-migration.js": {
+      "sha256": "e2a2e1fe7c40c2f37a7fb0b74399bddd97da6c81208eefae9d56a3879b7c1b39",
+      "bytes": 15560,
+      "mode": "0600"
+    },
+    "build-node24/compiled/dist/device/admission-sqlite.js": {
+      "sha256": "de7f8337e7f043480270c8aa3653487c51abacca709410f79796a42bb26bf8b1",
+      "bytes": 59986,
+      "mode": "0600"
+    },
+    "build-node24/compiled/dist/device/admission.js": {
+      "sha256": "9006f0d3c9328e6d75e7cf51af13dbcfea4db16525b7ac67b68f8230060e51ef",
+      "bytes": 12590,
+      "mode": "0600"
+    },
+    "build-node24/compiled/dist/device/android/adb.js": {
+      "sha256": "3edec1e60b2605c8252164a94ebc089afec9e196a3383d1cb58359b2226e28d6",
+      "bytes": 2237,
+      "mode": "0600"
+    },
+    "build-node24/compiled/dist/device/android/agent-client.js": {
+      "sha256": "1da4c9fa54388fa8456713f4186de58e2ecd7fd5f9ef4ea70616176668196947",
+      "bytes": 8401,
+      "mode": "0600"
+    },
+    "build-node24/compiled/dist/device/android/agent-supply.js": {
+      "sha256": "7cef22170d1702b9b03e68cefe3060ef578643a47907dffc021debfd23b45330",
+      "bytes": 4902,
+      "mode": "0600"
+    },
+    "build-node24/compiled/dist/device/android/driver.js": {
+      "sha256": "7ea0701ff8017904fc22ce7ffb056be8d9742df150b681daeae9559b06b35a14",
+      "bytes": 56572,
+      "mode": "0600"
+    },
+    "build-node24/compiled/dist/device/android/exit-watch.js": {
+      "sha256": "9b312677a3b8c9d3eae677092837c6e86c49e4ed1d580ad87693efe92ba1faa6",
+      "bytes": 6520,
+      "mode": "0600"
+    },
+    "build-node24/compiled/dist/device/android/ledger.js": {
+      "sha256": "113897aff0008ef044a6558f7463329c3a52a4d89bf5465d233a1833ec7ba049",
+      "bytes": 1315,
+      "mode": "0600"
+    },
+    "build-node24/compiled/dist/device/android/logcat.js": {
+      "sha256": "1a70a5a6836886c48052586a7d27e26fb4e49c82c731e490bdb7861d85980761",
+      "bytes": 7863,
+      "mode": "0600"
+    },
+    "build-node24/compiled/dist/device/android/mapping.js": {
+      "sha256": "fbc53c8e96fd1bdd0a3ef92e26a2a455c08720b8dcdc8be0bf8c976a2b5b4952",
+      "bytes": 6372,
+      "mode": "0600"
+    },
+    "build-node24/compiled/dist/device/android/settle.js": {
+      "sha256": "6fad022c962493e735ea1198a8a83f24b5df4b1652b4308002051ca5afe61363",
+      "bytes": 2474,
+      "mode": "0600"
+    },
+    "build-node24/compiled/dist/device/android/threadtime.js": {
+      "sha256": "be36c941425f1a87cc2d9c2dffe175fd07dd2a273e36a144bfa11e9415714feb",
+      "bytes": 782,
+      "mode": "0600"
+    },
+    "build-node24/compiled/dist/device/android/tools.js": {
+      "sha256": "38638379c79e1a4f9f22bc104dff7aefccd509ff9b822a7ef4d8db822d529774",
+      "bytes": 2313,
+      "mode": "0600"
+    },
+    "build-node24/compiled/dist/device/attach.js": {
+      "sha256": "2e27df08bd5a975c4b061e0a8f707b70af53504f6415f03986ac25a1d1743bcf",
+      "bytes": 735,
+      "mode": "0600"
+    },
+    "build-node24/compiled/dist/device/factory.js": {
+      "sha256": "9b3961c796b3c6d57ddafd39fd7cb1ec3f67fbe223947ca11c8e63dc7895fe70",
+      "bytes": 1283,
+      "mode": "0600"
+    },
+    "build-node24/compiled/dist/device/image.js": {
+      "sha256": "19f4e3dddab9f1d4fe5a57c44d7f25ee1ed9fcbc10f38878437ddd3db19fc846",
+      "bytes": 2200,
+      "mode": "0600"
+    },
+    "build-node24/compiled/dist/device/index.js": {
+      "sha256": "0f0105e0777963fa8c196da19e1d0550929d07a4d74e163b3a65983778151ee7",
+      "bytes": 58203,
+      "mode": "0600"
+    },
+    "build-node24/compiled/dist/device/lease.js": {
+      "sha256": "c54335efb2647f469c3e480e8b3036598e389ed41e56fc92b23cd669a9978523",
+      "bytes": 13449,
+      "mode": "0600"
+    },
+    "build-node24/compiled/dist/device/logs.js": {
+      "sha256": "799e9719aaa336321fc3dd3ae17b6ec7e24eb4268dca4f0c55f22364ea945cba",
+      "bytes": 1019,
+      "mode": "0600"
+    },
+    "build-node24/compiled/dist/driven/candidates.js": {
+      "sha256": "ed9da6235a0bed29b25dda9b7089b602306979f9f0753c5b736b9bbf847bd510",
+      "bytes": 6046,
+      "mode": "0600"
+    },
+    "build-node24/compiled/dist/driven/decide.js": {
+      "sha256": "64197e257066a9072cf00cd5af8e7ade8b97e7a952e37ad8a3370020753b8a7d",
+      "bytes": 9659,
+      "mode": "0600"
+    },
+    "build-node24/compiled/dist/driven/handback.js": {
+      "sha256": "d0be72d959d452efbb533cd5d7fad38aa805829025c28c7d4c0b1dc952176fd7",
+      "bytes": 14584,
+      "mode": "0600"
+    },
+    "build-node24/compiled/dist/driven/marker.js": {
+      "sha256": "bb2bd3a84c2973d94495e923f0ab15538eb523a6c6764476fa137c95b889e7bf",
+      "bytes": 363,
+      "mode": "0600"
+    },
+    "build-node24/compiled/dist/driven/policy.js": {
+      "sha256": "0b37bd689843a69fb7980273e915f20af44ae365305f736471705b6dd1500e04",
+      "bytes": 3752,
+      "mode": "0600"
+    },
+    "build-node24/compiled/dist/driven/project.js": {
+      "sha256": "1482a41c0041be0e971da386497b12557f91575d205e2c7bebab9222e494daa2",
+      "bytes": 14144,
+      "mode": "0600"
+    },
+    "build-node24/compiled/dist/driven/step.js": {
+      "sha256": "669eef883b2ad9994310a62561100a05e25d1b183b9360cffce39b640d37c3ae",
+      "bytes": 27417,
+      "mode": "0600"
+    },
+    "build-node24/compiled/dist/driven/vocabulary.js": {
+      "sha256": "81d171daef1f450ea866321b13f4ef22c2cade4a0e7dc0a384327be6f9a8524a",
+      "bytes": 2183,
+      "mode": "0600"
+    },
+    "build-node24/compiled/dist/exit-codes.js": {
+      "sha256": "c85c3e5ccc50b25255f516d2680539b4c0ed1817144c40d927733a556e2e9f95",
+      "bytes": 167,
+      "mode": "0600"
+    },
+    "build-node24/compiled/dist/experimental/observed-journal.js": {
+      "sha256": "b57ab8f9cf69bc8f252626dd948bd7b60c149c104181b6013c37d8dc105ef6bd",
+      "bytes": 1294,
+      "mode": "0600"
+    },
+    "build-node24/compiled/dist/experimental/observed-run.js": {
+      "sha256": "6ca67a307aed02f7cf9734558bdea7575b7661f4e060a410e0c81267ab491942",
+      "bytes": 3233,
+      "mode": "0600"
+    },
+    "build-node24/compiled/dist/experimental/observed-tap.js": {
+      "sha256": "80e81478bb734ce2b1c35e4005fb975e40fad68b86de6fb07b021d7c1ab331d7",
+      "bytes": 6285,
+      "mode": "0600"
+    },
+    "build-node24/compiled/dist/log/index.js": {
+      "sha256": "ead5f93a0fca9aeb3beec6e9f17ebb3c9a249501cf39be3b9fcfc0ecccb482b0",
+      "bytes": 9045,
+      "mode": "0600"
+    },
+    "build-node24/compiled/dist/logpane/attach.js": {
+      "sha256": "7162850524252f2e640c64a12cf75f2aacfe37b148b3238f2b1c051b3e8106a6",
+      "bytes": 4102,
+      "mode": "0600"
+    },
+    "build-node24/compiled/dist/logpane/format.js": {
+      "sha256": "8ebe92bb56509576e315b5e723f511f10347e0b83a9362d9d553aaaba32b8009",
+      "bytes": 3801,
+      "mode": "0600"
+    },
+    "build-node24/compiled/dist/logpane/stream.js": {
+      "sha256": "adf4eabc21fc50188a8a2a966960ec22c824526b0d4b092513f40f0ce301f986",
+      "bytes": 4926,
+      "mode": "0600"
+    },
+    "build-node24/compiled/dist/logpane/window.js": {
+      "sha256": "7297aca5f2f7b46d221ec0b754cb5ac4c30449c9485733ce1d8325d71d22ed6e",
+      "bytes": 2756,
+      "mode": "0600"
+    },
+    "build-node24/compiled/dist/mcp/index.js": {
+      "sha256": "64b3bb0d3733a367dfc3576ffa8e8c7f28e61031e53a82fc73292243f51d99a3",
+      "bytes": 6585,
+      "mode": "0600"
+    },
+    "build-node24/compiled/dist/mcp/observed.js": {
+      "sha256": "7cb75f32d67867140bd63880ca566b4918de24d915cec641fa4b7a6771fbc674",
+      "bytes": 4862,
+      "mode": "0600"
+    },
+    "build-node24/compiled/dist/observed/allocation-config.js": {
+      "sha256": "eed89b5ead452ce4695b13900c36a133c7eae96bb9128eef3790499bc7241a51",
+      "bytes": 37129,
+      "mode": "0600"
+    },
+    "build-node24/compiled/dist/observed/allocation-schema.js": {
+      "sha256": "1f4af01e2bd7559ccd78439b57e22477d6e58a2ef00dd85cc7bf159d314fde36",
+      "bytes": 5357,
+      "mode": "0600"
+    },
+    "build-node24/compiled/dist/observed/allocation.js": {
+      "sha256": "c78b4e2f37c3bf173afec88fa946ec3df094b8bc0719d137b387514a9ac29563",
+      "bytes": 30494,
+      "mode": "0600"
+    },
+    "build-node24/compiled/dist/observed/artifact.js": {
+      "sha256": "71697e79851b3afc6e0157e6bf3f2116ffec6233b13996463a54c24b6465aea5",
+      "bytes": 19731,
+      "mode": "0600"
+    },
+    "build-node24/compiled/dist/observed/cli.js": {
+      "sha256": "14679c0c13fdd87361f677d2d946841034343629bdb84221d280ba556720e4f2",
+      "bytes": 11821,
+      "mode": "0600"
+    },
+    "build-node24/compiled/dist/observed/create-source.js": {
+      "sha256": "1b3b13ab6dc55eb5f04f0f7a40b2b86a2d6fe46a96a7274bab1bf5cc81f5e8c3",
+      "bytes": 3756,
+      "mode": "0600"
+    },
+    "build-node24/compiled/dist/observed/evidence.js": {
+      "sha256": "682e600b8dca6ef3cfa5d869dab60cd8dc2865aa677bc84947629783762d158e",
+      "bytes": 3872,
+      "mode": "0600"
+    },
+    "build-node24/compiled/dist/observed/installed-plist.js": {
+      "sha256": "bfa578bac5fe8b3a1101ea945b8db8f0f54bccf29c9ab4de0122831d0162df5f",
+      "bytes": 6577,
+      "mode": "0600"
+    },
+    "build-node24/compiled/dist/observed/report.js": {
+      "sha256": "c843ab9d562e8299371e64c6d7380fd94ac574769562791ab2f66238a8393eee",
+      "bytes": 7416,
+      "mode": "0600"
+    },
+    "build-node24/compiled/dist/observed/schema.js": {
+      "sha256": "4981a31d0bf83c38d69efd54589cb57b344713dab6bdb223c28533d937861f53",
+      "bytes": 3874,
+      "mode": "0600"
+    },
+    "build-node24/compiled/dist/observed/service.js": {
+      "sha256": "13ae2e47efcf6139b7460fce862173960d8a6e465ba7a989d3356b273b24ac9f",
+      "bytes": 20488,
+      "mode": "0600"
+    },
+    "build-node24/compiled/dist/observed/supplied-source.js": {
+      "sha256": "74720e27069f89bf6e238cee90b8c804fd92783d6d0e82bdb23f7c9f75834c41",
+      "bytes": 1822,
+      "mode": "0600"
+    },
+    "build-node24/compiled/dist/process.js": {
+      "sha256": "62963d4ae970d3dbb06811e2ae7b983ebb7502380f02053d7f0e08a3e8f958f3",
+      "bytes": 440,
+      "mode": "0600"
+    },
+    "build-node24/compiled/dist/scripted/contracts.js": {
+      "sha256": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881",
+      "bytes": 11,
+      "mode": "0600"
+    },
+    "build-node24/compiled/dist/scripted/jev.js": {
+      "sha256": "d227aff5eb07388becd0f5dea1a800823f1abcf1e23fb9e4f1f8542c7e6d414c",
+      "bytes": 5069,
+      "mode": "0600"
+    },
+    "build-node24/compiled/dist/scripted/observe.js": {
+      "sha256": "db2c8e6df75acfb8be14d1668c355ca92d27b5caefc6bf2870d1bb90c6498c08",
+      "bytes": 3471,
+      "mode": "0600"
+    },
+    "build-node24/compiled/dist/scripted/report-json.js": {
+      "sha256": "1bd59963d6d37331a98ed7d4e537415f2e902e1d861a2f1ea2405c0ff271ffdb",
+      "bytes": 12167,
+      "mode": "0600"
+    },
+    "build-node24/compiled/dist/scripted/report.js": {
+      "sha256": "b5a6c25355dd73ecadb9cb048479adf81cc05237a5c92193cf17cd1d5c3c1886",
+      "bytes": 11534,
+      "mode": "0600"
+    },
+    "build-node24/compiled/dist/scripted/run.js": {
+      "sha256": "bc33b4c81a5c0185eb316a8016de67e691418f5e736e318d4c6e5e03298d74ea",
+      "bytes": 29839,
+      "mode": "0600"
+    },
+    "build-node24/compiled/dist/scripted/schema.js": {
+      "sha256": "85ce0c365ef5cead2899e7e8487c75a8c4a371768bb51f1b985028bc9922adb1",
+      "bytes": 22045,
+      "mode": "0600"
+    },
+    "build-node24/compiled/dist/scripted/select.js": {
+      "sha256": "c2d364f7ef5aed1f219f9de21601a078376b23b1621eddce26578ea5a99b8d2a",
+      "bytes": 5957,
+      "mode": "0600"
+    },
+    "build-node24/compiled/dist/scripted/vocabulary.js": {
+      "sha256": "3ff8fdb40f9e141281a3af9e73a779c64073f8bac98b91b04bd8edc340d40284",
+      "bytes": 7531,
+      "mode": "0600"
+    },
+    "build-node24/compiled/dist/service.js": {
+      "sha256": "a2b3f70361ffd728711767933bf74cba7c8a30c41ce8d8e76eb9fdb7396ffafe",
+      "bytes": 9645,
+      "mode": "0600"
+    },
+    "build-node24/compiled/dist/version.js": {
+      "sha256": "1f2780b5f9cc2737f99ad1de9598baed2af758754ab53f6577fcff5c8bc8a226",
+      "bytes": 230,
+      "mode": "0600"
+    },
+    "build-node24/compiled/dist/watch/index.js": {
+      "sha256": "f297ae862b9c13309e2ab56cc8bb7cc168c644f8342b0ee709245d82135a4a57",
+      "bytes": 11298,
+      "mode": "0600"
+    },
+    "build-node24/compiled-manifest.json": {
+      "sha256": "cf28b84bd60bbdc520622895a09f00ec2e1f56cd1f4e239f7759e08f1e0810bc",
+      "bytes": 6823,
+      "mode": "0600"
+    },
+    "build-node24/result.json": {
+      "sha256": "a5776969acfa71dccadbc2b417482daaba54de5504924d4f9678233c8178e8d1",
+      "bytes": 58894,
+      "mode": "0600"
+    },
+    "build-node24/started.json": {
+      "sha256": "fcf5e82f7236caaa6f26ed371f96f99a8d6e64bae00eb8a57db4217e21f77a58",
+      "bytes": 405,
+      "mode": "0600"
+    },
+    "build-node24/stderr.txt": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0,
+      "mode": "0600"
+    },
+    "build-node24/stdout.txt": {
+      "sha256": "d389e171e7d990557a7d1d14e7bf0468ef7ac9a086d5d3d6b4f7f76786d7e62a",
+      "bytes": 75,
+      "mode": "0600"
+    },
+    "build-node24-job.json": {
+      "sha256": "2e7a030755a6124f70ee375b4936e7acce78faf8c9199beda1047dc98596ca42",
+      "bytes": 53729,
+      "mode": "0600"
+    },
+    "build-node26/command.json": {
+      "sha256": "c14975a07989c11d0138c9838d14b66da43adfdb2a8f6caaee82d7032f6d5857",
+      "bytes": 54086,
+      "mode": "0600"
+    },
+    "build-node26/compiled/dist/capture.js": {
+      "sha256": "c4a0a4776605a3b1c72b2795fd97f1230184bd9134f4c343ba58aaefea31974f",
+      "bytes": 5452,
+      "mode": "0600"
+    },
+    "build-node26/compiled/dist/cli.js": {
+      "sha256": "3f3d41ee2687846dc939f502e7df5ad8aca3ea473a6d291d5652a5230b8ae2df",
+      "bytes": 17295,
+      "mode": "0600"
+    },
+    "build-node26/compiled/dist/contracts/index.js": {
+      "sha256": "dec6d2a8cea84e02493a041e74a15f36d80ce8f37e9dc6f43b82520570580864",
+      "bytes": 589,
+      "mode": "0600"
+    },
+    "build-node26/compiled/dist/device/admission-allocation.js": {
+      "sha256": "ba6f8ad883ec2d0edd08bbcbb216a02283eb13a74645a65e3cca94c7d1215c27",
+      "bytes": 2380,
+      "mode": "0600"
+    },
+    "build-node26/compiled/dist/device/admission-maintenance.js": {
+      "sha256": "c8d4451bb348ce01efc79ac9effc2bf0b83a545b4ca87edd4c12fbc46dc26965",
+      "bytes": 3657,
+      "mode": "0600"
+    },
+    "build-node26/compiled/dist/device/admission-migration.js": {
+      "sha256": "e2a2e1fe7c40c2f37a7fb0b74399bddd97da6c81208eefae9d56a3879b7c1b39",
+      "bytes": 15560,
+      "mode": "0600"
+    },
+    "build-node26/compiled/dist/device/admission-sqlite.js": {
+      "sha256": "de7f8337e7f043480270c8aa3653487c51abacca709410f79796a42bb26bf8b1",
+      "bytes": 59986,
+      "mode": "0600"
+    },
+    "build-node26/compiled/dist/device/admission.js": {
+      "sha256": "9006f0d3c9328e6d75e7cf51af13dbcfea4db16525b7ac67b68f8230060e51ef",
+      "bytes": 12590,
+      "mode": "0600"
+    },
+    "build-node26/compiled/dist/device/android/adb.js": {
+      "sha256": "3edec1e60b2605c8252164a94ebc089afec9e196a3383d1cb58359b2226e28d6",
+      "bytes": 2237,
+      "mode": "0600"
+    },
+    "build-node26/compiled/dist/device/android/agent-client.js": {
+      "sha256": "1da4c9fa54388fa8456713f4186de58e2ecd7fd5f9ef4ea70616176668196947",
+      "bytes": 8401,
+      "mode": "0600"
+    },
+    "build-node26/compiled/dist/device/android/agent-supply.js": {
+      "sha256": "7cef22170d1702b9b03e68cefe3060ef578643a47907dffc021debfd23b45330",
+      "bytes": 4902,
+      "mode": "0600"
+    },
+    "build-node26/compiled/dist/device/android/driver.js": {
+      "sha256": "7ea0701ff8017904fc22ce7ffb056be8d9742df150b681daeae9559b06b35a14",
+      "bytes": 56572,
+      "mode": "0600"
+    },
+    "build-node26/compiled/dist/device/android/exit-watch.js": {
+      "sha256": "9b312677a3b8c9d3eae677092837c6e86c49e4ed1d580ad87693efe92ba1faa6",
+      "bytes": 6520,
+      "mode": "0600"
+    },
+    "build-node26/compiled/dist/device/android/ledger.js": {
+      "sha256": "113897aff0008ef044a6558f7463329c3a52a4d89bf5465d233a1833ec7ba049",
+      "bytes": 1315,
+      "mode": "0600"
+    },
+    "build-node26/compiled/dist/device/android/logcat.js": {
+      "sha256": "1a70a5a6836886c48052586a7d27e26fb4e49c82c731e490bdb7861d85980761",
+      "bytes": 7863,
+      "mode": "0600"
+    },
+    "build-node26/compiled/dist/device/android/mapping.js": {
+      "sha256": "fbc53c8e96fd1bdd0a3ef92e26a2a455c08720b8dcdc8be0bf8c976a2b5b4952",
+      "bytes": 6372,
+      "mode": "0600"
+    },
+    "build-node26/compiled/dist/device/android/settle.js": {
+      "sha256": "6fad022c962493e735ea1198a8a83f24b5df4b1652b4308002051ca5afe61363",
+      "bytes": 2474,
+      "mode": "0600"
+    },
+    "build-node26/compiled/dist/device/android/threadtime.js": {
+      "sha256": "be36c941425f1a87cc2d9c2dffe175fd07dd2a273e36a144bfa11e9415714feb",
+      "bytes": 782,
+      "mode": "0600"
+    },
+    "build-node26/compiled/dist/device/android/tools.js": {
+      "sha256": "38638379c79e1a4f9f22bc104dff7aefccd509ff9b822a7ef4d8db822d529774",
+      "bytes": 2313,
+      "mode": "0600"
+    },
+    "build-node26/compiled/dist/device/attach.js": {
+      "sha256": "2e27df08bd5a975c4b061e0a8f707b70af53504f6415f03986ac25a1d1743bcf",
+      "bytes": 735,
+      "mode": "0600"
+    },
+    "build-node26/compiled/dist/device/factory.js": {
+      "sha256": "9b3961c796b3c6d57ddafd39fd7cb1ec3f67fbe223947ca11c8e63dc7895fe70",
+      "bytes": 1283,
+      "mode": "0600"
+    },
+    "build-node26/compiled/dist/device/image.js": {
+      "sha256": "19f4e3dddab9f1d4fe5a57c44d7f25ee1ed9fcbc10f38878437ddd3db19fc846",
+      "bytes": 2200,
+      "mode": "0600"
+    },
+    "build-node26/compiled/dist/device/index.js": {
+      "sha256": "0f0105e0777963fa8c196da19e1d0550929d07a4d74e163b3a65983778151ee7",
+      "bytes": 58203,
+      "mode": "0600"
+    },
+    "build-node26/compiled/dist/device/lease.js": {
+      "sha256": "c54335efb2647f469c3e480e8b3036598e389ed41e56fc92b23cd669a9978523",
+      "bytes": 13449,
+      "mode": "0600"
+    },
+    "build-node26/compiled/dist/device/logs.js": {
+      "sha256": "799e9719aaa336321fc3dd3ae17b6ec7e24eb4268dca4f0c55f22364ea945cba",
+      "bytes": 1019,
+      "mode": "0600"
+    },
+    "build-node26/compiled/dist/driven/candidates.js": {
+      "sha256": "ed9da6235a0bed29b25dda9b7089b602306979f9f0753c5b736b9bbf847bd510",
+      "bytes": 6046,
+      "mode": "0600"
+    },
+    "build-node26/compiled/dist/driven/decide.js": {
+      "sha256": "64197e257066a9072cf00cd5af8e7ade8b97e7a952e37ad8a3370020753b8a7d",
+      "bytes": 9659,
+      "mode": "0600"
+    },
+    "build-node26/compiled/dist/driven/handback.js": {
+      "sha256": "d0be72d959d452efbb533cd5d7fad38aa805829025c28c7d4c0b1dc952176fd7",
+      "bytes": 14584,
+      "mode": "0600"
+    },
+    "build-node26/compiled/dist/driven/marker.js": {
+      "sha256": "bb2bd3a84c2973d94495e923f0ab15538eb523a6c6764476fa137c95b889e7bf",
+      "bytes": 363,
+      "mode": "0600"
+    },
+    "build-node26/compiled/dist/driven/policy.js": {
+      "sha256": "0b37bd689843a69fb7980273e915f20af44ae365305f736471705b6dd1500e04",
+      "bytes": 3752,
+      "mode": "0600"
+    },
+    "build-node26/compiled/dist/driven/project.js": {
+      "sha256": "1482a41c0041be0e971da386497b12557f91575d205e2c7bebab9222e494daa2",
+      "bytes": 14144,
+      "mode": "0600"
+    },
+    "build-node26/compiled/dist/driven/step.js": {
+      "sha256": "669eef883b2ad9994310a62561100a05e25d1b183b9360cffce39b640d37c3ae",
+      "bytes": 27417,
+      "mode": "0600"
+    },
+    "build-node26/compiled/dist/driven/vocabulary.js": {
+      "sha256": "81d171daef1f450ea866321b13f4ef22c2cade4a0e7dc0a384327be6f9a8524a",
+      "bytes": 2183,
+      "mode": "0600"
+    },
+    "build-node26/compiled/dist/exit-codes.js": {
+      "sha256": "c85c3e5ccc50b25255f516d2680539b4c0ed1817144c40d927733a556e2e9f95",
+      "bytes": 167,
+      "mode": "0600"
+    },
+    "build-node26/compiled/dist/experimental/observed-journal.js": {
+      "sha256": "b57ab8f9cf69bc8f252626dd948bd7b60c149c104181b6013c37d8dc105ef6bd",
+      "bytes": 1294,
+      "mode": "0600"
+    },
+    "build-node26/compiled/dist/experimental/observed-run.js": {
+      "sha256": "6ca67a307aed02f7cf9734558bdea7575b7661f4e060a410e0c81267ab491942",
+      "bytes": 3233,
+      "mode": "0600"
+    },
+    "build-node26/compiled/dist/experimental/observed-tap.js": {
+      "sha256": "80e81478bb734ce2b1c35e4005fb975e40fad68b86de6fb07b021d7c1ab331d7",
+      "bytes": 6285,
+      "mode": "0600"
+    },
+    "build-node26/compiled/dist/log/index.js": {
+      "sha256": "ead5f93a0fca9aeb3beec6e9f17ebb3c9a249501cf39be3b9fcfc0ecccb482b0",
+      "bytes": 9045,
+      "mode": "0600"
+    },
+    "build-node26/compiled/dist/logpane/attach.js": {
+      "sha256": "7162850524252f2e640c64a12cf75f2aacfe37b148b3238f2b1c051b3e8106a6",
+      "bytes": 4102,
+      "mode": "0600"
+    },
+    "build-node26/compiled/dist/logpane/format.js": {
+      "sha256": "8ebe92bb56509576e315b5e723f511f10347e0b83a9362d9d553aaaba32b8009",
+      "bytes": 3801,
+      "mode": "0600"
+    },
+    "build-node26/compiled/dist/logpane/stream.js": {
+      "sha256": "adf4eabc21fc50188a8a2a966960ec22c824526b0d4b092513f40f0ce301f986",
+      "bytes": 4926,
+      "mode": "0600"
+    },
+    "build-node26/compiled/dist/logpane/window.js": {
+      "sha256": "7297aca5f2f7b46d221ec0b754cb5ac4c30449c9485733ce1d8325d71d22ed6e",
+      "bytes": 2756,
+      "mode": "0600"
+    },
+    "build-node26/compiled/dist/mcp/index.js": {
+      "sha256": "64b3bb0d3733a367dfc3576ffa8e8c7f28e61031e53a82fc73292243f51d99a3",
+      "bytes": 6585,
+      "mode": "0600"
+    },
+    "build-node26/compiled/dist/mcp/observed.js": {
+      "sha256": "7cb75f32d67867140bd63880ca566b4918de24d915cec641fa4b7a6771fbc674",
+      "bytes": 4862,
+      "mode": "0600"
+    },
+    "build-node26/compiled/dist/observed/allocation-config.js": {
+      "sha256": "eed89b5ead452ce4695b13900c36a133c7eae96bb9128eef3790499bc7241a51",
+      "bytes": 37129,
+      "mode": "0600"
+    },
+    "build-node26/compiled/dist/observed/allocation-schema.js": {
+      "sha256": "1f4af01e2bd7559ccd78439b57e22477d6e58a2ef00dd85cc7bf159d314fde36",
+      "bytes": 5357,
+      "mode": "0600"
+    },
+    "build-node26/compiled/dist/observed/allocation.js": {
+      "sha256": "c78b4e2f37c3bf173afec88fa946ec3df094b8bc0719d137b387514a9ac29563",
+      "bytes": 30494,
+      "mode": "0600"
+    },
+    "build-node26/compiled/dist/observed/artifact.js": {
+      "sha256": "71697e79851b3afc6e0157e6bf3f2116ffec6233b13996463a54c24b6465aea5",
+      "bytes": 19731,
+      "mode": "0600"
+    },
+    "build-node26/compiled/dist/observed/cli.js": {
+      "sha256": "14679c0c13fdd87361f677d2d946841034343629bdb84221d280ba556720e4f2",
+      "bytes": 11821,
+      "mode": "0600"
+    },
+    "build-node26/compiled/dist/observed/create-source.js": {
+      "sha256": "1b3b13ab6dc55eb5f04f0f7a40b2b86a2d6fe46a96a7274bab1bf5cc81f5e8c3",
+      "bytes": 3756,
+      "mode": "0600"
+    },
+    "build-node26/compiled/dist/observed/evidence.js": {
+      "sha256": "682e600b8dca6ef3cfa5d869dab60cd8dc2865aa677bc84947629783762d158e",
+      "bytes": 3872,
+      "mode": "0600"
+    },
+    "build-node26/compiled/dist/observed/installed-plist.js": {
+      "sha256": "bfa578bac5fe8b3a1101ea945b8db8f0f54bccf29c9ab4de0122831d0162df5f",
+      "bytes": 6577,
+      "mode": "0600"
+    },
+    "build-node26/compiled/dist/observed/report.js": {
+      "sha256": "c843ab9d562e8299371e64c6d7380fd94ac574769562791ab2f66238a8393eee",
+      "bytes": 7416,
+      "mode": "0600"
+    },
+    "build-node26/compiled/dist/observed/schema.js": {
+      "sha256": "4981a31d0bf83c38d69efd54589cb57b344713dab6bdb223c28533d937861f53",
+      "bytes": 3874,
+      "mode": "0600"
+    },
+    "build-node26/compiled/dist/observed/service.js": {
+      "sha256": "13ae2e47efcf6139b7460fce862173960d8a6e465ba7a989d3356b273b24ac9f",
+      "bytes": 20488,
+      "mode": "0600"
+    },
+    "build-node26/compiled/dist/observed/supplied-source.js": {
+      "sha256": "74720e27069f89bf6e238cee90b8c804fd92783d6d0e82bdb23f7c9f75834c41",
+      "bytes": 1822,
+      "mode": "0600"
+    },
+    "build-node26/compiled/dist/process.js": {
+      "sha256": "62963d4ae970d3dbb06811e2ae7b983ebb7502380f02053d7f0e08a3e8f958f3",
+      "bytes": 440,
+      "mode": "0600"
+    },
+    "build-node26/compiled/dist/scripted/contracts.js": {
+      "sha256": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881",
+      "bytes": 11,
+      "mode": "0600"
+    },
+    "build-node26/compiled/dist/scripted/jev.js": {
+      "sha256": "d227aff5eb07388becd0f5dea1a800823f1abcf1e23fb9e4f1f8542c7e6d414c",
+      "bytes": 5069,
+      "mode": "0600"
+    },
+    "build-node26/compiled/dist/scripted/observe.js": {
+      "sha256": "db2c8e6df75acfb8be14d1668c355ca92d27b5caefc6bf2870d1bb90c6498c08",
+      "bytes": 3471,
+      "mode": "0600"
+    },
+    "build-node26/compiled/dist/scripted/report-json.js": {
+      "sha256": "1bd59963d6d37331a98ed7d4e537415f2e902e1d861a2f1ea2405c0ff271ffdb",
+      "bytes": 12167,
+      "mode": "0600"
+    },
+    "build-node26/compiled/dist/scripted/report.js": {
+      "sha256": "b5a6c25355dd73ecadb9cb048479adf81cc05237a5c92193cf17cd1d5c3c1886",
+      "bytes": 11534,
+      "mode": "0600"
+    },
+    "build-node26/compiled/dist/scripted/run.js": {
+      "sha256": "bc33b4c81a5c0185eb316a8016de67e691418f5e736e318d4c6e5e03298d74ea",
+      "bytes": 29839,
+      "mode": "0600"
+    },
+    "build-node26/compiled/dist/scripted/schema.js": {
+      "sha256": "85ce0c365ef5cead2899e7e8487c75a8c4a371768bb51f1b985028bc9922adb1",
+      "bytes": 22045,
+      "mode": "0600"
+    },
+    "build-node26/compiled/dist/scripted/select.js": {
+      "sha256": "c2d364f7ef5aed1f219f9de21601a078376b23b1621eddce26578ea5a99b8d2a",
+      "bytes": 5957,
+      "mode": "0600"
+    },
+    "build-node26/compiled/dist/scripted/vocabulary.js": {
+      "sha256": "3ff8fdb40f9e141281a3af9e73a779c64073f8bac98b91b04bd8edc340d40284",
+      "bytes": 7531,
+      "mode": "0600"
+    },
+    "build-node26/compiled/dist/service.js": {
+      "sha256": "a2b3f70361ffd728711767933bf74cba7c8a30c41ce8d8e76eb9fdb7396ffafe",
+      "bytes": 9645,
+      "mode": "0600"
+    },
+    "build-node26/compiled/dist/version.js": {
+      "sha256": "1f2780b5f9cc2737f99ad1de9598baed2af758754ab53f6577fcff5c8bc8a226",
+      "bytes": 230,
+      "mode": "0600"
+    },
+    "build-node26/compiled/dist/watch/index.js": {
+      "sha256": "f297ae862b9c13309e2ab56cc8bb7cc168c644f8342b0ee709245d82135a4a57",
+      "bytes": 11298,
+      "mode": "0600"
+    },
+    "build-node26/compiled-manifest.json": {
+      "sha256": "cf28b84bd60bbdc520622895a09f00ec2e1f56cd1f4e239f7759e08f1e0810bc",
+      "bytes": 6823,
+      "mode": "0600"
+    },
+    "build-node26/result.json": {
+      "sha256": "951c9f923088dd51c6367d01ac2ffdaf3e880714e7ed88f4f1b5fd8088d3c573",
+      "bytes": 58894,
+      "mode": "0600"
+    },
+    "build-node26/started.json": {
+      "sha256": "c9feeac24cf00e010970a4d31420a15b44a8abfb9b360563ea7a6190f47d24ac",
+      "bytes": 374,
+      "mode": "0600"
+    },
+    "build-node26/stderr.txt": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0,
+      "mode": "0600"
+    },
+    "build-node26/stdout.txt": {
+      "sha256": "d389e171e7d990557a7d1d14e7bf0468ef7ac9a086d5d3d6b4f7f76786d7e62a",
+      "bytes": 75,
+      "mode": "0600"
+    },
+    "build-node26-job.json": {
+      "sha256": "37e58a2d05b3bbd901495e2855be974c9464c62a5d11785be52cddd067ff1b99",
+      "bytes": 53667,
+      "mode": "0600"
+    },
+    "candidate-source.json": {
+      "sha256": "2788ae63bbe1564d4ef531804684ce0644782db042c3acfed1d7410fede07e4e",
+      "bytes": 161985,
+      "mode": "0600"
+    },
+    "clause-regression-matrix.md": {
+      "sha256": "1203bf5dddce5c45e9add80e5b90aed11d28fbd122f6cdfcc5502b0223c3b616",
+      "bytes": 3938,
+      "mode": "0600"
+    },
+    "coverage-node24/command.json": {
+      "sha256": "868f834628b4417d3260495cf26bea2158c0d153743f22cc56c2ba2e7ca9673e",
+      "bytes": 54401,
+      "mode": "0600"
+    },
+    "coverage-node24/result.json": {
+      "sha256": "b05daf3e8cff0301457fad23c8d46307b58677029431f489c4f8755c1c83252a",
+      "bytes": 59019,
+      "mode": "0600"
+    },
+    "coverage-node24/started.json": {
+      "sha256": "c2b4c428c66177f23d1c950874faf4f0008cc995759abaead0b0d2b38014edc4",
+      "bytes": 652,
+      "mode": "0600"
+    },
+    "coverage-node24/stderr.txt": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0,
+      "mode": "0600"
+    },
+    "coverage-node24/stdout.txt": {
+      "sha256": "261d54aa5494143a04f85e1816cdd47e393d8d498ed459a05525ecaad993217f",
+      "bytes": 53082,
+      "mode": "0600"
+    },
+    "coverage-node24-job.json": {
+      "sha256": "0d8075729ade5975c2016f607c4018849a27c041076a924d5d2968fc45d1d290",
+      "bytes": 53979,
+      "mode": "0600"
+    },
+    "coverage-node26/command.json": {
+      "sha256": "e51385dcac5639bebdda9e1a3d7f50c88163603a2c5ab386387958521b08c484",
+      "bytes": 54339,
+      "mode": "0600"
+    },
+    "coverage-node26/result.json": {
+      "sha256": "2bac671f495b2971f26e8e8e07a05697fb0dfcf8fca14d892d0dd092246373a1",
+      "bytes": 59019,
+      "mode": "0600"
+    },
+    "coverage-node26/started.json": {
+      "sha256": "8053b61aa0ffa67919ecabc41520b6e0f926c078a6d565798667d290452238dc",
+      "bytes": 621,
+      "mode": "0600"
+    },
+    "coverage-node26/stderr.txt": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0,
+      "mode": "0600"
+    },
+    "coverage-node26/stdout.txt": {
+      "sha256": "2bf4aa0d93b1a9a1068d744a679797434e2c4034053a61d699327292a299d3d3",
+      "bytes": 52602,
+      "mode": "0600"
+    },
+    "coverage-node26-job.json": {
+      "sha256": "96bea37419e3ac90dca5d1d27b877d85b6d7a3fae9f35312b6525a6b1405ba8b",
+      "bytes": 53917,
+      "mode": "0600"
+    },
+    "domain-red-bytes/src/observed/allocation-config.ts": {
+      "sha256": "7d5798570970ca8de9fcca980b39662c4cf2b9be939e1ad31f23e9383e82fe62",
+      "bytes": 31610,
+      "mode": "0600"
+    },
+    "domain-red-bytes/tests/fixtures/observed-legacy-volume-runtime.ts": {
+      "sha256": "3eb679508ed31085367360e89a04a6a3e9170a0efcc89aab3ceb3f7d613946bb",
+      "bytes": 10868,
+      "mode": "0600"
+    },
+    "domain-red-bytes/tests/observed-legacy-volume-runtime.test.ts": {
+      "sha256": "3fc3706c34c17ffadf64fecaf8518cffd145b30abf643874f8817195b7301432",
+      "bytes": 16150,
+      "mode": "0600"
+    },
+    "domain-red-node24/command.json": {
+      "sha256": "8a24e67d0a6e5c7785ad25913f94f194bd2f71b55ca0029f95950068d963d978",
+      "bytes": 54176,
+      "mode": "0600"
+    },
+    "domain-red-node24/result.json": {
+      "sha256": "c64968d18fc4e94beda0703fd2878d21d4184b3996b3d9f855982406d8ff7d39",
+      "bytes": 59022,
+      "mode": "0600"
+    },
+    "domain-red-node24/started.json": {
+      "sha256": "906184ea0ac31112f33198a0cadf8dd681f4de6a49dc4f17c0bdc2a42532d2ba",
+      "bytes": 417,
+      "mode": "0600"
+    },
+    "domain-red-node24/stderr.txt": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0,
+      "mode": "0600"
+    },
+    "domain-red-node24/stdout.txt": {
+      "sha256": "864e576c64b12fa6fb0d1e6197b039d84f472dc315c39db95fc32b63dacc7fed",
+      "bytes": 95283,
+      "mode": "0600"
+    },
+    "domain-red-node24-job.json": {
+      "sha256": "26a65c3501d595ac832cb16dce129a5c212c9cbfd2955c5204991e8650a8e5b9",
+      "bytes": 53754,
+      "mode": "0600"
+    },
+    "domain-red-node26/command.json": {
+      "sha256": "910867fcc8c3ebca648ca5cb53b1bcdc211302f5c21d39e31f457fe9c0c2d6c4",
+      "bytes": 54114,
+      "mode": "0600"
+    },
+    "domain-red-node26/result.json": {
+      "sha256": "58063e8d045dc23ac5a8e09cf59860beaa19bb3b10726182e9fcadf3f385164d",
+      "bytes": 59022,
+      "mode": "0600"
+    },
+    "domain-red-node26/started.json": {
+      "sha256": "89434450c7dc4fb2c3a9b47c418b1b93daf9402e20e3a4ff75f703efe806e549",
+      "bytes": 386,
+      "mode": "0600"
+    },
+    "domain-red-node26/stderr.txt": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0,
+      "mode": "0600"
+    },
+    "domain-red-node26/stdout.txt": {
+      "sha256": "6ad408cce4ff6627429c6c54c81e25567737a1dc42fb9cfe80d6c09e37b81585",
+      "bytes": 95712,
+      "mode": "0600"
+    },
+    "domain-red-node26-job.json": {
+      "sha256": "5ef6506731f4d8be2d01e280c1d4c04140993af8481f195354b05c985be77666",
+      "bytes": 53692,
+      "mode": "0600"
+    },
+    "entry-alias-red-bytes/src/observed/allocation-config.ts": {
+      "sha256": "cbe64b7fada1005ad9a6251061b27724c3c9781215102cd7259439b47a0353e9",
+      "bytes": 37153,
+      "mode": "0600"
+    },
+    "entry-alias-red-bytes/tests/fixtures/observed-legacy-volume-runtime.ts": {
+      "sha256": "b0407ffb47f65ac4cfbdfb29c20a78ef94bdba19e1ce70c892bcda721adfc9ab",
+      "bytes": 10959,
+      "mode": "0600"
+    },
+    "entry-alias-red-bytes/tests/observed-legacy-volume-runtime.test.ts": {
+      "sha256": "a7156920d8cd9dc08d3b6d3bb7221dde36c08052071d96baf231489f0482bfd4",
+      "bytes": 22753,
+      "mode": "0600"
+    },
+    "entry-alias-red-node24/command.json": {
+      "sha256": "a769c745da2f0b896f4e60209eb4494164bb1b4e15e028e4f0158a3e950f090b",
+      "bytes": 54220,
+      "mode": "0600"
+    },
+    "entry-alias-red-node24/result.json": {
+      "sha256": "4883c318840c84ad70455b93afbe7fcd5ba758da8fc82a30a8a04e759c08d8cc",
+      "bytes": 59022,
+      "mode": "0600"
+    },
+    "entry-alias-red-node24/started.json": {
+      "sha256": "4df0b82fab056662d0841056119e694e048469ec6fc6f0f0b1ab94fbbd29103c",
+      "bytes": 476,
+      "mode": "0600"
+    },
+    "entry-alias-red-node24/stderr.txt": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0,
+      "mode": "0600"
+    },
+    "entry-alias-red-node24/stdout.txt": {
+      "sha256": "cf17b4ffe7804fa320880d279e855d5fee535c77fb8021465cc0b0aa8f1236f7",
+      "bytes": 1078,
+      "mode": "0600"
+    },
+    "entry-alias-red-node24-job.json": {
+      "sha256": "f5cea8c68d7a3cf92eb49d442d719e028f05dc875b0f0a5d52c1c67a9ab51ee5",
+      "bytes": 53799,
+      "mode": "0600"
+    },
+    "entry-alias-red-node26/command.json": {
+      "sha256": "b72f24ee8d413042aaf5f4e482c41f5af243710d565b9fa88e437238c728961d",
+      "bytes": 54157,
+      "mode": "0600"
+    },
+    "entry-alias-red-node26/result.json": {
+      "sha256": "61a43f165998633aa6efac4ac94dafc4ef8d8ccd4050f17fe328117a47e5ffb7",
+      "bytes": 59022,
+      "mode": "0600"
+    },
+    "entry-alias-red-node26/started.json": {
+      "sha256": "74f69ce9d86fb466d8d27158a48ea4afb7a409900931de5c186cedc7083a58dd",
+      "bytes": 445,
+      "mode": "0600"
+    },
+    "entry-alias-red-node26/stderr.txt": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0,
+      "mode": "0600"
+    },
+    "entry-alias-red-node26/stdout.txt": {
+      "sha256": "d321352402fb116a889c6e257c899c9d4ea3d8c67f8026c8f0b95d0aa11b8e9b",
+      "bytes": 928,
+      "mode": "0600"
+    },
+    "entry-alias-red-node26-job.json": {
+      "sha256": "fd2cae06a261c94d73d97cabaac05c30911e0bd90a5910e40d2461607a274795",
+      "bytes": 53737,
+      "mode": "0600"
+    },
+    "expanded-green-node26/command.json": {
+      "sha256": "4c3ecc9e946c87254253b20938eabb154b4dc7b4348afa2fd060097bacb5425b",
+      "bytes": 54114,
+      "mode": "0600"
+    },
+    "expanded-green-node26/result.json": {
+      "sha256": "39992302d962c25c6c82dc6e99727f87124e26490913598e7c2e65e553121650",
+      "bytes": 59025,
+      "mode": "0600"
+    },
+    "expanded-green-node26/started.json": {
+      "sha256": "626e2421bc86f0f4e4e5d68b524a3d150f9d8e8b52ca209b29ce4a9d8200261e",
+      "bytes": 386,
+      "mode": "0600"
+    },
+    "expanded-green-node26/stderr.txt": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0,
+      "mode": "0600"
+    },
+    "expanded-green-node26/stdout.txt": {
+      "sha256": "e3ef51ee5764c851397a11342e83d7bead80f31110d574bf6adb75ac4ab9b9b2",
+      "bytes": 17059,
+      "mode": "0600"
+    },
+    "expanded-green-node26-job.json": {
+      "sha256": "7cf1d0303906eac0c253668242fc1e2da4791ee29e0aeb836158ca4a49f12974",
+      "bytes": 53692,
+      "mode": "0600"
+    },
+    "first-green-attempt-bytes/src/observed/allocation-config.ts": {
+      "sha256": "cbe64b7fada1005ad9a6251061b27724c3c9781215102cd7259439b47a0353e9",
+      "bytes": 37153,
+      "mode": "0600"
+    },
+    "first-green-attempt-bytes/tests/fixtures/observed-legacy-volume-runtime.ts": {
+      "sha256": "3eb679508ed31085367360e89a04a6a3e9170a0efcc89aab3ceb3f7d613946bb",
+      "bytes": 10868,
+      "mode": "0600"
+    },
+    "first-green-attempt-bytes/tests/observed-legacy-volume-runtime.test.ts": {
+      "sha256": "3fc3706c34c17ffadf64fecaf8518cffd145b30abf643874f8817195b7301432",
+      "bytes": 16150,
+      "mode": "0600"
+    },
+    "first-green-node26/command.json": {
+      "sha256": "7a5c5231346541bd43d27bccbb5a47e64b89ed82912d2bf9bda7ef9a699b40ad",
+      "bytes": 54098,
+      "mode": "0600"
+    },
+    "first-green-node26/result.json": {
+      "sha256": "277ed37c8b77952847e99a7e43ada293a466ff0bced3e2065d6d1eab5772a017",
+      "bytes": 59022,
+      "mode": "0600"
+    },
+    "first-green-node26/started.json": {
+      "sha256": "9e23d4b29c822239168bb7b55dba6ef342399d68195b882db9b5ddec3aefc665",
+      "bytes": 386,
+      "mode": "0600"
+    },
+    "first-green-node26/stderr.txt": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0,
+      "mode": "0600"
+    },
+    "first-green-node26/stdout.txt": {
+      "sha256": "6bbbbcc3994f4fce3c50921e47da0358557d7e8c3d08d7f8322296f043556d2b",
+      "bytes": 13646,
+      "mode": "0600"
+    },
+    "first-green-node26-job.json": {
+      "sha256": "ff9fca8b381c5e3800b988b6469e574dc40fa250735f6467b7c07d8eb55cd6ee",
+      "bytes": 53676,
+      "mode": "0600"
+    },
+    "focused-node24/command.json": {
+      "sha256": "0068e2e8eaab1250799da948db2b65db0c1181627d2db6f21e5f3cf1dee48908",
+      "bytes": 54376,
+      "mode": "0600"
+    },
+    "focused-node24/result.json": {
+      "sha256": "f71841ba3d369b81e5ba2dac6e179e2a05d756b4657fc3be066520d52bd44f4e",
+      "bytes": 59018,
+      "mode": "0600"
+    },
+    "focused-node24/started.json": {
+      "sha256": "8692a7a419ea0c7206bf54e99ea3bd24ff2c5761565ae47cad8d29a9afe55da0",
+      "bytes": 628,
+      "mode": "0600"
+    },
+    "focused-node24/stderr.txt": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0,
+      "mode": "0600"
+    },
+    "focused-node24/stdout.txt": {
+      "sha256": "0d07e18c7e2036bdffacc104af72e09b6eea341f2dfd024a4c2c3f5093152d37",
+      "bytes": 68409,
+      "mode": "0600"
+    },
+    "focused-node24-job.json": {
+      "sha256": "681547de51935d530dc709da071d6726ef3643ca5ebf31a5e0801dd2a95be478",
+      "bytes": 53954,
+      "mode": "0600"
+    },
+    "focused-node26/command.json": {
+      "sha256": "c7770af3e43f9e57717266c7e9e79ee637f175262541917a8a5b721b098a8146",
+      "bytes": 54314,
+      "mode": "0600"
+    },
+    "focused-node26/result.json": {
+      "sha256": "a77fd55601d90e7dd307974a79b1ceb426eaf347f99fccc6bff8561523cfe419",
+      "bytes": 59018,
+      "mode": "0600"
+    },
+    "focused-node26/started.json": {
+      "sha256": "0a9047412cebd7034643b61195d0a4587781f366b29da9ddb60f46dd70732ce7",
+      "bytes": 597,
+      "mode": "0600"
+    },
+    "focused-node26/stderr.txt": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0,
+      "mode": "0600"
+    },
+    "focused-node26/stdout.txt": {
+      "sha256": "d5d2d26d1a9e5c3efded3d2725196740a33cb7863d1bbcfe46cb2b6acf536a47",
+      "bytes": 67733,
+      "mode": "0600"
+    },
+    "focused-node26-job.json": {
+      "sha256": "90f054639ea65dbeac8caaff874d38b83be85a3ea2e8154bdcb2ad0dad45b3a1",
+      "bytes": 53892,
+      "mode": "0600"
+    },
+    "freeze-audit-original.py": {
+      "sha256": "0e30b7b31bc57f5f43bea9ead04e2c46708dcc3ffdf1580ecc2b27dce4e21a89",
+      "bytes": 5104,
+      "mode": "0600"
+    },
+    "freeze-audit.py": {
+      "sha256": "23e6c4bf28204895b564da8a7c350b16f112a5890dac133420f8603b26b64365",
+      "bytes": 5227,
+      "mode": "0600"
+    },
+    "frozen-owned-bytes/src/observed/allocation-config.ts": {
+      "sha256": "5618f346f9855b54b809f82b1683a396f21a9e568328d0101d23e19c599bd6ce",
+      "bytes": 37158,
+      "mode": "0600"
+    },
+    "frozen-owned-bytes/tests/fixtures/observed-legacy-volume-runtime.ts": {
+      "sha256": "b0407ffb47f65ac4cfbdfb29c20a78ef94bdba19e1ce70c892bcda721adfc9ab",
+      "bytes": 10959,
+      "mode": "0600"
+    },
+    "frozen-owned-bytes/tests/observed-legacy-volume-runtime.test.ts": {
+      "sha256": "981f171779cba5efeb084bd0c84d37589fa1b8a13114d32d1a741c721ff11334",
+      "bytes": 26006,
+      "mode": "0600"
+    },
+    "implementation-report.md": {
+      "sha256": "61225e8856f38e723af5e96d27df72535d21fff7e0dcabbc5f31ecbd85e5037e",
+      "bytes": 4756,
+      "mode": "0600"
+    },
+    "initial-fixture-executable-mode-diagnosis.json": {
+      "sha256": "6d93cf2b37956939d303eb6e1a91aa01b4feeeaaa6dc2286eae40e8d94e15890",
+      "bytes": 532,
+      "mode": "0600"
+    },
+    "initial-red-bytes/src/observed/allocation-config.ts": {
+      "sha256": "7d5798570970ca8de9fcca980b39662c4cf2b9be939e1ad31f23e9383e82fe62",
+      "bytes": 31610,
+      "mode": "0600"
+    },
+    "initial-red-bytes/tests/fixtures/observed-legacy-volume-runtime.ts": {
+      "sha256": "962edabff75efee57c2c7681e210b3af59de43714c50f2d81e6686f54cfa8c68",
+      "bytes": 10796,
+      "mode": "0600"
+    },
+    "initial-red-bytes/tests/observed-legacy-volume-runtime.test.ts": {
+      "sha256": "3fc3706c34c17ffadf64fecaf8518cffd145b30abf643874f8817195b7301432",
+      "bytes": 16150,
+      "mode": "0600"
+    },
+    "isolation-proof.json": {
+      "sha256": "16d2dee00bac8fefa92c7b9cef76502d6634636bf85329f44abf13d3f707570e",
+      "bytes": 518,
+      "mode": "0600"
+    },
+    "mounted-green-node24/command.json": {
+      "sha256": "d2b819afaf43cde1cf2bdaeb19738a8369ba6171105279d4cf425d27afb80f92",
+      "bytes": 54171,
+      "mode": "0600"
+    },
+    "mounted-green-node24/result.json": {
+      "sha256": "a2edd211a3b707b2aeb72ceba16821fe104fa4eaec99b4f6b8a29a7bc0d7d077",
+      "bytes": 59024,
+      "mode": "0600"
+    },
+    "mounted-green-node24/started.json": {
+      "sha256": "5f1da5b20ebc23b49f9d6a4feb522e60a3227661ee48fdb80b2ac19d05d89486",
+      "bytes": 417,
+      "mode": "0600"
+    },
+    "mounted-green-node24/stderr.txt": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0,
+      "mode": "0600"
+    },
+    "mounted-green-node24/stdout.txt": {
+      "sha256": "99c180d57b11796c71b7120b99617cd342d3a52f62814ea11ada0a2bdf658ec8",
+      "bytes": 13048,
+      "mode": "0600"
+    },
+    "mounted-green-node24-job.json": {
+      "sha256": "e9a4e98095a5e961ad4db9d8855ada10f9cbbce02944897b2df9bfdb9396d7ef",
+      "bytes": 53749,
+      "mode": "0600"
+    },
+    "mounted-green-node26/command.json": {
+      "sha256": "4c3fe35dd2ddf6e25dc656fbe58fad9e4c1218b652e608e08bd2ea343465c6dc",
+      "bytes": 54109,
+      "mode": "0600"
+    },
+    "mounted-green-node26/result.json": {
+      "sha256": "923d5d3c8576f0d726ccdbf984186ca398311874c274bfb2b05b81092805f6fc",
+      "bytes": 59024,
+      "mode": "0600"
+    },
+    "mounted-green-node26/started.json": {
+      "sha256": "9e62f41549af6eb22392c9694c230dfbccb9dc032b4735a26bf30f2181af6d90",
+      "bytes": 386,
+      "mode": "0600"
+    },
+    "mounted-green-node26/stderr.txt": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0,
+      "mode": "0600"
+    },
+    "mounted-green-node26/stdout.txt": {
+      "sha256": "72dd8957760e67497acc8428134eea9bf641d5a0cd7f90a6bb2540b64a05d8e9",
+      "bytes": 12867,
+      "mode": "0600"
+    },
+    "mounted-green-node26-job.json": {
+      "sha256": "aa287af4ee47f730584434ec3a5a0fb16acfcbd9ca6ffccba27a7ed1ac39fe16",
+      "bytes": 53687,
+      "mode": "0600"
+    },
+    "npm-empty-globalconfig": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0,
+      "mode": "0600"
+    },
+    "npm-empty-userconfig": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0,
+      "mode": "0600"
+    },
+    "owned-case-matrix.json": {
+      "sha256": "f5d8e73827421a31dfa635833ecd58f4391394387ee8ac6ea37878ec69dd07c8",
+      "bytes": 26390,
+      "mode": "0600"
+    },
+    "owned-final-node26/command.json": {
+      "sha256": "2b62a876aad12280ce7783082e88d708301b4bb5a479cd8e7fb47364b8fa85f8",
+      "bytes": 54120,
+      "mode": "0600"
+    },
+    "owned-final-node26/result.json": {
+      "sha256": "a3ee52a98cd518dc821f1c3ad3faaada1423f5c57485be8c1e606c5794bdfd10",
+      "bytes": 59022,
+      "mode": "0600"
+    },
+    "owned-final-node26/started.json": {
+      "sha256": "019a2f2e8233d529777816cf7fd0030a4591e5cd856e00b26038e862dc8145cf",
+      "bytes": 386,
+      "mode": "0600"
+    },
+    "owned-final-node26/stderr.txt": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0,
+      "mode": "0600"
+    },
+    "owned-final-node26/stdout.txt": {
+      "sha256": "36c1072ced31f9b11b53bb71cd6624f3ac5394b6b691700db42c853f8490adfe",
+      "bytes": 18146,
+      "mode": "0600"
+    },
+    "owned-final-node26-job.json": {
+      "sha256": "7c67ebc8b8e1f5ed3d8183e48ad4a183ac908583dbdd4bbcf86d4489d665cc38",
+      "bytes": 53698,
+      "mode": "0600"
+    },
+    "predefault-audit.json": {
+      "sha256": "04b72a25ff0697e3b440e8455b3344e53c117be53f7e8a83c505dfa597e2ab11",
+      "bytes": 131732,
+      "mode": "0600"
+    },
+    "predefault-packaging-selector-failure.json": {
+      "sha256": "7b3f8c64fe3b39c27bffb6a642984a7ab1bfe4ac508a5a03f81bd299740eb9cc",
+      "bytes": 541,
+      "mode": "0600"
+    },
+    "predefault-packaging-selector-failure.txt": {
+      "sha256": "e5b134a8889cac36b3e25aeb35f3e227f56df3c3c89b654a4e038087ffb88782",
+      "bytes": 201,
+      "mode": "0600"
+    },
+    "prepare.py": {
+      "sha256": "8041e9f5a8a2d019278994834f299b8a0f7ee090c836e48da463ef0234173b8b",
+      "bytes": 1477,
+      "mode": "0600"
+    },
+    "pure-isolation-node24/command.json": {
+      "sha256": "05b4b3e30e4389a0c6a9024c0047cfe265405e0d2675278e5a73f2c9d91b8e46",
+      "bytes": 54187,
+      "mode": "0600"
+    },
+    "pure-isolation-node24/result.json": {
+      "sha256": "8ea2f1776a2293c520664a1f47bc24d5862928889a6fff980aa1a2bc4197cc6b",
+      "bytes": 59023,
+      "mode": "0600"
+    },
+    "pure-isolation-node24/started.json": {
+      "sha256": "91427812a050e12a8374e92d91a79f302c3db890b25b4a855c0776a482ddfc68",
+      "bytes": 457,
+      "mode": "0600"
+    },
+    "pure-isolation-node24/stderr.txt": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0,
+      "mode": "0600"
+    },
+    "pure-isolation-node24/stdout.txt": {
+      "sha256": "da16de0f8b4ca3ef1317a12f5aa4cec2126ad1a8a217da7b5ce10b8f93f16311",
+      "bytes": 1556,
+      "mode": "0600"
+    },
+    "pure-isolation-node24-job.json": {
+      "sha256": "1e8ec92677f85cac6c60071adc213e84e3b981cb19429d141f6c9c42019ddd20",
+      "bytes": 53766,
+      "mode": "0600"
+    },
+    "pure-isolation-node26/command.json": {
+      "sha256": "6379b4f021cf438079cbe5285ea7053b891ebfad8ab58cc93dddca87aa265e69",
+      "bytes": 54125,
+      "mode": "0600"
+    },
+    "pure-isolation-node26/result.json": {
+      "sha256": "5b4440acb462d14ac38816dac72fa248af5067ebec3a71acc92d1585d5650db8",
+      "bytes": 59023,
+      "mode": "0600"
+    },
+    "pure-isolation-node26/started.json": {
+      "sha256": "667a610eb146e3da214596faaed63a3e67cd9d914e5ecc0ea18618903423dd2c",
+      "bytes": 426,
+      "mode": "0600"
+    },
+    "pure-isolation-node26/stderr.txt": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0,
+      "mode": "0600"
+    },
+    "pure-isolation-node26/stdout.txt": {
+      "sha256": "fd4b301ca4d29ce853cca73a211f51cc19b8ab5c777de7c1a1e0c73c915376d6",
+      "bytes": 1390,
+      "mode": "0600"
+    },
+    "pure-isolation-node26-job.json": {
+      "sha256": "e7476603638aa077276c6202e14f4ef1a004773575bb2534169f5e30d96c2002",
+      "bytes": 53704,
+      "mode": "0600"
+    },
+    "record.py": {
+      "sha256": "08e800e49b53ebf689e0533c378f763e088b15c880324a247af23d76ee75663a",
+      "bytes": 1394,
+      "mode": "0600"
+    },
+    "red-node24/command.json": {
+      "sha256": "fc2a49fed8ba3d3b634fdd1a685443902d6edcc17588393ce8cddac6f37e13f7",
+      "bytes": 54180,
+      "mode": "0600"
+    },
+    "red-node24/result.json": {
+      "sha256": "fbb995ce58c7d1474309856e568ad8680d8de8cfc8259eb555d7067fdce1bbe8",
+      "bytes": 59014,
+      "mode": "0600"
+    },
+    "red-node24/started.json": {
+      "sha256": "1bd1d8ab9134e530b7f23eff63f90838cf126be35695a2987ebc33575260afbd",
+      "bytes": 417,
+      "mode": "0600"
+    },
+    "red-node24/stderr.txt": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0,
+      "mode": "0600"
+    },
+    "red-node24/stdout.txt": {
+      "sha256": "4da2d67cd719e7099bf76901f97fbbc1d48cd5f97cb2aa952bb245a8be7c7f31",
+      "bytes": 77396,
+      "mode": "0600"
+    },
+    "red-node24-job.json": {
+      "sha256": "2a98587888caa9147198cb622f0f994fbf79e705e14d0d5428ee1015f6ad1709",
+      "bytes": 53758,
+      "mode": "0600"
+    },
+    "red-node26/command.json": {
+      "sha256": "37979d565af677f9a7f21b81f4c54321def2aadc610c897e2c94546245235e48",
+      "bytes": 54118,
+      "mode": "0600"
+    },
+    "red-node26/result.json": {
+      "sha256": "b7c8ac5cef8adc923aac602446add02b11111c5b32c322bd1b1bfc512ede0a5c",
+      "bytes": 59014,
+      "mode": "0600"
+    },
+    "red-node26/started.json": {
+      "sha256": "357e1eda6de9a108a1ab3050142646d2b1f75a207da834bf2d5560aaaf07a4bf",
+      "bytes": 386,
+      "mode": "0600"
+    },
+    "red-node26/stderr.txt": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0,
+      "mode": "0600"
+    },
+    "red-node26/stdout.txt": {
+      "sha256": "430e56faa6e5716cd5312365e741ab3f9bf7c094db8464d9ee36c60416a854f1",
+      "bytes": 77232,
+      "mode": "0600"
+    },
+    "red-node26-job.json": {
+      "sha256": "00be1e66b7810dcf472c9b1576c5d25aac0f98364d63339f38b9ece6a416333e",
+      "bytes": 53696,
+      "mode": "0600"
+    },
+    "run-command.py": {
+      "sha256": "57be622a93c00a88d4b923c00ea5acdcf1406555cae10ce686b57a0eaeb58e38",
+      "bytes": 1588,
+      "mode": "0600"
+    },
+    "run-final-gates.py": {
+      "sha256": "0b0e487d87abb0f2f18032cf5700e66ef9e338f7e9a4794f3a2cec601a335eaa",
+      "bytes": 999,
+      "mode": "0600"
+    },
+    "runtime-node24/command.json": {
+      "sha256": "02104259d36ceaf1358247c0ad8dc924face082eedc17bbaf727a5acace9e450",
+      "bytes": 54061,
+      "mode": "0600"
+    },
+    "runtime-node24/result.json": {
+      "sha256": "7a5387b5f38e33f831c492cca2a80fc1b033d752df1fc6d4ff6eb41e93c0523d",
+      "bytes": 58896,
+      "mode": "0600"
+    },
+    "runtime-node24/started.json": {
+      "sha256": "4576c753e01a685300a34c9d76d48df0f2f125a65a6d16bd34b5b7b30215c1db",
+      "bytes": 341,
+      "mode": "0600"
+    },
+    "runtime-node24/stderr.txt": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0,
+      "mode": "0600"
+    },
+    "runtime-node24/stdout.txt": {
+      "sha256": "b988e13140652de941a9a3fab325102625f646ec6fde3a7b8a8af63496a74061",
+      "bytes": 8,
+      "mode": "0600"
+    },
+    "runtime-node24-job.json": {
+      "sha256": "141b80543645dd39b3f8970ea966f7a9779fa8527891fef3e53da99b00245e7e",
+      "bytes": 53643,
+      "mode": "0600"
+    },
+    "runtime-node26/command.json": {
+      "sha256": "afd7b46b26a6c1fae3d40b656396dc08f0a568997859568bf0970166673cd796",
+      "bytes": 53999,
+      "mode": "0600"
+    },
+    "runtime-node26/result.json": {
+      "sha256": "f4bf261cf92ba5e0caa14dc76e1de7a3e47dadb18450940ce9754e2424d4006d",
+      "bytes": 58896,
+      "mode": "0600"
+    },
+    "runtime-node26/started.json": {
+      "sha256": "0bc2fd520804c027db98418ecb2d0b7a09524a30087402207d6980f40c4c3354",
+      "bytes": 310,
+      "mode": "0600"
+    },
+    "runtime-node26/stderr.txt": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0,
+      "mode": "0600"
+    },
+    "runtime-node26/stdout.txt": {
+      "sha256": "bd17489adcddbc8ed526bf6dedb22de2e677bbae176b977aa7f7c0408999248c",
+      "bytes": 8,
+      "mode": "0600"
+    },
+    "runtime-node26-job.json": {
+      "sha256": "9b50a8be352005fe7efd73a85adda6efd3cd52629bc7bc82e77e8f985b5bf34c",
+      "bytes": 53581,
+      "mode": "0600"
+    },
+    "seal-prefreeze.py": {
+      "sha256": "1e8f6c6097963c53c53b00425d971c843138b70e1355e9c502aa16a92153539e",
+      "bytes": 3753,
+      "mode": "0600"
+    },
+    "strict-fixture-mode-diagnosis.json": {
+      "sha256": "f660d84446e450912fea7832a15f2090cefea1343b0034bf91721ae476c9f3ee",
+      "bytes": 507,
+      "mode": "0600"
+    },
+    "typecheck-first-node26/command.json": {
+      "sha256": "15b68e4543c5d099e272a627468ab52e3371500a08611554e08064309c41b916",
+      "bytes": 54031,
+      "mode": "0600"
+    },
+    "typecheck-first-node26/result.json": {
+      "sha256": "8450573e0ed69fc080998dd7c1942444639da488cfeb3d838a3eaa527e77be34",
+      "bytes": 58904,
+      "mode": "0600"
+    },
+    "typecheck-first-node26/started.json": {
+      "sha256": "96db1fc6bde72da4da7b6e90b5dc0f716fc3fc1bbb2f7906f891b99061babcf5",
+      "bytes": 348,
+      "mode": "0600"
+    },
+    "typecheck-first-node26/stderr.txt": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0,
+      "mode": "0600"
+    },
+    "typecheck-first-node26/stdout.txt": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0,
+      "mode": "0600"
+    },
+    "typecheck-first-node26-job.json": {
+      "sha256": "db967331bbb0460bb2c9913166a58cc79520a13348e4c679f3330a68e84fe242",
+      "bytes": 53613,
+      "mode": "0600"
+    },
+    "typecheck-node24/command.json": {
+      "sha256": "ecac66fcda4b2285c501ffa948f5848c77908ab074ed7be204bb8b77ddb4b63c",
+      "bytes": 54125,
+      "mode": "0600"
+    },
+    "typecheck-node24/result.json": {
+      "sha256": "0c0d0a9e8de65d135c5b3c6010162fb7882aa63d967b17ff2baa5b0d1a44f5a6",
+      "bytes": 58898,
+      "mode": "0600"
+    },
+    "typecheck-node24/started.json": {
+      "sha256": "97931307ce477d81b51d80ecc38f7fc23677871f3449669d28de22845ecfecca",
+      "bytes": 379,
+      "mode": "0600"
+    },
+    "typecheck-node24/stderr.txt": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0,
+      "mode": "0600"
+    },
+    "typecheck-node24/stdout.txt": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0,
+      "mode": "0600"
+    },
+    "typecheck-node24-job.json": {
+      "sha256": "bd2fc82c2f5667dcc7b29cd7eaac7749a15daf3b4a2153ec89799a91e58a3174",
+      "bytes": 53707,
+      "mode": "0600"
+    },
+    "typecheck-node26/command.json": {
+      "sha256": "fb19ea734b10a07cc56f838dbe6828a6b9b101f38d1fed6b959cd66dd46d459b",
+      "bytes": 54063,
+      "mode": "0600"
+    },
+    "typecheck-node26/result.json": {
+      "sha256": "3cebd1964fc1536da3a4d30caa5fc5d0bac1134b622ddd7054c0c4f0b34e61a6",
+      "bytes": 58898,
+      "mode": "0600"
+    },
+    "typecheck-node26/started.json": {
+      "sha256": "fc5628e7047bba9c533a2a342639e4f893e4ee3d2d52add768f90e4492f9fb53",
+      "bytes": 348,
+      "mode": "0600"
+    },
+    "typecheck-node26/stderr.txt": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0,
+      "mode": "0600"
+    },
+    "typecheck-node26/stdout.txt": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0,
+      "mode": "0600"
+    },
+    "typecheck-node26-job.json": {
+      "sha256": "299f4f9ee46a8a1fb5b09ed4d3dffd85c72b978c3ba06d92674fcb64b050e0fa",
+      "bytes": 53645,
+      "mode": "0600"
+    }
+  },
+  "operationalFileExclusions": {
+    "npm-cache/_logs/2026-10-09T08_06_18_576Z-debug-0.log": {
+      "sha256": "3aeec0e9d16b42a9fe873b95501009ac7f03d543fc7d688a6e779622dd56a145",
+      "bytes": 1362,
+      "mode": "0600",
+      "reason": "operational npm cache or lock; mutable during authorized later defaults, not acceptance evidence"
+    },
+    "npm-cache/_logs/2026-10-09T08_06_19_174Z-debug-0.log": {
+      "sha256": "19552c8ea861c1cbcd9f2966130d162da42ea3fc2322f5333c67be553cb42877",
+      "bytes": 1393,
+      "mode": "0600",
+      "reason": "operational npm cache or lock; mutable during authorized later defaults, not acceptance evidence"
+    },
+    "npm-cache/_update-notifier-last-checked": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0,
+      "mode": "0600",
+      "reason": "operational npm cache or lock; mutable during authorized later defaults, not acceptance evidence"
+    },
+    "validation.lock": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0,
+      "mode": "0600",
+      "reason": "operational npm cache or lock; mutable during authorized later defaults, not acceptance evidence"
+    }
+  },
+  "selfExclusion": "predefault-evidence-manifest.json cannot hash itself; parent receives its exact SHA256",
+  "futureFiles": "actual-default-* and successor final report/index will be fresh and separately sealed",
+  "historicalCryptexEvidence": "../installed-cryptex-runtime remains untouched and is held by Root separately",
+  "failureTranscriptQualification": "predefault-packaging-selector-failure.txt is a transcription of the tool output, not a contemporaneous command recorder receipt",
+  "noExcludedAcceptanceReceipts": true,
+  "files600Directories700": true
+}
