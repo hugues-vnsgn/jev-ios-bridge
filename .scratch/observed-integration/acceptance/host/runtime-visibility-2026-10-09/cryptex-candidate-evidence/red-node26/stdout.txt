@@ -1,0 +1,30 @@
+✖ the approved readonly Cryptex layout supplies exact installed compatibility without creation (48.028667ms)
+✖ production composition authorizes the approved Cryptex conversion between fresh mount proofs (31.099708ms)
+ℹ tests 2
+ℹ suites 0
+ℹ pass 0
+ℹ fail 2
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 538.968459
+
+✖ failing tests:
+
+test at tests/observed-cryptex-runtime.test.ts:1:341
+✖ the approved readonly Cryptex layout supplies exact installed compatibility without creation (48.028667ms)
+  Error: HOST_PREREQUISITE_MISSING
+      at verifyInstalledCompatibility (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime/src/observed/allocation-config.ts:233:19)
+      at async TestContext.<anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime/tests/observed-cryptex-runtime.test.ts:10:19)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    reason: 'HOST_PREREQUISITE_MISSING'
+  }
+
+test at tests/observed-cryptex-runtime.test.ts:1:900
+✖ production composition authorizes the approved Cryptex conversion between fresh mount proofs (31.099708ms)
+  Error: Host process is not authorized
+      at process (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime/src/observed/allocation-config.ts:102:93)
+      at TestContext.<anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime/tests/observed-cryptex-runtime.test.ts:21:26)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7)

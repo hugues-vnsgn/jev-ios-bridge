@@ -1,0 +1,22 @@
+{
+  "commit": "720cb380d07102d72b20a6a4f5f7787a0ab88f2b",
+  "parent": "dadde33a36440db6d9414adf84f80916caa9d2b3",
+  "manifest": ".scratch/installed-cryptex-runtime/candidate-cli-source.json",
+  "manifestSha256": "de35d66204122d4b4561e60f20136d15545edf03ebc1c3cbaefd245888770b3b",
+  "index": ".scratch/installed-cryptex-runtime/verification-index-cli.json",
+  "indexSha256": "d9edd22be1e067380f26f50c7a350a1239df10610311c73338790e120783bbd9",
+  "matrix": ".scratch/installed-cryptex-runtime/clause-regression-matrix-cli.json",
+  "matrixSha256": "a757fb3724c75ef74285890b02d58f135a2a234ccab3c7fa31d2de5e16e4403a",
+  "report": ".scratch/installed-cryptex-runtime/cli-isolation-report.md",
+  "reportSha256": "f4e86daa72bb0f18cd3a6f4e8481242d4982119f0b7289520bd164b019fce97f",
+  "owned5": {
+    "src/observed/allocation-config.ts": "7d5798570970ca8de9fcca980b39662c4cf2b9be939e1ad31f23e9383e82fe62",
+    "tests/fixtures/observed-allocation-backend.ts": "021a93e539ebb56ffb3cac8b15d2b77b8ce838f3fb77f9e9ef31ff3ed3fa894a",
+    "tests/observed-cryptex-runtime.test.ts": "5d83f729916adec23cce5598e0afb51e84f8842b4af10dc6df37925e90b43bd6",
+    "tests/fixtures/observed-cryptex-runtime.ts": "a4fda3b5fbdd0addef8b4b12892ad66b9b454e765c35a8eff89c7ff8999a8da6",
+    "tests/fixtures/observed-cli-server.ts": "eb1ee9f4215fff24f70867e904c3817d0528a6c7c35efa97bc50ecce6ff63669"
+  },
+  "sourceCount": 441,
+  "protectedCount": 436,
+  "compiledCount": 69
+}

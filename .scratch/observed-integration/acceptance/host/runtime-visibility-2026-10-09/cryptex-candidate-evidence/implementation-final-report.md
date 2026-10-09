@@ -1,0 +1,9 @@
+# Cryptex author validation completed
+
+Frozen candidate `720cb380d07102d72b20a6a4f5f7787a0ab88f2b` passed the unmodified `npm run check` on exact Node 26.8.1 and 24.0.0, serially. Both actual defaults report 1,999/1,999 tests, zero failures/cancellations/skips/TODO, and exit zero after typecheck, test, and build. All 441 Source bytes, 436 protected paths, and 69 compiled files match the frozen candidate throughout. The normal child umask was 022; private evidence was 077. Runtime overrides, warning suppression, and credentials were absent. Node 24's run began after Node 26 actually closed successfully.
+
+The feature owns five product paths over base 38aa879c. The successor changes only the public fixture mapper and 14 pure mapping regressions over dadde33a. Production Source remains fixed. Both earlier serial focused checks passed 505/505, owned coverage 354/354, affected public suites 235/235, and typecheck/build. The 180 owned cases retain the original 166 assertions.
+
+The failed original default (1,985 / 1,858 pass / 127 fail), naturally closed without signals, remains immutable. Its build did not execute. Earlier overlap failures, mapping reds, attempted fixture fixes, stale seed schema fields, private packaging assertion mistakes, and exact hash-matched historical reconstructions remain explicitly identified in the linked successor index/report. Original candidate/manifest/report/index paths remain unchanged; successor product archives and public mapping red/green archives are contemporaneous.
+
+See actual-default-cli-summary.json and verification-index-cli-defaults.json for exact argv, fixed environment, runtimes, times, exits, raw hashes, Source and compiled correspondence. Independent nonauthor review and sole-operator installed compatibility/live acceptance remain separate pending gates. No native/device work or production acceptance claim is made by this author report.

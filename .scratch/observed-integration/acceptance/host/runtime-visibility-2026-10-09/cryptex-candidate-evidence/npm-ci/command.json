@@ -1,0 +1,33 @@
+{
+  "argv": [
+    "/opt/homebrew/bin/npm",
+    "ci",
+    "--ignore-scripts",
+    "--no-audit",
+    "--no-fund",
+    "--userconfig",
+    "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime/.scratch/installed-cryptex-runtime/npm-empty-userconfig",
+    "--globalconfig",
+    "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime/.scratch/installed-cryptex-runtime/npm-empty-globalconfig",
+    "--cache",
+    "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime/.scratch/installed-cryptex-runtime/npm-cache"
+  ],
+  "cwd": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime",
+  "evidenceDirectory": ".scratch/installed-cryptex-runtime/npm-ci",
+  "env": {
+    "PATH": "/opt/homebrew/Cellar/node/26.8.1/bin:/usr/bin:/bin:/usr/sbin:/sbin",
+    "HOME": "/Users/hugues_mini",
+    "LANG": "C",
+    "LC_ALL": "C"
+  },
+  "commandChildUmask": "022",
+  "evidenceUmask": "077",
+  "scope": "Locked isolated dependencies, no lifecycle scripts or inherited key/loader variables.",
+  "startedAtUtc": "2026-10-09T04:10:51.513520+00:00",
+  "completedAtUtc": "2026-10-09T04:10:53.969598+00:00",
+  "exitCode": 0,
+  "stdoutBytes": 26,
+  "stdoutSha256": "f872b59adcee32839892dba71882b03705ffde94eafa0a23bb88f656ffe384b0",
+  "stderrBytes": 209,
+  "stderrSha256": "e49b794cae6663ada86efea1579a0381251a5d4d1ff9b0cefed3e5622b21317d"
+}

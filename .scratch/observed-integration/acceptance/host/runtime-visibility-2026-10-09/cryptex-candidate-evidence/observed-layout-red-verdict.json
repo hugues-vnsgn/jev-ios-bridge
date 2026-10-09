@@ -1,0 +1,39 @@
+{
+  "verdict": "GENUINE_PRODUCT_RED_ON_BOTH_VERIFIED_NODES",
+  "receipts": [
+    {
+      "path": ".scratch/installed-cryptex-runtime/red-node26/command.json",
+      "sha256": "bf13524900893f01ac1b0d1cd192f7eaea2133332792545fbc20be3f6d9d3145",
+      "exitCode": 1,
+      "tests": 2,
+      "pass": 0,
+      "fail": 2,
+      "skipped": 0,
+      "cancelled": 0,
+      "todo": 0,
+      "observedErrors": [
+        "HOST_PREREQUISITE_MISSING",
+        "Host process is not authorized"
+      ]
+    },
+    {
+      "path": ".scratch/installed-cryptex-runtime/red-node24/command.json",
+      "sha256": "66f0c4a1486870a19506261d3c2f4b48d70eb0fc2abe879e38c88f8fbcce6a31",
+      "exitCode": 1,
+      "tests": 2,
+      "pass": 0,
+      "fail": 2,
+      "skipped": 0,
+      "cancelled": 0,
+      "todo": 0,
+      "observedErrors": [
+        "HOST_PREREQUISITE_MISSING",
+        "Host process is not authorized"
+      ]
+    }
+  ],
+  "source439Unchanged": true,
+  "sourceSha256": "82140b7f019e6031597b678669d8f491d414a0eaf43e403cf49fde68fd370026",
+  "productionSourceEdited": false,
+  "reason": "Current discovery does not enumerate the approved Cryptex layout and production process class excludes its fixed plist target; fixtures reached the existing prerequisite/authorization refusals, not an import or syntax error."
+}

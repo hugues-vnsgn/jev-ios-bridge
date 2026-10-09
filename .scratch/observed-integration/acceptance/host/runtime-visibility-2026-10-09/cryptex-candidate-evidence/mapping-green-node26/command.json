@@ -1,0 +1,31 @@
+{
+  "argv": [
+    "/opt/homebrew/Cellar/node/26.8.1/bin/node",
+    "--import",
+    "tsx",
+    "--test",
+    "tests/observed-cryptex-runtime.test.ts"
+  ],
+  "cwd": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime",
+  "evidenceDirectory": ".scratch/installed-cryptex-runtime/mapping-green-node26",
+  "env": {
+    "PATH": "/opt/homebrew/Cellar/node/26.8.1/bin:/usr/bin:/bin:/usr/sbin:/sbin",
+    "HOME": "/Users/hugues_mini",
+    "LANG": "C",
+    "LC_ALL": "C"
+  },
+  "commandChildUmask": "022",
+  "evidenceUmask": "077",
+  "purpose": "Both authorized mapping changes green; original two Cryptex product cases remain red before production Source edits.",
+  "sourceSha256": "82140b7f019e6031597b678669d8f491d414a0eaf43e403cf49fde68fd370026",
+  "testSha256": "639723c68e5183b144d4dbfddb5a84687f70b8b5425fe2c4ed9bdfbeea3a0267",
+  "fixtureSha256": "a2a3179081b8e9e9ccc21b5b3706eae29bfa10bf1a2569df1ffb4ad13d6dbd53",
+  "sharedFixtureSha256": "fc29492e92741c5d2871346d133f62f93d149a25b916b96bae9e2453367d7fba",
+  "startedAtUtc": "2026-10-09T04:26:08.420934+00:00",
+  "completedAtUtc": "2026-10-09T04:26:08.774063+00:00",
+  "exitCode": 1,
+  "stdoutBytes": 2155,
+  "stdoutSha256": "7074c9503d9127555e1a4238fdd7c36068ec2fef9bd49a2a3e7b76b9c07da15d",
+  "stderrBytes": 0,
+  "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+}

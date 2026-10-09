@@ -1,0 +1,33 @@
+✔ the installed fixture maps / into its temporary host tree (42.272959ms)
+✔ the installed fixture maps /private into its temporary host tree (31.097166ms)
+✔ the installed fixture maps /private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.1.434.0.iVUyCZ/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.0.simruntime/Contents/Info.plist into its temporary host tree (31.759125ms)
+✖ the approved readonly Cryptex layout supplies exact installed compatibility without creation (46.475125ms)
+✖ production composition authorizes the approved Cryptex conversion between fresh mount proofs (37.923084ms)
+ℹ tests 5
+ℹ suites 0
+ℹ pass 3
+ℹ fail 2
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 311.835459
+
+✖ failing tests:
+
+test at tests/observed-cryptex-runtime.test.ts:1:657
+✖ the approved readonly Cryptex layout supplies exact installed compatibility without creation (46.475125ms)
+  Error: HOST_PREREQUISITE_MISSING
+      at verifyInstalledCompatibility (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime/src/observed/allocation-config.ts:233:19)
+      at async TestContext.<anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime/tests/observed-cryptex-runtime.test.ts:19:19)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    reason: 'HOST_PREREQUISITE_MISSING'
+  }
+
+test at tests/observed-cryptex-runtime.test.ts:1:1216
+✖ production composition authorizes the approved Cryptex conversion between fresh mount proofs (37.923084ms)
+  Error: Host process is not authorized
+      at process (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime/src/observed/allocation-config.ts:102:93)
+      at TestContext.<anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime/tests/observed-cryptex-runtime.test.ts:30:26)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7)

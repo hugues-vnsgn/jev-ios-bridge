@@ -1,0 +1,30 @@
+✖ the Cryptex fixture preserves inherited temporary paths and account stats (46.091875ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 0
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 194.745291
+
+✖ failing tests:
+
+test at tests/observed-cryptex-runtime.test.ts:1:4298
+✖ the Cryptex fixture preserves inherited temporary paths and account stats (46.091875ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + '/private/tmp/observed-allocator-hkrxi3/cryptex-host/private/tmp/observed-allocator-hkrxi3'
+  - '/private/tmp/observed-allocator-hkrxi3'
+  
+      at TestContext.<anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime/tests/observed-cryptex-runtime.test.ts:85:79)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: '/private/tmp/observed-allocator-hkrxi3/cryptex-host/private/tmp/observed-allocator-hkrxi3',
+    expected: '/private/tmp/observed-allocator-hkrxi3',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }

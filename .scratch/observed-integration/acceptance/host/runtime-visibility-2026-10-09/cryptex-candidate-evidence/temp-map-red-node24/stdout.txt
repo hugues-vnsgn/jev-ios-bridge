@@ -1,0 +1,110 @@
+(node:3631) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ the installed fixture maps / into its temporary host tree (39.523333ms)
+✔ the installed fixture maps /private into its temporary host tree (26.770292ms)
+✔ the installed fixture maps /private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.1.434.0.iVUyCZ/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.0.simruntime/Contents/Info.plist into its temporary host tree (28.06225ms)
+✖ the installed fixture preserves its owned temporary root path (30.01475ms)
+✖ the installed fixture preserves its owned temporary home path (27.337458ms)
+✖ the installed fixture preserves its owned temporary app path (27.721708ms)
+✖ the installed fixture preserves its owned temporary store path (25.301917ms)
+✖ the installed fixture preserves its owned temporary configPath path (24.434334ms)
+ℹ tests 8
+ℹ suites 0
+ℹ pass 3
+ℹ fail 5
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 362.08825
+
+✖ failing tests:
+
+test at tests/observed-cryptex-runtime.test.ts:1:1104
+✖ the installed fixture preserves its owned temporary root path (30.01475ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + '/private/tmp/observed-allocator-pTO14N/host/private/tmp/observed-allocator-pTO14N'
+  - '/private/tmp/observed-allocator-pTO14N'
+  
+      at TestContext.<anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime/tests/observed-cryptex-runtime.test.ts:26:18)
+      at async Test.run (node:internal/test_runner/test:1069:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:752:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: '/private/tmp/observed-allocator-pTO14N/host/private/tmp/observed-allocator-pTO14N',
+    expected: '/private/tmp/observed-allocator-pTO14N',
+    operator: 'strictEqual'
+  }
+
+test at tests/observed-cryptex-runtime.test.ts:1:1104
+✖ the installed fixture preserves its owned temporary home path (27.337458ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + '/private/tmp/observed-allocator-6blVMr/host/private/tmp/observed-allocator-6blVMr/home'
+  - '/private/tmp/observed-allocator-6blVMr/home'
+  
+      at TestContext.<anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime/tests/observed-cryptex-runtime.test.ts:26:18)
+      at async Test.run (node:internal/test_runner/test:1069:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:752:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: '/private/tmp/observed-allocator-6blVMr/host/private/tmp/observed-allocator-6blVMr/home',
+    expected: '/private/tmp/observed-allocator-6blVMr/home',
+    operator: 'strictEqual'
+  }
+
+test at tests/observed-cryptex-runtime.test.ts:1:1104
+✖ the installed fixture preserves its owned temporary app path (27.721708ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + '/private/tmp/observed-allocator-spSdHm/host/private/tmp/observed-allocator-spSdHm/Fixture.app'
+  - '/private/tmp/observed-allocator-spSdHm/Fixture.app'
+  
+      at TestContext.<anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime/tests/observed-cryptex-runtime.test.ts:26:18)
+      at async Test.run (node:internal/test_runner/test:1069:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:752:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: '/private/tmp/observed-allocator-spSdHm/host/private/tmp/observed-allocator-spSdHm/Fixture.app',
+    expected: '/private/tmp/observed-allocator-spSdHm/Fixture.app',
+    operator: 'strictEqual'
+  }
+
+test at tests/observed-cryptex-runtime.test.ts:1:1104
+✖ the installed fixture preserves its owned temporary store path (25.301917ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + '/private/tmp/observed-allocator-erPflf/host/private/tmp/observed-allocator-erPflf/store'
+  - '/private/tmp/observed-allocator-erPflf/store'
+  
+      at TestContext.<anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime/tests/observed-cryptex-runtime.test.ts:26:18)
+      at async Test.run (node:internal/test_runner/test:1069:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:752:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: '/private/tmp/observed-allocator-erPflf/host/private/tmp/observed-allocator-erPflf/store',
+    expected: '/private/tmp/observed-allocator-erPflf/store',
+    operator: 'strictEqual'
+  }
+
+test at tests/observed-cryptex-runtime.test.ts:1:1104
+✖ the installed fixture preserves its owned temporary configPath path (24.434334ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + '/private/tmp/observed-allocator-QXHxL9/host/private/tmp/observed-allocator-QXHxL9/home/Library/Application Support/jev-ios-bridge/allocation.json'
+  - '/private/tmp/observed-allocator-QXHxL9/home/Library/Application Support/jev-ios-bridge/allocation.json'
+  
+      at TestContext.<anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime/tests/observed-cryptex-runtime.test.ts:26:18)
+      at async Test.run (node:internal/test_runner/test:1069:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:752:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: '/private/tmp/observed-allocator-QXHxL9/host/private/tmp/observed-allocator-QXHxL9/home/Library/Application Support/jev-ios-bridge/allocation.json',
+    expected: '/private/tmp/observed-allocator-QXHxL9/home/Library/Application Support/jev-ios-bridge/allocation.json',
+    operator: 'strictEqual'
+  }

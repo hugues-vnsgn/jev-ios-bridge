@@ -1,0 +1,26 @@
+{
+  "argv": [
+    "/opt/homebrew/bin/npm",
+    "ci",
+    "--ignore-scripts",
+    "--no-audit",
+    "--no-fund",
+    "--userconfig",
+    "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime/.scratch/installed-cryptex-runtime/npm-empty-userconfig",
+    "--globalconfig",
+    "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime/.scratch/installed-cryptex-runtime/npm-empty-globalconfig",
+    "--cache",
+    "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime/.scratch/installed-cryptex-runtime/npm-cache"
+  ],
+  "cwd": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime",
+  "evidenceDirectory": ".scratch/installed-cryptex-runtime/npm-ci",
+  "env": {
+    "PATH": "/opt/homebrew/Cellar/node/26.8.1/bin:/usr/bin:/bin:/usr/sbin:/sbin",
+    "HOME": "/Users/hugues_mini",
+    "LANG": "C",
+    "LC_ALL": "C"
+  },
+  "commandChildUmask": "022",
+  "evidenceUmask": "077",
+  "scope": "Locked isolated dependencies, no lifecycle scripts or inherited key/loader variables."
+}

@@ -1,0 +1,49 @@
+{
+  "observedAtUtc": "2026-10-09T04:45:24.424234+00:00",
+  "sessions": {
+    "26": 22522,
+    "24": 18444
+  },
+  "bothPending": true,
+  "sourceCurrent": "7d5798570970ca8de9fcca980b39662c4cf2b9be939e1ad31f23e9383e82fe62",
+  "sourceUnchangedDuringOverlap": true,
+  "callsAfterPending": "raw read only; no more tests/builds/source mutations",
+  "26": {
+    "argv": [
+      "/opt/homebrew/Cellar/node/26.8.1/bin/node",
+      "--import",
+      "tsx",
+      "--test",
+      "tests/observed-cryptex-runtime.test.ts",
+      "tests/observed-allocation-config.test.ts",
+      "tests/installed-plist.test.ts",
+      "tests/observed-allocation.test.ts",
+      "tests/observed-artifact.test.ts"
+    ],
+    "sourceSha256": "7d5798570970ca8de9fcca980b39662c4cf2b9be939e1ad31f23e9383e82fe62",
+    "stdoutBytesAtSnapshot": 15845,
+    "stdoutSha256AtSnapshot": "8ab204132a31b4d0f7cd96260314356a20562641b4d673188d114ce1858244f7",
+    "stderrBytesAtSnapshot": 0,
+    "stderrSha256AtSnapshot": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "failureLinesAtSnapshot": []
+  },
+  "24": {
+    "argv": [
+      "/Users/hugues_mini/.npm/_npx/2c6eebc6231f3284/node_modules/node/bin/node",
+      "--import",
+      "tsx",
+      "--test",
+      "tests/observed-cryptex-runtime.test.ts",
+      "tests/observed-allocation-config.test.ts",
+      "tests/installed-plist.test.ts",
+      "tests/observed-allocation.test.ts",
+      "tests/observed-artifact.test.ts"
+    ],
+    "sourceSha256": "7d5798570970ca8de9fcca980b39662c4cf2b9be939e1ad31f23e9383e82fe62",
+    "stdoutBytesAtSnapshot": 16022,
+    "stdoutSha256AtSnapshot": "aa45bbc93f6fa66b8c13459262460735e1dc653b0e403d9ec664ab95edecb9d6",
+    "stderrBytesAtSnapshot": 0,
+    "stderrSha256AtSnapshot": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "failureLinesAtSnapshot": []
+  }
+}

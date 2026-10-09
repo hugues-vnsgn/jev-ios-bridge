@@ -1,0 +1,90 @@
+(node:44375) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+✖ the installed fixture maps / into its temporary host tree (38.38525ms)
+✖ the installed fixture maps /private into its temporary host tree (28.470416ms)
+✖ the installed fixture maps /private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.1.434.0.iVUyCZ/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.0.simruntime/Contents/Info.plist into its temporary host tree (26.984375ms)
+✖ the approved readonly Cryptex layout supplies exact installed compatibility without creation (34.5865ms)
+✖ production composition authorizes the approved Cryptex conversion between fresh mount proofs (36.280625ms)
+ℹ tests 5
+ℹ suites 0
+ℹ pass 0
+ℹ fail 5
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 321.921917
+
+✖ failing tests:
+
+test at tests/observed-cryptex-runtime.test.ts:1:434
+✖ the installed fixture maps / into its temporary host tree (38.38525ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + '/'
+  - '/private/tmp/observed-allocator-myPMhX/host/'
+  
+      at TestContext.<anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime/tests/observed-cryptex-runtime.test.ts:11:18)
+      at async Test.run (node:internal/test_runner/test:1069:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:332:3) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: '/',
+    expected: '/private/tmp/observed-allocator-myPMhX/host/',
+    operator: 'strictEqual'
+  }
+
+test at tests/observed-cryptex-runtime.test.ts:1:434
+✖ the installed fixture maps /private into its temporary host tree (28.470416ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + '/private'
+  - '/private/tmp/observed-allocator-rvoBZO/host/private'
+             ^
+  
+      at TestContext.<anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime/tests/observed-cryptex-runtime.test.ts:11:18)
+      at async Test.run (node:internal/test_runner/test:1069:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:752:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: '/private',
+    expected: '/private/tmp/observed-allocator-rvoBZO/host/private',
+    operator: 'strictEqual'
+  }
+
+test at tests/observed-cryptex-runtime.test.ts:1:434
+✖ the installed fixture maps /private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.1.434.0.iVUyCZ/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.0.simruntime/Contents/Info.plist into its temporary host tree (26.984375ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + '/private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.1.434.0.iVUyCZ/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.0.simruntime/Contents/Info.plist'
+  - '/private/tmp/observed-allocator-fF3Oli/host/private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.1.434.0.iVUyCZ/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.0.simruntime/Contents/Info.plist'
+  
+      at TestContext.<anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime/tests/observed-cryptex-runtime.test.ts:11:18)
+      at async Test.run (node:internal/test_runner/test:1069:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:752:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: '/private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.1.434.0.iVUyCZ/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.0.simruntime/Contents/Info.plist',
+    expected: '/private/tmp/observed-allocator-fF3Oli/host/private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.1.434.0.iVUyCZ/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.0.simruntime/Contents/Info.plist',
+    operator: 'strictEqual'
+  }
+
+test at tests/observed-cryptex-runtime.test.ts:1:657
+✖ the approved readonly Cryptex layout supplies exact installed compatibility without creation (34.5865ms)
+  Error: HOST_PREREQUISITE_MISSING
+      at verifyInstalledCompatibility (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime/src/observed/allocation-config.ts:233:19)
+      at async TestContext.<anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime/tests/observed-cryptex-runtime.test.ts:19:19)
+      at async Test.run (node:internal/test_runner/test:1069:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:752:7) {
+    reason: 'HOST_PREREQUISITE_MISSING'
+  }
+
+test at tests/observed-cryptex-runtime.test.ts:1:1216
+✖ production composition authorizes the approved Cryptex conversion between fresh mount proofs (36.280625ms)
+  Error: Host process is not authorized
+      at process (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime/src/observed/allocation-config.ts:102:93)
+      at TestContext.<anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime/tests/observed-cryptex-runtime.test.ts:30:26)
+      at async Test.run (node:internal/test_runner/test:1069:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:752:7)

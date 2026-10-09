@@ -1,0 +1,23 @@
+{
+  "argv": [
+    "/Users/hugues_mini/.npm/_npx/2c6eebc6231f3284/node_modules/node/bin/node",
+    "--import",
+    "tsx",
+    "--test",
+    "tests/observed-cryptex-runtime.test.ts"
+  ],
+  "cwd": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime",
+  "evidenceDirectory": ".scratch/installed-cryptex-runtime/red-node24",
+  "env": {
+    "PATH": "/Users/hugues_mini/.npm/_npx/2c6eebc6231f3284/node_modules/node/bin:/usr/bin:/bin:/usr/sbin:/sbin",
+    "HOME": "/Users/hugues_mini",
+    "LANG": "C",
+    "LC_ALL": "C"
+  },
+  "commandChildUmask": "022",
+  "evidenceUmask": "077",
+  "purpose": "Genuine two-case observed-layout regression against unchanged frozen product before any Source edit.",
+  "sourceSha256": "82140b7f019e6031597b678669d8f491d414a0eaf43e403cf49fde68fd370026",
+  "testSha256": "43f16147dc7e0e8145ff198340799c6d0fc3520205658c52520732f63e9d6aaa",
+  "fixtureSha256": "a2a3179081b8e9e9ccc21b5b3706eae29bfa10bf1a2569df1ffb4ad13d6dbd53"
+}

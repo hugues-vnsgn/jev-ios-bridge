@@ -1,0 +1,30 @@
+{
+  "argv": [
+    "/opt/homebrew/Cellar/node/26.8.1/bin/node",
+    "--import",
+    "tsx",
+    "--test",
+    "tests/observed-cryptex-runtime.test.ts"
+  ],
+  "cwd": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime",
+  "evidenceDirectory": ".scratch/installed-cryptex-runtime/mapping-red-node26",
+  "env": {
+    "PATH": "/opt/homebrew/Cellar/node/26.8.1/bin:/usr/bin:/bin:/usr/sbin:/sbin",
+    "HOME": "/Users/hugues_mini",
+    "LANG": "C",
+    "LC_ALL": "C"
+  },
+  "commandChildUmask": "022",
+  "evidenceUmask": "077",
+  "purpose": "Pure string fixture isolation regression before shared fixture mapping edits; product remains unchanged.",
+  "sourceSha256": "82140b7f019e6031597b678669d8f491d414a0eaf43e403cf49fde68fd370026",
+  "testSha256": "d1637f8bebb6e7dde8cf056b1598e1cc78b6bc9749ca7dc872ed1f873c7b3799",
+  "fixtureSha256": "a2a3179081b8e9e9ccc21b5b3706eae29bfa10bf1a2569df1ffb4ad13d6dbd53",
+  "startedAtUtc": "2026-10-09T04:25:34.130466+00:00",
+  "completedAtUtc": "2026-10-09T04:25:34.492690+00:00",
+  "exitCode": 1,
+  "stdoutBytes": 2624,
+  "stdoutSha256": "d5538b47098115c6c6915119dd375e153d6b69f75a55ba236477dc7db38335ab",
+  "stderrBytes": 0,
+  "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+}

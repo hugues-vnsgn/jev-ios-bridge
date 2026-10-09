@@ -1,0 +1,113 @@
+✔ the installed fixture maps / into its temporary host tree (40.049ms)
+✔ the installed fixture maps /private into its temporary host tree (27.592042ms)
+✔ the installed fixture maps /private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.1.434.0.iVUyCZ/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.0.simruntime/Contents/Info.plist into its temporary host tree (25.677667ms)
+✖ the installed fixture preserves its owned temporary root path (25.878709ms)
+✖ the installed fixture preserves its owned temporary home path (26.811375ms)
+✖ the installed fixture preserves its owned temporary app path (24.645792ms)
+✖ the installed fixture preserves its owned temporary store path (32.649375ms)
+✖ the installed fixture preserves its owned temporary configPath path (25.476917ms)
+ℹ tests 8
+ℹ suites 0
+ℹ pass 3
+ℹ fail 5
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 368.935959
+
+✖ failing tests:
+
+test at tests/observed-cryptex-runtime.test.ts:1:1104
+✖ the installed fixture preserves its owned temporary root path (25.878709ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + '/private/tmp/observed-allocator-YHIUzX/host/private/tmp/observed-allocator-YHIUzX'
+  - '/private/tmp/observed-allocator-YHIUzX'
+  
+      at TestContext.<anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime/tests/observed-cryptex-runtime.test.ts:26:18)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: '/private/tmp/observed-allocator-YHIUzX/host/private/tmp/observed-allocator-YHIUzX',
+    expected: '/private/tmp/observed-allocator-YHIUzX',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/observed-cryptex-runtime.test.ts:1:1104
+✖ the installed fixture preserves its owned temporary home path (26.811375ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + '/private/tmp/observed-allocator-f2VVN0/host/private/tmp/observed-allocator-f2VVN0/home'
+  - '/private/tmp/observed-allocator-f2VVN0/home'
+  
+      at TestContext.<anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime/tests/observed-cryptex-runtime.test.ts:26:18)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: '/private/tmp/observed-allocator-f2VVN0/host/private/tmp/observed-allocator-f2VVN0/home',
+    expected: '/private/tmp/observed-allocator-f2VVN0/home',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/observed-cryptex-runtime.test.ts:1:1104
+✖ the installed fixture preserves its owned temporary app path (24.645792ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + '/private/tmp/observed-allocator-zZ9oKp/host/private/tmp/observed-allocator-zZ9oKp/Fixture.app'
+  - '/private/tmp/observed-allocator-zZ9oKp/Fixture.app'
+  
+      at TestContext.<anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime/tests/observed-cryptex-runtime.test.ts:26:18)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: '/private/tmp/observed-allocator-zZ9oKp/host/private/tmp/observed-allocator-zZ9oKp/Fixture.app',
+    expected: '/private/tmp/observed-allocator-zZ9oKp/Fixture.app',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/observed-cryptex-runtime.test.ts:1:1104
+✖ the installed fixture preserves its owned temporary store path (32.649375ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + '/private/tmp/observed-allocator-eNDagw/host/private/tmp/observed-allocator-eNDagw/store'
+  - '/private/tmp/observed-allocator-eNDagw/store'
+  
+      at TestContext.<anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime/tests/observed-cryptex-runtime.test.ts:26:18)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: '/private/tmp/observed-allocator-eNDagw/host/private/tmp/observed-allocator-eNDagw/store',
+    expected: '/private/tmp/observed-allocator-eNDagw/store',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/observed-cryptex-runtime.test.ts:1:1104
+✖ the installed fixture preserves its owned temporary configPath path (25.476917ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + '/private/tmp/observed-allocator-uvY2Z4/host/private/tmp/observed-allocator-uvY2Z4/home/Library/Application Support/jev-ios-bridge/allocation.json'
+  - '/private/tmp/observed-allocator-uvY2Z4/home/Library/Application Support/jev-ios-bridge/allocation.json'
+  
+      at TestContext.<anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime/tests/observed-cryptex-runtime.test.ts:26:18)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: '/private/tmp/observed-allocator-uvY2Z4/host/private/tmp/observed-allocator-uvY2Z4/home/Library/Application Support/jev-ios-bridge/allocation.json',
+    expected: '/private/tmp/observed-allocator-uvY2Z4/home/Library/Application Support/jev-ios-bridge/allocation.json',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }

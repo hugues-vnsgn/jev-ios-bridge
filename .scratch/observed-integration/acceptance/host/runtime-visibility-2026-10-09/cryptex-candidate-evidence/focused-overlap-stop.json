@@ -1,0 +1,588 @@
+{
+  "completedAtUtc": "2026-10-09T04:47:19.946609+00:00",
+  "worktree": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime",
+  "roots": {
+    "26": 88716,
+    "24": 89265
+  },
+  "selectedProcesses": [
+    {
+      "pid": 88716,
+      "ppid": 88697,
+      "state": "S",
+      "command": "/opt/homebrew/Cellar/node/26.8.1/bin/node --import tsx --test tests/observed-cryptex-runtime.test.ts tests/observed-allocation-config.test.ts tests/installed-plist.test.ts tests/observed-allocation.test.ts tests/observed-artifact.test.ts",
+      "cwd": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime",
+      "node": "26",
+      "root": 88716
+    },
+    {
+      "pid": 88719,
+      "ppid": 88716,
+      "state": "S",
+      "command": "/opt/homebrew/Cellar/node/26.8.1/bin/node --test-concurrency=0 --heap-prof-interval=524288 --stack-trace-limit=10 --report-signal=SIGUSR2 --max-http-header-size=16384 --watch-kill-signal=SIGTERM --heapsnapshot-near-heap-limit=0 --inspect-publish-uid=stderr,http --test-isolation=process --test-coverage-lines=0 --cpu-prof-interval=1000 --test-coverage-functions=0 --test-timeout=0 --inspect-port=127.0.0.1:9229 --test-coverage-branches=0 --use-largepages=off --experimental-addon-modules --network-family-autoselection-attempt-timeout=500 --secure-heap-min=2 --import=tsx --v8-pool-size=4 --secure-heap=0 --tls-cipher-list=TLS_AES_256_GCM_SHA384:TLS_CHACHA20_POLY1305_SHA256:TLS_AES_128_GCM_SHA256:ECDHE-RSA-AES128-GCM-SHA256:ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-RSA-AES256-GCM-SHA384:ECDHE-ECDSA-AES256-GCM-SHA384:DHE-RSA-AES128-GCM-SHA256:ECDHE-RSA-AES128-SHA256:DHE-RSA-AES128-SHA256:ECDHE-RSA-AES256-SHA384:DHE-RSA-AES256-SHA384:ECDHE-RSA-AES256-SHA256:DHE-RSA-AES256-SHA256:HIGH:!aNULL:!eNULL:!EXPORT:!DES:!RC4:!MD5:!PSK:!SRP:!CAMELLIA --node-snapshot --trace-event-file-pattern=node_trace.${rotation}.log --import tsx tests/observed-allocation.test.ts",
+      "cwd": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime",
+      "node": "26",
+      "root": 88716
+    },
+    {
+      "pid": 88723,
+      "ppid": 88719,
+      "state": "S",
+      "command": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime/node_modules/@esbuild/darwin-arm64/bin/esbuild --service=0.28.2 --ping",
+      "cwd": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime",
+      "node": "26",
+      "root": 88716
+    },
+    {
+      "pid": 89265,
+      "ppid": 89246,
+      "state": "S",
+      "command": "/Users/hugues_mini/.npm/_npx/2c6eebc6231f3284/node_modules/node/bin/node --import tsx --test tests/observed-cryptex-runtime.test.ts tests/observed-allocation-config.test.ts tests/installed-plist.test.ts tests/observed-allocation.test.ts tests/observed-artifact.test.ts",
+      "cwd": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime",
+      "node": "24",
+      "root": 89265
+    },
+    {
+      "pid": 89278,
+      "ppid": 89265,
+      "state": "S",
+      "command": "/Users/hugues_mini/.npm/_npx/2c6eebc6231f3284/node_modules/node/bin/node --import tsx tests/observed-allocation.test.ts",
+      "cwd": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime",
+      "node": "24",
+      "root": 89265
+    },
+    {
+      "pid": 89284,
+      "ppid": 89278,
+      "state": "S",
+      "command": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime/node_modules/@esbuild/darwin-arm64/bin/esbuild --service=0.28.2 --ping",
+      "cwd": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime",
+      "node": "24",
+      "root": 89265
+    }
+  ],
+  "events": [
+    {
+      "atUtc": "2026-10-09T04:47:19.605456+00:00",
+      "argv": [
+        "/usr/bin/pgrep",
+        "-f",
+        "^/opt/homebrew/Cellar/node/26\\.8\\.1/bin/node --import tsx --test tests/observed-cryptex-runtime\\.test\\.ts tests/observed-allocation-config\\.test\\.ts tests/installed-plist\\.test\\.ts tests/observed-allocation\\.test\\.ts tests/observed-artifact\\.test\\.ts$"
+      ],
+      "exitCode": 0,
+      "stdout": "88716\n",
+      "stderr": ""
+    },
+    {
+      "atUtc": "2026-10-09T04:47:19.607529+00:00",
+      "argv": [
+        "/bin/ps",
+        "-p",
+        "88716",
+        "-o",
+        "pid=,ppid=,stat=,command="
+      ],
+      "exitCode": 0,
+      "stdout": "88716 88697 S    /opt/homebrew/Cellar/node/26.8.1/bin/node --import tsx --test tests/observed-cryptex-runtime.test.ts tests/observed-allocation-config.test.ts tests/installed-plist.test.ts tests/observed-allocation.test.ts tests/observed-artifact.test.ts\n",
+      "stderr": ""
+    },
+    {
+      "atUtc": "2026-10-09T04:47:19.625168+00:00",
+      "argv": [
+        "/usr/sbin/lsof",
+        "-a",
+        "-p",
+        "88716",
+        "-d",
+        "cwd",
+        "-Fn"
+      ],
+      "exitCode": 0,
+      "stdout": "p88716\nfcwd\nn/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime\n",
+      "stderr": ""
+    },
+    {
+      "atUtc": "2026-10-09T04:47:19.635303+00:00",
+      "argv": [
+        "/usr/bin/pgrep",
+        "-P",
+        "88716"
+      ],
+      "exitCode": 0,
+      "stdout": "88719\n",
+      "stderr": ""
+    },
+    {
+      "atUtc": "2026-10-09T04:47:19.637741+00:00",
+      "argv": [
+        "/bin/ps",
+        "-p",
+        "88719",
+        "-o",
+        "pid=,ppid=,stat=,command="
+      ],
+      "exitCode": 0,
+      "stdout": "88719 88716 S    /opt/homebrew/Cellar/node/26.8.1/bin/node --test-concurrency=0 --heap-prof-interval=524288 --stack-trace-limit=10 --report-signal=SIGUSR2 --max-http-header-size=16384 --watch-kill-signal=SIGTERM --heapsnapshot-near-heap-limit=0 --inspect-publish-uid=stderr,http --test-isolation=process --test-coverage-lines=0 --cpu-prof-interval=1000 --test-coverage-functions=0 --test-timeout=0 --inspect-port=127.0.0.1:9229 --test-coverage-branches=0 --use-largepages=off --experimental-addon-modules --network-family-autoselection-attempt-timeout=500 --secure-heap-min=2 --import=tsx --v8-pool-size=4 --secure-heap=0 --tls-cipher-list=TLS_AES_256_GCM_SHA384:TLS_CHACHA20_POLY1305_SHA256:TLS_AES_128_GCM_SHA256:ECDHE-RSA-AES128-GCM-SHA256:ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-RSA-AES256-GCM-SHA384:ECDHE-ECDSA-AES256-GCM-SHA384:DHE-RSA-AES128-GCM-SHA256:ECDHE-RSA-AES128-SHA256:DHE-RSA-AES128-SHA256:ECDHE-RSA-AES256-SHA384:DHE-RSA-AES256-SHA384:ECDHE-RSA-AES256-SHA256:DHE-RSA-AES256-SHA256:HIGH:!aNULL:!eNULL:!EXPORT:!DES:!RC4:!MD5:!PSK:!SRP:!CAMELLIA --node-snapshot --trace-event-file-pattern=node_trace.${rotation}.log --import tsx tests/observed-allocation.test.ts\n",
+      "stderr": ""
+    },
+    {
+      "atUtc": "2026-10-09T04:47:19.655512+00:00",
+      "argv": [
+        "/usr/sbin/lsof",
+        "-a",
+        "-p",
+        "88719",
+        "-d",
+        "cwd",
+        "-Fn"
+      ],
+      "exitCode": 0,
+      "stdout": "p88719\nfcwd\nn/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime\n",
+      "stderr": ""
+    },
+    {
+      "atUtc": "2026-10-09T04:47:19.665906+00:00",
+      "argv": [
+        "/usr/bin/pgrep",
+        "-P",
+        "88719"
+      ],
+      "exitCode": 0,
+      "stdout": "88723\n",
+      "stderr": ""
+    },
+    {
+      "atUtc": "2026-10-09T04:47:19.668292+00:00",
+      "argv": [
+        "/bin/ps",
+        "-p",
+        "88723",
+        "-o",
+        "pid=,ppid=,stat=,command="
+      ],
+      "exitCode": 0,
+      "stdout": "88723 88719 S    /Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime/node_modules/@esbuild/darwin-arm64/bin/esbuild --service=0.28.2 --ping\n",
+      "stderr": ""
+    },
+    {
+      "atUtc": "2026-10-09T04:47:19.686025+00:00",
+      "argv": [
+        "/usr/sbin/lsof",
+        "-a",
+        "-p",
+        "88723",
+        "-d",
+        "cwd",
+        "-Fn"
+      ],
+      "exitCode": 0,
+      "stdout": "p88723\nfcwd\nn/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime\n",
+      "stderr": ""
+    },
+    {
+      "atUtc": "2026-10-09T04:47:19.696282+00:00",
+      "argv": [
+        "/usr/bin/pgrep",
+        "-P",
+        "88723"
+      ],
+      "exitCode": 1,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "atUtc": "2026-10-09T04:47:19.708212+00:00",
+      "argv": [
+        "/usr/bin/pgrep",
+        "-f",
+        "^/Users/hugues_mini/\\.npm/_npx/2c6eebc6231f3284/node_modules/node/bin/node --import tsx --test tests/observed-cryptex-runtime\\.test\\.ts tests/observed-allocation-config\\.test\\.ts tests/installed-plist\\.test\\.ts tests/observed-allocation\\.test\\.ts tests/observed-artifact\\.test\\.ts$"
+      ],
+      "exitCode": 0,
+      "stdout": "89265\n",
+      "stderr": ""
+    },
+    {
+      "atUtc": "2026-10-09T04:47:19.710530+00:00",
+      "argv": [
+        "/bin/ps",
+        "-p",
+        "89265",
+        "-o",
+        "pid=,ppid=,stat=,command="
+      ],
+      "exitCode": 0,
+      "stdout": "89265 89246 S    /Users/hugues_mini/.npm/_npx/2c6eebc6231f3284/node_modules/node/bin/node --import tsx --test tests/observed-cryptex-runtime.test.ts tests/observed-allocation-config.test.ts tests/installed-plist.test.ts tests/observed-allocation.test.ts tests/observed-artifact.test.ts\n",
+      "stderr": ""
+    },
+    {
+      "atUtc": "2026-10-09T04:47:19.728350+00:00",
+      "argv": [
+        "/usr/sbin/lsof",
+        "-a",
+        "-p",
+        "89265",
+        "-d",
+        "cwd",
+        "-Fn"
+      ],
+      "exitCode": 0,
+      "stdout": "p89265\nfcwd\nn/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime\n",
+      "stderr": ""
+    },
+    {
+      "atUtc": "2026-10-09T04:47:19.738502+00:00",
+      "argv": [
+        "/usr/bin/pgrep",
+        "-P",
+        "89265"
+      ],
+      "exitCode": 0,
+      "stdout": "89278\n",
+      "stderr": ""
+    },
+    {
+      "atUtc": "2026-10-09T04:47:19.740904+00:00",
+      "argv": [
+        "/bin/ps",
+        "-p",
+        "89278",
+        "-o",
+        "pid=,ppid=,stat=,command="
+      ],
+      "exitCode": 0,
+      "stdout": "89278 89265 S    /Users/hugues_mini/.npm/_npx/2c6eebc6231f3284/node_modules/node/bin/node --import tsx tests/observed-allocation.test.ts\n",
+      "stderr": ""
+    },
+    {
+      "atUtc": "2026-10-09T04:47:19.758366+00:00",
+      "argv": [
+        "/usr/sbin/lsof",
+        "-a",
+        "-p",
+        "89278",
+        "-d",
+        "cwd",
+        "-Fn"
+      ],
+      "exitCode": 0,
+      "stdout": "p89278\nfcwd\nn/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime\n",
+      "stderr": ""
+    },
+    {
+      "atUtc": "2026-10-09T04:47:19.768855+00:00",
+      "argv": [
+        "/usr/bin/pgrep",
+        "-P",
+        "89278"
+      ],
+      "exitCode": 0,
+      "stdout": "89284\n",
+      "stderr": ""
+    },
+    {
+      "atUtc": "2026-10-09T04:47:19.771084+00:00",
+      "argv": [
+        "/bin/ps",
+        "-p",
+        "89284",
+        "-o",
+        "pid=,ppid=,stat=,command="
+      ],
+      "exitCode": 0,
+      "stdout": "89284 89278 S    /Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime/node_modules/@esbuild/darwin-arm64/bin/esbuild --service=0.28.2 --ping\n",
+      "stderr": ""
+    },
+    {
+      "atUtc": "2026-10-09T04:47:19.789084+00:00",
+      "argv": [
+        "/usr/sbin/lsof",
+        "-a",
+        "-p",
+        "89284",
+        "-d",
+        "cwd",
+        "-Fn"
+      ],
+      "exitCode": 0,
+      "stdout": "p89284\nfcwd\nn/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime\n",
+      "stderr": ""
+    },
+    {
+      "atUtc": "2026-10-09T04:47:19.799102+00:00",
+      "argv": [
+        "/usr/bin/pgrep",
+        "-P",
+        "89284"
+      ],
+      "exitCode": 1,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "atUtc": "2026-10-09T04:47:19.799154+00:00",
+      "pid": 88719,
+      "signal": "SIGTERM"
+    },
+    {
+      "atUtc": "2026-10-09T04:47:19.799161+00:00",
+      "pid": 88723,
+      "signal": "SIGTERM"
+    },
+    {
+      "atUtc": "2026-10-09T04:47:19.799166+00:00",
+      "pid": 89278,
+      "signal": "SIGTERM"
+    },
+    {
+      "atUtc": "2026-10-09T04:47:19.799169+00:00",
+      "pid": 89284,
+      "signal": "SIGTERM"
+    },
+    {
+      "atUtc": "2026-10-09T04:47:19.799173+00:00",
+      "pid": 89265,
+      "signal": "SIGTERM"
+    },
+    {
+      "atUtc": "2026-10-09T04:47:19.799178+00:00",
+      "pid": 88716,
+      "signal": "SIGTERM"
+    },
+    {
+      "atUtc": "2026-10-09T04:47:19.802599+00:00",
+      "argv": [
+        "/bin/ps",
+        "-p",
+        "88716",
+        "-o",
+        "pid=,ppid=,stat=,command="
+      ],
+      "exitCode": 0,
+      "stdout": "88716 88697 R    /opt/homebrew/Cellar/node/26.8.1/bin/node --import tsx --test tests/observed-cryptex-runtime.test.ts tests/observed-allocation-config.test.ts tests/installed-plist.test.ts tests/observed-allocation.test.ts tests/observed-artifact.test.ts\n",
+      "stderr": ""
+    },
+    {
+      "atUtc": "2026-10-09T04:47:19.804826+00:00",
+      "argv": [
+        "/bin/ps",
+        "-p",
+        "88719",
+        "-o",
+        "pid=,ppid=,stat=,command="
+      ],
+      "exitCode": 0,
+      "stdout": "88719 88716 Z    <defunct>\n",
+      "stderr": ""
+    },
+    {
+      "atUtc": "2026-10-09T04:47:19.806900+00:00",
+      "argv": [
+        "/bin/ps",
+        "-p",
+        "88723",
+        "-o",
+        "pid=,ppid=,stat=,command="
+      ],
+      "exitCode": 1,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "atUtc": "2026-10-09T04:47:19.809028+00:00",
+      "argv": [
+        "/bin/ps",
+        "-p",
+        "89265",
+        "-o",
+        "pid=,ppid=,stat=,command="
+      ],
+      "exitCode": 1,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "atUtc": "2026-10-09T04:47:19.811126+00:00",
+      "argv": [
+        "/bin/ps",
+        "-p",
+        "89278",
+        "-o",
+        "pid=,ppid=,stat=,command="
+      ],
+      "exitCode": 1,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "atUtc": "2026-10-09T04:47:19.812952+00:00",
+      "argv": [
+        "/bin/ps",
+        "-p",
+        "89284",
+        "-o",
+        "pid=,ppid=,stat=,command="
+      ],
+      "exitCode": 1,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "atUtc": "2026-10-09T04:47:19.922303+00:00",
+      "argv": [
+        "/bin/ps",
+        "-p",
+        "88716",
+        "-o",
+        "pid=,ppid=,stat=,command="
+      ],
+      "exitCode": 1,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "atUtc": "2026-10-09T04:47:19.925357+00:00",
+      "argv": [
+        "/bin/ps",
+        "-p",
+        "88719",
+        "-o",
+        "pid=,ppid=,stat=,command="
+      ],
+      "exitCode": 1,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "atUtc": "2026-10-09T04:47:19.927837+00:00",
+      "argv": [
+        "/bin/ps",
+        "-p",
+        "88723",
+        "-o",
+        "pid=,ppid=,stat=,command="
+      ],
+      "exitCode": 1,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "atUtc": "2026-10-09T04:47:19.930200+00:00",
+      "argv": [
+        "/bin/ps",
+        "-p",
+        "89265",
+        "-o",
+        "pid=,ppid=,stat=,command="
+      ],
+      "exitCode": 1,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "atUtc": "2026-10-09T04:47:19.932467+00:00",
+      "argv": [
+        "/bin/ps",
+        "-p",
+        "89278",
+        "-o",
+        "pid=,ppid=,stat=,command="
+      ],
+      "exitCode": 1,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "atUtc": "2026-10-09T04:47:19.934668+00:00",
+      "argv": [
+        "/bin/ps",
+        "-p",
+        "89284",
+        "-o",
+        "pid=,ppid=,stat=,command="
+      ],
+      "exitCode": 1,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "atUtc": "2026-10-09T04:47:19.936784+00:00",
+      "argv": [
+        "/bin/ps",
+        "-p",
+        "88716",
+        "-o",
+        "pid=,ppid=,stat=,command="
+      ],
+      "exitCode": 1,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "atUtc": "2026-10-09T04:47:19.938847+00:00",
+      "argv": [
+        "/bin/ps",
+        "-p",
+        "88719",
+        "-o",
+        "pid=,ppid=,stat=,command="
+      ],
+      "exitCode": 1,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "atUtc": "2026-10-09T04:47:19.940897+00:00",
+      "argv": [
+        "/bin/ps",
+        "-p",
+        "88723",
+        "-o",
+        "pid=,ppid=,stat=,command="
+      ],
+      "exitCode": 1,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "atUtc": "2026-10-09T04:47:19.942789+00:00",
+      "argv": [
+        "/bin/ps",
+        "-p",
+        "89265",
+        "-o",
+        "pid=,ppid=,stat=,command="
+      ],
+      "exitCode": 1,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "atUtc": "2026-10-09T04:47:19.944696+00:00",
+      "argv": [
+        "/bin/ps",
+        "-p",
+        "89278",
+        "-o",
+        "pid=,ppid=,stat=,command="
+      ],
+      "exitCode": 1,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "atUtc": "2026-10-09T04:47:19.946581+00:00",
+      "argv": [
+        "/bin/ps",
+        "-p",
+        "89284",
+        "-o",
+        "pid=,ppid=,stat=,command="
+      ],
+      "exitCode": 1,
+      "stdout": "",
+      "stderr": ""
+    }
+  ],
+  "allSelectedConfirmedNotRunning": true,
+  "recordingWrappersNotSignalled": true
+}

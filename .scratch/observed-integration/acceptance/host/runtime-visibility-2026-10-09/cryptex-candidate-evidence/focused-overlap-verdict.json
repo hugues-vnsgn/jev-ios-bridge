@@ -1,0 +1,57 @@
+{
+  "authoritative": false,
+  "schedulingError": "Node24 started before Node26 completion",
+  "hangCause": "private prefix remapped owned /private/tmp fixture home; CONFIG_INVALID before deferred started callback, so the allocation test waited forever",
+  "cleanupReceipt": "focused-overlap-stop.json",
+  "completion": {
+    "26": {
+      "startedAtUtc": "2026-10-09T04:43:32.400679+00:00",
+      "completedAtUtc": "2026-10-09T04:47:19.805170+00:00",
+      "exitCode": 1,
+      "stdoutBytes": 33179,
+      "stderrBytes": 0,
+      "sourceSha256": "7d5798570970ca8de9fcca980b39662c4cf2b9be939e1ad31f23e9383e82fe62",
+      "testSha256": "d470fcc6c7b7f17aff4dd28f62dc7b533d0740a6ff5800aaa8b9cfa00f9d6b94",
+      "fixtureSha256": "530837acb7f3dd169bb288a6ede184021152d5bd7f776396da537f2caadcc08b",
+      "sharedFixtureSha256": "fc29492e92741c5d2871346d133f62f93d149a25b916b96bae9e2453367d7fba",
+      "summaryLines": [
+        "\u2716 one fresh allocation reserves and stages before create, prepares once and parks for a fresh action (108.508375ms)",
+        "\u2716 tests/observed-allocation.test.ts (227362.895708ms)",
+        "\u2139 tests 349",
+        "\u2139 pass 347",
+        "\u2139 fail 1",
+        "\u2139 cancelled 1",
+        "\u2139 skipped 0",
+        "\u2716 failing tests:",
+        "\u2716 one fresh allocation reserves and stages before create, prepares once and parks for a fresh action (108.508375ms)",
+        "\u2716 tests/observed-allocation.test.ts (227362.895708ms)"
+      ],
+      "source441Bound": true
+    },
+    "24": {
+      "startedAtUtc": "2026-10-09T04:43:42.996766+00:00",
+      "completedAtUtc": "2026-10-09T04:47:19.807661+00:00",
+      "exitCode": 1,
+      "stdoutBytes": 33418,
+      "stderrBytes": 0,
+      "sourceSha256": "7d5798570970ca8de9fcca980b39662c4cf2b9be939e1ad31f23e9383e82fe62",
+      "testSha256": "d470fcc6c7b7f17aff4dd28f62dc7b533d0740a6ff5800aaa8b9cfa00f9d6b94",
+      "fixtureSha256": "530837acb7f3dd169bb288a6ede184021152d5bd7f776396da537f2caadcc08b",
+      "sharedFixtureSha256": "fc29492e92741c5d2871346d133f62f93d149a25b916b96bae9e2453367d7fba",
+      "summaryLines": [
+        "\u2716 one fresh allocation reserves and stages before create, prepares once and parks for a fresh action (94.389916ms)",
+        "\u2716 tests/observed-allocation.test.ts (216691.515292ms)",
+        "\u2139 tests 349",
+        "\u2139 pass 347",
+        "\u2139 fail 1",
+        "\u2139 cancelled 1",
+        "\u2139 skipped 0",
+        "\u2716 failing tests:",
+        "\u2716 one fresh allocation reserves and stages before create, prepares once and parks for a fresh action (94.389916ms)",
+        "\u2716 tests/observed-allocation.test.ts (216691.515292ms)"
+      ],
+      "source441Bound": true
+    }
+  },
+  "sourceNotMutatedWhilePending": true
+}

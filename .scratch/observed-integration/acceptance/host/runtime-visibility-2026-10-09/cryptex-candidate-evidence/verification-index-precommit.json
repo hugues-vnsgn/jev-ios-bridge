@@ -1,0 +1,870 @@
+{
+  "allReceipts": [
+    {
+      "path": ".scratch/installed-cryptex-runtime/build-final-node24/command.json",
+      "sha256": "2251fb87e23b864bbf2379c6833f87a63d220a7c5c3be999187a46b015484b64",
+      "argv": [
+        "/Users/hugues_mini/.npm/_npx/2c6eebc6231f3284/node_modules/node/bin/node",
+        "/opt/homebrew/lib/node_modules/npm/bin/npm-cli.js",
+        "--userconfig",
+        ".scratch/installed-cryptex-runtime/npm-empty-userconfig",
+        "--globalconfig",
+        ".scratch/installed-cryptex-runtime/npm-empty-globalconfig",
+        "--cache",
+        ".scratch/installed-cryptex-runtime/npm-cache",
+        "run",
+        "build"
+      ],
+      "exitCode": 0,
+      "sourceSha256": "7d5798570970ca8de9fcca980b39662c4cf2b9be939e1ad31f23e9383e82fe62",
+      "source441Count": 441,
+      "authoritative": true
+    },
+    {
+      "path": ".scratch/installed-cryptex-runtime/build-final-node26/command.json",
+      "sha256": "16b8af168f4c34571c19d5bce4eda894ad1a3fa9e9b9844194cfb67787c19a12",
+      "argv": [
+        "/opt/homebrew/Cellar/node/26.8.1/bin/node",
+        "/opt/homebrew/lib/node_modules/npm/bin/npm-cli.js",
+        "--userconfig",
+        ".scratch/installed-cryptex-runtime/npm-empty-userconfig",
+        "--globalconfig",
+        ".scratch/installed-cryptex-runtime/npm-empty-globalconfig",
+        "--cache",
+        ".scratch/installed-cryptex-runtime/npm-cache",
+        "run",
+        "build"
+      ],
+      "exitCode": 0,
+      "sourceSha256": "7d5798570970ca8de9fcca980b39662c4cf2b9be939e1ad31f23e9383e82fe62",
+      "source441Count": 441,
+      "authoritative": true
+    },
+    {
+      "path": ".scratch/installed-cryptex-runtime/build-v1-node24/command.json",
+      "sha256": "024c4ba069ec8c9d949a08a75f5347a504a9e173d6c5ae1d804c960fde96171a",
+      "argv": [
+        "/Users/hugues_mini/.npm/_npx/2c6eebc6231f3284/node_modules/node/bin/node",
+        "/opt/homebrew/lib/node_modules/npm/bin/npm-cli.js",
+        "--userconfig",
+        ".scratch/installed-cryptex-runtime/npm-empty-userconfig",
+        "--globalconfig",
+        ".scratch/installed-cryptex-runtime/npm-empty-globalconfig",
+        "--cache",
+        ".scratch/installed-cryptex-runtime/npm-cache",
+        "run",
+        "build"
+      ],
+      "exitCode": 0,
+      "sourceSha256": "7d5798570970ca8de9fcca980b39662c4cf2b9be939e1ad31f23e9383e82fe62",
+      "source441Count": 441,
+      "authoritative": true
+    },
+    {
+      "path": ".scratch/installed-cryptex-runtime/build-v1-node26/command.json",
+      "sha256": "bc136e6a21a796e82e1a1f182cbc27b5414413fbfbdf093e833ffd62ed216fc5",
+      "argv": [
+        "/opt/homebrew/Cellar/node/26.8.1/bin/node",
+        "/opt/homebrew/lib/node_modules/npm/bin/npm-cli.js",
+        "--userconfig",
+        ".scratch/installed-cryptex-runtime/npm-empty-userconfig",
+        "--globalconfig",
+        ".scratch/installed-cryptex-runtime/npm-empty-globalconfig",
+        "--cache",
+        ".scratch/installed-cryptex-runtime/npm-cache",
+        "run",
+        "build"
+      ],
+      "exitCode": 0,
+      "sourceSha256": "7d5798570970ca8de9fcca980b39662c4cf2b9be939e1ad31f23e9383e82fe62",
+      "source441Count": 441,
+      "authoritative": true
+    },
+    {
+      "path": ".scratch/installed-cryptex-runtime/coverage-final-node24/command.json",
+      "sha256": "8f28b4de719c472ba7346db18551bd79b9a0e2a9130a7eb8f86b888d3f09b8b0",
+      "argv": [
+        "/Users/hugues_mini/.npm/_npx/2c6eebc6231f3284/node_modules/node/bin/node",
+        "--import",
+        "tsx",
+        "--experimental-test-coverage",
+        "--test-coverage-include=**/src/observed/allocation-config.ts",
+        "--test",
+        "tests/observed-cryptex-runtime.test.ts",
+        "tests/observed-allocation-config.test.ts",
+        "tests/installed-plist.test.ts"
+      ],
+      "exitCode": 0,
+      "sourceSha256": "7d5798570970ca8de9fcca980b39662c4cf2b9be939e1ad31f23e9383e82fe62",
+      "source441Count": 441,
+      "authoritative": true
+    },
+    {
+      "path": ".scratch/installed-cryptex-runtime/coverage-final-node26/command.json",
+      "sha256": "f5875585ff7f62e7430b99119cb1df86e385bea0ddfe2562e061f50a7033b864",
+      "argv": [
+        "/opt/homebrew/Cellar/node/26.8.1/bin/node",
+        "--import",
+        "tsx",
+        "--experimental-test-coverage",
+        "--test-coverage-include=**/src/observed/allocation-config.ts",
+        "--test",
+        "tests/observed-cryptex-runtime.test.ts",
+        "tests/observed-allocation-config.test.ts",
+        "tests/installed-plist.test.ts"
+      ],
+      "exitCode": 0,
+      "sourceSha256": "7d5798570970ca8de9fcca980b39662c4cf2b9be939e1ad31f23e9383e82fe62",
+      "source441Count": 441,
+      "authoritative": true
+    },
+    {
+      "path": ".scratch/installed-cryptex-runtime/coverage-v1-node24/command.json",
+      "sha256": "3aa77bfed0bd29a2986ed3aee950d47a0a9299d1a10383a3fc89fc783f831dc2",
+      "argv": [
+        "/Users/hugues_mini/.npm/_npx/2c6eebc6231f3284/node_modules/node/bin/node",
+        "--import",
+        "tsx",
+        "--experimental-test-coverage",
+        "--test-coverage-include=**/src/observed/allocation-config.ts",
+        "--test",
+        "tests/observed-cryptex-runtime.test.ts",
+        "tests/observed-allocation-config.test.ts",
+        "tests/installed-plist.test.ts"
+      ],
+      "exitCode": 0,
+      "sourceSha256": "7d5798570970ca8de9fcca980b39662c4cf2b9be939e1ad31f23e9383e82fe62",
+      "source441Count": 441,
+      "authoritative": true
+    },
+    {
+      "path": ".scratch/installed-cryptex-runtime/coverage-v1-node26/command.json",
+      "sha256": "e57729eb08793ee53bd1915e7d9a21375e73102876985f2b722ede781b2adc73",
+      "argv": [
+        "/opt/homebrew/Cellar/node/26.8.1/bin/node",
+        "--import",
+        "tsx",
+        "--experimental-test-coverage",
+        "--test-coverage-include=**/src/observed/allocation-config.ts",
+        "--test",
+        "tests/observed-cryptex-runtime.test.ts",
+        "tests/observed-allocation-config.test.ts",
+        "tests/installed-plist.test.ts"
+      ],
+      "exitCode": 0,
+      "sourceSha256": "7d5798570970ca8de9fcca980b39662c4cf2b9be939e1ad31f23e9383e82fe62",
+      "source441Count": 441,
+      "authoritative": true
+    },
+    {
+      "path": ".scratch/installed-cryptex-runtime/first-green-node24/command.json",
+      "sha256": "7b4c3558977eaf63552c281b1b526786294d62aeb390b54168cea2dc1c693b7c",
+      "argv": [
+        "/Users/hugues_mini/.npm/_npx/2c6eebc6231f3284/node_modules/node/bin/node",
+        "--import",
+        "tsx",
+        "--test",
+        "tests/observed-cryptex-runtime.test.ts"
+      ],
+      "exitCode": 0,
+      "sourceSha256": "7d5798570970ca8de9fcca980b39662c4cf2b9be939e1ad31f23e9383e82fe62",
+      "source441Count": 0,
+      "authoritative": true
+    },
+    {
+      "path": ".scratch/installed-cryptex-runtime/first-green-node26/command.json",
+      "sha256": "77a2cd44269f15f57868fc64443c24c8a8e8ba810747181db34de8f7eccc0c3b",
+      "argv": [
+        "/opt/homebrew/Cellar/node/26.8.1/bin/node",
+        "--import",
+        "tsx",
+        "--test",
+        "tests/observed-cryptex-runtime.test.ts"
+      ],
+      "exitCode": 0,
+      "sourceSha256": "7d5798570970ca8de9fcca980b39662c4cf2b9be939e1ad31f23e9383e82fe62",
+      "source441Count": 0,
+      "authoritative": true
+    },
+    {
+      "path": ".scratch/installed-cryptex-runtime/focused-final-node24/command.json",
+      "sha256": "794c0b3e1dc8b90b534af8d3d74bc0111324ca7ff827fbc50e2ad10543b97e56",
+      "argv": [
+        "/Users/hugues_mini/.npm/_npx/2c6eebc6231f3284/node_modules/node/bin/node",
+        "--import",
+        "tsx",
+        "--test",
+        "tests/observed-cryptex-runtime.test.ts",
+        "tests/observed-allocation-config.test.ts",
+        "tests/installed-plist.test.ts",
+        "tests/observed-allocation.test.ts",
+        "tests/observed-artifact.test.ts"
+      ],
+      "exitCode": 0,
+      "sourceSha256": "7d5798570970ca8de9fcca980b39662c4cf2b9be939e1ad31f23e9383e82fe62",
+      "source441Count": 441,
+      "authoritative": true
+    },
+    {
+      "path": ".scratch/installed-cryptex-runtime/focused-final-node26/command.json",
+      "sha256": "0cc333a40977bd9afffa87ae69c96b8bb190b7d0c33fad125ca6a1e8fb96bd16",
+      "argv": [
+        "/opt/homebrew/Cellar/node/26.8.1/bin/node",
+        "--import",
+        "tsx",
+        "--test",
+        "tests/observed-cryptex-runtime.test.ts",
+        "tests/observed-allocation-config.test.ts",
+        "tests/installed-plist.test.ts",
+        "tests/observed-allocation.test.ts",
+        "tests/observed-artifact.test.ts"
+      ],
+      "exitCode": 0,
+      "sourceSha256": "7d5798570970ca8de9fcca980b39662c4cf2b9be939e1ad31f23e9383e82fe62",
+      "source441Count": 441,
+      "authoritative": true
+    },
+    {
+      "path": ".scratch/installed-cryptex-runtime/focused-serial-node24/command.json",
+      "sha256": "ed2129fd3d1636562f5cd66d1e46ff9001928b764c5bb945995468c0ea856091",
+      "argv": [
+        "/Users/hugues_mini/.npm/_npx/2c6eebc6231f3284/node_modules/node/bin/node",
+        "--import",
+        "tsx",
+        "--test",
+        "tests/observed-cryptex-runtime.test.ts",
+        "tests/observed-allocation-config.test.ts",
+        "tests/installed-plist.test.ts",
+        "tests/observed-allocation.test.ts",
+        "tests/observed-artifact.test.ts"
+      ],
+      "exitCode": 0,
+      "sourceSha256": "7d5798570970ca8de9fcca980b39662c4cf2b9be939e1ad31f23e9383e82fe62",
+      "source441Count": 441,
+      "authoritative": true
+    },
+    {
+      "path": ".scratch/installed-cryptex-runtime/focused-serial-node26/command.json",
+      "sha256": "ab6e7b1b8f278e9d358a527bded4f618cac4dc82ea295c759b44290a636fe02e",
+      "argv": [
+        "/opt/homebrew/Cellar/node/26.8.1/bin/node",
+        "--import",
+        "tsx",
+        "--test",
+        "tests/observed-cryptex-runtime.test.ts",
+        "tests/observed-allocation-config.test.ts",
+        "tests/installed-plist.test.ts",
+        "tests/observed-allocation.test.ts",
+        "tests/observed-artifact.test.ts"
+      ],
+      "exitCode": 0,
+      "sourceSha256": "7d5798570970ca8de9fcca980b39662c4cf2b9be939e1ad31f23e9383e82fe62",
+      "source441Count": 441,
+      "authoritative": true
+    },
+    {
+      "path": ".scratch/installed-cryptex-runtime/focused-v2-node24/command.json",
+      "sha256": "742c6ab3a3c6b9793a5dfb7bfc09390cca950b437b0872f9b01f69aaa1121136",
+      "argv": [
+        "/Users/hugues_mini/.npm/_npx/2c6eebc6231f3284/node_modules/node/bin/node",
+        "--import",
+        "tsx",
+        "--test",
+        "tests/observed-cryptex-runtime.test.ts",
+        "tests/observed-allocation-config.test.ts",
+        "tests/installed-plist.test.ts",
+        "tests/observed-allocation.test.ts",
+        "tests/observed-artifact.test.ts"
+      ],
+      "exitCode": 1,
+      "sourceSha256": "7d5798570970ca8de9fcca980b39662c4cf2b9be939e1ad31f23e9383e82fe62",
+      "source441Count": 441,
+      "authoritative": false
+    },
+    {
+      "path": ".scratch/installed-cryptex-runtime/focused-v2-node26/command.json",
+      "sha256": "35ac1c280b620d9f87616c4821a7652cd5c3353a6bc7d79ee9b16b5b4095ecf3",
+      "argv": [
+        "/opt/homebrew/Cellar/node/26.8.1/bin/node",
+        "--import",
+        "tsx",
+        "--test",
+        "tests/observed-cryptex-runtime.test.ts",
+        "tests/observed-allocation-config.test.ts",
+        "tests/installed-plist.test.ts",
+        "tests/observed-allocation.test.ts",
+        "tests/observed-artifact.test.ts"
+      ],
+      "exitCode": 1,
+      "sourceSha256": "7d5798570970ca8de9fcca980b39662c4cf2b9be939e1ad31f23e9383e82fe62",
+      "source441Count": 441,
+      "authoritative": false
+    },
+    {
+      "path": ".scratch/installed-cryptex-runtime/mapping-green-node24/command.json",
+      "sha256": "633e31477bbb8a3ccef4bf17a8a1783e6a6b04db3c1be5eb66c5bd0f89be0acf",
+      "argv": [
+        "/Users/hugues_mini/.npm/_npx/2c6eebc6231f3284/node_modules/node/bin/node",
+        "--import",
+        "tsx",
+        "--test",
+        "tests/observed-cryptex-runtime.test.ts"
+      ],
+      "exitCode": 1,
+      "sourceSha256": "82140b7f019e6031597b678669d8f491d414a0eaf43e403cf49fde68fd370026",
+      "source441Count": 0,
+      "authoritative": true
+    },
+    {
+      "path": ".scratch/installed-cryptex-runtime/mapping-green-node26/command.json",
+      "sha256": "0d80b4a40615a3667c318a259f9976c487df9add8b7b1039272aae61744ad9bd",
+      "argv": [
+        "/opt/homebrew/Cellar/node/26.8.1/bin/node",
+        "--import",
+        "tsx",
+        "--test",
+        "tests/observed-cryptex-runtime.test.ts"
+      ],
+      "exitCode": 1,
+      "sourceSha256": "82140b7f019e6031597b678669d8f491d414a0eaf43e403cf49fde68fd370026",
+      "source441Count": 0,
+      "authoritative": true
+    },
+    {
+      "path": ".scratch/installed-cryptex-runtime/mapping-red-complete-node24/command.json",
+      "sha256": "0b29aa06bc899ca7c728f71a59c95628c9cb25b8d86a895fe890ed42126d2e0b",
+      "argv": [
+        "/Users/hugues_mini/.npm/_npx/2c6eebc6231f3284/node_modules/node/bin/node",
+        "--import",
+        "tsx",
+        "--test",
+        "tests/observed-cryptex-runtime.test.ts"
+      ],
+      "exitCode": 1,
+      "sourceSha256": "82140b7f019e6031597b678669d8f491d414a0eaf43e403cf49fde68fd370026",
+      "source441Count": 0,
+      "authoritative": true
+    },
+    {
+      "path": ".scratch/installed-cryptex-runtime/mapping-red-complete-node26/command.json",
+      "sha256": "176db72b22921b4a2ce4ab7575ab473430ac712d39b4478c9f8eb5425e5632f3",
+      "argv": [
+        "/opt/homebrew/Cellar/node/26.8.1/bin/node",
+        "--import",
+        "tsx",
+        "--test",
+        "tests/observed-cryptex-runtime.test.ts"
+      ],
+      "exitCode": 1,
+      "sourceSha256": "82140b7f019e6031597b678669d8f491d414a0eaf43e403cf49fde68fd370026",
+      "source441Count": 0,
+      "authoritative": true
+    },
+    {
+      "path": ".scratch/installed-cryptex-runtime/mapping-red-node24/command.json",
+      "sha256": "0b5d6427a95480a1c6ffbf60e77009f46ab2056f64d2cf403a53255e2cb6ab47",
+      "argv": [
+        "/Users/hugues_mini/.npm/_npx/2c6eebc6231f3284/node_modules/node/bin/node",
+        "--import",
+        "tsx",
+        "--test",
+        "tests/observed-cryptex-runtime.test.ts"
+      ],
+      "exitCode": 1,
+      "sourceSha256": "82140b7f019e6031597b678669d8f491d414a0eaf43e403cf49fde68fd370026",
+      "source441Count": 0,
+      "authoritative": true
+    },
+    {
+      "path": ".scratch/installed-cryptex-runtime/mapping-red-node26/command.json",
+      "sha256": "7af06ba20410bc09d26fe167a69b64e3ec67f6747207a09b17e32e1436f3df44",
+      "argv": [
+        "/opt/homebrew/Cellar/node/26.8.1/bin/node",
+        "--import",
+        "tsx",
+        "--test",
+        "tests/observed-cryptex-runtime.test.ts"
+      ],
+      "exitCode": 1,
+      "sourceSha256": "82140b7f019e6031597b678669d8f491d414a0eaf43e403cf49fde68fd370026",
+      "source441Count": 0,
+      "authoritative": true
+    },
+    {
+      "path": ".scratch/installed-cryptex-runtime/npm-ci/command.json",
+      "sha256": "8294290b6cab16c94449d54810cf5c2f27ff475dfc082dd4c83c6ec174f95353",
+      "argv": [
+        "/opt/homebrew/bin/npm",
+        "ci",
+        "--ignore-scripts",
+        "--no-audit",
+        "--no-fund",
+        "--userconfig",
+        "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime/.scratch/installed-cryptex-runtime/npm-empty-userconfig",
+        "--globalconfig",
+        "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime/.scratch/installed-cryptex-runtime/npm-empty-globalconfig",
+        "--cache",
+        "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime/.scratch/installed-cryptex-runtime/npm-cache"
+      ],
+      "exitCode": 0,
+      "sourceSha256": null,
+      "source441Count": 0,
+      "authoritative": true
+    },
+    {
+      "path": ".scratch/installed-cryptex-runtime/own-temp-map-green-node24/command.json",
+      "sha256": "627baea71e85a6b1ef38cf15b579da8aa4e4261245882d1cb8080331eaf93f5e",
+      "argv": [
+        "/Users/hugues_mini/.npm/_npx/2c6eebc6231f3284/node_modules/node/bin/node",
+        "--import",
+        "tsx",
+        "--test",
+        "--test-name-pattern=the Cryptex fixture preserves",
+        "tests/observed-cryptex-runtime.test.ts"
+      ],
+      "exitCode": 1,
+      "sourceSha256": "7d5798570970ca8de9fcca980b39662c4cf2b9be939e1ad31f23e9383e82fe62",
+      "source441Count": 441,
+      "authoritative": true
+    },
+    {
+      "path": ".scratch/installed-cryptex-runtime/own-temp-map-green-node26/command.json",
+      "sha256": "c9b73bdc12b3cf6df49e3a4b7852a4e1e72f4c970d0bcfb59c74160269238686",
+      "argv": [
+        "/opt/homebrew/Cellar/node/26.8.1/bin/node",
+        "--import",
+        "tsx",
+        "--test",
+        "--test-name-pattern=the Cryptex fixture preserves",
+        "tests/observed-cryptex-runtime.test.ts"
+      ],
+      "exitCode": 1,
+      "sourceSha256": "7d5798570970ca8de9fcca980b39662c4cf2b9be939e1ad31f23e9383e82fe62",
+      "source441Count": 441,
+      "authoritative": true
+    },
+    {
+      "path": ".scratch/installed-cryptex-runtime/own-temp-map-green2-node24/command.json",
+      "sha256": "e7c8fd2ce0347b789643826f7d83c153c573cf73ee2a9ccfce31344978032ccd",
+      "argv": [
+        "/Users/hugues_mini/.npm/_npx/2c6eebc6231f3284/node_modules/node/bin/node",
+        "--import",
+        "tsx",
+        "--test",
+        "--test-name-pattern=the Cryptex fixture preserves",
+        "tests/observed-cryptex-runtime.test.ts"
+      ],
+      "exitCode": 0,
+      "sourceSha256": "7d5798570970ca8de9fcca980b39662c4cf2b9be939e1ad31f23e9383e82fe62",
+      "source441Count": 441,
+      "authoritative": true
+    },
+    {
+      "path": ".scratch/installed-cryptex-runtime/own-temp-map-green2-node26/command.json",
+      "sha256": "1cad0895f59634e9e5ea69e401cc4bd8aa4eba0b74256ca8a5a775fb7f27c154",
+      "argv": [
+        "/opt/homebrew/Cellar/node/26.8.1/bin/node",
+        "--import",
+        "tsx",
+        "--test",
+        "--test-name-pattern=the Cryptex fixture preserves",
+        "tests/observed-cryptex-runtime.test.ts"
+      ],
+      "exitCode": 0,
+      "sourceSha256": "7d5798570970ca8de9fcca980b39662c4cf2b9be939e1ad31f23e9383e82fe62",
+      "source441Count": 441,
+      "authoritative": true
+    },
+    {
+      "path": ".scratch/installed-cryptex-runtime/own-temp-map-red-node24/command.json",
+      "sha256": "c53b1be7ccf4bc87e6cce09af01818c9a6545bdfa65cb974bb2fe9179c51c016",
+      "argv": [
+        "/Users/hugues_mini/.npm/_npx/2c6eebc6231f3284/node_modules/node/bin/node",
+        "--import",
+        "tsx",
+        "--test",
+        "--test-name-pattern=the Cryptex fixture preserves",
+        "tests/observed-cryptex-runtime.test.ts"
+      ],
+      "exitCode": 1,
+      "sourceSha256": "7d5798570970ca8de9fcca980b39662c4cf2b9be939e1ad31f23e9383e82fe62",
+      "source441Count": 441,
+      "authoritative": true
+    },
+    {
+      "path": ".scratch/installed-cryptex-runtime/own-temp-map-red-node26/command.json",
+      "sha256": "7679648fc958d3f5e23d77c2c90ac910783071d7a54b36e42cf4603dd179e6d1",
+      "argv": [
+        "/opt/homebrew/Cellar/node/26.8.1/bin/node",
+        "--import",
+        "tsx",
+        "--test",
+        "--test-name-pattern=the Cryptex fixture preserves",
+        "tests/observed-cryptex-runtime.test.ts"
+      ],
+      "exitCode": 1,
+      "sourceSha256": "7d5798570970ca8de9fcca980b39662c4cf2b9be939e1ad31f23e9383e82fe62",
+      "source441Count": 441,
+      "authoritative": true
+    },
+    {
+      "path": ".scratch/installed-cryptex-runtime/policy-focused-v1-node24/command.json",
+      "sha256": "6f09cfa09c0c794d4b2658b0885c0822c34a2fb63f0b51328882e5cd7e221000",
+      "argv": [
+        "/Users/hugues_mini/.npm/_npx/2c6eebc6231f3284/node_modules/node/bin/node",
+        "--import",
+        "tsx",
+        "--test",
+        "tests/observed-cryptex-runtime.test.ts"
+      ],
+      "exitCode": 0,
+      "sourceSha256": "7d5798570970ca8de9fcca980b39662c4cf2b9be939e1ad31f23e9383e82fe62",
+      "source441Count": 0,
+      "authoritative": true
+    },
+    {
+      "path": ".scratch/installed-cryptex-runtime/policy-focused-v1-node26/command.json",
+      "sha256": "3061efe58b84558795b3bb2db21a9531c944ba087b38c3ecbc24de10959b633a",
+      "argv": [
+        "/opt/homebrew/Cellar/node/26.8.1/bin/node",
+        "--import",
+        "tsx",
+        "--test",
+        "tests/observed-cryptex-runtime.test.ts"
+      ],
+      "exitCode": 0,
+      "sourceSha256": "7d5798570970ca8de9fcca980b39662c4cf2b9be939e1ad31f23e9383e82fe62",
+      "source441Count": 0,
+      "authoritative": true
+    },
+    {
+      "path": ".scratch/installed-cryptex-runtime/red-node24/command.json",
+      "sha256": "66f0c4a1486870a19506261d3c2f4b48d70eb0fc2abe879e38c88f8fbcce6a31",
+      "argv": [
+        "/Users/hugues_mini/.npm/_npx/2c6eebc6231f3284/node_modules/node/bin/node",
+        "--import",
+        "tsx",
+        "--test",
+        "tests/observed-cryptex-runtime.test.ts"
+      ],
+      "exitCode": 1,
+      "sourceSha256": "82140b7f019e6031597b678669d8f491d414a0eaf43e403cf49fde68fd370026",
+      "source441Count": 0,
+      "authoritative": true
+    },
+    {
+      "path": ".scratch/installed-cryptex-runtime/red-node26/command.json",
+      "sha256": "bf13524900893f01ac1b0d1cd192f7eaea2133332792545fbc20be3f6d9d3145",
+      "argv": [
+        "/opt/homebrew/Cellar/node/26.8.1/bin/node",
+        "--import",
+        "tsx",
+        "--test",
+        "tests/observed-cryptex-runtime.test.ts"
+      ],
+      "exitCode": 1,
+      "sourceSha256": "82140b7f019e6031597b678669d8f491d414a0eaf43e403cf49fde68fd370026",
+      "source441Count": 0,
+      "authoritative": true
+    },
+    {
+      "path": ".scratch/installed-cryptex-runtime/runtime-node24/command.json",
+      "sha256": "4c6720fd1ba30f551691f19b96fee8fa9aa3a2678f4e766d3c074f62e6b31776",
+      "argv": [
+        "/Users/hugues_mini/.npm/_npx/2c6eebc6231f3284/node_modules/node/bin/node",
+        "--version"
+      ],
+      "exitCode": 0,
+      "sourceSha256": null,
+      "source441Count": 0,
+      "authoritative": true
+    },
+    {
+      "path": ".scratch/installed-cryptex-runtime/runtime-node26/command.json",
+      "sha256": "1fcacbdfef28884fd38b5ef45277e576465ff5735e994b45ad6d253f3a17c8e2",
+      "argv": [
+        "/opt/homebrew/Cellar/node/26.8.1/bin/node",
+        "--version"
+      ],
+      "exitCode": 0,
+      "sourceSha256": null,
+      "source441Count": 0,
+      "authoritative": true
+    },
+    {
+      "path": ".scratch/installed-cryptex-runtime/runtime-npm/command.json",
+      "sha256": "96a968b5cdc1a7398fbf4b681630d932ac12756d68b88f8baa391e4ec2539978",
+      "argv": [
+        "/opt/homebrew/bin/npm",
+        "--version"
+      ],
+      "exitCode": 0,
+      "sourceSha256": null,
+      "source441Count": 0,
+      "authoritative": true
+    },
+    {
+      "path": ".scratch/installed-cryptex-runtime/temp-map-green-node24/command.json",
+      "sha256": "582a908ae6a0fd7d8e7436dbd31a6c5b22d8c50522d2a0205400520763b8a4f9",
+      "argv": [
+        "/Users/hugues_mini/.npm/_npx/2c6eebc6231f3284/node_modules/node/bin/node",
+        "--import",
+        "tsx",
+        "--test",
+        "--test-name-pattern=the installed fixture",
+        "tests/observed-cryptex-runtime.test.ts"
+      ],
+      "exitCode": 0,
+      "sourceSha256": "7d5798570970ca8de9fcca980b39662c4cf2b9be939e1ad31f23e9383e82fe62",
+      "source441Count": 441,
+      "authoritative": true
+    },
+    {
+      "path": ".scratch/installed-cryptex-runtime/temp-map-green-node26/command.json",
+      "sha256": "9e4d5e86857de15647406c67d7af85b746c94c2e6890a1069d51049e92c3d741",
+      "argv": [
+        "/opt/homebrew/Cellar/node/26.8.1/bin/node",
+        "--import",
+        "tsx",
+        "--test",
+        "--test-name-pattern=the installed fixture",
+        "tests/observed-cryptex-runtime.test.ts"
+      ],
+      "exitCode": 0,
+      "sourceSha256": "7d5798570970ca8de9fcca980b39662c4cf2b9be939e1ad31f23e9383e82fe62",
+      "source441Count": 441,
+      "authoritative": true
+    },
+    {
+      "path": ".scratch/installed-cryptex-runtime/temp-map-red-node24/command.json",
+      "sha256": "59f1956357ffbaa28c46eec29f7c6c756884c84f715a14184015807a6722623c",
+      "argv": [
+        "/Users/hugues_mini/.npm/_npx/2c6eebc6231f3284/node_modules/node/bin/node",
+        "--import",
+        "tsx",
+        "--test",
+        "--test-name-pattern=the installed fixture",
+        "tests/observed-cryptex-runtime.test.ts"
+      ],
+      "exitCode": 1,
+      "sourceSha256": "7d5798570970ca8de9fcca980b39662c4cf2b9be939e1ad31f23e9383e82fe62",
+      "source441Count": 441,
+      "authoritative": true
+    },
+    {
+      "path": ".scratch/installed-cryptex-runtime/temp-map-red-node26/command.json",
+      "sha256": "655447710d69977281d680f672645c827b2bfc5a8bec1d29e06c27f7e7aaaa33",
+      "argv": [
+        "/opt/homebrew/Cellar/node/26.8.1/bin/node",
+        "--import",
+        "tsx",
+        "--test",
+        "--test-name-pattern=the installed fixture",
+        "tests/observed-cryptex-runtime.test.ts"
+      ],
+      "exitCode": 1,
+      "sourceSha256": "7d5798570970ca8de9fcca980b39662c4cf2b9be939e1ad31f23e9383e82fe62",
+      "source441Count": 441,
+      "authoritative": true
+    },
+    {
+      "path": ".scratch/installed-cryptex-runtime/typecheck-final-node24/command.json",
+      "sha256": "c00edfaeb4800d5293d6156dbda70a343fa1889f1f8d75b4988d09ff43ca071f",
+      "argv": [
+        "/Users/hugues_mini/.npm/_npx/2c6eebc6231f3284/node_modules/node/bin/node",
+        "node_modules/typescript/bin/tsc",
+        "--noEmit"
+      ],
+      "exitCode": 0,
+      "sourceSha256": "7d5798570970ca8de9fcca980b39662c4cf2b9be939e1ad31f23e9383e82fe62",
+      "source441Count": 441,
+      "authoritative": true
+    },
+    {
+      "path": ".scratch/installed-cryptex-runtime/typecheck-final-node26/command.json",
+      "sha256": "6e3d608d93c511fa9f6750fca79dd52c38e1c9507e7688c56d31553a496598eb",
+      "argv": [
+        "/opt/homebrew/Cellar/node/26.8.1/bin/node",
+        "node_modules/typescript/bin/tsc",
+        "--noEmit"
+      ],
+      "exitCode": 0,
+      "sourceSha256": "7d5798570970ca8de9fcca980b39662c4cf2b9be939e1ad31f23e9383e82fe62",
+      "source441Count": 441,
+      "authoritative": true
+    },
+    {
+      "path": ".scratch/installed-cryptex-runtime/typecheck-v1-node24/command.json",
+      "sha256": "48c30c85045bd857edc50dff46b4c402e743c621b5f6867d1a2448c3283efcf0",
+      "argv": [
+        "/Users/hugues_mini/.npm/_npx/2c6eebc6231f3284/node_modules/node/bin/node",
+        "node_modules/typescript/bin/tsc",
+        "--noEmit"
+      ],
+      "exitCode": 0,
+      "sourceSha256": "7d5798570970ca8de9fcca980b39662c4cf2b9be939e1ad31f23e9383e82fe62",
+      "source441Count": 441,
+      "authoritative": true
+    },
+    {
+      "path": ".scratch/installed-cryptex-runtime/typecheck-v1-node26/command.json",
+      "sha256": "419e5f5758cb72a4571906cd7be0ba5a3e071e7195c5e490bbceae5611c70d2e",
+      "argv": [
+        "/opt/homebrew/Cellar/node/26.8.1/bin/node",
+        "node_modules/typescript/bin/tsc",
+        "--noEmit"
+      ],
+      "exitCode": 0,
+      "sourceSha256": "7d5798570970ca8de9fcca980b39662c4cf2b9be939e1ad31f23e9383e82fe62",
+      "source441Count": 441,
+      "authoritative": true
+    }
+  ],
+  "historicalByteNotes": {
+    "sourceFirstGreen": "contemporaneous bytes preserved before any further Source edit",
+    "initialRedTest": "hash-matching reconstruction after extensions, not contemporaneous archive",
+    "firstGreenTest": "hash-matching reconstruction after extensions, not contemporaneous archive",
+    "initialFixture": "hash-matching reconstruction after hook extensions, not contemporaneous archive",
+    "baseSourceAndSharedFixture": "saved before production/shared-fixture edit"
+  },
+  "overlapNotes": "focused-overlap-verdict.json",
+  "terminationNotes": "focused-overlap-stop.json",
+  "finalGates": {
+    "focused-final-node26": {
+      "receipt": ".scratch/installed-cryptex-runtime/focused-final-node26/command.json",
+      "receiptSha256": "0cc333a40977bd9afffa87ae69c96b8bb190b7d0c33fad125ca6a1e8fb96bd16",
+      "counts": {
+        "tests": 491,
+        "suites": 0,
+        "pass": 491,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "exitCode": 0,
+      "startedAtUtc": "2026-10-09T04:59:24.433618+00:00",
+      "completedAtUtc": "2026-10-09T05:00:04.108617+00:00",
+      "stdoutSha256": "34290bf4c4dc2a4c0399c66d008c083bfd8d274d91d249c1b6176f716f63ca90",
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "source441Match": true,
+      "coverage": null
+    },
+    "typecheck-final-node26": {
+      "receipt": ".scratch/installed-cryptex-runtime/typecheck-final-node26/command.json",
+      "receiptSha256": "6e3d608d93c511fa9f6750fca79dd52c38e1c9507e7688c56d31553a496598eb",
+      "counts": {},
+      "exitCode": 0,
+      "startedAtUtc": "2026-10-09T05:02:29.711065+00:00",
+      "completedAtUtc": "2026-10-09T05:02:30.113899+00:00",
+      "stdoutSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "source441Match": true,
+      "coverage": null
+    },
+    "coverage-final-node26": {
+      "receipt": ".scratch/installed-cryptex-runtime/coverage-final-node26/command.json",
+      "receiptSha256": "f5875585ff7f62e7430b99119cb1df86e385bea0ddfe2562e061f50a7033b864",
+      "counts": {
+        "tests": 340,
+        "suites": 0,
+        "pass": 340,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "exitCode": 0,
+      "startedAtUtc": "2026-10-09T05:02:31.938138+00:00",
+      "completedAtUtc": "2026-10-09T05:02:41.417081+00:00",
+      "stdoutSha256": "9d0e57e11eaa491c56239a6d11f8b909bb61f4dd7765109daf27199e67005152",
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "source441Match": true,
+      "coverage": {
+        "line": 97.97,
+        "branch": 93.37,
+        "functions": 86.76
+      }
+    },
+    "build-final-node26": {
+      "receipt": ".scratch/installed-cryptex-runtime/build-final-node26/command.json",
+      "receiptSha256": "16b8af168f4c34571c19d5bce4eda894ad1a3fa9e9b9844194cfb67787c19a12",
+      "counts": {},
+      "exitCode": 0,
+      "startedAtUtc": "2026-10-09T05:04:24.590821+00:00",
+      "completedAtUtc": "2026-10-09T05:04:25.028009+00:00",
+      "stdoutSha256": "d389e171e7d990557a7d1d14e7bf0468ef7ac9a086d5d3d6b4f7f76786d7e62a",
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "source441Match": true,
+      "coverage": null
+    },
+    "focused-final-node24": {
+      "receipt": ".scratch/installed-cryptex-runtime/focused-final-node24/command.json",
+      "receiptSha256": "794c0b3e1dc8b90b534af8d3d74bc0111324ca7ff827fbc50e2ad10543b97e56",
+      "counts": {
+        "tests": 491,
+        "suites": 0,
+        "pass": 491,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "exitCode": 0,
+      "startedAtUtc": "2026-10-09T05:00:40.270843+00:00",
+      "completedAtUtc": "2026-10-09T05:01:19.589001+00:00",
+      "stdoutSha256": "6db274b36d9f4a630b4638695d0be06c64acc1556240a248740d7ed88d4a646e",
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "source441Match": true,
+      "coverage": null
+    },
+    "typecheck-final-node24": {
+      "receipt": ".scratch/installed-cryptex-runtime/typecheck-final-node24/command.json",
+      "receiptSha256": "c00edfaeb4800d5293d6156dbda70a343fa1889f1f8d75b4988d09ff43ca071f",
+      "counts": {},
+      "exitCode": 0,
+      "startedAtUtc": "2026-10-09T05:02:30.694387+00:00",
+      "completedAtUtc": "2026-10-09T05:02:31.063997+00:00",
+      "stdoutSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "source441Match": true,
+      "coverage": null
+    },
+    "coverage-final-node24": {
+      "receipt": ".scratch/installed-cryptex-runtime/coverage-final-node24/command.json",
+      "receiptSha256": "8f28b4de719c472ba7346db18551bd79b9a0e2a9130a7eb8f86b888d3f09b8b0",
+      "counts": {
+        "tests": 340,
+        "suites": 0,
+        "pass": 340,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "exitCode": 0,
+      "startedAtUtc": "2026-10-09T05:02:52.349029+00:00",
+      "completedAtUtc": "2026-10-09T05:03:02.016913+00:00",
+      "stdoutSha256": "8ca6630f028c886bec1c3aff9fe9654cf7190e13343eb0039a57e9b31a5cc988",
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "source441Match": true,
+      "coverage": {
+        "line": 97.97,
+        "branch": 93.37,
+        "functions": 86.76
+      }
+    },
+    "build-final-node24": {
+      "receipt": ".scratch/installed-cryptex-runtime/build-final-node24/command.json",
+      "receiptSha256": "2251fb87e23b864bbf2379c6833f87a63d220a7c5c3be999187a46b015484b64",
+      "counts": {},
+      "exitCode": 0,
+      "startedAtUtc": "2026-10-09T05:04:26.145596+00:00",
+      "completedAtUtc": "2026-10-09T05:04:26.619674+00:00",
+      "stdoutSha256": "d389e171e7d990557a7d1d14e7bf0468ef7ac9a086d5d3d6b4f7f76786d7e62a",
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "source441Match": true,
+      "coverage": null
+    }
+  }
+}

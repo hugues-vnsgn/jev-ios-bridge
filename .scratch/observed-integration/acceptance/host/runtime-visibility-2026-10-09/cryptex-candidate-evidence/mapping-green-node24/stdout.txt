@@ -1,0 +1,35 @@
+(node:45412) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ the installed fixture maps / into its temporary host tree (42.62475ms)
+✔ the installed fixture maps /private into its temporary host tree (32.313708ms)
+✔ the installed fixture maps /private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.1.434.0.iVUyCZ/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.0.simruntime/Contents/Info.plist into its temporary host tree (32.82ms)
+✖ the approved readonly Cryptex layout supplies exact installed compatibility without creation (39.984041ms)
+✖ production composition authorizes the approved Cryptex conversion between fresh mount proofs (37.021208ms)
+ℹ tests 5
+ℹ suites 0
+ℹ pass 3
+ℹ fail 2
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 309.152792
+
+✖ failing tests:
+
+test at tests/observed-cryptex-runtime.test.ts:1:657
+✖ the approved readonly Cryptex layout supplies exact installed compatibility without creation (39.984041ms)
+  Error: HOST_PREREQUISITE_MISSING
+      at verifyInstalledCompatibility (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime/src/observed/allocation-config.ts:233:19)
+      at async TestContext.<anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime/tests/observed-cryptex-runtime.test.ts:19:19)
+      at async Test.run (node:internal/test_runner/test:1069:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:752:7) {
+    reason: 'HOST_PREREQUISITE_MISSING'
+  }
+
+test at tests/observed-cryptex-runtime.test.ts:1:1216
+✖ production composition authorizes the approved Cryptex conversion between fresh mount proofs (37.021208ms)
+  Error: Host process is not authorized
+      at process (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime/src/observed/allocation-config.ts:102:93)
+      at TestContext.<anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime/tests/observed-cryptex-runtime.test.ts:30:26)
+      at async Test.run (node:internal/test_runner/test:1069:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:752:7)

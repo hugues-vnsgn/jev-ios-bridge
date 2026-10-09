@@ -1,0 +1,14 @@
+{
+  "atUtc": "2026-10-09T04:11:40.763512+00:00",
+  "status": "FIXTURE_AND_TWO_REDS_PREPARED_NOT_RUN",
+  "source439Unchanged": true,
+  "protected438Unchanged": true,
+  "sourceSha256": "82140b7f019e6031597b678669d8f491d414a0eaf43e403cf49fde68fd370026",
+  "newOwnedFiles": {
+    "tests/observed-cryptex-runtime.test.ts": "43f16147dc7e0e8145ff198340799c6d0fc3520205658c52520732f63e9d6aaa",
+    "tests/fixtures/observed-cryptex-runtime.ts": "a2a3179081b8e9e9ccc21b5b3706eae29bfa10bf1a2569df1ffb4ad13d6dbd53"
+  },
+  "fakeOnly": "Every installed-looking path resolves into temporary fixture trees; synthetic stat identities and matching FileHandle stats. Child launch adapter never spawns native executables.",
+  "observedRed": false,
+  "productionSourceEdited": false
+}

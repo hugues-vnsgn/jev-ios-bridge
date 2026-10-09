@@ -1,0 +1,21 @@
+(node:29093) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+✖ the Cryptex fixture preserves inherited temporary paths and account stats (37.225417ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 0
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 161.428791
+
+✖ failing tests:
+
+test at tests/observed-cryptex-runtime.test.ts:1:4298
+✖ the Cryptex fixture preserves inherited temporary paths and account stats (37.225417ms)
+  Error: Fixture path outside temporary trees
+      at Object.map (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime/tests/fixtures/observed-cryptex-runtime.ts:38:11)
+      at TestContext.<anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime/tests/observed-cryptex-runtime.test.ts:85:87)
+      at async Test.run (node:internal/test_runner/test:1069:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:332:3)

@@ -1,0 +1,92 @@
+✖ the pure public fixture maps / into its temporary host tree (3.893958ms)
+✖ the pure public fixture maps /private into its temporary host tree (0.170333ms)
+✖ the pure public fixture maps /private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.1.434.0.iVUyCZ/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.0.simruntime/Contents/Info.plist into its temporary host tree (0.105ms)
+✔ the pure public fixture preserves its owned temporary path /private/tmp/jev-public-pure-fixture (0.085792ms)
+✔ the pure public fixture preserves its owned temporary path /private/tmp/jev-public-pure-fixture/home (0.034208ms)
+✔ the pure public fixture preserves its owned temporary path /private/tmp/jev-public-pure-fixture/runs/owned.json (0.027625ms)
+✔ the pure public fixture preserves installed mapping for /Applications/Xcode.app (0.0405ms)
+✔ the pure public fixture preserves installed mapping for /Library/Developer (0.028334ms)
+✔ the pure public fixture preserves installed mapping for /System/Library (0.034458ms)
+✔ the pure public fixture preserves installed mapping for /usr/bin/plutil (0.055625ms)
+✔ the pure public fixture preserves unrelated mapping for /private-other (0.038417ms)
+✔ the pure public fixture preserves unrelated mapping for /Applications-other (0.024125ms)
+✔ the pure public fixture preserves unrelated mapping for /opt/fixture (0.025167ms)
+✔ the pure public fixture preserves unrelated mapping for relative/fixture (0.018792ms)
+ℹ tests 14
+ℹ suites 0
+ℹ pass 11
+ℹ fail 3
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 319.977166
+
+✖ failing tests:
+
+test at tests/observed-cryptex-runtime.test.ts:1:949
+✖ the pure public fixture maps / into its temporary host tree (3.893958ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + '/'
+  - '/private/tmp/jev-public-pure-fixture/host/'
+  
+      at TestContext.<anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime/tests/observed-cryptex-runtime.test.ts:20:12)
+      at Test.runInAsyncScope (node:async_hooks:226:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.start (node:internal/test_runner/test:1262:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:387:17) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: '/',
+    expected: '/private/tmp/jev-public-pure-fixture/host/',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/observed-cryptex-runtime.test.ts:1:949
+✖ the pure public fixture maps /private into its temporary host tree (0.170333ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + '/private'
+  - '/private/tmp/jev-public-pure-fixture/host/private'
+             ^
+  
+      at TestContext.<anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime/tests/observed-cryptex-runtime.test.ts:20:12)
+      at Test.runInAsyncScope (node:async_hooks:226:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: '/private',
+    expected: '/private/tmp/jev-public-pure-fixture/host/private',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/observed-cryptex-runtime.test.ts:1:949
+✖ the pure public fixture maps /private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.1.434.0.iVUyCZ/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.0.simruntime/Contents/Info.plist into its temporary host tree (0.105ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + '/private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.1.434.0.iVUyCZ/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.0.simruntime/Contents/Info.plist'
+  - '/private/tmp/jev-public-pure-fixture/host/private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.1.434.0.iVUyCZ/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.0.simruntime/Contents/Info.plist'
+  
+      at TestContext.<anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime/tests/observed-cryptex-runtime.test.ts:20:12)
+      at Test.runInAsyncScope (node:async_hooks:226:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: '/private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.1.434.0.iVUyCZ/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.0.simruntime/Contents/Info.plist',
+    expected: '/private/tmp/jev-public-pure-fixture/host/private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.1.434.0.iVUyCZ/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.0.simruntime/Contents/Info.plist',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }

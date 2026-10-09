@@ -1,0 +1,22 @@
+✔ the pure public fixture maps / into its temporary host tree (1.080208ms)
+✔ the pure public fixture maps /private into its temporary host tree (0.087083ms)
+✔ the pure public fixture maps /private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.1.434.0.iVUyCZ/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.0.simruntime/Contents/Info.plist into its temporary host tree (0.083417ms)
+✔ the pure public fixture preserves its owned temporary path /private/tmp/jev-public-pure-fixture (0.036083ms)
+✔ the pure public fixture preserves its owned temporary path /private/tmp/jev-public-pure-fixture/home (0.040459ms)
+✔ the pure public fixture preserves its owned temporary path /private/tmp/jev-public-pure-fixture/runs/owned.json (0.030666ms)
+✔ the pure public fixture preserves installed mapping for /Applications/Xcode.app (0.037958ms)
+✔ the pure public fixture preserves installed mapping for /Library/Developer (0.032458ms)
+✔ the pure public fixture preserves installed mapping for /System/Library (0.04125ms)
+✔ the pure public fixture preserves installed mapping for /usr/bin/plutil (0.060542ms)
+✔ the pure public fixture preserves unrelated mapping for /private-other (0.045958ms)
+✔ the pure public fixture preserves unrelated mapping for /Applications-other (0.028083ms)
+✔ the pure public fixture preserves unrelated mapping for /opt/fixture (0.01675ms)
+✔ the pure public fixture preserves unrelated mapping for relative/fixture (0.016167ms)
+ℹ tests 14
+ℹ suites 0
+ℹ pass 14
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 271.916208
