@@ -1,0 +1,23 @@
+{
+  "register": "Reference: scoped independent review findings",
+  "initialChecker": {
+    "strict": 118,
+    "candidate": 0,
+    "reportMaskedWordCount": 261
+  },
+  "fixed": [
+    "Changed em-dash separators to colons and quotation marks to straight marks.",
+    "Rendered numeric line ranges with ASCII hyphens; kept exact paths, identifiers, clauses and claims.",
+    "Replaced the abbreviated P1 policy quotation with the full exact sentence."
+  ],
+  "leftAlone": [
+    "Exact policy/source identifiers and factual limitations; no claim softened."
+  ],
+  "flagged": [
+    "P1 fixture mismatch/restore is an unexecuted static trace; no native reproduction or atomic guarantee.",
+    "Original Node24 lower cause remains unresolved; later green does not prove original cause."
+  ],
+  "finalCheckerExit": 0,
+  "reportWhitespaceWords": 262,
+  "finalCheckerLog": "prose-check-final.txt"
+}

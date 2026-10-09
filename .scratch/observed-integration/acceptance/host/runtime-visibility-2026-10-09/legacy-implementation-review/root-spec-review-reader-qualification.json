@@ -1,0 +1,10 @@
+{
+  "atUtc": "2026-10-09T09:56:24.366688+00:00",
+  "initialInlineAuditExit": 1,
+  "initialError": "AssertionError at inline line22 after sealed outputs and13842 input files were rehashed",
+  "cause": "Root assumed failed/allChecks were integer counters; actual failed is a list and allChecks is the check-record list",
+  "correction": "Use failed==[], len(allChecks)==checks==passed and inspect each pass field. All reviewer originals remain unchanged.",
+  "supplementalReadQualification": "First schema-inspection output unintentionally printed the large allChecks list and then failed len(checks), which is an integer. Follow-up inspected only types/counts; no data or Source change.",
+  "sourceGateNativeOperations": false,
+  "contemporaneousRecorder": "Original inline attempts retained by session tool transcript, not a separate original script file."
+}

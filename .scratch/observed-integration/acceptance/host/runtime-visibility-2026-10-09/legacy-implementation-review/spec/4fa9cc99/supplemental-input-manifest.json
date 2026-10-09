@@ -1,0 +1,69 @@
+{
+  "checks": [
+    {
+      "check": "author owned199 occurrences198 distinct names qualification",
+      "pass": true
+    },
+    {
+      "check": "previous native audit supplied exactSHA",
+      "pass": true
+    },
+    {
+      "check": "prior design freeze suppliedSHA",
+      "pass": true
+    }
+  ],
+  "count": 10,
+  "files": {
+    "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic/.scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/legacy-volume-policy-review/spec/revision3/evidence-audit.json": {
+      "bytes": 17624,
+      "mode": "0o600",
+      "sha256": "f57ed948199b18ea13354cf4ebd1136b3d993e518b797f9a561a44314eb1f9fc"
+    },
+    "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic/.scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/legacy-volume-policy-review/spec/revision3/freeze.json": {
+      "bytes": 2832,
+      "mode": "0o600",
+      "sha256": "d3d41dbf67f00b77ce20e0b0b5f2efedbeadedd6bee55d4764bae6b8e940c2a8"
+    },
+    "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic/.scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/legacy-volume-policy-review/spec/revision3/inputs-manifest.json": {
+      "bytes": 13190,
+      "mode": "0o600",
+      "sha256": "65b1caac5d3ea01cece0e55e64f3630a103700502919439de2fd0ee1273e2f58"
+    },
+    "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic/.scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/legacy-volume-policy-review/spec/revision3/report.md": {
+      "bytes": 2168,
+      "mode": "0o600",
+      "sha256": "99f2bb0d8c73903edf9c5adb49f5ebc601f2eb84021275fa205921b606371d72"
+    },
+    "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic/.scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/operator-repaired-compatibility/refusal-report.md": {
+      "bytes": 3069,
+      "mode": "0o600",
+      "sha256": "57aa25d715bb7f020ad7f99fa0b358c48b490208cf285acaf3bb206a06a0c52a"
+    },
+    "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic/.scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/owner-legacy-mount-trust-decision.json": {
+      "bytes": 1129,
+      "mode": "0o600",
+      "sha256": "08ce3e92770bd45e27a695e9cf98fa7b72c867cba378ea7b1e27ba13695fe947"
+    },
+    "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic/.scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/root-legacy-volume-evidence-audit.json": {
+      "bytes": 696435,
+      "mode": "0o600",
+      "sha256": "f6399bfaff67ccdb8642ecc1111fe4680d7d0589b03cc632529e3533ee25f1ea"
+    },
+    "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic/.scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/root-repaired-compatibility-audit.json": {
+      "bytes": 305496,
+      "mode": "0o600",
+      "sha256": "f8d36b0dca6c59023ed255d3905460308b452c3cec453745f73fb9a27350bcbd"
+    },
+    "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime/.scratch/installed-legacy-volume-runtime/actual-default-node24/stdout.txt": {
+      "bytes": 229357,
+      "mode": "0o600",
+      "sha256": "6f5faa5b1ffb0b44e334599cd8e5077d10b10b2d1bf58c4830970a26d358af64"
+    },
+    "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime/.scratch/installed-legacy-volume-runtime/owned-case-matrix.json": {
+      "bytes": 26390,
+      "mode": "0o600",
+      "sha256": "f5d8e73827421a31dfa635833ecd58f4391394387ee8ac6ea37878ec69dd07c8"
+    }
+  }
+}

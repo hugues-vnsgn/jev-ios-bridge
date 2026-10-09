@@ -1,0 +1,151 @@
+{
+  "axis": "Spec IMPLEMENTATION",
+  "base": "720cb380d07102d72b20a6a4f5f7787a0ab88f2b",
+  "boundInputFiles": 13842,
+  "candidate": "4fa9cc99a94ebb8c79e6d1fe347ccb83745da13d",
+  "correctedAuditChecks": 27831,
+  "correctedAuditFailures": 0,
+  "exactDiffCommand": "git diff 720cb380d07102d72b20a6a4f5f7787a0ab88f2b...4fa9cc99a94ebb8c79e6d1fe347ccb83745da13d",
+  "findings": [
+    {
+      "category": "apparently implemented but incorrect",
+      "id": "P1",
+      "policyLine": 27,
+      "severity": "P1",
+      "sourceLines": [
+        202,
+        278,
+        302,
+        363,
+        371
+      ],
+      "summary": "Captured enumeration candidate does not bind subsequent caller/production-inner metadata proofs; observed mismatch restored before final comparison can be accepted."
+    },
+    {
+      "category": "partial requirement",
+      "id": "P2",
+      "policyLine": 23,
+      "severity": "P2",
+      "sourceLines": [
+        184,
+        187,
+        190,
+        194,
+        197
+      ],
+      "summary": "Abort during awaited open or EOF read permits later validation stat dispatch; close-only cleanup remains allowed."
+    }
+  ],
+  "initialAuditAssumptionFailures": 7,
+  "initialAuditChecks": 27829,
+  "initialAuditPreserved": true,
+  "outputs": {
+    "audit-corrected.json": {
+      "bytes": 6232470,
+      "mode": "0600",
+      "sha256": "7880ec1e59952e27d38c55eb35af7f099237316f7f8c363bfe96297a773d2026"
+    },
+    "audit-corrected.py": {
+      "bytes": 14881,
+      "mode": "0600",
+      "sha256": "905134d2a40d2ef2261269443fa258936f63fd134cc3bc29d3535f4c8a2170c8"
+    },
+    "audit.json": {
+      "bytes": 6232857,
+      "mode": "0600",
+      "sha256": "d67b7cd1bd3af28247bd7f6a609c3481c7b7c118129b180a9521a761908df36e"
+    },
+    "audit.py": {
+      "bytes": 14530,
+      "mode": "0600",
+      "sha256": "51e81d602d03d1808906ac8f90d052d41d1ae02319836fecae99d73c55006d12"
+    },
+    "candidate.diff": {
+      "bytes": 67840,
+      "mode": "0600",
+      "sha256": "25a7e5c6b9b972c7a55c33daee1658c8f4cab90b55782f681e422d5cb96f3704"
+    },
+    "clause-correspondence.md": {
+      "bytes": 12703,
+      "mode": "0600",
+      "sha256": "a5c1b6c288476f2f53303f246f2424e5334bfae371d0afbd098e4b0fc74ae837"
+    },
+    "commit-list.txt": {
+      "bytes": 96,
+      "mode": "0600",
+      "sha256": "a53cf2e04dd05de85550f2f1d71f89b7c55a59eb37e6e5c8cea93dbb46efa406"
+    },
+    "finding-traces.md": {
+      "bytes": 4646,
+      "mode": "0600",
+      "sha256": "c37156c34c3bbaf6cc1f1b5eedcf845b9a18d75d50c343fff3cc75efe78b53de"
+    },
+    "initial-node24-failure-raw-excerpts.txt": {
+      "bytes": 4195,
+      "mode": "0600",
+      "sha256": "bd556ed6c4fc7446cc8095387f28445f027a9c2177e554e1613a9bcc58374de2"
+    },
+    "input-manifest-corrected.json": {
+      "bytes": 6129126,
+      "mode": "0600",
+      "sha256": "518cf3874c4a62308128d546260a7f0df56acb74fab68b6cb81d6e92e7041b56"
+    },
+    "input-manifest.json": {
+      "bytes": 6128408,
+      "mode": "0600",
+      "sha256": "2667f1243c3cd865be8248d2bfc7fa01d194ad5c84163fad9cc17275ec7ba8d6"
+    },
+    "inputs-final.json": {
+      "bytes": 6131003,
+      "mode": "0600",
+      "sha256": "b5d9d8d7165e6b1b0112c5e07be1a0a77838c479426967fb9c5215f5ac822783"
+    },
+    "prose-audit.json": {
+      "bytes": 888,
+      "mode": "0600",
+      "sha256": "22dce31d690d6026da1d77d3606bc1916fabc2a1f99baba09af4d5d729319a07"
+    },
+    "prose-check-final.txt": {
+      "bytes": 761,
+      "mode": "0600",
+      "sha256": "3c3121efbb77cb617e975a065e66d6c8b708197e02fd93256a3fcaa7bbe1718b"
+    },
+    "report.md": {
+      "bytes": 2486,
+      "mode": "0600",
+      "sha256": "8fb9b82d76aaf3f52bac8c179eb9745f02f41d7da0550be17ccf48c61a39464d"
+    },
+    "reviewer-audit-qualification.json": {
+      "bytes": 703,
+      "mode": "0600",
+      "sha256": "99bb4e387d377494cda94b319d4bc8947234a5d999ed82b5dfc26facdad8c385"
+    },
+    "supplemental-input-manifest.json": {
+      "bytes": 3738,
+      "mode": "0600",
+      "sha256": "ac7d81b592cdabc4e5fb839b1c327c3238fa999c95ecfef480ccfd95971f57ab"
+    }
+  },
+  "pendingGates": [
+    "Candidate-specific clean installed package/plugin proofs and wrapped startup before integration under policy37.",
+    "Independent Spec corrections required; Root decides successor integration readiness.",
+    "Fresh integrated physical gates and once actual compatibility; L01-L05/live/ticket12 unverified."
+  ],
+  "permissions": "directory0700, all regular output0600",
+  "policySha256": "14dd5566f99845a4ee6562404c16610c732795f311b7df1e95ecb306dd599492",
+  "qualifications": [
+    "No tests/build/native/Source operations executed by reviewer.",
+    "Static fixture traces unexecuted; native privileged replacement/pinning guarantees unverified.",
+    "Original Node24 failed official2198 run preserved with lower cause unresolved; later official exact24 baseline1999/candidate2198 pass actualclose/typecheck/test/build.",
+    "Root bookkeeping failures/false original build-marker fields/early context schemas preserved.",
+    "Ten full archive symlinks recorded as metadata only, not recreated or followed.",
+    "First private audit mistaken prebuild compiled-equality and repeated failure-name extraction corrected without product/gate rerun."
+  ],
+  "reportWhitespaceWords": 262,
+  "sealedAtUtc": "2026-10-09T09:52:04.141927+00:00",
+  "selfExclusion": "freeze.json SHA256 returned to parent; cannot hash itself",
+  "source443Protected440Compiled69": "PASS exact Git/working/baseline source hashes and final compiled69; prebuild compilation qualification retained",
+  "supplementalAuditChecks": 3,
+  "unaskedBehaviorFindings": 0,
+  "verdict": "FAIL"
+}

@@ -1,0 +1,10 @@
+{
+  "scope": "Private reviewer bookkeeping correction only; no Source/test/build/native actions or reruns",
+  "initialAudit": "audit.json",
+  "initialFailedChecks": 7,
+  "corrections": [
+    "Six prebuild TS-focused/typecheck/coverage receipts retained dist allocation-config88ebe6 before final build eed89; compare unchanged68 plus exact historical allocation hash, while final builds/defaults match final69. Source443 matched throughout.",
+    "Runner initial126 names were counted a second time in the later printed failure summary; restrict name extraction to the actual runner block before the first tests summary. All126 occurrences remain in final704."
+  ],
+  "initialArtifactsPreserved": true
+}

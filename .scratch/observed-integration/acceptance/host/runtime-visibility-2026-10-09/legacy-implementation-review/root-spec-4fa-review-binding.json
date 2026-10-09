@@ -1,0 +1,45 @@
+{
+  "atUtc": "2026-10-09T09:56:26.671224+00:00",
+  "status": "PASS review input/output correspondence; Spec verdict FAIL P1/P2",
+  "base": "720cb380d07102d72b20a6a4f5f7787a0ab88f2b",
+  "candidate": "4fa9cc99a94ebb8c79e6d1fe347ccb83745da13d",
+  "freezeSha256": "2dccdd930e94e33baf890c0742937dd14ec878060213584ae61cc37d5072439f",
+  "reportSha256": "8fb9b82d76aaf3f52bac8c179eb9745f02f41d7da0550be17ccf48c61a39464d",
+  "boundInputsRehashed": 13842,
+  "sealedOutputsRehashed": 17,
+  "correctedAuditChecks": 27831,
+  "supplementalChecks": 3,
+  "initialAuditAssumptionFailuresPreserved": 7,
+  "findings": [
+    {
+      "category": "apparently implemented but incorrect",
+      "id": "P1",
+      "policyLine": 27,
+      "severity": "P1",
+      "sourceLines": [
+        202,
+        278,
+        302,
+        363,
+        371
+      ],
+      "summary": "Captured enumeration candidate does not bind subsequent caller/production-inner metadata proofs; observed mismatch restored before final comparison can be accepted."
+    },
+    {
+      "category": "partial requirement",
+      "id": "P2",
+      "policyLine": 23,
+      "severity": "P2",
+      "sourceLines": [
+        184,
+        187,
+        190,
+        194,
+        197
+      ],
+      "summary": "Abort during awaited open or EOF read permits later validation stat dispatch; close-only cleanup remains allowed."
+    }
+  ],
+  "rootReaderQualificationSha256": "409c197c12d670e00ed876e9e0a4b5f4220b0ebb50009eb2f37cbe0d1bdb5a34",
+  "scope": "Read-only rehash only; no test/native operations. Candidate clean package/startup and live gates pending; original Node24 failure lower cause unresolved."
+}
