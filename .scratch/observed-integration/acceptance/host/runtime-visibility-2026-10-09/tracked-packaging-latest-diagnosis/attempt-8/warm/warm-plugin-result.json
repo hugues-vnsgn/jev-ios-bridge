@@ -1,0 +1,42 @@
+{
+  "label": "warm-plugin",
+  "argv": [
+    "npm",
+    "ci",
+    "--ignore-scripts",
+    "--no-audit",
+    "--no-fund"
+  ],
+  "cwd": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-tracked-binding/.scratch/installed-tracked-packaging-diagnosis/attempt-8/warm/installed-proof/plugin",
+  "environment": {
+    "HOME": "/Users/hugues_mini",
+    "LANG": "C",
+    "LC_ALL": "C",
+    "PATH": "/opt/homebrew/Cellar/node/26.8.1/bin:/opt/homebrew/Cellar/node/26.8.1/bin:/opt/homebrew/bin:/usr/bin:/bin:/usr/sbin:/sbin",
+    "NPM_CONFIG_USERCONFIG": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-tracked-binding/.scratch/installed-tracked-packaging-diagnosis/attempt-8/warm/user.npmrc",
+    "NPM_CONFIG_GLOBALCONFIG": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-tracked-binding/.scratch/installed-tracked-packaging-diagnosis/attempt-8/warm/global.npmrc",
+    "NPM_CONFIG_CACHE": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-tracked-binding/.scratch/installed-tracked-packaging-diagnosis/attempt-8/warm/outer-npm-cache",
+    "JEV_PACKAGING_EVIDENCE_DIR": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-tracked-binding/.scratch/installed-tracked-packaging-diagnosis/attempt-8/warm/installed-proof",
+    "npm_config_cache": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-tracked-binding/.scratch/installed-tracked-packaging-diagnosis/attempt-8/warm/installed-proof/registry-cache",
+    "npm_config_fetch_retries": "0",
+    "npm_config_fetch_timeout": "45000"
+  },
+  "startedAtUtc": "2026-10-10T02:58:40.744727+00:00",
+  "childUmask": "0022",
+  "stdio": "ignore,pipe,pipe; concurrent drain threads",
+  "timerSeconds": 90,
+  "timerFired": false,
+  "signals": [],
+  "actualClose": true,
+  "pid": 56253,
+  "pgid": 56253,
+  "exitCode": 0,
+  "closedOrCapturedAtUtc": "2026-10-10T02:58:42.112277+00:00",
+  "durationSeconds": 1.3675517910014605,
+  "groupAbsent": true,
+  "pipesDrained": true,
+  "drainErrors": [],
+  "stdoutSha256": "4799672eb74a1afa72d75e2cd7d89e1ea9b5268066173dad0472eb39090a8adb",
+  "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "pass": true
+}

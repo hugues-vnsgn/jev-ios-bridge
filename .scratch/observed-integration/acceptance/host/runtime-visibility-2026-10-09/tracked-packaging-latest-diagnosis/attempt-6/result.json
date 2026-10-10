@@ -1,0 +1,48 @@
+{
+  "argv": [
+    "/opt/homebrew/Cellar/node/26.8.1/bin/node",
+    "/opt/homebrew/lib/node_modules/npm/bin/npm-cli.js",
+    "ci",
+    "--ignore-scripts",
+    "--no-audit",
+    "--no-fund",
+    "--timing",
+    "--loglevel=silly"
+  ],
+  "cwd": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-tracked-binding/.scratch/installed-tracked-packaging-diagnosis/attempt-6/project",
+  "environment": {
+    "HOME": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-tracked-binding/.scratch/installed-tracked-packaging-diagnosis/attempt-6/home",
+    "PATH": "/opt/homebrew/Cellar/node/26.8.1/bin:/usr/bin:/bin",
+    "LANG": "C",
+    "LC_ALL": "C",
+    "NPM_CONFIG_USERCONFIG": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-tracked-binding/.scratch/installed-tracked-packaging-diagnosis/attempt-6/user.npmrc",
+    "NPM_CONFIG_GLOBALCONFIG": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-tracked-binding/.scratch/installed-tracked-packaging-diagnosis/attempt-6/global.npmrc",
+    "NPM_CONFIG_CACHE": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-tracked-binding/.scratch/installed-tracked-packaging-diagnosis/attempt-6/npm-cache",
+    "npm_config_fetch_retries": "0",
+    "npm_config_fetch_timeout": "45000",
+    "NODE_DEBUG": "net,tls,http"
+  },
+  "inputs": {
+    "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-tracked-binding/.scratch/installed-tracked-packaging-recheck/runs/tracked-packaging-recheck-node26/installed-proof/plugin/package.json": "4ef075dd2cf053ffda89ba2595b8be65af431addecb78fe25593454af76947b3",
+    "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-tracked-binding/.scratch/installed-tracked-packaging-recheck/runs/tracked-packaging-recheck-node26/installed-proof/plugin/package-lock.json": "be79b19a3f7891e340fcd123fe751260a4492a577e0bda22398325e6ea368cd7"
+  },
+  "startedAtUtc": "2026-10-10T02:48:52.645125+00:00",
+  "deadlineSeconds": 90,
+  "timerFired": false,
+  "signals": [],
+  "actualClose": true,
+  "scope": "One isolated reproduction; only package/lock copied; no acceptance retry or Source edit.",
+  "pid": 33718,
+  "pgid": 33718,
+  "exitCode": 0,
+  "closedOrCapturedAtUtc": "2026-10-10T02:48:54.969678+00:00",
+  "durationSeconds": 2.324313165998319,
+  "groupAbsent": true,
+  "stdoutSha256": "3115a6cfe5ce2ce6a7d810ce2bd9f82767afc225e1c3495a0fcdc0a89bcb1e1d",
+  "stderrSha256": "934c78933dd970db76263567e988ab22b6b1543d46ba3d88736fdd5df0a46613",
+  "rawBytes": {
+    "stdout.txt": 26,
+    "stderr.txt": 331530
+  },
+  "packageLockUnchanged": true
+}

@@ -1,0 +1,15 @@
+{
+  "actualCloseRecorded": true,
+  "candidateCommit": "cc5d30e2fdaf065bec476a65df465dabb1569f2c",
+  "commandSha256": "02070c239ddf5d601ca4f26ae30d1f01c16f59431fcf2f8178821314a067a829",
+  "completedAtUtc": "2026-10-10T02:52:16.605199+00:00",
+  "contextSha256": "7de42479f3263694ed81fe17d43540d638d7d6259531508c28bfd4388fb8e7c9",
+  "failures": [
+    "Helper nonzero/unsettled/outer timeout; preserve original, no retry",
+    "Derived helper proof: [Errno 2] No such file or directory: '/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-tracked-binding/.scratch/installed-tracked-packaging-after-diagnosis/runs/tracked-packaging-after-diagnosis-node26/installed-proof/summary.json'"
+  ],
+  "phase": "packaging",
+  "runtime": "26",
+  "source443AndCompiled69Unchanged": true,
+  "status": "FAIL"
+}

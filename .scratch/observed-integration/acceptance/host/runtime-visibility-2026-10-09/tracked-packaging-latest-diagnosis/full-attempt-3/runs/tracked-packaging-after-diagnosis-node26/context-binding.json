@@ -1,0 +1,23 @@
+{
+  "authorCwd": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-tracked-binding",
+  "candidateCommit": "cc5d30e2fdaf065bec476a65df465dabb1569f2c",
+  "contextPath": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-tracked-binding/.scratch/installed-tracked-packaging-after-diagnosis/candidate-source.json",
+  "contextSha256": "7de42479f3263694ed81fe17d43540d638d7d6259531508c28bfd4388fb8e7c9",
+  "fixedInputs": {
+    "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic/.scratch/observed-integration/acceptance/host/faults/production-startup/review/final/probe.mjs": "bf3b8b89d0ad11b03a30be23f2501b8e40aad8cf293b0ba94ce978f943ba0a4c",
+    "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic/.scratch/observed-integration/acceptance/host/installed-workflow/integration/root-gate-runner.py": "1a64e2143b07c99532456bc215090ee0dfbf631624670d8b0b013be0c7727efc",
+    "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic/tests/fixtures/observed-packaging/guard.mjs": "000c19430aae956338a406a9b4daceb68e99eb76d70bc3a0340fccf52ae0d2f7",
+    "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-tracked-binding/tests/fixtures/observed-packaging/guard.mjs": "000c19430aae956338a406a9b4daceb68e99eb76d70bc3a0340fccf52ae0d2f7",
+    "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-tracked-binding/tests/fixtures/observed-packaging/proof.mjs": "6aaf75a214d3dc89ddc2957b2be082ccf9eba7d93ade7511dd3bd652ae850635",
+    "/opt/homebrew/lib/node_modules/npm/bin/npm-cli.js": "8e5f6f3429f8cdbe693cdc29904e9d5a7b127a494bd15c804bd54c7403bfcbe7"
+  },
+  "noNativeGate": true,
+  "packaging": null,
+  "recorderSha256": "5f1238b33beb9048ad37d5662fa42c90392a39a1a6ccf5ba54243e7fe9f8fe77",
+  "runtime": {
+    "path": "/opt/homebrew/Cellar/node/26.8.1/bin/node",
+    "sha256": "902b6a6984d5d825829ea9064ab73b734548df37bc0683990dca31c8dc2a9253",
+    "version": "v26.8.1"
+  },
+  "selectedNpm": "/opt/homebrew/Cellar/node/26.8.1/bin/npm"
+}

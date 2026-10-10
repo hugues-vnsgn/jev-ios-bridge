@@ -1,0 +1,12 @@
+{
+  "executionChangesOnly": [
+    "Remove --timing",
+    "Remove --loglevel=silly",
+    "Remove NODE_DEBUG=net,tls,http"
+  ],
+  "nonExecutionChange": "Seal description says plain instead of instrumented",
+  "freshScope": "attempt-7 with newHOME/configs/cache/project; no copied cache or installation outputs",
+  "priorScriptSha256": "89a7e17cb8c705f89ac439509b9aac841e6c5989050f81fea97f25fe8ff207bc",
+  "currentScriptSha256": "2ced5bb4c12807cc16bc265dbb5ec8c6aa18638762ed242f2f366487b7faaf76",
+  "allOtherScriptBytesPreserved": true
+}

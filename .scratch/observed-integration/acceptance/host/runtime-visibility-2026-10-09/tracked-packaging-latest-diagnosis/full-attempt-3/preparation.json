@@ -1,0 +1,18 @@
+{
+  "status": "ROOT_GRANTED_SINGLE_SEQUENCE_AFTER_ISOLATED_NPM_DIAGNOSIS",
+  "recorderSha256": "5f1238b33beb9048ad37d5662fa42c90392a39a1a6ccf5ba54243e7fe9f8fe77",
+  "priorRecorderSha256": "c2cc00aa1932a64abf336941464402d3d9852bd427ff723d1a256b21eae721eb",
+  "onlyChange": {
+    "old": "PRIVATE = AUTHOR / '.scratch/installed-tracked-packaging'",
+    "new": "PRIVATE = AUTHOR / '.scratch/installed-tracked-packaging-after-diagnosis'"
+  },
+  "diffExactlyOneLiteral": true,
+  "sourceContextSha256": "7de42479f3263694ed81fe17d43540d638d7d6259531508c28bfd4388fb8e7c9",
+  "invariantsSha256": "5c46df509f99bc4886ab74268e116e9b5028a315d16e52966959def1b5e1f416",
+  "commandsSha256": "8cfe69379a11143bf114c0da58455ea9093f117a334f28d59f77ff313f62c39c",
+  "originalFailures": "Both preserved unchanged, lower cause unresolved; isolated npm ci PASS does not explain them.",
+  "diagnosticSealSha256": "7a2c87b7df86332d72396b8cda4f2ae408a6af07fa7e4375f8c32afb61196c85",
+  "cacheSeeding": false,
+  "diagnosticInstrumentationInAcceptance": false,
+  "nativeScope": "iOS compatibility/live acceptance explicitly deferred, not passed"
+}

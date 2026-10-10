@@ -1,0 +1,136 @@
+{
+  "status": "THREE_FULL_PACKAGING_FAILURES_PRESERVED_NO_FURTHER_RETRY",
+  "candidateCommit": "cc5d30e2fdaf065bec476a65df465dabb1569f2c",
+  "attempts": [
+    {
+      "label": "tracked-packaging-node26",
+      "resultSha256": "d708f6937970257dfa5dbeae7d3d58590826909091d1f57308767a160c9041b0",
+      "phaseSealSha256": "2f6e5497256edb2a1d07585fda4951d7c56c18a128ec5839de8809c89785eede",
+      "pluginLockSha256": "be79b19a3f7891e340fcd123fe751260a4492a577e0bda22398325e6ea368cd7",
+      "outer": {
+        "startedAtUtc": "2026-10-10T01:59:45.373424+00:00",
+        "closedAtUtc": "2026-10-10T02:02:20.006069+00:00",
+        "durationSeconds": 154.63207154100382,
+        "exitCode": 1,
+        "actualCloseRecorded": true,
+        "groupAbsentAfterClose": true,
+        "timedOut": false
+      },
+      "commandCount": 21,
+      "lastCommand": {
+        "id": "021",
+        "command": "npm",
+        "args": [
+          "ci",
+          "--ignore-scripts",
+          "--no-audit",
+          "--no-fund"
+        ],
+        "cwd": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-tracked-binding/.scratch/installed-tracked-packaging/runs/tracked-packaging-node26/installed-proof/plugin",
+        "node": "v26.8.1",
+        "exit": null,
+        "signal": "SIGKILL",
+        "stdout": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-tracked-binding/.scratch/installed-tracked-packaging/runs/tracked-packaging-node26/installed-proof/021.stdout",
+        "stderr": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-tracked-binding/.scratch/installed-tracked-packaging/runs/tracked-packaging-node26/installed-proof/021.stderr"
+      },
+      "npmDebugLog": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-tracked-binding/.scratch/installed-tracked-packaging/runs/tracked-packaging-node26/installed-proof/registry-cache/_logs/2026-10-10T02_00_50_028Z-debug-0.log",
+      "npmDebugLogSha256": "b4b78f5a5652b18df819eba0bbf9390dfd7b78f062c41b1921cf89e75ed4f516",
+      "requestedTarballs": 20,
+      "completedFetchLogLines": 18,
+      "missingCompletedFetch": [
+        "https://registry.npmjs.org/@sentry/core/-/core-10.75.3.tgz",
+        "https://registry.npmjs.org/ip-address/-/ip-address-10.7.2.tgz"
+      ],
+      "source443AndCompiled69Unchanged": true
+    },
+    {
+      "label": "tracked-packaging-recheck-node26",
+      "resultSha256": "30670ab5248d72761482461a4d46cffa890c77e6a4a83691b818f187916cbdb6",
+      "phaseSealSha256": "25f1244f823ff5d1106694fb1c128771bebf0c3b355d14c639411d96c95c9437",
+      "pluginLockSha256": "be79b19a3f7891e340fcd123fe751260a4492a577e0bda22398325e6ea368cd7",
+      "outer": {
+        "startedAtUtc": "2026-10-10T02:06:07.377010+00:00",
+        "closedAtUtc": "2026-10-10T02:09:08.618514+00:00",
+        "durationSeconds": 181.24082216600073,
+        "exitCode": 1,
+        "actualCloseRecorded": true,
+        "groupAbsentAfterClose": true,
+        "timedOut": false
+      },
+      "commandCount": 21,
+      "lastCommand": {
+        "id": "021",
+        "command": "npm",
+        "args": [
+          "ci",
+          "--ignore-scripts",
+          "--no-audit",
+          "--no-fund"
+        ],
+        "cwd": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-tracked-binding/.scratch/installed-tracked-packaging-recheck/runs/tracked-packaging-recheck-node26/installed-proof/plugin",
+        "node": "v26.8.1",
+        "exit": null,
+        "signal": "SIGKILL",
+        "stdout": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-tracked-binding/.scratch/installed-tracked-packaging-recheck/runs/tracked-packaging-recheck-node26/installed-proof/021.stdout",
+        "stderr": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-tracked-binding/.scratch/installed-tracked-packaging-recheck/runs/tracked-packaging-recheck-node26/installed-proof/021.stderr"
+      },
+      "npmDebugLog": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-tracked-binding/.scratch/installed-tracked-packaging-recheck/runs/tracked-packaging-recheck-node26/installed-proof/registry-cache/_logs/2026-10-10T02_07_38_638Z-debug-0.log",
+      "npmDebugLogSha256": "9067fce29fb265f2c64105185ee871dced65094c1dbcf95076dbf54e70a3ba79",
+      "requestedTarballs": 20,
+      "completedFetchLogLines": 17,
+      "missingCompletedFetch": [
+        "https://registry.npmjs.org/@sentry/node-core/-/node-core-10.75.3.tgz",
+        "https://registry.npmjs.org/@sentry/opentelemetry/-/opentelemetry-10.75.3.tgz",
+        "https://registry.npmjs.org/es-module-lexer/-/es-module-lexer-3.0.2.tgz"
+      ],
+      "source443AndCompiled69Unchanged": true
+    },
+    {
+      "label": "tracked-packaging-after-diagnosis-node26",
+      "resultSha256": "ee16b0ac18f71a2e505fe8b08f888a0ae594051f65d86252fb4f8972e37b86d8",
+      "phaseSealSha256": "cc673293a7842e96619b6e9e81f7899192511aa86312ca1b1d7ade0b427d58e4",
+      "pluginLockSha256": "be79b19a3f7891e340fcd123fe751260a4492a577e0bda22398325e6ea368cd7",
+      "outer": {
+        "startedAtUtc": "2026-10-10T02:50:37.263100+00:00",
+        "closedAtUtc": "2026-10-10T02:52:16.387725+00:00",
+        "durationSeconds": 99.12433466700168,
+        "exitCode": 1,
+        "actualCloseRecorded": true,
+        "groupAbsentAfterClose": true,
+        "timedOut": false
+      },
+      "commandCount": 21,
+      "lastCommand": {
+        "id": "021",
+        "command": "npm",
+        "args": [
+          "ci",
+          "--ignore-scripts",
+          "--no-audit",
+          "--no-fund"
+        ],
+        "cwd": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-tracked-binding/.scratch/installed-tracked-packaging-after-diagnosis/runs/tracked-packaging-after-diagnosis-node26/installed-proof/plugin",
+        "node": "v26.8.1",
+        "exit": null,
+        "signal": "SIGKILL",
+        "stdout": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-tracked-binding/.scratch/installed-tracked-packaging-after-diagnosis/runs/tracked-packaging-after-diagnosis-node26/installed-proof/021.stdout",
+        "stderr": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-tracked-binding/.scratch/installed-tracked-packaging-after-diagnosis/runs/tracked-packaging-after-diagnosis-node26/installed-proof/021.stderr"
+      },
+      "npmDebugLog": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-tracked-binding/.scratch/installed-tracked-packaging-after-diagnosis/runs/tracked-packaging-after-diagnosis-node26/installed-proof/registry-cache/_logs/2026-10-10T02_50_46_420Z-debug-0.log",
+      "npmDebugLogSha256": "441b06942561f89d75b74fc01a18ec6d12d4ebb11da79997686e397e7026d90d",
+      "requestedTarballs": 20,
+      "completedFetchLogLines": 18,
+      "missingCompletedFetch": [
+        "https://registry.npmjs.org/@modelcontextprotocol/sdk/-/sdk-1.30.1.tgz",
+        "https://registry.npmjs.org/@opentelemetry/sdk-trace/-/sdk-trace-2.11.0.tgz"
+      ],
+      "source443AndCompiled69Unchanged": true
+    }
+  ],
+  "samePluginLock": true,
+  "diagnosticResult": "One isolated plugin npm ci with credential-free NODE_DEBUG and timing/silly passed155 packages in2.324s using freshcache; no unchanged full proof pass followed.",
+  "diagnosticSealSha256": "7a2c87b7df86332d72396b8cda4f2ae408a6af07fa7e4375f8c32afb61196c85",
+  "qualification": "Each command021 null/SIGKILL close is consistent with unchanged90s helper timer; direct timer provenance absent for historical full runs. Exact lowercause remains UNRESOLVED. Incomplete tarball sets differ each run; same package lock. Instrumented isolated success did not establish a remedy.",
+  "pending": "Candidate startup26/packaging24/startup24 NOT RUN. Integration not authorized by failure. iOS compatibility/live acceptance explicitly deferred, never PASS.",
+  "nextMinimalRecommendation": "Instrument the failing warm-cache/full-proof-context npm ci seam rather than more standalone curl pairs. A diagnostic-only copied-cache reproduction would require Root to explicitly grant cache-copy scope; no acceptance cache seeding or execution is proposed as a passed gate."
+}

@@ -1,0 +1,62 @@
+[
+  {
+    "cwd": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-tracked-binding",
+    "argv": [
+      "python3",
+      "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-tracked-binding/.scratch/installed-tracked-packaging-after-diagnosis/candidate-installed-recorder.py",
+      "packaging",
+      "26",
+      "tracked-packaging-after-diagnosis-node26",
+      "--context",
+      "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-tracked-binding/.scratch/installed-tracked-packaging-after-diagnosis/candidate-source.json",
+      "--context-sha256",
+      "7de42479f3263694ed81fe17d43540d638d7d6259531508c28bfd4388fb8e7c9"
+    ]
+  },
+  {
+    "cwd": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-tracked-binding",
+    "argv": [
+      "python3",
+      "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-tracked-binding/.scratch/installed-tracked-packaging-after-diagnosis/candidate-installed-recorder.py",
+      "startup",
+      "26",
+      "tracked-startup-after-diagnosis-node26",
+      "--context",
+      "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-tracked-binding/.scratch/installed-tracked-packaging-after-diagnosis/candidate-source.json",
+      "--context-sha256",
+      "7de42479f3263694ed81fe17d43540d638d7d6259531508c28bfd4388fb8e7c9",
+      "--packaging-label",
+      "tracked-packaging-after-diagnosis-node26"
+    ]
+  },
+  {
+    "cwd": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-tracked-binding",
+    "argv": [
+      "python3",
+      "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-tracked-binding/.scratch/installed-tracked-packaging-after-diagnosis/candidate-installed-recorder.py",
+      "packaging",
+      "24",
+      "tracked-packaging-after-diagnosis-node24",
+      "--context",
+      "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-tracked-binding/.scratch/installed-tracked-packaging-after-diagnosis/candidate-source.json",
+      "--context-sha256",
+      "7de42479f3263694ed81fe17d43540d638d7d6259531508c28bfd4388fb8e7c9"
+    ]
+  },
+  {
+    "cwd": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-tracked-binding",
+    "argv": [
+      "python3",
+      "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-tracked-binding/.scratch/installed-tracked-packaging-after-diagnosis/candidate-installed-recorder.py",
+      "startup",
+      "24",
+      "tracked-startup-after-diagnosis-node24",
+      "--context",
+      "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-tracked-binding/.scratch/installed-tracked-packaging-after-diagnosis/candidate-source.json",
+      "--context-sha256",
+      "7de42479f3263694ed81fe17d43540d638d7d6259531508c28bfd4388fb8e7c9",
+      "--packaging-label",
+      "tracked-packaging-after-diagnosis-node24"
+    ]
+  }
+]

@@ -1,0 +1,43 @@
+{
+  "label": "warm-seed",
+  "argv": [
+    "npm",
+    "install",
+    "--ignore-scripts",
+    "--no-audit",
+    "--no-fund",
+    "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-tracked-binding/.scratch/installed-tracked-packaging-diagnosis/attempt-8/warm/installed-proof/jev-ios-bridge-1.3.1.tgz"
+  ],
+  "cwd": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-tracked-binding/.scratch/installed-tracked-packaging-diagnosis/attempt-8/warm/installed-proof/clean",
+  "environment": {
+    "HOME": "/Users/hugues_mini",
+    "LANG": "C",
+    "LC_ALL": "C",
+    "PATH": "/opt/homebrew/Cellar/node/26.8.1/bin:/opt/homebrew/Cellar/node/26.8.1/bin:/opt/homebrew/bin:/usr/bin:/bin:/usr/sbin:/sbin",
+    "NPM_CONFIG_USERCONFIG": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-tracked-binding/.scratch/installed-tracked-packaging-diagnosis/attempt-8/warm/user.npmrc",
+    "NPM_CONFIG_GLOBALCONFIG": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-tracked-binding/.scratch/installed-tracked-packaging-diagnosis/attempt-8/warm/global.npmrc",
+    "NPM_CONFIG_CACHE": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-tracked-binding/.scratch/installed-tracked-packaging-diagnosis/attempt-8/warm/outer-npm-cache",
+    "JEV_PACKAGING_EVIDENCE_DIR": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-tracked-binding/.scratch/installed-tracked-packaging-diagnosis/attempt-8/warm/installed-proof",
+    "npm_config_cache": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-tracked-binding/.scratch/installed-tracked-packaging-diagnosis/attempt-8/warm/installed-proof/registry-cache",
+    "npm_config_fetch_retries": "0",
+    "npm_config_fetch_timeout": "45000"
+  },
+  "startedAtUtc": "2026-10-10T02:58:33.851522+00:00",
+  "childUmask": "0022",
+  "stdio": "ignore,pipe,pipe; concurrent drain threads",
+  "timerSeconds": 90,
+  "timerFired": false,
+  "signals": [],
+  "actualClose": true,
+  "pid": 56067,
+  "pgid": 56067,
+  "exitCode": 0,
+  "closedOrCapturedAtUtc": "2026-10-10T02:58:40.719527+00:00",
+  "durationSeconds": 6.8680020829997375,
+  "groupAbsent": true,
+  "pipesDrained": true,
+  "drainErrors": [],
+  "stdoutSha256": "d3f76d41745f68a13271ebcd53553046935ebaa45d77596bdf75e8b25cd7eaa1",
+  "stderrSha256": "e49b794cae6663ada86efea1579a0381251a5d4d1ff9b0cefed3e5622b21317d",
+  "pass": true
+}
