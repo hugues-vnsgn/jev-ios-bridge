@@ -1,0 +1,181 @@
+{
+  "reviewedHead": "a3e6c4e3cbecd0bba345c3ac2004ff4530141e3a",
+  "inputs": {
+    ".scratch/observed-action-rollout/issues/12-independent-review.md": {
+      "sha256": "1c2f6969dcdb6666d5226a91310a662b2e0b53cfb5e2d857d58fc70ba62c345d",
+      "bytes": 3058
+    },
+    ".scratch/observed-action-rollout/next-work.md": {
+      "sha256": "130b78719eeed3df556c2838b52f650438608d34aaacbb2615b6f5c22e0bfafc",
+      "bytes": 19670
+    },
+    ".scratch/observed-action-rollout/spec.md": {
+      "sha256": "da62e93f89db0862493bff61dc925b67c5855b7fd45633ae3b211c2530e61aa0",
+      "bytes": 455
+    },
+    ".scratch/observed-integration/acceptance/host/accepted-host-freeze.json": {
+      "sha256": "60b537e4e7c35e8ee12668cf9162989a0024727f17812686c3535e27b80ee6a3",
+      "bytes": 2403
+    },
+    ".scratch/observed-integration/acceptance/host/mapped-host-freeze-round2.json": {
+      "sha256": "30b8829a00be0b3aac6cf43d3baec4090b6ec5dedab5bdb5f87acf5d663704d1",
+      "bytes": 2108
+    },
+    ".scratch/observed-integration/acceptance/host/mapped-host-freeze.json": {
+      "sha256": "0f6a935238736a2fcf19e83fccdde22d35d68ef4c14d8855c7b54768b4b01f7b",
+      "bytes": 1738
+    },
+    ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/cryptex-policy-proposal.md": {
+      "sha256": "e8cbff80f2a1610a6e0b4ec1b372086e490f0bc8a8030d6ecf2e5c7105859d13",
+      "bytes": 7557
+    },
+    ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/legacy-implementation-review/spec/cc5d30e2/report.md": {
+      "sha256": "b3b11a8bf60079de3ff59172cb5629cea4319239f03d6f889be82422a8ad7185",
+      "bytes": 2681
+    },
+    ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/legacy-implementation-review/standards/cc5d30e2/report.md": {
+      "sha256": "f31474b34991bdbb5bf2c46b6a4b1724ecda531212a2d6e7431caa613e07d8eb",
+      "bytes": 2519
+    },
+    ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/legacy-volume-policy-proposal-v3.md": {
+      "sha256": "14dd5566f99845a4ee6562404c16610c732795f311b7df1e95ecb306dd599492",
+      "bytes": 9519
+    },
+    ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/owner-cryptex-trust-decision.json": {
+      "sha256": "0b1bc876713d68cd9001dcd27a41bfa3e7f53aa96f8e1698f214e65dcca16c74",
+      "bytes": 1327
+    },
+    ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/owner-legacy-mount-trust-decision.json": {
+      "sha256": "08ce3e92770bd45e27a695e9cf98fa7b72c867cba378ea7b1e27ba13695fe947",
+      "bytes": 1129
+    },
+    ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/owner-trust-decision.json": {
+      "sha256": "32cf6348d01114c39c6f5722d000b127dd395150f22c21cf6b4e941b5f593f61",
+      "bytes": 1036
+    },
+    ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/root-fixture-review-bindings.json": {
+      "sha256": "cfffe6d6ecfe2124a8a832d463d211687d2a5e87e303295e2fc6f268ac16ddbb",
+      "bytes": 1400
+    },
+    ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/root-fixture-review/spec-inputs.json": {
+      "sha256": "d4ea31c917ee1d310ee76afcd418b6d1b47fbef85923917e3739b8a423d2261e",
+      "bytes": 11271
+    },
+    ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/root-fixture-review/spec.md": {
+      "sha256": "e1e73f4e3888931aa9faa4fe0572ce1d16700a07cf1e9ac7c280844f04c6e32a",
+      "bytes": 2313
+    },
+    ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/root-fixture-review/standards-final-inputs.json": {
+      "sha256": "b38ca964ba9e02e4c1365a9be947d11eca5b5a3164e6baf8674163d589f0c6da",
+      "bytes": 1406
+    },
+    ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/root-fixture-review/standards-final.md": {
+      "sha256": "c8af0620af83ee435043f3817e5837222dd75ec4f34d09f09e12da74e53050af",
+      "bytes": 1630
+    },
+    ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/root-tracked-final-gates/root-audit.json": {
+      "sha256": "9f12730b699705b15e10bb924d6b1bff4a098eb390112fe6cdb5ea7a881dfcdd",
+      "bytes": 17948939
+    },
+    ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/tracked-candidate-installed-maxsockets1/root-audit.json": {
+      "sha256": "6819bcd1db03ca6a9564d4a3bb9739c8ea86aaf9ebdc6cafbdf2d1ca2763b86b",
+      "bytes": 39630
+    },
+    ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/tracked-packaging-single-socket-diagnosis/root-audit.json": {
+      "sha256": "ce0c897860d9fddce6398a074f88b68b113ecbb9a71af874db977d9de86b3fbb",
+      "bytes": 3209
+    },
+    ".scratch/observed-integration/evidence/admission-decision.md": {
+      "sha256": "1f667b5a8828033c367fe733de8907f7b6ff6c2c860e0da63e0032a9f76547a2",
+      "bytes": 26950
+    },
+    ".scratch/observed-integration/evidence/allocation-contract.md": {
+      "sha256": "b12157b52fe4e2c2b9bfb1e2b740806e52ff3890a7623c083f6075a3344402f1",
+      "bytes": 18376
+    },
+    ".scratch/observed-integration/evidence/inventory-decision.md": {
+      "sha256": "6a06472ebddc173bfe0f92feb3400ae0ba8527e384550ab8e3e68cee15befac2",
+      "bytes": 13687
+    },
+    ".scratch/observed-integration/evidence/public-contract.md": {
+      "sha256": "2ff2a37284771567bb05765a1e6b7bd9b945435c62327eeed106f03251153e40",
+      "bytes": 17223
+    },
+    ".scratch/observed-integration/evidence/seam-decision.md": {
+      "sha256": "da5a8ee2b12f9fcefd56f736ac19e0a4072520b230ae10c4a831f5c327c9a79d",
+      "bytes": 21833
+    },
+    ".scratch/observed-integration/evidence/validation-matrix.md": {
+      "sha256": "4d7fa19d11c9cca4a097b0f0d0d19588aac517e9d18a8b7aa7c04c20884885e7",
+      "bytes": 17646
+    },
+    ".scratch/observed-integration/implementation-plan.md": {
+      "sha256": "08224739d905d0d0d2b504aaed55780ed9e0485b3b2d93905ae915467a702672",
+      "bytes": 25939
+    },
+    ".scratch/observed-integration/spec.md": {
+      "sha256": "e9a3464ae70ef32ca5118a7da96f2c92db3a24ebf0c6cea3c581131e6aebb0aa",
+      "bytes": 8360
+    },
+    ".scratch/v1-release/map.md": {
+      "sha256": "b154b9cb08454aa8433f1e8e917e4bef948db48d72b247f60f5b58d837daebaa",
+      "bytes": 12421
+    },
+    "AGENTS.md": {
+      "sha256": "86d3e5e2ccba32103401ab95af6b6488fc439d090913b028a7961d07f79a1c47",
+      "bytes": 1542
+    },
+    "GLOSSARY.md": {
+      "sha256": "a246e0082a15dfd2fa74138473607b9a3c5e3426460f1d43d1d9d154f87ec1c5",
+      "bytes": 5818
+    },
+    "docs/adr/0001-bridge-perceives-and-acts-jev-decides.md": {
+      "sha256": "cff98f9a271e38257b39fd7cec36796942c3bc98f36b3a87213dcb986938a90c",
+      "bytes": 5314
+    },
+    "docs/adr/0002-mobilebuildmcp-as-device-layer.md": {
+      "sha256": "00da2cbba873223976b22b0a26314a6b351b769b4c3f899a97f95334a565abe1",
+      "bytes": 4571
+    },
+    "docs/adr/0003-explicit-scripts-with-jev-assertions.md": {
+      "sha256": "20bacdcf19d87497b662078d9eb9905e19fc96d63c50358e80b72b32f7920d54",
+      "bytes": 3354
+    },
+    "docs/adr/0004-fixed-assertion-bounds-single-judgment.md": {
+      "sha256": "f1aeebbd30f6140856481ec68393730b80ff8a4aacfdb1cb33ed3201fac63643",
+      "bytes": 2490
+    },
+    "docs/adr/0005-the-1-0-stability-contract.md": {
+      "sha256": "fe61fd90fda45b661b183162062d500c3cb87517afc0b2aee37ccbb154f3f04b",
+      "bytes": 2850
+    },
+    "docs/adr/0006-mobilecli-device-agent-as-android-device-layer.md": {
+      "sha256": "609d25b0de8d3b813d58d99969a9f3c90938709e13f649ab72485bf97d6a9ff5",
+      "bytes": 5134
+    },
+    "docs/adr/0007-simulator-presentation-and-a-bounded-ios-point-tap-exception.md": {
+      "sha256": "05f09cb8c30602b489b3fca212fae6edb1a9ba6e6beeb1a31cd418c40bcabb20",
+      "bytes": 6767
+    },
+    "docs/adr/0008-durable-ios-admission.md": {
+      "sha256": "53d1111c4dd1e2f36635c89d5695a6356a72e054810d7e3f3e7faf4be194d501",
+      "bytes": 1625
+    },
+    "docs/adr/0009-bounded-simulator-creation.md": {
+      "sha256": "f60dae7177255f92e1263c29c6a4433216b80d17ce83bc91dd8a444f687ed384",
+      "bytes": 1691
+    },
+    "docs/agents/domain.md": {
+      "sha256": "edc6d6131fdffc4b7135704f5262124fc43355c95f61b7399dc5a4db643e28ca",
+      "bytes": 2033
+    },
+    "docs/agents/issue-tracker.md": {
+      "sha256": "bef53bbef5e5f758759305a856233a6ec7db25ed81781b9c72bca1b04a8fd225",
+      "bytes": 2375
+    },
+    "docs/agents/triage-labels.md": {
+      "sha256": "4f53c9b40ce2651e3611aa090eaedbd6dbc9b71ef8c5f7e65eac0d8263190d0d",
+      "bytes": 1045
+    }
+  }
+}

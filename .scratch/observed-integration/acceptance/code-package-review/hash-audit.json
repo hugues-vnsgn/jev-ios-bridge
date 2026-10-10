@@ -1,0 +1,35 @@
+{
+  "base": "b8c4a50942551bdf95d00036a6d2f7bb6142ff43",
+  "final": "a3e6c4e3cbecd0bba345c3ac2004ff4530141e3a",
+  "product": "48d4b95e319a2c1b24480be6f008f208acf4327c",
+  "rootAuditSha256": "9f12730b699705b15e10bb924d6b1bff4a098eb390112fe6cdb5ea7a881dfcdd",
+  "checks": {
+    "source443": 443,
+    "originalHostFiles15": 15,
+    "copiedRegularArtifacts": 25201,
+    "node26CompiledPrefixes": [
+      "tracked-root-gates-2026-10-10/tracked-root-final-node26-proof-installed/build-source"
+    ],
+    "26:tracked-root-gates-2026-10-10/tracked-root-final-node26-proof-installed/build-source": 69,
+    "node26PrivateProofFiles": 26034,
+    "node26LinksMatched": true,
+    "node26LinkCount": 14,
+    "node24CompiledPrefixes": [
+      "tracked-root-gates-2026-10-10/tracked-root-final-node24-proof-installed/build-source"
+    ],
+    "24:tracked-root-gates-2026-10-10/tracked-root-final-node24-proof-installed/build-source": 69,
+    "node24PrivateProofFiles": 26034,
+    "node24LinksMatched": true,
+    "node24LinkCount": 14,
+    "evidenceOnlyCommitsProductDelta": [],
+    "candidateChangedPaths": [
+      "tests/fixtures/observed-cli-server.ts",
+      "tests/observed-cli.test.ts",
+      "tests/observed-service.test.ts"
+    ]
+  },
+  "errors": [],
+  "productDiffSha256": "8674aa75a9a1a97bf363b32faac5be1c6bab9dee6d2df0369a2f262b6a65f95e",
+  "productDiffBytes": 6038993,
+  "status": "PASS"
+}

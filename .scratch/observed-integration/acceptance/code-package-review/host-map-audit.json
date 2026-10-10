@@ -1,0 +1,117 @@
+[
+  {
+    "manifest": ".scratch/observed-integration/acceptance/host/schema.json",
+    "sha256": "75fcbdfd5c2a0699a1098cfe25e3d0d08c0684d9becc4174de2de0256fd7f55f",
+    "rows": [
+      "H01",
+      "H02"
+    ],
+    "cases": 150,
+    "caseSourceHashes": {
+      "tests/observed-host-fault.test.ts": "e7ca2c244ad2f4eff64d9314b05cf8fc6f1fe5def61c64c31b6381cc315d2a9a"
+    },
+    "mismatches": [],
+    "scope": "Host: isolated stores, fake backends and declared injection/installed-proof limits. No live/native/remote-CI/final-safety verdict."
+  },
+  {
+    "manifest": ".scratch/observed-integration/acceptance/host/identity.json",
+    "sha256": "dc92b5fe1531ad7f5b2fca642106acb2a9bcd0b9a968aed672a90f7c1dc63add",
+    "rows": [
+      "H03",
+      "H04"
+    ],
+    "cases": 120,
+    "caseSourceHashes": {
+      "tests/observed-public-races.test.ts": "9e2187cb3ac5026827d7b9eb1130805a79ed3ba8dcf7ebce81157c12c656954e",
+      "tests/observed-host-fault.test.ts": "e7ca2c244ad2f4eff64d9314b05cf8fc6f1fe5def61c64c31b6381cc315d2a9a"
+    },
+    "mismatches": [],
+    "scope": "Host: isolated stores, fake backends and declared injection/installed-proof limits. No live/native/remote-CI/final-safety verdict."
+  },
+  {
+    "manifest": ".scratch/observed-integration/acceptance/host/cancel.json",
+    "sha256": "c4b5178ee7f1c849cfabba6913528a6ccc6ef9b96a745127ea9924f2574bf9e0",
+    "rows": [
+      "H05"
+    ],
+    "cases": 57,
+    "caseSourceHashes": {
+      "tests/observed-public-races.test.ts": "9e2187cb3ac5026827d7b9eb1130805a79ed3ba8dcf7ebce81157c12c656954e",
+      "tests/observed-host-fault.test.ts": "e7ca2c244ad2f4eff64d9314b05cf8fc6f1fe5def61c64c31b6381cc315d2a9a"
+    },
+    "mismatches": [],
+    "scope": "Host: isolated stores, fake backends and declared injection/installed-proof limits. No live/native/remote-CI/final-safety verdict."
+  },
+  {
+    "manifest": ".scratch/observed-integration/acceptance/host/crash.json",
+    "sha256": "9141de9a13473351652ca3fcc6628d2ee6e8501ef8175a1c8a81f0447e06be66",
+    "rows": [
+      "H06"
+    ],
+    "cases": 36,
+    "caseSourceHashes": {
+      "tests/observed-crash.test.ts": "3a5422f3f63baa67dd28c5cca50ccb23d2ddc9605ea22bd12693fc6b32b5c0ea"
+    },
+    "mismatches": [],
+    "scope": "Host: isolated stores, fake backends and declared injection/installed-proof limits. No live/native/remote-CI/final-safety verdict."
+  },
+  {
+    "manifest": ".scratch/observed-integration/acceptance/host/storage.json",
+    "sha256": "76303675ebb1010742915c5538a5d7e119d347a2e8da1eed67b43018e474232a",
+    "rows": [
+      "H07"
+    ],
+    "cases": 23,
+    "caseSourceHashes": {
+      "tests/observed-host-fault.test.ts": "e7ca2c244ad2f4eff64d9314b05cf8fc6f1fe5def61c64c31b6381cc315d2a9a"
+    },
+    "mismatches": [],
+    "scope": "Host: isolated stores, fake backends and declared injection/installed-proof limits. No live/native/remote-CI/final-safety verdict."
+  },
+  {
+    "manifest": ".scratch/observed-integration/acceptance/host/migration.json",
+    "sha256": "524ef3292eaeb300700051f830bda4cbdea676ce78aca7318ed6c6745a5de344",
+    "rows": [
+      "H08"
+    ],
+    "cases": 20,
+    "caseSourceHashes": {
+      "tests/observed-host-fault.test.ts": "e7ca2c244ad2f4eff64d9314b05cf8fc6f1fe5def61c64c31b6381cc315d2a9a"
+    },
+    "mismatches": [],
+    "scope": "Host: isolated stores, fake backends and declared injection/installed-proof limits. No live/native/remote-CI/final-safety verdict."
+  },
+  {
+    "manifest": ".scratch/observed-integration/acceptance/host/runtime.json",
+    "sha256": "480a38ec78de22022e0b6a5bf57a503030a549c27853470029ec7a84974ef338",
+    "rows": [
+      "H09"
+    ],
+    "cases": 3,
+    "caseSourceHashes": {},
+    "mismatches": [],
+    "scope": "Host: isolated stores, fake backends and declared injection/installed-proof limits. No live/native/remote-CI/final-safety verdict."
+  },
+  {
+    "manifest": ".scratch/observed-integration/acceptance/host/packaging.json",
+    "sha256": "be1ff3fc73519a0d847ed6487ff61356f5f22144065210b1667596ea86799ff6",
+    "rows": [
+      "H09"
+    ],
+    "cases": 2,
+    "caseSourceHashes": {},
+    "mismatches": [],
+    "scope": "Host: isolated stores, fake backends and declared injection/installed-proof limits. No live/native/remote-CI/final-safety verdict."
+  },
+  {
+    "manifest": ".scratch/observed-integration/acceptance/host/compatibility.json",
+    "sha256": "194888d03a55af2a0d17bbc58a3d0bb67ab8d2750031dd4482fcfba856157c70",
+    "rows": [
+      "H09"
+    ],
+    "cases": 1,
+    "caseSourceHashes": {},
+    "mismatches": [],
+    "scope": "Host: isolated stores, fake backends and declared injection/installed-proof limits. No live/native/remote-CI/final-safety verdict."
+  }
+]

@@ -1,0 +1,984 @@
+{
+  "base": "b8c4a50942551bdf95d00036a6d2f7bb6142ff43",
+  "final": "a3e6c4e3cbecd0bba345c3ac2004ff4530141e3a",
+  "checks": {
+    "source443": 443,
+    "originalHostFiles15": 15,
+    "copiedRegularArtifacts": 25201,
+    "node26PrivateRegularFiles": 26034,
+    "node26Links": {
+      "count": 14,
+      "allMatched": true
+    },
+    "node26CompiledPayloads": {
+      "payloads": [
+        "build-source",
+        "clean/node_modules/jev-ios-bridge",
+        "build-source/build/plugin/jev-ios-bridge",
+        "plugin"
+      ],
+      "filesEach": 69
+    },
+    "node26DistributionRaw": {
+      "commandCount": 37,
+      "exits": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        3,
+        3,
+        3,
+        3,
+        3,
+        3,
+        3,
+        3,
+        3,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        3,
+        3,
+        3,
+        3,
+        3,
+        3,
+        3,
+        3,
+        3,
+        0,
+        0,
+        0,
+        0
+      ],
+      "signals": [
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null
+      ],
+      "rawFiles": [
+        {
+          "path": ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/root-tracked-final-gates/preserved/tracked-root-gates-2026-10-10/tracked-root-final-node26-proof-installed/001.stdout",
+          "sha256": "d389e171e7d990557a7d1d14e7bf0468ef7ac9a086d5d3d6b4f7f76786d7e62a",
+          "bytes": 75
+        },
+        {
+          "path": ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/root-tracked-final-gates/preserved/tracked-root-gates-2026-10-10/tracked-root-final-node26-proof-installed/001.stderr",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "bytes": 0
+        },
+        {
+          "path": ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/root-tracked-final-gates/preserved/tracked-root-gates-2026-10-10/tracked-root-final-node26-proof-installed/002.stdout",
+          "sha256": "c6e1155a7a901def722274314b839e69e0ef5b9d8707312b848fb8a8a05a0a34",
+          "bytes": 10495
+        },
+        {
+          "path": ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/root-tracked-final-gates/preserved/tracked-root-gates-2026-10-10/tracked-root-final-node26-proof-installed/002.stderr",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "bytes": 0
+        },
+        {
+          "path": ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/root-tracked-final-gates/preserved/tracked-root-gates-2026-10-10/tracked-root-final-node26-proof-installed/003.stdout",
+          "sha256": "a3ca99abff933ad6360e07312fac18e2363991ab9cc07250b52a85077ac75cf9",
+          "bytes": 27
+        },
+        {
+          "path": ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/root-tracked-final-gates/preserved/tracked-root-gates-2026-10-10/tracked-root-final-node26-proof-installed/003.stderr",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "bytes": 0
+        },
+        {
+          "path": ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/root-tracked-final-gates/preserved/tracked-root-gates-2026-10-10/tracked-root-final-node26-proof-installed/004.stdout",
+          "sha256": "10e2e117b01523891ca271a615ae36e9d5e52348fd7d642f66727602c1b8dcbe",
+          "bytes": 6
+        },
+        {
+          "path": ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/root-tracked-final-gates/preserved/tracked-root-gates-2026-10-10/tracked-root-final-node26-proof-installed/004.stderr",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "bytes": 0
+        },
+        {
+          "path": ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/root-tracked-final-gates/preserved/tracked-root-gates-2026-10-10/tracked-root-final-node26-proof-installed/005.stdout",
+          "sha256": "10e2e117b01523891ca271a615ae36e9d5e52348fd7d642f66727602c1b8dcbe",
+          "bytes": 6
+        },
+        {
+          "path": ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/root-tracked-final-gates/preserved/tracked-root-gates-2026-10-10/tracked-root-final-node26-proof-installed/005.stderr",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "bytes": 0
+        },
+        {
+          "path": ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/root-tracked-final-gates/preserved/tracked-root-gates-2026-10-10/tracked-root-final-node26-proof-installed/006.stdout",
+          "sha256": "f50dd83c1426aad138c97797e72ec869d70243765f4679a819e1d66e4d72967b",
+          "bytes": 2342
+        },
+        {
+          "path": ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/root-tracked-final-gates/preserved/tracked-root-gates-2026-10-10/tracked-root-final-node26-proof-installed/006.stderr",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "bytes": 0
+        },
+        {
+          "path": ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/root-tracked-final-gates/preserved/tracked-root-gates-2026-10-10/tracked-root-final-node26-proof-installed/007.stdout",
+          "sha256": "10a9d77af3f48efc87403fa65b3027bfe2676d0382c23552511bb9d544a8ed97",
+          "bytes": 173
+        },
+        {
+          "path": ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/root-tracked-final-gates/preserved/tracked-root-gates-2026-10-10/tracked-root-final-node26-proof-installed/007.stderr",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "bytes": 0
+        },
+        {
+          "path": ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/root-tracked-final-gates/preserved/tracked-root-gates-2026-10-10/tracked-root-final-node26-proof-installed/008.stdout",
+          "sha256": "10a9d77af3f48efc87403fa65b3027bfe2676d0382c23552511bb9d544a8ed97",
+          "bytes": 173
+        },
+        {
+          "path": ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/root-tracked-final-gates/preserved/tracked-root-gates-2026-10-10/tracked-root-final-node26-proof-installed/008.stderr",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "bytes": 0
+        },
+        {
+          "path": ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/root-tracked-final-gates/preserved/tracked-root-gates-2026-10-10/tracked-root-final-node26-proof-installed/009.stdout",
+          "sha256": "10a9d77af3f48efc87403fa65b3027bfe2676d0382c23552511bb9d544a8ed97",
+          "bytes": 173
+        },
+        {
+          "path": ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/root-tracked-final-gates/preserved/tracked-root-gates-2026-10-10/tracked-root-final-node26-proof-installed/009.stderr",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "bytes": 0
+        },
+        {
+          "path": ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/root-tracked-final-gates/preserved/tracked-root-gates-2026-10-10/tracked-root-final-node26-proof-installed/010.stdout",
+          "sha256": "10a9d77af3f48efc87403fa65b3027bfe2676d0382c23552511bb9d544a8ed97",
+          "bytes": 173
+        },
+        {
+          "path": ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/root-tracked-final-gates/preserved/tracked-root-gates-2026-10-10/tracked-root-final-node26-proof-installed/010.stderr",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "bytes": 0
+        },
+        {
+          "path": ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/root-tracked-final-gates/preserved/tracked-root-gates-2026-10-10/tracked-root-final-node26-proof-installed/011.stdout",
+          "sha256": "8e4b3ab872ecbe079927b4528be55c178e2bc7fc167efc51a1ab3ed542f6d259",
+          "bytes": 168
+        },
+        {
+          "path": ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/root-tracked-final-gates/preserved/tracked-root-gates-2026-10-10/tracked-root-final-node26-proof-installed/011.stderr",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "bytes": 0
+        },
+        {
+          "path": ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/root-tracked-final-gates/preserved/tracked-root-gates-2026-10-10/tracked-root-final-node26-proof-installed/012.stdout",
+          "sha256": "8e4b3ab872ecbe079927b4528be55c178e2bc7fc167efc51a1ab3ed542f6d259",
+          "bytes": 168
+        },
+        {
+          "path": ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/root-tracked-final-gates/preserved/tracked-root-gates-2026-10-10/tracked-root-final-node26-proof-installed/012.stderr",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "bytes": 0
+        },
+        {
+          "path": ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/root-tracked-final-gates/preserved/tracked-root-gates-2026-10-10/tracked-root-final-node26-proof-installed/013.stdout",
+          "sha256": "8e4b3ab872ecbe079927b4528be55c178e2bc7fc167efc51a1ab3ed542f6d259",
+          "bytes": 168
+        },
+        {
+          "path": ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/root-tracked-final-gates/preserved/tracked-root-gates-2026-10-10/tracked-root-final-node26-proof-installed/013.stderr",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "bytes": 0
+        },
+        {
+          "path": ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/root-tracked-final-gates/preserved/tracked-root-gates-2026-10-10/tracked-root-final-node26-proof-installed/014.stdout",
+          "sha256": "0ca6e4367908aa33e3174af0dce098dfa3f275d14d759dedf352dd62251eda2f",
+          "bytes": 162
+        },
+        {
+          "path": ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/root-tracked-final-gates/preserved/tracked-root-gates-2026-10-10/tracked-root-final-node26-proof-installed/014.stderr",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "bytes": 0
+        },
+        {
+          "path": ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/root-tracked-final-gates/preserved/tracked-root-gates-2026-10-10/tracked-root-final-node26-proof-installed/015.stdout",
+          "sha256": "0ca6e4367908aa33e3174af0dce098dfa3f275d14d759dedf352dd62251eda2f",
+          "bytes": 162
+        },
+        {
+          "path": ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/root-tracked-final-gates/preserved/tracked-root-gates-2026-10-10/tracked-root-final-node26-proof-installed/015.stderr",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "bytes": 0
+        },
+        {
+          "path": ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/root-tracked-final-gates/preserved/tracked-root-gates-2026-10-10/tracked-root-final-node26-proof-installed/016.stdout",
+          "sha256": "3a2efc26fff3f21e2682f1feab0b36675fa20c9ba74caacfdbb7bac39868abd6",
+          "bytes": 1435
+        },
+        {
+          "path": ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/root-tracked-final-gates/preserved/tracked-root-gates-2026-10-10/tracked-root-final-node26-proof-installed/016.stderr",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "bytes": 0
+        },
+        {
+          "path": ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/root-tracked-final-gates/preserved/tracked-root-gates-2026-10-10/tracked-root-final-node26-proof-installed/017.stdout",
+          "sha256": "b20875d3fb9e8d432724381cde1edcad74cb069710a81cdf2cf4b96ecaf96104",
+          "bytes": 16042
+        },
+        {
+          "path": ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/root-tracked-final-gates/preserved/tracked-root-gates-2026-10-10/tracked-root-final-node26-proof-installed/017.stderr",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "bytes": 0
+        },
+        {
+          "path": ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/root-tracked-final-gates/preserved/tracked-root-gates-2026-10-10/tracked-root-final-node26-proof-installed/018.stdout",
+          "sha256": "b20875d3fb9e8d432724381cde1edcad74cb069710a81cdf2cf4b96ecaf96104",
+          "bytes": 16042
+        },
+        {
+          "path": ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/root-tracked-final-gates/preserved/tracked-root-gates-2026-10-10/tracked-root-final-node26-proof-installed/018.stderr",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "bytes": 0
+        },
+        {
+          "path": ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/root-tracked-final-gates/preserved/tracked-root-gates-2026-10-10/tracked-root-final-node26-proof-installed/019.stdout",
+          "sha256": "ae10dbd16f15963f6e1f752637090348dd337c3eadaf9b501cbd38ccc5dd1d3b",
+          "bytes": 22045
+        },
+        {
+          "path": ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/root-tracked-final-gates/preserved/tracked-root-gates-2026-10-10/tracked-root-final-node26-proof-installed/019.stderr",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "bytes": 0
+        },
+        {
+          "path": ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/root-tracked-final-gates/preserved/tracked-root-gates-2026-10-10/tracked-root-final-node26-proof-installed/020.stdout",
+          "sha256": "36b54ec3b61a5159cc99717eadaa14d49295ca27ba79db643dca592a57001f88",
+          "bytes": 313
+        },
+        {
+          "path": ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/root-tracked-final-gates/preserved/tracked-root-gates-2026-10-10/tracked-root-final-node26-proof-installed/020.stderr",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "bytes": 0
+        },
+        {
+          "path": ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/root-tracked-final-gates/preserved/tracked-root-gates-2026-10-10/tracked-root-final-node26-proof-installed/021.stdout",
+          "sha256": "897de64a2e54d32dad21ed563ffb95522ad2351055bb089b3355e09a93679e26",
+          "bytes": 26
+        },
+        {
+          "path": ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/root-tracked-final-gates/preserved/tracked-root-gates-2026-10-10/tracked-root-final-node26-proof-installed/021.stderr",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "bytes": 0
+        },
+        {
+          "path": ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/root-tracked-final-gates/preserved/tracked-root-gates-2026-10-10/tracked-root-final-node26-proof-installed/022.stdout",
+          "sha256": "10e2e117b01523891ca271a615ae36e9d5e52348fd7d642f66727602c1b8dcbe",
+          "bytes": 6
+        },
+        {
+          "path": ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/root-tracked-final-gates/preserved/tracked-root-gates-2026-10-10/tracked-root-final-node26-proof-installed/022.stderr",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "bytes": 0
+        },
+        {
+          "path": ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/root-tracked-final-gates/preserved/tracked-root-gates-2026-10-10/tracked-root-final-node26-proof-installed/023.stdout",
+          "sha256": "10e2e117b01523891ca271a615ae36e9d5e52348fd7d642f66727602c1b8dcbe",
+          "bytes": 6
+        },
+        {
+          "path": ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/root-tracked-final-gates/preserved/tracked-root-gates-2026-10-10/tracked-root-final-node26-proof-installed/023.stderr",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "bytes": 0
+        },
+        {
+          "path": ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/root-tracked-final-gates/preserved/tracked-root-gates-2026-10-10/tracked-root-final-node26-proof-installed/024.stdout",
+          "sha256": "f50dd83c1426aad138c97797e72ec869d70243765f4679a819e1d66e4d72967b",
+          "bytes": 2342
+        },
+        {
+          "path": ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/root-tracked-final-gates/preserved/tracked-root-gates-2026-10-10/tracked-root-final-node26-proof-installed/024.stderr",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "bytes": 0
+        },
+        {
+          "path": ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/root-tracked-final-gates/preserved/tracked-root-gates-2026-10-10/tracked-root-final-node26-proof-installed/025.stdout",
+          "sha256": "10a9d77af3f48efc87403fa65b3027bfe2676d0382c23552511bb9d544a8ed97",
+          "bytes": 173
+        },
+        {
+          "path": ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/root-tracked-final-gates/preserved/tracked-root-gates-2026-10-10/tracked-root-final-node26-proof-installed/025.stderr",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "bytes": 0
+        },
+        {
+          "path": ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/root-tracked-final-gates/preserved/tracked-root-gates-2026-10-10/tracked-root-final-node26-proof-installed/026.stdout",
+          "sha256": "10a9d77af3f48efc87403fa65b3027bfe2676d0382c23552511bb9d544a8ed97",
+          "bytes": 173
+        },
+        {
+          "path": ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/root-tracked-final-gates/preserved/tracked-root-gates-2026-10-10/tracked-root-final-node26-proof-installed/026.stderr",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "bytes": 0
+        },
+        {
+          "path": ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/root-tracked-final-gates/preserved/tracked-root-gates-2026-10-10/tracked-root-final-node26-proof-installed/027.stdout",
+          "sha256": "10a9d77af3f48efc87403fa65b3027bfe2676d0382c23552511bb9d544a8ed97",
+          "bytes": 173
+        },
+        {
+          "path": ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/root-tracked-final-gates/preserved/tracked-root-gates-2026-10-10/tracked-root-final-node26-proof-installed/027.stderr",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "bytes": 0
+        },
+        {
+          "path": ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/root-tracked-final-gates/preserved/tracked-root-gates-2026-10-10/tracked-root-final-node26-proof-installed/028.stdout",
+          "sha256": "10a9d77af3f48efc87403fa65b3027bfe2676d0382c23552511bb9d544a8ed97",
+          "bytes": 173
+        },
+        {
+          "path": ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/root-tracked-final-gates/preserved/tracked-root-gates-2026-10-10/tracked-root-final-node26-proof-installed/028.stderr",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "bytes": 0
+        },
+        {
+          "path": ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/root-tracked-final-gates/preserved/tracked-root-gates-2026-10-10/tracked-root-final-node26-proof-installed/029.stdout",
+          "sha256": "8e4b3ab872ecbe079927b4528be55c178e2bc7fc167efc51a1ab3ed542f6d259",
+          "bytes": 168
+        },
+        {
+          "path": ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/root-tracked-final-gates/preserved/tracked-root-gates-2026-10-10/tracked-root-final-node26-proof-installed/029.stderr",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "bytes": 0
+        },
+        {
+          "path": ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/root-tracked-final-gates/preserved/tracked-root-gates-2026-10-10/tracked-root-final-node26-proof-installed/030.stdout",
+          "sha256": "8e4b3ab872ecbe079927b4528be55c178e2bc7fc167efc51a1ab3ed542f6d259",
+          "bytes": 168
+        },
+        {
+          "path": ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/root-tracked-final-gates/preserved/tracked-root-gates-2026-10-10/tracked-root-final-node26-proof-installed/030.stderr",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "bytes": 0
+        },
+        {
+          "path": ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/root-tracked-final-gates/preserved/tracked-root-gates-2026-10-10/tracked-root-final-node26-proof-installed/031.stdout",
+          "sha256": "8e4b3ab872ecbe079927b4528be55c178e2bc7fc167efc51a1ab3ed542f6d259",
+          "bytes": 168
+        },
+        {
+          "path": ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/root-tracked-final-gates/preserved/tracked-root-gates-2026-10-10/tracked-root-final-node26-proof-installed/031.stderr",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "bytes": 0
+        },
+        {
+          "path": ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/root-tracked-final-gates/preserved/tracked-root-gates-2026-10-10/tracked-root-final-node26-proof-installed/032.stdout",
+          "sha256": "0ca6e4367908aa33e3174af0dce098dfa3f275d14d759dedf352dd62251eda2f",
+          "bytes": 162
+        },
+        {
+          "path": ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/root-tracked-final-gates/preserved/tracked-root-gates-2026-10-10/tracked-root-final-node26-proof-installed/032.stderr",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "bytes": 0
+        },
+        {
+          "path": ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/root-tracked-final-gates/preserved/tracked-root-gates-2026-10-10/tracked-root-final-node26-proof-installed/033.stdout",
+          "sha256": "0ca6e4367908aa33e3174af0dce098dfa3f275d14d759dedf352dd62251eda2f",
+          "bytes": 162
+        },
+        {
+          "path": ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/root-tracked-final-gates/preserved/tracked-root-gates-2026-10-10/tracked-root-final-node26-proof-installed/033.stderr",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "bytes": 0
+        },
+        {
+          "path": ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/root-tracked-final-gates/preserved/tracked-root-gates-2026-10-10/tracked-root-final-node26-proof-installed/034.stdout",
+          "sha256": "3a2efc26fff3f21e2682f1feab0b36675fa20c9ba74caacfdbb7bac39868abd6",
+          "bytes": 1435
+        },
+        {
+          "path": ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/root-tracked-final-gates/preserved/tracked-root-gates-2026-10-10/tracked-root-final-node26-proof-installed/034.stderr",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "bytes": 0
+        },
+        {
+          "path": ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/root-tracked-final-gates/preserved/tracked-root-gates-2026-10-10/tracked-root-final-node26-proof-installed/035.stdout",
+          "sha256": "b20875d3fb9e8d432724381cde1edcad74cb069710a81cdf2cf4b96ecaf96104",
+          "bytes": 16042
+        },
+        {
+          "path": ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/root-tracked-final-gates/preserved/tracked-root-gates-2026-10-10/tracked-root-final-node26-proof-installed/035.stderr",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "bytes": 0
+        },
+        {
+          "path": ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/root-tracked-final-gates/preserved/tracked-root-gates-2026-10-10/tracked-root-final-node26-proof-installed/036.stdout",
+          "sha256": "b20875d3fb9e8d432724381cde1edcad74cb069710a81cdf2cf4b96ecaf96104",
+          "bytes": 16042
+        },
+        {
+          "path": ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/root-tracked-final-gates/preserved/tracked-root-gates-2026-10-10/tracked-root-final-node26-proof-installed/036.stderr",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "bytes": 0
+        },
+        {
+          "path": ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/root-tracked-final-gates/preserved/tracked-root-gates-2026-10-10/tracked-root-final-node26-proof-installed/037.stdout",
+          "sha256": "ae10dbd16f15963f6e1f752637090348dd337c3eadaf9b501cbd38ccc5dd1d3b",
+          "bytes": 22045
+        },
+        {
+          "path": ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/root-tracked-final-gates/preserved/tracked-root-gates-2026-10-10/tracked-root-final-node26-proof-installed/037.stderr",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "bytes": 0
+        }
+      ]
+    },
+    "node26FullRaw": {
+      "path": ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/root-tracked-final-gates/preserved/tracked-root-gates-2026-10-10/tracked-root-final-node26-check.log",
+      "sha256": "a363fe18ef02e6a217c138974f36ff0c1ce2f327c6351894ddc6a6ba8b938f2e",
+      "counts": {
+        "tests": 2258,
+        "pass": 2258,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "typecheck": true,
+      "build": true
+    },
+    "node24PrivateRegularFiles": 26034,
+    "node24Links": {
+      "count": 14,
+      "allMatched": true
+    },
+    "node24CompiledPayloads": {
+      "payloads": [
+        "build-source",
+        "clean/node_modules/jev-ios-bridge",
+        "build-source/build/plugin/jev-ios-bridge",
+        "plugin"
+      ],
+      "filesEach": 69
+    },
+    "node24DistributionRaw": {
+      "commandCount": 37,
+      "exits": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        3,
+        3,
+        3,
+        3,
+        3,
+        3,
+        3,
+        3,
+        3,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        3,
+        3,
+        3,
+        3,
+        3,
+        3,
+        3,
+        3,
+        3,
+        0,
+        0,
+        0,
+        0
+      ],
+      "signals": [
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null
+      ],
+      "rawFiles": [
+        {
+          "path": ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/root-tracked-final-gates/preserved/tracked-root-gates-2026-10-10/tracked-root-final-node24-proof-installed/001.stdout",
+          "sha256": "d389e171e7d990557a7d1d14e7bf0468ef7ac9a086d5d3d6b4f7f76786d7e62a",
+          "bytes": 75
+        },
+        {
+          "path": ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/root-tracked-final-gates/preserved/tracked-root-gates-2026-10-10/tracked-root-final-node24-proof-installed/001.stderr",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "bytes": 0
+        },
+        {
+          "path": ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/root-tracked-final-gates/preserved/tracked-root-gates-2026-10-10/tracked-root-final-node24-proof-installed/002.stdout",
+          "sha256": "077760e25416e2caa702ed8cffa9f531ff0fa49bb491e1c6e8890cfe7af0be9c",
+          "bytes": 10495
+        },
+        {
+          "path": ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/root-tracked-final-gates/preserved/tracked-root-gates-2026-10-10/tracked-root-final-node24-proof-installed/002.stderr",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "bytes": 0
+        },
+        {
+          "path": ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/root-tracked-final-gates/preserved/tracked-root-gates-2026-10-10/tracked-root-final-node24-proof-installed/003.stdout",
+          "sha256": "5ca65cbc30a86c5ee9274c7b490050b74e9d577c740ad7c2843821152b05ef4a",
+          "bytes": 27
+        },
+        {
+          "path": ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/root-tracked-final-gates/preserved/tracked-root-gates-2026-10-10/tracked-root-final-node24-proof-installed/003.stderr",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "bytes": 0
+        },
+        {
+          "path": ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/root-tracked-final-gates/preserved/tracked-root-gates-2026-10-10/tracked-root-final-node24-proof-installed/004.stdout",
+          "sha256": "10e2e117b01523891ca271a615ae36e9d5e52348fd7d642f66727602c1b8dcbe",
+          "bytes": 6
+        },
+        {
+          "path": ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/root-tracked-final-gates/preserved/tracked-root-gates-2026-10-10/tracked-root-final-node24-proof-installed/004.stderr",
+          "sha256": "ba2992c4e87a68048697a3baaf40c0fe20cace6736884acd8f7d92becf3d7839",
+          "bytes": 169
+        },
+        {
+          "path": ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/root-tracked-final-gates/preserved/tracked-root-gates-2026-10-10/tracked-root-final-node24-proof-installed/005.stdout",
+          "sha256": "10e2e117b01523891ca271a615ae36e9d5e52348fd7d642f66727602c1b8dcbe",
+          "bytes": 6
+        },
+        {
+          "path": ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/root-tracked-final-gates/preserved/tracked-root-gates-2026-10-10/tracked-root-final-node24-proof-installed/005.stderr",
+          "sha256": "6dab179365263b68ef7da9b96582a8ba2bddc9ac5d208055b5512302f9ec23c9",
+          "bytes": 169
+        },
+        {
+          "path": ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/root-tracked-final-gates/preserved/tracked-root-gates-2026-10-10/tracked-root-final-node24-proof-installed/006.stdout",
+          "sha256": "f50dd83c1426aad138c97797e72ec869d70243765f4679a819e1d66e4d72967b",
+          "bytes": 2342
+        },
+        {
+          "path": ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/root-tracked-final-gates/preserved/tracked-root-gates-2026-10-10/tracked-root-final-node24-proof-installed/006.stderr",
+          "sha256": "17fa0975b2ba55134d8984aea7dd383b80c4a57110265fba113979699cf127ac",
+          "bytes": 169
+        },
+        {
+          "path": ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/root-tracked-final-gates/preserved/tracked-root-gates-2026-10-10/tracked-root-final-node24-proof-installed/007.stdout",
+          "sha256": "10a9d77af3f48efc87403fa65b3027bfe2676d0382c23552511bb9d544a8ed97",
+          "bytes": 173
+        },
+        {
+          "path": ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/root-tracked-final-gates/preserved/tracked-root-gates-2026-10-10/tracked-root-final-node24-proof-installed/007.stderr",
+          "sha256": "56cbea180494eb3b121b84df8f1d204f07c2443286aa8cc3d403895dea71be2f",
+          "bytes": 169
+        },
+        {
+          "path": ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/root-tracked-final-gates/preserved/tracked-root-gates-2026-10-10/tracked-root-final-node24-proof-installed/008.stdout",
+          "sha256": "10a9d77af3f48efc87403fa65b3027bfe2676d0382c23552511bb9d544a8ed97",
+          "bytes": 173
+        },
+        {
+          "path": ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/root-tracked-final-gates/preserved/tracked-root-gates-2026-10-10/tracked-root-final-node24-proof-installed/008.stderr",
+          "sha256": "003207eaa8e273af42b07c6af24c98406f5e608b0e2ef7bb1ce3cdc1f5e36b8b",
+          "bytes": 169
+        },
+        {
+          "path": ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/root-tracked-final-gates/preserved/tracked-root-gates-2026-10-10/tracked-root-final-node24-proof-installed/009.stdout",
+          "sha256": "10a9d77af3f48efc87403fa65b3027bfe2676d0382c23552511bb9d544a8ed97",
+          "bytes": 173
+        },
+        {
+          "path": ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/root-tracked-final-gates/preserved/tracked-root-gates-2026-10-10/tracked-root-final-node24-proof-installed/009.stderr",
+          "sha256": "2bad86c7fcbccde1db0ba229c322df32e973104f81a7d8b653cd48af1d4a2506",
+          "bytes": 169
+        },
+        {
+          "path": ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/root-tracked-final-gates/preserved/tracked-root-gates-2026-10-10/tracked-root-final-node24-proof-installed/010.stdout",
+          "sha256": "10a9d77af3f48efc87403fa65b3027bfe2676d0382c23552511bb9d544a8ed97",
+          "bytes": 173
+        },
+        {
+          "path": ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/root-tracked-final-gates/preserved/tracked-root-gates-2026-10-10/tracked-root-final-node24-proof-installed/010.stderr",
+          "sha256": "43a2f02c04dbd93f770155dd09ac0409d0320aed9735169d7212cd7b0e4be467",
+          "bytes": 169
+        },
+        {
+          "path": ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/root-tracked-final-gates/preserved/tracked-root-gates-2026-10-10/tracked-root-final-node24-proof-installed/011.stdout",
+          "sha256": "8e4b3ab872ecbe079927b4528be55c178e2bc7fc167efc51a1ab3ed542f6d259",
+          "bytes": 168
+        },
+        {
+          "path": ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/root-tracked-final-gates/preserved/tracked-root-gates-2026-10-10/tracked-root-final-node24-proof-installed/011.stderr",
+          "sha256": "21102e52094448cabb176ecb769f8a577bd540ea0c9a2f7b171c0422fa2a1e9c",
+          "bytes": 169
+        },
+        {
+          "path": ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/root-tracked-final-gates/preserved/tracked-root-gates-2026-10-10/tracked-root-final-node24-proof-installed/012.stdout",
+          "sha256": "8e4b3ab872ecbe079927b4528be55c178e2bc7fc167efc51a1ab3ed542f6d259",
+          "bytes": 168
+        },
+        {
+          "path": ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/root-tracked-final-gates/preserved/tracked-root-gates-2026-10-10/tracked-root-final-node24-proof-installed/012.stderr",
+          "sha256": "3985596bbf3c7f88b30e69745d18497687cb4698339d6b763fc1eced9bc4dcee",
+          "bytes": 169
+        },
+        {
+          "path": ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/root-tracked-final-gates/preserved/tracked-root-gates-2026-10-10/tracked-root-final-node24-proof-installed/013.stdout",
+          "sha256": "8e4b3ab872ecbe079927b4528be55c178e2bc7fc167efc51a1ab3ed542f6d259",
+          "bytes": 168
+        },
+        {
+          "path": ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/root-tracked-final-gates/preserved/tracked-root-gates-2026-10-10/tracked-root-final-node24-proof-installed/013.stderr",
+          "sha256": "0c075c9ce13d62440b072b1b0767057d7ddc0a7872641e8732e48ab22252ed50",
+          "bytes": 169
+        },
+        {
+          "path": ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/root-tracked-final-gates/preserved/tracked-root-gates-2026-10-10/tracked-root-final-node24-proof-installed/014.stdout",
+          "sha256": "0ca6e4367908aa33e3174af0dce098dfa3f275d14d759dedf352dd62251eda2f",
+          "bytes": 162
+        },
+        {
+          "path": ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/root-tracked-final-gates/preserved/tracked-root-gates-2026-10-10/tracked-root-final-node24-proof-installed/014.stderr",
+          "sha256": "4cd7678bd9f9e3ec4b18b200b4507f050e97e431a807acaa6585139b9dbdfb87",
+          "bytes": 169
+        },
+        {
+          "path": ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/root-tracked-final-gates/preserved/tracked-root-gates-2026-10-10/tracked-root-final-node24-proof-installed/015.stdout",
+          "sha256": "0ca6e4367908aa33e3174af0dce098dfa3f275d14d759dedf352dd62251eda2f",
+          "bytes": 162
+        },
+        {
+          "path": ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/root-tracked-final-gates/preserved/tracked-root-gates-2026-10-10/tracked-root-final-node24-proof-installed/015.stderr",
+          "sha256": "edef900b8b3d90dcf4d6b8c0d1cefdfcba059d56979d7295ca1e9d59daaf129c",
+          "bytes": 169
+        },
+        {
+          "path": ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/root-tracked-final-gates/preserved/tracked-root-gates-2026-10-10/tracked-root-final-node24-proof-installed/016.stdout",
+          "sha256": "3a2efc26fff3f21e2682f1feab0b36675fa20c9ba74caacfdbb7bac39868abd6",
+          "bytes": 1435
+        },
+        {
+          "path": ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/root-tracked-final-gates/preserved/tracked-root-gates-2026-10-10/tracked-root-final-node24-proof-installed/016.stderr",
+          "sha256": "e79ce1a7aea8f40dcf00183488bfef598bd8390de9c10438f67a97f31b2de0ef",
+          "bytes": 169
+        },
+        {
+          "path": ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/root-tracked-final-gates/preserved/tracked-root-gates-2026-10-10/tracked-root-final-node24-proof-installed/017.stdout",
+          "sha256": "b20875d3fb9e8d432724381cde1edcad74cb069710a81cdf2cf4b96ecaf96104",
+          "bytes": 16042
+        },
+        {
+          "path": ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/root-tracked-final-gates/preserved/tracked-root-gates-2026-10-10/tracked-root-final-node24-proof-installed/017.stderr",
+          "sha256": "d9b453e0a23f4d26fb03a9cf14596a80e6b6b4816e990ea0500d7280a7a710a0",
+          "bytes": 169
+        },
+        {
+          "path": ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/root-tracked-final-gates/preserved/tracked-root-gates-2026-10-10/tracked-root-final-node24-proof-installed/018.stdout",
+          "sha256": "b20875d3fb9e8d432724381cde1edcad74cb069710a81cdf2cf4b96ecaf96104",
+          "bytes": 16042
+        },
+        {
+          "path": ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/root-tracked-final-gates/preserved/tracked-root-gates-2026-10-10/tracked-root-final-node24-proof-installed/018.stderr",
+          "sha256": "bba904beb575d4bf3f54c2da5238d0ca0782d3f704fbc06ce2c36161d64137e9",
+          "bytes": 169
+        },
+        {
+          "path": ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/root-tracked-final-gates/preserved/tracked-root-gates-2026-10-10/tracked-root-final-node24-proof-installed/019.stdout",
+          "sha256": "ae10dbd16f15963f6e1f752637090348dd337c3eadaf9b501cbd38ccc5dd1d3b",
+          "bytes": 22045
+        },
+        {
+          "path": ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/root-tracked-final-gates/preserved/tracked-root-gates-2026-10-10/tracked-root-final-node24-proof-installed/019.stderr",
+          "sha256": "e3dd8570a35704b2b3130db00dabd2ce871d68bb22ceaa275f284520533a2a18",
+          "bytes": 169
+        },
+        {
+          "path": ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/root-tracked-final-gates/preserved/tracked-root-gates-2026-10-10/tracked-root-final-node24-proof-installed/020.stdout",
+          "sha256": "730655e537645921f30cffc57c9dd0cfbc85c8c3a6a3e9b8f41b3af994dac7ed",
+          "bytes": 313
+        },
+        {
+          "path": ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/root-tracked-final-gates/preserved/tracked-root-gates-2026-10-10/tracked-root-final-node24-proof-installed/020.stderr",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "bytes": 0
+        },
+        {
+          "path": ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/root-tracked-final-gates/preserved/tracked-root-gates-2026-10-10/tracked-root-final-node24-proof-installed/021.stdout",
+          "sha256": "3115a6cfe5ce2ce6a7d810ce2bd9f82767afc225e1c3495a0fcdc0a89bcb1e1d",
+          "bytes": 26
+        },
+        {
+          "path": ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/root-tracked-final-gates/preserved/tracked-root-gates-2026-10-10/tracked-root-final-node24-proof-installed/021.stderr",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "bytes": 0
+        },
+        {
+          "path": ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/root-tracked-final-gates/preserved/tracked-root-gates-2026-10-10/tracked-root-final-node24-proof-installed/022.stdout",
+          "sha256": "10e2e117b01523891ca271a615ae36e9d5e52348fd7d642f66727602c1b8dcbe",
+          "bytes": 6
+        },
+        {
+          "path": ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/root-tracked-final-gates/preserved/tracked-root-gates-2026-10-10/tracked-root-final-node24-proof-installed/022.stderr",
+          "sha256": "20eca5371b1ecba9bf8fda0c221fa7b77bcfc748b853e41645b7ca68499ad4fb",
+          "bytes": 169
+        },
+        {
+          "path": ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/root-tracked-final-gates/preserved/tracked-root-gates-2026-10-10/tracked-root-final-node24-proof-installed/023.stdout",
+          "sha256": "10e2e117b01523891ca271a615ae36e9d5e52348fd7d642f66727602c1b8dcbe",
+          "bytes": 6
+        },
+        {
+          "path": ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/root-tracked-final-gates/preserved/tracked-root-gates-2026-10-10/tracked-root-final-node24-proof-installed/023.stderr",
+          "sha256": "b5782284480b35cd91ba9c8a5f01bda811dc8ed1ebaf8261a17b35d6a3d7b49c",
+          "bytes": 169
+        },
+        {
+          "path": ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/root-tracked-final-gates/preserved/tracked-root-gates-2026-10-10/tracked-root-final-node24-proof-installed/024.stdout",
+          "sha256": "f50dd83c1426aad138c97797e72ec869d70243765f4679a819e1d66e4d72967b",
+          "bytes": 2342
+        },
+        {
+          "path": ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/root-tracked-final-gates/preserved/tracked-root-gates-2026-10-10/tracked-root-final-node24-proof-installed/024.stderr",
+          "sha256": "abc2afd80309d98f505ec24a55d57c060614d36593d84f09b5a58c41f0cc8d69",
+          "bytes": 169
+        },
+        {
+          "path": ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/root-tracked-final-gates/preserved/tracked-root-gates-2026-10-10/tracked-root-final-node24-proof-installed/025.stdout",
+          "sha256": "10a9d77af3f48efc87403fa65b3027bfe2676d0382c23552511bb9d544a8ed97",
+          "bytes": 173
+        },
+        {
+          "path": ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/root-tracked-final-gates/preserved/tracked-root-gates-2026-10-10/tracked-root-final-node24-proof-installed/025.stderr",
+          "sha256": "05f1a093122d95bfa34678bba5d939e5db9c729a3e0128749e4857ae64a37eb7",
+          "bytes": 169
+        },
+        {
+          "path": ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/root-tracked-final-gates/preserved/tracked-root-gates-2026-10-10/tracked-root-final-node24-proof-installed/026.stdout",
+          "sha256": "10a9d77af3f48efc87403fa65b3027bfe2676d0382c23552511bb9d544a8ed97",
+          "bytes": 173
+        },
+        {
+          "path": ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/root-tracked-final-gates/preserved/tracked-root-gates-2026-10-10/tracked-root-final-node24-proof-installed/026.stderr",
+          "sha256": "3cca32ae82634fc63edcd852b4ee59206b117cc7ba952792aa6edcac2760ea78",
+          "bytes": 169
+        },
+        {
+          "path": ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/root-tracked-final-gates/preserved/tracked-root-gates-2026-10-10/tracked-root-final-node24-proof-installed/027.stdout",
+          "sha256": "10a9d77af3f48efc87403fa65b3027bfe2676d0382c23552511bb9d544a8ed97",
+          "bytes": 173
+        },
+        {
+          "path": ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/root-tracked-final-gates/preserved/tracked-root-gates-2026-10-10/tracked-root-final-node24-proof-installed/027.stderr",
+          "sha256": "711ff023bbf635e923222dd8773538a87992e2eecd3acbf56427e71c6152dc66",
+          "bytes": 169
+        },
+        {
+          "path": ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/root-tracked-final-gates/preserved/tracked-root-gates-2026-10-10/tracked-root-final-node24-proof-installed/028.stdout",
+          "sha256": "10a9d77af3f48efc87403fa65b3027bfe2676d0382c23552511bb9d544a8ed97",
+          "bytes": 173
+        },
+        {
+          "path": ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/root-tracked-final-gates/preserved/tracked-root-gates-2026-10-10/tracked-root-final-node24-proof-installed/028.stderr",
+          "sha256": "bee2026ea51d81579e891359dd70e7c677b81f100386196ab08faf8b08ffbf79",
+          "bytes": 169
+        },
+        {
+          "path": ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/root-tracked-final-gates/preserved/tracked-root-gates-2026-10-10/tracked-root-final-node24-proof-installed/029.stdout",
+          "sha256": "8e4b3ab872ecbe079927b4528be55c178e2bc7fc167efc51a1ab3ed542f6d259",
+          "bytes": 168
+        },
+        {
+          "path": ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/root-tracked-final-gates/preserved/tracked-root-gates-2026-10-10/tracked-root-final-node24-proof-installed/029.stderr",
+          "sha256": "fc22916494790c61573e2f2ef80f71ba68b6dd64e8cd7b266b60a50f4973662e",
+          "bytes": 169
+        },
+        {
+          "path": ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/root-tracked-final-gates/preserved/tracked-root-gates-2026-10-10/tracked-root-final-node24-proof-installed/030.stdout",
+          "sha256": "8e4b3ab872ecbe079927b4528be55c178e2bc7fc167efc51a1ab3ed542f6d259",
+          "bytes": 168
+        },
+        {
+          "path": ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/root-tracked-final-gates/preserved/tracked-root-gates-2026-10-10/tracked-root-final-node24-proof-installed/030.stderr",
+          "sha256": "684144737874fca1b2b00ada973543468b748f6ec77f245582671c7865ec587e",
+          "bytes": 169
+        },
+        {
+          "path": ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/root-tracked-final-gates/preserved/tracked-root-gates-2026-10-10/tracked-root-final-node24-proof-installed/031.stdout",
+          "sha256": "8e4b3ab872ecbe079927b4528be55c178e2bc7fc167efc51a1ab3ed542f6d259",
+          "bytes": 168
+        },
+        {
+          "path": ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/root-tracked-final-gates/preserved/tracked-root-gates-2026-10-10/tracked-root-final-node24-proof-installed/031.stderr",
+          "sha256": "0dad57f4fc9daabaf4416bdeed790117271006a0298273d289b354c60d54bf44",
+          "bytes": 169
+        },
+        {
+          "path": ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/root-tracked-final-gates/preserved/tracked-root-gates-2026-10-10/tracked-root-final-node24-proof-installed/032.stdout",
+          "sha256": "0ca6e4367908aa33e3174af0dce098dfa3f275d14d759dedf352dd62251eda2f",
+          "bytes": 162
+        },
+        {
+          "path": ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/root-tracked-final-gates/preserved/tracked-root-gates-2026-10-10/tracked-root-final-node24-proof-installed/032.stderr",
+          "sha256": "19b2c6ecd6fde2fb6c0b53249d76d608e85d7525753c62a231d807427d05c063",
+          "bytes": 169
+        },
+        {
+          "path": ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/root-tracked-final-gates/preserved/tracked-root-gates-2026-10-10/tracked-root-final-node24-proof-installed/033.stdout",
+          "sha256": "0ca6e4367908aa33e3174af0dce098dfa3f275d14d759dedf352dd62251eda2f",
+          "bytes": 162
+        },
+        {
+          "path": ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/root-tracked-final-gates/preserved/tracked-root-gates-2026-10-10/tracked-root-final-node24-proof-installed/033.stderr",
+          "sha256": "991e1f7840622aeff1a683fc944c241686e30a6d8d46ec567a6c9087db4c74de",
+          "bytes": 169
+        },
+        {
+          "path": ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/root-tracked-final-gates/preserved/tracked-root-gates-2026-10-10/tracked-root-final-node24-proof-installed/034.stdout",
+          "sha256": "3a2efc26fff3f21e2682f1feab0b36675fa20c9ba74caacfdbb7bac39868abd6",
+          "bytes": 1435
+        },
+        {
+          "path": ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/root-tracked-final-gates/preserved/tracked-root-gates-2026-10-10/tracked-root-final-node24-proof-installed/034.stderr",
+          "sha256": "d08f6839eaeff83089c36c4087402c4a503e43cb5f3488d2d9d53717110db83a",
+          "bytes": 169
+        },
+        {
+          "path": ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/root-tracked-final-gates/preserved/tracked-root-gates-2026-10-10/tracked-root-final-node24-proof-installed/035.stdout",
+          "sha256": "b20875d3fb9e8d432724381cde1edcad74cb069710a81cdf2cf4b96ecaf96104",
+          "bytes": 16042
+        },
+        {
+          "path": ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/root-tracked-final-gates/preserved/tracked-root-gates-2026-10-10/tracked-root-final-node24-proof-installed/035.stderr",
+          "sha256": "3e3e02860bd5e7a860809f15b278cd23e92c03d2e97b5fff7b913f40d4422a60",
+          "bytes": 169
+        },
+        {
+          "path": ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/root-tracked-final-gates/preserved/tracked-root-gates-2026-10-10/tracked-root-final-node24-proof-installed/036.stdout",
+          "sha256": "b20875d3fb9e8d432724381cde1edcad74cb069710a81cdf2cf4b96ecaf96104",
+          "bytes": 16042
+        },
+        {
+          "path": ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/root-tracked-final-gates/preserved/tracked-root-gates-2026-10-10/tracked-root-final-node24-proof-installed/036.stderr",
+          "sha256": "4f931d7373d2bf230d125464be28275bc0f1280cdc3058e30b11853d04e788d9",
+          "bytes": 169
+        },
+        {
+          "path": ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/root-tracked-final-gates/preserved/tracked-root-gates-2026-10-10/tracked-root-final-node24-proof-installed/037.stdout",
+          "sha256": "ae10dbd16f15963f6e1f752637090348dd337c3eadaf9b501cbd38ccc5dd1d3b",
+          "bytes": 22045
+        },
+        {
+          "path": ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/root-tracked-final-gates/preserved/tracked-root-gates-2026-10-10/tracked-root-final-node24-proof-installed/037.stderr",
+          "sha256": "ec5a4d07cbfbc9bf1079af4a10f803ffadf29ee0af984015b57caac1e252dfe0",
+          "bytes": 169
+        }
+      ]
+    },
+    "node24FullRaw": {
+      "path": ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/root-tracked-final-gates/preserved/tracked-root-gates-2026-10-10/tracked-root-final-node24-check.log",
+      "sha256": "3d2dff936c469ffdcd7d7c2e0fc1d6dced05f0b9d7aaec54b840edd51ac2161c",
+      "counts": {
+        "tests": 2258,
+        "pass": 2258,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "typecheck": true,
+      "build": true
+    },
+    "evidenceOnlyCommitsProductDelta": [],
+    "candidateChangedPaths": [
+      "tests/fixtures/observed-cli-server.ts",
+      "tests/observed-cli.test.ts",
+      "tests/observed-service.test.ts"
+    ],
+    "legacyGoldenDelta": [],
+    "androidProductionDelta": []
+  },
+  "errors": [],
+  "rootAuditSha256": "9f12730b699705b15e10bb924d6b1bff4a098eb390112fe6cdb5ea7a881dfcdd",
+  "product": "48d4b95e319a2c1b24480be6f008f208acf4327c",
+  "productDiffSha256": "8674aa75a9a1a97bf363b32faac5be1c6bab9dee6d2df0369a2f262b6a65f95e",
+  "status": "PASS"
+}

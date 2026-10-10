@@ -1,0 +1,121 @@
+[
+  {
+    "map": "spec-inputs.json",
+    "input": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic/tests/observed-cli.test.ts",
+    "local": "tests/observed-cli.test.ts",
+    "sha256": "711a85de6e02f37f1a17543bd95a1b6c0a38a2577047f43b377f229a6179474f",
+    "matches": true
+  },
+  {
+    "map": "spec-inputs.json",
+    "input": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic/tests/fixtures/observed-cli-server.ts",
+    "local": "tests/fixtures/observed-cli-server.ts",
+    "sha256": "7f40dfb20327b0e13a436791eaae835126e1232832f8ca4a637468a081f7223e",
+    "matches": true
+  },
+  {
+    "map": "spec-inputs.json",
+    "input": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic/tests/observed-service.test.ts",
+    "local": "tests/observed-service.test.ts",
+    "sha256": "d45f010eebc4455f88fb36b70ba46f8a0ce1655cfd0956b3f9bc15091e56ec9c",
+    "matches": true
+  },
+  {
+    "map": "spec-inputs.json",
+    "input": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic/src/cli.ts",
+    "local": "src/cli.ts",
+    "sha256": "137b42ef8cdc34a3e143461cf762c659d4bc0a8da768f320ad8b0232e200d7de",
+    "matches": true
+  },
+  {
+    "map": "spec-inputs.json",
+    "input": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic/src/observed/service.ts",
+    "local": "src/observed/service.ts",
+    "sha256": "0c9e6cd6bfc1d7308bc6dcdb1cbf88b9179143084f9cb66d28af09cb6a9def6d",
+    "matches": true
+  },
+  {
+    "map": "spec-inputs.json",
+    "input": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic/src/device/admission-sqlite.ts",
+    "local": "src/device/admission-sqlite.ts",
+    "sha256": "209e311d610f77d172f6af15ac815ba24c79496d0e065e3ef25f410d0fb10856",
+    "matches": true
+  },
+  {
+    "map": "spec-inputs.json",
+    "input": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic/.scratch/observed-run-vault/tracked-root-gates-2026-10-10/tracked-root-node24-check.log",
+    "local": ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/root-tracked-final-gates/preserved/tracked-root-gates-2026-10-10/tracked-root-node24-check.log",
+    "sha256": "edbce626c166e0ddd7cd7a3543ea0d5f0db99d4af9639c82fba86494943e4d2a",
+    "matches": true
+  },
+  {
+    "map": "spec-inputs.json",
+    "input": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic/.scratch/observed-run-vault/tracked-root-gates-2026-10-10/tracked-root-node24-check.json",
+    "local": ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/root-tracked-final-gates/preserved/tracked-root-gates-2026-10-10/tracked-root-node24-check.json",
+    "sha256": "f23805e15ad8f6901aa8561da55a91fa2d6178d0a7caa01c8e292bd55a577b33",
+    "matches": true
+  },
+  {
+    "map": "spec-inputs.json",
+    "input": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic/.scratch/observed-run-vault/tracked-root-gates-2026-10-10/node24-focused-failures.log",
+    "local": ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/root-tracked-final-gates/preserved/tracked-root-gates-2026-10-10/node24-focused-failures.log",
+    "sha256": "91d06f580be7a151d46c577ecd2dfbaecd900669b793e8b7e9760e2cfed6a3e4",
+    "matches": true
+  },
+  {
+    "map": "spec-inputs.json",
+    "input": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic/.scratch/observed-run-vault/tracked-root-gates-2026-10-10/node24-focused-failures.json",
+    "local": ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/root-tracked-final-gates/preserved/tracked-root-gates-2026-10-10/node24-focused-failures.json",
+    "sha256": "4f498b9e89abd037313d8d5e1bc763126f2c5f904c7bea5767bbfa9e076c382e",
+    "matches": true
+  },
+  {
+    "map": "spec-inputs.json",
+    "input": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic/.scratch/observed-run-vault/tracked-root-gates-2026-10-10/node24-fixture-repaired.log",
+    "local": ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/root-tracked-final-gates/preserved/tracked-root-gates-2026-10-10/node24-fixture-repaired.log",
+    "sha256": "ea5979df78ab37e20aeda19f324c78101adf4ae5118ed392e03fbdaddfae298f",
+    "matches": true
+  },
+  {
+    "map": "spec-inputs.json",
+    "input": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic/.scratch/observed-run-vault/tracked-root-gates-2026-10-10/node24-fixture-repaired.json",
+    "local": ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/root-tracked-final-gates/preserved/tracked-root-gates-2026-10-10/node24-fixture-repaired.json",
+    "sha256": "15c6bb6b3d7dc8ed3a9e12395046d227ef3f1ab5338a78d9c313a4264c50bab6",
+    "matches": true
+  },
+  {
+    "map": "standards-final-inputs.json",
+    "input": "tests/observed-cli.test.ts",
+    "local": "tests/observed-cli.test.ts",
+    "sha256": "711a85de6e02f37f1a17543bd95a1b6c0a38a2577047f43b377f229a6179474f",
+    "matches": true
+  },
+  {
+    "map": "standards-final-inputs.json",
+    "input": "tests/fixtures/observed-cli-server.ts",
+    "local": "tests/fixtures/observed-cli-server.ts",
+    "sha256": "7f40dfb20327b0e13a436791eaae835126e1232832f8ca4a637468a081f7223e",
+    "matches": true
+  },
+  {
+    "map": "standards-final-inputs.json",
+    "input": "tests/observed-service.test.ts",
+    "local": "tests/observed-service.test.ts",
+    "sha256": "d45f010eebc4455f88fb36b70ba46f8a0ce1655cfd0956b3f9bc15091e56ec9c",
+    "matches": true
+  },
+  {
+    "map": "standards-final-inputs.json",
+    "input": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic/.scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/root-fixture-review/standards.md",
+    "local": ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/root-fixture-review/standards.md",
+    "sha256": "c953a946e0942c22710de1c6eea3cbc82c11b83046545e24d37b06af37d54e47",
+    "matches": true
+  },
+  {
+    "map": "standards-final-inputs.json",
+    "input": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic/.scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/root-fixture-review/standards-inputs.json",
+    "local": ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/root-fixture-review/standards-inputs.json",
+    "sha256": "6ec298a77e80cb1113bccabf2ae1109124d8914851a9c826d815094ef59efba7",
+    "matches": true
+  }
+]

@@ -1,0 +1,135 @@
+{
+  "status": "PASS",
+  "base": "b8c4a50942551bdf95d00036a6d2f7bb6142ff43",
+  "initial": "a3e6c4e3cbecd0bba345c3ac2004ff4530141e3a",
+  "final": "a387e4926147e68a85f84c3142f14737bcd9b41f",
+  "testedProduct": "48d4b95e319a2c1b24480be6f008f208acf4327c",
+  "correctionCommit": "70169e87fa59113f1353c61fb90dfe1fc7bf5f2b",
+  "correctionAuditSha256": "23788f5e88242d5ef6c6d333f4edef8a6be3c4705c96c793cfc07b0bf8f67458",
+  "source443Matched": 443,
+  "originalHost15Matched": 15,
+  "sourceDeltaFromFullGates": [
+    "docs/adr/0007-simulator-presentation-and-a-bounded-ios-point-tap-exception.md"
+  ],
+  "sourceDeltaFromInitial": [
+    "docs/adr/0007-simulator-presentation-and-a-bounded-ios-point-tap-exception.md"
+  ],
+  "compiled69SameAsFullGate": true,
+  "candidateFilesMatched": 439,
+  "declaredExceptions": [
+    "docs/adr/0007-simulator-presentation-and-a-bounded-ios-point-tap-exception.md",
+    "tests/fixtures/observed-cli-server.ts",
+    "tests/observed-cli.test.ts",
+    "tests/observed-service.test.ts"
+  ],
+  "protectedFilesPreserved": 435,
+  "affectedRawChecks": [
+    {
+      "label": "tracked-root-adr-node26-affected",
+      "command": [
+        "/opt/homebrew/Cellar/node/26.8.1/bin/node",
+        "--import",
+        "tsx",
+        "--test",
+        "tests/docs.test.ts",
+        "tests/observed-docs.test.ts",
+        "tests/observed-packaging.test.ts"
+      ],
+      "exit": 0,
+      "counts": {
+        "tests": 34,
+        "pass": 34,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "sha256": "cd9ce2d21ed8c0f8bb1f1dd7cc79daaf9d5650b3181b718a6bc03529ae45ba14",
+      "sourceBeforeAfterMatch": true,
+      "matchesFinal443": true
+    },
+    {
+      "label": "tracked-root-adr-node26-window",
+      "command": [
+        "/opt/homebrew/Cellar/node/26.8.1/bin/node",
+        "--import",
+        "tsx",
+        "--test",
+        "tests/simulator-window.test.ts"
+      ],
+      "exit": 0,
+      "counts": {
+        "tests": 31,
+        "pass": 31,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "sha256": "5fbd619fdca10d798fdeb39712c3afee21d8ecd0df3a95b18f5bc172d83566d9",
+      "sourceBeforeAfterMatch": true,
+      "matchesFinal443": true
+    },
+    {
+      "label": "tracked-root-adr-node24-affected",
+      "command": [
+        "/Users/hugues_mini/.npm/_npx/2c6eebc6231f3284/node_modules/node/bin/node",
+        "--import",
+        "tsx",
+        "--test",
+        "tests/docs.test.ts",
+        "tests/observed-docs.test.ts",
+        "tests/observed-packaging.test.ts"
+      ],
+      "exit": 0,
+      "counts": {
+        "tests": 34,
+        "pass": 34,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "sha256": "20a3e9c64449be3c57e37333c3efe9d19350cd4ee5f9b3aaae58c4e1fa886d47",
+      "sourceBeforeAfterMatch": true,
+      "matchesFinal443": true
+    },
+    {
+      "label": "tracked-root-adr-node24-window",
+      "command": [
+        "/Users/hugues_mini/.npm/_npx/2c6eebc6231f3284/node_modules/node/bin/node",
+        "--import",
+        "tsx",
+        "--test",
+        "tests/simulator-window.test.ts"
+      ],
+      "exit": 0,
+      "counts": {
+        "tests": 31,
+        "pass": 31,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "sha256": "3d4638ea3600ab0604b9ae0290ef0b161577295dcbbb0c3b1bddc1f298a9333e",
+      "sourceBeforeAfterMatch": true,
+      "matchesFinal443": true
+    }
+  ],
+  "errors": [],
+  "finalProductDiffSha256": "717e6b8684b2f3f584406030035e79376e80cb9b71c6f6070e73ea5cc0975850",
+  "inputHashes": {
+    ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/root-adr-review-correction/root-audit.json": "23788f5e88242d5ef6c6d333f4edef8a6be3c4705c96c793cfc07b0bf8f67458",
+    ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/root-adr-review-correction/tracked-root-adr-node24-affected-environment.json": "34665589f266489cbb61f83089ac776586cde1cd290146dcac63eac727bf0115",
+    ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/root-adr-review-correction/tracked-root-adr-node24-affected.json": "f9fc2b33f826c3a65bf88c521608facb649cc25c636637a303dc7570c0e1ff5b",
+    ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/root-adr-review-correction/tracked-root-adr-node24-affected.log": "20a3e9c64449be3c57e37333c3efe9d19350cd4ee5f9b3aaae58c4e1fa886d47",
+    ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/root-adr-review-correction/tracked-root-adr-node24-window.json": "416c227f4272cf9b40a1c468430eea7d636391de6650d5491f0a9b35f16a6360",
+    ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/root-adr-review-correction/tracked-root-adr-node24-window.log": "3d4638ea3600ab0604b9ae0290ef0b161577295dcbbb0c3b1bddc1f298a9333e",
+    ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/root-adr-review-correction/tracked-root-adr-node26-affected-environment.json": "2109a575d8fd62d823ecbfd0439c6217b681b231ad359f07d24fb2d874d80b59",
+    ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/root-adr-review-correction/tracked-root-adr-node26-affected.json": "07cc6e75a5989aab02ce6ad4cc34909393e21f552e50ef1f23bc339ad5712648",
+    ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/root-adr-review-correction/tracked-root-adr-node26-affected.log": "cd9ce2d21ed8c0f8bb1f1dd7cc79daaf9d5650b3181b718a6bc03529ae45ba14",
+    ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/root-adr-review-correction/tracked-root-adr-node26-window.json": "f83da2133163268d61391ce5ed42af3498946b4ff7aa115f2b173638610ea47c",
+    ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/root-adr-review-correction/tracked-root-adr-node26-window.log": "5fbd619fdca10d798fdeb39712c3afee21d8ecd0df3a95b18f5bc172d83566d9"
+  }
+}

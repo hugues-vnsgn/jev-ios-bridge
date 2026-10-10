@@ -29,3 +29,12 @@ Acceptance: safety-review.md records inspected SHAs, findings by severity with f
 Return the handoff's fixed-format report with review commit, inspected base/integrated SHAs, evidence links, checks, limitations and unresolved findings. Root issues merge-ready only when H01–H09, L01–L05 and independent review all PASS. Stop for an authorship conflict, unreviewable evidence, contradictory contract or missing prerequisites. No automatic merge, version bump, release or publish follows a PASS.
 
 ## Comments
+
+
+### 2026-10-10 — independent bounded code/package review
+
+At Root's explicit dispatch and the owner's code/package scope override, the nonauthor reviewer inspected planning base `b8c4a50942551bdf95d00036a6d2f7bb6142ff43`, initial integration `a3e6c4e3cbecd0bba345c3ac2004ff4530141e3a`, and final integration `a387e4926147e68a85f84c3142f14737bcd9b41f`. [Safety review](../../observed-integration/acceptance/safety-review.md) and [independent evidence audit](../../observed-integration/acceptance/code-package-review/evidence-audit.json) record the result.
+
+Bounded code/package acceptance is PASS with `npm_config_maxsockets=1`. Standards found one P2 documentation conflict, closed by Root's ADR-0007 amendment and bounded re-review; two P3 duplication advisories remain. Spec has zero confirmed defects, with the bundle-validation advisory and explicit-recovery qualification retained. Both full 2258-test checks, fresh 37-command installed proofs, guarded startup supplements and final 34/31 affected checks per Node are bound to their exact source revisions. Historical default-concurrency npm stalls and other unexplained failures remain preserved.
+
+This comment does not resolve original ticket12. `Status` and `Blocked by: 11` remain unchanged. Native compatibility, production-account activation/configuration, operational migration, app builds, devices and L01–L05 remain DEFERRED/UNVERIFIED; full original SHIP/merge readiness is UNVERIFIED. No merge, push or publication follows this bounded review.
