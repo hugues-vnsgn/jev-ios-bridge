@@ -1,0 +1,142 @@
+{
+  "status": "COMPLETE_BOUNDED_DIAGNOSIS",
+  "results": [
+    {
+      "target": "ip-address",
+      "version": "10.7.2",
+      "url": "https://registry.npmjs.org/ip-address/-/ip-address-10.7.2.tgz",
+      "expectedIntegrity": "sha512-7H/2gFSIitxc0hG3nOI1glS8QLo/EHBFFLk8vEUjXY/xu0AdL8jZ9U1IzO2PUm0d2D/ofQcAifb0g6OBkt8U7w==",
+      "argv": [
+        "/usr/bin/curl",
+        "--disable",
+        "--silent",
+        "--show-error",
+        "--fail",
+        "--connect-timeout",
+        "10",
+        "--max-time",
+        "45",
+        "--retry",
+        "0",
+        "--max-filesize",
+        "10485760",
+        "--proto",
+        "=https",
+        "--dump-header",
+        "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-tracked-binding/.scratch/installed-tracked-packaging-diagnosis/attempt-1/ip-address.headers",
+        "--output",
+        "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-tracked-binding/.scratch/installed-tracked-packaging-diagnosis/attempt-1/ip-address.tgz",
+        "--write-out",
+        "%{json}\n",
+        "https://registry.npmjs.org/ip-address/-/ip-address-10.7.2.tgz"
+      ],
+      "cwd": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-tracked-binding/.scratch/installed-tracked-packaging-diagnosis/attempt-1",
+      "environment": {
+        "HOME": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-tracked-binding/.scratch/installed-tracked-packaging-diagnosis/attempt-1/home",
+        "PATH": "/usr/bin:/bin",
+        "LANG": "C",
+        "LC_ALL": "C"
+      },
+      "startedAtUtc": "2026-10-10T02:05:09.234180+00:00",
+      "lockSha256": "be79b19a3f7891e340fcd123fe751260a4492a577e0bda22398325e6ea368cd7",
+      "curlSha256": "625cd93eb0043214d5f74974d34f0b4d748977473e236a2e7f4704ecc2b95950",
+      "addedOuterTimeout": false,
+      "redirectsEnabled": false,
+      "signalSent": false,
+      "childPid": 59649,
+      "exitCode": 0,
+      "actualClose": true,
+      "closedAtUtc": "2026-10-10T02:05:09.538068+00:00",
+      "durationSeconds": 0.30151658399699954,
+      "artifacts": {
+        "ip-address.tgz": {
+          "sha256": "4301746e43e8a85a6a41e268f02178b27e6ba58e78e6913ab105d3871618083b",
+          "bytes": 84649
+        },
+        "ip-address.headers": {
+          "sha256": "04d1fd835cd352783d49dd733b193374a6098f1637f2751a614c7ab0dc0e4505",
+          "bytes": 909
+        },
+        "ip-address.metrics.json": {
+          "sha256": "3a8b7caa5ceaecc80efb7d528e5b12b35cfe088e7ca908fb0b9d0ab61d75a31e",
+          "bytes": 9609
+        },
+        "ip-address.stderr": {
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "bytes": 0
+        }
+      },
+      "actualIntegrity": "sha512-7H/2gFSIitxc0hG3nOI1glS8QLo/EHBFFLk8vEUjXY/xu0AdL8jZ9U1IzO2PUm0d2D/ofQcAifb0g6OBkt8U7w==",
+      "integrityMatches": true
+    },
+    {
+      "target": "@sentry/core",
+      "version": "10.75.3",
+      "url": "https://registry.npmjs.org/@sentry/core/-/core-10.75.3.tgz",
+      "expectedIntegrity": "sha512-QHgzobetM4UgEVbyqx9WPJzRq0YzyNg2CeeoM1Bf84ivYJXXiiVWxjzc0RHk3c0DHY5/6O6nJqos1xVL55dgZA==",
+      "argv": [
+        "/usr/bin/curl",
+        "--disable",
+        "--silent",
+        "--show-error",
+        "--fail",
+        "--connect-timeout",
+        "10",
+        "--max-time",
+        "45",
+        "--retry",
+        "0",
+        "--max-filesize",
+        "10485760",
+        "--proto",
+        "=https",
+        "--dump-header",
+        "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-tracked-binding/.scratch/installed-tracked-packaging-diagnosis/attempt-1/sentry-core.headers",
+        "--output",
+        "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-tracked-binding/.scratch/installed-tracked-packaging-diagnosis/attempt-1/sentry-core.tgz",
+        "--write-out",
+        "%{json}\n",
+        "https://registry.npmjs.org/@sentry/core/-/core-10.75.3.tgz"
+      ],
+      "cwd": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-tracked-binding/.scratch/installed-tracked-packaging-diagnosis/attempt-1",
+      "environment": {
+        "HOME": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-tracked-binding/.scratch/installed-tracked-packaging-diagnosis/attempt-1/home",
+        "PATH": "/usr/bin:/bin",
+        "LANG": "C",
+        "LC_ALL": "C"
+      },
+      "startedAtUtc": "2026-10-10T02:05:09.539138+00:00",
+      "lockSha256": "be79b19a3f7891e340fcd123fe751260a4492a577e0bda22398325e6ea368cd7",
+      "curlSha256": "625cd93eb0043214d5f74974d34f0b4d748977473e236a2e7f4704ecc2b95950",
+      "addedOuterTimeout": false,
+      "redirectsEnabled": false,
+      "signalSent": false,
+      "childPid": 59661,
+      "exitCode": 0,
+      "actualClose": true,
+      "closedAtUtc": "2026-10-10T02:05:10.173193+00:00",
+      "durationSeconds": 0.6333537080063252,
+      "artifacts": {
+        "sentry-core.tgz": {
+          "sha256": "09231debfb4c03b8ef779d9685a9ea377ee6d5d51497e812988c16d99fefba64",
+          "bytes": 1259129
+        },
+        "sentry-core.headers": {
+          "sha256": "f7ee9d4f60ab83b59ca9fcb912fcac1bb2465527d36ef6671f7af6a16c8571ca",
+          "bytes": 917
+        },
+        "sentry-core.metrics.json": {
+          "sha256": "d01df1a752ceafc82d3564513b86de5c2bcc9f0dbef6260fd077576bb2dcab94",
+          "bytes": 9601
+        },
+        "sentry-core.stderr": {
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "bytes": 0
+        }
+      },
+      "actualIntegrity": "sha512-QHgzobetM4UgEVbyqx9WPJzRq0YzyNg2CeeoM1Bf84ivYJXXiiVWxjzc0RHk3c0DHY5/6O6nJqos1xVL55dgZA==",
+      "integrityMatches": true
+    }
+  ],
+  "qualification": "Current download availability/integrity only; historical npm delay cause remains unresolved. No cache seeding, extraction, npm/helper retry or Source mutation."
+}

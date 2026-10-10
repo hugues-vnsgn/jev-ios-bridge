@@ -1,0 +1,11 @@
+{
+  "rootReviewBinding": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic/.scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/legacy-implementation-review/root-cc5-review-bindings.json",
+  "rootReviewBindingSha256": "d5361ab2e68acc69680ae517b5f44852b28bdbdf4b6a08192490307762dca7d3",
+  "preparedInputs": {
+    "candidate-installed-recorder.py": "c2cc00aa1932a64abf336941464402d3d9852bd427ff723d1a256b21eae721eb",
+    "invariants.json": "5c46df509f99bc4886ab74268e116e9b5028a315d16e52966959def1b5e1f416",
+    "commands-prepared.json": "442a5c2809fa57e2da1a6d5c35e55492e00494e9574734bfd15ddd9cb62024f8",
+    "candidate-source.json": "7de42479f3263694ed81fe17d43540d638d7d6259531508c28bfd4388fb8e7c9"
+  },
+  "grant": "Root explicitly grants prepared four serial commands, necessary private registry fetches, stop first failure or uncertainty; no native/account/device/integration actions"
+}

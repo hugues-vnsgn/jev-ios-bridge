@@ -1,0 +1,81 @@
+--- prior-dcc-recorder.py
++++ tracked-candidate-recorder.py
+@@ -21,9 +21,9 @@
+ import time
+ import zipfile
+ 
+-AUTHOR = Path('/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-legacy-binding')
++AUTHOR = Path('/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-tracked-binding')
+ INTEGRATION = Path('/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic')
+-PRIVATE = AUTHOR / '.scratch/installed-legacy-volume-runtime/review-correction'
++PRIVATE = AUTHOR / '.scratch/installed-tracked-packaging'
+ PROOF = AUTHOR / 'tests/fixtures/observed-packaging/proof.mjs'
+ GUARD = INTEGRATION / 'tests/fixtures/observed-packaging/guard.mjs'
+ STARTUP = INTEGRATION / '.scratch/observed-integration/acceptance/host/faults/production-startup/review/final/probe.mjs'
+@@ -43,11 +43,11 @@
+     str(ROOT_RUNNER): '1a64e2143b07c99532456bc215090ee0dfbf631624670d8b0b013be0c7727efc',
+     str(NPM): '8e5f6f3429f8cdbe693cdc29904e9d5a7b127a494bd15c804bd54c7403bfcbe7',
+ }
+-INVARIANTS_SHA = 'c7ed390ac859707d2c6445a580292233b04447245f294ec18db76b2df063e2f1'
++INVARIANTS_SHA = '5c46df509f99bc4886ab74268e116e9b5028a315d16e52966959def1b5e1f416'
+ SOURCE_SELECTORS = ['src', 'tests', 'docs', 'skills', 'scripts', '.github', 'package.json',
+                     'package-lock.json', 'README.md', 'AGENTS.md', 'GLOSSARY.md',
+                     'tsconfig.json', 'tsconfig.build.json']
+-OWNED = {'src/observed/allocation-config.ts', 'tests/observed-legacy-volume-runtime.test.ts',
++OWNED = {'src/observed/allocation-config.ts', 'src/observed/allocation.ts', 'tests/observed-legacy-volume-runtime.test.ts',
+          'tests/fixtures/observed-legacy-volume-runtime.ts'}
+ STARTUP_SECONDS = 60
+ TERM_GRACE_SECONDS = 2
+@@ -164,7 +164,7 @@
+     compiled_files, compiled_links = tree_files(AUTHOR / 'dist')
+     return {'atUtc': now(), 'head': head, 'trackedSourcePaths': tracked, 'source443': source,
+             'gitSource443': git_blobs(head, invariants['sourcePaths443']),
+-            'protected440': {p: source[p] for p in invariants['protected440']},
++            'protected439': {p: source[p] for p in invariants['protected439']},
+             'compiled69': {'dist/' + p: h for p, h in compiled_files.items()},
+             'compiledSymlinks': compiled_links, 'packagingExtraInputs': extras,
+             'gitPackagingExtraInputs': git_blobs(head, sorted(extras)),
+@@ -175,7 +175,7 @@
+     demand(value['head'] == context['candidateCommit'], 'Candidate HEAD changed')
+     demand(value['trackedSourcePaths'] == invariants['sourcePaths443'], 'Source selector path set changed')
+     demand(value['source443'] == value['gitSource443'] == context['source443'], 'Source443 mismatch')
+-    demand(value['protected440'] == invariants['protected440'], 'Protected440 drift')
++    demand(value['protected439'] == invariants['protected439'], 'Protected439 drift')
+     demand(value['packagingExtraInputs'] == value['gitPackagingExtraInputs'] == invariants['packagingExtraInputs'],
+            'Protected packaging inputs drift')
+     demand(not value['compiledSymlinks'] and value['compiled69'] == context['compiled69']
+@@ -189,12 +189,12 @@
+     demand(SHA_RE.fullmatch(digest) and sha(path) == digest, 'Future context hash mismatch')
+     context = json.loads(path.read_text())
+     demand(re.fullmatch('[0-9a-f]{40}', context['candidateCommit']) is not None, 'Invalid candidate commit')
+-    demand(context['candidateCommit'] != invariants['basisCommit'], 'Old4fa is not a corrected candidate')
++    demand(context['candidateCommit'] != invariants['basisCommit'], 'Parent candidate is not the tracked correction')
+     demand(set(context['source443']) == set(invariants['sourcePaths443']), 'Expected exact Source443 paths')
+     demand(context['source443'] == context['gitSource443'], 'Future Git/working vectors differ')
+-    demand(context['protected440'] == invariants['protected440'], 'Future protected paths changed')
+-    demand(set(context['owned3']) == OWNED and context['owned3'] == {p: context['source443'][p] for p in OWNED},
+-           'Future owned3 mismatch')
++    demand(context['protected439'] == invariants['protected439'], 'Future protected paths changed')
++    demand(set(context['owned4']) == OWNED and context['owned4'] == {p: context['source443'][p] for p in OWNED},
++           'Future owned4 mismatch')
+     demand(set(context['compiled69']) == set(invariants['compiledPaths69']), 'Expected exact compiled69 paths')
+     for mapping in [context['source443'], context['compiled69']]:
+         for key, value in mapping.items():
+@@ -424,7 +424,7 @@
+     parser.add_argument('phase', choices=['packaging', 'startup'])
+     parser.add_argument('runtime', choices=['26', '24'])
+     parser.add_argument('label', help='Fresh private run label')
+-    parser.add_argument('--context', required=True, help='Future corrected context under review-correction/')
++    parser.add_argument('--context', required=True, help='Frozen context under installed-tracked-packaging/')
+     parser.add_argument('--context-sha256', required=True)
+     parser.add_argument('--packaging-label', help='Closed same-candidate packaging label required by startup')
+     args = parser.parse_args()
+@@ -440,7 +440,7 @@
+     node = NODES[args.runtime]
+     demand(sha(node['path']) == node['sha256'], 'Pinned Node binary changed')
+     demand(all(sha(p) == digest for p, digest in FIXED.items()), 'Fixed helper/npm/Root runner changed')
+-    for p, digest in invariants['protected440'].items():
++    for p, digest in invariants['protected439'].items():
+         demand(context['source443'][p] == digest, 'Context changed protected Source')
+     with (PRIVATE / 'serial.lock').open('a') as lock:
+         fcntl.flock(lock, fcntl.LOCK_EX | fcntl.LOCK_NB)

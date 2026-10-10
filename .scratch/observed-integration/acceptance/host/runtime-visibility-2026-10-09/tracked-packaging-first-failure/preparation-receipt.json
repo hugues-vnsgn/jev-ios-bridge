@@ -1,0 +1,79 @@
+{
+  "status": "PREPARED_NOT_EXECUTED",
+  "atUtc": "2026-10-10T01:57:43.181796+00:00",
+  "candidateCommit": "cc5d30e2fdaf065bec476a65df465dabb1569f2c",
+  "candidateContextSha256": "7de42479f3263694ed81fe17d43540d638d7d6259531508c28bfd4388fb8e7c9",
+  "inputs": {
+    "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-legacy-binding/.scratch/installed-legacy-volume-runtime/review-correction/candidate-installed-recorder.py": "d5b7801ee715c2b7aef52a319f28ba828b12f8b050e5ae06f276c93cf35076db",
+    "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-legacy-binding/.scratch/installed-legacy-volume-runtime/review-correction/invariants.json": "c7ed390ac859707d2c6445a580292233b04447245f294ec18db76b2df063e2f1",
+    "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-tracked-binding/.scratch/installed-tracked-runtime/candidate-source.json": "7de42479f3263694ed81fe17d43540d638d7d6259531508c28bfd4388fb8e7c9",
+    "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic/.scratch/observed-action-rollout/legacy-binding-compatibility-notes.md": "4bac22a2d6d4c794061273ee61c163e43d589cb969785853d456ca3a93153c60"
+  },
+  "preparedFiles": {
+    "README.md": {
+      "sha256": "261d93c8823ec8f0708cb56fae8dfa51f19cc7c4f8817ce6ff62afc90f67d258",
+      "bytes": 2112,
+      "mode": "0600"
+    },
+    "candidate-installed-recorder.py": {
+      "sha256": "c2cc00aa1932a64abf336941464402d3d9852bd427ff723d1a256b21eae721eb",
+      "bytes": 29868,
+      "mode": "0600"
+    },
+    "candidate-source.json": {
+      "sha256": "7de42479f3263694ed81fe17d43540d638d7d6259531508c28bfd4388fb8e7c9",
+      "bytes": 161828,
+      "mode": "0600"
+    },
+    "commands-prepared.json": {
+      "sha256": "442a5c2809fa57e2da1a6d5c35e55492e00494e9574734bfd15ddd9cb62024f8",
+      "bytes": 4843,
+      "mode": "0600"
+    },
+    "invariants.diff": {
+      "sha256": "18495afd00d37f9ad5c5e295827181e7aa9e5b516c5f679043c8ca58346faf87",
+      "bytes": 8058,
+      "mode": "0600"
+    },
+    "invariants.json": {
+      "sha256": "5c46df509f99bc4886ab74268e116e9b5028a315d16e52966959def1b5e1f416",
+      "bytes": 75370,
+      "mode": "0600"
+    },
+    "prior-candidate-installed-recorder.py": {
+      "sha256": "d5b7801ee715c2b7aef52a319f28ba828b12f8b050e5ae06f276c93cf35076db",
+      "bytes": 29848,
+      "mode": "0600"
+    },
+    "prior-invariants.json": {
+      "sha256": "c7ed390ac859707d2c6445a580292233b04447245f294ec18db76b2df063e2f1",
+      "bytes": 75433,
+      "mode": "0600"
+    },
+    "recorder.diff": {
+      "sha256": "6e2dc92a81e6b06c64ec17759992273092289e8d089b57672d3319d4354afec7",
+      "bytes": 5760,
+      "mode": "0600"
+    }
+  },
+  "fixedInputs": {
+    "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-tracked-binding/tests/fixtures/observed-packaging/proof.mjs": "6aaf75a214d3dc89ddc2957b2be082ccf9eba7d93ade7511dd3bd652ae850635",
+    "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-tracked-binding/tests/fixtures/observed-packaging/guard.mjs": "000c19430aae956338a406a9b4daceb68e99eb76d70bc3a0340fccf52ae0d2f7",
+    "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic/tests/fixtures/observed-packaging/guard.mjs": "000c19430aae956338a406a9b4daceb68e99eb76d70bc3a0340fccf52ae0d2f7",
+    "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic/.scratch/observed-integration/acceptance/host/faults/production-startup/review/final/probe.mjs": "bf3b8b89d0ad11b03a30be23f2501b8e40aad8cf293b0ba94ce978f943ba0a4c",
+    "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic/.scratch/observed-integration/acceptance/host/installed-workflow/integration/root-gate-runner.py": "1a64e2143b07c99532456bc215090ee0dfbf631624670d8b0b013be0c7727efc",
+    "/opt/homebrew/lib/node_modules/npm/bin/npm-cli.js": "8e5f6f3429f8cdbe693cdc29904e9d5a7b127a494bd15c804bd54c7403bfcbe7"
+  },
+  "source443Unchanged": true,
+  "protected439Unchanged": true,
+  "compiled69Unchanged": true,
+  "trackedWorkingTreeClean": true,
+  "syntaxParsedOnly": true,
+  "recorderImportedOrExecuted": false,
+  "gateExecutions": 0,
+  "nodeExecutions": 0,
+  "sourceEdits": 0,
+  "networkInstallNativeAccountSdkOperations": 0,
+  "directoryMode": "0700",
+  "selfExclusion": "preparation-receipt.json"
+}

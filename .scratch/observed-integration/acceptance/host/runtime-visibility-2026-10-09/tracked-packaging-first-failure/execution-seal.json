@@ -1,0 +1,10 @@
+{
+  "status": "SEALED_FAILED_ATTEMPT_NO_RETRY",
+  "manifestSha256": "2982f663b3096880a96c80710aa4b3ef8399c1c128998e4819c68897854ca87e",
+  "failureReportSha256": "a23c3b0670f67b09587656c1089692dd5b95efffd920aad911e9465aee63a05b",
+  "phaseSealSha256": "2f6e5497256edb2a1d07585fda4951d7c56c18a128ec5839de8809c89785eede",
+  "regularFilesIncludingManifestAndSeal": 24165,
+  "symlinks": 8,
+  "directories": 4210,
+  "selfExclusion": "execution-seal.json"
+}

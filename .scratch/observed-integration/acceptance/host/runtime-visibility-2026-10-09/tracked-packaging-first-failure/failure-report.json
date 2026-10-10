@@ -1,0 +1,39 @@
+{
+  "status": "FAILED_STOPPED_NO_RETRY",
+  "candidateCommit": "cc5d30e2fdaf065bec476a65df465dabb1569f2c",
+  "phase": "packaging26",
+  "completedCommands": 21,
+  "firstFailedCommand": {
+    "id": "021",
+    "command": "npm",
+    "args": [
+      "ci",
+      "--ignore-scripts",
+      "--no-audit",
+      "--no-fund"
+    ],
+    "cwd": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-tracked-binding/.scratch/installed-tracked-packaging/runs/tracked-packaging-node26/installed-proof/plugin",
+    "node": "v26.8.1",
+    "exit": null,
+    "signal": "SIGKILL",
+    "stdout": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-tracked-binding/.scratch/installed-tracked-packaging/runs/tracked-packaging-node26/installed-proof/021.stdout",
+    "stderr": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-tracked-binding/.scratch/installed-tracked-packaging/runs/tracked-packaging-node26/installed-proof/021.stderr"
+  },
+  "outerExitCode": 1,
+  "outerCloseUtc": "2026-10-10T02:02:20.006069+00:00",
+  "outerTimeout": false,
+  "outerCleanup": null,
+  "outerGroupAbsent": true,
+  "source443AndCompiled69Unchanged": true,
+  "confirmedFailure": "Private plugin npm ci closed with null exit and SIGKILL; unchanged helper asserted null != 0 and did not produce PASS summary.",
+  "qualification": "The unchanged proof helper has a90000ms per-command SIGKILL timer. Receipt/log timing is consistent with that deadline. The exact internal timer branch is not separately instrumented, and the underlying npm delay cause is unresolved. Last npm debug lines show successful tarball fetches; no terminal npm error/exit diagnosis was retained.",
+  "remainingPhases": "startup26,packaging24,startup24 NOT RUN",
+  "rawBindings": {
+    "result.json": "d708f6937970257dfa5dbeae7d3d58590826909091d1f57308767a160c9041b0",
+    "command.json": "08210b54007c57296ef281a90cd984da7adb4d24e7bb7dd384106b7a96a5e3cd",
+    "artifact-seal.json": "2f6e5497256edb2a1d07585fda4951d7c56c18a128ec5839de8809c89785eede",
+    "npmDebugLog": "b4b78f5a5652b18df819eba0bbf9390dfd7b78f062c41b1921cf89e75ed4f516",
+    "commands.jsonl": "56f54eef6780ecd87443d4a39527512d681e32e98f073e66ee686126879e16e4"
+  },
+  "executionGrantConsumed": "Stopped on first failed phase; no further execution or retries"
+}

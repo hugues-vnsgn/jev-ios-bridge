@@ -1,0 +1,101 @@
+{
+  "status": "PREPARED_NOT_EXECUTED",
+  "executionGrantRequired": true,
+  "order": "Serial; actual close and PASS seal required before every next command. Stop first failure/uncertainty; no retry.",
+  "commands": [
+    {
+      "cwd": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-tracked-binding",
+      "argv": [
+        "python3",
+        ".scratch/installed-tracked-packaging/candidate-installed-recorder.py",
+        "packaging",
+        "26",
+        "tracked-packaging-node26",
+        "--context",
+        "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-tracked-binding/.scratch/installed-tracked-packaging/candidate-source.json",
+        "--context-sha256",
+        "7de42479f3263694ed81fe17d43540d638d7d6259531508c28bfd4388fb8e7c9"
+      ],
+      "expectedResult": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-tracked-binding/.scratch/installed-tracked-packaging/runs/tracked-packaging-node26/result.json",
+      "expectedSeal": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-tracked-binding/.scratch/installed-tracked-packaging/runs/tracked-packaging-node26/artifact-seal.json",
+      "expectedStatus": "PASS",
+      "expectedCounts": {
+        "originalCommands": 37,
+        "skips": 0,
+        "forbiddenEffects": 0
+      }
+    },
+    {
+      "cwd": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-tracked-binding",
+      "argv": [
+        "python3",
+        ".scratch/installed-tracked-packaging/candidate-installed-recorder.py",
+        "startup",
+        "26",
+        "tracked-startup-node26",
+        "--context",
+        "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-tracked-binding/.scratch/installed-tracked-packaging/candidate-source.json",
+        "--context-sha256",
+        "7de42479f3263694ed81fe17d43540d638d7d6259531508c28bfd4388fb8e7c9",
+        "--packaging-label",
+        "tracked-packaging-node26"
+      ],
+      "expectedResult": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-tracked-binding/.scratch/installed-tracked-packaging/runs/tracked-startup-node26/result.json",
+      "expectedSeal": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-tracked-binding/.scratch/installed-tracked-packaging/runs/tracked-startup-node26/artifact-seal.json",
+      "expectedStatus": "PASS",
+      "expectedCounts": {
+        "cliCommands": 2,
+        "mcpCalls": 3,
+        "sdkDriverChildEffects": 0,
+        "productionAccountRootOperations": 0
+      }
+    },
+    {
+      "cwd": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-tracked-binding",
+      "argv": [
+        "python3",
+        ".scratch/installed-tracked-packaging/candidate-installed-recorder.py",
+        "packaging",
+        "24",
+        "tracked-packaging-node24",
+        "--context",
+        "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-tracked-binding/.scratch/installed-tracked-packaging/candidate-source.json",
+        "--context-sha256",
+        "7de42479f3263694ed81fe17d43540d638d7d6259531508c28bfd4388fb8e7c9"
+      ],
+      "expectedResult": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-tracked-binding/.scratch/installed-tracked-packaging/runs/tracked-packaging-node24/result.json",
+      "expectedSeal": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-tracked-binding/.scratch/installed-tracked-packaging/runs/tracked-packaging-node24/artifact-seal.json",
+      "expectedStatus": "PASS",
+      "expectedCounts": {
+        "originalCommands": 37,
+        "skips": 0,
+        "forbiddenEffects": 0
+      }
+    },
+    {
+      "cwd": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-tracked-binding",
+      "argv": [
+        "python3",
+        ".scratch/installed-tracked-packaging/candidate-installed-recorder.py",
+        "startup",
+        "24",
+        "tracked-startup-node24",
+        "--context",
+        "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-tracked-binding/.scratch/installed-tracked-packaging/candidate-source.json",
+        "--context-sha256",
+        "7de42479f3263694ed81fe17d43540d638d7d6259531508c28bfd4388fb8e7c9",
+        "--packaging-label",
+        "tracked-packaging-node24"
+      ],
+      "expectedResult": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-tracked-binding/.scratch/installed-tracked-packaging/runs/tracked-startup-node24/result.json",
+      "expectedSeal": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-tracked-binding/.scratch/installed-tracked-packaging/runs/tracked-startup-node24/artifact-seal.json",
+      "expectedStatus": "PASS",
+      "expectedCounts": {
+        "cliCommands": 2,
+        "mcpCalls": 3,
+        "sdkDriverChildEffects": 0,
+        "productionAccountRootOperations": 0
+      }
+    }
+  ]
+}

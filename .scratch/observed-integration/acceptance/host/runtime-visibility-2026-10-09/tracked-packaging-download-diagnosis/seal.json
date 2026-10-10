@@ -1,0 +1,59 @@
+{
+  "regularFiles": {
+    "summary.json": {
+      "sha256": "3e58eae5b329994bc8b50bb6f634ecb2ad9b4bc86b2149527e47617cfcf97a94",
+      "bytes": 5888
+    },
+    "sentry-core.metrics.json": {
+      "sha256": "d01df1a752ceafc82d3564513b86de5c2bcc9f0dbef6260fd077576bb2dcab94",
+      "bytes": 9601
+    },
+    "ip-address.tgz": {
+      "sha256": "4301746e43e8a85a6a41e268f02178b27e6ba58e78e6913ab105d3871618083b",
+      "bytes": 84649
+    },
+    "sentry-core-result.json": {
+      "sha256": "19b6f8b4b7ad3c7170b5a0ca134f93d5a2fef71210c094dfbfb2eab729191858",
+      "bytes": 2550
+    },
+    "ip-address-result.json": {
+      "sha256": "a1ff447aa3099ccd09d07f4775aa7cf5f127d5c47428a9f0681a85f1d920c18d",
+      "bytes": 2546
+    },
+    "ip-address-launch.json": {
+      "sha256": "a3c3eb221eca908170b6adeb2960de8fd6f451dbc01d60036ee2de41ee1fb8e8",
+      "bytes": 1689
+    },
+    "ip-address.metrics.json": {
+      "sha256": "3a8b7caa5ceaecc80efb7d528e5b12b35cfe088e7ca908fb0b9d0ab61d75a31e",
+      "bytes": 9609
+    },
+    "ip-address.stderr": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "sentry-core.headers": {
+      "sha256": "f7ee9d4f60ab83b59ca9fcb912fcac1bb2465527d36ef6671f7af6a16c8571ca",
+      "bytes": 917
+    },
+    "sentry-core-launch.json": {
+      "sha256": "efa3b970a4dfbfc37952700a750147ff992865dbb94389e7402c12b3881c6539",
+      "bytes": 1688
+    },
+    "sentry-core.tgz": {
+      "sha256": "09231debfb4c03b8ef779d9685a9ea377ee6d5d51497e812988c16d99fefba64",
+      "bytes": 1259129
+    },
+    "sentry-core.stderr": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "ip-address.headers": {
+      "sha256": "04d1fd835cd352783d49dd733b193374a6098f1637f2751a614c7ab0dc0e4505",
+      "bytes": 909
+    }
+  },
+  "selfExclusion": "seal.json",
+  "directoryMode": "0700",
+  "fileMode": "0600"
+}

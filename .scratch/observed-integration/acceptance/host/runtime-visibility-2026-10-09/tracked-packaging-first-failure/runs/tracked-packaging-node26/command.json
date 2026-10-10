@@ -1,0 +1,41 @@
+{
+  "absentNames": [
+    "TYPESAFE_API_KEY",
+    "NODE_OPTIONS",
+    "NODE_NO_WARNINGS"
+  ],
+  "actualCloseRecorded": true,
+  "childPgid": 48103,
+  "childPid": 48103,
+  "childSession": 48103,
+  "childUmask": "0022",
+  "cleanup": null,
+  "closedAtUtc": "2026-10-10T02:02:20.006069+00:00",
+  "command": [
+    "/opt/homebrew/Cellar/node/26.8.1/bin/node",
+    "tests/fixtures/observed-packaging/proof.mjs"
+  ],
+  "cwd": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-tracked-binding",
+  "durationSeconds": 154.63207154100382,
+  "environmentNames": [
+    "HOME",
+    "JEV_PACKAGING_EVIDENCE_DIR",
+    "LANG",
+    "LC_ALL",
+    "NPM_CONFIG_CACHE",
+    "NPM_CONFIG_GLOBALCONFIG",
+    "NPM_CONFIG_USERCONFIG",
+    "PATH"
+  ],
+  "exitCode": 1,
+  "groupAbsentAfterClose": true,
+  "outerTimeoutSeconds": null,
+  "parentUmask": "0077",
+  "rawComplete": true,
+  "rawHashCapturedAtUtc": "2026-10-10T02:02:20.006858+00:00",
+  "scrubStrategy": "Minimal allowlisted environment; no inherited credentials/loaders/config",
+  "startedAtUtc": "2026-10-10T01:59:45.373424+00:00",
+  "stderrSha256": "f9d63172bcf91c39df3d66e8933952bc4717feb83e7aefce55040044cf371fb0",
+  "stdoutSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "timedOut": false
+}
