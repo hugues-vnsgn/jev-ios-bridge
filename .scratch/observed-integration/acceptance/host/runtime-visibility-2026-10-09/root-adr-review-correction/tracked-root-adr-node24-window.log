@@ -1,0 +1,41 @@
+(node:52656) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ with the window on, prepare checks the simulator is booted, brings its window forward, then launches (169.534125ms)
+✔ a window that fails to open is a warning, never a failure (154.487875ms)
+✔ with the window on, a shut-down simulator is refused as DEVICE_NOT_BOOTED before the window opens or the app launches (173.1105ms)
+✔ a simulator still booting is DEVICE_NOT_BOOTED too (86.442083ms)
+✔ with the window on and the state unreadable, the window stays closed with a warning and the app still launches (139.3685ms)
+✔ with the window off, a successful launch sends no extra command and records no warning (106.896291ms)
+✔ with the window off, a launch that fails on a shut-down simulator becomes DEVICE_NOT_BOOTED (118.045708ms)
+✔ a launch failure on a booted simulator, or with the state unreadable, keeps its own error (638.35525ms)
+✔ the window command opens Simulator on the run's device (0.458708ms)
+✔ the window is on by default, off with --no-device-window or JEV_DEVICE_WINDOW=off (0.266583ms)
+✔ a run records prepare warnings on its prepared event, and nothing when there are none (7.309792ms)
+✔ a run on a shut-down simulator ends inconclusive with DEVICE_NOT_BOOTED, not DEVICE_ERROR (165.868ms)
+✔ the CLI takes --no-device-window on run only, and its help names it (359.72925ms)
+✔ malformed selected-device listing revokes dispatch before window or launch (158.950625ms)
+✔ malformed simulator entry (selected state is numeric) fences launch, presentation and cleanup (181.605167ms)
+✔ malformed simulator entry (selected state is missing) fences launch, presentation and cleanup (176.515375ms)
+✔ malformed simulator entry (selected state is null) fences launch, presentation and cleanup (119.649667ms)
+✔ malformed simulator entry (selected state is empty) fences launch, presentation and cleanup (108.731583ms)
+✔ malformed simulator entry (selected state is blank) fences launch, presentation and cleanup (101.660209ms)
+✔ malformed simulator entry (identity is numeric) fences launch, presentation and cleanup (104.2425ms)
+✔ malformed simulator entry (identity is missing) fences launch, presentation and cleanup (112.7785ms)
+✔ malformed simulator entry (identity is malformed) fences launch, presentation and cleanup (108.056791ms)
+✔ malformed simulator entry (list is missing) fences launch, presentation and cleanup (97.677958ms)
+✔ malformed simulator entry (list is null) fences launch, presentation and cleanup (96.192417ms)
+✔ malformed simulator entry (list is not an array) fences launch, presentation and cleanup (102.818ms)
+✔ malformed simulator entry (entry is null) fences launch, presentation and cleanup (103.115708ms)
+✔ malformed simulator entry (entry is an array) fences launch, presentation and cleanup (103.958667ms)
+✔ malformed simulator entry (entry is a string) fences launch, presentation and cleanup (98.421625ms)
+✔ malformed simulator entry (unselected entry is malformed) fences launch, presentation and cleanup (103.791625ms)
+✔ a valid empty simulator list keeps missing-identity warning and acknowledged launch behavior (136.263542ms)
+✔ a malformed simulator-list error receipt cannot acknowledge settlement or authorize cleanup (98.438208ms)
+ℹ tests 31
+ℹ suites 0
+ℹ pass 31
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 4370.146083

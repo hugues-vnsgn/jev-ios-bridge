@@ -1,0 +1,39 @@
+✔ with the window on, prepare checks the simulator is booted, brings its window forward, then launches (181.891125ms)
+✔ a window that fails to open is a warning, never a failure (160.155125ms)
+✔ with the window on, a shut-down simulator is refused as DEVICE_NOT_BOOTED before the window opens or the app launches (181.833625ms)
+✔ a simulator still booting is DEVICE_NOT_BOOTED too (88.624292ms)
+✔ with the window on and the state unreadable, the window stays closed with a warning and the app still launches (139.823958ms)
+✔ with the window off, a successful launch sends no extra command and records no warning (110.154125ms)
+✔ with the window off, a launch that fails on a shut-down simulator becomes DEVICE_NOT_BOOTED (115.829417ms)
+✔ a launch failure on a booted simulator, or with the state unreadable, keeps its own error (371.974292ms)
+✔ the window command opens Simulator on the run's device (0.315833ms)
+✔ the window is on by default, off with --no-device-window or JEV_DEVICE_WINDOW=off (0.118083ms)
+✔ a run records prepare warnings on its prepared event, and nothing when there are none (4.757833ms)
+✔ a run on a shut-down simulator ends inconclusive with DEVICE_NOT_BOOTED, not DEVICE_ERROR (104.026375ms)
+✔ the CLI takes --no-device-window on run only, and its help names it (352.724583ms)
+✔ malformed selected-device listing revokes dispatch before window or launch (96.120709ms)
+✔ malformed simulator entry (selected state is numeric) fences launch, presentation and cleanup (97.142958ms)
+✔ malformed simulator entry (selected state is missing) fences launch, presentation and cleanup (98.778ms)
+✔ malformed simulator entry (selected state is null) fences launch, presentation and cleanup (101.325291ms)
+✔ malformed simulator entry (selected state is empty) fences launch, presentation and cleanup (95.37825ms)
+✔ malformed simulator entry (selected state is blank) fences launch, presentation and cleanup (93.032417ms)
+✔ malformed simulator entry (identity is numeric) fences launch, presentation and cleanup (94.609917ms)
+✔ malformed simulator entry (identity is missing) fences launch, presentation and cleanup (99.07725ms)
+✔ malformed simulator entry (identity is malformed) fences launch, presentation and cleanup (99.866042ms)
+✔ malformed simulator entry (list is missing) fences launch, presentation and cleanup (101.902083ms)
+✔ malformed simulator entry (list is null) fences launch, presentation and cleanup (100.955416ms)
+✔ malformed simulator entry (list is not an array) fences launch, presentation and cleanup (100.117583ms)
+✔ malformed simulator entry (entry is null) fences launch, presentation and cleanup (94.916209ms)
+✔ malformed simulator entry (entry is an array) fences launch, presentation and cleanup (99.100375ms)
+✔ malformed simulator entry (entry is a string) fences launch, presentation and cleanup (96.610542ms)
+✔ malformed simulator entry (unselected entry is malformed) fences launch, presentation and cleanup (104.359833ms)
+✔ a valid empty simulator list keeps missing-identity warning and acknowledged launch behavior (141.6365ms)
+✔ a malformed simulator-list error receipt cannot acknowledge settlement or authorize cleanup (99.820875ms)
+ℹ tests 31
+ℹ suites 0
+ℹ pass 31
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 3755.511042
