@@ -1,0 +1,676 @@
+{
+  "checks": [
+    {
+      "name": "head",
+      "pass": true
+    },
+    {
+      "name": "context-pin",
+      "pass": true
+    },
+    {
+      "name": "verification-pin",
+      "pass": true
+    },
+    {
+      "name": "src/observed/allocation.ts-context",
+      "pass": true
+    },
+    {
+      "name": "src/observed/allocation.ts-git",
+      "pass": true
+    },
+    {
+      "name": "src/observed/allocation-config.ts-context",
+      "pass": true
+    },
+    {
+      "name": "src/observed/allocation-config.ts-git",
+      "pass": true
+    },
+    {
+      "name": "tests/observed-legacy-volume-runtime.test.ts-context",
+      "pass": true
+    },
+    {
+      "name": "tests/observed-legacy-volume-runtime.test.ts-git",
+      "pass": true
+    },
+    {
+      "name": "tests/fixtures/observed-legacy-volume-runtime.ts-context",
+      "pass": true
+    },
+    {
+      "name": "tests/fixtures/observed-legacy-volume-runtime.ts-git",
+      "pass": true
+    },
+    {
+      "name": "existing-test-body-exact",
+      "pass": true
+    },
+    {
+      "name": "isolation-node26-raw",
+      "pass": true
+    },
+    {
+      "name": "isolation-node26-exit",
+      "pass": true
+    },
+    {
+      "name": "isolation-node26-close",
+      "pass": true
+    },
+    {
+      "name": "isolation-node26-counts",
+      "pass": true
+    },
+    {
+      "name": "red-node26-raw",
+      "pass": true
+    },
+    {
+      "name": "red-node26-exit",
+      "pass": true
+    },
+    {
+      "name": "red-node26-close",
+      "pass": true
+    },
+    {
+      "name": "red-node26-counts",
+      "pass": true
+    },
+    {
+      "name": "final-green-node26-raw",
+      "pass": true
+    },
+    {
+      "name": "final-green-node26-exit",
+      "pass": true
+    },
+    {
+      "name": "final-green-node26-close",
+      "pass": true
+    },
+    {
+      "name": "final-green-node26-counts",
+      "pass": true
+    },
+    {
+      "name": "focused-node26-raw",
+      "pass": true
+    },
+    {
+      "name": "focused-node26-exit",
+      "pass": true
+    },
+    {
+      "name": "focused-node26-close",
+      "pass": true
+    },
+    {
+      "name": "focused-node26-counts",
+      "pass": true
+    },
+    {
+      "name": "coverage-node26-raw",
+      "pass": true
+    },
+    {
+      "name": "coverage-node26-exit",
+      "pass": true
+    },
+    {
+      "name": "coverage-node26-close",
+      "pass": true
+    },
+    {
+      "name": "coverage-node26-counts",
+      "pass": true
+    },
+    {
+      "name": "typecheck-node26-raw",
+      "pass": true
+    },
+    {
+      "name": "typecheck-node26-exit",
+      "pass": true
+    },
+    {
+      "name": "typecheck-node26-close",
+      "pass": true
+    },
+    {
+      "name": "build-node26-raw",
+      "pass": true
+    },
+    {
+      "name": "build-node26-exit",
+      "pass": true
+    },
+    {
+      "name": "build-node26-close",
+      "pass": true
+    },
+    {
+      "name": "actual-default-node26-raw",
+      "pass": true
+    },
+    {
+      "name": "actual-default-node26-exit",
+      "pass": true
+    },
+    {
+      "name": "actual-default-node26-close",
+      "pass": true
+    },
+    {
+      "name": "actual-default-node26-counts",
+      "pass": true
+    },
+    {
+      "name": "actual-default-node26-official",
+      "pass": true
+    },
+    {
+      "name": "isolation-node24-raw",
+      "pass": true
+    },
+    {
+      "name": "isolation-node24-exit",
+      "pass": true
+    },
+    {
+      "name": "isolation-node24-close",
+      "pass": true
+    },
+    {
+      "name": "isolation-node24-counts",
+      "pass": true
+    },
+    {
+      "name": "red-node24-raw",
+      "pass": true
+    },
+    {
+      "name": "red-node24-exit",
+      "pass": true
+    },
+    {
+      "name": "red-node24-close",
+      "pass": true
+    },
+    {
+      "name": "red-node24-counts",
+      "pass": true
+    },
+    {
+      "name": "final-green-node24-raw",
+      "pass": true
+    },
+    {
+      "name": "final-green-node24-exit",
+      "pass": true
+    },
+    {
+      "name": "final-green-node24-close",
+      "pass": true
+    },
+    {
+      "name": "final-green-node24-counts",
+      "pass": true
+    },
+    {
+      "name": "focused-node24-raw",
+      "pass": true
+    },
+    {
+      "name": "focused-node24-exit",
+      "pass": true
+    },
+    {
+      "name": "focused-node24-close",
+      "pass": true
+    },
+    {
+      "name": "focused-node24-counts",
+      "pass": true
+    },
+    {
+      "name": "coverage-node24-raw",
+      "pass": true
+    },
+    {
+      "name": "coverage-node24-exit",
+      "pass": true
+    },
+    {
+      "name": "coverage-node24-close",
+      "pass": true
+    },
+    {
+      "name": "coverage-node24-counts",
+      "pass": true
+    },
+    {
+      "name": "typecheck-node24-raw",
+      "pass": true
+    },
+    {
+      "name": "typecheck-node24-exit",
+      "pass": true
+    },
+    {
+      "name": "typecheck-node24-close",
+      "pass": true
+    },
+    {
+      "name": "build-node24-raw",
+      "pass": true
+    },
+    {
+      "name": "build-node24-exit",
+      "pass": true
+    },
+    {
+      "name": "build-node24-close",
+      "pass": true
+    },
+    {
+      "name": "actual-default-node24-raw",
+      "pass": true
+    },
+    {
+      "name": "actual-default-node24-exit",
+      "pass": true
+    },
+    {
+      "name": "actual-default-node24-close",
+      "pass": true
+    },
+    {
+      "name": "actual-default-node24-counts",
+      "pass": true
+    },
+    {
+      "name": "actual-default-node24-official",
+      "pass": true
+    },
+    {
+      "name": "defaults-serial",
+      "pass": true
+    }
+  ],
+  "failed": [],
+  "receipts": [
+    {
+      "label": "isolation-node26",
+      "counts": {
+        "tests": [
+          "14"
+        ],
+        "pass": [
+          "14"
+        ],
+        "fail": [
+          "0"
+        ],
+        "cancelled": [
+          "0"
+        ],
+        "skipped": [
+          "0"
+        ],
+        "todo": [
+          "0"
+        ]
+      },
+      "exitCode": 0,
+      "startedAtUtc": "2026-10-09T15:08:36.146862+00:00",
+      "completedAtUtc": "2026-10-09T15:08:36.576056+00:00"
+    },
+    {
+      "label": "red-node26",
+      "counts": {
+        "tests": [
+          "12"
+        ],
+        "pass": [
+          "6"
+        ],
+        "fail": [
+          "6"
+        ],
+        "cancelled": [
+          "0"
+        ],
+        "skipped": [
+          "0"
+        ],
+        "todo": [
+          "0"
+        ]
+      },
+      "exitCode": 1,
+      "startedAtUtc": "2026-10-09T15:08:51.586678+00:00",
+      "completedAtUtc": "2026-10-09T15:08:53.013594+00:00"
+    },
+    {
+      "label": "final-green-node26",
+      "counts": {
+        "tests": [
+          "259"
+        ],
+        "pass": [
+          "259"
+        ],
+        "fail": [
+          "0"
+        ],
+        "cancelled": [
+          "0"
+        ],
+        "skipped": [
+          "0"
+        ],
+        "todo": [
+          "0"
+        ]
+      },
+      "exitCode": 0,
+      "startedAtUtc": "2026-10-09T15:11:32.168343+00:00",
+      "completedAtUtc": "2026-10-09T15:11:45.279666+00:00"
+    },
+    {
+      "label": "focused-node26",
+      "counts": {
+        "tests": [
+          "764"
+        ],
+        "pass": [
+          "764"
+        ],
+        "fail": [
+          "0"
+        ],
+        "cancelled": [
+          "0"
+        ],
+        "skipped": [
+          "0"
+        ],
+        "todo": [
+          "0"
+        ]
+      },
+      "exitCode": 0,
+      "startedAtUtc": "2026-10-09T15:12:09.419993+00:00",
+      "completedAtUtc": "2026-10-09T15:12:51.873120+00:00"
+    },
+    {
+      "label": "coverage-node26",
+      "counts": {
+        "tests": [
+          "613"
+        ],
+        "pass": [
+          "613"
+        ],
+        "fail": [
+          "0"
+        ],
+        "cancelled": [
+          "0"
+        ],
+        "skipped": [
+          "0"
+        ],
+        "todo": [
+          "0"
+        ]
+      },
+      "exitCode": 0,
+      "startedAtUtc": "2026-10-09T15:13:35.933510+00:00",
+      "completedAtUtc": "2026-10-09T15:13:53.621724+00:00"
+    },
+    {
+      "label": "typecheck-node26",
+      "counts": {
+        "tests": [],
+        "pass": [],
+        "fail": [],
+        "cancelled": [],
+        "skipped": [],
+        "todo": []
+      },
+      "exitCode": 0,
+      "startedAtUtc": "2026-10-09T15:14:12.369275+00:00",
+      "completedAtUtc": "2026-10-09T15:14:13.057993+00:00"
+    },
+    {
+      "label": "build-node26",
+      "counts": {
+        "tests": [],
+        "pass": [],
+        "fail": [],
+        "cancelled": [],
+        "skipped": [],
+        "todo": []
+      },
+      "exitCode": 0,
+      "startedAtUtc": "2026-10-09T15:14:13.932932+00:00",
+      "completedAtUtc": "2026-10-09T15:14:14.299305+00:00"
+    },
+    {
+      "label": "actual-default-node26",
+      "counts": {
+        "tests": [
+          "2258"
+        ],
+        "pass": [
+          "2258"
+        ],
+        "fail": [
+          "0"
+        ],
+        "cancelled": [
+          "0"
+        ],
+        "skipped": [
+          "0"
+        ],
+        "todo": [
+          "0"
+        ]
+      },
+      "exitCode": 0,
+      "startedAtUtc": "2026-10-09T15:15:06.816502+00:00",
+      "completedAtUtc": "2026-10-09T15:17:40.102369+00:00"
+    },
+    {
+      "label": "isolation-node24",
+      "counts": {
+        "tests": [
+          "14"
+        ],
+        "pass": [
+          "14"
+        ],
+        "fail": [
+          "0"
+        ],
+        "cancelled": [
+          "0"
+        ],
+        "skipped": [
+          "0"
+        ],
+        "todo": [
+          "0"
+        ]
+      },
+      "exitCode": 0,
+      "startedAtUtc": "2026-10-09T15:08:47.629334+00:00",
+      "completedAtUtc": "2026-10-09T15:08:47.963504+00:00"
+    },
+    {
+      "label": "red-node24",
+      "counts": {
+        "tests": [
+          "12"
+        ],
+        "pass": [
+          "6"
+        ],
+        "fail": [
+          "6"
+        ],
+        "cancelled": [
+          "0"
+        ],
+        "skipped": [
+          "0"
+        ],
+        "todo": [
+          "0"
+        ]
+      },
+      "exitCode": 1,
+      "startedAtUtc": "2026-10-09T15:09:26.213457+00:00",
+      "completedAtUtc": "2026-10-09T15:09:27.882572+00:00"
+    },
+    {
+      "label": "final-green-node24",
+      "counts": {
+        "tests": [
+          "259"
+        ],
+        "pass": [
+          "259"
+        ],
+        "fail": [
+          "0"
+        ],
+        "cancelled": [
+          "0"
+        ],
+        "skipped": [
+          "0"
+        ],
+        "todo": [
+          "0"
+        ]
+      },
+      "exitCode": 0,
+      "startedAtUtc": "2026-10-09T15:11:55.851580+00:00",
+      "completedAtUtc": "2026-10-09T15:12:09.278988+00:00"
+    },
+    {
+      "label": "focused-node24",
+      "counts": {
+        "tests": [
+          "764"
+        ],
+        "pass": [
+          "764"
+        ],
+        "fail": [
+          "0"
+        ],
+        "cancelled": [
+          "0"
+        ],
+        "skipped": [
+          "0"
+        ],
+        "todo": [
+          "0"
+        ]
+      },
+      "exitCode": 0,
+      "startedAtUtc": "2026-10-09T15:12:52.246564+00:00",
+      "completedAtUtc": "2026-10-09T15:13:35.747789+00:00"
+    },
+    {
+      "label": "coverage-node24",
+      "counts": {
+        "tests": [
+          "613"
+        ],
+        "pass": [
+          "613"
+        ],
+        "fail": [
+          "0"
+        ],
+        "cancelled": [
+          "0"
+        ],
+        "skipped": [
+          "0"
+        ],
+        "todo": [
+          "0"
+        ]
+      },
+      "exitCode": 0,
+      "startedAtUtc": "2026-10-09T15:13:53.848806+00:00",
+      "completedAtUtc": "2026-10-09T15:14:12.235074+00:00"
+    },
+    {
+      "label": "typecheck-node24",
+      "counts": {
+        "tests": [],
+        "pass": [],
+        "fail": [],
+        "cancelled": [],
+        "skipped": [],
+        "todo": []
+      },
+      "exitCode": 0,
+      "startedAtUtc": "2026-10-09T15:14:13.267514+00:00",
+      "completedAtUtc": "2026-10-09T15:14:13.813599+00:00"
+    },
+    {
+      "label": "build-node24",
+      "counts": {
+        "tests": [],
+        "pass": [],
+        "fail": [],
+        "cancelled": [],
+        "skipped": [],
+        "todo": []
+      },
+      "exitCode": 0,
+      "startedAtUtc": "2026-10-09T15:14:14.528341+00:00",
+      "completedAtUtc": "2026-10-09T15:14:14.904247+00:00"
+    },
+    {
+      "label": "actual-default-node24",
+      "counts": {
+        "tests": [
+          "2258"
+        ],
+        "pass": [
+          "2258"
+        ],
+        "fail": [
+          "0"
+        ],
+        "cancelled": [
+          "0"
+        ],
+        "skipped": [
+          "0"
+        ],
+        "todo": [
+          "0"
+        ]
+      },
+      "exitCode": 0,
+      "startedAtUtc": "2026-10-09T15:17:45.197390+00:00",
+      "completedAtUtc": "2026-10-09T15:20:27.497872+00:00"
+    }
+  ],
+  "scope": "Read-only correspondence checks, not test executions."
+}

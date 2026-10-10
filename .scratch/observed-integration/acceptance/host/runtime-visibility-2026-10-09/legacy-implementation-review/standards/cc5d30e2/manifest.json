@@ -1,0 +1,43 @@
+{
+  "candidate": "cc5d30e2fdaf065bec476a65df465dabb1569f2c",
+  "verdict": "PASS",
+  "inputCount": 74,
+  "regularFiles": {
+    "audit.py": {
+      "sha256": "3fe2a677a06032febe236aa3b3d3aca2bd7a57ebe3767c69866bbfda97313108",
+      "bytes": 4425,
+      "mode": "0o600"
+    },
+    "commits.txt": {
+      "sha256": "b7a5b427702047c2431ef42393a57aedce8c21fc9932a8423f169f0fb1b4ab34",
+      "bytes": 72,
+      "mode": "0o600"
+    },
+    "design-audit.json": {
+      "sha256": "931fb62e2df7b7a34d5502a1379b74e529058a03b4a032ea51fec4c139ae2a35",
+      "bytes": 3481,
+      "mode": "0o600"
+    },
+    "diff.patch": {
+      "sha256": "3f68e3ce69e6c3ad88c155666e50c989b2c2de99e459233c5a4eb95fda47087b",
+      "bytes": 14812,
+      "mode": "0o600"
+    },
+    "input-bindings.json": {
+      "sha256": "09ade8052ec698fe8362d6c67f398dce658c274632384400feb57b3a507d608f",
+      "bytes": 20110,
+      "mode": "0o600"
+    },
+    "receipt-audit.json": {
+      "sha256": "249db16ce5e26d691e870f47d1bcbf0baf21ddc2af23ee45eeb696757037fc69",
+      "bytes": 12741,
+      "mode": "0o600"
+    },
+    "report.md": {
+      "sha256": "f31474b34991bdbb5bf2c46b6a4b1724ecda531212a2d6e7431caa613e07d8eb",
+      "bytes": 2519,
+      "mode": "0o600"
+    }
+  },
+  "selfExclusion": "manifest.json cannot include its own digest; caller binds it externally."
+}

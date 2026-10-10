@@ -1,0 +1,6642 @@
+{
+  "checks": [
+    {
+      "name": "context pin",
+      "pass": true
+    },
+    {
+      "name": "verification pin",
+      "pass": true
+    },
+    {
+      "name": "source443 count",
+      "pass": true
+    },
+    {
+      "name": "protected439 count",
+      "pass": true
+    },
+    {
+      "name": "compiled69 count",
+      "pass": true
+    },
+    {
+      "name": "owned4 count",
+      "pass": true
+    },
+    {
+      "name": "working .github/workflows/check.yml",
+      "pass": true
+    },
+    {
+      "name": "git .github/workflows/check.yml",
+      "pass": true
+    },
+    {
+      "name": "working AGENTS.md",
+      "pass": true
+    },
+    {
+      "name": "git AGENTS.md",
+      "pass": true
+    },
+    {
+      "name": "working GLOSSARY.md",
+      "pass": true
+    },
+    {
+      "name": "git GLOSSARY.md",
+      "pass": true
+    },
+    {
+      "name": "working README.md",
+      "pass": true
+    },
+    {
+      "name": "git README.md",
+      "pass": true
+    },
+    {
+      "name": "working docs/adr/0001-bridge-perceives-and-acts-jev-decides.md",
+      "pass": true
+    },
+    {
+      "name": "git docs/adr/0001-bridge-perceives-and-acts-jev-decides.md",
+      "pass": true
+    },
+    {
+      "name": "working docs/adr/0002-mobilebuildmcp-as-device-layer.md",
+      "pass": true
+    },
+    {
+      "name": "git docs/adr/0002-mobilebuildmcp-as-device-layer.md",
+      "pass": true
+    },
+    {
+      "name": "working docs/adr/0003-explicit-scripts-with-jev-assertions.md",
+      "pass": true
+    },
+    {
+      "name": "git docs/adr/0003-explicit-scripts-with-jev-assertions.md",
+      "pass": true
+    },
+    {
+      "name": "working docs/adr/0004-fixed-assertion-bounds-single-judgment.md",
+      "pass": true
+    },
+    {
+      "name": "git docs/adr/0004-fixed-assertion-bounds-single-judgment.md",
+      "pass": true
+    },
+    {
+      "name": "working docs/adr/0005-the-1-0-stability-contract.md",
+      "pass": true
+    },
+    {
+      "name": "git docs/adr/0005-the-1-0-stability-contract.md",
+      "pass": true
+    },
+    {
+      "name": "working docs/adr/0006-mobilecli-device-agent-as-android-device-layer.md",
+      "pass": true
+    },
+    {
+      "name": "git docs/adr/0006-mobilecli-device-agent-as-android-device-layer.md",
+      "pass": true
+    },
+    {
+      "name": "working docs/adr/0007-simulator-presentation-and-a-bounded-ios-point-tap-exception.md",
+      "pass": true
+    },
+    {
+      "name": "git docs/adr/0007-simulator-presentation-and-a-bounded-ios-point-tap-exception.md",
+      "pass": true
+    },
+    {
+      "name": "working docs/adr/0008-durable-ios-admission.md",
+      "pass": true
+    },
+    {
+      "name": "git docs/adr/0008-durable-ios-admission.md",
+      "pass": true
+    },
+    {
+      "name": "working docs/adr/0009-bounded-simulator-creation.md",
+      "pass": true
+    },
+    {
+      "name": "git docs/adr/0009-bounded-simulator-creation.md",
+      "pass": true
+    },
+    {
+      "name": "working docs/agents/domain.md",
+      "pass": true
+    },
+    {
+      "name": "git docs/agents/domain.md",
+      "pass": true
+    },
+    {
+      "name": "working docs/agents/issue-tracker.md",
+      "pass": true
+    },
+    {
+      "name": "git docs/agents/issue-tracker.md",
+      "pass": true
+    },
+    {
+      "name": "working docs/agents/triage-labels.md",
+      "pass": true
+    },
+    {
+      "name": "git docs/agents/triage-labels.md",
+      "pass": true
+    },
+    {
+      "name": "working docs/architecture.md",
+      "pass": true
+    },
+    {
+      "name": "git docs/architecture.md",
+      "pass": true
+    },
+    {
+      "name": "working docs/architecture/checked-native-owner.md",
+      "pass": true
+    },
+    {
+      "name": "git docs/architecture/checked-native-owner.md",
+      "pass": true
+    },
+    {
+      "name": "working docs/domain-boundaries.md",
+      "pass": true
+    },
+    {
+      "name": "git docs/domain-boundaries.md",
+      "pass": true
+    },
+    {
+      "name": "working docs/guide/01-quickstart.md",
+      "pass": true
+    },
+    {
+      "name": "git docs/guide/01-quickstart.md",
+      "pass": true
+    },
+    {
+      "name": "working docs/guide/02-prepare-your-app.md",
+      "pass": true
+    },
+    {
+      "name": "git docs/guide/02-prepare-your-app.md",
+      "pass": true
+    },
+    {
+      "name": "working docs/guide/03-identifiers.md",
+      "pass": true
+    },
+    {
+      "name": "git docs/guide/03-identifiers.md",
+      "pass": true
+    },
+    {
+      "name": "working docs/guide/04-writing-scripts.md",
+      "pass": true
+    },
+    {
+      "name": "git docs/guide/04-writing-scripts.md",
+      "pass": true
+    },
+    {
+      "name": "working docs/guide/05-writing-claims.md",
+      "pass": true
+    },
+    {
+      "name": "git docs/guide/05-writing-claims.md",
+      "pass": true
+    },
+    {
+      "name": "working docs/guide/06-running.md",
+      "pass": true
+    },
+    {
+      "name": "git docs/guide/06-running.md",
+      "pass": true
+    },
+    {
+      "name": "working docs/guide/07-reports-and-evidence.md",
+      "pass": true
+    },
+    {
+      "name": "git docs/guide/07-reports-and-evidence.md",
+      "pass": true
+    },
+    {
+      "name": "working docs/guide/08-troubleshooting.md",
+      "pass": true
+    },
+    {
+      "name": "git docs/guide/08-troubleshooting.md",
+      "pass": true
+    },
+    {
+      "name": "working docs/guide/09-data-handling.md",
+      "pass": true
+    },
+    {
+      "name": "git docs/guide/09-data-handling.md",
+      "pass": true
+    },
+    {
+      "name": "working docs/guide/10-limits.md",
+      "pass": true
+    },
+    {
+      "name": "git docs/guide/10-limits.md",
+      "pass": true
+    },
+    {
+      "name": "working docs/guide/11-stability.md",
+      "pass": true
+    },
+    {
+      "name": "git docs/guide/11-stability.md",
+      "pass": true
+    },
+    {
+      "name": "working docs/guide/12-android-setup.md",
+      "pass": true
+    },
+    {
+      "name": "git docs/guide/12-android-setup.md",
+      "pass": true
+    },
+    {
+      "name": "working docs/guide/13-driven-steps.md",
+      "pass": true
+    },
+    {
+      "name": "git docs/guide/13-driven-steps.md",
+      "pass": true
+    },
+    {
+      "name": "working docs/guide/14-observed-actions.md",
+      "pass": true
+    },
+    {
+      "name": "git docs/guide/14-observed-actions.md",
+      "pass": true
+    },
+    {
+      "name": "working docs/guide/README.md",
+      "pass": true
+    },
+    {
+      "name": "git docs/guide/README.md",
+      "pass": true
+    },
+    {
+      "name": "working docs/guide/examples/compose-gallery.md",
+      "pass": true
+    },
+    {
+      "name": "git docs/guide/examples/compose-gallery.md",
+      "pass": true
+    },
+    {
+      "name": "working docs/guide/examples/swiftui-weather.md",
+      "pass": true
+    },
+    {
+      "name": "git docs/guide/examples/swiftui-weather.md",
+      "pass": true
+    },
+    {
+      "name": "working docs/guide/reference/observed-format.md",
+      "pass": true
+    },
+    {
+      "name": "git docs/guide/reference/observed-format.md",
+      "pass": true
+    },
+    {
+      "name": "working docs/guide/reference/reason-codes.md",
+      "pass": true
+    },
+    {
+      "name": "git docs/guide/reference/reason-codes.md",
+      "pass": true
+    },
+    {
+      "name": "working docs/guide/reference/report-json.md",
+      "pass": true
+    },
+    {
+      "name": "git docs/guide/reference/report-json.md",
+      "pass": true
+    },
+    {
+      "name": "working docs/guide/reference/script-format.md",
+      "pass": true
+    },
+    {
+      "name": "git docs/guide/reference/script-format.md",
+      "pass": true
+    },
+    {
+      "name": "working docs/journals/2026-09-24-checkpoint-feasibility.md",
+      "pass": true
+    },
+    {
+      "name": "git docs/journals/2026-09-24-checkpoint-feasibility.md",
+      "pass": true
+    },
+    {
+      "name": "working docs/journals/2026-09-25-scripted-production.md",
+      "pass": true
+    },
+    {
+      "name": "git docs/journals/2026-09-25-scripted-production.md",
+      "pass": true
+    },
+    {
+      "name": "working docs/journals/261007-checked-provider-continuation.md",
+      "pass": true
+    },
+    {
+      "name": "git docs/journals/261007-checked-provider-continuation.md",
+      "pass": true
+    },
+    {
+      "name": "working docs/journals/261007-native-callback-diagnostic.md",
+      "pass": true
+    },
+    {
+      "name": "git docs/journals/261007-native-callback-diagnostic.md",
+      "pass": true
+    },
+    {
+      "name": "working docs/journals/261007-observed-ui-alternative.md",
+      "pass": true
+    },
+    {
+      "name": "git docs/journals/261007-observed-ui-alternative.md",
+      "pass": true
+    },
+    {
+      "name": "working docs/journals/261008-observed-offline-migration.md",
+      "pass": true
+    },
+    {
+      "name": "git docs/journals/261008-observed-offline-migration.md",
+      "pass": true
+    },
+    {
+      "name": "working docs/journals/261008-observed-rollout-wave-one.md",
+      "pass": true
+    },
+    {
+      "name": "git docs/journals/261008-observed-rollout-wave-one.md",
+      "pass": true
+    },
+    {
+      "name": "working docs/journals/261008-observed-ui-live-fix.md",
+      "pass": true
+    },
+    {
+      "name": "git docs/journals/261008-observed-ui-live-fix.md",
+      "pass": true
+    },
+    {
+      "name": "working docs/releases/v0.1.0.md",
+      "pass": true
+    },
+    {
+      "name": "git docs/releases/v0.1.0.md",
+      "pass": true
+    },
+    {
+      "name": "working docs/releases/v1.0.0.md",
+      "pass": true
+    },
+    {
+      "name": "git docs/releases/v1.0.0.md",
+      "pass": true
+    },
+    {
+      "name": "working docs/releases/v1.1.0.md",
+      "pass": true
+    },
+    {
+      "name": "git docs/releases/v1.1.0.md",
+      "pass": true
+    },
+    {
+      "name": "working docs/releases/v1.2.0.md",
+      "pass": true
+    },
+    {
+      "name": "git docs/releases/v1.2.0.md",
+      "pass": true
+    },
+    {
+      "name": "working docs/releases/v1.3.0.md",
+      "pass": true
+    },
+    {
+      "name": "git docs/releases/v1.3.0.md",
+      "pass": true
+    },
+    {
+      "name": "working docs/releases/v1.3.1.md",
+      "pass": true
+    },
+    {
+      "name": "git docs/releases/v1.3.1.md",
+      "pass": true
+    },
+    {
+      "name": "working docs/research/assertion-uncertainty.md",
+      "pass": true
+    },
+    {
+      "name": "git docs/research/assertion-uncertainty.md",
+      "pass": true
+    },
+    {
+      "name": "working docs/research/assets/compose-cmp/00-cold-relaunch-first-read-full.json",
+      "pass": true
+    },
+    {
+      "name": "git docs/research/assets/compose-cmp/00-cold-relaunch-first-read-full.json",
+      "pass": true
+    },
+    {
+      "name": "working docs/research/assets/compose-cmp/00-launch-first-read-full.json",
+      "pass": true
+    },
+    {
+      "name": "git docs/research/assets/compose-cmp/00-launch-first-read-full.json",
+      "pass": true
+    },
+    {
+      "name": "working docs/research/assets/compose-cmp/01-main-modal-perf-idle-compact.json",
+      "pass": true
+    },
+    {
+      "name": "git docs/research/assets/compose-cmp/01-main-modal-perf-idle-compact.json",
+      "pass": true
+    },
+    {
+      "name": "working docs/research/assets/compose-cmp/01-main-modal-perf-idle-full.json",
+      "pass": true
+    },
+    {
+      "name": "git docs/research/assets/compose-cmp/01-main-modal-perf-idle-full.json",
+      "pass": true
+    },
+    {
+      "name": "working docs/research/assets/compose-cmp/02-fullscreen-modal-tab-compact.json",
+      "pass": true
+    },
+    {
+      "name": "git docs/research/assets/compose-cmp/02-fullscreen-modal-tab-compact.json",
+      "pass": true
+    },
+    {
+      "name": "working docs/research/assets/compose-cmp/02-fullscreen-modal-tab-full.json",
+      "pass": true
+    },
+    {
+      "name": "git docs/research/assets/compose-cmp/02-fullscreen-modal-tab-full.json",
+      "pass": true
+    },
+    {
+      "name": "working docs/research/assets/compose-cmp/03-fullscreen-modal-outer-open-compact.json",
+      "pass": true
+    },
+    {
+      "name": "git docs/research/assets/compose-cmp/03-fullscreen-modal-outer-open-compact.json",
+      "pass": true
+    },
+    {
+      "name": "working docs/research/assets/compose-cmp/03-fullscreen-modal-outer-open-full.json",
+      "pass": true
+    },
+    {
+      "name": "git docs/research/assets/compose-cmp/03-fullscreen-modal-outer-open-full.json",
+      "pass": true
+    },
+    {
+      "name": "working docs/research/assets/compose-cmp/04-fullscreen-modal-field-typed-compact.json",
+      "pass": true
+    },
+    {
+      "name": "git docs/research/assets/compose-cmp/04-fullscreen-modal-field-typed-compact.json",
+      "pass": true
+    },
+    {
+      "name": "working docs/research/assets/compose-cmp/04-fullscreen-modal-field-typed-full.json",
+      "pass": true
+    },
+    {
+      "name": "git docs/research/assets/compose-cmp/04-fullscreen-modal-field-typed-full.json",
+      "pass": true
+    },
+    {
+      "name": "working docs/research/assets/compose-cmp/05-fullscreen-modal-field-replaced-compact.json",
+      "pass": true
+    },
+    {
+      "name": "git docs/research/assets/compose-cmp/05-fullscreen-modal-field-replaced-compact.json",
+      "pass": true
+    },
+    {
+      "name": "working docs/research/assets/compose-cmp/05-fullscreen-modal-field-replaced-full.json",
+      "pass": true
+    },
+    {
+      "name": "git docs/research/assets/compose-cmp/05-fullscreen-modal-field-replaced-full.json",
+      "pass": true
+    },
+    {
+      "name": "working docs/research/assets/compose-cmp/06-fullscreen-modal-nested-open-axe-describe-ui.json",
+      "pass": true
+    },
+    {
+      "name": "git docs/research/assets/compose-cmp/06-fullscreen-modal-nested-open-axe-describe-ui.json",
+      "pass": true
+    },
+    {
+      "name": "working docs/research/assets/compose-cmp/06-fullscreen-modal-nested-open-compact.json",
+      "pass": true
+    },
+    {
+      "name": "git docs/research/assets/compose-cmp/06-fullscreen-modal-nested-open-compact.json",
+      "pass": true
+    },
+    {
+      "name": "working docs/research/assets/compose-cmp/06-fullscreen-modal-nested-open-full.json",
+      "pass": true
+    },
+    {
+      "name": "git docs/research/assets/compose-cmp/06-fullscreen-modal-nested-open-full.json",
+      "pass": true
+    },
+    {
+      "name": "working docs/research/assets/compose-cmp/07-number-input-screen-compact.json",
+      "pass": true
+    },
+    {
+      "name": "git docs/research/assets/compose-cmp/07-number-input-screen-compact.json",
+      "pass": true
+    },
+    {
+      "name": "working docs/research/assets/compose-cmp/07-number-input-screen-full.json",
+      "pass": true
+    },
+    {
+      "name": "git docs/research/assets/compose-cmp/07-number-input-screen-full.json",
+      "pass": true
+    },
+    {
+      "name": "working docs/research/assets/compose-cmp/08-number-input-builtin-keypad-open-compact.json",
+      "pass": true
+    },
+    {
+      "name": "git docs/research/assets/compose-cmp/08-number-input-builtin-keypad-open-compact.json",
+      "pass": true
+    },
+    {
+      "name": "working docs/research/assets/compose-cmp/08-number-input-builtin-keypad-open-full.json",
+      "pass": true
+    },
+    {
+      "name": "git docs/research/assets/compose-cmp/08-number-input-builtin-keypad-open-full.json",
+      "pass": true
+    },
+    {
+      "name": "working docs/research/assets/compose-cmp/09-number-input-builtin-keypad-typed-compact.json",
+      "pass": true
+    },
+    {
+      "name": "git docs/research/assets/compose-cmp/09-number-input-builtin-keypad-typed-compact.json",
+      "pass": true
+    },
+    {
+      "name": "working docs/research/assets/compose-cmp/09-number-input-builtin-keypad-typed-full.json",
+      "pass": true
+    },
+    {
+      "name": "git docs/research/assets/compose-cmp/09-number-input-builtin-keypad-typed-full.json",
+      "pass": true
+    },
+    {
+      "name": "working docs/research/assets/compose-cmp/10-tab-row-dragged-left-full.json",
+      "pass": true
+    },
+    {
+      "name": "git docs/research/assets/compose-cmp/10-tab-row-dragged-left-full.json",
+      "pass": true
+    },
+    {
+      "name": "working docs/research/assets/compose-cmp/11-ofnumpad-screen-compact.json",
+      "pass": true
+    },
+    {
+      "name": "git docs/research/assets/compose-cmp/11-ofnumpad-screen-compact.json",
+      "pass": true
+    },
+    {
+      "name": "working docs/research/assets/compose-cmp/11-ofnumpad-screen-full.json",
+      "pass": true
+    },
+    {
+      "name": "git docs/research/assets/compose-cmp/11-ofnumpad-screen-full.json",
+      "pass": true
+    },
+    {
+      "name": "working docs/research/assets/compose-cmp/12-ofnumpad-keypad-open-compact.json",
+      "pass": true
+    },
+    {
+      "name": "git docs/research/assets/compose-cmp/12-ofnumpad-keypad-open-compact.json",
+      "pass": true
+    },
+    {
+      "name": "working docs/research/assets/compose-cmp/12-ofnumpad-keypad-open-full.json",
+      "pass": true
+    },
+    {
+      "name": "git docs/research/assets/compose-cmp/12-ofnumpad-keypad-open-full.json",
+      "pass": true
+    },
+    {
+      "name": "working docs/research/assets/compose-cmp/13-ofnumpad-keypad-typed-compact.json",
+      "pass": true
+    },
+    {
+      "name": "git docs/research/assets/compose-cmp/13-ofnumpad-keypad-typed-compact.json",
+      "pass": true
+    },
+    {
+      "name": "working docs/research/assets/compose-cmp/13-ofnumpad-keypad-typed-full.json",
+      "pass": true
+    },
+    {
+      "name": "git docs/research/assets/compose-cmp/13-ofnumpad-keypad-typed-full.json",
+      "pass": true
+    },
+    {
+      "name": "working docs/research/assets/compose-cmp/14-ofnumpad-usd-type-text-replace-compact.json",
+      "pass": true
+    },
+    {
+      "name": "git docs/research/assets/compose-cmp/14-ofnumpad-usd-type-text-replace-compact.json",
+      "pass": true
+    },
+    {
+      "name": "working docs/research/assets/compose-cmp/14-ofnumpad-usd-type-text-replace-full.json",
+      "pass": true
+    },
+    {
+      "name": "git docs/research/assets/compose-cmp/14-ofnumpad-usd-type-text-replace-full.json",
+      "pass": true
+    },
+    {
+      "name": "working docs/research/assets/compose-cmp/lazy-modal-after-jump-to-last-full.json",
+      "pass": true
+    },
+    {
+      "name": "git docs/research/assets/compose-cmp/lazy-modal-after-jump-to-last-full.json",
+      "pass": true
+    },
+    {
+      "name": "working docs/research/assets/compose-cmp/lazy-modal-axe-describe-ui.json",
+      "pass": true
+    },
+    {
+      "name": "git docs/research/assets/compose-cmp/lazy-modal-axe-describe-ui.json",
+      "pass": true
+    },
+    {
+      "name": "working docs/research/assets/compose-cmp/lazy-modal-index-only-scrolled-compact.json",
+      "pass": true
+    },
+    {
+      "name": "git docs/research/assets/compose-cmp/lazy-modal-index-only-scrolled-compact.json",
+      "pass": true
+    },
+    {
+      "name": "working docs/research/assets/compose-cmp/lazy-modal-top-compact.json",
+      "pass": true
+    },
+    {
+      "name": "git docs/research/assets/compose-cmp/lazy-modal-top-compact.json",
+      "pass": true
+    },
+    {
+      "name": "working docs/research/assets/compose-cmp/lazy-modal-top-full.json",
+      "pass": true
+    },
+    {
+      "name": "git docs/research/assets/compose-cmp/lazy-modal-top-full.json",
+      "pass": true
+    },
+    {
+      "name": "working docs/research/assets/snapshot-sample-verbose.json",
+      "pass": true
+    },
+    {
+      "name": "git docs/research/assets/snapshot-sample-verbose.json",
+      "pass": true
+    },
+    {
+      "name": "working docs/research/assets/snapshot-sample.txt",
+      "pass": true
+    },
+    {
+      "name": "git docs/research/assets/snapshot-sample.txt",
+      "pass": true
+    },
+    {
+      "name": "working docs/research/assets/watch-scripted-d03-evidence.json",
+      "pass": true
+    },
+    {
+      "name": "git docs/research/assets/watch-scripted-d03-evidence.json",
+      "pass": true
+    },
+    {
+      "name": "working docs/research/assets/watch-scripted-d03-final.png",
+      "pass": true
+    },
+    {
+      "name": "git docs/research/assets/watch-scripted-d03-final.png",
+      "pass": true
+    },
+    {
+      "name": "working docs/research/assets/watch-scripted-d03-full.png",
+      "pass": true
+    },
+    {
+      "name": "git docs/research/assets/watch-scripted-d03-full.png",
+      "pass": true
+    },
+    {
+      "name": "working docs/research/assets/watch-scripted-d03-narrow.png",
+      "pass": true
+    },
+    {
+      "name": "git docs/research/assets/watch-scripted-d03-narrow.png",
+      "pass": true
+    },
+    {
+      "name": "working docs/research/assets/watch-view-fixture.png",
+      "pass": true
+    },
+    {
+      "name": "git docs/research/assets/watch-view-fixture.png",
+      "pass": true
+    },
+    {
+      "name": "working docs/research/bridge-latency.md",
+      "pass": true
+    },
+    {
+      "name": "git docs/research/bridge-latency.md",
+      "pass": true
+    },
+    {
+      "name": "working docs/research/claude-and-jev-integration.md",
+      "pass": true
+    },
+    {
+      "name": "git docs/research/claude-and-jev-integration.md",
+      "pass": true
+    },
+    {
+      "name": "working docs/research/compose-cmp-capture.md",
+      "pass": true
+    },
+    {
+      "name": "git docs/research/compose-cmp-capture.md",
+      "pass": true
+    },
+    {
+      "name": "working docs/research/compose-multiplatform-ios.md",
+      "pass": true
+    },
+    {
+      "name": "git docs/research/compose-multiplatform-ios.md",
+      "pass": true
+    },
+    {
+      "name": "working docs/research/human-watch-panel.md",
+      "pass": true
+    },
+    {
+      "name": "git docs/research/human-watch-panel.md",
+      "pass": true
+    },
+    {
+      "name": "working docs/research/jev-model-and-api.md",
+      "pass": true
+    },
+    {
+      "name": "git docs/research/jev-model-and-api.md",
+      "pass": true
+    },
+    {
+      "name": "working docs/research/mobilebuildmcp-simulator-and-device.md",
+      "pass": true
+    },
+    {
+      "name": "git docs/research/mobilebuildmcp-simulator-and-device.md",
+      "pass": true
+    },
+    {
+      "name": "working docs/research/mobilecli-dependency.md",
+      "pass": true
+    },
+    {
+      "name": "git docs/research/mobilecli-dependency.md",
+      "pass": true
+    },
+    {
+      "name": "working docs/research/physical-iphone-device-layer.md",
+      "pass": true
+    },
+    {
+      "name": "git docs/research/physical-iphone-device-layer.md",
+      "pass": true
+    },
+    {
+      "name": "working docs/research/scripted-benchmarks.md",
+      "pass": true
+    },
+    {
+      "name": "git docs/research/scripted-benchmarks.md",
+      "pass": true
+    },
+    {
+      "name": "working package-lock.json",
+      "pass": true
+    },
+    {
+      "name": "git package-lock.json",
+      "pass": true
+    },
+    {
+      "name": "working package.json",
+      "pass": true
+    },
+    {
+      "name": "git package.json",
+      "pass": true
+    },
+    {
+      "name": "working scripts/build-plugin.d.mts",
+      "pass": true
+    },
+    {
+      "name": "git scripts/build-plugin.d.mts",
+      "pass": true
+    },
+    {
+      "name": "working scripts/build-plugin.mjs",
+      "pass": true
+    },
+    {
+      "name": "git scripts/build-plugin.mjs",
+      "pass": true
+    },
+    {
+      "name": "working scripts/render-route.py",
+      "pass": true
+    },
+    {
+      "name": "git scripts/render-route.py",
+      "pass": true
+    },
+    {
+      "name": "working scripts/summarize-run.mjs",
+      "pass": true
+    },
+    {
+      "name": "git scripts/summarize-run.mjs",
+      "pass": true
+    },
+    {
+      "name": "working skills/test-android/SKILL.md",
+      "pass": true
+    },
+    {
+      "name": "git skills/test-android/SKILL.md",
+      "pass": true
+    },
+    {
+      "name": "working skills/test-ios/SKILL.md",
+      "pass": true
+    },
+    {
+      "name": "git skills/test-ios/SKILL.md",
+      "pass": true
+    },
+    {
+      "name": "working src/capture.ts",
+      "pass": true
+    },
+    {
+      "name": "git src/capture.ts",
+      "pass": true
+    },
+    {
+      "name": "working src/cli.ts",
+      "pass": true
+    },
+    {
+      "name": "git src/cli.ts",
+      "pass": true
+    },
+    {
+      "name": "working src/contracts/index.ts",
+      "pass": true
+    },
+    {
+      "name": "git src/contracts/index.ts",
+      "pass": true
+    },
+    {
+      "name": "working src/device/admission-allocation.ts",
+      "pass": true
+    },
+    {
+      "name": "git src/device/admission-allocation.ts",
+      "pass": true
+    },
+    {
+      "name": "working src/device/admission-maintenance.ts",
+      "pass": true
+    },
+    {
+      "name": "git src/device/admission-maintenance.ts",
+      "pass": true
+    },
+    {
+      "name": "working src/device/admission-migration.ts",
+      "pass": true
+    },
+    {
+      "name": "git src/device/admission-migration.ts",
+      "pass": true
+    },
+    {
+      "name": "working src/device/admission-sqlite.ts",
+      "pass": true
+    },
+    {
+      "name": "git src/device/admission-sqlite.ts",
+      "pass": true
+    },
+    {
+      "name": "working src/device/admission.ts",
+      "pass": true
+    },
+    {
+      "name": "git src/device/admission.ts",
+      "pass": true
+    },
+    {
+      "name": "working src/device/android/adb.ts",
+      "pass": true
+    },
+    {
+      "name": "git src/device/android/adb.ts",
+      "pass": true
+    },
+    {
+      "name": "working src/device/android/agent-client.ts",
+      "pass": true
+    },
+    {
+      "name": "git src/device/android/agent-client.ts",
+      "pass": true
+    },
+    {
+      "name": "working src/device/android/agent-supply.ts",
+      "pass": true
+    },
+    {
+      "name": "git src/device/android/agent-supply.ts",
+      "pass": true
+    },
+    {
+      "name": "working src/device/android/driver.ts",
+      "pass": true
+    },
+    {
+      "name": "git src/device/android/driver.ts",
+      "pass": true
+    },
+    {
+      "name": "working src/device/android/exit-watch.ts",
+      "pass": true
+    },
+    {
+      "name": "git src/device/android/exit-watch.ts",
+      "pass": true
+    },
+    {
+      "name": "working src/device/android/ledger.ts",
+      "pass": true
+    },
+    {
+      "name": "git src/device/android/ledger.ts",
+      "pass": true
+    },
+    {
+      "name": "working src/device/android/logcat.ts",
+      "pass": true
+    },
+    {
+      "name": "git src/device/android/logcat.ts",
+      "pass": true
+    },
+    {
+      "name": "working src/device/android/mapping.ts",
+      "pass": true
+    },
+    {
+      "name": "git src/device/android/mapping.ts",
+      "pass": true
+    },
+    {
+      "name": "working src/device/android/settle.ts",
+      "pass": true
+    },
+    {
+      "name": "git src/device/android/settle.ts",
+      "pass": true
+    },
+    {
+      "name": "working src/device/android/threadtime.ts",
+      "pass": true
+    },
+    {
+      "name": "git src/device/android/threadtime.ts",
+      "pass": true
+    },
+    {
+      "name": "working src/device/android/tools.ts",
+      "pass": true
+    },
+    {
+      "name": "git src/device/android/tools.ts",
+      "pass": true
+    },
+    {
+      "name": "working src/device/attach.ts",
+      "pass": true
+    },
+    {
+      "name": "git src/device/attach.ts",
+      "pass": true
+    },
+    {
+      "name": "working src/device/factory.ts",
+      "pass": true
+    },
+    {
+      "name": "git src/device/factory.ts",
+      "pass": true
+    },
+    {
+      "name": "working src/device/image.ts",
+      "pass": true
+    },
+    {
+      "name": "git src/device/image.ts",
+      "pass": true
+    },
+    {
+      "name": "working src/device/index.ts",
+      "pass": true
+    },
+    {
+      "name": "git src/device/index.ts",
+      "pass": true
+    },
+    {
+      "name": "working src/device/lease.ts",
+      "pass": true
+    },
+    {
+      "name": "git src/device/lease.ts",
+      "pass": true
+    },
+    {
+      "name": "working src/device/logs.ts",
+      "pass": true
+    },
+    {
+      "name": "git src/device/logs.ts",
+      "pass": true
+    },
+    {
+      "name": "working src/driven/candidates.ts",
+      "pass": true
+    },
+    {
+      "name": "git src/driven/candidates.ts",
+      "pass": true
+    },
+    {
+      "name": "working src/driven/decide.ts",
+      "pass": true
+    },
+    {
+      "name": "git src/driven/decide.ts",
+      "pass": true
+    },
+    {
+      "name": "working src/driven/handback.ts",
+      "pass": true
+    },
+    {
+      "name": "git src/driven/handback.ts",
+      "pass": true
+    },
+    {
+      "name": "working src/driven/marker.ts",
+      "pass": true
+    },
+    {
+      "name": "git src/driven/marker.ts",
+      "pass": true
+    },
+    {
+      "name": "working src/driven/policy.ts",
+      "pass": true
+    },
+    {
+      "name": "git src/driven/policy.ts",
+      "pass": true
+    },
+    {
+      "name": "working src/driven/project.ts",
+      "pass": true
+    },
+    {
+      "name": "git src/driven/project.ts",
+      "pass": true
+    },
+    {
+      "name": "working src/driven/step.ts",
+      "pass": true
+    },
+    {
+      "name": "git src/driven/step.ts",
+      "pass": true
+    },
+    {
+      "name": "working src/driven/vocabulary.ts",
+      "pass": true
+    },
+    {
+      "name": "git src/driven/vocabulary.ts",
+      "pass": true
+    },
+    {
+      "name": "working src/exit-codes.ts",
+      "pass": true
+    },
+    {
+      "name": "git src/exit-codes.ts",
+      "pass": true
+    },
+    {
+      "name": "working src/experimental/observed-journal.ts",
+      "pass": true
+    },
+    {
+      "name": "git src/experimental/observed-journal.ts",
+      "pass": true
+    },
+    {
+      "name": "working src/experimental/observed-run.ts",
+      "pass": true
+    },
+    {
+      "name": "git src/experimental/observed-run.ts",
+      "pass": true
+    },
+    {
+      "name": "working src/experimental/observed-tap.ts",
+      "pass": true
+    },
+    {
+      "name": "git src/experimental/observed-tap.ts",
+      "pass": true
+    },
+    {
+      "name": "working src/log/index.ts",
+      "pass": true
+    },
+    {
+      "name": "git src/log/index.ts",
+      "pass": true
+    },
+    {
+      "name": "working src/logpane/attach.ts",
+      "pass": true
+    },
+    {
+      "name": "git src/logpane/attach.ts",
+      "pass": true
+    },
+    {
+      "name": "working src/logpane/format.ts",
+      "pass": true
+    },
+    {
+      "name": "git src/logpane/format.ts",
+      "pass": true
+    },
+    {
+      "name": "working src/logpane/stream.ts",
+      "pass": true
+    },
+    {
+      "name": "git src/logpane/stream.ts",
+      "pass": true
+    },
+    {
+      "name": "working src/logpane/window.ts",
+      "pass": true
+    },
+    {
+      "name": "git src/logpane/window.ts",
+      "pass": true
+    },
+    {
+      "name": "working src/mcp/index.ts",
+      "pass": true
+    },
+    {
+      "name": "git src/mcp/index.ts",
+      "pass": true
+    },
+    {
+      "name": "working src/mcp/observed.ts",
+      "pass": true
+    },
+    {
+      "name": "git src/mcp/observed.ts",
+      "pass": true
+    },
+    {
+      "name": "working src/observed/allocation-schema.ts",
+      "pass": true
+    },
+    {
+      "name": "git src/observed/allocation-schema.ts",
+      "pass": true
+    },
+    {
+      "name": "working src/observed/allocation.ts",
+      "pass": true
+    },
+    {
+      "name": "git src/observed/allocation.ts",
+      "pass": true
+    },
+    {
+      "name": "working src/observed/artifact.ts",
+      "pass": true
+    },
+    {
+      "name": "git src/observed/artifact.ts",
+      "pass": true
+    },
+    {
+      "name": "working src/observed/cli.ts",
+      "pass": true
+    },
+    {
+      "name": "git src/observed/cli.ts",
+      "pass": true
+    },
+    {
+      "name": "working src/observed/create-source.ts",
+      "pass": true
+    },
+    {
+      "name": "git src/observed/create-source.ts",
+      "pass": true
+    },
+    {
+      "name": "working src/observed/evidence.ts",
+      "pass": true
+    },
+    {
+      "name": "git src/observed/evidence.ts",
+      "pass": true
+    },
+    {
+      "name": "working src/observed/installed-plist.ts",
+      "pass": true
+    },
+    {
+      "name": "git src/observed/installed-plist.ts",
+      "pass": true
+    },
+    {
+      "name": "working src/observed/report.ts",
+      "pass": true
+    },
+    {
+      "name": "git src/observed/report.ts",
+      "pass": true
+    },
+    {
+      "name": "working src/observed/schema.ts",
+      "pass": true
+    },
+    {
+      "name": "git src/observed/schema.ts",
+      "pass": true
+    },
+    {
+      "name": "working src/observed/service.ts",
+      "pass": true
+    },
+    {
+      "name": "git src/observed/service.ts",
+      "pass": true
+    },
+    {
+      "name": "working src/observed/supplied-source.ts",
+      "pass": true
+    },
+    {
+      "name": "git src/observed/supplied-source.ts",
+      "pass": true
+    },
+    {
+      "name": "working src/process.ts",
+      "pass": true
+    },
+    {
+      "name": "git src/process.ts",
+      "pass": true
+    },
+    {
+      "name": "working src/scripted/contracts.ts",
+      "pass": true
+    },
+    {
+      "name": "git src/scripted/contracts.ts",
+      "pass": true
+    },
+    {
+      "name": "working src/scripted/jev.ts",
+      "pass": true
+    },
+    {
+      "name": "git src/scripted/jev.ts",
+      "pass": true
+    },
+    {
+      "name": "working src/scripted/observe.ts",
+      "pass": true
+    },
+    {
+      "name": "git src/scripted/observe.ts",
+      "pass": true
+    },
+    {
+      "name": "working src/scripted/report-json.ts",
+      "pass": true
+    },
+    {
+      "name": "git src/scripted/report-json.ts",
+      "pass": true
+    },
+    {
+      "name": "working src/scripted/report.ts",
+      "pass": true
+    },
+    {
+      "name": "git src/scripted/report.ts",
+      "pass": true
+    },
+    {
+      "name": "working src/scripted/run.ts",
+      "pass": true
+    },
+    {
+      "name": "git src/scripted/run.ts",
+      "pass": true
+    },
+    {
+      "name": "working src/scripted/schema.ts",
+      "pass": true
+    },
+    {
+      "name": "git src/scripted/schema.ts",
+      "pass": true
+    },
+    {
+      "name": "working src/scripted/select.ts",
+      "pass": true
+    },
+    {
+      "name": "git src/scripted/select.ts",
+      "pass": true
+    },
+    {
+      "name": "working src/scripted/vocabulary.ts",
+      "pass": true
+    },
+    {
+      "name": "git src/scripted/vocabulary.ts",
+      "pass": true
+    },
+    {
+      "name": "working src/service.ts",
+      "pass": true
+    },
+    {
+      "name": "git src/service.ts",
+      "pass": true
+    },
+    {
+      "name": "working src/version.ts",
+      "pass": true
+    },
+    {
+      "name": "git src/version.ts",
+      "pass": true
+    },
+    {
+      "name": "working src/watch/index.ts",
+      "pass": true
+    },
+    {
+      "name": "git src/watch/index.ts",
+      "pass": true
+    },
+    {
+      "name": "working tests/admission-allocation.test.ts",
+      "pass": true
+    },
+    {
+      "name": "git tests/admission-allocation.test.ts",
+      "pass": true
+    },
+    {
+      "name": "working tests/admission-core.test.ts",
+      "pass": true
+    },
+    {
+      "name": "git tests/admission-core.test.ts",
+      "pass": true
+    },
+    {
+      "name": "working tests/admission-driver.test.ts",
+      "pass": true
+    },
+    {
+      "name": "git tests/admission-driver.test.ts",
+      "pass": true
+    },
+    {
+      "name": "working tests/admission-maintenance-entry.test.ts",
+      "pass": true
+    },
+    {
+      "name": "git tests/admission-maintenance-entry.test.ts",
+      "pass": true
+    },
+    {
+      "name": "working tests/admission-migration.test.ts",
+      "pass": true
+    },
+    {
+      "name": "git tests/admission-migration.test.ts",
+      "pass": true
+    },
+    {
+      "name": "working tests/android-adb.test.ts",
+      "pass": true
+    },
+    {
+      "name": "git tests/android-adb.test.ts",
+      "pass": true
+    },
+    {
+      "name": "working tests/android-agent-client.test.ts",
+      "pass": true
+    },
+    {
+      "name": "git tests/android-agent-client.test.ts",
+      "pass": true
+    },
+    {
+      "name": "working tests/android-agent-supply.test.ts",
+      "pass": true
+    },
+    {
+      "name": "git tests/android-agent-supply.test.ts",
+      "pass": true
+    },
+    {
+      "name": "working tests/android-capture.test.ts",
+      "pass": true
+    },
+    {
+      "name": "git tests/android-capture.test.ts",
+      "pass": true
+    },
+    {
+      "name": "working tests/android-cli-signal.test.ts",
+      "pass": true
+    },
+    {
+      "name": "git tests/android-cli-signal.test.ts",
+      "pass": true
+    },
+    {
+      "name": "working tests/android-device.test.ts",
+      "pass": true
+    },
+    {
+      "name": "git tests/android-device.test.ts",
+      "pass": true
+    },
+    {
+      "name": "working tests/android-driven-actions.test.ts",
+      "pass": true
+    },
+    {
+      "name": "git tests/android-driven-actions.test.ts",
+      "pass": true
+    },
+    {
+      "name": "working tests/android-driver.test.ts",
+      "pass": true
+    },
+    {
+      "name": "git tests/android-driver.test.ts",
+      "pass": true
+    },
+    {
+      "name": "working tests/android-evidence-scripts.test.ts",
+      "pass": true
+    },
+    {
+      "name": "git tests/android-evidence-scripts.test.ts",
+      "pass": true
+    },
+    {
+      "name": "working tests/android-exit-watch.test.ts",
+      "pass": true
+    },
+    {
+      "name": "git tests/android-exit-watch.test.ts",
+      "pass": true
+    },
+    {
+      "name": "working tests/android-ledger.test.ts",
+      "pass": true
+    },
+    {
+      "name": "git tests/android-ledger.test.ts",
+      "pass": true
+    },
+    {
+      "name": "working tests/android-logcat-line.test.ts",
+      "pass": true
+    },
+    {
+      "name": "git tests/android-logcat-line.test.ts",
+      "pass": true
+    },
+    {
+      "name": "working tests/android-logcat.test.ts",
+      "pass": true
+    },
+    {
+      "name": "git tests/android-logcat.test.ts",
+      "pass": true
+    },
+    {
+      "name": "working tests/android-mapping.test.ts",
+      "pass": true
+    },
+    {
+      "name": "git tests/android-mapping.test.ts",
+      "pass": true
+    },
+    {
+      "name": "working tests/android-settle.test.ts",
+      "pass": true
+    },
+    {
+      "name": "git tests/android-settle.test.ts",
+      "pass": true
+    },
+    {
+      "name": "working tests/android-tools.test.ts",
+      "pass": true
+    },
+    {
+      "name": "git tests/android-tools.test.ts",
+      "pass": true
+    },
+    {
+      "name": "working tests/contract.test.ts",
+      "pass": true
+    },
+    {
+      "name": "git tests/contract.test.ts",
+      "pass": true
+    },
+    {
+      "name": "working tests/device-driven-actions.test.ts",
+      "pass": true
+    },
+    {
+      "name": "git tests/device-driven-actions.test.ts",
+      "pass": true
+    },
+    {
+      "name": "working tests/device-factory.test.ts",
+      "pass": true
+    },
+    {
+      "name": "git tests/device-factory.test.ts",
+      "pass": true
+    },
+    {
+      "name": "working tests/device-lease.test.ts",
+      "pass": true
+    },
+    {
+      "name": "git tests/device-lease.test.ts",
+      "pass": true
+    },
+    {
+      "name": "working tests/device.test.ts",
+      "pass": true
+    },
+    {
+      "name": "git tests/device.test.ts",
+      "pass": true
+    },
+    {
+      "name": "working tests/docs.test.ts",
+      "pass": true
+    },
+    {
+      "name": "git tests/docs.test.ts",
+      "pass": true
+    },
+    {
+      "name": "working tests/driven-android-pause.test.ts",
+      "pass": true
+    },
+    {
+      "name": "git tests/driven-android-pause.test.ts",
+      "pass": true
+    },
+    {
+      "name": "working tests/driven-candidates.test.ts",
+      "pass": true
+    },
+    {
+      "name": "git tests/driven-candidates.test.ts",
+      "pass": true
+    },
+    {
+      "name": "working tests/driven-decide.test.ts",
+      "pass": true
+    },
+    {
+      "name": "git tests/driven-decide.test.ts",
+      "pass": true
+    },
+    {
+      "name": "working tests/driven-docs.test.ts",
+      "pass": true
+    },
+    {
+      "name": "git tests/driven-docs.test.ts",
+      "pass": true
+    },
+    {
+      "name": "working tests/driven-handback.test.ts",
+      "pass": true
+    },
+    {
+      "name": "git tests/driven-handback.test.ts",
+      "pass": true
+    },
+    {
+      "name": "working tests/driven-late-screen.test.ts",
+      "pass": true
+    },
+    {
+      "name": "git tests/driven-late-screen.test.ts",
+      "pass": true
+    },
+    {
+      "name": "working tests/driven-live-check-fixes.test.ts",
+      "pass": true
+    },
+    {
+      "name": "git tests/driven-live-check-fixes.test.ts",
+      "pass": true
+    },
+    {
+      "name": "working tests/driven-local-and-preflight.test.ts",
+      "pass": true
+    },
+    {
+      "name": "git tests/driven-local-and-preflight.test.ts",
+      "pass": true
+    },
+    {
+      "name": "working tests/driven-masking-and-preflight-log.test.ts",
+      "pass": true
+    },
+    {
+      "name": "git tests/driven-masking-and-preflight-log.test.ts",
+      "pass": true
+    },
+    {
+      "name": "working tests/driven-opt-in.test.ts",
+      "pass": true
+    },
+    {
+      "name": "git tests/driven-opt-in.test.ts",
+      "pass": true
+    },
+    {
+      "name": "working tests/driven-policy.test.ts",
+      "pass": true
+    },
+    {
+      "name": "git tests/driven-policy.test.ts",
+      "pass": true
+    },
+    {
+      "name": "working tests/driven-privacy-and-pause.test.ts",
+      "pass": true
+    },
+    {
+      "name": "git tests/driven-privacy-and-pause.test.ts",
+      "pass": true
+    },
+    {
+      "name": "working tests/driven-project.test.ts",
+      "pass": true
+    },
+    {
+      "name": "git tests/driven-project.test.ts",
+      "pass": true
+    },
+    {
+      "name": "working tests/driven-review-round4.test.ts",
+      "pass": true
+    },
+    {
+      "name": "git tests/driven-review-round4.test.ts",
+      "pass": true
+    },
+    {
+      "name": "working tests/driven-safety.test.ts",
+      "pass": true
+    },
+    {
+      "name": "git tests/driven-safety.test.ts",
+      "pass": true
+    },
+    {
+      "name": "working tests/driven-step.test.ts",
+      "pass": true
+    },
+    {
+      "name": "git tests/driven-step.test.ts",
+      "pass": true
+    },
+    {
+      "name": "working tests/driven-unforgeable-marker.test.ts",
+      "pass": true
+    },
+    {
+      "name": "git tests/driven-unforgeable-marker.test.ts",
+      "pass": true
+    },
+    {
+      "name": "working tests/driven-wall-time.test.ts",
+      "pass": true
+    },
+    {
+      "name": "git tests/driven-wall-time.test.ts",
+      "pass": true
+    },
+    {
+      "name": "working tests/evidence.test.ts",
+      "pass": true
+    },
+    {
+      "name": "git tests/evidence.test.ts",
+      "pass": true
+    },
+    {
+      "name": "working tests/feasibility.test.ts",
+      "pass": true
+    },
+    {
+      "name": "git tests/feasibility.test.ts",
+      "pass": true
+    },
+    {
+      "name": "working tests/fixtures/adb-spawn.ts",
+      "pass": true
+    },
+    {
+      "name": "git tests/fixtures/adb-spawn.ts",
+      "pass": true
+    },
+    {
+      "name": "working tests/fixtures/admission-core-worker.ts",
+      "pass": true
+    },
+    {
+      "name": "git tests/fixtures/admission-core-worker.ts",
+      "pass": true
+    },
+    {
+      "name": "working tests/fixtures/admission-migration/crash-worker.ts",
+      "pass": true
+    },
+    {
+      "name": "git tests/fixtures/admission-migration/crash-worker.ts",
+      "pass": true
+    },
+    {
+      "name": "working tests/fixtures/allocation-store-worker.ts",
+      "pass": true
+    },
+    {
+      "name": "git tests/fixtures/allocation-store-worker.ts",
+      "pass": true
+    },
+    {
+      "name": "working tests/fixtures/android-device.ts",
+      "pass": true
+    },
+    {
+      "name": "git tests/fixtures/android-device.ts",
+      "pass": true
+    },
+    {
+      "name": "working tests/fixtures/android-script.ts",
+      "pass": true
+    },
+    {
+      "name": "git tests/fixtures/android-script.ts",
+      "pass": true
+    },
+    {
+      "name": "working tests/fixtures/android-tools.ts",
+      "pass": true
+    },
+    {
+      "name": "git tests/fixtures/android-tools.ts",
+      "pass": true
+    },
+    {
+      "name": "working tests/fixtures/android/adb/README.md",
+      "pass": true
+    },
+    {
+      "name": "git tests/fixtures/android/adb/README.md",
+      "pass": true
+    },
+    {
+      "name": "working tests/fixtures/android/adb/api31/am-start-W-extras.txt",
+      "pass": true
+    },
+    {
+      "name": "git tests/fixtures/android/adb/api31/am-start-W-extras.txt",
+      "pass": true
+    },
+    {
+      "name": "working tests/fixtures/android/adb/api31/am-start-W-no-activity.txt",
+      "pass": true
+    },
+    {
+      "name": "git tests/fixtures/android/adb/api31/am-start-W-no-activity.txt",
+      "pass": true
+    },
+    {
+      "name": "working tests/fixtures/android/adb/api31/devices-l.txt",
+      "pass": true
+    },
+    {
+      "name": "git tests/fixtures/android/adb/api31/devices-l.txt",
+      "pass": true
+    },
+    {
+      "name": "working tests/fixtures/android/adb/api31/environ-foreign-agent.bin",
+      "pass": true
+    },
+    {
+      "name": "git tests/fixtures/android/adb/api31/environ-foreign-agent.bin",
+      "pass": true
+    },
+    {
+      "name": "working tests/fixtures/android/adb/api31/environ-own-agent.bin",
+      "pass": true
+    },
+    {
+      "name": "git tests/fixtures/android/adb/api31/environ-own-agent.bin",
+      "pass": true
+    },
+    {
+      "name": "working tests/fixtures/android/adb/api31/forward-list-empty.txt",
+      "pass": true
+    },
+    {
+      "name": "git tests/fixtures/android/adb/api31/forward-list-empty.txt",
+      "pass": true
+    },
+    {
+      "name": "working tests/fixtures/android/adb/api31/forward-list-own.txt",
+      "pass": true
+    },
+    {
+      "name": "git tests/fixtures/android/adb/api31/forward-list-own.txt",
+      "pass": true
+    },
+    {
+      "name": "working tests/fixtures/android/adb/api31/getprop-ro.boot.qemu.avd_name.txt",
+      "pass": true
+    },
+    {
+      "name": "git tests/fixtures/android/adb/api31/getprop-ro.boot.qemu.avd_name.txt",
+      "pass": true
+    },
+    {
+      "name": "working tests/fixtures/android/adb/api31/getprop-ro.build.version.sdk.txt",
+      "pass": true
+    },
+    {
+      "name": "git tests/fixtures/android/adb/api31/getprop-ro.build.version.sdk.txt",
+      "pass": true
+    },
+    {
+      "name": "working tests/fixtures/android/adb/api31/getprop-sys.boot_completed.txt",
+      "pass": true
+    },
+    {
+      "name": "git tests/fixtures/android/adb/api31/getprop-sys.boot_completed.txt",
+      "pass": true
+    },
+    {
+      "name": "working tests/fixtures/android/adb/api31/pm-path-not-installed.txt",
+      "pass": true
+    },
+    {
+      "name": "git tests/fixtures/android/adb/api31/pm-path-not-installed.txt",
+      "pass": true
+    },
+    {
+      "name": "working tests/fixtures/android/adb/api31/pm-path-settings.txt",
+      "pass": true
+    },
+    {
+      "name": "git tests/fixtures/android/adb/api31/pm-path-settings.txt",
+      "pass": true
+    },
+    {
+      "name": "working tests/fixtures/android/adb/api31/ps-foreign-agent.txt",
+      "pass": true
+    },
+    {
+      "name": "git tests/fixtures/android/adb/api31/ps-foreign-agent.txt",
+      "pass": true
+    },
+    {
+      "name": "working tests/fixtures/android/adb/api31/ps-no-agent.txt",
+      "pass": true
+    },
+    {
+      "name": "git tests/fixtures/android/adb/api31/ps-no-agent.txt",
+      "pass": true
+    },
+    {
+      "name": "working tests/fixtures/android/adb/api31/ps-own-agent.txt",
+      "pass": true
+    },
+    {
+      "name": "git tests/fixtures/android/adb/api31/ps-own-agent.txt",
+      "pass": true
+    },
+    {
+      "name": "working tests/fixtures/android/adb/api31/resolve-launcher-actionsprobe.txt",
+      "pass": true
+    },
+    {
+      "name": "git tests/fixtures/android/adb/api31/resolve-launcher-actionsprobe.txt",
+      "pass": true
+    },
+    {
+      "name": "working tests/fixtures/android/adb/api31/resolve-launcher-none.txt",
+      "pass": true
+    },
+    {
+      "name": "git tests/fixtures/android/adb/api31/resolve-launcher-none.txt",
+      "pass": true
+    },
+    {
+      "name": "working tests/fixtures/android/adb/api31/resolve-launcher-settings.txt",
+      "pass": true
+    },
+    {
+      "name": "git tests/fixtures/android/adb/api31/resolve-launcher-settings.txt",
+      "pass": true
+    },
+    {
+      "name": "working tests/fixtures/android/adb/api31/window-policy-locked.derived.txt",
+      "pass": true
+    },
+    {
+      "name": "git tests/fixtures/android/adb/api31/window-policy-locked.derived.txt",
+      "pass": true
+    },
+    {
+      "name": "working tests/fixtures/android/adb/api31/window-policy-off.txt",
+      "pass": true
+    },
+    {
+      "name": "git tests/fixtures/android/adb/api31/window-policy-off.txt",
+      "pass": true
+    },
+    {
+      "name": "working tests/fixtures/android/adb/api31/window-policy-on.txt",
+      "pass": true
+    },
+    {
+      "name": "git tests/fixtures/android/adb/api31/window-policy-on.txt",
+      "pass": true
+    },
+    {
+      "name": "working tests/fixtures/android/adb/api31/window-policy-woken.txt",
+      "pass": true
+    },
+    {
+      "name": "git tests/fixtures/android/adb/api31/window-policy-woken.txt",
+      "pass": true
+    },
+    {
+      "name": "working tests/fixtures/android/adb/api36/am-start-W-extras.txt",
+      "pass": true
+    },
+    {
+      "name": "git tests/fixtures/android/adb/api36/am-start-W-extras.txt",
+      "pass": true
+    },
+    {
+      "name": "working tests/fixtures/android/adb/api36/am-start-W-no-activity.txt",
+      "pass": true
+    },
+    {
+      "name": "git tests/fixtures/android/adb/api36/am-start-W-no-activity.txt",
+      "pass": true
+    },
+    {
+      "name": "working tests/fixtures/android/adb/api36/devices-l.txt",
+      "pass": true
+    },
+    {
+      "name": "git tests/fixtures/android/adb/api36/devices-l.txt",
+      "pass": true
+    },
+    {
+      "name": "working tests/fixtures/android/adb/api36/environ-foreign-agent.bin",
+      "pass": true
+    },
+    {
+      "name": "git tests/fixtures/android/adb/api36/environ-foreign-agent.bin",
+      "pass": true
+    },
+    {
+      "name": "working tests/fixtures/android/adb/api36/environ-gone.stderr.txt",
+      "pass": true
+    },
+    {
+      "name": "git tests/fixtures/android/adb/api36/environ-gone.stderr.txt",
+      "pass": true
+    },
+    {
+      "name": "working tests/fixtures/android/adb/api36/environ-own-agent.bin",
+      "pass": true
+    },
+    {
+      "name": "git tests/fixtures/android/adb/api36/environ-own-agent.bin",
+      "pass": true
+    },
+    {
+      "name": "working tests/fixtures/android/adb/api36/forward-cannot-bind.stderr.txt",
+      "pass": true
+    },
+    {
+      "name": "git tests/fixtures/android/adb/api36/forward-cannot-bind.stderr.txt",
+      "pass": true
+    },
+    {
+      "name": "working tests/fixtures/android/adb/api36/forward-list-own.txt",
+      "pass": true
+    },
+    {
+      "name": "git tests/fixtures/android/adb/api36/forward-list-own.txt",
+      "pass": true
+    },
+    {
+      "name": "working tests/fixtures/android/adb/api36/forward-remove-gone.stderr.txt",
+      "pass": true
+    },
+    {
+      "name": "git tests/fixtures/android/adb/api36/forward-remove-gone.stderr.txt",
+      "pass": true
+    },
+    {
+      "name": "working tests/fixtures/android/adb/api36/getprop-ro.boot.qemu.avd_name.txt",
+      "pass": true
+    },
+    {
+      "name": "git tests/fixtures/android/adb/api36/getprop-ro.boot.qemu.avd_name.txt",
+      "pass": true
+    },
+    {
+      "name": "working tests/fixtures/android/adb/api36/getprop-ro.build.version.sdk.txt",
+      "pass": true
+    },
+    {
+      "name": "git tests/fixtures/android/adb/api36/getprop-ro.build.version.sdk.txt",
+      "pass": true
+    },
+    {
+      "name": "working tests/fixtures/android/adb/api36/getprop-sys.boot_completed.txt",
+      "pass": true
+    },
+    {
+      "name": "git tests/fixtures/android/adb/api36/getprop-sys.boot_completed.txt",
+      "pass": true
+    },
+    {
+      "name": "working tests/fixtures/android/adb/api36/kill-gone.stderr.txt",
+      "pass": true
+    },
+    {
+      "name": "git tests/fixtures/android/adb/api36/kill-gone.stderr.txt",
+      "pass": true
+    },
+    {
+      "name": "working tests/fixtures/android/adb/api36/pm-path-not-installed.txt",
+      "pass": true
+    },
+    {
+      "name": "git tests/fixtures/android/adb/api36/pm-path-not-installed.txt",
+      "pass": true
+    },
+    {
+      "name": "working tests/fixtures/android/adb/api36/pm-path-settings.txt",
+      "pass": true
+    },
+    {
+      "name": "git tests/fixtures/android/adb/api36/pm-path-settings.txt",
+      "pass": true
+    },
+    {
+      "name": "working tests/fixtures/android/adb/api36/ps-foreign-agent.txt",
+      "pass": true
+    },
+    {
+      "name": "git tests/fixtures/android/adb/api36/ps-foreign-agent.txt",
+      "pass": true
+    },
+    {
+      "name": "working tests/fixtures/android/adb/api36/ps-no-agent.txt",
+      "pass": true
+    },
+    {
+      "name": "git tests/fixtures/android/adb/api36/ps-no-agent.txt",
+      "pass": true
+    },
+    {
+      "name": "working tests/fixtures/android/adb/api36/ps-own-agent.txt",
+      "pass": true
+    },
+    {
+      "name": "git tests/fixtures/android/adb/api36/ps-own-agent.txt",
+      "pass": true
+    },
+    {
+      "name": "working tests/fixtures/android/adb/api36/resolve-launcher-none.txt",
+      "pass": true
+    },
+    {
+      "name": "git tests/fixtures/android/adb/api36/resolve-launcher-none.txt",
+      "pass": true
+    },
+    {
+      "name": "working tests/fixtures/android/adb/api36/resolve-launcher-settings.txt",
+      "pass": true
+    },
+    {
+      "name": "git tests/fixtures/android/adb/api36/resolve-launcher-settings.txt",
+      "pass": true
+    },
+    {
+      "name": "working tests/fixtures/android/adb/api36/window-policy-locked.derived.txt",
+      "pass": true
+    },
+    {
+      "name": "git tests/fixtures/android/adb/api36/window-policy-locked.derived.txt",
+      "pass": true
+    },
+    {
+      "name": "working tests/fixtures/android/adb/api36/window-policy-off.txt",
+      "pass": true
+    },
+    {
+      "name": "git tests/fixtures/android/adb/api36/window-policy-off.txt",
+      "pass": true
+    },
+    {
+      "name": "working tests/fixtures/android/adb/api36/window-policy-on.txt",
+      "pass": true
+    },
+    {
+      "name": "git tests/fixtures/android/adb/api36/window-policy-on.txt",
+      "pass": true
+    },
+    {
+      "name": "working tests/fixtures/android/adb/api36/window-policy-woken.txt",
+      "pass": true
+    },
+    {
+      "name": "git tests/fixtures/android/adb/api36/window-policy-woken.txt",
+      "pass": true
+    },
+    {
+      "name": "working tests/fixtures/android/adb/forward-list-two-emulators.txt",
+      "pass": true
+    },
+    {
+      "name": "git tests/fixtures/android/adb/forward-list-two-emulators.txt",
+      "pass": true
+    },
+    {
+      "name": "working tests/fixtures/android/agent/api31-empty-classic-fields.json",
+      "pass": true
+    },
+    {
+      "name": "git tests/fixtures/android/agent/api31-empty-classic-fields.json",
+      "pass": true
+    },
+    {
+      "name": "working tests/fixtures/android/agent/api36-empty-settings-search.json",
+      "pass": true
+    },
+    {
+      "name": "git tests/fixtures/android/agent/api36-empty-settings-search.json",
+      "pass": true
+    },
+    {
+      "name": "working tests/fixtures/android/api36-lists-scrollable.json",
+      "pass": true
+    },
+    {
+      "name": "git tests/fixtures/android/api36-lists-scrollable.json",
+      "pass": true
+    },
+    {
+      "name": "working tests/fixtures/android/captures/cmp-1-launch.json",
+      "pass": true
+    },
+    {
+      "name": "git tests/fixtures/android/captures/cmp-1-launch.json",
+      "pass": true
+    },
+    {
+      "name": "working tests/fixtures/android/captures/cmp-2-home.json",
+      "pass": true
+    },
+    {
+      "name": "git tests/fixtures/android/captures/cmp-2-home.json",
+      "pass": true
+    },
+    {
+      "name": "working tests/fixtures/android/captures/cmp-3-number-input.json",
+      "pass": true
+    },
+    {
+      "name": "git tests/fixtures/android/captures/cmp-3-number-input.json",
+      "pass": true
+    },
+    {
+      "name": "working tests/fixtures/android/captures/cmp-4-fullscreen-modal.json",
+      "pass": true
+    },
+    {
+      "name": "git tests/fixtures/android/captures/cmp-4-fullscreen-modal.json",
+      "pass": true
+    },
+    {
+      "name": "working tests/fixtures/android/captures/settings-1-main.json",
+      "pass": true
+    },
+    {
+      "name": "git tests/fixtures/android/captures/settings-1-main.json",
+      "pass": true
+    },
+    {
+      "name": "working tests/fixtures/android/captures/settings-2-display.json",
+      "pass": true
+    },
+    {
+      "name": "git tests/fixtures/android/captures/settings-2-display.json",
+      "pass": true
+    },
+    {
+      "name": "working tests/fixtures/android/captures/settings-3-search.json",
+      "pass": true
+    },
+    {
+      "name": "git tests/fixtures/android/captures/settings-3-search.json",
+      "pass": true
+    },
+    {
+      "name": "working tests/fixtures/android/captures/twin-1-choose.json",
+      "pass": true
+    },
+    {
+      "name": "git tests/fixtures/android/captures/twin-1-choose.json",
+      "pass": true
+    },
+    {
+      "name": "working tests/fixtures/android/captures/twin-2-apple-added.json",
+      "pass": true
+    },
+    {
+      "name": "git tests/fixtures/android/captures/twin-2-apple-added.json",
+      "pass": true
+    },
+    {
+      "name": "working tests/fixtures/android/captures/twin-3-confirmation.json",
+      "pass": true
+    },
+    {
+      "name": "git tests/fixtures/android/captures/twin-3-confirmation.json",
+      "pass": true
+    },
+    {
+      "name": "working tests/fixtures/android/logcat/README.md",
+      "pass": true
+    },
+    {
+      "name": "git tests/fixtures/android/logcat/README.md",
+      "pass": true
+    },
+    {
+      "name": "working tests/fixtures/android/logcat/probe-anr/events.log",
+      "pass": true
+    },
+    {
+      "name": "git tests/fixtures/android/logcat/probe-anr/events.log",
+      "pass": true
+    },
+    {
+      "name": "working tests/fixtures/android/logcat/probe-anr/meta.txt",
+      "pass": true
+    },
+    {
+      "name": "git tests/fixtures/android/logcat/probe-anr/meta.txt",
+      "pass": true
+    },
+    {
+      "name": "working tests/fixtures/android/logcat/probe-anr/uid.log",
+      "pass": true
+    },
+    {
+      "name": "git tests/fixtures/android/logcat/probe-anr/uid.log",
+      "pass": true
+    },
+    {
+      "name": "working tests/fixtures/android/logcat/probe-bgcrash/events.log",
+      "pass": true
+    },
+    {
+      "name": "git tests/fixtures/android/logcat/probe-bgcrash/events.log",
+      "pass": true
+    },
+    {
+      "name": "working tests/fixtures/android/logcat/probe-bgcrash/meta.txt",
+      "pass": true
+    },
+    {
+      "name": "git tests/fixtures/android/logcat/probe-bgcrash/meta.txt",
+      "pass": true
+    },
+    {
+      "name": "working tests/fixtures/android/logcat/probe-bgcrash/uid.log",
+      "pass": true
+    },
+    {
+      "name": "git tests/fixtures/android/logcat/probe-bgcrash/uid.log",
+      "pass": true
+    },
+    {
+      "name": "working tests/fixtures/android/logcat/probe-crash/events.log",
+      "pass": true
+    },
+    {
+      "name": "git tests/fixtures/android/logcat/probe-crash/events.log",
+      "pass": true
+    },
+    {
+      "name": "working tests/fixtures/android/logcat/probe-crash/meta.txt",
+      "pass": true
+    },
+    {
+      "name": "git tests/fixtures/android/logcat/probe-crash/meta.txt",
+      "pass": true
+    },
+    {
+      "name": "working tests/fixtures/android/logcat/probe-crash/uid.log",
+      "pass": true
+    },
+    {
+      "name": "git tests/fixtures/android/logcat/probe-crash/uid.log",
+      "pass": true
+    },
+    {
+      "name": "working tests/fixtures/android/logcat/probe-exit/events.log",
+      "pass": true
+    },
+    {
+      "name": "git tests/fixtures/android/logcat/probe-exit/events.log",
+      "pass": true
+    },
+    {
+      "name": "working tests/fixtures/android/logcat/probe-exit/meta.txt",
+      "pass": true
+    },
+    {
+      "name": "git tests/fixtures/android/logcat/probe-exit/meta.txt",
+      "pass": true
+    },
+    {
+      "name": "working tests/fixtures/android/logcat/probe-exit/uid.log",
+      "pass": true
+    },
+    {
+      "name": "git tests/fixtures/android/logcat/probe-exit/uid.log",
+      "pass": true
+    },
+    {
+      "name": "working tests/fixtures/android/logcat/probe-finish/events.log",
+      "pass": true
+    },
+    {
+      "name": "git tests/fixtures/android/logcat/probe-finish/events.log",
+      "pass": true
+    },
+    {
+      "name": "working tests/fixtures/android/logcat/probe-finish/meta.txt",
+      "pass": true
+    },
+    {
+      "name": "git tests/fixtures/android/logcat/probe-finish/meta.txt",
+      "pass": true
+    },
+    {
+      "name": "working tests/fixtures/android/logcat/probe-finish/uid.log",
+      "pass": true
+    },
+    {
+      "name": "git tests/fixtures/android/logcat/probe-finish/uid.log",
+      "pass": true
+    },
+    {
+      "name": "working tests/fixtures/android/logcat/probe-native/events.log",
+      "pass": true
+    },
+    {
+      "name": "git tests/fixtures/android/logcat/probe-native/events.log",
+      "pass": true
+    },
+    {
+      "name": "working tests/fixtures/android/logcat/probe-native/meta.txt",
+      "pass": true
+    },
+    {
+      "name": "git tests/fixtures/android/logcat/probe-native/meta.txt",
+      "pass": true
+    },
+    {
+      "name": "working tests/fixtures/android/logcat/probe-native/uid.log",
+      "pass": true
+    },
+    {
+      "name": "git tests/fixtures/android/logcat/probe-native/uid.log",
+      "pass": true
+    },
+    {
+      "name": "working tests/fixtures/android/logcat/probe-normal/events.log",
+      "pass": true
+    },
+    {
+      "name": "git tests/fixtures/android/logcat/probe-normal/events.log",
+      "pass": true
+    },
+    {
+      "name": "working tests/fixtures/android/logcat/probe-normal/meta.txt",
+      "pass": true
+    },
+    {
+      "name": "git tests/fixtures/android/logcat/probe-normal/meta.txt",
+      "pass": true
+    },
+    {
+      "name": "working tests/fixtures/android/logcat/probe-normal/uid.log",
+      "pass": true
+    },
+    {
+      "name": "git tests/fixtures/android/logcat/probe-normal/uid.log",
+      "pass": true
+    },
+    {
+      "name": "working tests/fixtures/android/logcat/twin-amcrash/events.log",
+      "pass": true
+    },
+    {
+      "name": "git tests/fixtures/android/logcat/twin-amcrash/events.log",
+      "pass": true
+    },
+    {
+      "name": "working tests/fixtures/android/logcat/twin-amcrash/meta.txt",
+      "pass": true
+    },
+    {
+      "name": "git tests/fixtures/android/logcat/twin-amcrash/meta.txt",
+      "pass": true
+    },
+    {
+      "name": "working tests/fixtures/android/logcat/twin-amcrash/uid.log",
+      "pass": true
+    },
+    {
+      "name": "git tests/fixtures/android/logcat/twin-amcrash/uid.log",
+      "pass": true
+    },
+    {
+      "name": "working tests/fixtures/android/logcat/twin-forcestop/events.log",
+      "pass": true
+    },
+    {
+      "name": "git tests/fixtures/android/logcat/twin-forcestop/events.log",
+      "pass": true
+    },
+    {
+      "name": "working tests/fixtures/android/logcat/twin-forcestop/meta.txt",
+      "pass": true
+    },
+    {
+      "name": "git tests/fixtures/android/logcat/twin-forcestop/meta.txt",
+      "pass": true
+    },
+    {
+      "name": "working tests/fixtures/android/logcat/twin-forcestop/uid.log",
+      "pass": true
+    },
+    {
+      "name": "git tests/fixtures/android/logcat/twin-forcestop/uid.log",
+      "pass": true
+    },
+    {
+      "name": "working tests/fixtures/android/logcat/twin-home/events.log",
+      "pass": true
+    },
+    {
+      "name": "git tests/fixtures/android/logcat/twin-home/events.log",
+      "pass": true
+    },
+    {
+      "name": "working tests/fixtures/android/logcat/twin-home/meta.txt",
+      "pass": true
+    },
+    {
+      "name": "git tests/fixtures/android/logcat/twin-home/meta.txt",
+      "pass": true
+    },
+    {
+      "name": "working tests/fixtures/android/logcat/twin-home/uid.log",
+      "pass": true
+    },
+    {
+      "name": "git tests/fixtures/android/logcat/twin-home/uid.log",
+      "pass": true
+    },
+    {
+      "name": "working tests/fixtures/android/logcat/twin-kill9/events.log",
+      "pass": true
+    },
+    {
+      "name": "git tests/fixtures/android/logcat/twin-kill9/events.log",
+      "pass": true
+    },
+    {
+      "name": "working tests/fixtures/android/logcat/twin-kill9/meta.txt",
+      "pass": true
+    },
+    {
+      "name": "git tests/fixtures/android/logcat/twin-kill9/meta.txt",
+      "pass": true
+    },
+    {
+      "name": "working tests/fixtures/android/logcat/twin-kill9/uid.log",
+      "pass": true
+    },
+    {
+      "name": "git tests/fixtures/android/logcat/twin-kill9/uid.log",
+      "pass": true
+    },
+    {
+      "name": "working tests/fixtures/android/logcat/twin-normal/events.log",
+      "pass": true
+    },
+    {
+      "name": "git tests/fixtures/android/logcat/twin-normal/events.log",
+      "pass": true
+    },
+    {
+      "name": "working tests/fixtures/android/logcat/twin-normal/meta.txt",
+      "pass": true
+    },
+    {
+      "name": "git tests/fixtures/android/logcat/twin-normal/meta.txt",
+      "pass": true
+    },
+    {
+      "name": "working tests/fixtures/android/logcat/twin-normal/uid.log",
+      "pass": true
+    },
+    {
+      "name": "git tests/fixtures/android/logcat/twin-normal/uid.log",
+      "pass": true
+    },
+    {
+      "name": "working tests/fixtures/android/logcat/twin-segv/events.log",
+      "pass": true
+    },
+    {
+      "name": "git tests/fixtures/android/logcat/twin-segv/events.log",
+      "pass": true
+    },
+    {
+      "name": "working tests/fixtures/android/logcat/twin-segv/meta.txt",
+      "pass": true
+    },
+    {
+      "name": "git tests/fixtures/android/logcat/twin-segv/meta.txt",
+      "pass": true
+    },
+    {
+      "name": "working tests/fixtures/android/logcat/twin-segv/uid.log",
+      "pass": true
+    },
+    {
+      "name": "git tests/fixtures/android/logcat/twin-segv/uid.log",
+      "pass": true
+    },
+    {
+      "name": "working tests/fixtures/android/observations/cmp-1-launch.txt",
+      "pass": true
+    },
+    {
+      "name": "git tests/fixtures/android/observations/cmp-1-launch.txt",
+      "pass": true
+    },
+    {
+      "name": "working tests/fixtures/android/observations/cmp-2-home.txt",
+      "pass": true
+    },
+    {
+      "name": "git tests/fixtures/android/observations/cmp-2-home.txt",
+      "pass": true
+    },
+    {
+      "name": "working tests/fixtures/android/observations/cmp-3-number-input.txt",
+      "pass": true
+    },
+    {
+      "name": "git tests/fixtures/android/observations/cmp-3-number-input.txt",
+      "pass": true
+    },
+    {
+      "name": "working tests/fixtures/android/observations/cmp-4-fullscreen-modal.txt",
+      "pass": true
+    },
+    {
+      "name": "git tests/fixtures/android/observations/cmp-4-fullscreen-modal.txt",
+      "pass": true
+    },
+    {
+      "name": "working tests/fixtures/android/observations/settings-1-main.txt",
+      "pass": true
+    },
+    {
+      "name": "git tests/fixtures/android/observations/settings-1-main.txt",
+      "pass": true
+    },
+    {
+      "name": "working tests/fixtures/android/observations/settings-2-display.txt",
+      "pass": true
+    },
+    {
+      "name": "git tests/fixtures/android/observations/settings-2-display.txt",
+      "pass": true
+    },
+    {
+      "name": "working tests/fixtures/android/observations/settings-3-search.txt",
+      "pass": true
+    },
+    {
+      "name": "git tests/fixtures/android/observations/settings-3-search.txt",
+      "pass": true
+    },
+    {
+      "name": "working tests/fixtures/android/observations/twin-1-choose.txt",
+      "pass": true
+    },
+    {
+      "name": "git tests/fixtures/android/observations/twin-1-choose.txt",
+      "pass": true
+    },
+    {
+      "name": "working tests/fixtures/android/observations/twin-2-apple-added.txt",
+      "pass": true
+    },
+    {
+      "name": "git tests/fixtures/android/observations/twin-2-apple-added.txt",
+      "pass": true
+    },
+    {
+      "name": "working tests/fixtures/android/observations/twin-3-confirmation.txt",
+      "pass": true
+    },
+    {
+      "name": "git tests/fixtures/android/observations/twin-3-confirmation.txt",
+      "pass": true
+    },
+    {
+      "name": "working tests/fixtures/android/text-fields.json",
+      "pass": true
+    },
+    {
+      "name": "git tests/fixtures/android/text-fields.json",
+      "pass": true
+    },
+    {
+      "name": "working tests/fixtures/capture.ts",
+      "pass": true
+    },
+    {
+      "name": "git tests/fixtures/capture.ts",
+      "pass": true
+    },
+    {
+      "name": "working tests/fixtures/driven-judge.ts",
+      "pass": true
+    },
+    {
+      "name": "git tests/fixtures/driven-judge.ts",
+      "pass": true
+    },
+    {
+      "name": "working tests/fixtures/frozen-schema-819ea10/contracts.ts",
+      "pass": true
+    },
+    {
+      "name": "git tests/fixtures/frozen-schema-819ea10/contracts.ts",
+      "pass": true
+    },
+    {
+      "name": "working tests/fixtures/frozen-schema-819ea10/schema.ts",
+      "pass": true
+    },
+    {
+      "name": "git tests/fixtures/frozen-schema-819ea10/schema.ts",
+      "pass": true
+    },
+    {
+      "name": "working tests/fixtures/frozen-schema-819ea10/vocabulary.ts",
+      "pass": true
+    },
+    {
+      "name": "git tests/fixtures/frozen-schema-819ea10/vocabulary.ts",
+      "pass": true
+    },
+    {
+      "name": "working tests/fixtures/golden.ts",
+      "pass": true
+    },
+    {
+      "name": "git tests/fixtures/golden.ts",
+      "pass": true
+    },
+    {
+      "name": "working tests/fixtures/mcp-driven-server.ts",
+      "pass": true
+    },
+    {
+      "name": "git tests/fixtures/mcp-driven-server.ts",
+      "pass": true
+    },
+    {
+      "name": "working tests/fixtures/mcp-env-server.ts",
+      "pass": true
+    },
+    {
+      "name": "git tests/fixtures/mcp-env-server.ts",
+      "pass": true
+    },
+    {
+      "name": "working tests/fixtures/mcp-server.ts",
+      "pass": true
+    },
+    {
+      "name": "git tests/fixtures/mcp-server.ts",
+      "pass": true
+    },
+    {
+      "name": "working tests/fixtures/mcp-session.ts",
+      "pass": true
+    },
+    {
+      "name": "git tests/fixtures/mcp-session.ts",
+      "pass": true
+    },
+    {
+      "name": "working tests/fixtures/observed-artifacts/Fixture.app/Fixture",
+      "pass": true
+    },
+    {
+      "name": "git tests/fixtures/observed-artifacts/Fixture.app/Fixture",
+      "pass": true
+    },
+    {
+      "name": "working tests/fixtures/observed-artifacts/Fixture.app/Info.plist",
+      "pass": true
+    },
+    {
+      "name": "git tests/fixtures/observed-artifacts/Fixture.app/Info.plist",
+      "pass": true
+    },
+    {
+      "name": "working tests/fixtures/observed-cli-server.ts",
+      "pass": true
+    },
+    {
+      "name": "git tests/fixtures/observed-cli-server.ts",
+      "pass": true
+    },
+    {
+      "name": "working tests/fixtures/observed-host/allocator-public.ts",
+      "pass": true
+    },
+    {
+      "name": "git tests/fixtures/observed-host/allocator-public.ts",
+      "pass": true
+    },
+    {
+      "name": "working tests/fixtures/observed-host/case-matrix.json",
+      "pass": true
+    },
+    {
+      "name": "git tests/fixtures/observed-host/case-matrix.json",
+      "pass": true
+    },
+    {
+      "name": "working tests/fixtures/observed-host/early-cli.ts",
+      "pass": true
+    },
+    {
+      "name": "git tests/fixtures/observed-host/early-cli.ts",
+      "pass": true
+    },
+    {
+      "name": "working tests/fixtures/observed-host/harness.ts",
+      "pass": true
+    },
+    {
+      "name": "git tests/fixtures/observed-host/harness.ts",
+      "pass": true
+    },
+    {
+      "name": "working tests/fixtures/observed-host/owner.ts",
+      "pass": true
+    },
+    {
+      "name": "git tests/fixtures/observed-host/owner.ts",
+      "pass": true
+    },
+    {
+      "name": "working tests/fixtures/observed-mcp-server.ts",
+      "pass": true
+    },
+    {
+      "name": "git tests/fixtures/observed-mcp-server.ts",
+      "pass": true
+    },
+    {
+      "name": "working tests/fixtures/observed-packaging/guard.mjs",
+      "pass": true
+    },
+    {
+      "name": "git tests/fixtures/observed-packaging/guard.mjs",
+      "pass": true
+    },
+    {
+      "name": "working tests/fixtures/observed-packaging/proof.mjs",
+      "pass": true
+    },
+    {
+      "name": "git tests/fixtures/observed-packaging/proof.mjs",
+      "pass": true
+    },
+    {
+      "name": "working tests/fixtures/run-log.ts",
+      "pass": true
+    },
+    {
+      "name": "git tests/fixtures/run-log.ts",
+      "pass": true
+    },
+    {
+      "name": "working tests/golden/android-capture.json",
+      "pass": true
+    },
+    {
+      "name": "git tests/golden/android-capture.json",
+      "pass": true
+    },
+    {
+      "name": "working tests/golden/android-elements.json",
+      "pass": true
+    },
+    {
+      "name": "git tests/golden/android-elements.json",
+      "pass": true
+    },
+    {
+      "name": "working tests/golden/android-render.json",
+      "pass": true
+    },
+    {
+      "name": "git tests/golden/android-render.json",
+      "pass": true
+    },
+    {
+      "name": "working tests/golden/cli-exit-codes.json",
+      "pass": true
+    },
+    {
+      "name": "git tests/golden/cli-exit-codes.json",
+      "pass": true
+    },
+    {
+      "name": "working tests/golden/evidence-layout.json",
+      "pass": true
+    },
+    {
+      "name": "git tests/golden/evidence-layout.json",
+      "pass": true
+    },
+    {
+      "name": "working tests/golden/mcp.json",
+      "pass": true
+    },
+    {
+      "name": "git tests/golden/mcp.json",
+      "pass": true
+    },
+    {
+      "name": "working tests/golden/observed-mcp-v1.json",
+      "pass": true
+    },
+    {
+      "name": "git tests/golden/observed-mcp-v1.json",
+      "pass": true
+    },
+    {
+      "name": "working tests/golden/observed-replies-v1.json",
+      "pass": true
+    },
+    {
+      "name": "git tests/golden/observed-replies-v1.json",
+      "pass": true
+    },
+    {
+      "name": "working tests/golden/report-json-android.json",
+      "pass": true
+    },
+    {
+      "name": "git tests/golden/report-json-android.json",
+      "pass": true
+    },
+    {
+      "name": "working tests/golden/report-json-driven.json",
+      "pass": true
+    },
+    {
+      "name": "git tests/golden/report-json-driven.json",
+      "pass": true
+    },
+    {
+      "name": "working tests/golden/report-json.json",
+      "pass": true
+    },
+    {
+      "name": "git tests/golden/report-json.json",
+      "pass": true
+    },
+    {
+      "name": "working tests/golden/report-text-driven.json",
+      "pass": true
+    },
+    {
+      "name": "git tests/golden/report-text-driven.json",
+      "pass": true
+    },
+    {
+      "name": "working tests/golden/scripts.json",
+      "pass": true
+    },
+    {
+      "name": "git tests/golden/scripts.json",
+      "pass": true
+    },
+    {
+      "name": "working tests/golden/vocabulary.json",
+      "pass": true
+    },
+    {
+      "name": "git tests/golden/vocabulary.json",
+      "pass": true
+    },
+    {
+      "name": "working tests/installed-plist.test.ts",
+      "pass": true
+    },
+    {
+      "name": "git tests/installed-plist.test.ts",
+      "pass": true
+    },
+    {
+      "name": "working tests/integration-edge.test.ts",
+      "pass": true
+    },
+    {
+      "name": "git tests/integration-edge.test.ts",
+      "pass": true
+    },
+    {
+      "name": "working tests/jev-drives-candidates.test.ts",
+      "pass": true
+    },
+    {
+      "name": "git tests/jev-drives-candidates.test.ts",
+      "pass": true
+    },
+    {
+      "name": "working tests/jev-drives-harness.test.ts",
+      "pass": true
+    },
+    {
+      "name": "git tests/jev-drives-harness.test.ts",
+      "pass": true
+    },
+    {
+      "name": "working tests/jev.test.ts",
+      "pass": true
+    },
+    {
+      "name": "git tests/jev.test.ts",
+      "pass": true
+    },
+    {
+      "name": "working tests/lease.test.ts",
+      "pass": true
+    },
+    {
+      "name": "git tests/lease.test.ts",
+      "pass": true
+    },
+    {
+      "name": "working tests/log-driven.test.ts",
+      "pass": true
+    },
+    {
+      "name": "git tests/log-driven.test.ts",
+      "pass": true
+    },
+    {
+      "name": "working tests/logpane.test.ts",
+      "pass": true
+    },
+    {
+      "name": "git tests/logpane.test.ts",
+      "pass": true
+    },
+    {
+      "name": "working tests/mcp-handback.test.ts",
+      "pass": true
+    },
+    {
+      "name": "git tests/mcp-handback.test.ts",
+      "pass": true
+    },
+    {
+      "name": "working tests/mcp.test.ts",
+      "pass": true
+    },
+    {
+      "name": "git tests/mcp.test.ts",
+      "pass": true
+    },
+    {
+      "name": "working tests/observation.test.ts",
+      "pass": true
+    },
+    {
+      "name": "git tests/observation.test.ts",
+      "pass": true
+    },
+    {
+      "name": "working tests/observed-allocation-config.test.ts",
+      "pass": true
+    },
+    {
+      "name": "git tests/observed-allocation-config.test.ts",
+      "pass": true
+    },
+    {
+      "name": "working tests/observed-allocation.test.ts",
+      "pass": true
+    },
+    {
+      "name": "git tests/observed-allocation.test.ts",
+      "pass": true
+    },
+    {
+      "name": "working tests/observed-artifact.test.ts",
+      "pass": true
+    },
+    {
+      "name": "git tests/observed-artifact.test.ts",
+      "pass": true
+    },
+    {
+      "name": "working tests/observed-cli.test.ts",
+      "pass": true
+    },
+    {
+      "name": "git tests/observed-cli.test.ts",
+      "pass": true
+    },
+    {
+      "name": "working tests/observed-contract.test.ts",
+      "pass": true
+    },
+    {
+      "name": "git tests/observed-contract.test.ts",
+      "pass": true
+    },
+    {
+      "name": "working tests/observed-crash.test.ts",
+      "pass": true
+    },
+    {
+      "name": "git tests/observed-crash.test.ts",
+      "pass": true
+    },
+    {
+      "name": "working tests/observed-docs.test.ts",
+      "pass": true
+    },
+    {
+      "name": "git tests/observed-docs.test.ts",
+      "pass": true
+    },
+    {
+      "name": "working tests/observed-evidence.test.ts",
+      "pass": true
+    },
+    {
+      "name": "git tests/observed-evidence.test.ts",
+      "pass": true
+    },
+    {
+      "name": "working tests/observed-host-fault.test.ts",
+      "pass": true
+    },
+    {
+      "name": "git tests/observed-host-fault.test.ts",
+      "pass": true
+    },
+    {
+      "name": "working tests/observed-journal.test.ts",
+      "pass": true
+    },
+    {
+      "name": "git tests/observed-journal.test.ts",
+      "pass": true
+    },
+    {
+      "name": "working tests/observed-mcp.test.ts",
+      "pass": true
+    },
+    {
+      "name": "git tests/observed-mcp.test.ts",
+      "pass": true
+    },
+    {
+      "name": "working tests/observed-packaging.test.ts",
+      "pass": true
+    },
+    {
+      "name": "git tests/observed-packaging.test.ts",
+      "pass": true
+    },
+    {
+      "name": "working tests/observed-public-races.test.ts",
+      "pass": true
+    },
+    {
+      "name": "git tests/observed-public-races.test.ts",
+      "pass": true
+    },
+    {
+      "name": "working tests/observed-run.test.ts",
+      "pass": true
+    },
+    {
+      "name": "git tests/observed-run.test.ts",
+      "pass": true
+    },
+    {
+      "name": "working tests/observed-schema.test.ts",
+      "pass": true
+    },
+    {
+      "name": "git tests/observed-schema.test.ts",
+      "pass": true
+    },
+    {
+      "name": "working tests/observed-service.test.ts",
+      "pass": true
+    },
+    {
+      "name": "git tests/observed-service.test.ts",
+      "pass": true
+    },
+    {
+      "name": "working tests/observed-sources.test.ts",
+      "pass": true
+    },
+    {
+      "name": "git tests/observed-sources.test.ts",
+      "pass": true
+    },
+    {
+      "name": "working tests/observed-tap.test.ts",
+      "pass": true
+    },
+    {
+      "name": "git tests/observed-tap.test.ts",
+      "pass": true
+    },
+    {
+      "name": "working tests/observed-touch-integration.test.ts",
+      "pass": true
+    },
+    {
+      "name": "git tests/observed-touch-integration.test.ts",
+      "pass": true
+    },
+    {
+      "name": "working tests/plugin-driven-setting.test.ts",
+      "pass": true
+    },
+    {
+      "name": "git tests/plugin-driven-setting.test.ts",
+      "pass": true
+    },
+    {
+      "name": "working tests/plugin.test.ts",
+      "pass": true
+    },
+    {
+      "name": "git tests/plugin.test.ts",
+      "pass": true
+    },
+    {
+      "name": "working tests/preflight-processes.test.ts",
+      "pass": true
+    },
+    {
+      "name": "git tests/preflight-processes.test.ts",
+      "pass": true
+    },
+    {
+      "name": "working tests/report-driven.test.ts",
+      "pass": true
+    },
+    {
+      "name": "git tests/report-driven.test.ts",
+      "pass": true
+    },
+    {
+      "name": "working tests/script-v2.test.ts",
+      "pass": true
+    },
+    {
+      "name": "git tests/script-v2.test.ts",
+      "pass": true
+    },
+    {
+      "name": "working tests/scripted-feasibility.test.ts",
+      "pass": true
+    },
+    {
+      "name": "git tests/scripted-feasibility.test.ts",
+      "pass": true
+    },
+    {
+      "name": "working tests/scripted-integration.test.ts",
+      "pass": true
+    },
+    {
+      "name": "git tests/scripted-integration.test.ts",
+      "pass": true
+    },
+    {
+      "name": "working tests/scripted-jev-android.test.ts",
+      "pass": true
+    },
+    {
+      "name": "git tests/scripted-jev-android.test.ts",
+      "pass": true
+    },
+    {
+      "name": "working tests/scripted-jev.test.ts",
+      "pass": true
+    },
+    {
+      "name": "git tests/scripted-jev.test.ts",
+      "pass": true
+    },
+    {
+      "name": "working tests/scripted-production-parity.test.ts",
+      "pass": true
+    },
+    {
+      "name": "git tests/scripted-production-parity.test.ts",
+      "pass": true
+    },
+    {
+      "name": "working tests/scripted-production.test.ts",
+      "pass": true
+    },
+    {
+      "name": "git tests/scripted-production.test.ts",
+      "pass": true
+    },
+    {
+      "name": "working tests/scripted-run.test.ts",
+      "pass": true
+    },
+    {
+      "name": "git tests/scripted-run.test.ts",
+      "pass": true
+    },
+    {
+      "name": "working tests/scripted-schema-parity.test.ts",
+      "pass": true
+    },
+    {
+      "name": "git tests/scripted-schema-parity.test.ts",
+      "pass": true
+    },
+    {
+      "name": "working tests/scripted-schema.test.ts",
+      "pass": true
+    },
+    {
+      "name": "git tests/scripted-schema.test.ts",
+      "pass": true
+    },
+    {
+      "name": "working tests/service-handback.test.ts",
+      "pass": true
+    },
+    {
+      "name": "git tests/service-handback.test.ts",
+      "pass": true
+    },
+    {
+      "name": "working tests/service.test.ts",
+      "pass": true
+    },
+    {
+      "name": "git tests/service.test.ts",
+      "pass": true
+    },
+    {
+      "name": "working tests/simulator-window.test.ts",
+      "pass": true
+    },
+    {
+      "name": "git tests/simulator-window.test.ts",
+      "pass": true
+    },
+    {
+      "name": "working tests/start-attach.test.ts",
+      "pass": true
+    },
+    {
+      "name": "git tests/start-attach.test.ts",
+      "pass": true
+    },
+    {
+      "name": "working tests/values-from-env.test.ts",
+      "pass": true
+    },
+    {
+      "name": "git tests/values-from-env.test.ts",
+      "pass": true
+    },
+    {
+      "name": "working tests/watch-driven.test.ts",
+      "pass": true
+    },
+    {
+      "name": "git tests/watch-driven.test.ts",
+      "pass": true
+    },
+    {
+      "name": "working tsconfig.build.json",
+      "pass": true
+    },
+    {
+      "name": "git tsconfig.build.json",
+      "pass": true
+    },
+    {
+      "name": "working tsconfig.json",
+      "pass": true
+    },
+    {
+      "name": "git tsconfig.json",
+      "pass": true
+    },
+    {
+      "name": "working src/observed/allocation-config.ts",
+      "pass": true
+    },
+    {
+      "name": "git src/observed/allocation-config.ts",
+      "pass": true
+    },
+    {
+      "name": "working tests/fixtures/observed-allocation-backend.ts",
+      "pass": true
+    },
+    {
+      "name": "git tests/fixtures/observed-allocation-backend.ts",
+      "pass": true
+    },
+    {
+      "name": "working tests/observed-cryptex-runtime.test.ts",
+      "pass": true
+    },
+    {
+      "name": "git tests/observed-cryptex-runtime.test.ts",
+      "pass": true
+    },
+    {
+      "name": "working tests/fixtures/observed-cryptex-runtime.ts",
+      "pass": true
+    },
+    {
+      "name": "git tests/fixtures/observed-cryptex-runtime.ts",
+      "pass": true
+    },
+    {
+      "name": "working tests/observed-legacy-volume-runtime.test.ts",
+      "pass": true
+    },
+    {
+      "name": "git tests/observed-legacy-volume-runtime.test.ts",
+      "pass": true
+    },
+    {
+      "name": "working tests/fixtures/observed-legacy-volume-runtime.ts",
+      "pass": true
+    },
+    {
+      "name": "git tests/fixtures/observed-legacy-volume-runtime.ts",
+      "pass": true
+    },
+    {
+      "name": "protected .github/workflows/check.yml",
+      "pass": true
+    },
+    {
+      "name": "protected AGENTS.md",
+      "pass": true
+    },
+    {
+      "name": "protected GLOSSARY.md",
+      "pass": true
+    },
+    {
+      "name": "protected README.md",
+      "pass": true
+    },
+    {
+      "name": "protected docs/adr/0001-bridge-perceives-and-acts-jev-decides.md",
+      "pass": true
+    },
+    {
+      "name": "protected docs/adr/0002-mobilebuildmcp-as-device-layer.md",
+      "pass": true
+    },
+    {
+      "name": "protected docs/adr/0003-explicit-scripts-with-jev-assertions.md",
+      "pass": true
+    },
+    {
+      "name": "protected docs/adr/0004-fixed-assertion-bounds-single-judgment.md",
+      "pass": true
+    },
+    {
+      "name": "protected docs/adr/0005-the-1-0-stability-contract.md",
+      "pass": true
+    },
+    {
+      "name": "protected docs/adr/0006-mobilecli-device-agent-as-android-device-layer.md",
+      "pass": true
+    },
+    {
+      "name": "protected docs/adr/0007-simulator-presentation-and-a-bounded-ios-point-tap-exception.md",
+      "pass": true
+    },
+    {
+      "name": "protected docs/adr/0008-durable-ios-admission.md",
+      "pass": true
+    },
+    {
+      "name": "protected docs/adr/0009-bounded-simulator-creation.md",
+      "pass": true
+    },
+    {
+      "name": "protected docs/agents/domain.md",
+      "pass": true
+    },
+    {
+      "name": "protected docs/agents/issue-tracker.md",
+      "pass": true
+    },
+    {
+      "name": "protected docs/agents/triage-labels.md",
+      "pass": true
+    },
+    {
+      "name": "protected docs/architecture.md",
+      "pass": true
+    },
+    {
+      "name": "protected docs/architecture/checked-native-owner.md",
+      "pass": true
+    },
+    {
+      "name": "protected docs/domain-boundaries.md",
+      "pass": true
+    },
+    {
+      "name": "protected docs/guide/01-quickstart.md",
+      "pass": true
+    },
+    {
+      "name": "protected docs/guide/02-prepare-your-app.md",
+      "pass": true
+    },
+    {
+      "name": "protected docs/guide/03-identifiers.md",
+      "pass": true
+    },
+    {
+      "name": "protected docs/guide/04-writing-scripts.md",
+      "pass": true
+    },
+    {
+      "name": "protected docs/guide/05-writing-claims.md",
+      "pass": true
+    },
+    {
+      "name": "protected docs/guide/06-running.md",
+      "pass": true
+    },
+    {
+      "name": "protected docs/guide/07-reports-and-evidence.md",
+      "pass": true
+    },
+    {
+      "name": "protected docs/guide/08-troubleshooting.md",
+      "pass": true
+    },
+    {
+      "name": "protected docs/guide/09-data-handling.md",
+      "pass": true
+    },
+    {
+      "name": "protected docs/guide/10-limits.md",
+      "pass": true
+    },
+    {
+      "name": "protected docs/guide/11-stability.md",
+      "pass": true
+    },
+    {
+      "name": "protected docs/guide/12-android-setup.md",
+      "pass": true
+    },
+    {
+      "name": "protected docs/guide/13-driven-steps.md",
+      "pass": true
+    },
+    {
+      "name": "protected docs/guide/14-observed-actions.md",
+      "pass": true
+    },
+    {
+      "name": "protected docs/guide/README.md",
+      "pass": true
+    },
+    {
+      "name": "protected docs/guide/examples/compose-gallery.md",
+      "pass": true
+    },
+    {
+      "name": "protected docs/guide/examples/swiftui-weather.md",
+      "pass": true
+    },
+    {
+      "name": "protected docs/guide/reference/observed-format.md",
+      "pass": true
+    },
+    {
+      "name": "protected docs/guide/reference/reason-codes.md",
+      "pass": true
+    },
+    {
+      "name": "protected docs/guide/reference/report-json.md",
+      "pass": true
+    },
+    {
+      "name": "protected docs/guide/reference/script-format.md",
+      "pass": true
+    },
+    {
+      "name": "protected docs/journals/2026-09-24-checkpoint-feasibility.md",
+      "pass": true
+    },
+    {
+      "name": "protected docs/journals/2026-09-25-scripted-production.md",
+      "pass": true
+    },
+    {
+      "name": "protected docs/journals/261007-checked-provider-continuation.md",
+      "pass": true
+    },
+    {
+      "name": "protected docs/journals/261007-native-callback-diagnostic.md",
+      "pass": true
+    },
+    {
+      "name": "protected docs/journals/261007-observed-ui-alternative.md",
+      "pass": true
+    },
+    {
+      "name": "protected docs/journals/261008-observed-offline-migration.md",
+      "pass": true
+    },
+    {
+      "name": "protected docs/journals/261008-observed-rollout-wave-one.md",
+      "pass": true
+    },
+    {
+      "name": "protected docs/journals/261008-observed-ui-live-fix.md",
+      "pass": true
+    },
+    {
+      "name": "protected docs/releases/v0.1.0.md",
+      "pass": true
+    },
+    {
+      "name": "protected docs/releases/v1.0.0.md",
+      "pass": true
+    },
+    {
+      "name": "protected docs/releases/v1.1.0.md",
+      "pass": true
+    },
+    {
+      "name": "protected docs/releases/v1.2.0.md",
+      "pass": true
+    },
+    {
+      "name": "protected docs/releases/v1.3.0.md",
+      "pass": true
+    },
+    {
+      "name": "protected docs/releases/v1.3.1.md",
+      "pass": true
+    },
+    {
+      "name": "protected docs/research/assertion-uncertainty.md",
+      "pass": true
+    },
+    {
+      "name": "protected docs/research/assets/compose-cmp/00-cold-relaunch-first-read-full.json",
+      "pass": true
+    },
+    {
+      "name": "protected docs/research/assets/compose-cmp/00-launch-first-read-full.json",
+      "pass": true
+    },
+    {
+      "name": "protected docs/research/assets/compose-cmp/01-main-modal-perf-idle-compact.json",
+      "pass": true
+    },
+    {
+      "name": "protected docs/research/assets/compose-cmp/01-main-modal-perf-idle-full.json",
+      "pass": true
+    },
+    {
+      "name": "protected docs/research/assets/compose-cmp/02-fullscreen-modal-tab-compact.json",
+      "pass": true
+    },
+    {
+      "name": "protected docs/research/assets/compose-cmp/02-fullscreen-modal-tab-full.json",
+      "pass": true
+    },
+    {
+      "name": "protected docs/research/assets/compose-cmp/03-fullscreen-modal-outer-open-compact.json",
+      "pass": true
+    },
+    {
+      "name": "protected docs/research/assets/compose-cmp/03-fullscreen-modal-outer-open-full.json",
+      "pass": true
+    },
+    {
+      "name": "protected docs/research/assets/compose-cmp/04-fullscreen-modal-field-typed-compact.json",
+      "pass": true
+    },
+    {
+      "name": "protected docs/research/assets/compose-cmp/04-fullscreen-modal-field-typed-full.json",
+      "pass": true
+    },
+    {
+      "name": "protected docs/research/assets/compose-cmp/05-fullscreen-modal-field-replaced-compact.json",
+      "pass": true
+    },
+    {
+      "name": "protected docs/research/assets/compose-cmp/05-fullscreen-modal-field-replaced-full.json",
+      "pass": true
+    },
+    {
+      "name": "protected docs/research/assets/compose-cmp/06-fullscreen-modal-nested-open-axe-describe-ui.json",
+      "pass": true
+    },
+    {
+      "name": "protected docs/research/assets/compose-cmp/06-fullscreen-modal-nested-open-compact.json",
+      "pass": true
+    },
+    {
+      "name": "protected docs/research/assets/compose-cmp/06-fullscreen-modal-nested-open-full.json",
+      "pass": true
+    },
+    {
+      "name": "protected docs/research/assets/compose-cmp/07-number-input-screen-compact.json",
+      "pass": true
+    },
+    {
+      "name": "protected docs/research/assets/compose-cmp/07-number-input-screen-full.json",
+      "pass": true
+    },
+    {
+      "name": "protected docs/research/assets/compose-cmp/08-number-input-builtin-keypad-open-compact.json",
+      "pass": true
+    },
+    {
+      "name": "protected docs/research/assets/compose-cmp/08-number-input-builtin-keypad-open-full.json",
+      "pass": true
+    },
+    {
+      "name": "protected docs/research/assets/compose-cmp/09-number-input-builtin-keypad-typed-compact.json",
+      "pass": true
+    },
+    {
+      "name": "protected docs/research/assets/compose-cmp/09-number-input-builtin-keypad-typed-full.json",
+      "pass": true
+    },
+    {
+      "name": "protected docs/research/assets/compose-cmp/10-tab-row-dragged-left-full.json",
+      "pass": true
+    },
+    {
+      "name": "protected docs/research/assets/compose-cmp/11-ofnumpad-screen-compact.json",
+      "pass": true
+    },
+    {
+      "name": "protected docs/research/assets/compose-cmp/11-ofnumpad-screen-full.json",
+      "pass": true
+    },
+    {
+      "name": "protected docs/research/assets/compose-cmp/12-ofnumpad-keypad-open-compact.json",
+      "pass": true
+    },
+    {
+      "name": "protected docs/research/assets/compose-cmp/12-ofnumpad-keypad-open-full.json",
+      "pass": true
+    },
+    {
+      "name": "protected docs/research/assets/compose-cmp/13-ofnumpad-keypad-typed-compact.json",
+      "pass": true
+    },
+    {
+      "name": "protected docs/research/assets/compose-cmp/13-ofnumpad-keypad-typed-full.json",
+      "pass": true
+    },
+    {
+      "name": "protected docs/research/assets/compose-cmp/14-ofnumpad-usd-type-text-replace-compact.json",
+      "pass": true
+    },
+    {
+      "name": "protected docs/research/assets/compose-cmp/14-ofnumpad-usd-type-text-replace-full.json",
+      "pass": true
+    },
+    {
+      "name": "protected docs/research/assets/compose-cmp/lazy-modal-after-jump-to-last-full.json",
+      "pass": true
+    },
+    {
+      "name": "protected docs/research/assets/compose-cmp/lazy-modal-axe-describe-ui.json",
+      "pass": true
+    },
+    {
+      "name": "protected docs/research/assets/compose-cmp/lazy-modal-index-only-scrolled-compact.json",
+      "pass": true
+    },
+    {
+      "name": "protected docs/research/assets/compose-cmp/lazy-modal-top-compact.json",
+      "pass": true
+    },
+    {
+      "name": "protected docs/research/assets/compose-cmp/lazy-modal-top-full.json",
+      "pass": true
+    },
+    {
+      "name": "protected docs/research/assets/snapshot-sample-verbose.json",
+      "pass": true
+    },
+    {
+      "name": "protected docs/research/assets/snapshot-sample.txt",
+      "pass": true
+    },
+    {
+      "name": "protected docs/research/assets/watch-scripted-d03-evidence.json",
+      "pass": true
+    },
+    {
+      "name": "protected docs/research/assets/watch-scripted-d03-final.png",
+      "pass": true
+    },
+    {
+      "name": "protected docs/research/assets/watch-scripted-d03-full.png",
+      "pass": true
+    },
+    {
+      "name": "protected docs/research/assets/watch-scripted-d03-narrow.png",
+      "pass": true
+    },
+    {
+      "name": "protected docs/research/assets/watch-view-fixture.png",
+      "pass": true
+    },
+    {
+      "name": "protected docs/research/bridge-latency.md",
+      "pass": true
+    },
+    {
+      "name": "protected docs/research/claude-and-jev-integration.md",
+      "pass": true
+    },
+    {
+      "name": "protected docs/research/compose-cmp-capture.md",
+      "pass": true
+    },
+    {
+      "name": "protected docs/research/compose-multiplatform-ios.md",
+      "pass": true
+    },
+    {
+      "name": "protected docs/research/human-watch-panel.md",
+      "pass": true
+    },
+    {
+      "name": "protected docs/research/jev-model-and-api.md",
+      "pass": true
+    },
+    {
+      "name": "protected docs/research/mobilebuildmcp-simulator-and-device.md",
+      "pass": true
+    },
+    {
+      "name": "protected docs/research/mobilecli-dependency.md",
+      "pass": true
+    },
+    {
+      "name": "protected docs/research/physical-iphone-device-layer.md",
+      "pass": true
+    },
+    {
+      "name": "protected docs/research/scripted-benchmarks.md",
+      "pass": true
+    },
+    {
+      "name": "protected package-lock.json",
+      "pass": true
+    },
+    {
+      "name": "protected package.json",
+      "pass": true
+    },
+    {
+      "name": "protected scripts/build-plugin.d.mts",
+      "pass": true
+    },
+    {
+      "name": "protected scripts/build-plugin.mjs",
+      "pass": true
+    },
+    {
+      "name": "protected scripts/render-route.py",
+      "pass": true
+    },
+    {
+      "name": "protected scripts/summarize-run.mjs",
+      "pass": true
+    },
+    {
+      "name": "protected skills/test-android/SKILL.md",
+      "pass": true
+    },
+    {
+      "name": "protected skills/test-ios/SKILL.md",
+      "pass": true
+    },
+    {
+      "name": "protected src/capture.ts",
+      "pass": true
+    },
+    {
+      "name": "protected src/cli.ts",
+      "pass": true
+    },
+    {
+      "name": "protected src/contracts/index.ts",
+      "pass": true
+    },
+    {
+      "name": "protected src/device/admission-allocation.ts",
+      "pass": true
+    },
+    {
+      "name": "protected src/device/admission-maintenance.ts",
+      "pass": true
+    },
+    {
+      "name": "protected src/device/admission-migration.ts",
+      "pass": true
+    },
+    {
+      "name": "protected src/device/admission-sqlite.ts",
+      "pass": true
+    },
+    {
+      "name": "protected src/device/admission.ts",
+      "pass": true
+    },
+    {
+      "name": "protected src/device/android/adb.ts",
+      "pass": true
+    },
+    {
+      "name": "protected src/device/android/agent-client.ts",
+      "pass": true
+    },
+    {
+      "name": "protected src/device/android/agent-supply.ts",
+      "pass": true
+    },
+    {
+      "name": "protected src/device/android/driver.ts",
+      "pass": true
+    },
+    {
+      "name": "protected src/device/android/exit-watch.ts",
+      "pass": true
+    },
+    {
+      "name": "protected src/device/android/ledger.ts",
+      "pass": true
+    },
+    {
+      "name": "protected src/device/android/logcat.ts",
+      "pass": true
+    },
+    {
+      "name": "protected src/device/android/mapping.ts",
+      "pass": true
+    },
+    {
+      "name": "protected src/device/android/settle.ts",
+      "pass": true
+    },
+    {
+      "name": "protected src/device/android/threadtime.ts",
+      "pass": true
+    },
+    {
+      "name": "protected src/device/android/tools.ts",
+      "pass": true
+    },
+    {
+      "name": "protected src/device/attach.ts",
+      "pass": true
+    },
+    {
+      "name": "protected src/device/factory.ts",
+      "pass": true
+    },
+    {
+      "name": "protected src/device/image.ts",
+      "pass": true
+    },
+    {
+      "name": "protected src/device/index.ts",
+      "pass": true
+    },
+    {
+      "name": "protected src/device/lease.ts",
+      "pass": true
+    },
+    {
+      "name": "protected src/device/logs.ts",
+      "pass": true
+    },
+    {
+      "name": "protected src/driven/candidates.ts",
+      "pass": true
+    },
+    {
+      "name": "protected src/driven/decide.ts",
+      "pass": true
+    },
+    {
+      "name": "protected src/driven/handback.ts",
+      "pass": true
+    },
+    {
+      "name": "protected src/driven/marker.ts",
+      "pass": true
+    },
+    {
+      "name": "protected src/driven/policy.ts",
+      "pass": true
+    },
+    {
+      "name": "protected src/driven/project.ts",
+      "pass": true
+    },
+    {
+      "name": "protected src/driven/step.ts",
+      "pass": true
+    },
+    {
+      "name": "protected src/driven/vocabulary.ts",
+      "pass": true
+    },
+    {
+      "name": "protected src/exit-codes.ts",
+      "pass": true
+    },
+    {
+      "name": "protected src/experimental/observed-journal.ts",
+      "pass": true
+    },
+    {
+      "name": "protected src/experimental/observed-run.ts",
+      "pass": true
+    },
+    {
+      "name": "protected src/experimental/observed-tap.ts",
+      "pass": true
+    },
+    {
+      "name": "protected src/log/index.ts",
+      "pass": true
+    },
+    {
+      "name": "protected src/logpane/attach.ts",
+      "pass": true
+    },
+    {
+      "name": "protected src/logpane/format.ts",
+      "pass": true
+    },
+    {
+      "name": "protected src/logpane/stream.ts",
+      "pass": true
+    },
+    {
+      "name": "protected src/logpane/window.ts",
+      "pass": true
+    },
+    {
+      "name": "protected src/mcp/index.ts",
+      "pass": true
+    },
+    {
+      "name": "protected src/mcp/observed.ts",
+      "pass": true
+    },
+    {
+      "name": "protected src/observed/allocation-schema.ts",
+      "pass": true
+    },
+    {
+      "name": "protected src/observed/artifact.ts",
+      "pass": true
+    },
+    {
+      "name": "protected src/observed/cli.ts",
+      "pass": true
+    },
+    {
+      "name": "protected src/observed/create-source.ts",
+      "pass": true
+    },
+    {
+      "name": "protected src/observed/evidence.ts",
+      "pass": true
+    },
+    {
+      "name": "protected src/observed/installed-plist.ts",
+      "pass": true
+    },
+    {
+      "name": "protected src/observed/report.ts",
+      "pass": true
+    },
+    {
+      "name": "protected src/observed/schema.ts",
+      "pass": true
+    },
+    {
+      "name": "protected src/observed/service.ts",
+      "pass": true
+    },
+    {
+      "name": "protected src/observed/supplied-source.ts",
+      "pass": true
+    },
+    {
+      "name": "protected src/process.ts",
+      "pass": true
+    },
+    {
+      "name": "protected src/scripted/contracts.ts",
+      "pass": true
+    },
+    {
+      "name": "protected src/scripted/jev.ts",
+      "pass": true
+    },
+    {
+      "name": "protected src/scripted/observe.ts",
+      "pass": true
+    },
+    {
+      "name": "protected src/scripted/report-json.ts",
+      "pass": true
+    },
+    {
+      "name": "protected src/scripted/report.ts",
+      "pass": true
+    },
+    {
+      "name": "protected src/scripted/run.ts",
+      "pass": true
+    },
+    {
+      "name": "protected src/scripted/schema.ts",
+      "pass": true
+    },
+    {
+      "name": "protected src/scripted/select.ts",
+      "pass": true
+    },
+    {
+      "name": "protected src/scripted/vocabulary.ts",
+      "pass": true
+    },
+    {
+      "name": "protected src/service.ts",
+      "pass": true
+    },
+    {
+      "name": "protected src/version.ts",
+      "pass": true
+    },
+    {
+      "name": "protected src/watch/index.ts",
+      "pass": true
+    },
+    {
+      "name": "protected tests/admission-allocation.test.ts",
+      "pass": true
+    },
+    {
+      "name": "protected tests/admission-core.test.ts",
+      "pass": true
+    },
+    {
+      "name": "protected tests/admission-driver.test.ts",
+      "pass": true
+    },
+    {
+      "name": "protected tests/admission-maintenance-entry.test.ts",
+      "pass": true
+    },
+    {
+      "name": "protected tests/admission-migration.test.ts",
+      "pass": true
+    },
+    {
+      "name": "protected tests/android-adb.test.ts",
+      "pass": true
+    },
+    {
+      "name": "protected tests/android-agent-client.test.ts",
+      "pass": true
+    },
+    {
+      "name": "protected tests/android-agent-supply.test.ts",
+      "pass": true
+    },
+    {
+      "name": "protected tests/android-capture.test.ts",
+      "pass": true
+    },
+    {
+      "name": "protected tests/android-cli-signal.test.ts",
+      "pass": true
+    },
+    {
+      "name": "protected tests/android-device.test.ts",
+      "pass": true
+    },
+    {
+      "name": "protected tests/android-driven-actions.test.ts",
+      "pass": true
+    },
+    {
+      "name": "protected tests/android-driver.test.ts",
+      "pass": true
+    },
+    {
+      "name": "protected tests/android-evidence-scripts.test.ts",
+      "pass": true
+    },
+    {
+      "name": "protected tests/android-exit-watch.test.ts",
+      "pass": true
+    },
+    {
+      "name": "protected tests/android-ledger.test.ts",
+      "pass": true
+    },
+    {
+      "name": "protected tests/android-logcat-line.test.ts",
+      "pass": true
+    },
+    {
+      "name": "protected tests/android-logcat.test.ts",
+      "pass": true
+    },
+    {
+      "name": "protected tests/android-mapping.test.ts",
+      "pass": true
+    },
+    {
+      "name": "protected tests/android-settle.test.ts",
+      "pass": true
+    },
+    {
+      "name": "protected tests/android-tools.test.ts",
+      "pass": true
+    },
+    {
+      "name": "protected tests/contract.test.ts",
+      "pass": true
+    },
+    {
+      "name": "protected tests/device-driven-actions.test.ts",
+      "pass": true
+    },
+    {
+      "name": "protected tests/device-factory.test.ts",
+      "pass": true
+    },
+    {
+      "name": "protected tests/device-lease.test.ts",
+      "pass": true
+    },
+    {
+      "name": "protected tests/device.test.ts",
+      "pass": true
+    },
+    {
+      "name": "protected tests/docs.test.ts",
+      "pass": true
+    },
+    {
+      "name": "protected tests/driven-android-pause.test.ts",
+      "pass": true
+    },
+    {
+      "name": "protected tests/driven-candidates.test.ts",
+      "pass": true
+    },
+    {
+      "name": "protected tests/driven-decide.test.ts",
+      "pass": true
+    },
+    {
+      "name": "protected tests/driven-docs.test.ts",
+      "pass": true
+    },
+    {
+      "name": "protected tests/driven-handback.test.ts",
+      "pass": true
+    },
+    {
+      "name": "protected tests/driven-late-screen.test.ts",
+      "pass": true
+    },
+    {
+      "name": "protected tests/driven-live-check-fixes.test.ts",
+      "pass": true
+    },
+    {
+      "name": "protected tests/driven-local-and-preflight.test.ts",
+      "pass": true
+    },
+    {
+      "name": "protected tests/driven-masking-and-preflight-log.test.ts",
+      "pass": true
+    },
+    {
+      "name": "protected tests/driven-opt-in.test.ts",
+      "pass": true
+    },
+    {
+      "name": "protected tests/driven-policy.test.ts",
+      "pass": true
+    },
+    {
+      "name": "protected tests/driven-privacy-and-pause.test.ts",
+      "pass": true
+    },
+    {
+      "name": "protected tests/driven-project.test.ts",
+      "pass": true
+    },
+    {
+      "name": "protected tests/driven-review-round4.test.ts",
+      "pass": true
+    },
+    {
+      "name": "protected tests/driven-safety.test.ts",
+      "pass": true
+    },
+    {
+      "name": "protected tests/driven-step.test.ts",
+      "pass": true
+    },
+    {
+      "name": "protected tests/driven-unforgeable-marker.test.ts",
+      "pass": true
+    },
+    {
+      "name": "protected tests/driven-wall-time.test.ts",
+      "pass": true
+    },
+    {
+      "name": "protected tests/evidence.test.ts",
+      "pass": true
+    },
+    {
+      "name": "protected tests/feasibility.test.ts",
+      "pass": true
+    },
+    {
+      "name": "protected tests/fixtures/adb-spawn.ts",
+      "pass": true
+    },
+    {
+      "name": "protected tests/fixtures/admission-core-worker.ts",
+      "pass": true
+    },
+    {
+      "name": "protected tests/fixtures/admission-migration/crash-worker.ts",
+      "pass": true
+    },
+    {
+      "name": "protected tests/fixtures/allocation-store-worker.ts",
+      "pass": true
+    },
+    {
+      "name": "protected tests/fixtures/android-device.ts",
+      "pass": true
+    },
+    {
+      "name": "protected tests/fixtures/android-script.ts",
+      "pass": true
+    },
+    {
+      "name": "protected tests/fixtures/android-tools.ts",
+      "pass": true
+    },
+    {
+      "name": "protected tests/fixtures/android/adb/README.md",
+      "pass": true
+    },
+    {
+      "name": "protected tests/fixtures/android/adb/api31/am-start-W-extras.txt",
+      "pass": true
+    },
+    {
+      "name": "protected tests/fixtures/android/adb/api31/am-start-W-no-activity.txt",
+      "pass": true
+    },
+    {
+      "name": "protected tests/fixtures/android/adb/api31/devices-l.txt",
+      "pass": true
+    },
+    {
+      "name": "protected tests/fixtures/android/adb/api31/environ-foreign-agent.bin",
+      "pass": true
+    },
+    {
+      "name": "protected tests/fixtures/android/adb/api31/environ-own-agent.bin",
+      "pass": true
+    },
+    {
+      "name": "protected tests/fixtures/android/adb/api31/forward-list-empty.txt",
+      "pass": true
+    },
+    {
+      "name": "protected tests/fixtures/android/adb/api31/forward-list-own.txt",
+      "pass": true
+    },
+    {
+      "name": "protected tests/fixtures/android/adb/api31/getprop-ro.boot.qemu.avd_name.txt",
+      "pass": true
+    },
+    {
+      "name": "protected tests/fixtures/android/adb/api31/getprop-ro.build.version.sdk.txt",
+      "pass": true
+    },
+    {
+      "name": "protected tests/fixtures/android/adb/api31/getprop-sys.boot_completed.txt",
+      "pass": true
+    },
+    {
+      "name": "protected tests/fixtures/android/adb/api31/pm-path-not-installed.txt",
+      "pass": true
+    },
+    {
+      "name": "protected tests/fixtures/android/adb/api31/pm-path-settings.txt",
+      "pass": true
+    },
+    {
+      "name": "protected tests/fixtures/android/adb/api31/ps-foreign-agent.txt",
+      "pass": true
+    },
+    {
+      "name": "protected tests/fixtures/android/adb/api31/ps-no-agent.txt",
+      "pass": true
+    },
+    {
+      "name": "protected tests/fixtures/android/adb/api31/ps-own-agent.txt",
+      "pass": true
+    },
+    {
+      "name": "protected tests/fixtures/android/adb/api31/resolve-launcher-actionsprobe.txt",
+      "pass": true
+    },
+    {
+      "name": "protected tests/fixtures/android/adb/api31/resolve-launcher-none.txt",
+      "pass": true
+    },
+    {
+      "name": "protected tests/fixtures/android/adb/api31/resolve-launcher-settings.txt",
+      "pass": true
+    },
+    {
+      "name": "protected tests/fixtures/android/adb/api31/window-policy-locked.derived.txt",
+      "pass": true
+    },
+    {
+      "name": "protected tests/fixtures/android/adb/api31/window-policy-off.txt",
+      "pass": true
+    },
+    {
+      "name": "protected tests/fixtures/android/adb/api31/window-policy-on.txt",
+      "pass": true
+    },
+    {
+      "name": "protected tests/fixtures/android/adb/api31/window-policy-woken.txt",
+      "pass": true
+    },
+    {
+      "name": "protected tests/fixtures/android/adb/api36/am-start-W-extras.txt",
+      "pass": true
+    },
+    {
+      "name": "protected tests/fixtures/android/adb/api36/am-start-W-no-activity.txt",
+      "pass": true
+    },
+    {
+      "name": "protected tests/fixtures/android/adb/api36/devices-l.txt",
+      "pass": true
+    },
+    {
+      "name": "protected tests/fixtures/android/adb/api36/environ-foreign-agent.bin",
+      "pass": true
+    },
+    {
+      "name": "protected tests/fixtures/android/adb/api36/environ-gone.stderr.txt",
+      "pass": true
+    },
+    {
+      "name": "protected tests/fixtures/android/adb/api36/environ-own-agent.bin",
+      "pass": true
+    },
+    {
+      "name": "protected tests/fixtures/android/adb/api36/forward-cannot-bind.stderr.txt",
+      "pass": true
+    },
+    {
+      "name": "protected tests/fixtures/android/adb/api36/forward-list-own.txt",
+      "pass": true
+    },
+    {
+      "name": "protected tests/fixtures/android/adb/api36/forward-remove-gone.stderr.txt",
+      "pass": true
+    },
+    {
+      "name": "protected tests/fixtures/android/adb/api36/getprop-ro.boot.qemu.avd_name.txt",
+      "pass": true
+    },
+    {
+      "name": "protected tests/fixtures/android/adb/api36/getprop-ro.build.version.sdk.txt",
+      "pass": true
+    },
+    {
+      "name": "protected tests/fixtures/android/adb/api36/getprop-sys.boot_completed.txt",
+      "pass": true
+    },
+    {
+      "name": "protected tests/fixtures/android/adb/api36/kill-gone.stderr.txt",
+      "pass": true
+    },
+    {
+      "name": "protected tests/fixtures/android/adb/api36/pm-path-not-installed.txt",
+      "pass": true
+    },
+    {
+      "name": "protected tests/fixtures/android/adb/api36/pm-path-settings.txt",
+      "pass": true
+    },
+    {
+      "name": "protected tests/fixtures/android/adb/api36/ps-foreign-agent.txt",
+      "pass": true
+    },
+    {
+      "name": "protected tests/fixtures/android/adb/api36/ps-no-agent.txt",
+      "pass": true
+    },
+    {
+      "name": "protected tests/fixtures/android/adb/api36/ps-own-agent.txt",
+      "pass": true
+    },
+    {
+      "name": "protected tests/fixtures/android/adb/api36/resolve-launcher-none.txt",
+      "pass": true
+    },
+    {
+      "name": "protected tests/fixtures/android/adb/api36/resolve-launcher-settings.txt",
+      "pass": true
+    },
+    {
+      "name": "protected tests/fixtures/android/adb/api36/window-policy-locked.derived.txt",
+      "pass": true
+    },
+    {
+      "name": "protected tests/fixtures/android/adb/api36/window-policy-off.txt",
+      "pass": true
+    },
+    {
+      "name": "protected tests/fixtures/android/adb/api36/window-policy-on.txt",
+      "pass": true
+    },
+    {
+      "name": "protected tests/fixtures/android/adb/api36/window-policy-woken.txt",
+      "pass": true
+    },
+    {
+      "name": "protected tests/fixtures/android/adb/forward-list-two-emulators.txt",
+      "pass": true
+    },
+    {
+      "name": "protected tests/fixtures/android/agent/api31-empty-classic-fields.json",
+      "pass": true
+    },
+    {
+      "name": "protected tests/fixtures/android/agent/api36-empty-settings-search.json",
+      "pass": true
+    },
+    {
+      "name": "protected tests/fixtures/android/api36-lists-scrollable.json",
+      "pass": true
+    },
+    {
+      "name": "protected tests/fixtures/android/captures/cmp-1-launch.json",
+      "pass": true
+    },
+    {
+      "name": "protected tests/fixtures/android/captures/cmp-2-home.json",
+      "pass": true
+    },
+    {
+      "name": "protected tests/fixtures/android/captures/cmp-3-number-input.json",
+      "pass": true
+    },
+    {
+      "name": "protected tests/fixtures/android/captures/cmp-4-fullscreen-modal.json",
+      "pass": true
+    },
+    {
+      "name": "protected tests/fixtures/android/captures/settings-1-main.json",
+      "pass": true
+    },
+    {
+      "name": "protected tests/fixtures/android/captures/settings-2-display.json",
+      "pass": true
+    },
+    {
+      "name": "protected tests/fixtures/android/captures/settings-3-search.json",
+      "pass": true
+    },
+    {
+      "name": "protected tests/fixtures/android/captures/twin-1-choose.json",
+      "pass": true
+    },
+    {
+      "name": "protected tests/fixtures/android/captures/twin-2-apple-added.json",
+      "pass": true
+    },
+    {
+      "name": "protected tests/fixtures/android/captures/twin-3-confirmation.json",
+      "pass": true
+    },
+    {
+      "name": "protected tests/fixtures/android/logcat/README.md",
+      "pass": true
+    },
+    {
+      "name": "protected tests/fixtures/android/logcat/probe-anr/events.log",
+      "pass": true
+    },
+    {
+      "name": "protected tests/fixtures/android/logcat/probe-anr/meta.txt",
+      "pass": true
+    },
+    {
+      "name": "protected tests/fixtures/android/logcat/probe-anr/uid.log",
+      "pass": true
+    },
+    {
+      "name": "protected tests/fixtures/android/logcat/probe-bgcrash/events.log",
+      "pass": true
+    },
+    {
+      "name": "protected tests/fixtures/android/logcat/probe-bgcrash/meta.txt",
+      "pass": true
+    },
+    {
+      "name": "protected tests/fixtures/android/logcat/probe-bgcrash/uid.log",
+      "pass": true
+    },
+    {
+      "name": "protected tests/fixtures/android/logcat/probe-crash/events.log",
+      "pass": true
+    },
+    {
+      "name": "protected tests/fixtures/android/logcat/probe-crash/meta.txt",
+      "pass": true
+    },
+    {
+      "name": "protected tests/fixtures/android/logcat/probe-crash/uid.log",
+      "pass": true
+    },
+    {
+      "name": "protected tests/fixtures/android/logcat/probe-exit/events.log",
+      "pass": true
+    },
+    {
+      "name": "protected tests/fixtures/android/logcat/probe-exit/meta.txt",
+      "pass": true
+    },
+    {
+      "name": "protected tests/fixtures/android/logcat/probe-exit/uid.log",
+      "pass": true
+    },
+    {
+      "name": "protected tests/fixtures/android/logcat/probe-finish/events.log",
+      "pass": true
+    },
+    {
+      "name": "protected tests/fixtures/android/logcat/probe-finish/meta.txt",
+      "pass": true
+    },
+    {
+      "name": "protected tests/fixtures/android/logcat/probe-finish/uid.log",
+      "pass": true
+    },
+    {
+      "name": "protected tests/fixtures/android/logcat/probe-native/events.log",
+      "pass": true
+    },
+    {
+      "name": "protected tests/fixtures/android/logcat/probe-native/meta.txt",
+      "pass": true
+    },
+    {
+      "name": "protected tests/fixtures/android/logcat/probe-native/uid.log",
+      "pass": true
+    },
+    {
+      "name": "protected tests/fixtures/android/logcat/probe-normal/events.log",
+      "pass": true
+    },
+    {
+      "name": "protected tests/fixtures/android/logcat/probe-normal/meta.txt",
+      "pass": true
+    },
+    {
+      "name": "protected tests/fixtures/android/logcat/probe-normal/uid.log",
+      "pass": true
+    },
+    {
+      "name": "protected tests/fixtures/android/logcat/twin-amcrash/events.log",
+      "pass": true
+    },
+    {
+      "name": "protected tests/fixtures/android/logcat/twin-amcrash/meta.txt",
+      "pass": true
+    },
+    {
+      "name": "protected tests/fixtures/android/logcat/twin-amcrash/uid.log",
+      "pass": true
+    },
+    {
+      "name": "protected tests/fixtures/android/logcat/twin-forcestop/events.log",
+      "pass": true
+    },
+    {
+      "name": "protected tests/fixtures/android/logcat/twin-forcestop/meta.txt",
+      "pass": true
+    },
+    {
+      "name": "protected tests/fixtures/android/logcat/twin-forcestop/uid.log",
+      "pass": true
+    },
+    {
+      "name": "protected tests/fixtures/android/logcat/twin-home/events.log",
+      "pass": true
+    },
+    {
+      "name": "protected tests/fixtures/android/logcat/twin-home/meta.txt",
+      "pass": true
+    },
+    {
+      "name": "protected tests/fixtures/android/logcat/twin-home/uid.log",
+      "pass": true
+    },
+    {
+      "name": "protected tests/fixtures/android/logcat/twin-kill9/events.log",
+      "pass": true
+    },
+    {
+      "name": "protected tests/fixtures/android/logcat/twin-kill9/meta.txt",
+      "pass": true
+    },
+    {
+      "name": "protected tests/fixtures/android/logcat/twin-kill9/uid.log",
+      "pass": true
+    },
+    {
+      "name": "protected tests/fixtures/android/logcat/twin-normal/events.log",
+      "pass": true
+    },
+    {
+      "name": "protected tests/fixtures/android/logcat/twin-normal/meta.txt",
+      "pass": true
+    },
+    {
+      "name": "protected tests/fixtures/android/logcat/twin-normal/uid.log",
+      "pass": true
+    },
+    {
+      "name": "protected tests/fixtures/android/logcat/twin-segv/events.log",
+      "pass": true
+    },
+    {
+      "name": "protected tests/fixtures/android/logcat/twin-segv/meta.txt",
+      "pass": true
+    },
+    {
+      "name": "protected tests/fixtures/android/logcat/twin-segv/uid.log",
+      "pass": true
+    },
+    {
+      "name": "protected tests/fixtures/android/observations/cmp-1-launch.txt",
+      "pass": true
+    },
+    {
+      "name": "protected tests/fixtures/android/observations/cmp-2-home.txt",
+      "pass": true
+    },
+    {
+      "name": "protected tests/fixtures/android/observations/cmp-3-number-input.txt",
+      "pass": true
+    },
+    {
+      "name": "protected tests/fixtures/android/observations/cmp-4-fullscreen-modal.txt",
+      "pass": true
+    },
+    {
+      "name": "protected tests/fixtures/android/observations/settings-1-main.txt",
+      "pass": true
+    },
+    {
+      "name": "protected tests/fixtures/android/observations/settings-2-display.txt",
+      "pass": true
+    },
+    {
+      "name": "protected tests/fixtures/android/observations/settings-3-search.txt",
+      "pass": true
+    },
+    {
+      "name": "protected tests/fixtures/android/observations/twin-1-choose.txt",
+      "pass": true
+    },
+    {
+      "name": "protected tests/fixtures/android/observations/twin-2-apple-added.txt",
+      "pass": true
+    },
+    {
+      "name": "protected tests/fixtures/android/observations/twin-3-confirmation.txt",
+      "pass": true
+    },
+    {
+      "name": "protected tests/fixtures/android/text-fields.json",
+      "pass": true
+    },
+    {
+      "name": "protected tests/fixtures/capture.ts",
+      "pass": true
+    },
+    {
+      "name": "protected tests/fixtures/driven-judge.ts",
+      "pass": true
+    },
+    {
+      "name": "protected tests/fixtures/frozen-schema-819ea10/contracts.ts",
+      "pass": true
+    },
+    {
+      "name": "protected tests/fixtures/frozen-schema-819ea10/schema.ts",
+      "pass": true
+    },
+    {
+      "name": "protected tests/fixtures/frozen-schema-819ea10/vocabulary.ts",
+      "pass": true
+    },
+    {
+      "name": "protected tests/fixtures/golden.ts",
+      "pass": true
+    },
+    {
+      "name": "protected tests/fixtures/mcp-driven-server.ts",
+      "pass": true
+    },
+    {
+      "name": "protected tests/fixtures/mcp-env-server.ts",
+      "pass": true
+    },
+    {
+      "name": "protected tests/fixtures/mcp-server.ts",
+      "pass": true
+    },
+    {
+      "name": "protected tests/fixtures/mcp-session.ts",
+      "pass": true
+    },
+    {
+      "name": "protected tests/fixtures/observed-artifacts/Fixture.app/Fixture",
+      "pass": true
+    },
+    {
+      "name": "protected tests/fixtures/observed-artifacts/Fixture.app/Info.plist",
+      "pass": true
+    },
+    {
+      "name": "protected tests/fixtures/observed-cli-server.ts",
+      "pass": true
+    },
+    {
+      "name": "protected tests/fixtures/observed-host/allocator-public.ts",
+      "pass": true
+    },
+    {
+      "name": "protected tests/fixtures/observed-host/case-matrix.json",
+      "pass": true
+    },
+    {
+      "name": "protected tests/fixtures/observed-host/early-cli.ts",
+      "pass": true
+    },
+    {
+      "name": "protected tests/fixtures/observed-host/harness.ts",
+      "pass": true
+    },
+    {
+      "name": "protected tests/fixtures/observed-host/owner.ts",
+      "pass": true
+    },
+    {
+      "name": "protected tests/fixtures/observed-mcp-server.ts",
+      "pass": true
+    },
+    {
+      "name": "protected tests/fixtures/observed-packaging/guard.mjs",
+      "pass": true
+    },
+    {
+      "name": "protected tests/fixtures/observed-packaging/proof.mjs",
+      "pass": true
+    },
+    {
+      "name": "protected tests/fixtures/run-log.ts",
+      "pass": true
+    },
+    {
+      "name": "protected tests/golden/android-capture.json",
+      "pass": true
+    },
+    {
+      "name": "protected tests/golden/android-elements.json",
+      "pass": true
+    },
+    {
+      "name": "protected tests/golden/android-render.json",
+      "pass": true
+    },
+    {
+      "name": "protected tests/golden/cli-exit-codes.json",
+      "pass": true
+    },
+    {
+      "name": "protected tests/golden/evidence-layout.json",
+      "pass": true
+    },
+    {
+      "name": "protected tests/golden/mcp.json",
+      "pass": true
+    },
+    {
+      "name": "protected tests/golden/observed-mcp-v1.json",
+      "pass": true
+    },
+    {
+      "name": "protected tests/golden/observed-replies-v1.json",
+      "pass": true
+    },
+    {
+      "name": "protected tests/golden/report-json-android.json",
+      "pass": true
+    },
+    {
+      "name": "protected tests/golden/report-json-driven.json",
+      "pass": true
+    },
+    {
+      "name": "protected tests/golden/report-json.json",
+      "pass": true
+    },
+    {
+      "name": "protected tests/golden/report-text-driven.json",
+      "pass": true
+    },
+    {
+      "name": "protected tests/golden/scripts.json",
+      "pass": true
+    },
+    {
+      "name": "protected tests/golden/vocabulary.json",
+      "pass": true
+    },
+    {
+      "name": "protected tests/installed-plist.test.ts",
+      "pass": true
+    },
+    {
+      "name": "protected tests/integration-edge.test.ts",
+      "pass": true
+    },
+    {
+      "name": "protected tests/jev-drives-candidates.test.ts",
+      "pass": true
+    },
+    {
+      "name": "protected tests/jev-drives-harness.test.ts",
+      "pass": true
+    },
+    {
+      "name": "protected tests/jev.test.ts",
+      "pass": true
+    },
+    {
+      "name": "protected tests/lease.test.ts",
+      "pass": true
+    },
+    {
+      "name": "protected tests/log-driven.test.ts",
+      "pass": true
+    },
+    {
+      "name": "protected tests/logpane.test.ts",
+      "pass": true
+    },
+    {
+      "name": "protected tests/mcp-handback.test.ts",
+      "pass": true
+    },
+    {
+      "name": "protected tests/mcp.test.ts",
+      "pass": true
+    },
+    {
+      "name": "protected tests/observation.test.ts",
+      "pass": true
+    },
+    {
+      "name": "protected tests/observed-allocation-config.test.ts",
+      "pass": true
+    },
+    {
+      "name": "protected tests/observed-allocation.test.ts",
+      "pass": true
+    },
+    {
+      "name": "protected tests/observed-artifact.test.ts",
+      "pass": true
+    },
+    {
+      "name": "protected tests/observed-cli.test.ts",
+      "pass": true
+    },
+    {
+      "name": "protected tests/observed-contract.test.ts",
+      "pass": true
+    },
+    {
+      "name": "protected tests/observed-crash.test.ts",
+      "pass": true
+    },
+    {
+      "name": "protected tests/observed-docs.test.ts",
+      "pass": true
+    },
+    {
+      "name": "protected tests/observed-evidence.test.ts",
+      "pass": true
+    },
+    {
+      "name": "protected tests/observed-host-fault.test.ts",
+      "pass": true
+    },
+    {
+      "name": "protected tests/observed-journal.test.ts",
+      "pass": true
+    },
+    {
+      "name": "protected tests/observed-mcp.test.ts",
+      "pass": true
+    },
+    {
+      "name": "protected tests/observed-packaging.test.ts",
+      "pass": true
+    },
+    {
+      "name": "protected tests/observed-public-races.test.ts",
+      "pass": true
+    },
+    {
+      "name": "protected tests/observed-run.test.ts",
+      "pass": true
+    },
+    {
+      "name": "protected tests/observed-schema.test.ts",
+      "pass": true
+    },
+    {
+      "name": "protected tests/observed-service.test.ts",
+      "pass": true
+    },
+    {
+      "name": "protected tests/observed-sources.test.ts",
+      "pass": true
+    },
+    {
+      "name": "protected tests/observed-tap.test.ts",
+      "pass": true
+    },
+    {
+      "name": "protected tests/observed-touch-integration.test.ts",
+      "pass": true
+    },
+    {
+      "name": "protected tests/plugin-driven-setting.test.ts",
+      "pass": true
+    },
+    {
+      "name": "protected tests/plugin.test.ts",
+      "pass": true
+    },
+    {
+      "name": "protected tests/preflight-processes.test.ts",
+      "pass": true
+    },
+    {
+      "name": "protected tests/report-driven.test.ts",
+      "pass": true
+    },
+    {
+      "name": "protected tests/script-v2.test.ts",
+      "pass": true
+    },
+    {
+      "name": "protected tests/scripted-feasibility.test.ts",
+      "pass": true
+    },
+    {
+      "name": "protected tests/scripted-integration.test.ts",
+      "pass": true
+    },
+    {
+      "name": "protected tests/scripted-jev-android.test.ts",
+      "pass": true
+    },
+    {
+      "name": "protected tests/scripted-jev.test.ts",
+      "pass": true
+    },
+    {
+      "name": "protected tests/scripted-production-parity.test.ts",
+      "pass": true
+    },
+    {
+      "name": "protected tests/scripted-production.test.ts",
+      "pass": true
+    },
+    {
+      "name": "protected tests/scripted-run.test.ts",
+      "pass": true
+    },
+    {
+      "name": "protected tests/scripted-schema-parity.test.ts",
+      "pass": true
+    },
+    {
+      "name": "protected tests/scripted-schema.test.ts",
+      "pass": true
+    },
+    {
+      "name": "protected tests/service-handback.test.ts",
+      "pass": true
+    },
+    {
+      "name": "protected tests/service.test.ts",
+      "pass": true
+    },
+    {
+      "name": "protected tests/simulator-window.test.ts",
+      "pass": true
+    },
+    {
+      "name": "protected tests/start-attach.test.ts",
+      "pass": true
+    },
+    {
+      "name": "protected tests/values-from-env.test.ts",
+      "pass": true
+    },
+    {
+      "name": "protected tests/watch-driven.test.ts",
+      "pass": true
+    },
+    {
+      "name": "protected tsconfig.build.json",
+      "pass": true
+    },
+    {
+      "name": "protected tsconfig.json",
+      "pass": true
+    },
+    {
+      "name": "protected tests/fixtures/observed-allocation-backend.ts",
+      "pass": true
+    },
+    {
+      "name": "protected tests/observed-cryptex-runtime.test.ts",
+      "pass": true
+    },
+    {
+      "name": "protected tests/fixtures/observed-cryptex-runtime.ts",
+      "pass": true
+    },
+    {
+      "name": "compiled dist/capture.js",
+      "pass": true
+    },
+    {
+      "name": "compiled dist/cli.js",
+      "pass": true
+    },
+    {
+      "name": "compiled dist/contracts/index.js",
+      "pass": true
+    },
+    {
+      "name": "compiled dist/device/admission-allocation.js",
+      "pass": true
+    },
+    {
+      "name": "compiled dist/device/admission-maintenance.js",
+      "pass": true
+    },
+    {
+      "name": "compiled dist/device/admission-migration.js",
+      "pass": true
+    },
+    {
+      "name": "compiled dist/device/admission-sqlite.js",
+      "pass": true
+    },
+    {
+      "name": "compiled dist/device/admission.js",
+      "pass": true
+    },
+    {
+      "name": "compiled dist/device/android/adb.js",
+      "pass": true
+    },
+    {
+      "name": "compiled dist/device/android/agent-client.js",
+      "pass": true
+    },
+    {
+      "name": "compiled dist/device/android/agent-supply.js",
+      "pass": true
+    },
+    {
+      "name": "compiled dist/device/android/driver.js",
+      "pass": true
+    },
+    {
+      "name": "compiled dist/device/android/exit-watch.js",
+      "pass": true
+    },
+    {
+      "name": "compiled dist/device/android/ledger.js",
+      "pass": true
+    },
+    {
+      "name": "compiled dist/device/android/logcat.js",
+      "pass": true
+    },
+    {
+      "name": "compiled dist/device/android/mapping.js",
+      "pass": true
+    },
+    {
+      "name": "compiled dist/device/android/settle.js",
+      "pass": true
+    },
+    {
+      "name": "compiled dist/device/android/threadtime.js",
+      "pass": true
+    },
+    {
+      "name": "compiled dist/device/android/tools.js",
+      "pass": true
+    },
+    {
+      "name": "compiled dist/device/attach.js",
+      "pass": true
+    },
+    {
+      "name": "compiled dist/device/factory.js",
+      "pass": true
+    },
+    {
+      "name": "compiled dist/device/image.js",
+      "pass": true
+    },
+    {
+      "name": "compiled dist/device/index.js",
+      "pass": true
+    },
+    {
+      "name": "compiled dist/device/lease.js",
+      "pass": true
+    },
+    {
+      "name": "compiled dist/device/logs.js",
+      "pass": true
+    },
+    {
+      "name": "compiled dist/driven/candidates.js",
+      "pass": true
+    },
+    {
+      "name": "compiled dist/driven/decide.js",
+      "pass": true
+    },
+    {
+      "name": "compiled dist/driven/handback.js",
+      "pass": true
+    },
+    {
+      "name": "compiled dist/driven/marker.js",
+      "pass": true
+    },
+    {
+      "name": "compiled dist/driven/policy.js",
+      "pass": true
+    },
+    {
+      "name": "compiled dist/driven/project.js",
+      "pass": true
+    },
+    {
+      "name": "compiled dist/driven/step.js",
+      "pass": true
+    },
+    {
+      "name": "compiled dist/driven/vocabulary.js",
+      "pass": true
+    },
+    {
+      "name": "compiled dist/exit-codes.js",
+      "pass": true
+    },
+    {
+      "name": "compiled dist/experimental/observed-journal.js",
+      "pass": true
+    },
+    {
+      "name": "compiled dist/experimental/observed-run.js",
+      "pass": true
+    },
+    {
+      "name": "compiled dist/experimental/observed-tap.js",
+      "pass": true
+    },
+    {
+      "name": "compiled dist/log/index.js",
+      "pass": true
+    },
+    {
+      "name": "compiled dist/logpane/attach.js",
+      "pass": true
+    },
+    {
+      "name": "compiled dist/logpane/format.js",
+      "pass": true
+    },
+    {
+      "name": "compiled dist/logpane/stream.js",
+      "pass": true
+    },
+    {
+      "name": "compiled dist/logpane/window.js",
+      "pass": true
+    },
+    {
+      "name": "compiled dist/mcp/index.js",
+      "pass": true
+    },
+    {
+      "name": "compiled dist/mcp/observed.js",
+      "pass": true
+    },
+    {
+      "name": "compiled dist/observed/allocation-config.js",
+      "pass": true
+    },
+    {
+      "name": "compiled dist/observed/allocation-schema.js",
+      "pass": true
+    },
+    {
+      "name": "compiled dist/observed/allocation.js",
+      "pass": true
+    },
+    {
+      "name": "compiled dist/observed/artifact.js",
+      "pass": true
+    },
+    {
+      "name": "compiled dist/observed/cli.js",
+      "pass": true
+    },
+    {
+      "name": "compiled dist/observed/create-source.js",
+      "pass": true
+    },
+    {
+      "name": "compiled dist/observed/evidence.js",
+      "pass": true
+    },
+    {
+      "name": "compiled dist/observed/installed-plist.js",
+      "pass": true
+    },
+    {
+      "name": "compiled dist/observed/report.js",
+      "pass": true
+    },
+    {
+      "name": "compiled dist/observed/schema.js",
+      "pass": true
+    },
+    {
+      "name": "compiled dist/observed/service.js",
+      "pass": true
+    },
+    {
+      "name": "compiled dist/observed/supplied-source.js",
+      "pass": true
+    },
+    {
+      "name": "compiled dist/process.js",
+      "pass": true
+    },
+    {
+      "name": "compiled dist/scripted/contracts.js",
+      "pass": true
+    },
+    {
+      "name": "compiled dist/scripted/jev.js",
+      "pass": true
+    },
+    {
+      "name": "compiled dist/scripted/observe.js",
+      "pass": true
+    },
+    {
+      "name": "compiled dist/scripted/report-json.js",
+      "pass": true
+    },
+    {
+      "name": "compiled dist/scripted/report.js",
+      "pass": true
+    },
+    {
+      "name": "compiled dist/scripted/run.js",
+      "pass": true
+    },
+    {
+      "name": "compiled dist/scripted/schema.js",
+      "pass": true
+    },
+    {
+      "name": "compiled dist/scripted/select.js",
+      "pass": true
+    },
+    {
+      "name": "compiled dist/scripted/vocabulary.js",
+      "pass": true
+    },
+    {
+      "name": "compiled dist/service.js",
+      "pass": true
+    },
+    {
+      "name": "compiled dist/version.js",
+      "pass": true
+    },
+    {
+      "name": "compiled dist/watch/index.js",
+      "pass": true
+    },
+    {
+      "name": "three changed paths",
+      "pass": true
+    },
+    {
+      "name": "existing241 exact bodies",
+      "pass": true
+    },
+    {
+      "name": "fixture identical",
+      "pass": true
+    },
+    {
+      "name": "policy pin",
+      "pass": true
+    },
+    {
+      "name": "actual-default-node24 stdout hash",
+      "pass": true
+    },
+    {
+      "name": "actual-default-node24 stderr hash",
+      "pass": true
+    },
+    {
+      "name": "actual-default-node24 natural close",
+      "pass": true
+    },
+    {
+      "name": "actual-default-node24 source stable",
+      "pass": true
+    },
+    {
+      "name": "actual-default-node24 raw counts",
+      "pass": true
+    },
+    {
+      "name": "actual-default-node24 exit",
+      "pass": true
+    },
+    {
+      "name": "actual-default-node24 exact argv",
+      "pass": true
+    },
+    {
+      "name": "actual-default-node24 frozen candidate",
+      "pass": true
+    },
+    {
+      "name": "actual-default-node24 package steps",
+      "pass": true
+    },
+    {
+      "name": "actual-default-node26 stdout hash",
+      "pass": true
+    },
+    {
+      "name": "actual-default-node26 stderr hash",
+      "pass": true
+    },
+    {
+      "name": "actual-default-node26 natural close",
+      "pass": true
+    },
+    {
+      "name": "actual-default-node26 source stable",
+      "pass": true
+    },
+    {
+      "name": "actual-default-node26 raw counts",
+      "pass": true
+    },
+    {
+      "name": "actual-default-node26 exit",
+      "pass": true
+    },
+    {
+      "name": "actual-default-node26 exact argv",
+      "pass": true
+    },
+    {
+      "name": "actual-default-node26 frozen candidate",
+      "pass": true
+    },
+    {
+      "name": "actual-default-node26 package steps",
+      "pass": true
+    },
+    {
+      "name": "build-node24 stdout hash",
+      "pass": true
+    },
+    {
+      "name": "build-node24 stderr hash",
+      "pass": true
+    },
+    {
+      "name": "build-node24 natural close",
+      "pass": true
+    },
+    {
+      "name": "build-node24 source stable",
+      "pass": true
+    },
+    {
+      "name": "build-node24 exit",
+      "pass": true
+    },
+    {
+      "name": "build-node26 stdout hash",
+      "pass": true
+    },
+    {
+      "name": "build-node26 stderr hash",
+      "pass": true
+    },
+    {
+      "name": "build-node26 natural close",
+      "pass": true
+    },
+    {
+      "name": "build-node26 source stable",
+      "pass": true
+    },
+    {
+      "name": "build-node26 exit",
+      "pass": true
+    },
+    {
+      "name": "coverage-node24 stdout hash",
+      "pass": true
+    },
+    {
+      "name": "coverage-node24 stderr hash",
+      "pass": true
+    },
+    {
+      "name": "coverage-node24 natural close",
+      "pass": true
+    },
+    {
+      "name": "coverage-node24 source stable",
+      "pass": true
+    },
+    {
+      "name": "coverage-node24 raw counts",
+      "pass": true
+    },
+    {
+      "name": "coverage-node24 exit",
+      "pass": true
+    },
+    {
+      "name": "coverage-node26 stdout hash",
+      "pass": true
+    },
+    {
+      "name": "coverage-node26 stderr hash",
+      "pass": true
+    },
+    {
+      "name": "coverage-node26 natural close",
+      "pass": true
+    },
+    {
+      "name": "coverage-node26 source stable",
+      "pass": true
+    },
+    {
+      "name": "coverage-node26 raw counts",
+      "pass": true
+    },
+    {
+      "name": "coverage-node26 exit",
+      "pass": true
+    },
+    {
+      "name": "final-green-node24 stdout hash",
+      "pass": true
+    },
+    {
+      "name": "final-green-node24 stderr hash",
+      "pass": true
+    },
+    {
+      "name": "final-green-node24 natural close",
+      "pass": true
+    },
+    {
+      "name": "final-green-node24 source stable",
+      "pass": true
+    },
+    {
+      "name": "final-green-node24 raw counts",
+      "pass": true
+    },
+    {
+      "name": "final-green-node24 exit",
+      "pass": true
+    },
+    {
+      "name": "final-green-node26 stdout hash",
+      "pass": true
+    },
+    {
+      "name": "final-green-node26 stderr hash",
+      "pass": true
+    },
+    {
+      "name": "final-green-node26 natural close",
+      "pass": true
+    },
+    {
+      "name": "final-green-node26 source stable",
+      "pass": true
+    },
+    {
+      "name": "final-green-node26 raw counts",
+      "pass": true
+    },
+    {
+      "name": "final-green-node26 exit",
+      "pass": true
+    },
+    {
+      "name": "focused-node24 stdout hash",
+      "pass": true
+    },
+    {
+      "name": "focused-node24 stderr hash",
+      "pass": true
+    },
+    {
+      "name": "focused-node24 natural close",
+      "pass": true
+    },
+    {
+      "name": "focused-node24 source stable",
+      "pass": true
+    },
+    {
+      "name": "focused-node24 raw counts",
+      "pass": true
+    },
+    {
+      "name": "focused-node24 exit",
+      "pass": true
+    },
+    {
+      "name": "focused-node26 stdout hash",
+      "pass": true
+    },
+    {
+      "name": "focused-node26 stderr hash",
+      "pass": true
+    },
+    {
+      "name": "focused-node26 natural close",
+      "pass": true
+    },
+    {
+      "name": "focused-node26 source stable",
+      "pass": true
+    },
+    {
+      "name": "focused-node26 raw counts",
+      "pass": true
+    },
+    {
+      "name": "focused-node26 exit",
+      "pass": true
+    },
+    {
+      "name": "green-node26 stdout hash",
+      "pass": true
+    },
+    {
+      "name": "green-node26 stderr hash",
+      "pass": true
+    },
+    {
+      "name": "green-node26 natural close",
+      "pass": true
+    },
+    {
+      "name": "green-node26 source stable",
+      "pass": true
+    },
+    {
+      "name": "green-node26 raw counts",
+      "pass": true
+    },
+    {
+      "name": "green-node26 exit",
+      "pass": true
+    },
+    {
+      "name": "isolation-node24 stdout hash",
+      "pass": true
+    },
+    {
+      "name": "isolation-node24 stderr hash",
+      "pass": true
+    },
+    {
+      "name": "isolation-node24 natural close",
+      "pass": true
+    },
+    {
+      "name": "isolation-node24 source stable",
+      "pass": true
+    },
+    {
+      "name": "isolation-node24 raw counts",
+      "pass": true
+    },
+    {
+      "name": "isolation-node24 exit",
+      "pass": true
+    },
+    {
+      "name": "isolation-node26 stdout hash",
+      "pass": true
+    },
+    {
+      "name": "isolation-node26 stderr hash",
+      "pass": true
+    },
+    {
+      "name": "isolation-node26 natural close",
+      "pass": true
+    },
+    {
+      "name": "isolation-node26 source stable",
+      "pass": true
+    },
+    {
+      "name": "isolation-node26 raw counts",
+      "pass": true
+    },
+    {
+      "name": "isolation-node26 exit",
+      "pass": true
+    },
+    {
+      "name": "red-node24 stdout hash",
+      "pass": true
+    },
+    {
+      "name": "red-node24 stderr hash",
+      "pass": true
+    },
+    {
+      "name": "red-node24 natural close",
+      "pass": true
+    },
+    {
+      "name": "red-node24 source stable",
+      "pass": true
+    },
+    {
+      "name": "red-node24 raw counts",
+      "pass": true
+    },
+    {
+      "name": "red-node24 exit",
+      "pass": true
+    },
+    {
+      "name": "red-node26 stdout hash",
+      "pass": true
+    },
+    {
+      "name": "red-node26 stderr hash",
+      "pass": true
+    },
+    {
+      "name": "red-node26 natural close",
+      "pass": true
+    },
+    {
+      "name": "red-node26 source stable",
+      "pass": true
+    },
+    {
+      "name": "red-node26 raw counts",
+      "pass": true
+    },
+    {
+      "name": "red-node26 exit",
+      "pass": true
+    },
+    {
+      "name": "typecheck-node24 stdout hash",
+      "pass": true
+    },
+    {
+      "name": "typecheck-node24 stderr hash",
+      "pass": true
+    },
+    {
+      "name": "typecheck-node24 natural close",
+      "pass": true
+    },
+    {
+      "name": "typecheck-node24 source stable",
+      "pass": true
+    },
+    {
+      "name": "typecheck-node24 exit",
+      "pass": true
+    },
+    {
+      "name": "typecheck-node26 stdout hash",
+      "pass": true
+    },
+    {
+      "name": "typecheck-node26 stderr hash",
+      "pass": true
+    },
+    {
+      "name": "typecheck-node26 natural close",
+      "pass": true
+    },
+    {
+      "name": "typecheck-node26 source stable",
+      "pass": true
+    },
+    {
+      "name": "typecheck-node26 exit",
+      "pass": true
+    },
+    {
+      "name": "serial defaults",
+      "pass": true
+    },
+    {
+      "name": "isolation before red 26",
+      "pass": true
+    },
+    {
+      "name": "isolation before red 24",
+      "pass": true
+    },
+    {
+      "name": "matrix24",
+      "pass": true
+    },
+    {
+      "name": "matrix raw red-node2626:legacy:Contents/Info.plist:factory conversion",
+      "pass": true
+    },
+    {
+      "name": "matrix raw final-green-node2626:legacy:Contents/Info.plist:factory conversion",
+      "pass": true
+    },
+    {
+      "name": "matrix rejects 26:legacy:Contents/Info.plist:factory conversion",
+      "pass": true
+    },
+    {
+      "name": "matrix red classification 26:legacy:Contents/Info.plist:factory conversion",
+      "pass": true
+    },
+    {
+      "name": "matrix raw red-node2626:legacy:Contents/Info.plist:factory bootstrap",
+      "pass": true
+    },
+    {
+      "name": "matrix raw final-green-node2626:legacy:Contents/Info.plist:factory bootstrap",
+      "pass": true
+    },
+    {
+      "name": "matrix rejects 26:legacy:Contents/Info.plist:factory bootstrap",
+      "pass": true
+    },
+    {
+      "name": "matrix red classification 26:legacy:Contents/Info.plist:factory bootstrap",
+      "pass": true
+    },
+    {
+      "name": "matrix raw red-node2626:legacy:Contents/Resources/profile.plist:factory conversion",
+      "pass": true
+    },
+    {
+      "name": "matrix raw final-green-node2626:legacy:Contents/Resources/profile.plist:factory conversion",
+      "pass": true
+    },
+    {
+      "name": "matrix rejects 26:legacy:Contents/Resources/profile.plist:factory conversion",
+      "pass": true
+    },
+    {
+      "name": "matrix red classification 26:legacy:Contents/Resources/profile.plist:factory conversion",
+      "pass": true
+    },
+    {
+      "name": "matrix raw red-node2626:legacy:Contents/Resources/profile.plist:factory bootstrap",
+      "pass": true
+    },
+    {
+      "name": "matrix raw final-green-node2626:legacy:Contents/Resources/profile.plist:factory bootstrap",
+      "pass": true
+    },
+    {
+      "name": "matrix rejects 26:legacy:Contents/Resources/profile.plist:factory bootstrap",
+      "pass": true
+    },
+    {
+      "name": "matrix red classification 26:legacy:Contents/Resources/profile.plist:factory bootstrap",
+      "pass": true
+    },
+    {
+      "name": "matrix raw red-node2626:legacy:Contents/Resources/RuntimeRoot/System/Library/CoreServices/SystemVersion.plist:factory conversion",
+      "pass": true
+    },
+    {
+      "name": "matrix raw final-green-node2626:legacy:Contents/Resources/RuntimeRoot/System/Library/CoreServices/SystemVersion.plist:factory conversion",
+      "pass": true
+    },
+    {
+      "name": "matrix rejects 26:legacy:Contents/Resources/RuntimeRoot/System/Library/CoreServices/SystemVersion.plist:factory conversion",
+      "pass": true
+    },
+    {
+      "name": "matrix red classification 26:legacy:Contents/Resources/RuntimeRoot/System/Library/CoreServices/SystemVersion.plist:factory conversion",
+      "pass": true
+    },
+    {
+      "name": "matrix raw red-node2626:legacy:Contents/Resources/RuntimeRoot/System/Library/CoreServices/SystemVersion.plist:factory bootstrap",
+      "pass": true
+    },
+    {
+      "name": "matrix raw final-green-node2626:legacy:Contents/Resources/RuntimeRoot/System/Library/CoreServices/SystemVersion.plist:factory bootstrap",
+      "pass": true
+    },
+    {
+      "name": "matrix rejects 26:legacy:Contents/Resources/RuntimeRoot/System/Library/CoreServices/SystemVersion.plist:factory bootstrap",
+      "pass": true
+    },
+    {
+      "name": "matrix red classification 26:legacy:Contents/Resources/RuntimeRoot/System/Library/CoreServices/SystemVersion.plist:factory bootstrap",
+      "pass": true
+    },
+    {
+      "name": "matrix raw red-node2626:cryptex:Contents/Info.plist:factory conversion",
+      "pass": true
+    },
+    {
+      "name": "matrix raw final-green-node2626:cryptex:Contents/Info.plist:factory conversion",
+      "pass": true
+    },
+    {
+      "name": "matrix rejects 26:cryptex:Contents/Info.plist:factory conversion",
+      "pass": true
+    },
+    {
+      "name": "matrix red classification 26:cryptex:Contents/Info.plist:factory conversion",
+      "pass": true
+    },
+    {
+      "name": "matrix raw red-node2626:cryptex:Contents/Info.plist:factory bootstrap",
+      "pass": true
+    },
+    {
+      "name": "matrix raw final-green-node2626:cryptex:Contents/Info.plist:factory bootstrap",
+      "pass": true
+    },
+    {
+      "name": "matrix rejects 26:cryptex:Contents/Info.plist:factory bootstrap",
+      "pass": true
+    },
+    {
+      "name": "matrix red classification 26:cryptex:Contents/Info.plist:factory bootstrap",
+      "pass": true
+    },
+    {
+      "name": "matrix raw red-node2626:cryptex:Contents/Resources/profile.plist:factory conversion",
+      "pass": true
+    },
+    {
+      "name": "matrix raw final-green-node2626:cryptex:Contents/Resources/profile.plist:factory conversion",
+      "pass": true
+    },
+    {
+      "name": "matrix rejects 26:cryptex:Contents/Resources/profile.plist:factory conversion",
+      "pass": true
+    },
+    {
+      "name": "matrix red classification 26:cryptex:Contents/Resources/profile.plist:factory conversion",
+      "pass": true
+    },
+    {
+      "name": "matrix raw red-node2626:cryptex:Contents/Resources/profile.plist:factory bootstrap",
+      "pass": true
+    },
+    {
+      "name": "matrix raw final-green-node2626:cryptex:Contents/Resources/profile.plist:factory bootstrap",
+      "pass": true
+    },
+    {
+      "name": "matrix rejects 26:cryptex:Contents/Resources/profile.plist:factory bootstrap",
+      "pass": true
+    },
+    {
+      "name": "matrix red classification 26:cryptex:Contents/Resources/profile.plist:factory bootstrap",
+      "pass": true
+    },
+    {
+      "name": "matrix raw red-node2626:cryptex:Contents/Resources/RuntimeRoot/System/Library/CoreServices/SystemVersion.plist:factory conversion",
+      "pass": true
+    },
+    {
+      "name": "matrix raw final-green-node2626:cryptex:Contents/Resources/RuntimeRoot/System/Library/CoreServices/SystemVersion.plist:factory conversion",
+      "pass": true
+    },
+    {
+      "name": "matrix rejects 26:cryptex:Contents/Resources/RuntimeRoot/System/Library/CoreServices/SystemVersion.plist:factory conversion",
+      "pass": true
+    },
+    {
+      "name": "matrix red classification 26:cryptex:Contents/Resources/RuntimeRoot/System/Library/CoreServices/SystemVersion.plist:factory conversion",
+      "pass": true
+    },
+    {
+      "name": "matrix raw red-node2626:cryptex:Contents/Resources/RuntimeRoot/System/Library/CoreServices/SystemVersion.plist:factory bootstrap",
+      "pass": true
+    },
+    {
+      "name": "matrix raw final-green-node2626:cryptex:Contents/Resources/RuntimeRoot/System/Library/CoreServices/SystemVersion.plist:factory bootstrap",
+      "pass": true
+    },
+    {
+      "name": "matrix rejects 26:cryptex:Contents/Resources/RuntimeRoot/System/Library/CoreServices/SystemVersion.plist:factory bootstrap",
+      "pass": true
+    },
+    {
+      "name": "matrix red classification 26:cryptex:Contents/Resources/RuntimeRoot/System/Library/CoreServices/SystemVersion.plist:factory bootstrap",
+      "pass": true
+    },
+    {
+      "name": "matrix raw red-node2424:legacy:Contents/Info.plist:factory conversion",
+      "pass": true
+    },
+    {
+      "name": "matrix raw final-green-node2424:legacy:Contents/Info.plist:factory conversion",
+      "pass": true
+    },
+    {
+      "name": "matrix rejects 24:legacy:Contents/Info.plist:factory conversion",
+      "pass": true
+    },
+    {
+      "name": "matrix red classification 24:legacy:Contents/Info.plist:factory conversion",
+      "pass": true
+    },
+    {
+      "name": "matrix raw red-node2424:legacy:Contents/Info.plist:factory bootstrap",
+      "pass": true
+    },
+    {
+      "name": "matrix raw final-green-node2424:legacy:Contents/Info.plist:factory bootstrap",
+      "pass": true
+    },
+    {
+      "name": "matrix rejects 24:legacy:Contents/Info.plist:factory bootstrap",
+      "pass": true
+    },
+    {
+      "name": "matrix red classification 24:legacy:Contents/Info.plist:factory bootstrap",
+      "pass": true
+    },
+    {
+      "name": "matrix raw red-node2424:legacy:Contents/Resources/profile.plist:factory conversion",
+      "pass": true
+    },
+    {
+      "name": "matrix raw final-green-node2424:legacy:Contents/Resources/profile.plist:factory conversion",
+      "pass": true
+    },
+    {
+      "name": "matrix rejects 24:legacy:Contents/Resources/profile.plist:factory conversion",
+      "pass": true
+    },
+    {
+      "name": "matrix red classification 24:legacy:Contents/Resources/profile.plist:factory conversion",
+      "pass": true
+    },
+    {
+      "name": "matrix raw red-node2424:legacy:Contents/Resources/profile.plist:factory bootstrap",
+      "pass": true
+    },
+    {
+      "name": "matrix raw final-green-node2424:legacy:Contents/Resources/profile.plist:factory bootstrap",
+      "pass": true
+    },
+    {
+      "name": "matrix rejects 24:legacy:Contents/Resources/profile.plist:factory bootstrap",
+      "pass": true
+    },
+    {
+      "name": "matrix red classification 24:legacy:Contents/Resources/profile.plist:factory bootstrap",
+      "pass": true
+    },
+    {
+      "name": "matrix raw red-node2424:legacy:Contents/Resources/RuntimeRoot/System/Library/CoreServices/SystemVersion.plist:factory conversion",
+      "pass": true
+    },
+    {
+      "name": "matrix raw final-green-node2424:legacy:Contents/Resources/RuntimeRoot/System/Library/CoreServices/SystemVersion.plist:factory conversion",
+      "pass": true
+    },
+    {
+      "name": "matrix rejects 24:legacy:Contents/Resources/RuntimeRoot/System/Library/CoreServices/SystemVersion.plist:factory conversion",
+      "pass": true
+    },
+    {
+      "name": "matrix red classification 24:legacy:Contents/Resources/RuntimeRoot/System/Library/CoreServices/SystemVersion.plist:factory conversion",
+      "pass": true
+    },
+    {
+      "name": "matrix raw red-node2424:legacy:Contents/Resources/RuntimeRoot/System/Library/CoreServices/SystemVersion.plist:factory bootstrap",
+      "pass": true
+    },
+    {
+      "name": "matrix raw final-green-node2424:legacy:Contents/Resources/RuntimeRoot/System/Library/CoreServices/SystemVersion.plist:factory bootstrap",
+      "pass": true
+    },
+    {
+      "name": "matrix rejects 24:legacy:Contents/Resources/RuntimeRoot/System/Library/CoreServices/SystemVersion.plist:factory bootstrap",
+      "pass": true
+    },
+    {
+      "name": "matrix red classification 24:legacy:Contents/Resources/RuntimeRoot/System/Library/CoreServices/SystemVersion.plist:factory bootstrap",
+      "pass": true
+    },
+    {
+      "name": "matrix raw red-node2424:cryptex:Contents/Info.plist:factory conversion",
+      "pass": true
+    },
+    {
+      "name": "matrix raw final-green-node2424:cryptex:Contents/Info.plist:factory conversion",
+      "pass": true
+    },
+    {
+      "name": "matrix rejects 24:cryptex:Contents/Info.plist:factory conversion",
+      "pass": true
+    },
+    {
+      "name": "matrix red classification 24:cryptex:Contents/Info.plist:factory conversion",
+      "pass": true
+    },
+    {
+      "name": "matrix raw red-node2424:cryptex:Contents/Info.plist:factory bootstrap",
+      "pass": true
+    },
+    {
+      "name": "matrix raw final-green-node2424:cryptex:Contents/Info.plist:factory bootstrap",
+      "pass": true
+    },
+    {
+      "name": "matrix rejects 24:cryptex:Contents/Info.plist:factory bootstrap",
+      "pass": true
+    },
+    {
+      "name": "matrix red classification 24:cryptex:Contents/Info.plist:factory bootstrap",
+      "pass": true
+    },
+    {
+      "name": "matrix raw red-node2424:cryptex:Contents/Resources/profile.plist:factory conversion",
+      "pass": true
+    },
+    {
+      "name": "matrix raw final-green-node2424:cryptex:Contents/Resources/profile.plist:factory conversion",
+      "pass": true
+    },
+    {
+      "name": "matrix rejects 24:cryptex:Contents/Resources/profile.plist:factory conversion",
+      "pass": true
+    },
+    {
+      "name": "matrix red classification 24:cryptex:Contents/Resources/profile.plist:factory conversion",
+      "pass": true
+    },
+    {
+      "name": "matrix raw red-node2424:cryptex:Contents/Resources/profile.plist:factory bootstrap",
+      "pass": true
+    },
+    {
+      "name": "matrix raw final-green-node2424:cryptex:Contents/Resources/profile.plist:factory bootstrap",
+      "pass": true
+    },
+    {
+      "name": "matrix rejects 24:cryptex:Contents/Resources/profile.plist:factory bootstrap",
+      "pass": true
+    },
+    {
+      "name": "matrix red classification 24:cryptex:Contents/Resources/profile.plist:factory bootstrap",
+      "pass": true
+    },
+    {
+      "name": "matrix raw red-node2424:cryptex:Contents/Resources/RuntimeRoot/System/Library/CoreServices/SystemVersion.plist:factory conversion",
+      "pass": true
+    },
+    {
+      "name": "matrix raw final-green-node2424:cryptex:Contents/Resources/RuntimeRoot/System/Library/CoreServices/SystemVersion.plist:factory conversion",
+      "pass": true
+    },
+    {
+      "name": "matrix rejects 24:cryptex:Contents/Resources/RuntimeRoot/System/Library/CoreServices/SystemVersion.plist:factory conversion",
+      "pass": true
+    },
+    {
+      "name": "matrix red classification 24:cryptex:Contents/Resources/RuntimeRoot/System/Library/CoreServices/SystemVersion.plist:factory conversion",
+      "pass": true
+    },
+    {
+      "name": "matrix raw red-node2424:cryptex:Contents/Resources/RuntimeRoot/System/Library/CoreServices/SystemVersion.plist:factory bootstrap",
+      "pass": true
+    },
+    {
+      "name": "matrix raw final-green-node2424:cryptex:Contents/Resources/RuntimeRoot/System/Library/CoreServices/SystemVersion.plist:factory bootstrap",
+      "pass": true
+    },
+    {
+      "name": "matrix rejects 24:cryptex:Contents/Resources/RuntimeRoot/System/Library/CoreServices/SystemVersion.plist:factory bootstrap",
+      "pass": true
+    },
+    {
+      "name": "matrix red classification 24:cryptex:Contents/Resources/RuntimeRoot/System/Library/CoreServices/SystemVersion.plist:factory bootstrap",
+      "pass": true
+    },
+    {
+      "name": "predefault all asserted checks",
+      "pass": true
+    },
+    {
+      "name": "verification all asserted checks",
+      "pass": true
+    }
+  ],
+  "passed": 1610,
+  "failed": [],
+  "gates": {
+    "actual-default-node24": {
+      "counts": {
+        "tests": 2258,
+        "pass": 2258,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "exitCode": 0,
+      "startedAtUtc": "2026-10-09T15:17:45.197390+00:00",
+      "completedAtUtc": "2026-10-09T15:20:27.497872+00:00"
+    },
+    "actual-default-node26": {
+      "counts": {
+        "tests": 2258,
+        "pass": 2258,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "exitCode": 0,
+      "startedAtUtc": "2026-10-09T15:15:06.816502+00:00",
+      "completedAtUtc": "2026-10-09T15:17:40.102369+00:00"
+    },
+    "build-node24": {
+      "counts": {},
+      "exitCode": 0,
+      "startedAtUtc": "2026-10-09T15:14:14.528341+00:00",
+      "completedAtUtc": "2026-10-09T15:14:14.904247+00:00"
+    },
+    "build-node26": {
+      "counts": {},
+      "exitCode": 0,
+      "startedAtUtc": "2026-10-09T15:14:13.932932+00:00",
+      "completedAtUtc": "2026-10-09T15:14:14.299305+00:00"
+    },
+    "coverage-node24": {
+      "counts": {
+        "tests": 613,
+        "pass": 613,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "exitCode": 0,
+      "startedAtUtc": "2026-10-09T15:13:53.848806+00:00",
+      "completedAtUtc": "2026-10-09T15:14:12.235074+00:00"
+    },
+    "coverage-node26": {
+      "counts": {
+        "tests": 613,
+        "pass": 613,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "exitCode": 0,
+      "startedAtUtc": "2026-10-09T15:13:35.933510+00:00",
+      "completedAtUtc": "2026-10-09T15:13:53.621724+00:00"
+    },
+    "final-green-node24": {
+      "counts": {
+        "tests": 259,
+        "pass": 259,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "exitCode": 0,
+      "startedAtUtc": "2026-10-09T15:11:55.851580+00:00",
+      "completedAtUtc": "2026-10-09T15:12:09.278988+00:00"
+    },
+    "final-green-node26": {
+      "counts": {
+        "tests": 259,
+        "pass": 259,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "exitCode": 0,
+      "startedAtUtc": "2026-10-09T15:11:32.168343+00:00",
+      "completedAtUtc": "2026-10-09T15:11:45.279666+00:00"
+    },
+    "focused-node24": {
+      "counts": {
+        "tests": 764,
+        "pass": 764,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "exitCode": 0,
+      "startedAtUtc": "2026-10-09T15:12:52.246564+00:00",
+      "completedAtUtc": "2026-10-09T15:13:35.747789+00:00"
+    },
+    "focused-node26": {
+      "counts": {
+        "tests": 764,
+        "pass": 764,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "exitCode": 0,
+      "startedAtUtc": "2026-10-09T15:12:09.419993+00:00",
+      "completedAtUtc": "2026-10-09T15:12:51.873120+00:00"
+    },
+    "green-node26": {
+      "counts": {
+        "tests": 259,
+        "pass": 258,
+        "fail": 1,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "exitCode": 1,
+      "startedAtUtc": "2026-10-09T15:10:47.513336+00:00",
+      "completedAtUtc": "2026-10-09T15:11:00.873366+00:00"
+    },
+    "isolation-node24": {
+      "counts": {
+        "tests": 14,
+        "pass": 14,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "exitCode": 0,
+      "startedAtUtc": "2026-10-09T15:08:47.629334+00:00",
+      "completedAtUtc": "2026-10-09T15:08:47.963504+00:00"
+    },
+    "isolation-node26": {
+      "counts": {
+        "tests": 14,
+        "pass": 14,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "exitCode": 0,
+      "startedAtUtc": "2026-10-09T15:08:36.146862+00:00",
+      "completedAtUtc": "2026-10-09T15:08:36.576056+00:00"
+    },
+    "red-node24": {
+      "counts": {
+        "tests": 12,
+        "pass": 6,
+        "fail": 6,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "exitCode": 1,
+      "startedAtUtc": "2026-10-09T15:09:26.213457+00:00",
+      "completedAtUtc": "2026-10-09T15:09:27.882572+00:00"
+    },
+    "red-node26": {
+      "counts": {
+        "tests": 12,
+        "pass": 6,
+        "fail": 6,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "exitCode": 1,
+      "startedAtUtc": "2026-10-09T15:08:51.586678+00:00",
+      "completedAtUtc": "2026-10-09T15:08:53.013594+00:00"
+    },
+    "typecheck-node24": {
+      "counts": {},
+      "exitCode": 0,
+      "startedAtUtc": "2026-10-09T15:14:13.267514+00:00",
+      "completedAtUtc": "2026-10-09T15:14:13.813599+00:00"
+    },
+    "typecheck-node26": {
+      "counts": {},
+      "exitCode": 0,
+      "startedAtUtc": "2026-10-09T15:14:12.369275+00:00",
+      "completedAtUtc": "2026-10-09T15:14:13.057993+00:00"
+    }
+  },
+  "scope": "Read-only correspondence audit; no tests, builds or native operations executed. Full archive excluded; Root binding separate."
+}

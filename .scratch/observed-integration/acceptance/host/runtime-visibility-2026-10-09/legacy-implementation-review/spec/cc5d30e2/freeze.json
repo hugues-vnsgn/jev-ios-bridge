@@ -1,0 +1,40 @@
+{
+  "candidate": "cc5d30e2fdaf065bec476a65df465dabb1569f2c",
+  "verdict": "PASS",
+  "findings": 0,
+  "checksPassed": 1610,
+  "reliedOnInputs": 588,
+  "outputs": {
+    "audit.json": {
+      "sha256": "d4369e0e3cf42a8cf7b6a3faa36935032659f4a495f898db9a6873052a9f6c32",
+      "bytes": 162684,
+      "mode": "0o600"
+    },
+    "audit.py": {
+      "sha256": "f2cb4988772dabb21347121d42eba0420a489a2b1e510c48d202482f8eb76165",
+      "bytes": 6725,
+      "mode": "0o600"
+    },
+    "commits.txt": {
+      "sha256": "b7a5b427702047c2431ef42393a57aedce8c21fc9932a8423f169f0fb1b4ab34",
+      "bytes": 72,
+      "mode": "0o600"
+    },
+    "diff.patch": {
+      "sha256": "3f68e3ce69e6c3ad88c155666e50c989b2c2de99e459233c5a4eb95fda47087b",
+      "bytes": 14812,
+      "mode": "0o600"
+    },
+    "input-manifest.json": {
+      "sha256": "78578146cfb1875db8eb54733ca95f69f5a7b12994dcffb1b654ef752527c26d",
+      "bytes": 156538,
+      "mode": "0o600"
+    },
+    "report.md": {
+      "sha256": "b3b11a8bf60079de3ff59172cb5629cea4319239f03d6f889be82422a8ad7185",
+      "bytes": 2681,
+      "mode": "0o600"
+    }
+  },
+  "selfExclusion": "freeze.json excludes itself; hash returned to Root"
+}

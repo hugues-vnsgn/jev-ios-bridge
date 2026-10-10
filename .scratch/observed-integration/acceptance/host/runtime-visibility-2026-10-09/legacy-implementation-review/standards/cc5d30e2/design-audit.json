@@ -1,0 +1,55 @@
+{
+  "verdict": "PASS",
+  "hardViolations": [],
+  "designFindings": [],
+  "hunks": [
+    {
+      "file": "src/observed/allocation-config.ts",
+      "line": 234,
+      "judgment": "PASS. Shared composition helper owns registry lookup/registration and production brand propagation. Per-invocation expected closure stays private; injected branch passes exactly three arguments. This is meaningful behavior, not a Middle Man. Abort check occurs inside supplied thunk."
+    },
+    {
+      "file": "src/observed/allocation.ts",
+      "line": 10,
+      "judgment": "PASS. Imports shared production composition helper; no unrelated imports or public contract changes."
+    },
+    {
+      "file": "src/observed/allocation.ts",
+      "line": 178,
+      "judgment": "PASS. Same deferred Promise, pending tracking and success/error diagnostic chain. Abort moves into helper thunk without changing order. Compatibility, artifact and create consumers keep shared tracked process."
+    },
+    {
+      "file": "tests/observed-legacy-volume-runtime.test.ts",
+      "line": 8,
+      "judgment": "PASS. Imports the real shared helper and existing fixture; no new test-only registry seam."
+    },
+    {
+      "file": "tests/observed-legacy-volume-runtime.test.ts",
+      "line": 445,
+      "judgment": "PASS. Both namespaces and three leaves cross actual helper; conversion/bootstrap windows, arity, diagnostics, abort, nested brand, concurrency exercised. Existing 241-case body preserved. Trace-count fixture windows are deliberate observed restore windows and assert mismatch actually seen; tests do not claim whole real allocator execution."
+    }
+  ],
+  "heuristics": {
+    "Mysterious Name": "No finding: helper and callback name tracking purpose; existing InstalledExpectation supplies identity vocabulary.",
+    "Duplicated Code": "No finding: namespace/leaf/window products parameterized; production registration repeats necessary factory vs wrapper construction, not competing policy implementations.",
+    "Feature Envy": "No finding: registry logic remains with its owning module.",
+    "Data Clumps": "No finding: expectations remain grouped existing InstalledExpectation.",
+    "Primitive Obsession": "No finding: operation string is existing executable diagnostic identity; no new domain scalar needs wrapper.",
+    "Repeated Switches": "No finding: single registered/injected branch; test scenarios intentionally discriminate windows.",
+    "Shotgun Surgery": "No finding: one helper, one production caller, one regression file.",
+    "Divergent Change": "No finding: all changes serve tracked identity preservation.",
+    "Speculative Generality": "No finding: callbacks serve real production tracking and test observations; both usages exist.",
+    "Message Chains": "No finding: promise chains encode settlement behavior; no object navigation leak.",
+    "Middle Man": "No finding: helper preserves private invocation identity and authority brand, plus cancellation; deletion recreates these responsibilities in caller.",
+    "Refused Bequest": "No finding: no inheritance added."
+  },
+  "standards": [
+    "AGENTS.md secrets/local scope",
+    "GLOSSARY.md observed allocation vocabulary",
+    "docs/adr/0005 stability surfaces",
+    "docs/adr/0008 no alternate authority and minimum runtime verification",
+    "docs/adr/0009 bounded explicit creation/no automatic retries",
+    "codebase-design Interface, Locality, interface as test surface"
+  ],
+  "toolingIssuesExcluded": true
+}

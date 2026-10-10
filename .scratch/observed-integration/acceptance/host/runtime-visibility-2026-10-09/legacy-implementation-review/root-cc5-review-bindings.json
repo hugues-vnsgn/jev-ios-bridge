@@ -1,0 +1,25 @@
+{
+  "candidate": "cc5d30e2fdaf065bec476a65df465dabb1569f2c",
+  "verdict": "PASS",
+  "axes": {
+    "spec": {
+      "verdict": "PASS",
+      "findings": 0,
+      "sealSha256": "462cc84765213e5dbd839dcf842b80a8e1ba58e805072895946d2caa66fb2f2a",
+      "inputs": 588,
+      "outputs": 7,
+      "checks": 1610,
+      "reportSha256": "b3b11a8bf60079de3ff59172cb5629cea4319239f03d6f889be82422a8ad7185"
+    },
+    "standards": {
+      "verdict": "PASS",
+      "findings": 0,
+      "sealSha256": "ac704ae99bee9545c62c96a79d23bcf144ce46f050c17bf33d26e277d01da618",
+      "inputs": 74,
+      "outputs": 8,
+      "checks": 75,
+      "reportSha256": "f31474b34991bdbb5bf2c46b6a4b1724ecda531212a2d6e7431caa613e07d8eb"
+    }
+  },
+  "scope": "All sealed review inputs and outputs independently rehashed; no Source/native execution"
+}

@@ -1,27 +1,29 @@
 # Remaining observed workflow execution
 
-## Current checkpoint: tracked allocator correction active
+## Current checkpoint: reviewed candidate installation checks active
 
-Tickets01–10 and H01–H09 are accepted. Ticket11's five live cases and ticket12's final independent review remain unstarted. The v1.0.0 release was published on2026-09-26; this page tracks the later observed workflow rollout.
+Tickets01–10 and H01–H09 are accepted. Ticket11's five live cases and ticket12's final review remain unstarted. This tracks the observed workflow rollout after the published v1.0.0 release.
 
-Corrective candidate dcc06dc0 passed2240/2240 actual default checks on both exact Node versions, plus746 focused and595 coverage cases, typecheck and build. Both independent reviews then failed on the same remaining gap: the real allocator's tracking wrapper drops the captured runtime identity expectations. The cancellation defect is resolved. Root preserved the evidence and independently rehashed the sealed reviews. [Spec report](../observed-integration/acceptance/host/runtime-visibility-2026-10-09/legacy-implementation-review/spec/dcc06dc0/report.md), [Standards report](../observed-integration/acceptance/host/runtime-visibility-2026-10-09/legacy-implementation-review/standards/dcc06dc0/report.md).
+Frozen candidate `cc5d30e2fdaf065bec476a65df465dabb1569f2c` repairs identity propagation through the shared helper used by the real allocator. Both exact Nodes passed2258/2258 official defaults,259 owned cases,764 focused cases,613 coverage cases, typecheck and build. Six genuine restoration failures were reproduced per Node before the repair; six bootstrap cases already passed. Existing241 legacy cases remain unchanged. The original4fa Node24 cause is still unresolved.
 
-The allocation author is correcting that composition in `fix-installed-tracked-binding`, based exactly on dcc06dc0. Both earlier author checkouts stay frozen. [Four-file dispatch](tracked-binding-correction-dispatch.md) protects the other439 Source files and all prior241 legacy cases. Integration still contains accepted441Source/69compiled. No owner decision is pending. The sole GPT-6.1-Sol xhigh operator remains idle; its terminal must be rebound after the Orca restart before any later native work.
+Both independent reviews PASS with zero findings. Root independently rehashed588 Spec inputs/7 outputs and74 Standards inputs/8 outputs. [Spec report](../observed-integration/acceptance/host/runtime-visibility-2026-10-09/legacy-implementation-review/spec/cc5d30e2/report.md), [Standards report](../observed-integration/acceptance/host/runtime-visibility-2026-10-09/legacy-implementation-review/standards/cc5d30e2/report.md), [Root binding](../observed-integration/acceptance/host/runtime-visibility-2026-10-09/legacy-implementation-review/root-cc5-review-bindings.json). Root preserved12859 candidate evidence files and recorded10 symlinks without following them; exact443Source/439protected/69compiled and raw default results match.
+
+Candidate clean installation and startup checks are now authorized serially: packaging26, startup26, packaging24, startup24. Each requires actual close and a passing seal before the next. Integration still contains accepted441Source/69compiled; no native work has begun. No owner decision is pending. The sole GPT-6.1-Sol xhigh operator remains idle and must be rebound to the current Orca runtime before later native dispatch.
 
 ## Current execution order
 
 | Order | Work | Completion evidence |
 | --- | --- | --- |
-| 1 — active | Correct the tracking helper used by the real allocator | Genuine regressions through the shared helper on both Nodes; preserve tracking, diagnostics, brand and cancellation; focused/coverage/typecheck/build and actual serial full defaults on frozen443Source/69compiled. |
-| 2 | Independent Spec and Standards review the frozen correction | Both axes PASS with no unresolved findings and exact input/output seals. |
-| 3 | Candidate clean npm/plugin installations and wrapped startup |37 commands per Node and fixed startup proofs, all69 payloads bound, before Source integration. |
+| 1 — complete | Correct the tracking helper used by the real allocator | Genuine regressions through the shared helper on both Nodes; preserve tracking, diagnostics, brand and cancellation; focused/coverage/typecheck/build and actual serial full defaults on frozen443Source/69compiled. |
+| 2 — complete | Independent Spec and Standards review the frozen correction | Both axes PASS with no unresolved findings and exact input/output seals. |
+| 3 — active | Candidate clean npm/plugin installations and wrapped startup |37 commands per Node and fixed startup proofs, all69 payloads bound, before Source integration. |
 | 4 | Root integrates the exact reviewed Source delta and runs fresh physical gates |443Source/439protected/69compiled correspondence, both full defaults/typecheck/build, both clean37 and startup proofs, original15 host artifacts preserved. |
 | 5 | Sole operator performs one actual iPhone17/iOS27.0 compatibility lookup | Guarded production composition, lossless traces, all child closes; stop on refusal or uncertainty. |
 | 6 | Sole operator completes operational entry | Effective config, migration once, capacity/storage and unchanged fixture/Weather generic builds. |
 | 7 | Sole operator executes L01–L05 serially | All five public CLI/MCP outcomes and effect counts pass; retain all five allocations within the eight-allocation limit. |
 | 8 | Independent nonauthor gpt-6-astra high completes ticket12 | Required host/live rows and review PASS; Root reports merge readiness. No automatic merge, push or publication. |
 
-A reliable finish time is not yet available: actual installed compatibility and all five live cases remain unverified. The next milestone is a corrected candidate that passes both independent reviews. Earlier4fa Node24 failures remain preserved with an unresolved cause; later passing checks do not explain them. Historical checkpoints below do not supersede this order.
+A reliable finish time is not yet available: actual installed compatibility and all five live cases remain unverified. The next milestone is passing candidate installation/startup checks before integration. Earlier4fa Node24 failures remain preserved with an unresolved cause; later passing checks do not explain them. Historical checkpoints below do not supersede this order.
 
 ## Earlier checkpoint: installed gates passed; legacy volume refused
 
