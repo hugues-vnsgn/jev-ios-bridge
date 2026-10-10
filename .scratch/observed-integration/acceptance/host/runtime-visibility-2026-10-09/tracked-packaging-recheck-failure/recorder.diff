@@ -1,0 +1,11 @@
+--- prior-recorder.py
++++ candidate-installed-recorder.py
+@@ -23,7 +23,7 @@
+ 
+ AUTHOR = Path('/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-tracked-binding')
+ INTEGRATION = Path('/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic')
+-PRIVATE = AUTHOR / '.scratch/installed-tracked-packaging'
++PRIVATE = AUTHOR / '.scratch/installed-tracked-packaging-recheck'
+ PROOF = AUTHOR / 'tests/fixtures/observed-packaging/proof.mjs'
+ GUARD = INTEGRATION / 'tests/fixtures/observed-packaging/guard.mjs'
+ STARTUP = INTEGRATION / '.scratch/observed-integration/acceptance/host/faults/production-startup/review/final/probe.mjs'

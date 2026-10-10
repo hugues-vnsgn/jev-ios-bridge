@@ -94,3 +94,7 @@ No owner decision is pending. Source integration, candidate packaging/startup, a
 ### Tracked candidate accepted by both review axes
 
 Frozen cc5d30e2 passed both actual2258/2258 defaults and focused/coverage/typecheck/build. Spec PASS0 (588 inputs/7 outputs,1610 correspondence checks); Standards PASS0 (74 inputs/8 outputs,75 checks). Root independently rehashed both seals and preserved12859 candidate evidence files. Root review binding SHA d5361ab2e68acc69680ae517b5f44852b28bdbdf4b6a08192490307762dca7d3. Candidate installation/startup execution granted after both seals: packaging26→startup26→packaging24→startup24, actual close/PASS required at each boundary, stop first failure/uncertainty. Source integration and all native/live gates remain pending. No owner decision is waiting.
+
+### Candidate installation blocked by repeated download stall
+
+Both review axes remain PASS0 for frozencc5. Candidate packaging26 stopped at plugin npm ci command021 SIGKILL; the one authorized fresh recheck also stopped there. Source/compiled unchanged. Both failures and exact identical plugin lockfiles are retained. Root rehashed24165/25450 regular files. Two attempts lacked different completed downloads. A smaller curl/npm comparison reproduced curl partial-body timeout while npm passed; IPv4/IPv6 comparison subsequently passed both. One fixed-endpoint comparison is authorized, with no further installation retry. No startup, Node24 packaging, Source integration or native/live work follows from these diagnostic results. See current next-work.md for evidence links.

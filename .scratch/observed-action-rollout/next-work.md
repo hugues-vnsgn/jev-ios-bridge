@@ -1,6 +1,6 @@
 # Remaining observed workflow execution
 
-## Current checkpoint: reviewed candidate installation checks active
+## Current checkpoint: reviewed repair; installation download stall under diagnosis
 
 Tickets01–10 and H01–H09 are accepted. Ticket11's five live cases and ticket12's final review remain unstarted. This tracks the observed workflow rollout after the published v1.0.0 release.
 
@@ -8,7 +8,11 @@ Frozen candidate `cc5d30e2fdaf065bec476a65df465dabb1569f2c` repairs identity pro
 
 Both independent reviews PASS with zero findings. Root independently rehashed588 Spec inputs/7 outputs and74 Standards inputs/8 outputs. [Spec report](../observed-integration/acceptance/host/runtime-visibility-2026-10-09/legacy-implementation-review/spec/cc5d30e2/report.md), [Standards report](../observed-integration/acceptance/host/runtime-visibility-2026-10-09/legacy-implementation-review/standards/cc5d30e2/report.md), [Root binding](../observed-integration/acceptance/host/runtime-visibility-2026-10-09/legacy-implementation-review/root-cc5-review-bindings.json). Root preserved12859 candidate evidence files and recorded10 symlinks without following them; exact443Source/439protected/69compiled and raw default results match.
 
-Candidate clean installation and startup checks are now authorized serially: packaging26, startup26, packaging24, startup24. Each requires actual close and a passing seal before the next. Integration still contains accepted441Source/69compiled; no native work has begun. No owner decision is pending. The sole GPT-6.1-Sol xhigh operator remains idle and must be rebound to the current Orca runtime before later native dispatch.
+Candidate packaging26 failed at command021, private plugin npm ci, with SIGKILL. One explicitly authorized fresh recheck after download checks failed at the same step. Both original runs are sealed; no startup, Node24 packaging or Source integration followed. Source443/compiled69 remain unchanged. Root independently rehashed24165 first-attempt and25450 recheck files; selected raw control/log evidence and complete manifests are retained in integration, full payload/cache bytes remain sealed in author directories.
+
+The two identical plugin lockfiles had different incomplete downloads. A matched curl/npm request then reproduced a partial-body stall in curl (45s timeout,51959/84612 bytes); npm succeeded0.80s with exact integrity. Subsequent IPv4 and IPv6 requests both passed in under0.30s with exact integrity, so a family-wide fault is not established. One fixed-address comparison of the earlier stalled and successful IPv6 endpoints is now authorized; no further installation retry is granted. Historical SIGKILL sender and underlying delay remain unproven. [First failure audit](../observed-integration/acceptance/host/runtime-visibility-2026-10-09/tracked-packaging-first-failure/root-audit.json), [recheck audit](../observed-integration/acceptance/host/runtime-visibility-2026-10-09/tracked-packaging-recheck-failure/root-audit.json), [client comparison](../observed-integration/acceptance/host/runtime-visibility-2026-10-09/tracked-packaging-client-diagnosis/summary.json), [family comparison](../observed-integration/acceptance/host/runtime-visibility-2026-10-09/tracked-packaging-family-diagnosis/summary.json).
+
+Integration still contains accepted441Source/69compiled. No owner decision is pending. The sole GPT-6.1-Sol xhigh operator stays idle and must be rebound before later native work.
 
 ## Current execution order
 

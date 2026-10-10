@@ -1,0 +1,15 @@
+{
+  "status": "PREPARED_FOR_ONE_ROOT_GRANTED_RECHECK",
+  "recorderSha256": "534225fb8cefbad935172071276f5fe76d9042b1e2758fdd002bd95c9d5e2010",
+  "priorRecorderSha256": "c2cc00aa1932a64abf336941464402d3d9852bd427ff723d1a256b21eae721eb",
+  "onlyChange": {
+    "old": "PRIVATE = AUTHOR / '.scratch/installed-tracked-packaging'",
+    "new": "PRIVATE = AUTHOR / '.scratch/installed-tracked-packaging-recheck'"
+  },
+  "diffExactlyOneLiteral": true,
+  "sourceContextSha256": "7de42479f3263694ed81fe17d43540d638d7d6259531508c28bfd4388fb8e7c9",
+  "invariantsSha256": "5c46df509f99bc4886ab74268e116e9b5028a315d16e52966959def1b5e1f416",
+  "commandsSha256": "bd16e6731fcac2a0a5089e27b2a03abdec4aa0f5b4c398ba0e4797ae92b477c7",
+  "priorFailure": "Retained unchanged; historical lower cause UNKNOWN. Two current tarball downloads succeeded with exact lock integrity; this does not explain prior failure.",
+  "cacheSeeding": false
+}

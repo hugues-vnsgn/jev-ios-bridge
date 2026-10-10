@@ -1,0 +1,49 @@
+{
+  "status": "PROPOSED_ONLY_NOT_EXECUTED",
+  "scope": "Fresh sibling installed-tracked-packaging-diagnosis/attempt-2, with separate empty HOME and npm cache; no Source or sealed evidence mutation.",
+  "targetUrl": "https://registry.npmjs.org/es-module-lexer/-/es-module-lexer-3.0.2.tgz",
+  "reason": "This exact tarball lacked a completed fetch/cache payload in the second attempt. A matched curl versus npm-cache-add pair isolates client fetch/cache behavior without installing a project or repeating full37.",
+  "commands": [
+    [
+      "/usr/bin/curl",
+      "--disable",
+      "--silent",
+      "--show-error",
+      "--fail",
+      "--connect-timeout",
+      "10",
+      "--max-time",
+      "45",
+      "--retry",
+      "0",
+      "--max-filesize",
+      "10485760",
+      "--proto",
+      "=https",
+      "--dump-header",
+      "curl.headers",
+      "--output",
+      "curl.tgz",
+      "--write-out",
+      "%{json}\n",
+      "https://registry.npmjs.org/es-module-lexer/-/es-module-lexer-3.0.2.tgz"
+    ],
+    [
+      "/opt/homebrew/Cellar/node/26.8.1/bin/node",
+      "/opt/homebrew/lib/node_modules/npm/bin/npm-cli.js",
+      "cache",
+      "add",
+      "https://registry.npmjs.org/es-module-lexer/-/es-module-lexer-3.0.2.tgz",
+      "--ignore-scripts",
+      "--no-audit",
+      "--no-fund",
+      "--fetch-retries=0",
+      "--fetch-timeout=45000",
+      "--loglevel=silly"
+    ]
+  ],
+  "npmEnvironment": "Minimal PATH/HOME/LANG/LC_ALL; empty private USERCONFIG/GLOBALCONFIG and fresh NPM_CONFIG_CACHE; no proxy/credentials/loaders.",
+  "bounds": "Curl45s and10MiB; npm original90s outer bound with owned-process settlement; no retry. Require separate Root grant for precise recorder/settlement protocol before execution.",
+  "verification": "Compare curl body and npm cache content SHA512 to sealed plugin lock integrity, preserve argv/logs/metrics/times/actualclose.",
+  "limits": "Serial success would not exclude concurrency-dependent npm behavior; this is diagnostic, not acceptance or authority to retry full proof."
+}
