@@ -7,7 +7,7 @@ import { createPreparationDriver } from '../device/factory.js';
 import { inspectArtifact, stageArtifact, verifyStagedArtifact, ArtifactError, type ArtifactRequest } from './artifact.js';
 import { createSimulator, type SourceProcess } from './create-source.js';
 import { selectSuppliedSource } from './supplied-source.js';
-import { readAllocationConfig, installedHost, allocationSourceProcess, allocationStorage, verifyInstalledCompatibility,
+import { readAllocationConfig, installedHost, allocationSourceProcess, allocationStorage, verifyInstalledCompatibility, trackAllocationSourceProcess,
   AllocationPrerequisiteError, stableFile, isProductionSourceProcess, type InstalledHost } from './allocation-config.js';
 import { allocationSnapshot, importedAllocationSnapshot, allocationError, allocationIdSchema, allocationActionIdSchema, AllocationInputError, parsePrepareAllocation, preparationDigest,
   type PrepareAllocationRequest, type AllocationResult, type AllocationOperationCode } from './allocation-schema.js';
@@ -175,8 +175,8 @@ export class ObservedAllocator {
       const evidenceDirectory = join(resolve(this.options.runsDir), 'observed', request.actionId, 'allocation');
       const stagingRoot = join(evidenceDirectory, 'staging');
       const process = this.options.fakeBackend?.process ?? allocationSourceProcess(this.host, [request.app.artifactPath, stagingRoot]);
-      const trackedProcess: SourceProcess = (file, args, options) => this.track(Promise.resolve().then(() => { options.signal.throwIfAborted(); return process(file, args, options); }).then(
-        receipt => { this.diagnostic(job, file, receipt); return receipt; }, error => { this.diagnostic(job, file, error); throw error; }));
+      const trackedProcess = trackAllocationSourceProcess(process, (file, invoke) => this.track(Promise.resolve().then(invoke).then(
+        receipt => { this.diagnostic(job, file, receipt); return receipt; }, error => { this.diagnostic(job, file, error); throw error; })));
       const proof = await this.stage(job, 10000, signal => verifyInstalledCompatibility(source, this.host, trackedProcess, signal));
       const artifactRequest: ArtifactRequest = { ...request.app, target: proof, maxBytes: config.budgets.maxArtifactBytes, stagingRoot };
       const inspected = await this.stage(job, Math.max(1, job.deadline - Date.now()), signal => inspectArtifact(artifactRequest, { process: trackedProcess, signal }));
