@@ -1,0 +1,11 @@
+--- attempt-9/harness.mjs
++++ attempt-10/harness.mjs
+@@ -6,7 +6,7 @@
+ const evidence=process.env.JEV_PACKAGING_EVIDENCE_DIR;
+ const root=dirname(evidence);const snapshot=join(evidence,'clean');const commands=join(evidence,'commands.jsonl');let sequence=0;let phase='seed';
+ const expectedCleanLock=process.env.DIAGNOSTIC_EXPECTED_CLEAN_LOCK;delete process.env.DIAGNOSTIC_EXPECTED_CLEAN_LOCK;
+-const env={...process.env,PATH:dirname(process.execPath)+':'+process.env.PATH,npm_config_cache:join(evidence,'registry-cache'),npm_config_fetch_retries:'0',npm_config_fetch_timeout:'45000'};
++const env={...process.env,PATH:dirname(process.execPath)+':'+process.env.PATH,npm_config_cache:join(evidence,'registry-cache'),npm_config_fetch_retries:'0',npm_config_fetch_timeout:'45000',npm_config_local_address:'192.168.1.3'};
+ const events=join(root,'events.jsonl');const event=v=>appendFileSync(events,JSON.stringify({atUtc:new Date().toISOString(),...v})+'\n');const scopes=[];
+ const setTimeout=(callback,delay)=>nativeSetTimeout(()=>{event({kind:'original-run-timer-fired',phase,delay});callback();},delay);
+ function scoped(command,args,label){return new Promise(resolve=>{const child=nativeSpawn(command,args,{env:{PATH:'/usr/bin:/bin',LANG:'C',LC_ALL:'C'},stdio:['ignore','pipe','pipe']});let stdout='',stderr='';child.stdout.on('data',b=>stdout+=b);child.stderr.on('data',b=>stderr+=b);child.on('error',error=>event({kind:'scoped-spawn-error',label,error:String(error)}));const scopeTimer=nativeSetTimeout(()=>{event({kind:'scoped-five-second-deadline',label,pid:child.pid});child.kill('SIGKILL');},5000);child.once('close',(code,signal)=>{clearTimeout(scopeTimer);writeFileSync(join(root,label+'.stdout'),stdout);writeFileSync(join(root,label+'.stderr'),stderr);event({kind:'scoped-close',label,pid:child.pid,code,signal});resolve();});});}

@@ -1,0 +1,32 @@
+{
+  "source": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-tracked-binding/.scratch/installed-tracked-packaging-diagnosis/attempt-10",
+  "sealSha256": "d598662b9a170a240fc6a79b33d56bacbaf1b78c8e51bc946eb4406d2a36678a",
+  "regularFilesVerified": 123,
+  "linksVerifiedNotFollowed": 0,
+  "copied": {
+    "harness.diff": "fde927e2b618e790e1073b418ed5e711b96e05b6f7a8e33f5d3797c744d7b7fb",
+    "installed-proof/001.stderr": "b7a70895b63ed890fab934472f23b83172a2a71d4c7039bafa4ce589d41330fe",
+    "seal.json": "d598662b9a170a240fc6a79b33d56bacbaf1b78c8e51bc946eb4406d2a36678a",
+    "change-binding.json": "50d25739c0e82297191248449864113c9d1a75021ffd1c9d5b8f46e4a08e9a3c",
+    "interface-confirmation.json": "4c1f8c0d4fae519b6ad61b5c3fd3958c2447f31949ee8b2f0802f5b9d16b5a56",
+    "user.npmrc": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "installed-proof/commands.jsonl": "c715acb749b264989a235bb144ad396aec1b8565d838952e4a267678b573eb7f",
+    "global.npmrc": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "inputs.json": "38b7494370d6e7676361b48191e0bf28a7159528ab3ef86b47f80cc217eeb32b",
+    "events.jsonl": "ea979c88144c9b428b19dfe826faa4933d310edec869dadb002eb5737e9ee7a2",
+    "node-result.json": "3173e4ccacd2ceaf1453735995f5cc75055ba2a37b865756f9af5b5675c66f69",
+    "outer-result.json": "74d1e1ae8cbcb09f09bf39f6aa42f010ee4b394918fc29f8c347aad00339bba3",
+    "installed-proof/plugin/package-lock.json": "be79b19a3f7891e340fcd123fe751260a4492a577e0bda22398325e6ea368cd7",
+    "installed-proof/registry-cache/_logs/2026-10-10T03_09_45_156Z-debug-0.log": "2a30e54d7a0901758aa7c42a0c14f74c7fb8ef4fb24218d8bc747c4e28d07d40",
+    "installed-proof/plugin/package.json": "4ef075dd2cf053ffda89ba2595b8be65af431addecb78fe25593454af76947b3",
+    "outer.stdout": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "harness.mjs": "7643b4c70c8cde90d8c69f200b3765ce5248a35f0023512df82e957ac1d9b91a",
+    "outer-launch.json": "5f2a0822ffc147638dce125cb031c3a765ad1d4cd3202d9fed0ff589085fcf7d",
+    "prior-harness.mjs.txt": "cfeaa7606c667b9460e17c406e2ad54446e815f95c01426c3f8dfc128a8c672b",
+    "installed-proof/clean/package.json": "1eecd1d899c319d6e4df31f404fc636c013a9b9af241aaa6b9733dd155f27e82",
+    "outer.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "installed-proof/001.stdout": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "original-functions.mjs.txt": "2feffb5c0709770850a63d763eb0462fb5860e9e773443993ac5b57c99062492"
+  },
+  "scope": "All manifest bytes verified; selected controls/logs copied; payloads remain sealed at source."
+}

@@ -1,0 +1,73 @@
+0 verbose cli /opt/homebrew/Cellar/node/26.8.1/bin/node /opt/homebrew/Cellar/node/26.8.1/bin/npm
+1 info using npm@11.19.0
+2 info using node@v26.8.1
+3 silly config load:file:/opt/homebrew/lib/node_modules/npm/npmrc
+4 silly config load:file:/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-tracked-binding/.scratch/installed-tracked-packaging-diagnosis/attempt-10/installed-proof/clean/.npmrc
+5 silly config load:file:/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-tracked-binding/.scratch/installed-tracked-packaging-diagnosis/attempt-10/user.npmrc
+6 silly config load:file:/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-tracked-binding/.scratch/installed-tracked-packaging-diagnosis/attempt-10/global.npmrc
+7 verbose title npm install /Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-tracked-binding/.scratch/installed-tracked-packaging-diagnosis/attempt-10/installed-proof/jev-ios-bridge-1.3.1.tgz
+8 verbose argv "install" "--ignore-scripts" "--no-audit" "--no-fund" "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-tracked-binding/.scratch/installed-tracked-packaging-diagnosis/attempt-10/installed-proof/jev-ios-bridge-1.3.1.tgz"
+9 verbose logfile logs-max:10 dir:/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-tracked-binding/.scratch/installed-tracked-packaging-diagnosis/attempt-10/installed-proof/registry-cache/_logs/2026-10-10T03_09_45_156Z-
+10 verbose logfile /Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-tracked-binding/.scratch/installed-tracked-packaging-diagnosis/attempt-10/installed-proof/registry-cache/_logs/2026-10-10T03_09_45_156Z-debug-0.log
+11 silly logfile done cleaning log files
+12 silly packumentCache heap:4395630592 maxSize:1098907648 maxEntrySize:549453824
+13 silly idealTree buildDeps
+14 silly fetch manifest jev-ios-bridge@file:../jev-ios-bridge-1.3.1.tgz
+15 http fetch GET https://registry.npmjs.org/npm attempt 1 failed with EINVAL
+16 silly placeDep ROOT jev-ios-bridge@1.3.1 OK for: isolated-installed-proof@1.0.0 want: file:../jev-ios-bridge-1.3.1.tgz
+17 silly fetch manifest @modelcontextprotocol/server@2.1.0
+18 silly packumentCache full:https://registry.npmjs.org/@modelcontextprotocol%2fserver cache-miss
+19 silly fetch manifest @typesafe-ai/sdk@0.6.0
+20 silly packumentCache full:https://registry.npmjs.org/@typesafe-ai%2fsdk cache-miss
+21 silly fetch manifest mobilebuildmcp@2.7.1
+22 silly packumentCache full:https://registry.npmjs.org/mobilebuildmcp cache-miss
+23 silly fetch manifest mobilecli@1.0.14
+24 silly packumentCache full:https://registry.npmjs.org/mobilecli cache-miss
+25 silly fetch manifest zod@4.6.5
+26 silly packumentCache full:https://registry.npmjs.org/zod cache-miss
+27 http fetch GET https://registry.npmjs.org/@modelcontextprotocol%2fserver attempt 1 failed with EINVAL
+28 http fetch GET https://registry.npmjs.org/@typesafe-ai%2fsdk attempt 1 failed with EINVAL
+29 http fetch GET https://registry.npmjs.org/mobilebuildmcp attempt 1 failed with EINVAL
+30 http fetch GET https://registry.npmjs.org/mobilecli attempt 1 failed with EINVAL
+31 http fetch GET https://registry.npmjs.org/zod attempt 1 failed with EINVAL
+32 silly fetch manifest @modelcontextprotocol/server@2.1.0
+33 silly packumentCache full:https://registry.npmjs.org/@modelcontextprotocol%2fserver cache-miss
+34 http fetch GET https://registry.npmjs.org/@modelcontextprotocol%2fserver attempt 1 failed with EINVAL
+35 silly fetch manifest @typesafe-ai/sdk@0.6.0
+36 silly packumentCache full:https://registry.npmjs.org/@typesafe-ai%2fsdk cache-miss
+37 http fetch GET https://registry.npmjs.org/@typesafe-ai%2fsdk attempt 1 failed with EINVAL
+38 silly fetch manifest mobilebuildmcp@2.7.1
+39 silly packumentCache full:https://registry.npmjs.org/mobilebuildmcp cache-miss
+40 http fetch GET https://registry.npmjs.org/mobilebuildmcp attempt 1 failed with EINVAL
+41 silly fetch manifest mobilecli@1.0.14
+42 silly packumentCache full:https://registry.npmjs.org/mobilecli cache-miss
+43 http fetch GET https://registry.npmjs.org/mobilecli attempt 1 failed with EINVAL
+44 silly fetch manifest zod@4.6.5
+45 silly packumentCache full:https://registry.npmjs.org/zod cache-miss
+46 http fetch GET https://registry.npmjs.org/zod attempt 1 failed with EINVAL
+47 silly placeDep node_modules/jev-ios-bridge @modelcontextprotocol/server@ OK for: jev-ios-bridge@1.3.1 want: 2.1.0
+48 silly placeDep node_modules/jev-ios-bridge @typesafe-ai/sdk@ OK for: jev-ios-bridge@1.3.1 want: 0.6.0
+49 silly placeDep node_modules/jev-ios-bridge mobilebuildmcp@ OK for: jev-ios-bridge@1.3.1 want: 2.7.1
+50 silly placeDep node_modules/jev-ios-bridge mobilecli@ OK for: jev-ios-bridge@1.3.1 want: 1.0.14
+51 silly placeDep node_modules/jev-ios-bridge zod@ OK for: jev-ios-bridge@1.3.1 want: 4.6.5
+52 verbose type system
+53 verbose stack FetchError: request to https://registry.npmjs.org/@modelcontextprotocol%2fserver failed, reason: bind EINVAL 192.168.1.3
+53 verbose stack     at ClientRequest.<anonymous> (/opt/homebrew/lib/node_modules/npm/node_modules/minipass-fetch/lib/index.js:130:14)
+53 verbose stack     at ClientRequest.emit (node:events:514:20)
+53 verbose stack     at emitErrorEvent (node:_http_client:114:11)
+53 verbose stack     at _destroy (node:_http_client:1169:9)
+53 verbose stack     at onSocketNT (node:_http_client:1190:5)
+53 verbose stack     at process.processTicksAndRejections (node:internal/process/task_queues:91:21)
+54 error code EINVAL
+55 error syscall bind
+56 error errno EINVAL
+57 error request to https://registry.npmjs.org/@modelcontextprotocol%2fserver failed, reason: bind EINVAL 192.168.1.3
+58 silly unfinished npm timer reify 1791601785412
+59 silly unfinished npm timer reify:loadTrees 1791601785413
+60 verbose cwd /Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-tracked-binding/.scratch/installed-tracked-packaging-diagnosis/attempt-10/installed-proof/clean
+61 verbose os Darwin 27.0.0
+62 verbose node v26.8.1
+63 verbose npm  v11.19.0
+64 verbose exit 1
+65 verbose code 1
+66 error A complete log of this run can be found in: /Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-tracked-binding/.scratch/installed-tracked-packaging-diagnosis/attempt-10/installed-proof/registry-cache/_logs/2026-10-10T03_09_45_156Z-debug-0.log

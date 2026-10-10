@@ -1,0 +1,12 @@
+{
+  "originalFunctionsExact": true,
+  "wrapperChanges": [
+    "Record original timer callback invocation without changing90000ms delay",
+    "Record npm spawn/kill/close around native spawn",
+    "At30s plugin only, scoped ps/lsof; no sample/no unrelated process state",
+    "Scoped ps/lsof each bounded5s; direct owned read-only child only"
+  ],
+  "npmCommandsMaximum": 2,
+  "harnessSha256": "cfeaa7606c667b9460e17c406e2ad54446e815f95c01426c3f8dfc128a8c672b",
+  "fixedFunctionsSha256": "2feffb5c0709770850a63d763eb0462fb5860e9e773443993ac5b57c99062492"
+}

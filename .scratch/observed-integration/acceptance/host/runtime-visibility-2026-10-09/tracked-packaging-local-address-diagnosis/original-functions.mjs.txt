@@ -1,0 +1,20 @@
+function launch(command, args, options) {
+  const previous = process.umask(0o022);
+  try { return spawn(command, args, options); } finally { process.umask(previous); }
+}
+function record(command, args, cwd, result) {
+  const id = String(++sequence).padStart(3, '0');
+  const stdout = join(evidence, id + '.stdout'); const stderr = join(evidence, id + '.stderr');
+  writeFileSync(stdout, result.stdout); writeFileSync(stderr, result.stderr);
+  appendFileSync(commands, JSON.stringify({ id, command, args, cwd, node: process.version, exit: result.code,
+    signal: result.signal, stdout, stderr }) + '\n');
+}
+async function run(command, args, cwd = snapshot, extra = {}) {
+  const child = launch(command, args, { cwd, env: { ...env, ...extra }, stdio: ['ignore', 'pipe', 'pipe'] });
+  let stdout = ''; let stderr = ''; child.stdout.on('data', b => { stdout += b; }); child.stderr.on('data', b => { stderr += b; });
+  const timer = setTimeout(() => child.kill('SIGKILL'), 90000);
+  const result = await new Promise((done, fail) => {
+    child.once('error', fail); child.once('close', (code, signal) => done({ code, signal, stdout, stderr }));
+  }); clearTimeout(timer); record(command, args, cwd, result); return result;
+}
+function ok(result) { assert.equal(result.code, 0, result.stderr + '\n' + result.stdout); assert.equal(result.signal, null); return result.stdout; }
