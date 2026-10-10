@@ -1,0 +1,86 @@
+{
+  "status": "CODE_PACKAGE_READY",
+  "owner": "Root",
+  "scope": "Owner-approved code/package roadmap complete; original full rollout acceptance remains incomplete",
+  "planningBase": "b8c4a50942551bdf95d00036a6d2f7bb6142ff43",
+  "fullGatesProductCommit": "48d4b95e319a2c1b24480be6f008f208acf4327c",
+  "finalReviewedRevision": "a387e4926147e68a85f84c3142f14737bcd9b41f",
+  "integratedIndependentReviewCommit": "664ffad972eff42b2722fa6754f257031c1445b9",
+  "reviewReportSha256": "c9ab7e6f5fcac738d556ab1528ea90f5aaee40b8e6e04f253f8d2ab27a9ee1e5",
+  "reviewOutputSealSha256": "b07c6f25ac7870b84a16e554c340f47ab58c9aa3f7cb2e1d41bc139176de9f93",
+  "reviewOutputFilesVerified": 13,
+  "initialReviewInputBlobsVerifiedAtPinnedRevision": 44,
+  "currentSourceFilesVerified": 443,
+  "compiledFilesVerified": 69,
+  "originalHostFilesPreserved": 15,
+  "declaredExceptionsFromCandidate": [
+    "docs/adr/0007-simulator-presentation-and-a-bounded-ios-point-tap-exception.md",
+    "tests/fixtures/observed-cli-server.ts",
+    "tests/observed-cli.test.ts",
+    "tests/observed-service.test.ts"
+  ],
+  "candidateSourceMatches": 439,
+  "protectedFilesPreserved": 435,
+  "runtimeChecks": {
+    "v26.8.1": {
+      "fullTests": 2258,
+      "failures": 0,
+      "skips": 0,
+      "typecheck": "PASS",
+      "build": "PASS",
+      "cleanPackageCommands": 37,
+      "startupCli": 2,
+      "startupMcp": 3,
+      "forbiddenEffects": 0,
+      "laterAdrDocumentationChecks": 34,
+      "laterAdrWindowChecks": 31
+    },
+    "v24.0.0": {
+      "fullTests": 2258,
+      "failures": 0,
+      "skips": 0,
+      "typecheck": "PASS",
+      "build": "PASS",
+      "cleanPackageCommands": 37,
+      "startupCli": 2,
+      "startupMcp": 3,
+      "forbiddenEffects": 0,
+      "laterAdrDocumentationChecks": 34,
+      "laterAdrWindowChecks": 31
+    }
+  },
+  "npmValidationEnvironment": "Blank npm configs, minimal environment, npm_config_maxsockets=1; unchanged fixed proof/budgets/registry/TLS/integrity",
+  "sourceAssociation": "Full default/typecheck/build and clean37/startup apply to48d4b95. The only later Source change is ADR-0007; affected34/31 checks per Node apply to70169e87. No later full-default or package rerun is claimed. Production and shipped package payload remain identical.",
+  "evidence": {
+    "fullGateAudit": {
+      "path": "host/runtime-visibility-2026-10-09/root-tracked-final-gates/root-audit.json",
+      "sha256": "9f12730b699705b15e10bb924d6b1bff4a098eb390112fe6cdb5ea7a881dfcdd"
+    },
+    "adrDeltaAudit": {
+      "path": "host/runtime-visibility-2026-10-09/root-adr-review-correction/root-audit.json",
+      "sha256": "23788f5e88242d5ef6c6d333f4edef8a6be3c4705c96c793cfc07b0bf8f67458"
+    },
+    "independentReview": "safety-review.md"
+  },
+  "findings": {
+    "openMaterial": 0,
+    "standardsP2": "CLOSED",
+    "standardsP3": "Two nonblocking duplication advisories",
+    "specConfirmedDefects": 0,
+    "specQualifications": "Bundle-ID validator alignment advisory; installed restart does not automatically invoke internal explicit recovery"
+  },
+  "deferredUnverified": [
+    "Actual iOS27 compatibility",
+    "Production configuration/store activation",
+    "Operational migration/quiescence",
+    "Unchanged app builds",
+    "L01",
+    "L02",
+    "L03",
+    "L04",
+    "L05",
+    "Full original ticket12 and SHIP/merge readiness"
+  ],
+  "historicalFailureCauses": "Default-concurrency npm stalls and earlier Node24 failures remain incompletely explained; retained PASS evidence does not explain them.",
+  "releaseActions": "No merge, push, version bump or publication performed."
+}
