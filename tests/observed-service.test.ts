@@ -525,18 +525,22 @@ test('authoritative renderer validates binding consistency and absolute evidence
 for (const mode of ['error', 'pending'] as const) {
   test(`local close ${mode} cannot promote an observed success and finishes within the separate five-second budget`, async t => {
     let driver!: ReturnType<typeof createObservedDriver>; const release = deferred<void>();
+    let finalizationBegan: number | undefined;
     const { root, admission, service } = fixture(t, async () => reply(true), { createDriver: () => ({
       attachObserved: (...args) => driver.attachObserved(...args), observe: (...args) => driver.observe(...args),
       tapOnce: (...args) => driver.tapOnce(...args), revokeIssuance: () => driver.revokeIssuance(),
       async close() { if (mode === 'error') throw new Error('Unknown local close'); await release.promise; },
-    }) });
+    }) }, { fault(point, operation) {
+      if (point === 'beforeCommit' && operation === 'beginActionFinalization') finalizationBegan = Date.now();
+    } });
     const runner: CliRunner = async () => reply(true);
     driver = createObservedDriver({ cwd: root, admission, lockRoot: join(root, 'leases'), runner,
       deviceWindow: async () => assert.fail('No window'), fakeBackend: { runner, window: undefined } });
-    const raw = request(await ready(admission)); raw.timeoutMs = 6000; const began = Date.now(); await service.start(raw);
+    const raw = request(await ready(admission)); raw.timeoutMs = 6000; await service.start(raw);
     const result = await service.inspect('one', { waitMs: 7000 });
     assert.equal(result.authority, 'committed'); assert.equal(result.outcome, 'inconclusive'); assert.equal(result.reason, 'FINISH_UNCONFIRMED');
-    assert.equal(result.actionAttempted, false); assert.equal(result.admission, 'quarantined'); assert.ok(Date.now() - began < 6500);
+    assert.equal(result.actionAttempted, false); assert.equal(result.admission, 'quarantined');
+    assert.ok(finalizationBegan !== undefined, 'Finalization began'); assert.ok(Date.now() - finalizationBegan < 6500);
     assert.equal(result.evidence.exportStatus, mode === 'pending' ? 'failed' : 'complete');
     const before = admission.readAction('one'); release.resolve(); await new Promise(resolve => setTimeout(resolve, 20));
     assert.deepEqual(admission.readAction('one'), before); await service.close();

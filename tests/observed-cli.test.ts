@@ -18,9 +18,15 @@ function childCommand(root: string, command: string, argument: string, mode = 'o
   const child = spawn(process.execPath, ['--import', 'tsx', 'tests/fixtures/observed-cli-server.ts', root, command, argument, ...(wait === undefined ? [] : [String(wait)])], { env, stdio: ['ignore', 'pipe', 'pipe'] });
   let stdout = ''; let stderr = '';
   child.stdout.on('data', bytes => { stdout += bytes; }); child.stderr.on('data', bytes => { stderr += bytes; });
-  const result = new Promise<{code:number|null;stdout:string;stderr:string;reply:any}>(done => child.once('exit', code => {
-    const lines = stdout.trim().split('\n'); assert.equal(lines.length, 1, stdout); done({ code, stdout, stderr, reply: JSON.parse(lines[0]!) });
-  }));
+  const result = new Promise<{code:number|null;stdout:string;stderr:string;reply:any}>((done, reject) => {
+    child.once('error', reject);
+    child.once('close', code => {
+      try {
+        const lines = stdout.trim().split('\n'); assert.equal(lines.length, 1, stdout);
+        done({ code, stdout, stderr, reply: JSON.parse(lines[0]!) });
+      } catch (error) { reject(error); }
+    });
+  });
   return { child, result };
 }
 async function prepare(t: TestContext) {
@@ -89,6 +95,15 @@ async function untilCall(root: string, operation: string, offset = 0) {
   const end=Date.now()+5000;
   while(!fixtureCalls(root).slice(offset).includes(operation)) { assert.ok(Date.now()<end,'Missing fake milestone '+operation);await new Promise(done=>setTimeout(done,20)); }
 }
+async function untilReadWait(root: string, pid: number) {
+  const end = Date.now() + 5000;
+  while (true) {
+    try { assert.equal(await readFile(join(root, `read-wait-${pid}`), 'utf8'), 'ready'); return; }
+    catch (error) { if ((error as NodeJS.ErrnoException).code !== 'ENOENT') throw error; }
+    assert.ok(Date.now() < end, 'Missing read-wait readiness milestone');
+    await new Promise(done => setTimeout(done, 20));
+  }
+}
 for(const [signal,code] of [['SIGINT',130],['SIGTERM',143]] as const) {
   test(`CLI ${signal} revokes owned action and returns ${code} without late input`,{timeout:15000},async t=>{
     const f=await prepare(t);const path=join(f.root,'action.json');await writeFile(path,JSON.stringify({...actionRequest(f.allocationId),timeoutMs:60000}));
@@ -111,7 +126,7 @@ for(const [signal,code] of [['SIGINT',130],['SIGTERM',143]] as const) {
     await untilCall(f.root,'snapshot-ui',before);
     const initial=(await childCommand(f.root,'observed-report','one','observed',0,'0').result).reply;
     const waiting=childCommand(f.root,'observed-report','one','observed',45000,'0');
-    await new Promise(done=>setTimeout(done,350));waiting.child.kill(signal);const stopped=await waiting.result;
+    await untilReadWait(f.root, waiting.child.pid!);waiting.child.kill(signal);const stopped=await waiting.result;
     assert.equal(stopped.code,code);assert.equal(stopped.reply.code,'WAIT_CANCELLED');
     const current=(await childCommand(f.root,'observed-report','one','observed',0,'0').result).reply;
     assert.deepEqual(current,initial);assert.equal(current.cancellationRequested,false);assert.equal(worker.child.exitCode,null);

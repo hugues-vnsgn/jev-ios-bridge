@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict';
 import * as fs from 'node:fs/promises';
-import { appendFileSync, readFileSync, existsSync } from 'node:fs';
+import { appendFileSync, readFileSync, existsSync, writeFileSync, renameSync } from 'node:fs';
 import { join, resolve } from 'node:path';
 import { pathToFileURL } from 'node:url';
 import { Admission } from '../../src/device/admission.js';
@@ -94,5 +94,17 @@ if (process.argv[1] && import.meta.url === pathToFileURL(resolve(process.argv[1]
   const [root, command, argument] = process.argv.slice(2);
   if (!root || !command || !isObservedCommand(command)) throw new Error('Invalid fixture invocation');
   const module = fixtureObserved(root, process.env.JEV_EXPERIMENTAL_OBSERVED === '1', process.env.OBSERVED_FIXTURE_MODE);
+  if (command === 'observed-report') {
+    const inspect = module.inspect.bind(module);
+    module.inspect = (id, options) => {
+      const result = inspect(id, options);
+      if ((options?.waitMs ?? 0) > 0) {
+        const marker = join(root, `read-wait-${process.pid}`);
+        writeFileSync(marker + '.pending', 'ready', { mode: 0o600 });
+        renameSync(marker + '.pending', marker);
+      }
+      return result;
+    };
+  }
   await runCli([command, ...(argument ? [argument] : []), '--json', ...(process.argv[5] !== undefined ? ['--wait-ms', process.argv[5]] : [])], { observed: module, projectDir: root });
 }
