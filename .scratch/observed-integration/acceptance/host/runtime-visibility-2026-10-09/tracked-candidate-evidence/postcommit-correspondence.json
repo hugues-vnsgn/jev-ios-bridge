@@ -1,0 +1,510 @@
+{
+  "verdict": "PASS",
+  "checks": [
+    {
+      "name": "source443",
+      "pass": true
+    },
+    {
+      "name": "protected439",
+      "pass": true
+    },
+    {
+      "name": "compiled69",
+      "pass": true
+    },
+    {
+      "name": "actual-three-path-delta-within-four-owned",
+      "pass": true
+    },
+    {
+      "name": "existing241-bodies-and-assertions-exact",
+      "pass": true
+    },
+    {
+      "name": "fixture-guards-byte-exact",
+      "pass": true
+    },
+    {
+      "name": "isolation-node26-raw-bound",
+      "pass": true
+    },
+    {
+      "name": "isolation-node26-natural-close",
+      "pass": true
+    },
+    {
+      "name": "isolation-node26-exit",
+      "pass": true
+    },
+    {
+      "name": "isolation-node26-counts",
+      "pass": true
+    },
+    {
+      "name": "red-node26-raw-bound",
+      "pass": true
+    },
+    {
+      "name": "red-node26-natural-close",
+      "pass": true
+    },
+    {
+      "name": "red-node26-exit",
+      "pass": true
+    },
+    {
+      "name": "red-node26-counts",
+      "pass": true
+    },
+    {
+      "name": "final-green-node26-raw-bound",
+      "pass": true
+    },
+    {
+      "name": "final-green-node26-natural-close",
+      "pass": true
+    },
+    {
+      "name": "final-green-node26-exit",
+      "pass": true
+    },
+    {
+      "name": "final-green-node26-counts",
+      "pass": true
+    },
+    {
+      "name": "final-green-node26-final-source",
+      "pass": true
+    },
+    {
+      "name": "focused-node26-raw-bound",
+      "pass": true
+    },
+    {
+      "name": "focused-node26-natural-close",
+      "pass": true
+    },
+    {
+      "name": "focused-node26-exit",
+      "pass": true
+    },
+    {
+      "name": "focused-node26-counts",
+      "pass": true
+    },
+    {
+      "name": "focused-node26-final-source",
+      "pass": true
+    },
+    {
+      "name": "coverage-node26-raw-bound",
+      "pass": true
+    },
+    {
+      "name": "coverage-node26-natural-close",
+      "pass": true
+    },
+    {
+      "name": "coverage-node26-exit",
+      "pass": true
+    },
+    {
+      "name": "coverage-node26-counts",
+      "pass": true
+    },
+    {
+      "name": "coverage-node26-final-source",
+      "pass": true
+    },
+    {
+      "name": "typecheck-node26-raw-bound",
+      "pass": true
+    },
+    {
+      "name": "typecheck-node26-natural-close",
+      "pass": true
+    },
+    {
+      "name": "typecheck-node26-exit",
+      "pass": true
+    },
+    {
+      "name": "typecheck-node26-final-source",
+      "pass": true
+    },
+    {
+      "name": "build-node26-raw-bound",
+      "pass": true
+    },
+    {
+      "name": "build-node26-natural-close",
+      "pass": true
+    },
+    {
+      "name": "build-node26-exit",
+      "pass": true
+    },
+    {
+      "name": "build-node26-final-source",
+      "pass": true
+    },
+    {
+      "name": "build-node26-compiled",
+      "pass": true
+    },
+    {
+      "name": "isolation-node24-raw-bound",
+      "pass": true
+    },
+    {
+      "name": "isolation-node24-natural-close",
+      "pass": true
+    },
+    {
+      "name": "isolation-node24-exit",
+      "pass": true
+    },
+    {
+      "name": "isolation-node24-counts",
+      "pass": true
+    },
+    {
+      "name": "red-node24-raw-bound",
+      "pass": true
+    },
+    {
+      "name": "red-node24-natural-close",
+      "pass": true
+    },
+    {
+      "name": "red-node24-exit",
+      "pass": true
+    },
+    {
+      "name": "red-node24-counts",
+      "pass": true
+    },
+    {
+      "name": "final-green-node24-raw-bound",
+      "pass": true
+    },
+    {
+      "name": "final-green-node24-natural-close",
+      "pass": true
+    },
+    {
+      "name": "final-green-node24-exit",
+      "pass": true
+    },
+    {
+      "name": "final-green-node24-counts",
+      "pass": true
+    },
+    {
+      "name": "final-green-node24-final-source",
+      "pass": true
+    },
+    {
+      "name": "focused-node24-raw-bound",
+      "pass": true
+    },
+    {
+      "name": "focused-node24-natural-close",
+      "pass": true
+    },
+    {
+      "name": "focused-node24-exit",
+      "pass": true
+    },
+    {
+      "name": "focused-node24-counts",
+      "pass": true
+    },
+    {
+      "name": "focused-node24-final-source",
+      "pass": true
+    },
+    {
+      "name": "coverage-node24-raw-bound",
+      "pass": true
+    },
+    {
+      "name": "coverage-node24-natural-close",
+      "pass": true
+    },
+    {
+      "name": "coverage-node24-exit",
+      "pass": true
+    },
+    {
+      "name": "coverage-node24-counts",
+      "pass": true
+    },
+    {
+      "name": "coverage-node24-final-source",
+      "pass": true
+    },
+    {
+      "name": "typecheck-node24-raw-bound",
+      "pass": true
+    },
+    {
+      "name": "typecheck-node24-natural-close",
+      "pass": true
+    },
+    {
+      "name": "typecheck-node24-exit",
+      "pass": true
+    },
+    {
+      "name": "typecheck-node24-final-source",
+      "pass": true
+    },
+    {
+      "name": "build-node24-raw-bound",
+      "pass": true
+    },
+    {
+      "name": "build-node24-natural-close",
+      "pass": true
+    },
+    {
+      "name": "build-node24-exit",
+      "pass": true
+    },
+    {
+      "name": "build-node24-final-source",
+      "pass": true
+    },
+    {
+      "name": "build-node24-compiled",
+      "pass": true
+    },
+    {
+      "name": "node26-12-restoration-pairs",
+      "pass": true
+    },
+    {
+      "name": "node26-case1",
+      "pass": true
+    },
+    {
+      "name": "node26-genuine-red1",
+      "pass": true
+    },
+    {
+      "name": "node26-case2",
+      "pass": true
+    },
+    {
+      "name": "node26-bootstrap-invariant2",
+      "pass": true
+    },
+    {
+      "name": "node26-case3",
+      "pass": true
+    },
+    {
+      "name": "node26-genuine-red3",
+      "pass": true
+    },
+    {
+      "name": "node26-case4",
+      "pass": true
+    },
+    {
+      "name": "node26-bootstrap-invariant4",
+      "pass": true
+    },
+    {
+      "name": "node26-case5",
+      "pass": true
+    },
+    {
+      "name": "node26-genuine-red5",
+      "pass": true
+    },
+    {
+      "name": "node26-case6",
+      "pass": true
+    },
+    {
+      "name": "node26-bootstrap-invariant6",
+      "pass": true
+    },
+    {
+      "name": "node26-case7",
+      "pass": true
+    },
+    {
+      "name": "node26-genuine-red7",
+      "pass": true
+    },
+    {
+      "name": "node26-case8",
+      "pass": true
+    },
+    {
+      "name": "node26-bootstrap-invariant8",
+      "pass": true
+    },
+    {
+      "name": "node26-case9",
+      "pass": true
+    },
+    {
+      "name": "node26-genuine-red9",
+      "pass": true
+    },
+    {
+      "name": "node26-case10",
+      "pass": true
+    },
+    {
+      "name": "node26-bootstrap-invariant10",
+      "pass": true
+    },
+    {
+      "name": "node26-case11",
+      "pass": true
+    },
+    {
+      "name": "node26-genuine-red11",
+      "pass": true
+    },
+    {
+      "name": "node26-case12",
+      "pass": true
+    },
+    {
+      "name": "node26-bootstrap-invariant12",
+      "pass": true
+    },
+    {
+      "name": "node24-12-restoration-pairs",
+      "pass": true
+    },
+    {
+      "name": "node24-case1",
+      "pass": true
+    },
+    {
+      "name": "node24-genuine-red1",
+      "pass": true
+    },
+    {
+      "name": "node24-case2",
+      "pass": true
+    },
+    {
+      "name": "node24-bootstrap-invariant2",
+      "pass": true
+    },
+    {
+      "name": "node24-case3",
+      "pass": true
+    },
+    {
+      "name": "node24-genuine-red3",
+      "pass": true
+    },
+    {
+      "name": "node24-case4",
+      "pass": true
+    },
+    {
+      "name": "node24-bootstrap-invariant4",
+      "pass": true
+    },
+    {
+      "name": "node24-case5",
+      "pass": true
+    },
+    {
+      "name": "node24-genuine-red5",
+      "pass": true
+    },
+    {
+      "name": "node24-case6",
+      "pass": true
+    },
+    {
+      "name": "node24-bootstrap-invariant6",
+      "pass": true
+    },
+    {
+      "name": "node24-case7",
+      "pass": true
+    },
+    {
+      "name": "node24-genuine-red7",
+      "pass": true
+    },
+    {
+      "name": "node24-case8",
+      "pass": true
+    },
+    {
+      "name": "node24-bootstrap-invariant8",
+      "pass": true
+    },
+    {
+      "name": "node24-case9",
+      "pass": true
+    },
+    {
+      "name": "node24-genuine-red9",
+      "pass": true
+    },
+    {
+      "name": "node24-case10",
+      "pass": true
+    },
+    {
+      "name": "node24-bootstrap-invariant10",
+      "pass": true
+    },
+    {
+      "name": "node24-case11",
+      "pass": true
+    },
+    {
+      "name": "node24-genuine-red11",
+      "pass": true
+    },
+    {
+      "name": "node24-case12",
+      "pass": true
+    },
+    {
+      "name": "node24-bootstrap-invariant12",
+      "pass": true
+    },
+    {
+      "name": "all-prefreeze-checks-pass",
+      "pass": true
+    },
+    {
+      "name": "git-add",
+      "pass": true
+    },
+    {
+      "name": "git-commit",
+      "pass": true
+    },
+    {
+      "name": "parent-dcc",
+      "pass": true
+    },
+    {
+      "name": "git-working-exact443",
+      "pass": true
+    },
+    {
+      "name": "tracked-working-clean",
+      "pass": true
+    }
+  ],
+  "candidateContextSha256": "7de42479f3263694ed81fe17d43540d638d7d6259531508c28bfd4388fb8e7c9"
+}

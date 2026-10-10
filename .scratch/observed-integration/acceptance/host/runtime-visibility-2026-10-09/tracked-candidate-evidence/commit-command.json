@@ -1,0 +1,10 @@
+{
+  "exitCode": 0,
+  "stdout": "[fix/installed-tracked-binding cc5d30e2] fix: preserve installed identities through allocation tracking\n 3 files changed, 138 insertions(+), 5 deletions(-)\n",
+  "stderr": "",
+  "paths": [
+    "src/observed/allocation-config.ts",
+    "src/observed/allocation.ts",
+    "tests/observed-legacy-volume-runtime.test.ts"
+  ]
+}

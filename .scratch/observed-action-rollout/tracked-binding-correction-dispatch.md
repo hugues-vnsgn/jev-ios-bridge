@@ -31,4 +31,4 @@ Return the frozen candidate for independent Spec and Standards review. Describe 
 
 ## Remaining gates
 
-Both review axes must pass before candidate clean37 npm/plugin and fixed wrapped startup executions. Those require Root's later grant and precede integration. Then exact four-file integration and fresh physical host/distribution gates, sole-operator once iPhone17/iOS27.0 compatibility, operational entry, five serial live cases, and ticket12 independent review. The sole live operator stays idle. No native, SDK, account, migration, app build, secret access, merge, push or publication is granted here. No owner decision is pending.
+Both review axes must pass before candidate clean37 npm/plugin and fixed wrapped startup executions. Those require Root's later grant and precede integration. Then exact reviewed Source integration and fresh physical host/distribution gates, sole-operator once iPhone17/iOS27.0 compatibility, operational entry, five serial live cases, and ticket12 independent review. The sole live operator stays idle. No native, SDK, account, migration, app build, secret access, merge, push or publication is granted here. No owner decision is pending.

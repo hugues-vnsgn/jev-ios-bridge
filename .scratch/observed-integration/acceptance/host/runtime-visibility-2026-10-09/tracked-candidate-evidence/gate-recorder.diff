@@ -1,0 +1,65 @@
+--- sealed-dcc-recorder
++++ tracked-recorder
+@@ -1,8 +1,8 @@
+ import argparse, datetime, fcntl, hashlib, json, os, re, subprocess, time
+ from pathlib import Path
+ 
+-ROOT = Path('/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-legacy-binding')
+-EVIDENCE = ROOT / '.scratch/installed-legacy-volume-runtime/review-correction'
++ROOT = Path('/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-tracked-binding')
++EVIDENCE = ROOT / '.scratch/installed-tracked-runtime'
+ NODE = {'26': '/opt/homebrew/Cellar/node/26.8.1/bin/node',
+         '24': '/Users/hugues_mini/.npm/_npx/2c6eebc6231f3284/node_modules/node/bin/node'}
+ NODE_SHA = {'26': '902b6a6984d5d825829ea9064ab73b734548df37bc0683990dca31c8dc2a9253',
+@@ -38,14 +38,14 @@
+     fcntl.flock(lock, fcntl.LOCK_EX | fcntl.LOCK_NB)
+     run = EVIDENCE / args.label; run.mkdir(mode=0o700, exist_ok=False)
+     before = source(baseline); built_before = compiled(); head = git('rev-parse', 'HEAD').strip()
+-    assert len(before) == 443 and all(before[p] == h for p, h in baseline['protected440'].items())
++    assert len(before) == 443 and all(before[p] == h for p, h in baseline['protected439'].items())
+     freeze = json.loads(Path(args.freeze).read_text()) if args.freeze else None
+     if args.mode == 'default':
+         assert freeze and head == freeze['candidateCommit'] and before == freeze['source443'] and built_before == freeze['compiled69']
+-    for p in baseline['owned3']:
++    for p in baseline['owned4']:
+         path = run / 'owned-source' / p; path.parent.mkdir(parents=True, mode=0o700, exist_ok=True)
+         path.open('xb').write((ROOT / p).read_bytes()); path.chmod(0o600)
+-    put(run / 'before.json', {'head': head, 'source443': before, 'protected440': baseline['protected440'], 'compiled69': built_before})
++    put(run / 'before.json', {'head': head, 'source443': before, 'protected439': baseline['protected439'], 'compiled69': built_before})
+     (run / 'user.npmrc').open('x').close(); (run / 'global.npmrc').open('x').close()
+     environment = {'PATH': str(Path(NODE[args.node]).parent) + ':/opt/homebrew/bin:/usr/bin:/bin:/usr/sbin:/sbin',
+                    'HOME': '/Users/hugues_mini', 'LANG': 'C', 'LC_ALL': 'C',
+@@ -62,13 +62,13 @@
+         if args.mode == 'coverage': command += ['--experimental-test-coverage', '--test-coverage-include=**/src/observed/allocation-config.ts']
+         command += ['--test']
+         if args.mode in ['isolation', 'red']:
+-            command += ['--test-name-pattern=' + ('^pure legacy ' if args.mode == 'isolation' else '^review correction '), OWNED_TEST]
++            command += ['--test-name-pattern=' + ('^pure legacy ' if args.mode == 'isolation' else '^tracked correction '), OWNED_TEST]
+         else: command += [OWNED_TEST] if args.mode == 'owned' else FOCUSED[:4] if args.mode == 'coverage' else FOCUSED
+     record = {'argv': command, 'cwd': str(ROOT), 'mode': args.mode, 'runtime': version.stdout.decode().strip(),
+               'startedAtUtc': now(), 'environmentNames': sorted(environment), 'environment': environment,
+               'absentEnvironment': ['TYPESAFE_API_KEY', 'NODE_OPTIONS', 'NODE_NO_WARNINGS'],
+-              'parentUmask': '0077', 'childUmask': '0022', 'candidateSource443': before, 'protected440': baseline['protected440'],
+-              'owned3': {p: before[p] for p in baseline['owned3']}, 'compiledBefore69': built_before, 'head': head,
++              'parentUmask': '0077', 'childUmask': '0022', 'candidateSource443': before, 'protected439': baseline['protected439'],
++              'owned4': {p: before[p] for p in baseline['owned4']}, 'compiledBefore69': built_before, 'head': head,
+               'addedOuterTimeout': False, 'signalSent': False}
+     start = time.monotonic()
+     with (run / 'stdout.txt').open('xb') as stdout, (run / 'stderr.txt').open('xb') as stderr:
+@@ -81,7 +81,7 @@
+                    'actualCloseRecorded': True, 'stdoutSha256': sha(run / 'stdout.txt'), 'stderrSha256': sha(run / 'stderr.txt')})
+     after = source(baseline); built_after = compiled()
+     record.update({'sourceAfter443': after, 'compiledAfter': built_after, 'sourceUnchanged': before == after,
+-                   'protected440Unchanged': all(after[p] == h for p, h in baseline['protected440'].items())})
++                   'protected439Unchanged': all(after[p] == h for p, h in baseline['protected439'].items())})
+     put(run / 'command.json', record)
+     raw = (run / 'stdout.txt').read_text(errors='replace'); counts = {}
+     for key in ['tests', 'pass', 'fail', 'cancelled', 'skipped', 'todo']:
+@@ -98,6 +98,6 @@
+     print(json.dumps({'label': args.label, 'mode': args.mode, 'runtime': record['runtime'], 'exitCode': code,
+                       'counts': counts, 'actualClose': record['completedAtUtc'], 'sourceUnchanged': before == after,
+                       'commandSha256': sha(run / 'command.json')}), flush=True)
+-    assert before == after and record['protected440Unchanged']
++    assert before == after and record['protected439Unchanged']
+     if args.mode == 'default': assert after == freeze['source443'] and built_after == freeze['compiled69']
+     raise SystemExit(code)

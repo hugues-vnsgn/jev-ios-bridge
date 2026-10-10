@@ -1,0 +1,29 @@
+{
+  "version": 1,
+  "kind": "observed-action",
+  "actionId": "one",
+  "allocationId": "E94E59F9-0340-4A53-803A-B0DE0C5E5BA0",
+  "device": {
+    "platform": "ios-simulator",
+    "udid": "ABCDEF00-0000-4000-8000-000000000001"
+  },
+  "bridgeVersion": "host-fixture",
+  "state": "terminal",
+  "authority": "committed",
+  "disposition": "retrieved",
+  "cancellationRequested": false,
+  "actionAttempted": false,
+  "actionAcknowledged": false,
+  "observations": 0,
+  "outcome": "inconclusive",
+  "reason": "PREPARATION_UNCONFIRMED",
+  "admission": "quarantined",
+  "allocationState": "quarantined",
+  "evidence": {
+    "directory": "/private/tmp/observed-allocator-pe5QbA/runs/observed/one",
+    "request": "/private/tmp/observed-allocator-pe5QbA/runs/observed/one/request.json",
+    "observations": [],
+    "terminal": null,
+    "exportStatus": "pending"
+  }
+}

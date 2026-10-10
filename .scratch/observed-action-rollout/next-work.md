@@ -15,7 +15,7 @@ The allocation author is correcting that composition in `fix-installed-tracked-b
 | 1 — active | Correct the tracking helper used by the real allocator | Genuine regressions through the shared helper on both Nodes; preserve tracking, diagnostics, brand and cancellation; focused/coverage/typecheck/build and actual serial full defaults on frozen443Source/69compiled. |
 | 2 | Independent Spec and Standards review the frozen correction | Both axes PASS with no unresolved findings and exact input/output seals. |
 | 3 | Candidate clean npm/plugin installations and wrapped startup |37 commands per Node and fixed startup proofs, all69 payloads bound, before Source integration. |
-| 4 | Root integrates the exact four-file delta and runs fresh physical gates |443Source/439protected/69compiled correspondence, both full defaults/typecheck/build, both clean37 and startup proofs, original15 host artifacts preserved. |
+| 4 | Root integrates the exact reviewed Source delta and runs fresh physical gates |443Source/439protected/69compiled correspondence, both full defaults/typecheck/build, both clean37 and startup proofs, original15 host artifacts preserved. |
 | 5 | Sole operator performs one actual iPhone17/iOS27.0 compatibility lookup | Guarded production composition, lossless traces, all child closes; stop on refusal or uncertainty. |
 | 6 | Sole operator completes operational entry | Effective config, migration once, capacity/storage and unchanged fixture/Weather generic builds. |
 | 7 | Sole operator executes L01–L05 serially | All five public CLI/MCP outcomes and effect counts pass; retain all five allocations within the eight-allocation limit. |

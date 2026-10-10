@@ -1,0 +1,26 @@
+--- dcc-seal-evidence.py
++++ tracked-seal-evidence.py
+@@ -2,8 +2,8 @@
+ from collections import defaultdict
+ from pathlib import Path
+ 
+-ROOT = Path('/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-legacy-binding')
+-PRIVATE = ROOT / '.scratch/installed-legacy-volume-runtime/review-correction'
++ROOT = Path('/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-tracked-binding')
++PRIVATE = ROOT / '.scratch/installed-tracked-runtime'
+ os.umask(0o077)
+ def sha(path):
+     digest = hashlib.sha256()
+@@ -87,10 +87,10 @@
+             'candidateCommit': context['candidateCommit'], 'candidateContextSha256': context_sha,
+             'manifestSha256': manifest_sha, 'verificationIndexSha256': sha(PRIVATE / 'verification-index.json'),
+             'implementationReportSha256': sha(PRIVATE / 'implementation-report.md'),
+-            'regressionMatrixSha256': sha(PRIVATE / 'correction-regression-matrix.json'),
++            'regressionMatrixSha256': sha(PRIVATE / 'restoration-matrix.json'),
+             'regularFilesInManifest': len(regular), 'regularFilesIncludingManifestAndSeal': len(regular) + 2,
+             'symlinks': len(symlinks), 'directories': len(directories),
+-            'source443StillFrozen': True, 'protected440StillFrozen': True, 'compiled69StillFrozen': True,
++            'source443StillFrozen': True, 'protected439StillFrozen': True, 'compiled69StillFrozen': True,
+             'allRetainedRegularBytesRehashed': True, 'allRetainedSymlinkTargetsRecheckedWithoutFollowing': True,
+             'fileMode': '0600', 'directoryMode': '0700', 'selfExclusion': excluded['evidence-seal.json']}
+     seal_sha = put('evidence-seal.json', seal)

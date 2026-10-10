@@ -1,0 +1,12 @@
+{"pid":92834,"message":{"jsonrpc":"2.0","id":1,"method":"initialize","params":{"protocolVersion":"2025-03-26","capabilities":{},"clientInfo":{"name":"host-fault","version":"1"}}}}
+{"pid":92834,"message":{"jsonrpc":"2.0","id":2,"method":"tools/list","params":{}}}
+{"pid":92834,"message":{"jsonrpc":"2.0","id":3,"method":"tools/call","params":{"name":"start_observed_action","arguments":{"version":1,"actionId":"one","allocationId":"681E2135-D3D6-4972-8280-983C43827FD0","app":{"bundleId":"org.example.fixture"},"action":{"kind":"tap","selector":{"identifier":"go"}},"before":{"present":[{"identifier":"go"}]},"after":{"present":[{"identifier":"done"}]},"timeoutMs":5000}}}}
+{"pid":92834,"message":{"jsonrpc":"2.0","id":4,"method":"tools/call","params":{"name":"get_observed_action","arguments":{"actionId":"one","waitMs":5000}}}}
+{"pid":92931,"message":{"jsonrpc":"2.0","id":1,"method":"initialize","params":{"protocolVersion":"2025-03-26","capabilities":{},"clientInfo":{"name":"host-fault","version":"1"}}}}
+{"pid":92931,"message":{"jsonrpc":"2.0","id":2,"method":"tools/list","params":{}}}
+{"pid":92931,"message":{"jsonrpc":"2.0","id":3,"method":"tools/call","params":{"name":"get_observed_action","arguments":{"actionId":"one"}}}}
+{"pid":92931,"message":{"jsonrpc":"2.0","id":4,"method":"tools/call","params":{"name":"get_observed_action","arguments":{"actionId":"one"}}}}
+{"pid":92931,"message":{"jsonrpc":"2.0","id":5,"method":"tools/call","params":{"name":"cancel_observed_action","arguments":{"actionId":"one"}}}}
+{"pid":92931,"message":{"jsonrpc":"2.0","id":6,"method":"tools/call","params":{"name":"get_observed_allocation","arguments":{"allocationId":"681E2135-D3D6-4972-8280-983C43827FD0"}}}}
+{"pid":92931,"message":{"jsonrpc":"2.0","id":7,"method":"tools/call","params":{"name":"retire_observed_allocation","arguments":{"allocationId":"681E2135-D3D6-4972-8280-983C43827FD0"}}}}
+{"pid":92931,"message":{"jsonrpc":"2.0","id":8,"method":"tools/call","params":{"name":"cancel_observed_allocation","arguments":{"allocationId":"681E2135-D3D6-4972-8280-983C43827FD0"}}}}
