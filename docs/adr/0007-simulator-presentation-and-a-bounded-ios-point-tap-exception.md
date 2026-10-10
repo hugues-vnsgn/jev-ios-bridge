@@ -24,7 +24,7 @@ During `prepare` the driver runs `open -a Simulator --args -CurrentDeviceUDID <u
 - **Bounded and fenced.** `open` has a deadline of at most 10 seconds. An acknowledged terminal failure produces a warning when device issuance remains open. Cancellation, timeout or an unconfirmed outcome closes issuance and fails preparation; an unconfirmed operation keeps the lease.
 - **Optional.** On by default; `--no-device-window` or `JEV_DEVICE_WINDOW=off` turns it off.
 
-The window shows the simulator without app input or a hand-back. Its invocation passes through durable shared iOS admission and the device lease's command ledger. Releasing the lease requires confirming local settlement. This admission amendment was recorded on 2026-10-10; [ADR-0008](0008-durable-ios-admission.md) defines the shared authority and conservative quarantine rules.
+The window shows the simulator without app input or a hand-back. Its invocation passes through durable shared iOS admission and the device lease's command ledger. Releasing the lease requires confirming local settlement; these checks do not establish native device settlement or release. This admission amendment was recorded on 2026-10-10; [ADR-0008](0008-durable-ios-admission.md) defines the shared authority and conservative quarantine rules.
 
 ## Automation: Claude's `tapAt` through bundled AXe
 
