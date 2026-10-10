@@ -1,0 +1,1820 @@
+{
+  "archives": {
+    "pluginZip": {
+      "compiled69": {
+        "dist/capture.js": {
+          "member": "dist/capture.js",
+          "sha256": "c4a0a4776605a3b1c72b2795fd97f1230184bd9134f4c343ba58aaefea31974f"
+        },
+        "dist/cli.js": {
+          "member": "dist/cli.js",
+          "sha256": "3f3d41ee2687846dc939f502e7df5ad8aca3ea473a6d291d5652a5230b8ae2df"
+        },
+        "dist/contracts/index.js": {
+          "member": "dist/contracts/index.js",
+          "sha256": "dec6d2a8cea84e02493a041e74a15f36d80ce8f37e9dc6f43b82520570580864"
+        },
+        "dist/device/admission-allocation.js": {
+          "member": "dist/device/admission-allocation.js",
+          "sha256": "ba6f8ad883ec2d0edd08bbcbb216a02283eb13a74645a65e3cca94c7d1215c27"
+        },
+        "dist/device/admission-maintenance.js": {
+          "member": "dist/device/admission-maintenance.js",
+          "sha256": "c8d4451bb348ce01efc79ac9effc2bf0b83a545b4ca87edd4c12fbc46dc26965"
+        },
+        "dist/device/admission-migration.js": {
+          "member": "dist/device/admission-migration.js",
+          "sha256": "e2a2e1fe7c40c2f37a7fb0b74399bddd97da6c81208eefae9d56a3879b7c1b39"
+        },
+        "dist/device/admission-sqlite.js": {
+          "member": "dist/device/admission-sqlite.js",
+          "sha256": "de7f8337e7f043480270c8aa3653487c51abacca709410f79796a42bb26bf8b1"
+        },
+        "dist/device/admission.js": {
+          "member": "dist/device/admission.js",
+          "sha256": "9006f0d3c9328e6d75e7cf51af13dbcfea4db16525b7ac67b68f8230060e51ef"
+        },
+        "dist/device/android/adb.js": {
+          "member": "dist/device/android/adb.js",
+          "sha256": "3edec1e60b2605c8252164a94ebc089afec9e196a3383d1cb58359b2226e28d6"
+        },
+        "dist/device/android/agent-client.js": {
+          "member": "dist/device/android/agent-client.js",
+          "sha256": "1da4c9fa54388fa8456713f4186de58e2ecd7fd5f9ef4ea70616176668196947"
+        },
+        "dist/device/android/agent-supply.js": {
+          "member": "dist/device/android/agent-supply.js",
+          "sha256": "7cef22170d1702b9b03e68cefe3060ef578643a47907dffc021debfd23b45330"
+        },
+        "dist/device/android/driver.js": {
+          "member": "dist/device/android/driver.js",
+          "sha256": "7ea0701ff8017904fc22ce7ffb056be8d9742df150b681daeae9559b06b35a14"
+        },
+        "dist/device/android/exit-watch.js": {
+          "member": "dist/device/android/exit-watch.js",
+          "sha256": "9b312677a3b8c9d3eae677092837c6e86c49e4ed1d580ad87693efe92ba1faa6"
+        },
+        "dist/device/android/ledger.js": {
+          "member": "dist/device/android/ledger.js",
+          "sha256": "113897aff0008ef044a6558f7463329c3a52a4d89bf5465d233a1833ec7ba049"
+        },
+        "dist/device/android/logcat.js": {
+          "member": "dist/device/android/logcat.js",
+          "sha256": "1a70a5a6836886c48052586a7d27e26fb4e49c82c731e490bdb7861d85980761"
+        },
+        "dist/device/android/mapping.js": {
+          "member": "dist/device/android/mapping.js",
+          "sha256": "fbc53c8e96fd1bdd0a3ef92e26a2a455c08720b8dcdc8be0bf8c976a2b5b4952"
+        },
+        "dist/device/android/settle.js": {
+          "member": "dist/device/android/settle.js",
+          "sha256": "6fad022c962493e735ea1198a8a83f24b5df4b1652b4308002051ca5afe61363"
+        },
+        "dist/device/android/threadtime.js": {
+          "member": "dist/device/android/threadtime.js",
+          "sha256": "be36c941425f1a87cc2d9c2dffe175fd07dd2a273e36a144bfa11e9415714feb"
+        },
+        "dist/device/android/tools.js": {
+          "member": "dist/device/android/tools.js",
+          "sha256": "38638379c79e1a4f9f22bc104dff7aefccd509ff9b822a7ef4d8db822d529774"
+        },
+        "dist/device/attach.js": {
+          "member": "dist/device/attach.js",
+          "sha256": "2e27df08bd5a975c4b061e0a8f707b70af53504f6415f03986ac25a1d1743bcf"
+        },
+        "dist/device/factory.js": {
+          "member": "dist/device/factory.js",
+          "sha256": "9b3961c796b3c6d57ddafd39fd7cb1ec3f67fbe223947ca11c8e63dc7895fe70"
+        },
+        "dist/device/image.js": {
+          "member": "dist/device/image.js",
+          "sha256": "19f4e3dddab9f1d4fe5a57c44d7f25ee1ed9fcbc10f38878437ddd3db19fc846"
+        },
+        "dist/device/index.js": {
+          "member": "dist/device/index.js",
+          "sha256": "0f0105e0777963fa8c196da19e1d0550929d07a4d74e163b3a65983778151ee7"
+        },
+        "dist/device/lease.js": {
+          "member": "dist/device/lease.js",
+          "sha256": "c54335efb2647f469c3e480e8b3036598e389ed41e56fc92b23cd669a9978523"
+        },
+        "dist/device/logs.js": {
+          "member": "dist/device/logs.js",
+          "sha256": "799e9719aaa336321fc3dd3ae17b6ec7e24eb4268dca4f0c55f22364ea945cba"
+        },
+        "dist/driven/candidates.js": {
+          "member": "dist/driven/candidates.js",
+          "sha256": "ed9da6235a0bed29b25dda9b7089b602306979f9f0753c5b736b9bbf847bd510"
+        },
+        "dist/driven/decide.js": {
+          "member": "dist/driven/decide.js",
+          "sha256": "64197e257066a9072cf00cd5af8e7ade8b97e7a952e37ad8a3370020753b8a7d"
+        },
+        "dist/driven/handback.js": {
+          "member": "dist/driven/handback.js",
+          "sha256": "d0be72d959d452efbb533cd5d7fad38aa805829025c28c7d4c0b1dc952176fd7"
+        },
+        "dist/driven/marker.js": {
+          "member": "dist/driven/marker.js",
+          "sha256": "bb2bd3a84c2973d94495e923f0ab15538eb523a6c6764476fa137c95b889e7bf"
+        },
+        "dist/driven/policy.js": {
+          "member": "dist/driven/policy.js",
+          "sha256": "0b37bd689843a69fb7980273e915f20af44ae365305f736471705b6dd1500e04"
+        },
+        "dist/driven/project.js": {
+          "member": "dist/driven/project.js",
+          "sha256": "1482a41c0041be0e971da386497b12557f91575d205e2c7bebab9222e494daa2"
+        },
+        "dist/driven/step.js": {
+          "member": "dist/driven/step.js",
+          "sha256": "669eef883b2ad9994310a62561100a05e25d1b183b9360cffce39b640d37c3ae"
+        },
+        "dist/driven/vocabulary.js": {
+          "member": "dist/driven/vocabulary.js",
+          "sha256": "81d171daef1f450ea866321b13f4ef22c2cade4a0e7dc0a384327be6f9a8524a"
+        },
+        "dist/exit-codes.js": {
+          "member": "dist/exit-codes.js",
+          "sha256": "c85c3e5ccc50b25255f516d2680539b4c0ed1817144c40d927733a556e2e9f95"
+        },
+        "dist/experimental/observed-journal.js": {
+          "member": "dist/experimental/observed-journal.js",
+          "sha256": "b57ab8f9cf69bc8f252626dd948bd7b60c149c104181b6013c37d8dc105ef6bd"
+        },
+        "dist/experimental/observed-run.js": {
+          "member": "dist/experimental/observed-run.js",
+          "sha256": "6ca67a307aed02f7cf9734558bdea7575b7661f4e060a410e0c81267ab491942"
+        },
+        "dist/experimental/observed-tap.js": {
+          "member": "dist/experimental/observed-tap.js",
+          "sha256": "80e81478bb734ce2b1c35e4005fb975e40fad68b86de6fb07b021d7c1ab331d7"
+        },
+        "dist/log/index.js": {
+          "member": "dist/log/index.js",
+          "sha256": "ead5f93a0fca9aeb3beec6e9f17ebb3c9a249501cf39be3b9fcfc0ecccb482b0"
+        },
+        "dist/logpane/attach.js": {
+          "member": "dist/logpane/attach.js",
+          "sha256": "7162850524252f2e640c64a12cf75f2aacfe37b148b3238f2b1c051b3e8106a6"
+        },
+        "dist/logpane/format.js": {
+          "member": "dist/logpane/format.js",
+          "sha256": "8ebe92bb56509576e315b5e723f511f10347e0b83a9362d9d553aaaba32b8009"
+        },
+        "dist/logpane/stream.js": {
+          "member": "dist/logpane/stream.js",
+          "sha256": "adf4eabc21fc50188a8a2a966960ec22c824526b0d4b092513f40f0ce301f986"
+        },
+        "dist/logpane/window.js": {
+          "member": "dist/logpane/window.js",
+          "sha256": "7297aca5f2f7b46d221ec0b754cb5ac4c30449c9485733ce1d8325d71d22ed6e"
+        },
+        "dist/mcp/index.js": {
+          "member": "dist/mcp/index.js",
+          "sha256": "64b3bb0d3733a367dfc3576ffa8e8c7f28e61031e53a82fc73292243f51d99a3"
+        },
+        "dist/mcp/observed.js": {
+          "member": "dist/mcp/observed.js",
+          "sha256": "7cb75f32d67867140bd63880ca566b4918de24d915cec641fa4b7a6771fbc674"
+        },
+        "dist/observed/allocation-config.js": {
+          "member": "dist/observed/allocation-config.js",
+          "sha256": "4e71bfd6d540d8637011f80084176eb899d799d8c6dc0c734e1baba109a77705"
+        },
+        "dist/observed/allocation-schema.js": {
+          "member": "dist/observed/allocation-schema.js",
+          "sha256": "1f4af01e2bd7559ccd78439b57e22477d6e58a2ef00dd85cc7bf159d314fde36"
+        },
+        "dist/observed/allocation.js": {
+          "member": "dist/observed/allocation.js",
+          "sha256": "87d8d4c98ac77d3868f5e88f9e09b2274f0dd77f457fd1ef7f254f15750cb467"
+        },
+        "dist/observed/artifact.js": {
+          "member": "dist/observed/artifact.js",
+          "sha256": "71697e79851b3afc6e0157e6bf3f2116ffec6233b13996463a54c24b6465aea5"
+        },
+        "dist/observed/cli.js": {
+          "member": "dist/observed/cli.js",
+          "sha256": "14679c0c13fdd87361f677d2d946841034343629bdb84221d280ba556720e4f2"
+        },
+        "dist/observed/create-source.js": {
+          "member": "dist/observed/create-source.js",
+          "sha256": "1b3b13ab6dc55eb5f04f0f7a40b2b86a2d6fe46a96a7274bab1bf5cc81f5e8c3"
+        },
+        "dist/observed/evidence.js": {
+          "member": "dist/observed/evidence.js",
+          "sha256": "682e600b8dca6ef3cfa5d869dab60cd8dc2865aa677bc84947629783762d158e"
+        },
+        "dist/observed/installed-plist.js": {
+          "member": "dist/observed/installed-plist.js",
+          "sha256": "bfa578bac5fe8b3a1101ea945b8db8f0f54bccf29c9ab4de0122831d0162df5f"
+        },
+        "dist/observed/report.js": {
+          "member": "dist/observed/report.js",
+          "sha256": "c843ab9d562e8299371e64c6d7380fd94ac574769562791ab2f66238a8393eee"
+        },
+        "dist/observed/schema.js": {
+          "member": "dist/observed/schema.js",
+          "sha256": "4981a31d0bf83c38d69efd54589cb57b344713dab6bdb223c28533d937861f53"
+        },
+        "dist/observed/service.js": {
+          "member": "dist/observed/service.js",
+          "sha256": "13ae2e47efcf6139b7460fce862173960d8a6e465ba7a989d3356b273b24ac9f"
+        },
+        "dist/observed/supplied-source.js": {
+          "member": "dist/observed/supplied-source.js",
+          "sha256": "74720e27069f89bf6e238cee90b8c804fd92783d6d0e82bdb23f7c9f75834c41"
+        },
+        "dist/process.js": {
+          "member": "dist/process.js",
+          "sha256": "62963d4ae970d3dbb06811e2ae7b983ebb7502380f02053d7f0e08a3e8f958f3"
+        },
+        "dist/scripted/contracts.js": {
+          "member": "dist/scripted/contracts.js",
+          "sha256": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881"
+        },
+        "dist/scripted/jev.js": {
+          "member": "dist/scripted/jev.js",
+          "sha256": "d227aff5eb07388becd0f5dea1a800823f1abcf1e23fb9e4f1f8542c7e6d414c"
+        },
+        "dist/scripted/observe.js": {
+          "member": "dist/scripted/observe.js",
+          "sha256": "db2c8e6df75acfb8be14d1668c355ca92d27b5caefc6bf2870d1bb90c6498c08"
+        },
+        "dist/scripted/report-json.js": {
+          "member": "dist/scripted/report-json.js",
+          "sha256": "1bd59963d6d37331a98ed7d4e537415f2e902e1d861a2f1ea2405c0ff271ffdb"
+        },
+        "dist/scripted/report.js": {
+          "member": "dist/scripted/report.js",
+          "sha256": "b5a6c25355dd73ecadb9cb048479adf81cc05237a5c92193cf17cd1d5c3c1886"
+        },
+        "dist/scripted/run.js": {
+          "member": "dist/scripted/run.js",
+          "sha256": "bc33b4c81a5c0185eb316a8016de67e691418f5e736e318d4c6e5e03298d74ea"
+        },
+        "dist/scripted/schema.js": {
+          "member": "dist/scripted/schema.js",
+          "sha256": "85ce0c365ef5cead2899e7e8487c75a8c4a371768bb51f1b985028bc9922adb1"
+        },
+        "dist/scripted/select.js": {
+          "member": "dist/scripted/select.js",
+          "sha256": "c2d364f7ef5aed1f219f9de21601a078376b23b1621eddce26578ea5a99b8d2a"
+        },
+        "dist/scripted/vocabulary.js": {
+          "member": "dist/scripted/vocabulary.js",
+          "sha256": "3ff8fdb40f9e141281a3af9e73a779c64073f8bac98b91b04bd8edc340d40284"
+        },
+        "dist/service.js": {
+          "member": "dist/service.js",
+          "sha256": "a2b3f70361ffd728711767933bf74cba7c8a30c41ce8d8e76eb9fdb7396ffafe"
+        },
+        "dist/version.js": {
+          "member": "dist/version.js",
+          "sha256": "1f2780b5f9cc2737f99ad1de9598baed2af758754ab53f6577fcff5c8bc8a226"
+        },
+        "dist/watch/index.js": {
+          "member": "dist/watch/index.js",
+          "sha256": "f297ae862b9c13309e2ab56cc8bb7cc168c644f8342b0ee709245d82135a4a57"
+        }
+      },
+      "path": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-tracked-binding/.scratch/installed-tracked-packaging-maxsockets1/runs/tracked-maxsockets1-packaging-node26/installed-proof/build-source/build/plugin/jev-ios-bridge-plugin-1.3.1.zip",
+      "regularMembers": {
+        ".claude-plugin/plugin.json": "3cfff7600e3db5d3965dd51f690caab9bfce38d6fa0203c5c68b320c2304b107",
+        "CHANGELOG.md": "3815c77f66c9ab05bb5a6d88d34ec44bb23ca278f1ccc16c6369d6cc2523f983",
+        "LICENSE": "2821ecf355c722efab7a2c5537a32261d29890ebd7402c5cf2e5887e54b789a8",
+        "README.md": "b5465ca95374299beb4e1be0bfd256d889d1edce214f681f7e5521461288dcb6",
+        "dist/capture.js": "c4a0a4776605a3b1c72b2795fd97f1230184bd9134f4c343ba58aaefea31974f",
+        "dist/cli.js": "3f3d41ee2687846dc939f502e7df5ad8aca3ea473a6d291d5652a5230b8ae2df",
+        "dist/contracts/index.js": "dec6d2a8cea84e02493a041e74a15f36d80ce8f37e9dc6f43b82520570580864",
+        "dist/device/admission-allocation.js": "ba6f8ad883ec2d0edd08bbcbb216a02283eb13a74645a65e3cca94c7d1215c27",
+        "dist/device/admission-maintenance.js": "c8d4451bb348ce01efc79ac9effc2bf0b83a545b4ca87edd4c12fbc46dc26965",
+        "dist/device/admission-migration.js": "e2a2e1fe7c40c2f37a7fb0b74399bddd97da6c81208eefae9d56a3879b7c1b39",
+        "dist/device/admission-sqlite.js": "de7f8337e7f043480270c8aa3653487c51abacca709410f79796a42bb26bf8b1",
+        "dist/device/admission.js": "9006f0d3c9328e6d75e7cf51af13dbcfea4db16525b7ac67b68f8230060e51ef",
+        "dist/device/android/adb.js": "3edec1e60b2605c8252164a94ebc089afec9e196a3383d1cb58359b2226e28d6",
+        "dist/device/android/agent-client.js": "1da4c9fa54388fa8456713f4186de58e2ecd7fd5f9ef4ea70616176668196947",
+        "dist/device/android/agent-supply.js": "7cef22170d1702b9b03e68cefe3060ef578643a47907dffc021debfd23b45330",
+        "dist/device/android/driver.js": "7ea0701ff8017904fc22ce7ffb056be8d9742df150b681daeae9559b06b35a14",
+        "dist/device/android/exit-watch.js": "9b312677a3b8c9d3eae677092837c6e86c49e4ed1d580ad87693efe92ba1faa6",
+        "dist/device/android/ledger.js": "113897aff0008ef044a6558f7463329c3a52a4d89bf5465d233a1833ec7ba049",
+        "dist/device/android/logcat.js": "1a70a5a6836886c48052586a7d27e26fb4e49c82c731e490bdb7861d85980761",
+        "dist/device/android/mapping.js": "fbc53c8e96fd1bdd0a3ef92e26a2a455c08720b8dcdc8be0bf8c976a2b5b4952",
+        "dist/device/android/settle.js": "6fad022c962493e735ea1198a8a83f24b5df4b1652b4308002051ca5afe61363",
+        "dist/device/android/threadtime.js": "be36c941425f1a87cc2d9c2dffe175fd07dd2a273e36a144bfa11e9415714feb",
+        "dist/device/android/tools.js": "38638379c79e1a4f9f22bc104dff7aefccd509ff9b822a7ef4d8db822d529774",
+        "dist/device/attach.js": "2e27df08bd5a975c4b061e0a8f707b70af53504f6415f03986ac25a1d1743bcf",
+        "dist/device/factory.js": "9b3961c796b3c6d57ddafd39fd7cb1ec3f67fbe223947ca11c8e63dc7895fe70",
+        "dist/device/image.js": "19f4e3dddab9f1d4fe5a57c44d7f25ee1ed9fcbc10f38878437ddd3db19fc846",
+        "dist/device/index.js": "0f0105e0777963fa8c196da19e1d0550929d07a4d74e163b3a65983778151ee7",
+        "dist/device/lease.js": "c54335efb2647f469c3e480e8b3036598e389ed41e56fc92b23cd669a9978523",
+        "dist/device/logs.js": "799e9719aaa336321fc3dd3ae17b6ec7e24eb4268dca4f0c55f22364ea945cba",
+        "dist/driven/candidates.js": "ed9da6235a0bed29b25dda9b7089b602306979f9f0753c5b736b9bbf847bd510",
+        "dist/driven/decide.js": "64197e257066a9072cf00cd5af8e7ade8b97e7a952e37ad8a3370020753b8a7d",
+        "dist/driven/handback.js": "d0be72d959d452efbb533cd5d7fad38aa805829025c28c7d4c0b1dc952176fd7",
+        "dist/driven/marker.js": "bb2bd3a84c2973d94495e923f0ab15538eb523a6c6764476fa137c95b889e7bf",
+        "dist/driven/policy.js": "0b37bd689843a69fb7980273e915f20af44ae365305f736471705b6dd1500e04",
+        "dist/driven/project.js": "1482a41c0041be0e971da386497b12557f91575d205e2c7bebab9222e494daa2",
+        "dist/driven/step.js": "669eef883b2ad9994310a62561100a05e25d1b183b9360cffce39b640d37c3ae",
+        "dist/driven/vocabulary.js": "81d171daef1f450ea866321b13f4ef22c2cade4a0e7dc0a384327be6f9a8524a",
+        "dist/exit-codes.js": "c85c3e5ccc50b25255f516d2680539b4c0ed1817144c40d927733a556e2e9f95",
+        "dist/experimental/observed-journal.js": "b57ab8f9cf69bc8f252626dd948bd7b60c149c104181b6013c37d8dc105ef6bd",
+        "dist/experimental/observed-run.js": "6ca67a307aed02f7cf9734558bdea7575b7661f4e060a410e0c81267ab491942",
+        "dist/experimental/observed-tap.js": "80e81478bb734ce2b1c35e4005fb975e40fad68b86de6fb07b021d7c1ab331d7",
+        "dist/log/index.js": "ead5f93a0fca9aeb3beec6e9f17ebb3c9a249501cf39be3b9fcfc0ecccb482b0",
+        "dist/logpane/attach.js": "7162850524252f2e640c64a12cf75f2aacfe37b148b3238f2b1c051b3e8106a6",
+        "dist/logpane/format.js": "8ebe92bb56509576e315b5e723f511f10347e0b83a9362d9d553aaaba32b8009",
+        "dist/logpane/stream.js": "adf4eabc21fc50188a8a2a966960ec22c824526b0d4b092513f40f0ce301f986",
+        "dist/logpane/window.js": "7297aca5f2f7b46d221ec0b754cb5ac4c30449c9485733ce1d8325d71d22ed6e",
+        "dist/mcp/index.js": "64b3bb0d3733a367dfc3576ffa8e8c7f28e61031e53a82fc73292243f51d99a3",
+        "dist/mcp/observed.js": "7cb75f32d67867140bd63880ca566b4918de24d915cec641fa4b7a6771fbc674",
+        "dist/observed/allocation-config.js": "4e71bfd6d540d8637011f80084176eb899d799d8c6dc0c734e1baba109a77705",
+        "dist/observed/allocation-schema.js": "1f4af01e2bd7559ccd78439b57e22477d6e58a2ef00dd85cc7bf159d314fde36",
+        "dist/observed/allocation.js": "87d8d4c98ac77d3868f5e88f9e09b2274f0dd77f457fd1ef7f254f15750cb467",
+        "dist/observed/artifact.js": "71697e79851b3afc6e0157e6bf3f2116ffec6233b13996463a54c24b6465aea5",
+        "dist/observed/cli.js": "14679c0c13fdd87361f677d2d946841034343629bdb84221d280ba556720e4f2",
+        "dist/observed/create-source.js": "1b3b13ab6dc55eb5f04f0f7a40b2b86a2d6fe46a96a7274bab1bf5cc81f5e8c3",
+        "dist/observed/evidence.js": "682e600b8dca6ef3cfa5d869dab60cd8dc2865aa677bc84947629783762d158e",
+        "dist/observed/installed-plist.js": "bfa578bac5fe8b3a1101ea945b8db8f0f54bccf29c9ab4de0122831d0162df5f",
+        "dist/observed/report.js": "c843ab9d562e8299371e64c6d7380fd94ac574769562791ab2f66238a8393eee",
+        "dist/observed/schema.js": "4981a31d0bf83c38d69efd54589cb57b344713dab6bdb223c28533d937861f53",
+        "dist/observed/service.js": "13ae2e47efcf6139b7460fce862173960d8a6e465ba7a989d3356b273b24ac9f",
+        "dist/observed/supplied-source.js": "74720e27069f89bf6e238cee90b8c804fd92783d6d0e82bdb23f7c9f75834c41",
+        "dist/process.js": "62963d4ae970d3dbb06811e2ae7b983ebb7502380f02053d7f0e08a3e8f958f3",
+        "dist/scripted/contracts.js": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881",
+        "dist/scripted/jev.js": "d227aff5eb07388becd0f5dea1a800823f1abcf1e23fb9e4f1f8542c7e6d414c",
+        "dist/scripted/observe.js": "db2c8e6df75acfb8be14d1668c355ca92d27b5caefc6bf2870d1bb90c6498c08",
+        "dist/scripted/report-json.js": "1bd59963d6d37331a98ed7d4e537415f2e902e1d861a2f1ea2405c0ff271ffdb",
+        "dist/scripted/report.js": "b5a6c25355dd73ecadb9cb048479adf81cc05237a5c92193cf17cd1d5c3c1886",
+        "dist/scripted/run.js": "bc33b4c81a5c0185eb316a8016de67e691418f5e736e318d4c6e5e03298d74ea",
+        "dist/scripted/schema.js": "85ce0c365ef5cead2899e7e8487c75a8c4a371768bb51f1b985028bc9922adb1",
+        "dist/scripted/select.js": "c2d364f7ef5aed1f219f9de21601a078376b23b1621eddce26578ea5a99b8d2a",
+        "dist/scripted/vocabulary.js": "3ff8fdb40f9e141281a3af9e73a779c64073f8bac98b91b04bd8edc340d40284",
+        "dist/service.js": "a2b3f70361ffd728711767933bf74cba7c8a30c41ce8d8e76eb9fdb7396ffafe",
+        "dist/version.js": "1f2780b5f9cc2737f99ad1de9598baed2af758754ab53f6577fcff5c8bc8a226",
+        "dist/watch/index.js": "f297ae862b9c13309e2ab56cc8bb7cc168c644f8342b0ee709245d82135a4a57",
+        "docs/guide/01-quickstart.md": "40533d4d818f40de8c2be7b1ca02480bcb6dea9c29340a5369c77a1d741c6753",
+        "docs/guide/02-prepare-your-app.md": "98c91f09d17b4674a4b49412e5e88773bcc3c93d4f38e630cc8c617d014d23a7",
+        "docs/guide/03-identifiers.md": "f220763a2ba4861f3388f08a02a1cfe28671a0190e5fae2f00819d3508492ea5",
+        "docs/guide/04-writing-scripts.md": "58427512dfc6909e80f2a13c29a06e47cd431a45639807e27c7331e2eec7779e",
+        "docs/guide/05-writing-claims.md": "24bea343e48afb1503cf2c4c8ab525f91b99093da1b656b4301592015f2f3835",
+        "docs/guide/06-running.md": "dc8b953fd4d115209d3d1c943d027fd32c678a519bdd551d607f73805c6c5d5c",
+        "docs/guide/07-reports-and-evidence.md": "f0158f5642812ec2115fe0c612828c0b69f7ee0e773c9096a789fff57898cefb",
+        "docs/guide/08-troubleshooting.md": "664da61c1712eed8c583800f8ee04f6e389982917cd4fd7e4c8af250e51249e0",
+        "docs/guide/09-data-handling.md": "bd2412cf2a38a76765b2b2f881c416f587a26499fb8d90127842752e794ada0d",
+        "docs/guide/10-limits.md": "805faaba309c9c6e5d95442f1519bd6d57d2cd74e960819719d56cacd122936c",
+        "docs/guide/11-stability.md": "c18ebddf84180dc8eb89147325f4f464f8e526e5ce72b2a434fb1d3cc30b81de",
+        "docs/guide/12-android-setup.md": "761d0bfd9f673f0b66da26702e46ac7dd7f0d2f955a17558aceabfb613871c06",
+        "docs/guide/13-driven-steps.md": "f05dd5e1edb34cc1e236b5baf3f462cc3ef050f896a08ae38b8efe47ad537528",
+        "docs/guide/14-observed-actions.md": "b1296abbdadb769d075876cb21cacc68a83a02962c6891c3f8f2e036c9ae8267",
+        "docs/guide/README.md": "e86fa091483524ffc75d23858ee39c422ee84acf2d966fd8153ea5cf5ef47d83",
+        "docs/guide/examples/compose-gallery.md": "ed8c80e18878e424cd38f39e34c2a30345bc59faba7f38ba7785d8e63ed5eb96",
+        "docs/guide/examples/swiftui-weather.md": "6ee268ca8d7291e6f5f2eca555b0c44b6a1b15899a77d29f66c193fdf4108f19",
+        "docs/guide/reference/observed-format.md": "75b47e9a5f9951412be514363c2d0ed1009d4bf666138efa1c52cfbef66e8c96",
+        "docs/guide/reference/reason-codes.md": "77efcf0d0c05c7ca7db359909d18f6f337f5b1c06c061260c53006098c6d0391",
+        "docs/guide/reference/report-json.md": "3cbfbed68553991ef6cd24e6ba7d9185a5ecc5811d5855d807f2ea6a17aed6d7",
+        "docs/guide/reference/script-format.md": "ef953f1de5c7ce2e7f4e37426dfd8b0e5400e66241149278b2076853979ed5ec",
+        "package-lock.json": "be79b19a3f7891e340fcd123fe751260a4492a577e0bda22398325e6ea368cd7",
+        "package.json": "4ef075dd2cf053ffda89ba2595b8be65af431addecb78fe25593454af76947b3",
+        "skills/test-android/SKILL.md": "36eb1bb46478145ac8498e2f6d6696968535fb33b31ec6976a58d383479a49a2",
+        "skills/test-ios/SKILL.md": "089f443b4131615778ae8bb1f7fbbc0ff18a3936f08ce6b9f61f616bbb0dac46"
+      },
+      "sha256": "b2fd8e20cbca7d396655f9619839090ea8986e582bf122a12353551754a66e7c",
+      "symlinkOrHardlinkMembers": {}
+    },
+    "tarball": {
+      "compiled69": {
+        "dist/capture.js": {
+          "member": "package/dist/capture.js",
+          "sha256": "c4a0a4776605a3b1c72b2795fd97f1230184bd9134f4c343ba58aaefea31974f"
+        },
+        "dist/cli.js": {
+          "member": "package/dist/cli.js",
+          "sha256": "3f3d41ee2687846dc939f502e7df5ad8aca3ea473a6d291d5652a5230b8ae2df"
+        },
+        "dist/contracts/index.js": {
+          "member": "package/dist/contracts/index.js",
+          "sha256": "dec6d2a8cea84e02493a041e74a15f36d80ce8f37e9dc6f43b82520570580864"
+        },
+        "dist/device/admission-allocation.js": {
+          "member": "package/dist/device/admission-allocation.js",
+          "sha256": "ba6f8ad883ec2d0edd08bbcbb216a02283eb13a74645a65e3cca94c7d1215c27"
+        },
+        "dist/device/admission-maintenance.js": {
+          "member": "package/dist/device/admission-maintenance.js",
+          "sha256": "c8d4451bb348ce01efc79ac9effc2bf0b83a545b4ca87edd4c12fbc46dc26965"
+        },
+        "dist/device/admission-migration.js": {
+          "member": "package/dist/device/admission-migration.js",
+          "sha256": "e2a2e1fe7c40c2f37a7fb0b74399bddd97da6c81208eefae9d56a3879b7c1b39"
+        },
+        "dist/device/admission-sqlite.js": {
+          "member": "package/dist/device/admission-sqlite.js",
+          "sha256": "de7f8337e7f043480270c8aa3653487c51abacca709410f79796a42bb26bf8b1"
+        },
+        "dist/device/admission.js": {
+          "member": "package/dist/device/admission.js",
+          "sha256": "9006f0d3c9328e6d75e7cf51af13dbcfea4db16525b7ac67b68f8230060e51ef"
+        },
+        "dist/device/android/adb.js": {
+          "member": "package/dist/device/android/adb.js",
+          "sha256": "3edec1e60b2605c8252164a94ebc089afec9e196a3383d1cb58359b2226e28d6"
+        },
+        "dist/device/android/agent-client.js": {
+          "member": "package/dist/device/android/agent-client.js",
+          "sha256": "1da4c9fa54388fa8456713f4186de58e2ecd7fd5f9ef4ea70616176668196947"
+        },
+        "dist/device/android/agent-supply.js": {
+          "member": "package/dist/device/android/agent-supply.js",
+          "sha256": "7cef22170d1702b9b03e68cefe3060ef578643a47907dffc021debfd23b45330"
+        },
+        "dist/device/android/driver.js": {
+          "member": "package/dist/device/android/driver.js",
+          "sha256": "7ea0701ff8017904fc22ce7ffb056be8d9742df150b681daeae9559b06b35a14"
+        },
+        "dist/device/android/exit-watch.js": {
+          "member": "package/dist/device/android/exit-watch.js",
+          "sha256": "9b312677a3b8c9d3eae677092837c6e86c49e4ed1d580ad87693efe92ba1faa6"
+        },
+        "dist/device/android/ledger.js": {
+          "member": "package/dist/device/android/ledger.js",
+          "sha256": "113897aff0008ef044a6558f7463329c3a52a4d89bf5465d233a1833ec7ba049"
+        },
+        "dist/device/android/logcat.js": {
+          "member": "package/dist/device/android/logcat.js",
+          "sha256": "1a70a5a6836886c48052586a7d27e26fb4e49c82c731e490bdb7861d85980761"
+        },
+        "dist/device/android/mapping.js": {
+          "member": "package/dist/device/android/mapping.js",
+          "sha256": "fbc53c8e96fd1bdd0a3ef92e26a2a455c08720b8dcdc8be0bf8c976a2b5b4952"
+        },
+        "dist/device/android/settle.js": {
+          "member": "package/dist/device/android/settle.js",
+          "sha256": "6fad022c962493e735ea1198a8a83f24b5df4b1652b4308002051ca5afe61363"
+        },
+        "dist/device/android/threadtime.js": {
+          "member": "package/dist/device/android/threadtime.js",
+          "sha256": "be36c941425f1a87cc2d9c2dffe175fd07dd2a273e36a144bfa11e9415714feb"
+        },
+        "dist/device/android/tools.js": {
+          "member": "package/dist/device/android/tools.js",
+          "sha256": "38638379c79e1a4f9f22bc104dff7aefccd509ff9b822a7ef4d8db822d529774"
+        },
+        "dist/device/attach.js": {
+          "member": "package/dist/device/attach.js",
+          "sha256": "2e27df08bd5a975c4b061e0a8f707b70af53504f6415f03986ac25a1d1743bcf"
+        },
+        "dist/device/factory.js": {
+          "member": "package/dist/device/factory.js",
+          "sha256": "9b3961c796b3c6d57ddafd39fd7cb1ec3f67fbe223947ca11c8e63dc7895fe70"
+        },
+        "dist/device/image.js": {
+          "member": "package/dist/device/image.js",
+          "sha256": "19f4e3dddab9f1d4fe5a57c44d7f25ee1ed9fcbc10f38878437ddd3db19fc846"
+        },
+        "dist/device/index.js": {
+          "member": "package/dist/device/index.js",
+          "sha256": "0f0105e0777963fa8c196da19e1d0550929d07a4d74e163b3a65983778151ee7"
+        },
+        "dist/device/lease.js": {
+          "member": "package/dist/device/lease.js",
+          "sha256": "c54335efb2647f469c3e480e8b3036598e389ed41e56fc92b23cd669a9978523"
+        },
+        "dist/device/logs.js": {
+          "member": "package/dist/device/logs.js",
+          "sha256": "799e9719aaa336321fc3dd3ae17b6ec7e24eb4268dca4f0c55f22364ea945cba"
+        },
+        "dist/driven/candidates.js": {
+          "member": "package/dist/driven/candidates.js",
+          "sha256": "ed9da6235a0bed29b25dda9b7089b602306979f9f0753c5b736b9bbf847bd510"
+        },
+        "dist/driven/decide.js": {
+          "member": "package/dist/driven/decide.js",
+          "sha256": "64197e257066a9072cf00cd5af8e7ade8b97e7a952e37ad8a3370020753b8a7d"
+        },
+        "dist/driven/handback.js": {
+          "member": "package/dist/driven/handback.js",
+          "sha256": "d0be72d959d452efbb533cd5d7fad38aa805829025c28c7d4c0b1dc952176fd7"
+        },
+        "dist/driven/marker.js": {
+          "member": "package/dist/driven/marker.js",
+          "sha256": "bb2bd3a84c2973d94495e923f0ab15538eb523a6c6764476fa137c95b889e7bf"
+        },
+        "dist/driven/policy.js": {
+          "member": "package/dist/driven/policy.js",
+          "sha256": "0b37bd689843a69fb7980273e915f20af44ae365305f736471705b6dd1500e04"
+        },
+        "dist/driven/project.js": {
+          "member": "package/dist/driven/project.js",
+          "sha256": "1482a41c0041be0e971da386497b12557f91575d205e2c7bebab9222e494daa2"
+        },
+        "dist/driven/step.js": {
+          "member": "package/dist/driven/step.js",
+          "sha256": "669eef883b2ad9994310a62561100a05e25d1b183b9360cffce39b640d37c3ae"
+        },
+        "dist/driven/vocabulary.js": {
+          "member": "package/dist/driven/vocabulary.js",
+          "sha256": "81d171daef1f450ea866321b13f4ef22c2cade4a0e7dc0a384327be6f9a8524a"
+        },
+        "dist/exit-codes.js": {
+          "member": "package/dist/exit-codes.js",
+          "sha256": "c85c3e5ccc50b25255f516d2680539b4c0ed1817144c40d927733a556e2e9f95"
+        },
+        "dist/experimental/observed-journal.js": {
+          "member": "package/dist/experimental/observed-journal.js",
+          "sha256": "b57ab8f9cf69bc8f252626dd948bd7b60c149c104181b6013c37d8dc105ef6bd"
+        },
+        "dist/experimental/observed-run.js": {
+          "member": "package/dist/experimental/observed-run.js",
+          "sha256": "6ca67a307aed02f7cf9734558bdea7575b7661f4e060a410e0c81267ab491942"
+        },
+        "dist/experimental/observed-tap.js": {
+          "member": "package/dist/experimental/observed-tap.js",
+          "sha256": "80e81478bb734ce2b1c35e4005fb975e40fad68b86de6fb07b021d7c1ab331d7"
+        },
+        "dist/log/index.js": {
+          "member": "package/dist/log/index.js",
+          "sha256": "ead5f93a0fca9aeb3beec6e9f17ebb3c9a249501cf39be3b9fcfc0ecccb482b0"
+        },
+        "dist/logpane/attach.js": {
+          "member": "package/dist/logpane/attach.js",
+          "sha256": "7162850524252f2e640c64a12cf75f2aacfe37b148b3238f2b1c051b3e8106a6"
+        },
+        "dist/logpane/format.js": {
+          "member": "package/dist/logpane/format.js",
+          "sha256": "8ebe92bb56509576e315b5e723f511f10347e0b83a9362d9d553aaaba32b8009"
+        },
+        "dist/logpane/stream.js": {
+          "member": "package/dist/logpane/stream.js",
+          "sha256": "adf4eabc21fc50188a8a2a966960ec22c824526b0d4b092513f40f0ce301f986"
+        },
+        "dist/logpane/window.js": {
+          "member": "package/dist/logpane/window.js",
+          "sha256": "7297aca5f2f7b46d221ec0b754cb5ac4c30449c9485733ce1d8325d71d22ed6e"
+        },
+        "dist/mcp/index.js": {
+          "member": "package/dist/mcp/index.js",
+          "sha256": "64b3bb0d3733a367dfc3576ffa8e8c7f28e61031e53a82fc73292243f51d99a3"
+        },
+        "dist/mcp/observed.js": {
+          "member": "package/dist/mcp/observed.js",
+          "sha256": "7cb75f32d67867140bd63880ca566b4918de24d915cec641fa4b7a6771fbc674"
+        },
+        "dist/observed/allocation-config.js": {
+          "member": "package/dist/observed/allocation-config.js",
+          "sha256": "4e71bfd6d540d8637011f80084176eb899d799d8c6dc0c734e1baba109a77705"
+        },
+        "dist/observed/allocation-schema.js": {
+          "member": "package/dist/observed/allocation-schema.js",
+          "sha256": "1f4af01e2bd7559ccd78439b57e22477d6e58a2ef00dd85cc7bf159d314fde36"
+        },
+        "dist/observed/allocation.js": {
+          "member": "package/dist/observed/allocation.js",
+          "sha256": "87d8d4c98ac77d3868f5e88f9e09b2274f0dd77f457fd1ef7f254f15750cb467"
+        },
+        "dist/observed/artifact.js": {
+          "member": "package/dist/observed/artifact.js",
+          "sha256": "71697e79851b3afc6e0157e6bf3f2116ffec6233b13996463a54c24b6465aea5"
+        },
+        "dist/observed/cli.js": {
+          "member": "package/dist/observed/cli.js",
+          "sha256": "14679c0c13fdd87361f677d2d946841034343629bdb84221d280ba556720e4f2"
+        },
+        "dist/observed/create-source.js": {
+          "member": "package/dist/observed/create-source.js",
+          "sha256": "1b3b13ab6dc55eb5f04f0f7a40b2b86a2d6fe46a96a7274bab1bf5cc81f5e8c3"
+        },
+        "dist/observed/evidence.js": {
+          "member": "package/dist/observed/evidence.js",
+          "sha256": "682e600b8dca6ef3cfa5d869dab60cd8dc2865aa677bc84947629783762d158e"
+        },
+        "dist/observed/installed-plist.js": {
+          "member": "package/dist/observed/installed-plist.js",
+          "sha256": "bfa578bac5fe8b3a1101ea945b8db8f0f54bccf29c9ab4de0122831d0162df5f"
+        },
+        "dist/observed/report.js": {
+          "member": "package/dist/observed/report.js",
+          "sha256": "c843ab9d562e8299371e64c6d7380fd94ac574769562791ab2f66238a8393eee"
+        },
+        "dist/observed/schema.js": {
+          "member": "package/dist/observed/schema.js",
+          "sha256": "4981a31d0bf83c38d69efd54589cb57b344713dab6bdb223c28533d937861f53"
+        },
+        "dist/observed/service.js": {
+          "member": "package/dist/observed/service.js",
+          "sha256": "13ae2e47efcf6139b7460fce862173960d8a6e465ba7a989d3356b273b24ac9f"
+        },
+        "dist/observed/supplied-source.js": {
+          "member": "package/dist/observed/supplied-source.js",
+          "sha256": "74720e27069f89bf6e238cee90b8c804fd92783d6d0e82bdb23f7c9f75834c41"
+        },
+        "dist/process.js": {
+          "member": "package/dist/process.js",
+          "sha256": "62963d4ae970d3dbb06811e2ae7b983ebb7502380f02053d7f0e08a3e8f958f3"
+        },
+        "dist/scripted/contracts.js": {
+          "member": "package/dist/scripted/contracts.js",
+          "sha256": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881"
+        },
+        "dist/scripted/jev.js": {
+          "member": "package/dist/scripted/jev.js",
+          "sha256": "d227aff5eb07388becd0f5dea1a800823f1abcf1e23fb9e4f1f8542c7e6d414c"
+        },
+        "dist/scripted/observe.js": {
+          "member": "package/dist/scripted/observe.js",
+          "sha256": "db2c8e6df75acfb8be14d1668c355ca92d27b5caefc6bf2870d1bb90c6498c08"
+        },
+        "dist/scripted/report-json.js": {
+          "member": "package/dist/scripted/report-json.js",
+          "sha256": "1bd59963d6d37331a98ed7d4e537415f2e902e1d861a2f1ea2405c0ff271ffdb"
+        },
+        "dist/scripted/report.js": {
+          "member": "package/dist/scripted/report.js",
+          "sha256": "b5a6c25355dd73ecadb9cb048479adf81cc05237a5c92193cf17cd1d5c3c1886"
+        },
+        "dist/scripted/run.js": {
+          "member": "package/dist/scripted/run.js",
+          "sha256": "bc33b4c81a5c0185eb316a8016de67e691418f5e736e318d4c6e5e03298d74ea"
+        },
+        "dist/scripted/schema.js": {
+          "member": "package/dist/scripted/schema.js",
+          "sha256": "85ce0c365ef5cead2899e7e8487c75a8c4a371768bb51f1b985028bc9922adb1"
+        },
+        "dist/scripted/select.js": {
+          "member": "package/dist/scripted/select.js",
+          "sha256": "c2d364f7ef5aed1f219f9de21601a078376b23b1621eddce26578ea5a99b8d2a"
+        },
+        "dist/scripted/vocabulary.js": {
+          "member": "package/dist/scripted/vocabulary.js",
+          "sha256": "3ff8fdb40f9e141281a3af9e73a779c64073f8bac98b91b04bd8edc340d40284"
+        },
+        "dist/service.js": {
+          "member": "package/dist/service.js",
+          "sha256": "a2b3f70361ffd728711767933bf74cba7c8a30c41ce8d8e76eb9fdb7396ffafe"
+        },
+        "dist/version.js": {
+          "member": "package/dist/version.js",
+          "sha256": "1f2780b5f9cc2737f99ad1de9598baed2af758754ab53f6577fcff5c8bc8a226"
+        },
+        "dist/watch/index.js": {
+          "member": "package/dist/watch/index.js",
+          "sha256": "f297ae862b9c13309e2ab56cc8bb7cc168c644f8342b0ee709245d82135a4a57"
+        }
+      },
+      "path": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-tracked-binding/.scratch/installed-tracked-packaging-maxsockets1/runs/tracked-maxsockets1-packaging-node26/installed-proof/jev-ios-bridge-1.3.1.tgz",
+      "regularMembers": {
+        "package/CHANGELOG.md": "3815c77f66c9ab05bb5a6d88d34ec44bb23ca278f1ccc16c6369d6cc2523f983",
+        "package/LICENSE": "2821ecf355c722efab7a2c5537a32261d29890ebd7402c5cf2e5887e54b789a8",
+        "package/README.md": "b5465ca95374299beb4e1be0bfd256d889d1edce214f681f7e5521461288dcb6",
+        "package/dist/capture.js": "c4a0a4776605a3b1c72b2795fd97f1230184bd9134f4c343ba58aaefea31974f",
+        "package/dist/cli.js": "3f3d41ee2687846dc939f502e7df5ad8aca3ea473a6d291d5652a5230b8ae2df",
+        "package/dist/contracts/index.js": "dec6d2a8cea84e02493a041e74a15f36d80ce8f37e9dc6f43b82520570580864",
+        "package/dist/device/admission-allocation.js": "ba6f8ad883ec2d0edd08bbcbb216a02283eb13a74645a65e3cca94c7d1215c27",
+        "package/dist/device/admission-maintenance.js": "c8d4451bb348ce01efc79ac9effc2bf0b83a545b4ca87edd4c12fbc46dc26965",
+        "package/dist/device/admission-migration.js": "e2a2e1fe7c40c2f37a7fb0b74399bddd97da6c81208eefae9d56a3879b7c1b39",
+        "package/dist/device/admission-sqlite.js": "de7f8337e7f043480270c8aa3653487c51abacca709410f79796a42bb26bf8b1",
+        "package/dist/device/admission.js": "9006f0d3c9328e6d75e7cf51af13dbcfea4db16525b7ac67b68f8230060e51ef",
+        "package/dist/device/android/adb.js": "3edec1e60b2605c8252164a94ebc089afec9e196a3383d1cb58359b2226e28d6",
+        "package/dist/device/android/agent-client.js": "1da4c9fa54388fa8456713f4186de58e2ecd7fd5f9ef4ea70616176668196947",
+        "package/dist/device/android/agent-supply.js": "7cef22170d1702b9b03e68cefe3060ef578643a47907dffc021debfd23b45330",
+        "package/dist/device/android/driver.js": "7ea0701ff8017904fc22ce7ffb056be8d9742df150b681daeae9559b06b35a14",
+        "package/dist/device/android/exit-watch.js": "9b312677a3b8c9d3eae677092837c6e86c49e4ed1d580ad87693efe92ba1faa6",
+        "package/dist/device/android/ledger.js": "113897aff0008ef044a6558f7463329c3a52a4d89bf5465d233a1833ec7ba049",
+        "package/dist/device/android/logcat.js": "1a70a5a6836886c48052586a7d27e26fb4e49c82c731e490bdb7861d85980761",
+        "package/dist/device/android/mapping.js": "fbc53c8e96fd1bdd0a3ef92e26a2a455c08720b8dcdc8be0bf8c976a2b5b4952",
+        "package/dist/device/android/settle.js": "6fad022c962493e735ea1198a8a83f24b5df4b1652b4308002051ca5afe61363",
+        "package/dist/device/android/threadtime.js": "be36c941425f1a87cc2d9c2dffe175fd07dd2a273e36a144bfa11e9415714feb",
+        "package/dist/device/android/tools.js": "38638379c79e1a4f9f22bc104dff7aefccd509ff9b822a7ef4d8db822d529774",
+        "package/dist/device/attach.js": "2e27df08bd5a975c4b061e0a8f707b70af53504f6415f03986ac25a1d1743bcf",
+        "package/dist/device/factory.js": "9b3961c796b3c6d57ddafd39fd7cb1ec3f67fbe223947ca11c8e63dc7895fe70",
+        "package/dist/device/image.js": "19f4e3dddab9f1d4fe5a57c44d7f25ee1ed9fcbc10f38878437ddd3db19fc846",
+        "package/dist/device/index.js": "0f0105e0777963fa8c196da19e1d0550929d07a4d74e163b3a65983778151ee7",
+        "package/dist/device/lease.js": "c54335efb2647f469c3e480e8b3036598e389ed41e56fc92b23cd669a9978523",
+        "package/dist/device/logs.js": "799e9719aaa336321fc3dd3ae17b6ec7e24eb4268dca4f0c55f22364ea945cba",
+        "package/dist/driven/candidates.js": "ed9da6235a0bed29b25dda9b7089b602306979f9f0753c5b736b9bbf847bd510",
+        "package/dist/driven/decide.js": "64197e257066a9072cf00cd5af8e7ade8b97e7a952e37ad8a3370020753b8a7d",
+        "package/dist/driven/handback.js": "d0be72d959d452efbb533cd5d7fad38aa805829025c28c7d4c0b1dc952176fd7",
+        "package/dist/driven/marker.js": "bb2bd3a84c2973d94495e923f0ab15538eb523a6c6764476fa137c95b889e7bf",
+        "package/dist/driven/policy.js": "0b37bd689843a69fb7980273e915f20af44ae365305f736471705b6dd1500e04",
+        "package/dist/driven/project.js": "1482a41c0041be0e971da386497b12557f91575d205e2c7bebab9222e494daa2",
+        "package/dist/driven/step.js": "669eef883b2ad9994310a62561100a05e25d1b183b9360cffce39b640d37c3ae",
+        "package/dist/driven/vocabulary.js": "81d171daef1f450ea866321b13f4ef22c2cade4a0e7dc0a384327be6f9a8524a",
+        "package/dist/exit-codes.js": "c85c3e5ccc50b25255f516d2680539b4c0ed1817144c40d927733a556e2e9f95",
+        "package/dist/experimental/observed-journal.js": "b57ab8f9cf69bc8f252626dd948bd7b60c149c104181b6013c37d8dc105ef6bd",
+        "package/dist/experimental/observed-run.js": "6ca67a307aed02f7cf9734558bdea7575b7661f4e060a410e0c81267ab491942",
+        "package/dist/experimental/observed-tap.js": "80e81478bb734ce2b1c35e4005fb975e40fad68b86de6fb07b021d7c1ab331d7",
+        "package/dist/log/index.js": "ead5f93a0fca9aeb3beec6e9f17ebb3c9a249501cf39be3b9fcfc0ecccb482b0",
+        "package/dist/logpane/attach.js": "7162850524252f2e640c64a12cf75f2aacfe37b148b3238f2b1c051b3e8106a6",
+        "package/dist/logpane/format.js": "8ebe92bb56509576e315b5e723f511f10347e0b83a9362d9d553aaaba32b8009",
+        "package/dist/logpane/stream.js": "adf4eabc21fc50188a8a2a966960ec22c824526b0d4b092513f40f0ce301f986",
+        "package/dist/logpane/window.js": "7297aca5f2f7b46d221ec0b754cb5ac4c30449c9485733ce1d8325d71d22ed6e",
+        "package/dist/mcp/index.js": "64b3bb0d3733a367dfc3576ffa8e8c7f28e61031e53a82fc73292243f51d99a3",
+        "package/dist/mcp/observed.js": "7cb75f32d67867140bd63880ca566b4918de24d915cec641fa4b7a6771fbc674",
+        "package/dist/observed/allocation-config.js": "4e71bfd6d540d8637011f80084176eb899d799d8c6dc0c734e1baba109a77705",
+        "package/dist/observed/allocation-schema.js": "1f4af01e2bd7559ccd78439b57e22477d6e58a2ef00dd85cc7bf159d314fde36",
+        "package/dist/observed/allocation.js": "87d8d4c98ac77d3868f5e88f9e09b2274f0dd77f457fd1ef7f254f15750cb467",
+        "package/dist/observed/artifact.js": "71697e79851b3afc6e0157e6bf3f2116ffec6233b13996463a54c24b6465aea5",
+        "package/dist/observed/cli.js": "14679c0c13fdd87361f677d2d946841034343629bdb84221d280ba556720e4f2",
+        "package/dist/observed/create-source.js": "1b3b13ab6dc55eb5f04f0f7a40b2b86a2d6fe46a96a7274bab1bf5cc81f5e8c3",
+        "package/dist/observed/evidence.js": "682e600b8dca6ef3cfa5d869dab60cd8dc2865aa677bc84947629783762d158e",
+        "package/dist/observed/installed-plist.js": "bfa578bac5fe8b3a1101ea945b8db8f0f54bccf29c9ab4de0122831d0162df5f",
+        "package/dist/observed/report.js": "c843ab9d562e8299371e64c6d7380fd94ac574769562791ab2f66238a8393eee",
+        "package/dist/observed/schema.js": "4981a31d0bf83c38d69efd54589cb57b344713dab6bdb223c28533d937861f53",
+        "package/dist/observed/service.js": "13ae2e47efcf6139b7460fce862173960d8a6e465ba7a989d3356b273b24ac9f",
+        "package/dist/observed/supplied-source.js": "74720e27069f89bf6e238cee90b8c804fd92783d6d0e82bdb23f7c9f75834c41",
+        "package/dist/process.js": "62963d4ae970d3dbb06811e2ae7b983ebb7502380f02053d7f0e08a3e8f958f3",
+        "package/dist/scripted/contracts.js": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881",
+        "package/dist/scripted/jev.js": "d227aff5eb07388becd0f5dea1a800823f1abcf1e23fb9e4f1f8542c7e6d414c",
+        "package/dist/scripted/observe.js": "db2c8e6df75acfb8be14d1668c355ca92d27b5caefc6bf2870d1bb90c6498c08",
+        "package/dist/scripted/report-json.js": "1bd59963d6d37331a98ed7d4e537415f2e902e1d861a2f1ea2405c0ff271ffdb",
+        "package/dist/scripted/report.js": "b5a6c25355dd73ecadb9cb048479adf81cc05237a5c92193cf17cd1d5c3c1886",
+        "package/dist/scripted/run.js": "bc33b4c81a5c0185eb316a8016de67e691418f5e736e318d4c6e5e03298d74ea",
+        "package/dist/scripted/schema.js": "85ce0c365ef5cead2899e7e8487c75a8c4a371768bb51f1b985028bc9922adb1",
+        "package/dist/scripted/select.js": "c2d364f7ef5aed1f219f9de21601a078376b23b1621eddce26578ea5a99b8d2a",
+        "package/dist/scripted/vocabulary.js": "3ff8fdb40f9e141281a3af9e73a779c64073f8bac98b91b04bd8edc340d40284",
+        "package/dist/service.js": "a2b3f70361ffd728711767933bf74cba7c8a30c41ce8d8e76eb9fdb7396ffafe",
+        "package/dist/version.js": "1f2780b5f9cc2737f99ad1de9598baed2af758754ab53f6577fcff5c8bc8a226",
+        "package/dist/watch/index.js": "f297ae862b9c13309e2ab56cc8bb7cc168c644f8342b0ee709245d82135a4a57",
+        "package/docs/guide/01-quickstart.md": "40533d4d818f40de8c2be7b1ca02480bcb6dea9c29340a5369c77a1d741c6753",
+        "package/docs/guide/02-prepare-your-app.md": "98c91f09d17b4674a4b49412e5e88773bcc3c93d4f38e630cc8c617d014d23a7",
+        "package/docs/guide/03-identifiers.md": "f220763a2ba4861f3388f08a02a1cfe28671a0190e5fae2f00819d3508492ea5",
+        "package/docs/guide/04-writing-scripts.md": "58427512dfc6909e80f2a13c29a06e47cd431a45639807e27c7331e2eec7779e",
+        "package/docs/guide/05-writing-claims.md": "24bea343e48afb1503cf2c4c8ab525f91b99093da1b656b4301592015f2f3835",
+        "package/docs/guide/06-running.md": "dc8b953fd4d115209d3d1c943d027fd32c678a519bdd551d607f73805c6c5d5c",
+        "package/docs/guide/07-reports-and-evidence.md": "f0158f5642812ec2115fe0c612828c0b69f7ee0e773c9096a789fff57898cefb",
+        "package/docs/guide/08-troubleshooting.md": "664da61c1712eed8c583800f8ee04f6e389982917cd4fd7e4c8af250e51249e0",
+        "package/docs/guide/09-data-handling.md": "bd2412cf2a38a76765b2b2f881c416f587a26499fb8d90127842752e794ada0d",
+        "package/docs/guide/10-limits.md": "805faaba309c9c6e5d95442f1519bd6d57d2cd74e960819719d56cacd122936c",
+        "package/docs/guide/11-stability.md": "c18ebddf84180dc8eb89147325f4f464f8e526e5ce72b2a434fb1d3cc30b81de",
+        "package/docs/guide/12-android-setup.md": "761d0bfd9f673f0b66da26702e46ac7dd7f0d2f955a17558aceabfb613871c06",
+        "package/docs/guide/13-driven-steps.md": "f05dd5e1edb34cc1e236b5baf3f462cc3ef050f896a08ae38b8efe47ad537528",
+        "package/docs/guide/14-observed-actions.md": "b1296abbdadb769d075876cb21cacc68a83a02962c6891c3f8f2e036c9ae8267",
+        "package/docs/guide/README.md": "e86fa091483524ffc75d23858ee39c422ee84acf2d966fd8153ea5cf5ef47d83",
+        "package/docs/guide/examples/compose-gallery.md": "ed8c80e18878e424cd38f39e34c2a30345bc59faba7f38ba7785d8e63ed5eb96",
+        "package/docs/guide/examples/swiftui-weather.md": "6ee268ca8d7291e6f5f2eca555b0c44b6a1b15899a77d29f66c193fdf4108f19",
+        "package/docs/guide/reference/observed-format.md": "75b47e9a5f9951412be514363c2d0ed1009d4bf666138efa1c52cfbef66e8c96",
+        "package/docs/guide/reference/reason-codes.md": "77efcf0d0c05c7ca7db359909d18f6f337f5b1c06c061260c53006098c6d0391",
+        "package/docs/guide/reference/report-json.md": "3cbfbed68553991ef6cd24e6ba7d9185a5ecc5811d5855d807f2ea6a17aed6d7",
+        "package/docs/guide/reference/script-format.md": "ef953f1de5c7ce2e7f4e37426dfd8b0e5400e66241149278b2076853979ed5ec",
+        "package/package.json": "d2fffea3e28d6ea794536b2cb67337abe8ec75c46cf10c2944ca1b3cd0a3a3ea",
+        "package/skills/test-android/SKILL.md": "299d6d3d774382fb83c86b65d233b02821f86019df13ccc7ea0eeb44ce7a7799",
+        "package/skills/test-ios/SKILL.md": "7d51dfee8530ca3fa8ba68179db97c64eb07804efe2fb5ec8defaee2ee2eaa33"
+      },
+      "sha256": "3c3fcea00514db1f8c30e49d3bec8baa2c47bd2791c2ba5de47c0b2a9caf7057",
+      "symlinkOrHardlinkMembers": {}
+    }
+  },
+  "compiledPayloads69Each": {
+    "buildSnapshot": {
+      "dist/capture.js": "c4a0a4776605a3b1c72b2795fd97f1230184bd9134f4c343ba58aaefea31974f",
+      "dist/cli.js": "3f3d41ee2687846dc939f502e7df5ad8aca3ea473a6d291d5652a5230b8ae2df",
+      "dist/contracts/index.js": "dec6d2a8cea84e02493a041e74a15f36d80ce8f37e9dc6f43b82520570580864",
+      "dist/device/admission-allocation.js": "ba6f8ad883ec2d0edd08bbcbb216a02283eb13a74645a65e3cca94c7d1215c27",
+      "dist/device/admission-maintenance.js": "c8d4451bb348ce01efc79ac9effc2bf0b83a545b4ca87edd4c12fbc46dc26965",
+      "dist/device/admission-migration.js": "e2a2e1fe7c40c2f37a7fb0b74399bddd97da6c81208eefae9d56a3879b7c1b39",
+      "dist/device/admission-sqlite.js": "de7f8337e7f043480270c8aa3653487c51abacca709410f79796a42bb26bf8b1",
+      "dist/device/admission.js": "9006f0d3c9328e6d75e7cf51af13dbcfea4db16525b7ac67b68f8230060e51ef",
+      "dist/device/android/adb.js": "3edec1e60b2605c8252164a94ebc089afec9e196a3383d1cb58359b2226e28d6",
+      "dist/device/android/agent-client.js": "1da4c9fa54388fa8456713f4186de58e2ecd7fd5f9ef4ea70616176668196947",
+      "dist/device/android/agent-supply.js": "7cef22170d1702b9b03e68cefe3060ef578643a47907dffc021debfd23b45330",
+      "dist/device/android/driver.js": "7ea0701ff8017904fc22ce7ffb056be8d9742df150b681daeae9559b06b35a14",
+      "dist/device/android/exit-watch.js": "9b312677a3b8c9d3eae677092837c6e86c49e4ed1d580ad87693efe92ba1faa6",
+      "dist/device/android/ledger.js": "113897aff0008ef044a6558f7463329c3a52a4d89bf5465d233a1833ec7ba049",
+      "dist/device/android/logcat.js": "1a70a5a6836886c48052586a7d27e26fb4e49c82c731e490bdb7861d85980761",
+      "dist/device/android/mapping.js": "fbc53c8e96fd1bdd0a3ef92e26a2a455c08720b8dcdc8be0bf8c976a2b5b4952",
+      "dist/device/android/settle.js": "6fad022c962493e735ea1198a8a83f24b5df4b1652b4308002051ca5afe61363",
+      "dist/device/android/threadtime.js": "be36c941425f1a87cc2d9c2dffe175fd07dd2a273e36a144bfa11e9415714feb",
+      "dist/device/android/tools.js": "38638379c79e1a4f9f22bc104dff7aefccd509ff9b822a7ef4d8db822d529774",
+      "dist/device/attach.js": "2e27df08bd5a975c4b061e0a8f707b70af53504f6415f03986ac25a1d1743bcf",
+      "dist/device/factory.js": "9b3961c796b3c6d57ddafd39fd7cb1ec3f67fbe223947ca11c8e63dc7895fe70",
+      "dist/device/image.js": "19f4e3dddab9f1d4fe5a57c44d7f25ee1ed9fcbc10f38878437ddd3db19fc846",
+      "dist/device/index.js": "0f0105e0777963fa8c196da19e1d0550929d07a4d74e163b3a65983778151ee7",
+      "dist/device/lease.js": "c54335efb2647f469c3e480e8b3036598e389ed41e56fc92b23cd669a9978523",
+      "dist/device/logs.js": "799e9719aaa336321fc3dd3ae17b6ec7e24eb4268dca4f0c55f22364ea945cba",
+      "dist/driven/candidates.js": "ed9da6235a0bed29b25dda9b7089b602306979f9f0753c5b736b9bbf847bd510",
+      "dist/driven/decide.js": "64197e257066a9072cf00cd5af8e7ade8b97e7a952e37ad8a3370020753b8a7d",
+      "dist/driven/handback.js": "d0be72d959d452efbb533cd5d7fad38aa805829025c28c7d4c0b1dc952176fd7",
+      "dist/driven/marker.js": "bb2bd3a84c2973d94495e923f0ab15538eb523a6c6764476fa137c95b889e7bf",
+      "dist/driven/policy.js": "0b37bd689843a69fb7980273e915f20af44ae365305f736471705b6dd1500e04",
+      "dist/driven/project.js": "1482a41c0041be0e971da386497b12557f91575d205e2c7bebab9222e494daa2",
+      "dist/driven/step.js": "669eef883b2ad9994310a62561100a05e25d1b183b9360cffce39b640d37c3ae",
+      "dist/driven/vocabulary.js": "81d171daef1f450ea866321b13f4ef22c2cade4a0e7dc0a384327be6f9a8524a",
+      "dist/exit-codes.js": "c85c3e5ccc50b25255f516d2680539b4c0ed1817144c40d927733a556e2e9f95",
+      "dist/experimental/observed-journal.js": "b57ab8f9cf69bc8f252626dd948bd7b60c149c104181b6013c37d8dc105ef6bd",
+      "dist/experimental/observed-run.js": "6ca67a307aed02f7cf9734558bdea7575b7661f4e060a410e0c81267ab491942",
+      "dist/experimental/observed-tap.js": "80e81478bb734ce2b1c35e4005fb975e40fad68b86de6fb07b021d7c1ab331d7",
+      "dist/log/index.js": "ead5f93a0fca9aeb3beec6e9f17ebb3c9a249501cf39be3b9fcfc0ecccb482b0",
+      "dist/logpane/attach.js": "7162850524252f2e640c64a12cf75f2aacfe37b148b3238f2b1c051b3e8106a6",
+      "dist/logpane/format.js": "8ebe92bb56509576e315b5e723f511f10347e0b83a9362d9d553aaaba32b8009",
+      "dist/logpane/stream.js": "adf4eabc21fc50188a8a2a966960ec22c824526b0d4b092513f40f0ce301f986",
+      "dist/logpane/window.js": "7297aca5f2f7b46d221ec0b754cb5ac4c30449c9485733ce1d8325d71d22ed6e",
+      "dist/mcp/index.js": "64b3bb0d3733a367dfc3576ffa8e8c7f28e61031e53a82fc73292243f51d99a3",
+      "dist/mcp/observed.js": "7cb75f32d67867140bd63880ca566b4918de24d915cec641fa4b7a6771fbc674",
+      "dist/observed/allocation-config.js": "4e71bfd6d540d8637011f80084176eb899d799d8c6dc0c734e1baba109a77705",
+      "dist/observed/allocation-schema.js": "1f4af01e2bd7559ccd78439b57e22477d6e58a2ef00dd85cc7bf159d314fde36",
+      "dist/observed/allocation.js": "87d8d4c98ac77d3868f5e88f9e09b2274f0dd77f457fd1ef7f254f15750cb467",
+      "dist/observed/artifact.js": "71697e79851b3afc6e0157e6bf3f2116ffec6233b13996463a54c24b6465aea5",
+      "dist/observed/cli.js": "14679c0c13fdd87361f677d2d946841034343629bdb84221d280ba556720e4f2",
+      "dist/observed/create-source.js": "1b3b13ab6dc55eb5f04f0f7a40b2b86a2d6fe46a96a7274bab1bf5cc81f5e8c3",
+      "dist/observed/evidence.js": "682e600b8dca6ef3cfa5d869dab60cd8dc2865aa677bc84947629783762d158e",
+      "dist/observed/installed-plist.js": "bfa578bac5fe8b3a1101ea945b8db8f0f54bccf29c9ab4de0122831d0162df5f",
+      "dist/observed/report.js": "c843ab9d562e8299371e64c6d7380fd94ac574769562791ab2f66238a8393eee",
+      "dist/observed/schema.js": "4981a31d0bf83c38d69efd54589cb57b344713dab6bdb223c28533d937861f53",
+      "dist/observed/service.js": "13ae2e47efcf6139b7460fce862173960d8a6e465ba7a989d3356b273b24ac9f",
+      "dist/observed/supplied-source.js": "74720e27069f89bf6e238cee90b8c804fd92783d6d0e82bdb23f7c9f75834c41",
+      "dist/process.js": "62963d4ae970d3dbb06811e2ae7b983ebb7502380f02053d7f0e08a3e8f958f3",
+      "dist/scripted/contracts.js": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881",
+      "dist/scripted/jev.js": "d227aff5eb07388becd0f5dea1a800823f1abcf1e23fb9e4f1f8542c7e6d414c",
+      "dist/scripted/observe.js": "db2c8e6df75acfb8be14d1668c355ca92d27b5caefc6bf2870d1bb90c6498c08",
+      "dist/scripted/report-json.js": "1bd59963d6d37331a98ed7d4e537415f2e902e1d861a2f1ea2405c0ff271ffdb",
+      "dist/scripted/report.js": "b5a6c25355dd73ecadb9cb048479adf81cc05237a5c92193cf17cd1d5c3c1886",
+      "dist/scripted/run.js": "bc33b4c81a5c0185eb316a8016de67e691418f5e736e318d4c6e5e03298d74ea",
+      "dist/scripted/schema.js": "85ce0c365ef5cead2899e7e8487c75a8c4a371768bb51f1b985028bc9922adb1",
+      "dist/scripted/select.js": "c2d364f7ef5aed1f219f9de21601a078376b23b1621eddce26578ea5a99b8d2a",
+      "dist/scripted/vocabulary.js": "3ff8fdb40f9e141281a3af9e73a779c64073f8bac98b91b04bd8edc340d40284",
+      "dist/service.js": "a2b3f70361ffd728711767933bf74cba7c8a30c41ce8d8e76eb9fdb7396ffafe",
+      "dist/version.js": "1f2780b5f9cc2737f99ad1de9598baed2af758754ab53f6577fcff5c8bc8a226",
+      "dist/watch/index.js": "f297ae862b9c13309e2ab56cc8bb7cc168c644f8342b0ee709245d82135a4a57"
+    },
+    "npmInstalled": {
+      "dist/capture.js": "c4a0a4776605a3b1c72b2795fd97f1230184bd9134f4c343ba58aaefea31974f",
+      "dist/cli.js": "3f3d41ee2687846dc939f502e7df5ad8aca3ea473a6d291d5652a5230b8ae2df",
+      "dist/contracts/index.js": "dec6d2a8cea84e02493a041e74a15f36d80ce8f37e9dc6f43b82520570580864",
+      "dist/device/admission-allocation.js": "ba6f8ad883ec2d0edd08bbcbb216a02283eb13a74645a65e3cca94c7d1215c27",
+      "dist/device/admission-maintenance.js": "c8d4451bb348ce01efc79ac9effc2bf0b83a545b4ca87edd4c12fbc46dc26965",
+      "dist/device/admission-migration.js": "e2a2e1fe7c40c2f37a7fb0b74399bddd97da6c81208eefae9d56a3879b7c1b39",
+      "dist/device/admission-sqlite.js": "de7f8337e7f043480270c8aa3653487c51abacca709410f79796a42bb26bf8b1",
+      "dist/device/admission.js": "9006f0d3c9328e6d75e7cf51af13dbcfea4db16525b7ac67b68f8230060e51ef",
+      "dist/device/android/adb.js": "3edec1e60b2605c8252164a94ebc089afec9e196a3383d1cb58359b2226e28d6",
+      "dist/device/android/agent-client.js": "1da4c9fa54388fa8456713f4186de58e2ecd7fd5f9ef4ea70616176668196947",
+      "dist/device/android/agent-supply.js": "7cef22170d1702b9b03e68cefe3060ef578643a47907dffc021debfd23b45330",
+      "dist/device/android/driver.js": "7ea0701ff8017904fc22ce7ffb056be8d9742df150b681daeae9559b06b35a14",
+      "dist/device/android/exit-watch.js": "9b312677a3b8c9d3eae677092837c6e86c49e4ed1d580ad87693efe92ba1faa6",
+      "dist/device/android/ledger.js": "113897aff0008ef044a6558f7463329c3a52a4d89bf5465d233a1833ec7ba049",
+      "dist/device/android/logcat.js": "1a70a5a6836886c48052586a7d27e26fb4e49c82c731e490bdb7861d85980761",
+      "dist/device/android/mapping.js": "fbc53c8e96fd1bdd0a3ef92e26a2a455c08720b8dcdc8be0bf8c976a2b5b4952",
+      "dist/device/android/settle.js": "6fad022c962493e735ea1198a8a83f24b5df4b1652b4308002051ca5afe61363",
+      "dist/device/android/threadtime.js": "be36c941425f1a87cc2d9c2dffe175fd07dd2a273e36a144bfa11e9415714feb",
+      "dist/device/android/tools.js": "38638379c79e1a4f9f22bc104dff7aefccd509ff9b822a7ef4d8db822d529774",
+      "dist/device/attach.js": "2e27df08bd5a975c4b061e0a8f707b70af53504f6415f03986ac25a1d1743bcf",
+      "dist/device/factory.js": "9b3961c796b3c6d57ddafd39fd7cb1ec3f67fbe223947ca11c8e63dc7895fe70",
+      "dist/device/image.js": "19f4e3dddab9f1d4fe5a57c44d7f25ee1ed9fcbc10f38878437ddd3db19fc846",
+      "dist/device/index.js": "0f0105e0777963fa8c196da19e1d0550929d07a4d74e163b3a65983778151ee7",
+      "dist/device/lease.js": "c54335efb2647f469c3e480e8b3036598e389ed41e56fc92b23cd669a9978523",
+      "dist/device/logs.js": "799e9719aaa336321fc3dd3ae17b6ec7e24eb4268dca4f0c55f22364ea945cba",
+      "dist/driven/candidates.js": "ed9da6235a0bed29b25dda9b7089b602306979f9f0753c5b736b9bbf847bd510",
+      "dist/driven/decide.js": "64197e257066a9072cf00cd5af8e7ade8b97e7a952e37ad8a3370020753b8a7d",
+      "dist/driven/handback.js": "d0be72d959d452efbb533cd5d7fad38aa805829025c28c7d4c0b1dc952176fd7",
+      "dist/driven/marker.js": "bb2bd3a84c2973d94495e923f0ab15538eb523a6c6764476fa137c95b889e7bf",
+      "dist/driven/policy.js": "0b37bd689843a69fb7980273e915f20af44ae365305f736471705b6dd1500e04",
+      "dist/driven/project.js": "1482a41c0041be0e971da386497b12557f91575d205e2c7bebab9222e494daa2",
+      "dist/driven/step.js": "669eef883b2ad9994310a62561100a05e25d1b183b9360cffce39b640d37c3ae",
+      "dist/driven/vocabulary.js": "81d171daef1f450ea866321b13f4ef22c2cade4a0e7dc0a384327be6f9a8524a",
+      "dist/exit-codes.js": "c85c3e5ccc50b25255f516d2680539b4c0ed1817144c40d927733a556e2e9f95",
+      "dist/experimental/observed-journal.js": "b57ab8f9cf69bc8f252626dd948bd7b60c149c104181b6013c37d8dc105ef6bd",
+      "dist/experimental/observed-run.js": "6ca67a307aed02f7cf9734558bdea7575b7661f4e060a410e0c81267ab491942",
+      "dist/experimental/observed-tap.js": "80e81478bb734ce2b1c35e4005fb975e40fad68b86de6fb07b021d7c1ab331d7",
+      "dist/log/index.js": "ead5f93a0fca9aeb3beec6e9f17ebb3c9a249501cf39be3b9fcfc0ecccb482b0",
+      "dist/logpane/attach.js": "7162850524252f2e640c64a12cf75f2aacfe37b148b3238f2b1c051b3e8106a6",
+      "dist/logpane/format.js": "8ebe92bb56509576e315b5e723f511f10347e0b83a9362d9d553aaaba32b8009",
+      "dist/logpane/stream.js": "adf4eabc21fc50188a8a2a966960ec22c824526b0d4b092513f40f0ce301f986",
+      "dist/logpane/window.js": "7297aca5f2f7b46d221ec0b754cb5ac4c30449c9485733ce1d8325d71d22ed6e",
+      "dist/mcp/index.js": "64b3bb0d3733a367dfc3576ffa8e8c7f28e61031e53a82fc73292243f51d99a3",
+      "dist/mcp/observed.js": "7cb75f32d67867140bd63880ca566b4918de24d915cec641fa4b7a6771fbc674",
+      "dist/observed/allocation-config.js": "4e71bfd6d540d8637011f80084176eb899d799d8c6dc0c734e1baba109a77705",
+      "dist/observed/allocation-schema.js": "1f4af01e2bd7559ccd78439b57e22477d6e58a2ef00dd85cc7bf159d314fde36",
+      "dist/observed/allocation.js": "87d8d4c98ac77d3868f5e88f9e09b2274f0dd77f457fd1ef7f254f15750cb467",
+      "dist/observed/artifact.js": "71697e79851b3afc6e0157e6bf3f2116ffec6233b13996463a54c24b6465aea5",
+      "dist/observed/cli.js": "14679c0c13fdd87361f677d2d946841034343629bdb84221d280ba556720e4f2",
+      "dist/observed/create-source.js": "1b3b13ab6dc55eb5f04f0f7a40b2b86a2d6fe46a96a7274bab1bf5cc81f5e8c3",
+      "dist/observed/evidence.js": "682e600b8dca6ef3cfa5d869dab60cd8dc2865aa677bc84947629783762d158e",
+      "dist/observed/installed-plist.js": "bfa578bac5fe8b3a1101ea945b8db8f0f54bccf29c9ab4de0122831d0162df5f",
+      "dist/observed/report.js": "c843ab9d562e8299371e64c6d7380fd94ac574769562791ab2f66238a8393eee",
+      "dist/observed/schema.js": "4981a31d0bf83c38d69efd54589cb57b344713dab6bdb223c28533d937861f53",
+      "dist/observed/service.js": "13ae2e47efcf6139b7460fce862173960d8a6e465ba7a989d3356b273b24ac9f",
+      "dist/observed/supplied-source.js": "74720e27069f89bf6e238cee90b8c804fd92783d6d0e82bdb23f7c9f75834c41",
+      "dist/process.js": "62963d4ae970d3dbb06811e2ae7b983ebb7502380f02053d7f0e08a3e8f958f3",
+      "dist/scripted/contracts.js": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881",
+      "dist/scripted/jev.js": "d227aff5eb07388becd0f5dea1a800823f1abcf1e23fb9e4f1f8542c7e6d414c",
+      "dist/scripted/observe.js": "db2c8e6df75acfb8be14d1668c355ca92d27b5caefc6bf2870d1bb90c6498c08",
+      "dist/scripted/report-json.js": "1bd59963d6d37331a98ed7d4e537415f2e902e1d861a2f1ea2405c0ff271ffdb",
+      "dist/scripted/report.js": "b5a6c25355dd73ecadb9cb048479adf81cc05237a5c92193cf17cd1d5c3c1886",
+      "dist/scripted/run.js": "bc33b4c81a5c0185eb316a8016de67e691418f5e736e318d4c6e5e03298d74ea",
+      "dist/scripted/schema.js": "85ce0c365ef5cead2899e7e8487c75a8c4a371768bb51f1b985028bc9922adb1",
+      "dist/scripted/select.js": "c2d364f7ef5aed1f219f9de21601a078376b23b1621eddce26578ea5a99b8d2a",
+      "dist/scripted/vocabulary.js": "3ff8fdb40f9e141281a3af9e73a779c64073f8bac98b91b04bd8edc340d40284",
+      "dist/service.js": "a2b3f70361ffd728711767933bf74cba7c8a30c41ce8d8e76eb9fdb7396ffafe",
+      "dist/version.js": "1f2780b5f9cc2737f99ad1de9598baed2af758754ab53f6577fcff5c8bc8a226",
+      "dist/watch/index.js": "f297ae862b9c13309e2ab56cc8bb7cc168c644f8342b0ee709245d82135a4a57"
+    },
+    "pluginBuilt": {
+      "dist/capture.js": "c4a0a4776605a3b1c72b2795fd97f1230184bd9134f4c343ba58aaefea31974f",
+      "dist/cli.js": "3f3d41ee2687846dc939f502e7df5ad8aca3ea473a6d291d5652a5230b8ae2df",
+      "dist/contracts/index.js": "dec6d2a8cea84e02493a041e74a15f36d80ce8f37e9dc6f43b82520570580864",
+      "dist/device/admission-allocation.js": "ba6f8ad883ec2d0edd08bbcbb216a02283eb13a74645a65e3cca94c7d1215c27",
+      "dist/device/admission-maintenance.js": "c8d4451bb348ce01efc79ac9effc2bf0b83a545b4ca87edd4c12fbc46dc26965",
+      "dist/device/admission-migration.js": "e2a2e1fe7c40c2f37a7fb0b74399bddd97da6c81208eefae9d56a3879b7c1b39",
+      "dist/device/admission-sqlite.js": "de7f8337e7f043480270c8aa3653487c51abacca709410f79796a42bb26bf8b1",
+      "dist/device/admission.js": "9006f0d3c9328e6d75e7cf51af13dbcfea4db16525b7ac67b68f8230060e51ef",
+      "dist/device/android/adb.js": "3edec1e60b2605c8252164a94ebc089afec9e196a3383d1cb58359b2226e28d6",
+      "dist/device/android/agent-client.js": "1da4c9fa54388fa8456713f4186de58e2ecd7fd5f9ef4ea70616176668196947",
+      "dist/device/android/agent-supply.js": "7cef22170d1702b9b03e68cefe3060ef578643a47907dffc021debfd23b45330",
+      "dist/device/android/driver.js": "7ea0701ff8017904fc22ce7ffb056be8d9742df150b681daeae9559b06b35a14",
+      "dist/device/android/exit-watch.js": "9b312677a3b8c9d3eae677092837c6e86c49e4ed1d580ad87693efe92ba1faa6",
+      "dist/device/android/ledger.js": "113897aff0008ef044a6558f7463329c3a52a4d89bf5465d233a1833ec7ba049",
+      "dist/device/android/logcat.js": "1a70a5a6836886c48052586a7d27e26fb4e49c82c731e490bdb7861d85980761",
+      "dist/device/android/mapping.js": "fbc53c8e96fd1bdd0a3ef92e26a2a455c08720b8dcdc8be0bf8c976a2b5b4952",
+      "dist/device/android/settle.js": "6fad022c962493e735ea1198a8a83f24b5df4b1652b4308002051ca5afe61363",
+      "dist/device/android/threadtime.js": "be36c941425f1a87cc2d9c2dffe175fd07dd2a273e36a144bfa11e9415714feb",
+      "dist/device/android/tools.js": "38638379c79e1a4f9f22bc104dff7aefccd509ff9b822a7ef4d8db822d529774",
+      "dist/device/attach.js": "2e27df08bd5a975c4b061e0a8f707b70af53504f6415f03986ac25a1d1743bcf",
+      "dist/device/factory.js": "9b3961c796b3c6d57ddafd39fd7cb1ec3f67fbe223947ca11c8e63dc7895fe70",
+      "dist/device/image.js": "19f4e3dddab9f1d4fe5a57c44d7f25ee1ed9fcbc10f38878437ddd3db19fc846",
+      "dist/device/index.js": "0f0105e0777963fa8c196da19e1d0550929d07a4d74e163b3a65983778151ee7",
+      "dist/device/lease.js": "c54335efb2647f469c3e480e8b3036598e389ed41e56fc92b23cd669a9978523",
+      "dist/device/logs.js": "799e9719aaa336321fc3dd3ae17b6ec7e24eb4268dca4f0c55f22364ea945cba",
+      "dist/driven/candidates.js": "ed9da6235a0bed29b25dda9b7089b602306979f9f0753c5b736b9bbf847bd510",
+      "dist/driven/decide.js": "64197e257066a9072cf00cd5af8e7ade8b97e7a952e37ad8a3370020753b8a7d",
+      "dist/driven/handback.js": "d0be72d959d452efbb533cd5d7fad38aa805829025c28c7d4c0b1dc952176fd7",
+      "dist/driven/marker.js": "bb2bd3a84c2973d94495e923f0ab15538eb523a6c6764476fa137c95b889e7bf",
+      "dist/driven/policy.js": "0b37bd689843a69fb7980273e915f20af44ae365305f736471705b6dd1500e04",
+      "dist/driven/project.js": "1482a41c0041be0e971da386497b12557f91575d205e2c7bebab9222e494daa2",
+      "dist/driven/step.js": "669eef883b2ad9994310a62561100a05e25d1b183b9360cffce39b640d37c3ae",
+      "dist/driven/vocabulary.js": "81d171daef1f450ea866321b13f4ef22c2cade4a0e7dc0a384327be6f9a8524a",
+      "dist/exit-codes.js": "c85c3e5ccc50b25255f516d2680539b4c0ed1817144c40d927733a556e2e9f95",
+      "dist/experimental/observed-journal.js": "b57ab8f9cf69bc8f252626dd948bd7b60c149c104181b6013c37d8dc105ef6bd",
+      "dist/experimental/observed-run.js": "6ca67a307aed02f7cf9734558bdea7575b7661f4e060a410e0c81267ab491942",
+      "dist/experimental/observed-tap.js": "80e81478bb734ce2b1c35e4005fb975e40fad68b86de6fb07b021d7c1ab331d7",
+      "dist/log/index.js": "ead5f93a0fca9aeb3beec6e9f17ebb3c9a249501cf39be3b9fcfc0ecccb482b0",
+      "dist/logpane/attach.js": "7162850524252f2e640c64a12cf75f2aacfe37b148b3238f2b1c051b3e8106a6",
+      "dist/logpane/format.js": "8ebe92bb56509576e315b5e723f511f10347e0b83a9362d9d553aaaba32b8009",
+      "dist/logpane/stream.js": "adf4eabc21fc50188a8a2a966960ec22c824526b0d4b092513f40f0ce301f986",
+      "dist/logpane/window.js": "7297aca5f2f7b46d221ec0b754cb5ac4c30449c9485733ce1d8325d71d22ed6e",
+      "dist/mcp/index.js": "64b3bb0d3733a367dfc3576ffa8e8c7f28e61031e53a82fc73292243f51d99a3",
+      "dist/mcp/observed.js": "7cb75f32d67867140bd63880ca566b4918de24d915cec641fa4b7a6771fbc674",
+      "dist/observed/allocation-config.js": "4e71bfd6d540d8637011f80084176eb899d799d8c6dc0c734e1baba109a77705",
+      "dist/observed/allocation-schema.js": "1f4af01e2bd7559ccd78439b57e22477d6e58a2ef00dd85cc7bf159d314fde36",
+      "dist/observed/allocation.js": "87d8d4c98ac77d3868f5e88f9e09b2274f0dd77f457fd1ef7f254f15750cb467",
+      "dist/observed/artifact.js": "71697e79851b3afc6e0157e6bf3f2116ffec6233b13996463a54c24b6465aea5",
+      "dist/observed/cli.js": "14679c0c13fdd87361f677d2d946841034343629bdb84221d280ba556720e4f2",
+      "dist/observed/create-source.js": "1b3b13ab6dc55eb5f04f0f7a40b2b86a2d6fe46a96a7274bab1bf5cc81f5e8c3",
+      "dist/observed/evidence.js": "682e600b8dca6ef3cfa5d869dab60cd8dc2865aa677bc84947629783762d158e",
+      "dist/observed/installed-plist.js": "bfa578bac5fe8b3a1101ea945b8db8f0f54bccf29c9ab4de0122831d0162df5f",
+      "dist/observed/report.js": "c843ab9d562e8299371e64c6d7380fd94ac574769562791ab2f66238a8393eee",
+      "dist/observed/schema.js": "4981a31d0bf83c38d69efd54589cb57b344713dab6bdb223c28533d937861f53",
+      "dist/observed/service.js": "13ae2e47efcf6139b7460fce862173960d8a6e465ba7a989d3356b273b24ac9f",
+      "dist/observed/supplied-source.js": "74720e27069f89bf6e238cee90b8c804fd92783d6d0e82bdb23f7c9f75834c41",
+      "dist/process.js": "62963d4ae970d3dbb06811e2ae7b983ebb7502380f02053d7f0e08a3e8f958f3",
+      "dist/scripted/contracts.js": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881",
+      "dist/scripted/jev.js": "d227aff5eb07388becd0f5dea1a800823f1abcf1e23fb9e4f1f8542c7e6d414c",
+      "dist/scripted/observe.js": "db2c8e6df75acfb8be14d1668c355ca92d27b5caefc6bf2870d1bb90c6498c08",
+      "dist/scripted/report-json.js": "1bd59963d6d37331a98ed7d4e537415f2e902e1d861a2f1ea2405c0ff271ffdb",
+      "dist/scripted/report.js": "b5a6c25355dd73ecadb9cb048479adf81cc05237a5c92193cf17cd1d5c3c1886",
+      "dist/scripted/run.js": "bc33b4c81a5c0185eb316a8016de67e691418f5e736e318d4c6e5e03298d74ea",
+      "dist/scripted/schema.js": "85ce0c365ef5cead2899e7e8487c75a8c4a371768bb51f1b985028bc9922adb1",
+      "dist/scripted/select.js": "c2d364f7ef5aed1f219f9de21601a078376b23b1621eddce26578ea5a99b8d2a",
+      "dist/scripted/vocabulary.js": "3ff8fdb40f9e141281a3af9e73a779c64073f8bac98b91b04bd8edc340d40284",
+      "dist/service.js": "a2b3f70361ffd728711767933bf74cba7c8a30c41ce8d8e76eb9fdb7396ffafe",
+      "dist/version.js": "1f2780b5f9cc2737f99ad1de9598baed2af758754ab53f6577fcff5c8bc8a226",
+      "dist/watch/index.js": "f297ae862b9c13309e2ab56cc8bb7cc168c644f8342b0ee709245d82135a4a57"
+    },
+    "pluginInstalled": {
+      "dist/capture.js": "c4a0a4776605a3b1c72b2795fd97f1230184bd9134f4c343ba58aaefea31974f",
+      "dist/cli.js": "3f3d41ee2687846dc939f502e7df5ad8aca3ea473a6d291d5652a5230b8ae2df",
+      "dist/contracts/index.js": "dec6d2a8cea84e02493a041e74a15f36d80ce8f37e9dc6f43b82520570580864",
+      "dist/device/admission-allocation.js": "ba6f8ad883ec2d0edd08bbcbb216a02283eb13a74645a65e3cca94c7d1215c27",
+      "dist/device/admission-maintenance.js": "c8d4451bb348ce01efc79ac9effc2bf0b83a545b4ca87edd4c12fbc46dc26965",
+      "dist/device/admission-migration.js": "e2a2e1fe7c40c2f37a7fb0b74399bddd97da6c81208eefae9d56a3879b7c1b39",
+      "dist/device/admission-sqlite.js": "de7f8337e7f043480270c8aa3653487c51abacca709410f79796a42bb26bf8b1",
+      "dist/device/admission.js": "9006f0d3c9328e6d75e7cf51af13dbcfea4db16525b7ac67b68f8230060e51ef",
+      "dist/device/android/adb.js": "3edec1e60b2605c8252164a94ebc089afec9e196a3383d1cb58359b2226e28d6",
+      "dist/device/android/agent-client.js": "1da4c9fa54388fa8456713f4186de58e2ecd7fd5f9ef4ea70616176668196947",
+      "dist/device/android/agent-supply.js": "7cef22170d1702b9b03e68cefe3060ef578643a47907dffc021debfd23b45330",
+      "dist/device/android/driver.js": "7ea0701ff8017904fc22ce7ffb056be8d9742df150b681daeae9559b06b35a14",
+      "dist/device/android/exit-watch.js": "9b312677a3b8c9d3eae677092837c6e86c49e4ed1d580ad87693efe92ba1faa6",
+      "dist/device/android/ledger.js": "113897aff0008ef044a6558f7463329c3a52a4d89bf5465d233a1833ec7ba049",
+      "dist/device/android/logcat.js": "1a70a5a6836886c48052586a7d27e26fb4e49c82c731e490bdb7861d85980761",
+      "dist/device/android/mapping.js": "fbc53c8e96fd1bdd0a3ef92e26a2a455c08720b8dcdc8be0bf8c976a2b5b4952",
+      "dist/device/android/settle.js": "6fad022c962493e735ea1198a8a83f24b5df4b1652b4308002051ca5afe61363",
+      "dist/device/android/threadtime.js": "be36c941425f1a87cc2d9c2dffe175fd07dd2a273e36a144bfa11e9415714feb",
+      "dist/device/android/tools.js": "38638379c79e1a4f9f22bc104dff7aefccd509ff9b822a7ef4d8db822d529774",
+      "dist/device/attach.js": "2e27df08bd5a975c4b061e0a8f707b70af53504f6415f03986ac25a1d1743bcf",
+      "dist/device/factory.js": "9b3961c796b3c6d57ddafd39fd7cb1ec3f67fbe223947ca11c8e63dc7895fe70",
+      "dist/device/image.js": "19f4e3dddab9f1d4fe5a57c44d7f25ee1ed9fcbc10f38878437ddd3db19fc846",
+      "dist/device/index.js": "0f0105e0777963fa8c196da19e1d0550929d07a4d74e163b3a65983778151ee7",
+      "dist/device/lease.js": "c54335efb2647f469c3e480e8b3036598e389ed41e56fc92b23cd669a9978523",
+      "dist/device/logs.js": "799e9719aaa336321fc3dd3ae17b6ec7e24eb4268dca4f0c55f22364ea945cba",
+      "dist/driven/candidates.js": "ed9da6235a0bed29b25dda9b7089b602306979f9f0753c5b736b9bbf847bd510",
+      "dist/driven/decide.js": "64197e257066a9072cf00cd5af8e7ade8b97e7a952e37ad8a3370020753b8a7d",
+      "dist/driven/handback.js": "d0be72d959d452efbb533cd5d7fad38aa805829025c28c7d4c0b1dc952176fd7",
+      "dist/driven/marker.js": "bb2bd3a84c2973d94495e923f0ab15538eb523a6c6764476fa137c95b889e7bf",
+      "dist/driven/policy.js": "0b37bd689843a69fb7980273e915f20af44ae365305f736471705b6dd1500e04",
+      "dist/driven/project.js": "1482a41c0041be0e971da386497b12557f91575d205e2c7bebab9222e494daa2",
+      "dist/driven/step.js": "669eef883b2ad9994310a62561100a05e25d1b183b9360cffce39b640d37c3ae",
+      "dist/driven/vocabulary.js": "81d171daef1f450ea866321b13f4ef22c2cade4a0e7dc0a384327be6f9a8524a",
+      "dist/exit-codes.js": "c85c3e5ccc50b25255f516d2680539b4c0ed1817144c40d927733a556e2e9f95",
+      "dist/experimental/observed-journal.js": "b57ab8f9cf69bc8f252626dd948bd7b60c149c104181b6013c37d8dc105ef6bd",
+      "dist/experimental/observed-run.js": "6ca67a307aed02f7cf9734558bdea7575b7661f4e060a410e0c81267ab491942",
+      "dist/experimental/observed-tap.js": "80e81478bb734ce2b1c35e4005fb975e40fad68b86de6fb07b021d7c1ab331d7",
+      "dist/log/index.js": "ead5f93a0fca9aeb3beec6e9f17ebb3c9a249501cf39be3b9fcfc0ecccb482b0",
+      "dist/logpane/attach.js": "7162850524252f2e640c64a12cf75f2aacfe37b148b3238f2b1c051b3e8106a6",
+      "dist/logpane/format.js": "8ebe92bb56509576e315b5e723f511f10347e0b83a9362d9d553aaaba32b8009",
+      "dist/logpane/stream.js": "adf4eabc21fc50188a8a2a966960ec22c824526b0d4b092513f40f0ce301f986",
+      "dist/logpane/window.js": "7297aca5f2f7b46d221ec0b754cb5ac4c30449c9485733ce1d8325d71d22ed6e",
+      "dist/mcp/index.js": "64b3bb0d3733a367dfc3576ffa8e8c7f28e61031e53a82fc73292243f51d99a3",
+      "dist/mcp/observed.js": "7cb75f32d67867140bd63880ca566b4918de24d915cec641fa4b7a6771fbc674",
+      "dist/observed/allocation-config.js": "4e71bfd6d540d8637011f80084176eb899d799d8c6dc0c734e1baba109a77705",
+      "dist/observed/allocation-schema.js": "1f4af01e2bd7559ccd78439b57e22477d6e58a2ef00dd85cc7bf159d314fde36",
+      "dist/observed/allocation.js": "87d8d4c98ac77d3868f5e88f9e09b2274f0dd77f457fd1ef7f254f15750cb467",
+      "dist/observed/artifact.js": "71697e79851b3afc6e0157e6bf3f2116ffec6233b13996463a54c24b6465aea5",
+      "dist/observed/cli.js": "14679c0c13fdd87361f677d2d946841034343629bdb84221d280ba556720e4f2",
+      "dist/observed/create-source.js": "1b3b13ab6dc55eb5f04f0f7a40b2b86a2d6fe46a96a7274bab1bf5cc81f5e8c3",
+      "dist/observed/evidence.js": "682e600b8dca6ef3cfa5d869dab60cd8dc2865aa677bc84947629783762d158e",
+      "dist/observed/installed-plist.js": "bfa578bac5fe8b3a1101ea945b8db8f0f54bccf29c9ab4de0122831d0162df5f",
+      "dist/observed/report.js": "c843ab9d562e8299371e64c6d7380fd94ac574769562791ab2f66238a8393eee",
+      "dist/observed/schema.js": "4981a31d0bf83c38d69efd54589cb57b344713dab6bdb223c28533d937861f53",
+      "dist/observed/service.js": "13ae2e47efcf6139b7460fce862173960d8a6e465ba7a989d3356b273b24ac9f",
+      "dist/observed/supplied-source.js": "74720e27069f89bf6e238cee90b8c804fd92783d6d0e82bdb23f7c9f75834c41",
+      "dist/process.js": "62963d4ae970d3dbb06811e2ae7b983ebb7502380f02053d7f0e08a3e8f958f3",
+      "dist/scripted/contracts.js": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881",
+      "dist/scripted/jev.js": "d227aff5eb07388becd0f5dea1a800823f1abcf1e23fb9e4f1f8542c7e6d414c",
+      "dist/scripted/observe.js": "db2c8e6df75acfb8be14d1668c355ca92d27b5caefc6bf2870d1bb90c6498c08",
+      "dist/scripted/report-json.js": "1bd59963d6d37331a98ed7d4e537415f2e902e1d861a2f1ea2405c0ff271ffdb",
+      "dist/scripted/report.js": "b5a6c25355dd73ecadb9cb048479adf81cc05237a5c92193cf17cd1d5c3c1886",
+      "dist/scripted/run.js": "bc33b4c81a5c0185eb316a8016de67e691418f5e736e318d4c6e5e03298d74ea",
+      "dist/scripted/schema.js": "85ce0c365ef5cead2899e7e8487c75a8c4a371768bb51f1b985028bc9922adb1",
+      "dist/scripted/select.js": "c2d364f7ef5aed1f219f9de21601a078376b23b1621eddce26578ea5a99b8d2a",
+      "dist/scripted/vocabulary.js": "3ff8fdb40f9e141281a3af9e73a779c64073f8bac98b91b04bd8edc340d40284",
+      "dist/service.js": "a2b3f70361ffd728711767933bf74cba7c8a30c41ce8d8e76eb9fdb7396ffafe",
+      "dist/version.js": "1f2780b5f9cc2737f99ad1de9598baed2af758754ab53f6577fcff5c8bc8a226",
+      "dist/watch/index.js": "f297ae862b9c13309e2ab56cc8bb7cc168c644f8342b0ee709245d82135a4a57"
+    }
+  },
+  "helperSummary": {
+    "cleanInstall": true,
+    "cliOperationsPerInstallation": 7,
+    "commandCount": 37,
+    "commands": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-tracked-binding/.scratch/installed-tracked-packaging-maxsockets1/runs/tracked-maxsockets1-packaging-node26/installed-proof/commands.jsonl",
+    "evidence": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-tracked-binding/.scratch/installed-tracked-packaging-maxsockets1/runs/tracked-maxsockets1-packaging-node26/installed-proof",
+    "forbiddenEffects": 0,
+    "installations": 2,
+    "installed": {
+      "dist/cli.js": "3f3d41ee2687846dc939f502e7df5ad8aca3ea473a6d291d5652a5230b8ae2df",
+      "dist/device/admission-maintenance.js": "c8d4451bb348ce01efc79ac9effc2bf0b83a545b4ca87edd4c12fbc46dc26965",
+      "dist/device/admission-sqlite.js": "de7f8337e7f043480270c8aa3653487c51abacca709410f79796a42bb26bf8b1",
+      "dist/mcp/observed.js": "7cb75f32d67867140bd63880ca566b4918de24d915cec641fa4b7a6771fbc674",
+      "dist/observed/allocation.js": "87d8d4c98ac77d3868f5e88f9e09b2274f0dd77f457fd1ef7f254f15750cb467",
+      "dist/observed/cli.js": "14679c0c13fdd87361f677d2d946841034343629bdb84221d280ba556720e4f2",
+      "dist/observed/service.js": "13ae2e47efcf6139b7460fce862173960d8a6e465ba7a989d3356b273b24ac9f",
+      "docs/guide/14-observed-actions.md": "b1296abbdadb769d075876cb21cacc68a83a02962c6891c3f8f2e036c9ae8267",
+      "docs/guide/reference/observed-format.md": "75b47e9a5f9951412be514363c2d0ed1009d4bf666138efa1c52cfbef66e8c96",
+      "skills/test-ios/SKILL.md": "7d51dfee8530ca3fa8ba68179db97c64eb07804efe2fb5ec8defaee2ee2eaa33"
+    },
+    "mcpGateCasesPerInstallation": 3,
+    "mcpSchemaErrorCalls": 34,
+    "node": "v26.8.1",
+    "plugin": true,
+    "pluginFiles": {
+      "dist/cli.js": "3f3d41ee2687846dc939f502e7df5ad8aca3ea473a6d291d5652a5230b8ae2df",
+      "dist/device/admission-maintenance.js": "c8d4451bb348ce01efc79ac9effc2bf0b83a545b4ca87edd4c12fbc46dc26965",
+      "dist/device/admission-sqlite.js": "de7f8337e7f043480270c8aa3653487c51abacca709410f79796a42bb26bf8b1",
+      "dist/mcp/observed.js": "7cb75f32d67867140bd63880ca566b4918de24d915cec641fa4b7a6771fbc674",
+      "dist/observed/allocation.js": "87d8d4c98ac77d3868f5e88f9e09b2274f0dd77f457fd1ef7f254f15750cb467",
+      "dist/observed/cli.js": "14679c0c13fdd87361f677d2d946841034343629bdb84221d280ba556720e4f2",
+      "dist/observed/service.js": "13ae2e47efcf6139b7460fce862173960d8a6e465ba7a989d3356b273b24ac9f",
+      "docs/guide/14-observed-actions.md": "b1296abbdadb769d075876cb21cacc68a83a02962c6891c3f8f2e036c9ae8267",
+      "docs/guide/reference/observed-format.md": "75b47e9a5f9951412be514363c2d0ed1009d4bf666138efa1c52cfbef66e8c96",
+      "skills/test-ios/SKILL.md": "089f443b4131615778ae8bb1f7fbbc0ff18a3936f08ce6b9f61f616bbb0dac46"
+    },
+    "pluginZip": {
+      "path": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-tracked-binding/.scratch/installed-tracked-packaging-maxsockets1/runs/tracked-maxsockets1-packaging-node26/installed-proof/build-source/build/plugin/jev-ios-bridge-plugin-1.3.1.zip",
+      "sha256": "b2fd8e20cbca7d396655f9619839090ea8986e582bf122a12353551754a66e7c"
+    },
+    "shebang": true,
+    "skips": 0,
+    "source": {
+      "dist/cli.js": "3f3d41ee2687846dc939f502e7df5ad8aca3ea473a6d291d5652a5230b8ae2df",
+      "dist/device/admission-maintenance.js": "c8d4451bb348ce01efc79ac9effc2bf0b83a545b4ca87edd4c12fbc46dc26965",
+      "dist/device/admission-sqlite.js": "de7f8337e7f043480270c8aa3653487c51abacca709410f79796a42bb26bf8b1",
+      "dist/mcp/observed.js": "7cb75f32d67867140bd63880ca566b4918de24d915cec641fa4b7a6771fbc674",
+      "dist/observed/allocation.js": "87d8d4c98ac77d3868f5e88f9e09b2274f0dd77f457fd1ef7f254f15750cb467",
+      "dist/observed/cli.js": "14679c0c13fdd87361f677d2d946841034343629bdb84221d280ba556720e4f2",
+      "dist/observed/service.js": "13ae2e47efcf6139b7460fce862173960d8a6e465ba7a989d3356b273b24ac9f",
+      "docs/guide/14-observed-actions.md": "b1296abbdadb769d075876cb21cacc68a83a02962c6891c3f8f2e036c9ae8267",
+      "docs/guide/reference/observed-format.md": "75b47e9a5f9951412be514363c2d0ed1009d4bf666138efa1c52cfbef66e8c96",
+      "skills/test-ios/SKILL.md": "7d51dfee8530ca3fa8ba68179db97c64eb07804efe2fb5ec8defaee2ee2eaa33"
+    },
+    "status": "PASS",
+    "symlink": true,
+    "tarball": {
+      "path": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-tracked-binding/.scratch/installed-tracked-packaging-maxsockets1/runs/tracked-maxsockets1-packaging-node26/installed-proof/jev-ios-bridge-1.3.1.tgz",
+      "sha256": "3c3fcea00514db1f8c30e49d3bec8baa2c47bd2791c2ba5de47c0b2a9caf7057"
+    }
+  },
+  "originalHelperCommandReceipts37": [
+    {
+      "args": [
+        "run",
+        "build"
+      ],
+      "command": "npm",
+      "cwd": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-tracked-binding/.scratch/installed-tracked-packaging-maxsockets1/runs/tracked-maxsockets1-packaging-node26/installed-proof/build-source",
+      "exit": 0,
+      "id": "001",
+      "node": "v26.8.1",
+      "settlementEvidence": "Original helper command record; run() awaits close; mcp() may use an already set exitCode. Outer actual root close and owned group absence are recorded separately.",
+      "signal": null,
+      "stderr": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-tracked-binding/.scratch/installed-tracked-packaging-maxsockets1/runs/tracked-maxsockets1-packaging-node26/installed-proof/001.stderr",
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-tracked-binding/.scratch/installed-tracked-packaging-maxsockets1/runs/tracked-maxsockets1-packaging-node26/installed-proof/001.stdout",
+      "stdoutSha256": "d389e171e7d990557a7d1d14e7bf0468ef7ac9a086d5d3d6b4f7f76786d7e62a"
+    },
+    {
+      "args": [
+        "pack",
+        "--json",
+        "--pack-destination",
+        "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-tracked-binding/.scratch/installed-tracked-packaging-maxsockets1/runs/tracked-maxsockets1-packaging-node26/installed-proof"
+      ],
+      "command": "npm",
+      "cwd": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-tracked-binding/.scratch/installed-tracked-packaging-maxsockets1/runs/tracked-maxsockets1-packaging-node26/installed-proof/build-source",
+      "exit": 0,
+      "id": "002",
+      "node": "v26.8.1",
+      "settlementEvidence": "Original helper command record; run() awaits close; mcp() may use an already set exitCode. Outer actual root close and owned group absence are recorded separately.",
+      "signal": null,
+      "stderr": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-tracked-binding/.scratch/installed-tracked-packaging-maxsockets1/runs/tracked-maxsockets1-packaging-node26/installed-proof/002.stderr",
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-tracked-binding/.scratch/installed-tracked-packaging-maxsockets1/runs/tracked-maxsockets1-packaging-node26/installed-proof/002.stdout",
+      "stdoutSha256": "c6e1155a7a901def722274314b839e69e0ef5b9d8707312b848fb8a8a05a0a34"
+    },
+    {
+      "args": [
+        "install",
+        "--ignore-scripts",
+        "--no-audit",
+        "--no-fund",
+        "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-tracked-binding/.scratch/installed-tracked-packaging-maxsockets1/runs/tracked-maxsockets1-packaging-node26/installed-proof/jev-ios-bridge-1.3.1.tgz"
+      ],
+      "command": "npm",
+      "cwd": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-tracked-binding/.scratch/installed-tracked-packaging-maxsockets1/runs/tracked-maxsockets1-packaging-node26/installed-proof/clean",
+      "exit": 0,
+      "id": "003",
+      "node": "v26.8.1",
+      "settlementEvidence": "Original helper command record; run() awaits close; mcp() may use an already set exitCode. Outer actual root close and owned group absence are recorded separately.",
+      "signal": null,
+      "stderr": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-tracked-binding/.scratch/installed-tracked-packaging-maxsockets1/runs/tracked-maxsockets1-packaging-node26/installed-proof/003.stderr",
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-tracked-binding/.scratch/installed-tracked-packaging-maxsockets1/runs/tracked-maxsockets1-packaging-node26/installed-proof/003.stdout",
+      "stdoutSha256": "115c3300400044ccf47ffe7739f9942df3d3bb4d6620d81c34ec91925a31f3ee"
+    },
+    {
+      "args": [
+        "--version"
+      ],
+      "command": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-tracked-binding/.scratch/installed-tracked-packaging-maxsockets1/runs/tracked-maxsockets1-packaging-node26/installed-proof/clean/node_modules/.bin/jev-ios-bridge",
+      "cwd": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-tracked-binding/.scratch/installed-tracked-packaging-maxsockets1/runs/tracked-maxsockets1-packaging-node26/installed-proof/clean",
+      "exit": 0,
+      "id": "004",
+      "node": "v26.8.1",
+      "settlementEvidence": "Original helper command record; run() awaits close; mcp() may use an already set exitCode. Outer actual root close and owned group absence are recorded separately.",
+      "signal": null,
+      "stderr": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-tracked-binding/.scratch/installed-tracked-packaging-maxsockets1/runs/tracked-maxsockets1-packaging-node26/installed-proof/004.stderr",
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-tracked-binding/.scratch/installed-tracked-packaging-maxsockets1/runs/tracked-maxsockets1-packaging-node26/installed-proof/004.stdout",
+      "stdoutSha256": "10e2e117b01523891ca271a615ae36e9d5e52348fd7d642f66727602c1b8dcbe"
+    },
+    {
+      "args": [
+        "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-tracked-binding/.scratch/installed-tracked-packaging-maxsockets1/runs/tracked-maxsockets1-packaging-node26/installed-proof/clean/node_modules/jev-ios-bridge/dist/cli.js",
+        "--version"
+      ],
+      "command": "/opt/homebrew/Cellar/node/26.8.1/bin/node",
+      "cwd": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-tracked-binding/.scratch/installed-tracked-packaging-maxsockets1/runs/tracked-maxsockets1-packaging-node26/installed-proof/clean",
+      "exit": 0,
+      "id": "005",
+      "node": "v26.8.1",
+      "settlementEvidence": "Original helper command record; run() awaits close; mcp() may use an already set exitCode. Outer actual root close and owned group absence are recorded separately.",
+      "signal": null,
+      "stderr": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-tracked-binding/.scratch/installed-tracked-packaging-maxsockets1/runs/tracked-maxsockets1-packaging-node26/installed-proof/005.stderr",
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-tracked-binding/.scratch/installed-tracked-packaging-maxsockets1/runs/tracked-maxsockets1-packaging-node26/installed-proof/005.stdout",
+      "stdoutSha256": "10e2e117b01523891ca271a615ae36e9d5e52348fd7d642f66727602c1b8dcbe"
+    },
+    {
+      "args": [
+        "--help"
+      ],
+      "command": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-tracked-binding/.scratch/installed-tracked-packaging-maxsockets1/runs/tracked-maxsockets1-packaging-node26/installed-proof/clean/node_modules/.bin/jev-ios-bridge",
+      "cwd": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-tracked-binding/.scratch/installed-tracked-packaging-maxsockets1/runs/tracked-maxsockets1-packaging-node26/installed-proof/clean",
+      "exit": 0,
+      "id": "006",
+      "node": "v26.8.1",
+      "settlementEvidence": "Original helper command record; run() awaits close; mcp() may use an already set exitCode. Outer actual root close and owned group absence are recorded separately.",
+      "signal": null,
+      "stderr": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-tracked-binding/.scratch/installed-tracked-packaging-maxsockets1/runs/tracked-maxsockets1-packaging-node26/installed-proof/006.stderr",
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-tracked-binding/.scratch/installed-tracked-packaging-maxsockets1/runs/tracked-maxsockets1-packaging-node26/installed-proof/006.stdout",
+      "stdoutSha256": "f50dd83c1426aad138c97797e72ec869d70243765f4679a819e1d66e4d72967b"
+    },
+    {
+      "args": [
+        "--import",
+        "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-tracked-binding/tests/fixtures/observed-packaging/guard.mjs",
+        "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-tracked-binding/.scratch/installed-tracked-packaging-maxsockets1/runs/tracked-maxsockets1-packaging-node26/installed-proof/clean/node_modules/jev-ios-bridge/dist/cli.js",
+        "observed-allocate",
+        "--json"
+      ],
+      "command": "/opt/homebrew/Cellar/node/26.8.1/bin/node",
+      "cwd": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-tracked-binding/.scratch/installed-tracked-packaging-maxsockets1/runs/tracked-maxsockets1-packaging-node26/installed-proof/clean",
+      "exit": 3,
+      "id": "007",
+      "node": "v26.8.1",
+      "settlementEvidence": "Original helper command record; run() awaits close; mcp() may use an already set exitCode. Outer actual root close and owned group absence are recorded separately.",
+      "signal": null,
+      "stderr": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-tracked-binding/.scratch/installed-tracked-packaging-maxsockets1/runs/tracked-maxsockets1-packaging-node26/installed-proof/007.stderr",
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-tracked-binding/.scratch/installed-tracked-packaging-maxsockets1/runs/tracked-maxsockets1-packaging-node26/installed-proof/007.stdout",
+      "stdoutSha256": "10a9d77af3f48efc87403fa65b3027bfe2676d0382c23552511bb9d544a8ed97"
+    },
+    {
+      "args": [
+        "--import",
+        "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-tracked-binding/tests/fixtures/observed-packaging/guard.mjs",
+        "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-tracked-binding/.scratch/installed-tracked-packaging-maxsockets1/runs/tracked-maxsockets1-packaging-node26/installed-proof/clean/node_modules/jev-ios-bridge/dist/cli.js",
+        "observed-allocation",
+        "--json"
+      ],
+      "command": "/opt/homebrew/Cellar/node/26.8.1/bin/node",
+      "cwd": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-tracked-binding/.scratch/installed-tracked-packaging-maxsockets1/runs/tracked-maxsockets1-packaging-node26/installed-proof/clean",
+      "exit": 3,
+      "id": "008",
+      "node": "v26.8.1",
+      "settlementEvidence": "Original helper command record; run() awaits close; mcp() may use an already set exitCode. Outer actual root close and owned group absence are recorded separately.",
+      "signal": null,
+      "stderr": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-tracked-binding/.scratch/installed-tracked-packaging-maxsockets1/runs/tracked-maxsockets1-packaging-node26/installed-proof/008.stderr",
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-tracked-binding/.scratch/installed-tracked-packaging-maxsockets1/runs/tracked-maxsockets1-packaging-node26/installed-proof/008.stdout",
+      "stdoutSha256": "10a9d77af3f48efc87403fa65b3027bfe2676d0382c23552511bb9d544a8ed97"
+    },
+    {
+      "args": [
+        "--import",
+        "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-tracked-binding/tests/fixtures/observed-packaging/guard.mjs",
+        "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-tracked-binding/.scratch/installed-tracked-packaging-maxsockets1/runs/tracked-maxsockets1-packaging-node26/installed-proof/clean/node_modules/jev-ios-bridge/dist/cli.js",
+        "observed-allocation-cancel",
+        "--json"
+      ],
+      "command": "/opt/homebrew/Cellar/node/26.8.1/bin/node",
+      "cwd": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-tracked-binding/.scratch/installed-tracked-packaging-maxsockets1/runs/tracked-maxsockets1-packaging-node26/installed-proof/clean",
+      "exit": 3,
+      "id": "009",
+      "node": "v26.8.1",
+      "settlementEvidence": "Original helper command record; run() awaits close; mcp() may use an already set exitCode. Outer actual root close and owned group absence are recorded separately.",
+      "signal": null,
+      "stderr": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-tracked-binding/.scratch/installed-tracked-packaging-maxsockets1/runs/tracked-maxsockets1-packaging-node26/installed-proof/009.stderr",
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-tracked-binding/.scratch/installed-tracked-packaging-maxsockets1/runs/tracked-maxsockets1-packaging-node26/installed-proof/009.stdout",
+      "stdoutSha256": "10a9d77af3f48efc87403fa65b3027bfe2676d0382c23552511bb9d544a8ed97"
+    },
+    {
+      "args": [
+        "--import",
+        "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-tracked-binding/tests/fixtures/observed-packaging/guard.mjs",
+        "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-tracked-binding/.scratch/installed-tracked-packaging-maxsockets1/runs/tracked-maxsockets1-packaging-node26/installed-proof/clean/node_modules/jev-ios-bridge/dist/cli.js",
+        "observed-retire",
+        "--json"
+      ],
+      "command": "/opt/homebrew/Cellar/node/26.8.1/bin/node",
+      "cwd": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-tracked-binding/.scratch/installed-tracked-packaging-maxsockets1/runs/tracked-maxsockets1-packaging-node26/installed-proof/clean",
+      "exit": 3,
+      "id": "010",
+      "node": "v26.8.1",
+      "settlementEvidence": "Original helper command record; run() awaits close; mcp() may use an already set exitCode. Outer actual root close and owned group absence are recorded separately.",
+      "signal": null,
+      "stderr": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-tracked-binding/.scratch/installed-tracked-packaging-maxsockets1/runs/tracked-maxsockets1-packaging-node26/installed-proof/010.stderr",
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-tracked-binding/.scratch/installed-tracked-packaging-maxsockets1/runs/tracked-maxsockets1-packaging-node26/installed-proof/010.stdout",
+      "stdoutSha256": "10a9d77af3f48efc87403fa65b3027bfe2676d0382c23552511bb9d544a8ed97"
+    },
+    {
+      "args": [
+        "--import",
+        "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-tracked-binding/tests/fixtures/observed-packaging/guard.mjs",
+        "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-tracked-binding/.scratch/installed-tracked-packaging-maxsockets1/runs/tracked-maxsockets1-packaging-node26/installed-proof/clean/node_modules/jev-ios-bridge/dist/cli.js",
+        "observed-action",
+        "--json"
+      ],
+      "command": "/opt/homebrew/Cellar/node/26.8.1/bin/node",
+      "cwd": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-tracked-binding/.scratch/installed-tracked-packaging-maxsockets1/runs/tracked-maxsockets1-packaging-node26/installed-proof/clean",
+      "exit": 3,
+      "id": "011",
+      "node": "v26.8.1",
+      "settlementEvidence": "Original helper command record; run() awaits close; mcp() may use an already set exitCode. Outer actual root close and owned group absence are recorded separately.",
+      "signal": null,
+      "stderr": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-tracked-binding/.scratch/installed-tracked-packaging-maxsockets1/runs/tracked-maxsockets1-packaging-node26/installed-proof/011.stderr",
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-tracked-binding/.scratch/installed-tracked-packaging-maxsockets1/runs/tracked-maxsockets1-packaging-node26/installed-proof/011.stdout",
+      "stdoutSha256": "8e4b3ab872ecbe079927b4528be55c178e2bc7fc167efc51a1ab3ed542f6d259"
+    },
+    {
+      "args": [
+        "--import",
+        "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-tracked-binding/tests/fixtures/observed-packaging/guard.mjs",
+        "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-tracked-binding/.scratch/installed-tracked-packaging-maxsockets1/runs/tracked-maxsockets1-packaging-node26/installed-proof/clean/node_modules/jev-ios-bridge/dist/cli.js",
+        "observed-report",
+        "--json"
+      ],
+      "command": "/opt/homebrew/Cellar/node/26.8.1/bin/node",
+      "cwd": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-tracked-binding/.scratch/installed-tracked-packaging-maxsockets1/runs/tracked-maxsockets1-packaging-node26/installed-proof/clean",
+      "exit": 3,
+      "id": "012",
+      "node": "v26.8.1",
+      "settlementEvidence": "Original helper command record; run() awaits close; mcp() may use an already set exitCode. Outer actual root close and owned group absence are recorded separately.",
+      "signal": null,
+      "stderr": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-tracked-binding/.scratch/installed-tracked-packaging-maxsockets1/runs/tracked-maxsockets1-packaging-node26/installed-proof/012.stderr",
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-tracked-binding/.scratch/installed-tracked-packaging-maxsockets1/runs/tracked-maxsockets1-packaging-node26/installed-proof/012.stdout",
+      "stdoutSha256": "8e4b3ab872ecbe079927b4528be55c178e2bc7fc167efc51a1ab3ed542f6d259"
+    },
+    {
+      "args": [
+        "--import",
+        "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-tracked-binding/tests/fixtures/observed-packaging/guard.mjs",
+        "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-tracked-binding/.scratch/installed-tracked-packaging-maxsockets1/runs/tracked-maxsockets1-packaging-node26/installed-proof/clean/node_modules/jev-ios-bridge/dist/cli.js",
+        "observed-cancel",
+        "--json"
+      ],
+      "command": "/opt/homebrew/Cellar/node/26.8.1/bin/node",
+      "cwd": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-tracked-binding/.scratch/installed-tracked-packaging-maxsockets1/runs/tracked-maxsockets1-packaging-node26/installed-proof/clean",
+      "exit": 3,
+      "id": "013",
+      "node": "v26.8.1",
+      "settlementEvidence": "Original helper command record; run() awaits close; mcp() may use an already set exitCode. Outer actual root close and owned group absence are recorded separately.",
+      "signal": null,
+      "stderr": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-tracked-binding/.scratch/installed-tracked-packaging-maxsockets1/runs/tracked-maxsockets1-packaging-node26/installed-proof/013.stderr",
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-tracked-binding/.scratch/installed-tracked-packaging-maxsockets1/runs/tracked-maxsockets1-packaging-node26/installed-proof/013.stdout",
+      "stdoutSha256": "8e4b3ab872ecbe079927b4528be55c178e2bc7fc167efc51a1ab3ed542f6d259"
+    },
+    {
+      "args": [
+        "--import",
+        "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-tracked-binding/tests/fixtures/observed-packaging/guard.mjs",
+        "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-tracked-binding/.scratch/installed-tracked-packaging-maxsockets1/runs/tracked-maxsockets1-packaging-node26/installed-proof/clean/node_modules/jev-ios-bridge/dist/cli.js",
+        "observed-action",
+        "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-tracked-binding/.scratch/installed-tracked-packaging-maxsockets1/runs/tracked-maxsockets1-packaging-node26/installed-proof/clean/npm-action.json",
+        "--json"
+      ],
+      "command": "/opt/homebrew/Cellar/node/26.8.1/bin/node",
+      "cwd": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-tracked-binding/.scratch/installed-tracked-packaging-maxsockets1/runs/tracked-maxsockets1-packaging-node26/installed-proof/clean",
+      "exit": 3,
+      "id": "014",
+      "node": "v26.8.1",
+      "settlementEvidence": "Original helper command record; run() awaits close; mcp() may use an already set exitCode. Outer actual root close and owned group absence are recorded separately.",
+      "signal": null,
+      "stderr": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-tracked-binding/.scratch/installed-tracked-packaging-maxsockets1/runs/tracked-maxsockets1-packaging-node26/installed-proof/014.stderr",
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-tracked-binding/.scratch/installed-tracked-packaging-maxsockets1/runs/tracked-maxsockets1-packaging-node26/installed-proof/014.stdout",
+      "stdoutSha256": "0ca6e4367908aa33e3174af0dce098dfa3f275d14d759dedf352dd62251eda2f"
+    },
+    {
+      "args": [
+        "--import",
+        "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-tracked-binding/tests/fixtures/observed-packaging/guard.mjs",
+        "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-tracked-binding/.scratch/installed-tracked-packaging-maxsockets1/runs/tracked-maxsockets1-packaging-node26/installed-proof/clean/node_modules/jev-ios-bridge/dist/cli.js",
+        "observed-action",
+        "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-tracked-binding/.scratch/installed-tracked-packaging-maxsockets1/runs/tracked-maxsockets1-packaging-node26/installed-proof/clean/npm-action.json",
+        "--json"
+      ],
+      "command": "/opt/homebrew/Cellar/node/26.8.1/bin/node",
+      "cwd": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-tracked-binding/.scratch/installed-tracked-packaging-maxsockets1/runs/tracked-maxsockets1-packaging-node26/installed-proof/clean",
+      "exit": 3,
+      "id": "015",
+      "node": "v26.8.1",
+      "settlementEvidence": "Original helper command record; run() awaits close; mcp() may use an already set exitCode. Outer actual root close and owned group absence are recorded separately.",
+      "signal": null,
+      "stderr": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-tracked-binding/.scratch/installed-tracked-packaging-maxsockets1/runs/tracked-maxsockets1-packaging-node26/installed-proof/015.stderr",
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-tracked-binding/.scratch/installed-tracked-packaging-maxsockets1/runs/tracked-maxsockets1-packaging-node26/installed-proof/015.stdout",
+      "stdoutSha256": "0ca6e4367908aa33e3174af0dce098dfa3f275d14d759dedf352dd62251eda2f"
+    },
+    {
+      "args": [
+        "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-tracked-binding/.scratch/installed-tracked-packaging-maxsockets1/runs/tracked-maxsockets1-packaging-node26/installed-proof/clean/node_modules/jev-ios-bridge/dist/device/admission-maintenance.js",
+        "--help"
+      ],
+      "command": "/opt/homebrew/Cellar/node/26.8.1/bin/node",
+      "cwd": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-tracked-binding/.scratch/installed-tracked-packaging-maxsockets1/runs/tracked-maxsockets1-packaging-node26/installed-proof/clean",
+      "exit": 0,
+      "id": "016",
+      "node": "v26.8.1",
+      "settlementEvidence": "Original helper command record; run() awaits close; mcp() may use an already set exitCode. Outer actual root close and owned group absence are recorded separately.",
+      "signal": null,
+      "stderr": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-tracked-binding/.scratch/installed-tracked-packaging-maxsockets1/runs/tracked-maxsockets1-packaging-node26/installed-proof/016.stderr",
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-tracked-binding/.scratch/installed-tracked-packaging-maxsockets1/runs/tracked-maxsockets1-packaging-node26/installed-proof/016.stdout",
+      "stdoutSha256": "3a2efc26fff3f21e2682f1feab0b36675fa20c9ba74caacfdbb7bac39868abd6"
+    },
+    {
+      "args": [
+        "--import",
+        "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-tracked-binding/tests/fixtures/observed-packaging/guard.mjs",
+        "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-tracked-binding/.scratch/installed-tracked-packaging-maxsockets1/runs/tracked-maxsockets1-packaging-node26/installed-proof/clean/node_modules/jev-ios-bridge/dist/cli.js",
+        "mcp"
+      ],
+      "command": "/opt/homebrew/Cellar/node/26.8.1/bin/node",
+      "cwd": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-tracked-binding/.scratch/installed-tracked-packaging-maxsockets1/runs/tracked-maxsockets1-packaging-node26/installed-proof/clean",
+      "exit": 0,
+      "id": "017",
+      "node": "v26.8.1",
+      "settlementEvidence": "Original helper command record; run() awaits close; mcp() may use an already set exitCode. Outer actual root close and owned group absence are recorded separately.",
+      "signal": null,
+      "stderr": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-tracked-binding/.scratch/installed-tracked-packaging-maxsockets1/runs/tracked-maxsockets1-packaging-node26/installed-proof/017.stderr",
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-tracked-binding/.scratch/installed-tracked-packaging-maxsockets1/runs/tracked-maxsockets1-packaging-node26/installed-proof/017.stdout",
+      "stdoutSha256": "b20875d3fb9e8d432724381cde1edcad74cb069710a81cdf2cf4b96ecaf96104"
+    },
+    {
+      "args": [
+        "--import",
+        "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-tracked-binding/tests/fixtures/observed-packaging/guard.mjs",
+        "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-tracked-binding/.scratch/installed-tracked-packaging-maxsockets1/runs/tracked-maxsockets1-packaging-node26/installed-proof/clean/node_modules/jev-ios-bridge/dist/cli.js",
+        "mcp"
+      ],
+      "command": "/opt/homebrew/Cellar/node/26.8.1/bin/node",
+      "cwd": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-tracked-binding/.scratch/installed-tracked-packaging-maxsockets1/runs/tracked-maxsockets1-packaging-node26/installed-proof/clean",
+      "exit": 0,
+      "id": "018",
+      "node": "v26.8.1",
+      "settlementEvidence": "Original helper command record; run() awaits close; mcp() may use an already set exitCode. Outer actual root close and owned group absence are recorded separately.",
+      "signal": null,
+      "stderr": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-tracked-binding/.scratch/installed-tracked-packaging-maxsockets1/runs/tracked-maxsockets1-packaging-node26/installed-proof/018.stderr",
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-tracked-binding/.scratch/installed-tracked-packaging-maxsockets1/runs/tracked-maxsockets1-packaging-node26/installed-proof/018.stdout",
+      "stdoutSha256": "b20875d3fb9e8d432724381cde1edcad74cb069710a81cdf2cf4b96ecaf96104"
+    },
+    {
+      "args": [
+        "--import",
+        "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-tracked-binding/tests/fixtures/observed-packaging/guard.mjs",
+        "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-tracked-binding/.scratch/installed-tracked-packaging-maxsockets1/runs/tracked-maxsockets1-packaging-node26/installed-proof/clean/node_modules/jev-ios-bridge/dist/cli.js",
+        "mcp"
+      ],
+      "command": "/opt/homebrew/Cellar/node/26.8.1/bin/node",
+      "cwd": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-tracked-binding/.scratch/installed-tracked-packaging-maxsockets1/runs/tracked-maxsockets1-packaging-node26/installed-proof/clean",
+      "exit": 0,
+      "id": "019",
+      "node": "v26.8.1",
+      "settlementEvidence": "Original helper command record; run() awaits close; mcp() may use an already set exitCode. Outer actual root close and owned group absence are recorded separately.",
+      "signal": null,
+      "stderr": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-tracked-binding/.scratch/installed-tracked-packaging-maxsockets1/runs/tracked-maxsockets1-packaging-node26/installed-proof/019.stderr",
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-tracked-binding/.scratch/installed-tracked-packaging-maxsockets1/runs/tracked-maxsockets1-packaging-node26/installed-proof/019.stdout",
+      "stdoutSha256": "ae10dbd16f15963f6e1f752637090348dd337c3eadaf9b501cbd38ccc5dd1d3b"
+    },
+    {
+      "args": [
+        "run",
+        "build:plugin"
+      ],
+      "command": "npm",
+      "cwd": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-tracked-binding/.scratch/installed-tracked-packaging-maxsockets1/runs/tracked-maxsockets1-packaging-node26/installed-proof/build-source",
+      "exit": 0,
+      "id": "020",
+      "node": "v26.8.1",
+      "settlementEvidence": "Original helper command record; run() awaits close; mcp() may use an already set exitCode. Outer actual root close and owned group absence are recorded separately.",
+      "signal": null,
+      "stderr": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-tracked-binding/.scratch/installed-tracked-packaging-maxsockets1/runs/tracked-maxsockets1-packaging-node26/installed-proof/020.stderr",
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-tracked-binding/.scratch/installed-tracked-packaging-maxsockets1/runs/tracked-maxsockets1-packaging-node26/installed-proof/020.stdout",
+      "stdoutSha256": "6f96e3be032a409ab97dd92c8d6e2e25c6ebfd28aae68b86c5cb81b64783efd8"
+    },
+    {
+      "args": [
+        "ci",
+        "--ignore-scripts",
+        "--no-audit",
+        "--no-fund"
+      ],
+      "command": "npm",
+      "cwd": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-tracked-binding/.scratch/installed-tracked-packaging-maxsockets1/runs/tracked-maxsockets1-packaging-node26/installed-proof/plugin",
+      "exit": 0,
+      "id": "021",
+      "node": "v26.8.1",
+      "settlementEvidence": "Original helper command record; run() awaits close; mcp() may use an already set exitCode. Outer actual root close and owned group absence are recorded separately.",
+      "signal": null,
+      "stderr": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-tracked-binding/.scratch/installed-tracked-packaging-maxsockets1/runs/tracked-maxsockets1-packaging-node26/installed-proof/021.stderr",
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-tracked-binding/.scratch/installed-tracked-packaging-maxsockets1/runs/tracked-maxsockets1-packaging-node26/installed-proof/021.stdout",
+      "stdoutSha256": "897de64a2e54d32dad21ed563ffb95522ad2351055bb089b3355e09a93679e26"
+    },
+    {
+      "args": [
+        "--version"
+      ],
+      "command": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-tracked-binding/.scratch/installed-tracked-packaging-maxsockets1/runs/tracked-maxsockets1-packaging-node26/installed-proof/plugin/dist/cli.js",
+      "cwd": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-tracked-binding/.scratch/installed-tracked-packaging-maxsockets1/runs/tracked-maxsockets1-packaging-node26/installed-proof/plugin",
+      "exit": 0,
+      "id": "022",
+      "node": "v26.8.1",
+      "settlementEvidence": "Original helper command record; run() awaits close; mcp() may use an already set exitCode. Outer actual root close and owned group absence are recorded separately.",
+      "signal": null,
+      "stderr": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-tracked-binding/.scratch/installed-tracked-packaging-maxsockets1/runs/tracked-maxsockets1-packaging-node26/installed-proof/022.stderr",
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-tracked-binding/.scratch/installed-tracked-packaging-maxsockets1/runs/tracked-maxsockets1-packaging-node26/installed-proof/022.stdout",
+      "stdoutSha256": "10e2e117b01523891ca271a615ae36e9d5e52348fd7d642f66727602c1b8dcbe"
+    },
+    {
+      "args": [
+        "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-tracked-binding/.scratch/installed-tracked-packaging-maxsockets1/runs/tracked-maxsockets1-packaging-node26/installed-proof/plugin/dist/cli.js",
+        "--version"
+      ],
+      "command": "/opt/homebrew/Cellar/node/26.8.1/bin/node",
+      "cwd": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-tracked-binding/.scratch/installed-tracked-packaging-maxsockets1/runs/tracked-maxsockets1-packaging-node26/installed-proof/plugin",
+      "exit": 0,
+      "id": "023",
+      "node": "v26.8.1",
+      "settlementEvidence": "Original helper command record; run() awaits close; mcp() may use an already set exitCode. Outer actual root close and owned group absence are recorded separately.",
+      "signal": null,
+      "stderr": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-tracked-binding/.scratch/installed-tracked-packaging-maxsockets1/runs/tracked-maxsockets1-packaging-node26/installed-proof/023.stderr",
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-tracked-binding/.scratch/installed-tracked-packaging-maxsockets1/runs/tracked-maxsockets1-packaging-node26/installed-proof/023.stdout",
+      "stdoutSha256": "10e2e117b01523891ca271a615ae36e9d5e52348fd7d642f66727602c1b8dcbe"
+    },
+    {
+      "args": [
+        "--help"
+      ],
+      "command": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-tracked-binding/.scratch/installed-tracked-packaging-maxsockets1/runs/tracked-maxsockets1-packaging-node26/installed-proof/plugin/dist/cli.js",
+      "cwd": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-tracked-binding/.scratch/installed-tracked-packaging-maxsockets1/runs/tracked-maxsockets1-packaging-node26/installed-proof/plugin",
+      "exit": 0,
+      "id": "024",
+      "node": "v26.8.1",
+      "settlementEvidence": "Original helper command record; run() awaits close; mcp() may use an already set exitCode. Outer actual root close and owned group absence are recorded separately.",
+      "signal": null,
+      "stderr": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-tracked-binding/.scratch/installed-tracked-packaging-maxsockets1/runs/tracked-maxsockets1-packaging-node26/installed-proof/024.stderr",
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-tracked-binding/.scratch/installed-tracked-packaging-maxsockets1/runs/tracked-maxsockets1-packaging-node26/installed-proof/024.stdout",
+      "stdoutSha256": "f50dd83c1426aad138c97797e72ec869d70243765f4679a819e1d66e4d72967b"
+    },
+    {
+      "args": [
+        "--import",
+        "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-tracked-binding/tests/fixtures/observed-packaging/guard.mjs",
+        "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-tracked-binding/.scratch/installed-tracked-packaging-maxsockets1/runs/tracked-maxsockets1-packaging-node26/installed-proof/plugin/dist/cli.js",
+        "observed-allocate",
+        "--json"
+      ],
+      "command": "/opt/homebrew/Cellar/node/26.8.1/bin/node",
+      "cwd": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-tracked-binding/.scratch/installed-tracked-packaging-maxsockets1/runs/tracked-maxsockets1-packaging-node26/installed-proof/plugin",
+      "exit": 3,
+      "id": "025",
+      "node": "v26.8.1",
+      "settlementEvidence": "Original helper command record; run() awaits close; mcp() may use an already set exitCode. Outer actual root close and owned group absence are recorded separately.",
+      "signal": null,
+      "stderr": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-tracked-binding/.scratch/installed-tracked-packaging-maxsockets1/runs/tracked-maxsockets1-packaging-node26/installed-proof/025.stderr",
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-tracked-binding/.scratch/installed-tracked-packaging-maxsockets1/runs/tracked-maxsockets1-packaging-node26/installed-proof/025.stdout",
+      "stdoutSha256": "10a9d77af3f48efc87403fa65b3027bfe2676d0382c23552511bb9d544a8ed97"
+    },
+    {
+      "args": [
+        "--import",
+        "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-tracked-binding/tests/fixtures/observed-packaging/guard.mjs",
+        "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-tracked-binding/.scratch/installed-tracked-packaging-maxsockets1/runs/tracked-maxsockets1-packaging-node26/installed-proof/plugin/dist/cli.js",
+        "observed-allocation",
+        "--json"
+      ],
+      "command": "/opt/homebrew/Cellar/node/26.8.1/bin/node",
+      "cwd": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-tracked-binding/.scratch/installed-tracked-packaging-maxsockets1/runs/tracked-maxsockets1-packaging-node26/installed-proof/plugin",
+      "exit": 3,
+      "id": "026",
+      "node": "v26.8.1",
+      "settlementEvidence": "Original helper command record; run() awaits close; mcp() may use an already set exitCode. Outer actual root close and owned group absence are recorded separately.",
+      "signal": null,
+      "stderr": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-tracked-binding/.scratch/installed-tracked-packaging-maxsockets1/runs/tracked-maxsockets1-packaging-node26/installed-proof/026.stderr",
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-tracked-binding/.scratch/installed-tracked-packaging-maxsockets1/runs/tracked-maxsockets1-packaging-node26/installed-proof/026.stdout",
+      "stdoutSha256": "10a9d77af3f48efc87403fa65b3027bfe2676d0382c23552511bb9d544a8ed97"
+    },
+    {
+      "args": [
+        "--import",
+        "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-tracked-binding/tests/fixtures/observed-packaging/guard.mjs",
+        "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-tracked-binding/.scratch/installed-tracked-packaging-maxsockets1/runs/tracked-maxsockets1-packaging-node26/installed-proof/plugin/dist/cli.js",
+        "observed-allocation-cancel",
+        "--json"
+      ],
+      "command": "/opt/homebrew/Cellar/node/26.8.1/bin/node",
+      "cwd": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-tracked-binding/.scratch/installed-tracked-packaging-maxsockets1/runs/tracked-maxsockets1-packaging-node26/installed-proof/plugin",
+      "exit": 3,
+      "id": "027",
+      "node": "v26.8.1",
+      "settlementEvidence": "Original helper command record; run() awaits close; mcp() may use an already set exitCode. Outer actual root close and owned group absence are recorded separately.",
+      "signal": null,
+      "stderr": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-tracked-binding/.scratch/installed-tracked-packaging-maxsockets1/runs/tracked-maxsockets1-packaging-node26/installed-proof/027.stderr",
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-tracked-binding/.scratch/installed-tracked-packaging-maxsockets1/runs/tracked-maxsockets1-packaging-node26/installed-proof/027.stdout",
+      "stdoutSha256": "10a9d77af3f48efc87403fa65b3027bfe2676d0382c23552511bb9d544a8ed97"
+    },
+    {
+      "args": [
+        "--import",
+        "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-tracked-binding/tests/fixtures/observed-packaging/guard.mjs",
+        "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-tracked-binding/.scratch/installed-tracked-packaging-maxsockets1/runs/tracked-maxsockets1-packaging-node26/installed-proof/plugin/dist/cli.js",
+        "observed-retire",
+        "--json"
+      ],
+      "command": "/opt/homebrew/Cellar/node/26.8.1/bin/node",
+      "cwd": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-tracked-binding/.scratch/installed-tracked-packaging-maxsockets1/runs/tracked-maxsockets1-packaging-node26/installed-proof/plugin",
+      "exit": 3,
+      "id": "028",
+      "node": "v26.8.1",
+      "settlementEvidence": "Original helper command record; run() awaits close; mcp() may use an already set exitCode. Outer actual root close and owned group absence are recorded separately.",
+      "signal": null,
+      "stderr": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-tracked-binding/.scratch/installed-tracked-packaging-maxsockets1/runs/tracked-maxsockets1-packaging-node26/installed-proof/028.stderr",
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-tracked-binding/.scratch/installed-tracked-packaging-maxsockets1/runs/tracked-maxsockets1-packaging-node26/installed-proof/028.stdout",
+      "stdoutSha256": "10a9d77af3f48efc87403fa65b3027bfe2676d0382c23552511bb9d544a8ed97"
+    },
+    {
+      "args": [
+        "--import",
+        "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-tracked-binding/tests/fixtures/observed-packaging/guard.mjs",
+        "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-tracked-binding/.scratch/installed-tracked-packaging-maxsockets1/runs/tracked-maxsockets1-packaging-node26/installed-proof/plugin/dist/cli.js",
+        "observed-action",
+        "--json"
+      ],
+      "command": "/opt/homebrew/Cellar/node/26.8.1/bin/node",
+      "cwd": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-tracked-binding/.scratch/installed-tracked-packaging-maxsockets1/runs/tracked-maxsockets1-packaging-node26/installed-proof/plugin",
+      "exit": 3,
+      "id": "029",
+      "node": "v26.8.1",
+      "settlementEvidence": "Original helper command record; run() awaits close; mcp() may use an already set exitCode. Outer actual root close and owned group absence are recorded separately.",
+      "signal": null,
+      "stderr": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-tracked-binding/.scratch/installed-tracked-packaging-maxsockets1/runs/tracked-maxsockets1-packaging-node26/installed-proof/029.stderr",
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-tracked-binding/.scratch/installed-tracked-packaging-maxsockets1/runs/tracked-maxsockets1-packaging-node26/installed-proof/029.stdout",
+      "stdoutSha256": "8e4b3ab872ecbe079927b4528be55c178e2bc7fc167efc51a1ab3ed542f6d259"
+    },
+    {
+      "args": [
+        "--import",
+        "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-tracked-binding/tests/fixtures/observed-packaging/guard.mjs",
+        "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-tracked-binding/.scratch/installed-tracked-packaging-maxsockets1/runs/tracked-maxsockets1-packaging-node26/installed-proof/plugin/dist/cli.js",
+        "observed-report",
+        "--json"
+      ],
+      "command": "/opt/homebrew/Cellar/node/26.8.1/bin/node",
+      "cwd": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-tracked-binding/.scratch/installed-tracked-packaging-maxsockets1/runs/tracked-maxsockets1-packaging-node26/installed-proof/plugin",
+      "exit": 3,
+      "id": "030",
+      "node": "v26.8.1",
+      "settlementEvidence": "Original helper command record; run() awaits close; mcp() may use an already set exitCode. Outer actual root close and owned group absence are recorded separately.",
+      "signal": null,
+      "stderr": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-tracked-binding/.scratch/installed-tracked-packaging-maxsockets1/runs/tracked-maxsockets1-packaging-node26/installed-proof/030.stderr",
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-tracked-binding/.scratch/installed-tracked-packaging-maxsockets1/runs/tracked-maxsockets1-packaging-node26/installed-proof/030.stdout",
+      "stdoutSha256": "8e4b3ab872ecbe079927b4528be55c178e2bc7fc167efc51a1ab3ed542f6d259"
+    },
+    {
+      "args": [
+        "--import",
+        "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-tracked-binding/tests/fixtures/observed-packaging/guard.mjs",
+        "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-tracked-binding/.scratch/installed-tracked-packaging-maxsockets1/runs/tracked-maxsockets1-packaging-node26/installed-proof/plugin/dist/cli.js",
+        "observed-cancel",
+        "--json"
+      ],
+      "command": "/opt/homebrew/Cellar/node/26.8.1/bin/node",
+      "cwd": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-tracked-binding/.scratch/installed-tracked-packaging-maxsockets1/runs/tracked-maxsockets1-packaging-node26/installed-proof/plugin",
+      "exit": 3,
+      "id": "031",
+      "node": "v26.8.1",
+      "settlementEvidence": "Original helper command record; run() awaits close; mcp() may use an already set exitCode. Outer actual root close and owned group absence are recorded separately.",
+      "signal": null,
+      "stderr": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-tracked-binding/.scratch/installed-tracked-packaging-maxsockets1/runs/tracked-maxsockets1-packaging-node26/installed-proof/031.stderr",
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-tracked-binding/.scratch/installed-tracked-packaging-maxsockets1/runs/tracked-maxsockets1-packaging-node26/installed-proof/031.stdout",
+      "stdoutSha256": "8e4b3ab872ecbe079927b4528be55c178e2bc7fc167efc51a1ab3ed542f6d259"
+    },
+    {
+      "args": [
+        "--import",
+        "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-tracked-binding/tests/fixtures/observed-packaging/guard.mjs",
+        "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-tracked-binding/.scratch/installed-tracked-packaging-maxsockets1/runs/tracked-maxsockets1-packaging-node26/installed-proof/plugin/dist/cli.js",
+        "observed-action",
+        "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-tracked-binding/.scratch/installed-tracked-packaging-maxsockets1/runs/tracked-maxsockets1-packaging-node26/installed-proof/plugin/plugin-action.json",
+        "--json"
+      ],
+      "command": "/opt/homebrew/Cellar/node/26.8.1/bin/node",
+      "cwd": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-tracked-binding/.scratch/installed-tracked-packaging-maxsockets1/runs/tracked-maxsockets1-packaging-node26/installed-proof/plugin",
+      "exit": 3,
+      "id": "032",
+      "node": "v26.8.1",
+      "settlementEvidence": "Original helper command record; run() awaits close; mcp() may use an already set exitCode. Outer actual root close and owned group absence are recorded separately.",
+      "signal": null,
+      "stderr": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-tracked-binding/.scratch/installed-tracked-packaging-maxsockets1/runs/tracked-maxsockets1-packaging-node26/installed-proof/032.stderr",
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-tracked-binding/.scratch/installed-tracked-packaging-maxsockets1/runs/tracked-maxsockets1-packaging-node26/installed-proof/032.stdout",
+      "stdoutSha256": "0ca6e4367908aa33e3174af0dce098dfa3f275d14d759dedf352dd62251eda2f"
+    },
+    {
+      "args": [
+        "--import",
+        "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-tracked-binding/tests/fixtures/observed-packaging/guard.mjs",
+        "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-tracked-binding/.scratch/installed-tracked-packaging-maxsockets1/runs/tracked-maxsockets1-packaging-node26/installed-proof/plugin/dist/cli.js",
+        "observed-action",
+        "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-tracked-binding/.scratch/installed-tracked-packaging-maxsockets1/runs/tracked-maxsockets1-packaging-node26/installed-proof/plugin/plugin-action.json",
+        "--json"
+      ],
+      "command": "/opt/homebrew/Cellar/node/26.8.1/bin/node",
+      "cwd": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-tracked-binding/.scratch/installed-tracked-packaging-maxsockets1/runs/tracked-maxsockets1-packaging-node26/installed-proof/plugin",
+      "exit": 3,
+      "id": "033",
+      "node": "v26.8.1",
+      "settlementEvidence": "Original helper command record; run() awaits close; mcp() may use an already set exitCode. Outer actual root close and owned group absence are recorded separately.",
+      "signal": null,
+      "stderr": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-tracked-binding/.scratch/installed-tracked-packaging-maxsockets1/runs/tracked-maxsockets1-packaging-node26/installed-proof/033.stderr",
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-tracked-binding/.scratch/installed-tracked-packaging-maxsockets1/runs/tracked-maxsockets1-packaging-node26/installed-proof/033.stdout",
+      "stdoutSha256": "0ca6e4367908aa33e3174af0dce098dfa3f275d14d759dedf352dd62251eda2f"
+    },
+    {
+      "args": [
+        "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-tracked-binding/.scratch/installed-tracked-packaging-maxsockets1/runs/tracked-maxsockets1-packaging-node26/installed-proof/plugin/dist/device/admission-maintenance.js",
+        "--help"
+      ],
+      "command": "/opt/homebrew/Cellar/node/26.8.1/bin/node",
+      "cwd": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-tracked-binding/.scratch/installed-tracked-packaging-maxsockets1/runs/tracked-maxsockets1-packaging-node26/installed-proof/plugin",
+      "exit": 0,
+      "id": "034",
+      "node": "v26.8.1",
+      "settlementEvidence": "Original helper command record; run() awaits close; mcp() may use an already set exitCode. Outer actual root close and owned group absence are recorded separately.",
+      "signal": null,
+      "stderr": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-tracked-binding/.scratch/installed-tracked-packaging-maxsockets1/runs/tracked-maxsockets1-packaging-node26/installed-proof/034.stderr",
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-tracked-binding/.scratch/installed-tracked-packaging-maxsockets1/runs/tracked-maxsockets1-packaging-node26/installed-proof/034.stdout",
+      "stdoutSha256": "3a2efc26fff3f21e2682f1feab0b36675fa20c9ba74caacfdbb7bac39868abd6"
+    },
+    {
+      "args": [
+        "--import",
+        "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-tracked-binding/tests/fixtures/observed-packaging/guard.mjs",
+        "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-tracked-binding/.scratch/installed-tracked-packaging-maxsockets1/runs/tracked-maxsockets1-packaging-node26/installed-proof/plugin/dist/cli.js",
+        "mcp"
+      ],
+      "command": "/opt/homebrew/Cellar/node/26.8.1/bin/node",
+      "cwd": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-tracked-binding/.scratch/installed-tracked-packaging-maxsockets1/runs/tracked-maxsockets1-packaging-node26/installed-proof/plugin",
+      "exit": 0,
+      "id": "035",
+      "node": "v26.8.1",
+      "settlementEvidence": "Original helper command record; run() awaits close; mcp() may use an already set exitCode. Outer actual root close and owned group absence are recorded separately.",
+      "signal": null,
+      "stderr": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-tracked-binding/.scratch/installed-tracked-packaging-maxsockets1/runs/tracked-maxsockets1-packaging-node26/installed-proof/035.stderr",
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-tracked-binding/.scratch/installed-tracked-packaging-maxsockets1/runs/tracked-maxsockets1-packaging-node26/installed-proof/035.stdout",
+      "stdoutSha256": "b20875d3fb9e8d432724381cde1edcad74cb069710a81cdf2cf4b96ecaf96104"
+    },
+    {
+      "args": [
+        "--import",
+        "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-tracked-binding/tests/fixtures/observed-packaging/guard.mjs",
+        "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-tracked-binding/.scratch/installed-tracked-packaging-maxsockets1/runs/tracked-maxsockets1-packaging-node26/installed-proof/plugin/dist/cli.js",
+        "mcp"
+      ],
+      "command": "/opt/homebrew/Cellar/node/26.8.1/bin/node",
+      "cwd": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-tracked-binding/.scratch/installed-tracked-packaging-maxsockets1/runs/tracked-maxsockets1-packaging-node26/installed-proof/plugin",
+      "exit": 0,
+      "id": "036",
+      "node": "v26.8.1",
+      "settlementEvidence": "Original helper command record; run() awaits close; mcp() may use an already set exitCode. Outer actual root close and owned group absence are recorded separately.",
+      "signal": null,
+      "stderr": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-tracked-binding/.scratch/installed-tracked-packaging-maxsockets1/runs/tracked-maxsockets1-packaging-node26/installed-proof/036.stderr",
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-tracked-binding/.scratch/installed-tracked-packaging-maxsockets1/runs/tracked-maxsockets1-packaging-node26/installed-proof/036.stdout",
+      "stdoutSha256": "b20875d3fb9e8d432724381cde1edcad74cb069710a81cdf2cf4b96ecaf96104"
+    },
+    {
+      "args": [
+        "--import",
+        "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-tracked-binding/tests/fixtures/observed-packaging/guard.mjs",
+        "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-tracked-binding/.scratch/installed-tracked-packaging-maxsockets1/runs/tracked-maxsockets1-packaging-node26/installed-proof/plugin/dist/cli.js",
+        "mcp"
+      ],
+      "command": "/opt/homebrew/Cellar/node/26.8.1/bin/node",
+      "cwd": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-tracked-binding/.scratch/installed-tracked-packaging-maxsockets1/runs/tracked-maxsockets1-packaging-node26/installed-proof/plugin",
+      "exit": 0,
+      "id": "037",
+      "node": "v26.8.1",
+      "settlementEvidence": "Original helper command record; run() awaits close; mcp() may use an already set exitCode. Outer actual root close and owned group absence are recorded separately.",
+      "signal": null,
+      "stderr": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-tracked-binding/.scratch/installed-tracked-packaging-maxsockets1/runs/tracked-maxsockets1-packaging-node26/installed-proof/037.stderr",
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-tracked-binding/.scratch/installed-tracked-packaging-maxsockets1/runs/tracked-maxsockets1-packaging-node26/installed-proof/037.stdout",
+      "stdoutSha256": "ae10dbd16f15963f6e1f752637090348dd337c3eadaf9b501cbd38ccc5dd1d3b"
+    }
+  ],
+  "scope": "Candidate offline npm/plugin installations, not native compatibility or live acceptance"
+}

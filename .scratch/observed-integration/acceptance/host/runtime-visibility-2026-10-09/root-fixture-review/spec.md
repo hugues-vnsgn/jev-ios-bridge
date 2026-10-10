@@ -1,0 +1,11 @@
+# Fixture-correction Spec review: PASS
+
+Zero material findings. Scope: exact three-file working diff from `5629e45778af71a9d1fc6aee616ea7d8e24920a3`; final atomic marker included.
+
+The requested startup synchronization is implemented at `tests/fixtures/observed-cli-server.ts:97–107`: report inspection is invoked before publishing a private PID marker. `src/cli.ts:116` registers both signal handlers before invoking the observed command. Writing the completed marker to a same-directory temporary file and renaming prevents the parent from observing partial content. `tests/observed-cli.test.ts:98–106,129` waits for that bounded milestone before signalling. This verifies cancellation of an entered read operation without assuming 350ms is sufficient for process startup.
+
+`tests/observed-cli.test.ts:21–30` now parses after child close, preserving the single-response assertion and rejecting spawn/parse failures. Existing signal exit codes, WAIT_CANCELLED response, unchanged underlying action/cancellation state, and worker continuity assertions are retained.
+
+The service test's requirement is its separate finalization budget. `tests/observed-service.test.ts:528–543` anchors the unchanged6500ms assertion to the existing beginActionFinalization beforeCommit milestone. This precedes local close, after the production5000ms timer is created (`src/observed/service.ts:166–174`). It removes unrelated earlier action work from the measured interval. Qualification: the milestone does not measure synchronous transaction work before beforeCommit; this test establishes the local-close/finalization interval, not a universal total-action wall-clock bound. Terminal authority/outcome/reason, no-action, quarantine, export and immutable-after-release assertions remain intact. No production/API/budget changes or scope creep were found.
+
+Raw evidence retains the original2256/2258 failure (empty JSON plus pending-close elapsed assertion), the unchanged focused2/2 pass, and repaired4/4 pass. Receipt hashes match logs. The4/4 result predates atomic marker publication and does not validate the final bytes; fresh full checks remain pending. Isolated passes do not establish the original failures' complete scheduling cause. This reviewer performed no tests, builds, native operations or Source edits.

@@ -1,0 +1,30 @@
+{
+  "base": "5629e45778af71a9d1fc6aee616ea7d8e24920a3",
+  "diffSha256": "41cec89f4402fdb5fe2fc1a89ef5bd83946c128801251d05ad9f5ff3ec738095",
+  "inputs": {
+    "tests/observed-cli.test.ts": {
+      "sha256": "711a85de6e02f37f1a17543bd95a1b6c0a38a2577047f43b377f229a6179474f",
+      "bytes": 20422
+    },
+    "tests/fixtures/observed-cli-server.ts": {
+      "sha256": "7f40dfb20327b0e13a436791eaae835126e1232832f8ca4a637468a081f7223e",
+      "bytes": 8947
+    },
+    "tests/observed-service.test.ts": {
+      "sha256": "d45f010eebc4455f88fb36b70ba46f8a0ce1655cfd0956b3f9bc15091e56ec9c",
+      "bytes": 66429
+    },
+    "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic/.scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/root-fixture-review/standards.md": {
+      "sha256": "c953a946e0942c22710de1c6eea3cbc82c11b83046545e24d37b06af37d54e47",
+      "bytes": 2177
+    },
+    "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic/.scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/root-fixture-review/standards-inputs.json": {
+      "sha256": "6ec298a77e80cb1113bccabf2ae1109124d8914851a9c826d815094ef59efba7",
+      "bytes": 3591
+    }
+  },
+  "reportSha256": "c8af0620af83ee435043f3817e5837222dd75ec4f34d09f09e12da74e53050af",
+  "verdict": "PASS",
+  "hardViolations": [],
+  "heuristicFindings": []
+}

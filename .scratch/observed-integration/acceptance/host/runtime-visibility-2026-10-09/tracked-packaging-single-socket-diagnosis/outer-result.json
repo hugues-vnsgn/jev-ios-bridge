@@ -1,0 +1,33 @@
+{
+  "argv": [
+    "/opt/homebrew/Cellar/node/26.8.1/bin/node",
+    "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-tracked-binding/.scratch/installed-tracked-packaging-diagnosis/attempt-11/harness.mjs"
+  ],
+  "cwd": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-tracked-binding",
+  "environment": {
+    "HOME": "/Users/hugues_mini",
+    "LANG": "C",
+    "LC_ALL": "C",
+    "PATH": "/opt/homebrew/Cellar/node/26.8.1/bin:/opt/homebrew/bin:/usr/bin:/bin:/usr/sbin:/sbin",
+    "NPM_CONFIG_USERCONFIG": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-tracked-binding/.scratch/installed-tracked-packaging-diagnosis/attempt-11/user.npmrc",
+    "NPM_CONFIG_GLOBALCONFIG": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-tracked-binding/.scratch/installed-tracked-packaging-diagnosis/attempt-11/global.npmrc",
+    "NPM_CONFIG_CACHE": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-tracked-binding/.scratch/installed-tracked-packaging-diagnosis/attempt-11/outer-npm-cache",
+    "JEV_PACKAGING_EVIDENCE_DIR": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-tracked-binding/.scratch/installed-tracked-packaging-diagnosis/attempt-11/installed-proof",
+    "DIAGNOSTIC_EXPECTED_CLEAN_LOCK": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-tracked-binding/.scratch/installed-tracked-packaging-after-diagnosis/runs/tracked-packaging-after-diagnosis-node26/installed-proof/clean/package-lock.json"
+  },
+  "recorderOnlyExpectedLockVariableRemovedBeforeNpm": true,
+  "startedAtUtc": "2026-10-10T03:19:25.057549+00:00",
+  "outerTimeout": null,
+  "harnessSha256": "96e98e8fdf53490021a704984d8a2e796668e9b6a70345c5ee370317620c6078",
+  "childUmask": "0022",
+  "outerSignals": [],
+  "pid": 5475,
+  "pgid": 5475,
+  "exitCode": 0,
+  "actualClose": true,
+  "closedAtUtc": "2026-10-10T03:20:00.126101+00:00",
+  "durationSeconds": 35.06818950000161,
+  "groupAbsent": true,
+  "stdoutSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+}

@@ -1,0 +1,16 @@
+{
+  "status": "PREPARED_NOT_EXECUTED",
+  "delta": [
+    "PRIVATE path",
+    "env_for adds npm_config_maxsockets=1"
+  ],
+  "files": {
+    "commands-prepared.json": "98fb709b84dc6ed2ad509e70a505e48da25268ca6ca8f10ad3ee1068b544daf0",
+    "invariants.json": "5c46df509f99bc4886ab74268e116e9b5028a315d16e52966959def1b5e1f416",
+    "candidate-installed-recorder.py": "ed2421f9d3f2f753a9953cc8f5a0e25e40c41413b7b6928e0f83f5d7b013ba1d",
+    "prior-recorder.py.txt": "c2cc00aa1932a64abf336941464402d3d9852bd427ff723d1a256b21eae721eb",
+    "candidate-source.json": "7de42479f3263694ed81fe17d43540d638d7d6259531508c28bfd4388fb8e7c9",
+    "recorder.diff": "3e188634b037661e1da251cbe37f2b065222b7d90bc104ccd3916ba4fdab6cf9"
+  },
+  "historicalCause": "UNRESOLVED"
+}

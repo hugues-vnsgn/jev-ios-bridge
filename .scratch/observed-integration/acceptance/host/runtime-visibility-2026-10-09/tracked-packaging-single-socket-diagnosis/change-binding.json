@@ -1,0 +1,10 @@
+{
+  "onlyExecutionChange": "npm_config_maxsockets='1'",
+  "priorHarnessSha256": "cfeaa7606c667b9460e17c406e2ad54446e815f95c01426c3f8dfc128a8c672b",
+  "harnessSha256": "96e98e8fdf53490021a704984d8a2e796668e9b6a70345c5ee370317620c6078",
+  "npmDefinitionPath": "/opt/homebrew/lib/node_modules/npm/node_modules/@npmcli/config/lib/definitions/definitions.js",
+  "npmDefinitionSha256": "f9cffb281460dfc5aa98f4f2e91a47052b814faece72fc9a80eaf3fff2ceb8eb",
+  "definitionExcerpt": "  maxsockets: new Definition('maxsockets', {\n    default: 15,\n    type: Number,\n    description: `\n      The maximum number of connections to use per origin (protocol/host/port\n      combination).\n    `,\n    flatten (key, obj, flatOptions) {\n      flatOptions.maxSockets = obj[key]\n    },\n  }),\n",
+  "effectiveSettingBinding": "Child npm-spawn env records explicit lowercase value1; pinned npm definition maps maxsockets numeric option to maxSockets (default15). No local_address or timeout/retry change.",
+  "claim": "Diagnostic reduction of simultaneous connections; no rootcause proof or product change."
+}

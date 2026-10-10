@@ -1,0 +1,59 @@
+{
+  "base": "5629e45778af71a9d1fc6aee616ea7d8e24920a3",
+  "diffCommand": "git diff 5629e45778af71a9d1fc6aee616ea7d8e24920a3 -- tests/observed-cli.test.ts tests/fixtures/observed-cli-server.ts tests/observed-service.test.ts",
+  "diffSha256": "41cec89f4402fdb5fe2fc1a89ef5bd83946c128801251d05ad9f5ff3ec738095",
+  "diff": "diff --git a/tests/fixtures/observed-cli-server.ts b/tests/fixtures/observed-cli-server.ts\nindex fae49f9b6..8b4a80031 100644\n--- a/tests/fixtures/observed-cli-server.ts\n+++ b/tests/fixtures/observed-cli-server.ts\n@@ -1,6 +1,6 @@\n import assert from 'node:assert/strict';\n import * as fs from 'node:fs/promises';\n-import { appendFileSync, readFileSync, existsSync } from 'node:fs';\n+import { appendFileSync, readFileSync, existsSync, writeFileSync, renameSync } from 'node:fs';\n import { join, resolve } from 'node:path';\n import { pathToFileURL } from 'node:url';\n import { Admission } from '../../src/device/admission.js';\n@@ -94,5 +94,17 @@ if (process.argv[1] && import.meta.url === pathToFileURL(resolve(process.argv[1]\n   const [root, command, argument] = process.argv.slice(2);\n   if (!root || !command || !isObservedCommand(command)) throw new Error('Invalid fixture invocation');\n   const module = fixtureObserved(root, process.env.JEV_EXPERIMENTAL_OBSERVED === '1', process.env.OBSERVED_FIXTURE_MODE);\n+  if (command === 'observed-report') {\n+    const inspect = module.inspect.bind(module);\n+    module.inspect = (id, options) => {\n+      const result = inspect(id, options);\n+      if ((options?.waitMs ?? 0) > 0) {\n+        const marker = join(root, `read-wait-${process.pid}`);\n+        writeFileSync(marker + '.pending', 'ready', { mode: 0o600 });\n+        renameSync(marker + '.pending', marker);\n+      }\n+      return result;\n+    };\n+  }\n   await runCli([command, ...(argument ? [argument] : []), '--json', ...(process.argv[5] !== undefined ? ['--wait-ms', process.argv[5]] : [])], { observed: module, projectDir: root });\n }\ndiff --git a/tests/observed-cli.test.ts b/tests/observed-cli.test.ts\nindex 62aa2c24f..9f74ae330 100644\n--- a/tests/observed-cli.test.ts\n+++ b/tests/observed-cli.test.ts\n@@ -18,9 +18,15 @@ function childCommand(root: string, command: string, argument: string, mode = 'o\n   const child = spawn(process.execPath, ['--import', 'tsx', 'tests/fixtures/observed-cli-server.ts', root, command, argument, ...(wait === undefined ? [] : [String(wait)])], { env, stdio: ['ignore', 'pipe', 'pipe'] });\n   let stdout = ''; let stderr = '';\n   child.stdout.on('data', bytes => { stdout += bytes; }); child.stderr.on('data', bytes => { stderr += bytes; });\n-  const result = new Promise<{code:number|null;stdout:string;stderr:string;reply:any}>(done => child.once('exit', code => {\n-    const lines = stdout.trim().split('\\n'); assert.equal(lines.length, 1, stdout); done({ code, stdout, stderr, reply: JSON.parse(lines[0]!) });\n-  }));\n+  const result = new Promise<{code:number|null;stdout:string;stderr:string;reply:any}>((done, reject) => {\n+    child.once('error', reject);\n+    child.once('close', code => {\n+      try {\n+        const lines = stdout.trim().split('\\n'); assert.equal(lines.length, 1, stdout);\n+        done({ code, stdout, stderr, reply: JSON.parse(lines[0]!) });\n+      } catch (error) { reject(error); }\n+    });\n+  });\n   return { child, result };\n }\n async function prepare(t: TestContext) {\n@@ -89,6 +95,15 @@ async function untilCall(root: string, operation: string, offset = 0) {\n   const end=Date.now()+5000;\n   while(!fixtureCalls(root).slice(offset).includes(operation)) { assert.ok(Date.now()<end,'Missing fake milestone '+operation);await new Promise(done=>setTimeout(done,20)); }\n }\n+async function untilReadWait(root: string, pid: number) {\n+  const end = Date.now() + 5000;\n+  while (true) {\n+    try { assert.equal(await readFile(join(root, `read-wait-${pid}`), 'utf8'), 'ready'); return; }\n+    catch (error) { if ((error as NodeJS.ErrnoException).code !== 'ENOENT') throw error; }\n+    assert.ok(Date.now() < end, 'Missing read-wait readiness milestone');\n+    await new Promise(done => setTimeout(done, 20));\n+  }\n+}\n for(const [signal,code] of [['SIGINT',130],['SIGTERM',143]] as const) {\n   test(`CLI ${signal} revokes owned action and returns ${code} without late input`,{timeout:15000},async t=>{\n     const f=await prepare(t);const path=join(f.root,'action.json');await writeFile(path,JSON.stringify({...actionRequest(f.allocationId),timeoutMs:60000}));\n@@ -111,7 +126,7 @@ for(const [signal,code] of [['SIGINT',130],['SIGTERM',143]] as const) {\n     await untilCall(f.root,'snapshot-ui',before);\n     const initial=(await childCommand(f.root,'observed-report','one','observed',0,'0').result).reply;\n     const waiting=childCommand(f.root,'observed-report','one','observed',45000,'0');\n-    await new Promise(done=>setTimeout(done,350));waiting.child.kill(signal);const stopped=await waiting.result;\n+    await untilReadWait(f.root, waiting.child.pid!);waiting.child.kill(signal);const stopped=await waiting.result;\n     assert.equal(stopped.code,code);assert.equal(stopped.reply.code,'WAIT_CANCELLED');\n     const current=(await childCommand(f.root,'observed-report','one','observed',0,'0').result).reply;\n     assert.deepEqual(current,initial);assert.equal(current.cancellationRequested,false);assert.equal(worker.child.exitCode,null);\ndiff --git a/tests/observed-service.test.ts b/tests/observed-service.test.ts\nindex ebd5d8f59..bcb8e4ec5 100644\n--- a/tests/observed-service.test.ts\n+++ b/tests/observed-service.test.ts\n@@ -525,18 +525,22 @@ test('authoritative renderer validates binding consistency and absolute evidence\n for (const mode of ['error', 'pending'] as const) {\n   test(`local close ${mode} cannot promote an observed success and finishes within the separate five-second budget`, async t => {\n     let driver!: ReturnType<typeof createObservedDriver>; const release = deferred<void>();\n+    let finalizationBegan: number | undefined;\n     const { root, admission, service } = fixture(t, async () => reply(true), { createDriver: () => ({\n       attachObserved: (...args) => driver.attachObserved(...args), observe: (...args) => driver.observe(...args),\n       tapOnce: (...args) => driver.tapOnce(...args), revokeIssuance: () => driver.revokeIssuance(),\n       async close() { if (mode === 'error') throw new Error('Unknown local close'); await release.promise; },\n-    }) });\n+    }) }, { fault(point, operation) {\n+      if (point === 'beforeCommit' && operation === 'beginActionFinalization') finalizationBegan = Date.now();\n+    } });\n     const runner: CliRunner = async () => reply(true);\n     driver = createObservedDriver({ cwd: root, admission, lockRoot: join(root, 'leases'), runner,\n       deviceWindow: async () => assert.fail('No window'), fakeBackend: { runner, window: undefined } });\n-    const raw = request(await ready(admission)); raw.timeoutMs = 6000; const began = Date.now(); await service.start(raw);\n+    const raw = request(await ready(admission)); raw.timeoutMs = 6000; await service.start(raw);\n     const result = await service.inspect('one', { waitMs: 7000 });\n     assert.equal(result.authority, 'committed'); assert.equal(result.outcome, 'inconclusive'); assert.equal(result.reason, 'FINISH_UNCONFIRMED');\n-    assert.equal(result.actionAttempted, false); assert.equal(result.admission, 'quarantined'); assert.ok(Date.now() - began < 6500);\n+    assert.equal(result.actionAttempted, false); assert.equal(result.admission, 'quarantined');\n+    assert.ok(finalizationBegan !== undefined, 'Finalization began'); assert.ok(Date.now() - finalizationBegan < 6500);\n     assert.equal(result.evidence.exportStatus, mode === 'pending' ? 'failed' : 'complete');\n     const before = admission.readAction('one'); release.resolve(); await new Promise(resolve => setTimeout(resolve, 20));\n     assert.deepEqual(admission.readAction('one'), before); await service.close();\n",
+  "inputs": {
+    "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic/tests/observed-cli.test.ts": {
+      "sha256": "711a85de6e02f37f1a17543bd95a1b6c0a38a2577047f43b377f229a6179474f",
+      "bytes": 20422
+    },
+    "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic/tests/fixtures/observed-cli-server.ts": {
+      "sha256": "7f40dfb20327b0e13a436791eaae835126e1232832f8ca4a637468a081f7223e",
+      "bytes": 8947
+    },
+    "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic/tests/observed-service.test.ts": {
+      "sha256": "d45f010eebc4455f88fb36b70ba46f8a0ce1655cfd0956b3f9bc15091e56ec9c",
+      "bytes": 66429
+    },
+    "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic/src/cli.ts": {
+      "sha256": "137b42ef8cdc34a3e143461cf762c659d4bc0a8da768f320ad8b0232e200d7de",
+      "bytes": 16620
+    },
+    "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic/src/observed/service.ts": {
+      "sha256": "0c9e6cd6bfc1d7308bc6dcdb1cbf88b9179143084f9cb66d28af09cb6a9def6d",
+      "bytes": 20304
+    },
+    "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic/src/device/admission-sqlite.ts": {
+      "sha256": "209e311d610f77d172f6af15ac815ba24c79496d0e065e3ef25f410d0fb10856",
+      "bytes": 58024
+    },
+    "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic/.scratch/observed-run-vault/tracked-root-gates-2026-10-10/tracked-root-node24-check.log": {
+      "sha256": "edbce626c166e0ddd7cd7a3543ea0d5f0db99d4af9639c82fba86494943e4d2a",
+      "bytes": 284301
+    },
+    "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic/.scratch/observed-run-vault/tracked-root-gates-2026-10-10/tracked-root-node24-check.json": {
+      "sha256": "f23805e15ad8f6901aa8561da55a91fa2d6178d0a7caa01c8e292bd55a577b33",
+      "bytes": 103771
+    },
+    "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic/.scratch/observed-run-vault/tracked-root-gates-2026-10-10/node24-focused-failures.log": {
+      "sha256": "91d06f580be7a151d46c577ecd2dfbaecd900669b793e8b7e9760e2cfed6a3e4",
+      "bytes": 641
+    },
+    "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic/.scratch/observed-run-vault/tracked-root-gates-2026-10-10/node24-focused-failures.json": {
+      "sha256": "4f498b9e89abd037313d8d5e1bc763126f2c5f904c7bea5767bbfa9e076c382e",
+      "bytes": 1691
+    },
+    "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic/.scratch/observed-run-vault/tracked-root-gates-2026-10-10/node24-fixture-repaired.log": {
+      "sha256": "ea5979df78ab37e20aeda19f324c78101adf4ae5118ed392e03fbdaddfae298f",
+      "bytes": 829
+    },
+    "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic/.scratch/observed-run-vault/tracked-root-gates-2026-10-10/node24-fixture-repaired.json": {
+      "sha256": "15c6bb6b3d7dc8ed3a9e12395046d227ef3f1ab5338a78d9c313a4264c50bab6",
+      "bytes": 634
+    }
+  },
+  "verdict": "PASS",
+  "findings": 0,
+  "reportSha256": "e1e73f4e3888931aa9faa4fe0572ce1d16700a07cf1e9ac7c280844f04c6e32a"
+}

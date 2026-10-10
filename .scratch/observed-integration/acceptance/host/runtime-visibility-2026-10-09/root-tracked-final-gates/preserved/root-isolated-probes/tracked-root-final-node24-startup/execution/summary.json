@@ -1,0 +1,19 @@
+{
+  "status": "PASS",
+  "node": "v24.0.0",
+  "installedProof": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic/.scratch/observed-run-vault/tracked-root-gates-2026-10-10/tracked-root-final-node24-proof-installed",
+  "injectedBoundary": "Admission.open before any account store access",
+  "loader": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic/tests/fixtures/observed-packaging/guard.mjs",
+  "loaderSha256": "000c19430aae956338a406a9b4daceb68e99eb76d70bc3a0340fccf52ae0d2f7",
+  "cliCommands": 2,
+  "mcpCalls": 3,
+  "cliOpenAttemptsPerProcess": 1,
+  "mcpOpenAttemptsSameComposition": 1,
+  "sdkDriverChildEffects": 0,
+  "productionAccountRootOperations": 0,
+  "limits": [
+    "Injected production factory open-error translation; not actual account-root corruption/missing-store experiment.",
+    "Isolated actual SQLite failure evidence is supplied separately by ticket09.",
+    "Per-process/composition caching; no cross-process one-open guarantee."
+  ]
+}

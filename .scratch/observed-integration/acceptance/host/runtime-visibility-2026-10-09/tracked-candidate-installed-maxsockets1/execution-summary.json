@@ -1,0 +1,84 @@
+{
+  "status": "PASS_WITH_NPM_MAXSOCKETS_1",
+  "candidateCommit": "cc5d30e2fdaf065bec476a65df465dabb1569f2c",
+  "source443Compiled69Unchanged": true,
+  "environmentDelta": {
+    "npm_config_maxsockets": "1"
+  },
+  "recorderSha256": "ed2421f9d3f2f753a9953cc8f5a0e25e40c41413b7b6928e0f83f5d7b013ba1d",
+  "phases": [
+    {
+      "label": "tracked-maxsockets1-packaging-node26",
+      "phase": "packaging",
+      "runtime": "26",
+      "status": "PASS",
+      "actualClose": true,
+      "groupAbsent": true,
+      "seconds": 55.53138704199955,
+      "counts": {
+        "commandCount": 37,
+        "skips": 0,
+        "forbiddenEffects": 0
+      },
+      "resultSha256": "560f63b913fe71ebe19f5d06d833ac006c2cc89865095e9ecd46ac684281d73d",
+      "sealSha256": "2aa0d43348b215ef1dcd5c7b00f20d0ff9bb5febd698adfdaf65d5e814372eeb"
+    },
+    {
+      "label": "tracked-maxsockets1-startup-node26",
+      "phase": "startup",
+      "runtime": "26",
+      "status": "PASS",
+      "actualClose": true,
+      "groupAbsent": true,
+      "seconds": 0.5097417079959996,
+      "counts": {
+        "cliCommands": 2,
+        "mcpCalls": 3,
+        "sdkDriverChildEffects": 0,
+        "productionAccountRootOperations": 0
+      },
+      "resultSha256": "63c0ba340d1fe4b6c0defeca1e98fd5bd52b9316f02dc0db7b78e9daf1b50b08",
+      "sealSha256": "f83f5a4ef274386ff893224facc4c7ea453204736ee457f842de2618b92c9a8f"
+    },
+    {
+      "label": "tracked-maxsockets1-packaging-node24",
+      "phase": "packaging",
+      "runtime": "24",
+      "status": "PASS",
+      "actualClose": true,
+      "groupAbsent": true,
+      "seconds": 39.88811862500006,
+      "counts": {
+        "commandCount": 37,
+        "skips": 0,
+        "forbiddenEffects": 0
+      },
+      "resultSha256": "28066269b80f2c5888a05ddbc9a61d5485f0cc014671f6c72b88604dc7b9cbbf",
+      "sealSha256": "43d274f228f4fd4667ce0c4a36b022e41b5ce2b7ab2901feca0ecbef02eafde1"
+    },
+    {
+      "label": "tracked-maxsockets1-startup-node24",
+      "phase": "startup",
+      "runtime": "24",
+      "status": "PASS",
+      "actualClose": true,
+      "groupAbsent": true,
+      "seconds": 0.46819800000230316,
+      "counts": {
+        "cliCommands": 2,
+        "mcpCalls": 3,
+        "sdkDriverChildEffects": 0,
+        "productionAccountRootOperations": 0
+      },
+      "resultSha256": "b2c56e72500e1cb8f77c43c5a0f7b318c663e1ad6be2ca8df57477acf3f6ad20",
+      "sealSha256": "f6b7779d376e487d73e4d62cd560045831f850c0130f497bb9519c76bd67ad34"
+    }
+  ],
+  "limits": [
+    "Three historical full packaging failures remain preserved and unexplained; successful reduced connection concurrency does not establish root cause.",
+    "Original 4fa Node24 default failure remains unexplained.",
+    "Startup is guarded production Admission.open error translation, not actual account-root corruption.",
+    "iOS27 compatibility and live acceptance deferred; no native/account/device operations.",
+    "No integration or publication performed."
+  ]
+}

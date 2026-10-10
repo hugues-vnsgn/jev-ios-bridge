@@ -1,0 +1,2 @@
+{"pid":97233,"kind":"attempt","sequence":1,"backend":"source","operation":"plist","executable":"/usr/bin/plutil","args":["-convert","json","-o","-","--","/Applications/Xcode.app/Contents/Info.plist"],"signalAborted":false}
+{"pid":97233,"kind":"process-exit","exitCode":143}

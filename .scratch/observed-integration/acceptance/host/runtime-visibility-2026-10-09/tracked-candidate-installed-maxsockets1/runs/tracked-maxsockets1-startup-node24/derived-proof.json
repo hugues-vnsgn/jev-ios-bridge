@@ -1,0 +1,88 @@
+{
+  "actualChildCloseReceipts3": [
+    {
+      "childUmask": "0022",
+      "code": 3,
+      "command": [
+        "/Users/hugues_mini/.npm/_npx/2c6eebc6231f3284/node_modules/node/bin/node",
+        "--import",
+        "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic/tests/fixtures/observed-packaging/guard.mjs",
+        "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-tracked-binding/.scratch/installed-tracked-packaging-maxsockets1/runs/tracked-maxsockets1-packaging-node24/installed-proof/clean/node_modules/jev-ios-bridge/dist/cli.js",
+        "observed-allocation",
+        "ABCDEF00-0000-4000-8000-000000000099",
+        "--json"
+      ],
+      "cwd": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-tracked-binding/.scratch/installed-tracked-packaging-maxsockets1/runs/tracked-maxsockets1-packaging-node24/installed-proof/clean",
+      "guardLog": "cli-allocation-guard.jsonl",
+      "label": "cli-allocation",
+      "node": "v24.0.0",
+      "signal": null,
+      "stderr": "cli-allocation.stderr",
+      "stderrSha256": "b382fdd5ec43e672f299bd7de111c2c777e028ddcb2f4a720a788cbb8595b356",
+      "stdout": "cli-allocation.stdout",
+      "stdoutSha256": "00beff87177ec4f8c460fb2dea7962f94d2891e5a558f2a0fb3d0929c2af126e"
+    },
+    {
+      "childUmask": "0022",
+      "code": 3,
+      "command": [
+        "/Users/hugues_mini/.npm/_npx/2c6eebc6231f3284/node_modules/node/bin/node",
+        "--import",
+        "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic/tests/fixtures/observed-packaging/guard.mjs",
+        "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-tracked-binding/.scratch/installed-tracked-packaging-maxsockets1/runs/tracked-maxsockets1-packaging-node24/installed-proof/clean/node_modules/jev-ios-bridge/dist/cli.js",
+        "observed-report",
+        "store-fault",
+        "--json"
+      ],
+      "cwd": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-tracked-binding/.scratch/installed-tracked-packaging-maxsockets1/runs/tracked-maxsockets1-packaging-node24/installed-proof/clean",
+      "guardLog": "cli-action-guard.jsonl",
+      "label": "cli-action",
+      "node": "v24.0.0",
+      "signal": null,
+      "stderr": "cli-action.stderr",
+      "stderrSha256": "5c2f59036fc85c37875c136236ca9c3c82ed318a3207fec6e9ee380c2bcda40f",
+      "stdout": "cli-action.stdout",
+      "stdoutSha256": "49f79e0f5b6e48113ff085b943bdaeec515d09df82cfd55131976f3f739cb058"
+    },
+    {
+      "childUmask": "0022",
+      "code": 0,
+      "command": [
+        "/Users/hugues_mini/.npm/_npx/2c6eebc6231f3284/node_modules/node/bin/node",
+        "--import",
+        "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic/tests/fixtures/observed-packaging/guard.mjs",
+        "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-tracked-binding/.scratch/installed-tracked-packaging-maxsockets1/runs/tracked-maxsockets1-packaging-node24/installed-proof/clean/node_modules/jev-ios-bridge/dist/cli.js",
+        "mcp"
+      ],
+      "cwd": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-tracked-binding/.scratch/installed-tracked-packaging-maxsockets1/runs/tracked-maxsockets1-packaging-node24/installed-proof/clean",
+      "guardLog": "mcp-guard.jsonl",
+      "label": "mcp",
+      "node": "v24.0.0",
+      "signal": null,
+      "stderr": "mcp.stderr",
+      "stderrSha256": "64c4a608e45c34a015afda317fd6acb440fb6b667c1ac7913276cdc873feb4fd",
+      "stdout": "mcp.stdout",
+      "stdoutSha256": "e4e744e9fc080d3e8fa737f31c16d186dc057119a8142944c432e271b8e52193"
+    }
+  ],
+  "helperSummary": {
+    "cliCommands": 2,
+    "cliOpenAttemptsPerProcess": 1,
+    "injectedBoundary": "Admission.open before any account store access",
+    "installedProof": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-tracked-binding/.scratch/installed-tracked-packaging-maxsockets1/runs/tracked-maxsockets1-packaging-node24/installed-proof",
+    "limits": [
+      "Injected production factory open-error translation; not actual account-root corruption/missing-store experiment.",
+      "Isolated actual SQLite failure evidence is supplied separately by ticket09.",
+      "Per-process/composition caching; no cross-process one-open guarantee."
+    ],
+    "loader": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic/tests/fixtures/observed-packaging/guard.mjs",
+    "loaderSha256": "000c19430aae956338a406a9b4daceb68e99eb76d70bc3a0340fccf52ae0d2f7",
+    "mcpCalls": 3,
+    "mcpOpenAttemptsSameComposition": 1,
+    "node": "v24.0.0",
+    "productionAccountRootOperations": 0,
+    "sdkDriverChildEffects": 0,
+    "status": "PASS"
+  },
+  "scope": "Guarded installed production Admission.open error translation; no account/native execution"
+}

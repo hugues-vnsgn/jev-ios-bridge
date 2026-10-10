@@ -1,0 +1,15 @@
+{
+  "scope": "Bounded four repairedcase diagnostics, no default-gate acceptance",
+  "command": [
+    "/Users/hugues_mini/.npm/_npx/2c6eebc6231f3284/node_modules/node/bin/node",
+    "--import",
+    "tsx",
+    "--test",
+    "--test-name-pattern=^(CLI SIG(INT|TERM) stops only a read wait with (130|143)|local close (pending|error) cannot promote an observed success and finishes within the separate five-second budget)$",
+    "tests/observed-cli.test.ts",
+    "tests/observed-service.test.ts"
+  ],
+  "exit": 0,
+  "durationSeconds": 6.3438957079997635,
+  "rawSha256": "ea5979df78ab37e20aeda19f324c78101adf4ae5118ed392e03fbdaddfae298f"
+}

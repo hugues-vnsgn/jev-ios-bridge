@@ -1,0 +1,90 @@
+{
+  "base": "5629e45778af71a9d1fc6aee616ea7d8e24920a3",
+  "diffSha256": "4ffbc1c1eb60633145c5cbae4c9e6027a97f7b78fc5a7362247102b31d94458f",
+  "inputs": {
+    "tests/observed-cli.test.ts": {
+      "sha256": "711a85de6e02f37f1a17543bd95a1b6c0a38a2577047f43b377f229a6179474f",
+      "bytes": 20422
+    },
+    "tests/fixtures/observed-cli-server.ts": {
+      "sha256": "4d538443fe1339f76c7e7d9046a0bd2724c0ab644e2de6142ad112b9d985783d",
+      "bytes": 8824
+    },
+    "tests/observed-service.test.ts": {
+      "sha256": "d45f010eebc4455f88fb36b70ba46f8a0ce1655cfd0956b3f9bc15091e56ec9c",
+      "bytes": 66429
+    },
+    "src/cli.ts": {
+      "sha256": "137b42ef8cdc34a3e143461cf762c659d4bc0a8da768f320ad8b0232e200d7de",
+      "bytes": 16620
+    },
+    "src/observed/cli.ts": {
+      "sha256": "17ed826b608359a9f901012a82447fd1e06d1d2a65e5b8b477e1c0a0885f8e78",
+      "bytes": 12398
+    },
+    "src/observed/service.ts": {
+      "sha256": "0c9e6cd6bfc1d7308bc6dcdb1cbf88b9179143084f9cb66d28af09cb6a9def6d",
+      "bytes": 20304
+    },
+    "src/device/admission.ts": {
+      "sha256": "a0533274c6fbebecb227fa2dd7121a170ce2a2d9c84ddf73f4fad74a39569a91",
+      "bytes": 15559
+    },
+    "src/device/admission-sqlite.ts": {
+      "sha256": "209e311d610f77d172f6af15ac815ba24c79496d0e065e3ef25f410d0fb10856",
+      "bytes": 58024
+    },
+    "AGENTS.md": {
+      "sha256": "86d3e5e2ccba32103401ab95af6b6488fc439d090913b028a7961d07f79a1c47",
+      "bytes": 1542
+    },
+    "docs/agents/domain.md": {
+      "sha256": "edc6d6131fdffc4b7135704f5262124fc43355c95f61b7399dc5a4db643e28ca",
+      "bytes": 2033
+    },
+    "CONTEXT.md": {
+      "sha256": "da9d367b1b911c13afc06331be6c0908b56a2c2cd3833936d3f9fa3d218d95f2",
+      "bytes": 140
+    },
+    "GLOSSARY.md": {
+      "sha256": "a246e0082a15dfd2fa74138473607b9a3c5e3426460f1d43d1d9d154f87ec1c5",
+      "bytes": 5818
+    },
+    "docs/adr/0005-the-1-0-stability-contract.md": {
+      "sha256": "fe61fd90fda45b661b183162062d500c3cb87517afc0b2aee37ccbb154f3f04b",
+      "bytes": 2850
+    },
+    "docs/adr/0008-durable-ios-admission.md": {
+      "sha256": "53d1111c4dd1e2f36635c89d5695a6356a72e054810d7e3f3e7faf4be194d501",
+      "bytes": 1625
+    },
+    ".scratch/observed-run-vault/tracked-root-gates-2026-10-10/tracked-root-node24-check.log": {
+      "sha256": "edbce626c166e0ddd7cd7a3543ea0d5f0db99d4af9639c82fba86494943e4d2a",
+      "bytes": 284301
+    },
+    ".scratch/observed-run-vault/tracked-root-gates-2026-10-10/tracked-root-node24-check.json": {
+      "sha256": "f23805e15ad8f6901aa8561da55a91fa2d6178d0a7caa01c8e292bd55a577b33",
+      "bytes": 103771
+    },
+    ".scratch/observed-run-vault/tracked-root-gates-2026-10-10/node24-focused-failures.log": {
+      "sha256": "91d06f580be7a151d46c577ecd2dfbaecd900669b793e8b7e9760e2cfed6a3e4",
+      "bytes": 641
+    },
+    ".scratch/observed-run-vault/tracked-root-gates-2026-10-10/node24-focused-failures.json": {
+      "sha256": "4f498b9e89abd037313d8d5e1bc763126f2c5f904c7bea5767bbfa9e076c382e",
+      "bytes": 1691
+    },
+    ".scratch/observed-run-vault/tracked-root-gates-2026-10-10/node24-fixture-repaired.log": {
+      "sha256": "ea5979df78ab37e20aeda19f324c78101adf4ae5118ed392e03fbdaddfae298f",
+      "bytes": 829
+    },
+    ".scratch/observed-run-vault/tracked-root-gates-2026-10-10/node24-fixture-repaired.json": {
+      "sha256": "15c6bb6b3d7dc8ed3a9e12395046d227ef3f1ab5338a78d9c313a4264c50bab6",
+      "bytes": 634
+    }
+  },
+  "reportSha256": "c953a946e0942c22710de1c6eea3cbc82c11b83046545e24d37b06af37d54e47",
+  "verdict": "PASS",
+  "hardViolations": [],
+  "heuristicFindings": []
+}

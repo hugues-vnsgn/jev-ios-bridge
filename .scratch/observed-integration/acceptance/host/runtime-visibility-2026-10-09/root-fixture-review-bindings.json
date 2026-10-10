@@ -1,0 +1,41 @@
+{
+  "productCommit": "48d4b95e319a2c1b24480be6f008f208acf4327c",
+  "base": "5629e45778af71a9d1fc6aee616ea7d8e24920a3",
+  "scope": "Root three-file fixture correction, preserving public assertions and budgets. Closed first-pass reports retained; only final reports bind current final bytes. Finalization timing excludes earlier synchronous transaction work.",
+  "reports": {
+    "spec.md": {
+      "sha256": "e1e73f4e3888931aa9faa4fe0572ce1d16700a07cf1e9ac7c280844f04c6e32a",
+      "bytes": 2313
+    },
+    "spec-inputs.json": {
+      "sha256": "d4ea31c917ee1d310ee76afcd418b6d1b47fbef85923917e3739b8a423d2261e",
+      "bytes": 11271
+    },
+    "standards.md": {
+      "sha256": "c953a946e0942c22710de1c6eea3cbc82c11b83046545e24d37b06af37d54e47",
+      "bytes": 2177
+    },
+    "standards-inputs.json": {
+      "sha256": "6ec298a77e80cb1113bccabf2ae1109124d8914851a9c826d815094ef59efba7",
+      "bytes": 3591
+    },
+    "standards-final.md": {
+      "sha256": "c8af0620af83ee435043f3817e5837222dd75ec4f34d09f09e12da74e53050af",
+      "bytes": 1630
+    },
+    "standards-final-inputs.json": {
+      "sha256": "b38ca964ba9e02e4c1365a9be947d11eca5b5a3164e6baf8674163d589f0c6da",
+      "bytes": 1406
+    }
+  },
+  "finalInputsVerified": {
+    "spec-inputs.json": {
+      "count": 12,
+      "verdict": "PASS"
+    },
+    "standards-final-inputs.json": {
+      "count": 5,
+      "verdict": "PASS"
+    }
+  }
+}

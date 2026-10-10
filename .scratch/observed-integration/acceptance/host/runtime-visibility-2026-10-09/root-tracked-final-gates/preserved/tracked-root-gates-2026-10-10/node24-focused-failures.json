@@ -1,0 +1,27 @@
+{
+  "scope": "Unchanged2 failingcases only; filtered diagnostic not default-gate acceptance",
+  "command": [
+    "/Users/hugues_mini/.npm/_npx/2c6eebc6231f3284/node_modules/node/bin/node",
+    "--import",
+    "tsx",
+    "--test",
+    "--test-name-pattern=^(CLI SIGINT stops only a read wait with 130|local close pending cannot promote an observed success and finishes within the separate five-second budget)$",
+    "tests/observed-cli.test.ts",
+    "tests/observed-service.test.ts"
+  ],
+  "environment": {
+    "HOME": "/Users/hugues_mini",
+    "LANG": "C",
+    "LC_ALL": "C",
+    "PATH": "/Users/hugues_mini/.npm/_npx/2c6eebc6231f3284/node_modules/node/bin:/opt/homebrew/bin:/usr/bin:/bin:/usr/sbin:/sbin",
+    "NPM_CONFIG_USERCONFIG": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic/.scratch/observed-run-vault/tracked-root-gates-2026-10-10/user.npmrc",
+    "NPM_CONFIG_GLOBALCONFIG": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic/.scratch/observed-run-vault/tracked-root-gates-2026-10-10/global.npmrc",
+    "NPM_CONFIG_CACHE": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic/.scratch/observed-run-vault/tracked-root-gates-2026-10-10/node24-outer-cache",
+    "npm_config_maxsockets": "1",
+    "HOST_EVIDENCE_DIR": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic/.scratch/observed-run-vault/tracked-root-gates-2026-10-10/node24-focused-faults"
+  },
+  "exit": 0,
+  "durationSeconds": 5.741012959006184,
+  "rawSha256": "91d06f580be7a151d46c577ecd2dfbaecd900669b793e8b7e9760e2cfed6a3e4",
+  "productCommit": "5629e45778af71a9d1fc6aee616ea7d8e24920a3"
+}

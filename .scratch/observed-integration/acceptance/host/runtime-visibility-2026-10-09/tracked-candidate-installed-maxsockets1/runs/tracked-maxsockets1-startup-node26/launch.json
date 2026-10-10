@@ -1,0 +1,35 @@
+{
+  "absentNames": [
+    "TYPESAFE_API_KEY",
+    "NODE_OPTIONS",
+    "NODE_NO_WARNINGS"
+  ],
+  "actualCloseRecorded": false,
+  "childPgid": 21308,
+  "childPid": 21308,
+  "childSession": 21308,
+  "childUmask": "0022",
+  "cleanup": null,
+  "command": [
+    "/opt/homebrew/Cellar/node/26.8.1/bin/node",
+    "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic/.scratch/observed-integration/acceptance/host/faults/production-startup/review/final/probe.mjs",
+    "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-tracked-binding/.scratch/installed-tracked-packaging-maxsockets1/runs/tracked-maxsockets1-packaging-node26/installed-proof",
+    "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-tracked-binding/.scratch/installed-tracked-packaging-maxsockets1/runs/tracked-maxsockets1-startup-node26/startup-proof"
+  ],
+  "cwd": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-tracked-binding",
+  "environmentNames": [
+    "HOME",
+    "LANG",
+    "LC_ALL",
+    "NPM_CONFIG_CACHE",
+    "NPM_CONFIG_GLOBALCONFIG",
+    "NPM_CONFIG_USERCONFIG",
+    "PATH",
+    "npm_config_maxsockets"
+  ],
+  "outerTimeoutSeconds": 60,
+  "parentUmask": "0077",
+  "scrubStrategy": "Minimal allowlisted environment; no inherited credentials/loaders/config",
+  "startedAtUtc": "2026-10-10T03:24:53.341352+00:00",
+  "timedOut": false
+}

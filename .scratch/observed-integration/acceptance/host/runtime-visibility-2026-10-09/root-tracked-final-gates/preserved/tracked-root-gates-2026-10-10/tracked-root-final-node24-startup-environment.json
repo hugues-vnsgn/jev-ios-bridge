@@ -1,0 +1,25 @@
+{
+  "scope": "Integrated host/package validation; native/live deferred",
+  "command": [
+    "/opt/homebrew/opt/python@3.14/bin/python3.14",
+    "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic/.scratch/observed-run-vault/root-isolated-probe-runner.py",
+    "startup",
+    "24",
+    "--label",
+    "tracked-root-final-node24-startup",
+    "--installed-proof",
+    "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic/.scratch/observed-run-vault/tracked-root-gates-2026-10-10/tracked-root-final-node24-proof-installed"
+  ],
+  "environment": {
+    "HOME": "/Users/hugues_mini",
+    "LANG": "C",
+    "LC_ALL": "C",
+    "PATH": "/opt/homebrew/bin:/usr/bin:/bin:/usr/sbin:/sbin",
+    "NPM_CONFIG_USERCONFIG": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic/.scratch/observed-run-vault/tracked-root-gates-2026-10-10/user.npmrc",
+    "NPM_CONFIG_GLOBALCONFIG": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic/.scratch/observed-run-vault/tracked-root-gates-2026-10-10/global.npmrc",
+    "NPM_CONFIG_CACHE": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic/.scratch/observed-run-vault/tracked-root-gates-2026-10-10/tracked-root-final-node24-startup-outer-cache",
+    "npm_config_maxsockets": "1"
+  },
+  "runnerSha256": "42dedbf1e6936f6942794b88f1af2bffedd9ca95de3f67f46a8c80458beb8ab1",
+  "configuration": "Blank user/global npm config; npm maxsockets=1; no inherited credentials/loaders/proxies"
+}

@@ -1,0 +1,34 @@
+{
+  "absentNames": [
+    "TYPESAFE_API_KEY",
+    "NODE_OPTIONS",
+    "NODE_NO_WARNINGS"
+  ],
+  "actualCloseRecorded": false,
+  "childPgid": 22629,
+  "childPid": 22629,
+  "childSession": 22629,
+  "childUmask": "0022",
+  "cleanup": null,
+  "command": [
+    "/Users/hugues_mini/.npm/_npx/2c6eebc6231f3284/node_modules/node/bin/node",
+    "tests/fixtures/observed-packaging/proof.mjs"
+  ],
+  "cwd": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-tracked-binding",
+  "environmentNames": [
+    "HOME",
+    "JEV_PACKAGING_EVIDENCE_DIR",
+    "LANG",
+    "LC_ALL",
+    "NPM_CONFIG_CACHE",
+    "NPM_CONFIG_GLOBALCONFIG",
+    "NPM_CONFIG_USERCONFIG",
+    "PATH",
+    "npm_config_maxsockets"
+  ],
+  "outerTimeoutSeconds": null,
+  "parentUmask": "0077",
+  "scrubStrategy": "Minimal allowlisted environment; no inherited credentials/loaders/config",
+  "startedAtUtc": "2026-10-10T03:25:13.523444+00:00",
+  "timedOut": false
+}

@@ -1,0 +1,43 @@
+{
+  "absentNames": [
+    "TYPESAFE_API_KEY",
+    "NODE_OPTIONS",
+    "NODE_NO_WARNINGS"
+  ],
+  "actualCloseRecorded": true,
+  "childPgid": 25677,
+  "childPid": 25677,
+  "childSession": 25677,
+  "childUmask": "0022",
+  "cleanup": null,
+  "closedAtUtc": "2026-10-10T03:26:24.353105+00:00",
+  "command": [
+    "/Users/hugues_mini/.npm/_npx/2c6eebc6231f3284/node_modules/node/bin/node",
+    "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic/.scratch/observed-integration/acceptance/host/faults/production-startup/review/final/probe.mjs",
+    "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-tracked-binding/.scratch/installed-tracked-packaging-maxsockets1/runs/tracked-maxsockets1-packaging-node24/installed-proof",
+    "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-tracked-binding/.scratch/installed-tracked-packaging-maxsockets1/runs/tracked-maxsockets1-startup-node24/startup-proof"
+  ],
+  "cwd": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-tracked-binding",
+  "durationSeconds": 0.46819800000230316,
+  "environmentNames": [
+    "HOME",
+    "LANG",
+    "LC_ALL",
+    "NPM_CONFIG_CACHE",
+    "NPM_CONFIG_GLOBALCONFIG",
+    "NPM_CONFIG_USERCONFIG",
+    "PATH",
+    "npm_config_maxsockets"
+  ],
+  "exitCode": 0,
+  "groupAbsentAfterClose": true,
+  "outerTimeoutSeconds": 60,
+  "parentUmask": "0077",
+  "rawComplete": true,
+  "rawHashCapturedAtUtc": "2026-10-10T03:26:24.353402+00:00",
+  "scrubStrategy": "Minimal allowlisted environment; no inherited credentials/loaders/config",
+  "startedAtUtc": "2026-10-10T03:26:23.884894+00:00",
+  "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "stdoutSha256": "522b1586ba1cf692cf20c70404505f28fac99dad27311f99768105cc15d79681",
+  "timedOut": false
+}

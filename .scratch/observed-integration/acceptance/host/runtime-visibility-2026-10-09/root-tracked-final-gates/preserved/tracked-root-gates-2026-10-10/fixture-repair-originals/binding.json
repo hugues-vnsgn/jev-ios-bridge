@@ -1,0 +1,9 @@
+{
+  "baseCommit": "5629e45778af71a9d1fc6aee616ea7d8e24920a3",
+  "originalFiles": {
+    "tests/observed-cli.test.ts": "754f0e747adcb181700f8d76a407c854b3f813f4e2c76ca712d8348d50194873",
+    "tests/fixtures/observed-cli-server.ts": "eb1ee9f4215fff24f70867e904c3817d0528a6c7c35efa97bc50ecce6ff63669",
+    "tests/observed-service.test.ts": "b80d5741d34f6cd1a0c350c5c6ddc50295f0483253eef0a111387476567222db"
+  },
+  "scope": "Root owns a bounded test-fixture correction: wait for report adapter readiness before signal; parse only afterstdio close; measure existing separate-finalization6500ms assertion from finalization milestone. Preserve everypublic/effect/outcome/budget assertion, productionSource, goldens and fixedpackaging helpers."
+}

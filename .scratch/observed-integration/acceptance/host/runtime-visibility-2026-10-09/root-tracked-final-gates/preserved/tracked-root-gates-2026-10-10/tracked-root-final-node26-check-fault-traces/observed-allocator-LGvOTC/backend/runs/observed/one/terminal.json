@@ -1,0 +1,29 @@
+{
+  "version": 1,
+  "kind": "observed-action",
+  "actionId": "one",
+  "allocationId": "528CF312-994B-4D11-B43B-79E56DB113C6",
+  "device": {
+    "platform": "ios-simulator",
+    "udid": "ABCDEF00-0000-4000-8000-000000000001"
+  },
+  "bridgeVersion": "host-fixture",
+  "state": "terminal",
+  "authority": "committed",
+  "disposition": "retrieved",
+  "cancellationRequested": false,
+  "actionAttempted": false,
+  "actionAcknowledged": false,
+  "observations": 0,
+  "outcome": "inconclusive",
+  "reason": "PREPARATION_UNCONFIRMED",
+  "admission": "quarantined",
+  "allocationState": "quarantined",
+  "evidence": {
+    "directory": "/private/tmp/observed-allocator-LGvOTC/runs/observed/one",
+    "request": "/private/tmp/observed-allocator-LGvOTC/runs/observed/one/request.json",
+    "observations": [],
+    "terminal": null,
+    "exportStatus": "pending"
+  }
+}

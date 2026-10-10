@@ -1,0 +1,20 @@
+--- original
++++ maxsockets1
+@@ -23,7 +23,7 @@
+ 
+ AUTHOR = Path('/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-tracked-binding')
+ INTEGRATION = Path('/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic')
+-PRIVATE = AUTHOR / '.scratch/installed-tracked-packaging'
++PRIVATE = AUTHOR / '.scratch/installed-tracked-packaging-maxsockets1'
+ PROOF = AUTHOR / 'tests/fixtures/observed-packaging/proof.mjs'
+ GUARD = INTEGRATION / 'tests/fixtures/observed-packaging/guard.mjs'
+ STARTUP = INTEGRATION / '.scratch/observed-integration/acceptance/host/faults/production-startup/review/final/probe.mjs'
+@@ -210,7 +210,7 @@
+             'PATH': str(Path(node).parent) + ':/opt/homebrew/bin:/usr/bin:/bin:/usr/sbin:/sbin',
+             'NPM_CONFIG_USERCONFIG': str(run / 'user.npmrc'),
+             'NPM_CONFIG_GLOBALCONFIG': str(run / 'global.npmrc'),
+-            'NPM_CONFIG_CACHE': str(run / 'outer-npm-cache')}
++            'NPM_CONFIG_CACHE': str(run / 'outer-npm-cache'), 'npm_config_maxsockets': '1'}
+ 
+ 
+ def group_exists(pgid):

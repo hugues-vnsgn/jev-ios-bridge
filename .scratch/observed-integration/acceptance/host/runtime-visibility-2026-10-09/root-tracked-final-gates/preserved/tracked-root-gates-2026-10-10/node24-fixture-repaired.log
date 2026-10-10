@@ -1,0 +1,16 @@
+(node:74321) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ CLI SIGINT stops only a read wait with 130 (1668.498125ms)
+✔ CLI SIGTERM stops only a read wait with 143 (1303.791ms)
+(node:74322) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ local close error cannot promote an observed success and finishes within the separate five-second budget (455.175334ms)
+✔ local close pending cannot promote an observed success and finishes within the separate five-second budget (5510.202958ms)
+ℹ tests 4
+ℹ suites 0
+ℹ pass 4
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 6207.033792
