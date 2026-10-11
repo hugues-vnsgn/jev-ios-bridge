@@ -104,3 +104,11 @@ Pinned endpoint comparison completed: previously stalled IPv6 address passed, pr
 ### Owner deferred iOS27 checks, 2026-10-10
 
 Owner instruction: “ignore iOS 27 checks”, followed by “go ahead” for installation diagnosis, installation/startup, integration, integrated verification and code/package review. Actual compatibility, operational entry and L01–L05 are deferred for this execution, never counted PASS. Continue the code/package scope without native/account/device actions. No merge/push/publication authority is implied.
+
+### Live roadmap resumed: 2026-10-11
+
+Owner explicitly approved resuming compatibility, operational entry, L01–L05 and final review in order. Root restored the sole operator to tab/leaf `b0e5a4b6-106b-4dab-a49a-b3933445d4ef:2002f159-05e1-4609-822f-a0e72b9674ab`, terminal `term_b2a0f5b5-3228-4fad-bf5d-d08d08be3405`, GPT-6.1-Sol xhigh. Root verified current443 Source/69 compiled/15 original host files against the accepted final manifest at integrated HEAD1f69ec7d3. Only once guarded metadata compatibility is dispatched so far; operational entry and live cases require its audited result. Binding/evidence root: `.scratch/observed-integration/acceptance/host/live-resume-2026-10-11/`. No merge, push or publication authorization.
+
+### Operational entry storage blocker: 2026-10-11
+
+Actual compatibility passed. Root accepted configuration after correcting the handoff digest (an old source-file hash had been used). A scoped owner-authorized0755→0700 repair of the exact app state directory passed held-descriptor/path checks. Once migration passed with four historical actions/four protected devices retained and ten source hashes preserved. Capacity is0allocations/0bytes, all four protected identities remain quarantined. The production storage helper reports16.38GiB available against70GiB conservative staging requirement:53.62GiB shortfall before build margin. Builds, reservations and L01–L05 remain unstarted. Root is handling routine approvals under owner delegation; cleanup, budget increases and migration retry are not authorized. Preserve all earlier refusal evidence. Resume only after fresh storage acceptance, unchanged builds and Root entry audit. Evidence: `acceptance/live/entry-2026-10-11-v2/` under `.scratch/observed-integration/`.

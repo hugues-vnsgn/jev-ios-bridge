@@ -1,0 +1,25 @@
+{
+  "status": "BOUND_FOR_ONCE_METADATA_COMPATIBILITY",
+  "ownerInstruction": "ok, follow the map and go ahead",
+  "scope": "Resume compatibility, operational entry, five serial live cases and final review in roadmap order; no merge/push/publication",
+  "integratedHead": "1f69ec7d3d648189cd631259c1c9427c5b8e1b0e",
+  "operator": {
+    "handle": "term_b2a0f5b5-3228-4fad-bf5d-d08d08be3405",
+    "tab": "b0e5a4b6-106b-4dab-a49a-b3933445d4ef",
+    "leaf": "2002f159-05e1-4609-822f-a0e72b9674ab",
+    "model": "gpt-6.1-sol",
+    "effort": "xhigh",
+    "runtime": "f17c0176-76ac-4295-a18e-8013507de739",
+    "idleVerified": true
+  },
+  "manifestPath": ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/root-adr-review-correction/root-audit.json",
+  "manifestSha256": "23788f5e88242d5ef6c6d333f4edef8a6be3c4705c96c793cfc07b0bf8f67458",
+  "verifiedCounts": {
+    "source443": 443,
+    "compiled69": 69,
+    "originalHostFiles15": 15
+  },
+  "lookupBudget": 1,
+  "evidenceDirectory": ".scratch/observed-integration/acceptance/host/live-resume-2026-10-11/operator-compatibility",
+  "legacyHandoffOverrides": "Current 443 Source and 69 compiled, current restored operator; approved legacy v3 policy included; new evidence directory, preserve prior evidence; all other installed-compatibility-recheck guards and stops apply."
+}

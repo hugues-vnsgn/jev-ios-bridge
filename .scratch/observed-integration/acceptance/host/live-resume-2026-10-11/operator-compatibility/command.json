@@ -1,0 +1,52 @@
+{
+  "scope": "Preflight only; compatibility lookup never dispatched",
+  "outerShellCommand": "python3 - <<'PY'\nimport os,json,pathlib,hashlib,stat,subprocess,datetime\nrepo=pathlib.Path.cwd()\nbase=repo/'.scratch/observed-integration/acceptance/host/live-resume-2026-10-11'\nev=base/'operator-compatibility'\nif ev.exists() or ev.is_symlink(): raise SystemExit('Evidence directory already exists; stop without overwrite')\nos.umask(0o077)\nev.mkdir(mode=0o700)\ndef read(p):\n p=repo/p\n if not p.is_relative_to(repo) or p.name=='.env': raise ValueError('Outside authorized repository reads')\n for q in [p,*p.parents]:\n  if q==repo: break\n  s=q.lstat()\n  if stat.S_ISLNK(s.st_mode): raise ValueError('Repository alias: '+str(q))\n s=p.lstat()\n if not stat.S_ISREG(s.st_mode) or s.st_nlink!=1: raise ValueError('Not single-link regular file: '+str(p))\n with open(p,'rb') as f:\n  a=os.fstat(f.fileno()); b=f.read(); z=os.fstat(f.fileno())\n after=p.lstat()\n key=lambda s:(s.st_dev,s.st_ino,s.st_uid,s.st_gid,s.st_mode,s.st_size,s.st_nlink,s.st_ctime_ns,s.st_mtime_ns)\n if not(key(s)==key(a)==key(z)==key(after)): raise ValueError('Repository input changed: '+str(p))\n return b\nsha=lambda b:hashlib.sha256(b).hexdigest()\ndef write(name,obj):\n with open(ev/name,'x',encoding='utf8') as f: json.dump(obj,f,indent=2); f.write('\\n')\nbp='.scratch/observed-integration/acceptance/host/live-resume-2026-10-11/root-binding.json'\nbb=read(bp); binding=json.loads(bb)\nmp=binding['manifestPath']; mb=read(mp)\nif sha(mb)!=binding['manifestSha256'] or sha(mb)!='23788f5e88242d5ef6c6d333f4edef8a6be3c4705c96c793cfc07b0bf8f67458': raise SystemExit('Root manifest mismatch')\naudit=json.loads(mb)\nhead=subprocess.check_output(['git','rev-parse','HEAD'],env={'PATH':'/usr/bin:/bin:/usr/sbin:/sbin','LANG':'C','LC_ALL':'C'},text=True).strip()\nif head!=binding['integratedHead'] or head!='1f69ec7d3d648189cd631259c1c9427c5b8e1b0e': raise SystemExit('HEAD mismatch')\ngroups={k:audit[k] for k in ['source443','compiled69','originalHostFiles15']}\nif [len(v) for v in groups.values()]!=[443,69,15]: raise SystemExit('Pinned vector counts mismatch')\nold='.scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/'\nrefs={bp:sha(bb),mp:sha(mb)}\ndef add(p,h=None):\n actual=sha(read(p))\n if h is not None and actual!=h: raise ValueError('Prior evidence hash mismatch: '+p)\n if p in refs and refs[p]!=actual: raise ValueError('Conflicting prior pin')\n refs[p]=actual\nfor n in range(1,6):\n p=old+f'operator-phase{n}/artifact-hashes.json'; add(p)\n for x in json.loads(read(p))['files']: add(old+f'operator-phase{n}/'+x['path'],x['sha256'])\np=old+'root-repaired-compatibility-audit.json'; add(p)\nr=json.loads(read(p))\nfor n,x in r['files'].items(): add(old+'operator-repaired-compatibility/'+n,x['sha256'])\np=old+'operator-repaired-compatibility/prior-evidence-reference.json'\nfor n,h in json.loads(read(p))['priorEvidence'].items(): add(n,h)\np=old+'operator-legacy-volume-diagnosis/artifact-hashes.json'; add(p)\nfor x in json.loads(read(p))['files']: add(old+'operator-legacy-volume-diagnosis/'+x['path'],x['sha256'])\nfor n in ['cryptex-policy-proposal.md','owner-cryptex-trust-decision.json','legacy-volume-policy-proposal-v3.md','owner-legacy-mount-trust-decision.json','root-legacy-volume-diagnosis-audit.json']:\n p=old+n\n if (repo/p).exists(): add(p)\nadd('.scratch/observed-action-rollout/installed-compatibility-recheck.md')\nfor n in ['owner-cryptex-trust-decision.json','owner-legacy-mount-trust-decision.json']:\n d=json.loads(read(old+n)); p=d.get('proposalPath',d.get('proposal')); add(p,d['proposalSha256'])\ngroups['priorEvidence']=refs\nrecords={}; mismatches=[]\nfor g,entries in groups.items():\n values=[]\n for p,h in entries.items():\n  b=read(p); actual=sha(b); v={'path':p,'bytes':len(b),'expectedSha256':h,'actualSha256':actual,'match':actual==h}; values.append(v)\n  if not v['match']: mismatches.append({'group':g,**v})\n records[g]={'count':len(values),'allMatch':all(v['match'] for v in values),'files':values}\nwrite('references.json',{'groups':groups,'scope':'Only explicit root and historical manifests; no fake-host fixtures/caches or symlinks traversed.'})\nwrite('source-hashes-before.json',{'capturedAtUtc':datetime.datetime.now(datetime.timezone.utc).isoformat(),'head':head,'rootBindingSha256':sha(bb),'rootManifestSha256':sha(mb),'allMatch':not mismatches,'mismatches':mismatches,'groups':records})\nwrite('preparation-receipt.json',{'status':'PIN_VERIFICATION_PASS' if not mismatches else 'PIN_VERIFICATION_FAILURE','installedMetadataCalls':0,'compatibilityLookupCalls':0,'nativeChildren':0,'evidenceMode':'0700 dirs /0600 files','outerEnvironmentNames':sorted(os.environ),'head':head,'counts':{g:len(v) for g,v in groups.items()},'mismatches':mismatches})\nprint(json.dumps({'status':'PIN_VERIFICATION_PASS' if not mismatches else 'PIN_VERIFICATION_FAILURE','head':head,'counts':{g:len(v) for g,v in groups.items()},'mismatches':mismatches}))\nPY",
+  "cwd": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic",
+  "login": false,
+  "toolChunkId": "20a8cf",
+  "toolExitCode": 0,
+  "toolReportedOriginalTokenCount": 190,
+  "toolReportedWallTimeSeconds": 3.040240625,
+  "repositoryHeadCommand": {
+    "argv": [
+      "git",
+      "rev-parse",
+      "HEAD"
+    ],
+    "resolvedExecutableByExplicitPATH": "/usr/bin/git",
+    "environment": {
+      "PATH": "/usr/bin:/bin:/usr/sbin:/sbin",
+      "LANG": "C",
+      "LC_ALL": "C"
+    },
+    "stdoutHandling": "Captured as text by subprocess.check_output; no git stdout content printed except full HEAD in final summary.",
+    "stderrHandling": "Inherited by Python; received in exec_command combined output.",
+    "actualSubprocessReturn": {
+      "returnCode": 0,
+      "basis": "subprocess.check_output completed normally; Python reached hash checks and returned exit0.",
+      "normalizedCapturedStdout": "1f69ec7d3d648189cd631259c1c9427c5b8e1b0e",
+      "normalization": "text=True followed by str.strip()",
+      "originalStdoutBytesRetained": false,
+      "stderr": "Inherited and retained verbatim as tool-returned combined text."
+    }
+  },
+  "receivedOutput": {
+    "file": "preparation-command-received.txt",
+    "utf8Bytes": 759,
+    "sha256": "9ddd5191c93ad701af6de921c449ccf7f5d881967d576c6f954b83bf9d1aeb92",
+    "redaction": "none",
+    "origin": "Complete tool-returned output text copied verbatim; original OS stdout/stderr byte streams were not separately captured, so this receipt does not certify those original streams."
+  },
+  "observedUnexpectedDiagnostic": {
+    "programLabel": "xcodebuild",
+    "pid": 60422,
+    "localTimestamps": [
+      "2026-10-11 09:05:39.717",
+      "2026-10-11 09:05:40.066"
+    ],
+    "parentage": "Not traced",
+    "argv": "Not captured",
+    "exitOrClose": "Not captured",
+    "scope": "Diagnostics observed during the git preflight; no xcodebuild command was deliberately requested."
+  }
+}

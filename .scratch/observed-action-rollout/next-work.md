@@ -1,5 +1,23 @@
 # Remaining observed workflow execution
 
+## Active resumption: 2026-10-11
+
+The owner explicitly approved resuming the remaining live roadmap: “ok, follow the map and go ahead”, following the stated compatibility → operational entry → L01–L05 → final review order. This supersedes the earlier deferral for these stages; it does not authorize merge, push or publication. Code/package acceptance remains complete. Root restored the sole GPT-6.1-Sol xhigh operator after the prior pane disappeared at restart and verified all 443 Source, 69 compiled and 15 preserved host files against the accepted final manifest. Actual metadata compatibility passed. Operational entry passed configuration, migration and capacity, then stopped at insufficient disk space. Live cases await storage and builds. Current binding: [2026-10-11 Root binding](../observed-integration/acceptance/host/live-resume-2026-10-11/root-binding.json). Historical deferral/status sections below describe earlier checkpoints.
+
+### Current live checkpoint
+
+Actual iPhone17/iOS27.0 metadata compatibility PASS on macOS27.0.1/Xcode27.0 build27A266a/runtime24A434. Root audited775files,165successful child closes,422metadata reads and26fresh read-only proofs across the two legacy mounts and Cryptex mount; all443Source/69compiled/15host references preserved. [Accepted compatibility](../observed-integration/acceptance/host/live-resume-2026-10-11/root-compatibility-v3-audit.json).
+
+The earlier workspace-write DiskManagement refusal and two preparation failures remain preserved. The same read-only mount query succeeded through supported elevated execution. The owner delegated routine approvals to Root.
+
+Operational configuration is accepted with unchanged defaults, effective digest `0ef4ca5a076024284eef7594e40dc638ee7be61dcc69b99fca1aff3249ded77d`. Root corrected a handoff error that had supplied an old source-file hash as the configuration digest. The sole operator tightened only the app-owned state directory from0755 to0700, with held-descriptor identity checks and verified close. The original refusal receipts are preserved.
+
+Once migration passed: installation `d411f7ce-9db6-4aa7-9c86-f337e739020a`, four imported actions and four retained devices, ten historical files preserved. Capacity passed with zero current allocations/bytes and all four protected identities quarantined.
+
+**Current blocker: storage.** The production helper reported17,591,939,072bytes (16.38GiB) available on both relevant paths. The five-case plan requires60GiB on simulator storage and70GiB on staging storage, including the20GiB free floor and10GiB staging allowance. Staging shortfall is57,569,988,608bytes (53.62GiB), before build margin. No build, reservation or device action ran. Free additional storage while preserving evidence/stores/protected devices; then the sole operator must freshly verify storage and finish builds. Do not repeat migration or weaken budgets. [Entry evidence](../observed-integration/acceptance/live/entry-2026-10-11-v2/), [digest correction](../observed-integration/acceptance/host/live-resume-2026-10-11/root-config-digest-correction.json), [resume checkpoint](../observed-integration/acceptance/host/live-resume-2026-10-11/resume-checkpoint.json).
+
+Read-only workspace attribution completed: Orca project workspaces17.37GiB, including integration5.13GiB; integration `.scratch`4.86GiB and `node_modules`0.21GiB; original checkout0.76GiB. Totals overlap and cannot be summed or treated as reclaimable capacity. They do not resolve the53.62GiB deficit. No cleanup was performed. [Attribution audit](../observed-integration/acceptance/host/live-resume-2026-10-11/root-disk-attribution-audit.json).
+
 ## Owner scope update: 2026-10-10
 
 The owner said “ignore iOS 27 checks” and then approved proceeding with the displayed code/package plan. For this execution, actual iOS27 compatibility, operational entry/migration/app builds and liveL01–L05 are deferred, not passed. Continue installation diagnosis, candidate clean37/startup on both Nodes, exact integration, fresh integrated host/distribution checks, and final review of the completed code/package scope. Report deferred live acceptance explicitly; do not claim full original rollout acceptance or perform native/account/device work. No merge, push or publication is authorized.
@@ -24,18 +42,16 @@ No owner decision is pending. The sole live operator stays idle and must be rebo
 
 ## Current execution order
 
-| Order | Work | Completion evidence |
+| Order | Work | Status |
 | --- | --- | --- |
-| 1 — complete | Correct the tracking helper used by the real allocator | Genuine regressions through the shared helper on both Nodes; preserve tracking, diagnostics, brand and cancellation; focused/coverage/typecheck/build and actual serial full defaults on frozen443Source/69compiled. |
-| 2 — complete | Independent Spec and Standards review the frozen correction | Both axes PASS with no unresolved findings and exact input/output seals. |
-| 3 — complete | Candidate clean npm/plugin installations and wrapped startup |37 commands and fixed startup proofs per Node passed with `maxsockets=1`; all69 payloads and archives bound. |
-| 4 — complete | Root integrates the reviewed source and runs fresh host/package gates | Both full checks pass 2,258 tests plus typecheck/build; both clean 37-command and startup proofs pass. Reviewed fixture corrections and later ADR clarification are bound separately; 69 compiled files and 15 original host artifacts preserved. |
-| Deferred | Sole operator performs one actual iPhone17/iOS27.0 compatibility lookup | Guarded production composition, lossless traces, all child closes; stop on refusal or uncertainty. |
-| Deferred | Sole operator completes operational entry | Effective config, migration once, capacity/storage and unchanged fixture/Weather generic builds. |
-| Deferred | Sole operator executes L01–L05 serially | All five public CLI/MCP outcomes and effect counts pass; retain all five allocations within the eight-allocation limit. |
-| 5 — complete | Independent review of completed code/package scope | GPT-6-Astra high code/package PASS; material documentation finding closed and affected checks passed. Native/live acceptance remains UNVERIFIED; full ticket12 incomplete. |
+| 1 | Product fixes, both review axes, clean package/startup and integrated host checks | Complete; exact evidence above |
+| 2 | Actual iPhone17/iOS27.0 metadata compatibility | PASS |
+| 3 | Operational configuration, once migration and capacity | PASS; corrected effective digest recorded |
+| 4 | Storage and unchanged fixture/Weather generic builds | BLOCKED:16.38GiB available;70GiB required plus build margin |
+| 5 | Serial L01–L05 via the sole operator | UNVERIFIED; requires accepted entry evidence |
+| 6 | Independent final review of completed live acceptance | Pending; code/package review already passed |
 
-A release finish time depends on resuming actual compatibility and the five live cases. The approved code/package roadmap is complete. To resume the original release acceptance, rebind the sole operator, then perform compatibility, operational entry and L01–L05 in that order before the full ticket12 review. These stages remain deferred by the owner; no merge, push or publication has occurred. Earlier Node 24 failures and default-concurrency installation stalls remain preserved; later passing checks do not establish their complete causes. Historical checkpoints below do not supersede this order.
+Completion depends on resolving disk capacity, then builds and live outcomes. No reliable finish time is available while storage is blocked. No merge, push or publication has occurred. Earlier sections labeled owner deferral describe historical scope and are superseded by the active resumption above.
 
 ## Earlier checkpoint: installed gates passed; legacy volume refused
 

@@ -1,0 +1,157 @@
+{
+  "status": "PASS",
+  "activation": {
+    "version": 1,
+    "installationId": "d411f7ce-9db6-4aa7-9c86-f337e739020a",
+    "declaration": {
+      "version": 1,
+      "writersStopped": true,
+      "historicalRootsDeclaredOrExcluded": true,
+      "additionalJournalRoots": [],
+      "additionalLeaseRoots": [],
+      "excludedDevices": []
+    },
+    "sources": [
+      {
+        "kind": "journal",
+        "root": "/Users/hugues_mini/Library/Application Support/jev-ios-bridge/observed-actions",
+        "present": true,
+        "requestedRoots": [
+          "/Users/hugues_mini/Library/Application Support/jev-ios-bridge/observed-actions"
+        ],
+        "files": [
+          {
+            "path": "/Users/hugues_mini/Library/Application Support/jev-ios-bridge/observed-actions/2fbd334417cfd0019bede26d507fc4a91a92f79b427921d153faba8e63e80e0f/cdb99068b1d33a3aa6679b05f928f586bd11c3ddc6312026dcd715d62b1ff8f1.intent.json",
+            "sha256": "0e19de91b92d8045dbfd5fc711c6e29711f54c623dba1350a4d7c4d786d1a0b2"
+          },
+          {
+            "path": "/Users/hugues_mini/Library/Application Support/jev-ios-bridge/observed-actions/2fbd334417cfd0019bede26d507fc4a91a92f79b427921d153faba8e63e80e0f/cdb99068b1d33a3aa6679b05f928f586bd11c3ddc6312026dcd715d62b1ff8f1.result.json",
+            "sha256": "346af606d0c1d5a21d98953186b0bb5a61c1426a2bc451b7e68bf447827e880f"
+          },
+          {
+            "path": "/Users/hugues_mini/Library/Application Support/jev-ios-bridge/observed-actions/2fbd334417cfd0019bede26d507fc4a91a92f79b427921d153faba8e63e80e0f/quarantine.json",
+            "sha256": "ec39c6b23e01679fb468b5608ec66dc99c78073f3cd8dfbcf1a6a5801357618c"
+          },
+          {
+            "path": "/Users/hugues_mini/Library/Application Support/jev-ios-bridge/observed-actions/d05718444fddd9ffcd6aeb8024f89d94eb6b9f37bbb5c95c53b9a64aa5d297df/1e128b93368a5310a16cbc42ade12f6f8a78fe674d350b93be764b47626597e7.intent.json",
+            "sha256": "93c90be21f2d63ee69fcaf5fe4937c56e1c199c58ead3a75c382e636b15bf428"
+          },
+          {
+            "path": "/Users/hugues_mini/Library/Application Support/jev-ios-bridge/observed-actions/d05718444fddd9ffcd6aeb8024f89d94eb6b9f37bbb5c95c53b9a64aa5d297df/1e128b93368a5310a16cbc42ade12f6f8a78fe674d350b93be764b47626597e7.result.json",
+            "sha256": "66ed1d35a832df2f50cef2952b93af045a8395f6214cc41f95fe019cd6e6fda4"
+          },
+          {
+            "path": "/Users/hugues_mini/Library/Application Support/jev-ios-bridge/observed-actions/d05718444fddd9ffcd6aeb8024f89d94eb6b9f37bbb5c95c53b9a64aa5d297df/326235deeed5670b499bbd40935d0e273489b868f6751791d6793e5c2c9784cc.intent.json",
+            "sha256": "cb8eb20259d2eab6c8a8c6b37e61f8c853446b6b251455f7a349bf314b108293"
+          },
+          {
+            "path": "/Users/hugues_mini/Library/Application Support/jev-ios-bridge/observed-actions/d05718444fddd9ffcd6aeb8024f89d94eb6b9f37bbb5c95c53b9a64aa5d297df/326235deeed5670b499bbd40935d0e273489b868f6751791d6793e5c2c9784cc.result.json",
+            "sha256": "686dcb9c045da4fce71655c3d67ee2c594e74a609d40b17ed34daae768e88e4f"
+          },
+          {
+            "path": "/Users/hugues_mini/Library/Application Support/jev-ios-bridge/observed-actions/d05718444fddd9ffcd6aeb8024f89d94eb6b9f37bbb5c95c53b9a64aa5d297df/3a7ddb74a81795172a640a62ebf43db403055dd57e09f97f25391896ae879fe7.intent.json",
+            "sha256": "aa738e2a91c99789ae8b809c3591ff00364427b532459527af3e2680633c2ee2"
+          },
+          {
+            "path": "/Users/hugues_mini/Library/Application Support/jev-ios-bridge/observed-actions/d05718444fddd9ffcd6aeb8024f89d94eb6b9f37bbb5c95c53b9a64aa5d297df/3a7ddb74a81795172a640a62ebf43db403055dd57e09f97f25391896ae879fe7.result.json",
+            "sha256": "3c5d181ad88715b2128272c8f9c13a5f3972d405536b421f3acc332c43ae896b"
+          },
+          {
+            "path": "/Users/hugues_mini/Library/Application Support/jev-ios-bridge/observed-actions/d05718444fddd9ffcd6aeb8024f89d94eb6b9f37bbb5c95c53b9a64aa5d297df/quarantine.json",
+            "sha256": "ff7a89f90c0ea50eb795cfc674422fbaab26f61fc7b18625fb6c0024737914d8"
+          }
+        ]
+      },
+      {
+        "kind": "leases",
+        "root": "/private/var/folders/yd/86fjng8s4hbfhcz7_0yqcl9w0000gn/T/jev-ios-bridge-device-locks",
+        "present": false,
+        "requestedRoots": [
+          "/var/folders/yd/86fjng8s4hbfhcz7_0yqcl9w0000gn/T/jev-ios-bridge-device-locks"
+        ],
+        "files": []
+      }
+    ],
+    "importedActions": 4,
+    "retainedDevices": 4,
+    "ignoredNonIosLeases": 0
+  },
+  "capacity": {
+    "heldAllocations": 0,
+    "reservedBytes": 0
+  },
+  "budgets": {
+    "maxRetainedAllocations": 8,
+    "maxConcurrentPreparations": 1,
+    "reservationBytesPerAllocation": 8589934592,
+    "maxReservedBytes": 68719476736,
+    "minFreeBytes": 21474836480,
+    "maxArtifactBytes": 2147483648,
+    "createTimeoutMs": 60000,
+    "bootTimeoutMs": 120000,
+    "installTimeoutMs": 120000,
+    "launchTimeoutMs": 30000,
+    "readinessTimeoutMs": 30000,
+    "readyTtlMs": 300000,
+    "timeoutMs": 360000
+  },
+  "proposed": {
+    "allocations": 5,
+    "reservationBytes": 42949672960
+  },
+  "fiveCasesFit": true,
+  "protectedIdentities": [
+    {
+      "device": "73997430-DB8A-48C8-8146-12320CE6AEFE",
+      "view": {
+        "device": "73997430-DB8A-48C8-8146-12320CE6AEFE",
+        "state": "quarantined",
+        "generation": 0,
+        "owner": null,
+        "reason": "protected-device"
+      }
+    },
+    {
+      "device": "2FE383F2-2D0F-4286-8797-D3ACEFCD6220",
+      "view": {
+        "device": "2FE383F2-2D0F-4286-8797-D3ACEFCD6220",
+        "state": "quarantined",
+        "generation": 0,
+        "owner": null,
+        "reason": "protected-device"
+      }
+    },
+    {
+      "device": "6A8C5F93-F59A-456B-B157-10642209B734",
+      "view": {
+        "device": "6A8C5F93-F59A-456B-B157-10642209B734",
+        "state": "quarantined",
+        "generation": 0,
+        "owner": null,
+        "reason": "protected-device"
+      }
+    },
+    {
+      "device": "0E42FDE2-5E09-42D3-9876-9EF0037FCBE7",
+      "view": {
+        "device": "0E42FDE2-5E09-42D3-9876-9EF0037FCBE7",
+        "state": "quarantined",
+        "generation": 0,
+        "owner": null,
+        "reason": "protected-device"
+      }
+    }
+  ],
+  "allProtectedRetained": true,
+  "activeAllocations": [],
+  "noActiveAllocationsObserved": true,
+  "methods": [
+    "Admission.open",
+    "activation",
+    "readAllocationCapacity",
+    "listActiveAllocations",
+    "inspect"
+  ],
+  "logicalStateMutation": false,
+  "claimChange": false
+}

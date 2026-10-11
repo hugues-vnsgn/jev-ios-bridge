@@ -1,0 +1,19 @@
+{
+  "status": "PREPARED_NARROW_SUCCESSOR",
+  "scriptSha256": "245be1d040fde3294f37eaba004fbc44f3bca051e4055b7415a576b7a84682be",
+  "predecessorScriptSha256": "886b3d40b3baca970d099fb6846829b7884ca48113d2e5a65c95855df06aa5e6",
+  "change": "Only evidence directory, bounded outer assertion permitting optional __CF_USER_TEXT_ENCODING, and recording outer environment names. Native launch/protocol/parser/pins unchanged.",
+  "outerCommand": "env -i HOME=/Users/hugues_mini PATH=/usr/bin:/bin:/usr/sbin:/sbin LANG=C LC_ALL=C DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer /opt/homebrew/Cellar/node/26.8.1/bin/node .scratch/observed-integration/acceptance/host/live-resume-2026-10-11/operator-diskutil-execution-diagnosis-v2/run.mjs --elevated-once",
+  "cwd": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic",
+  "diagnosticBudget": 1,
+  "diagnosticCalls": 0,
+  "compatibilityCalls": 0,
+  "childEnvironmentUnchanged": {
+    "HOME": "/Users/hugues_mini",
+    "PATH": "/usr/bin:/bin:/usr/sbin:/sbin",
+    "LANG": "C",
+    "LC_ALL": "C",
+    "DEVELOPER_DIR": "/Applications/Xcode.app/Contents/Developer"
+  },
+  "approval": "Previous one-time UI approval is not reused; supported require_escalated path governs this request. If rejected/unavailable, stop without alternate route."
+}

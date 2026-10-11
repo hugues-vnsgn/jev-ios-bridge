@@ -1,0 +1,61 @@
+{
+  "sealedAtUtc": "2026-10-11T03:16:53.830Z",
+  "scope": "All attribution evidence except this manifest itself",
+  "directoriesMode": "0700",
+  "files": [
+    {
+      "path": "child-receipt.json",
+      "bytes": 2285,
+      "sha256": "7f3df4773f7c6ce7c585a10c5d24d89d92de15cbfab5d06c3b632d3b47343d86",
+      "mode": "0600"
+    },
+    {
+      "path": "preparation.json",
+      "bytes": 527,
+      "sha256": "1f7ff3e026654ea0af95f2672a473a1879bfca02f1811af270fdc83447883849",
+      "mode": "0600"
+    },
+    {
+      "path": "query-claimed.json",
+      "bytes": 626,
+      "sha256": "c83c0934b462d698c541e55603f7a26471c7e24fa090a3ef9e6f4b9d24160627",
+      "mode": "0600"
+    },
+    {
+      "path": "report.md",
+      "bytes": 2411,
+      "sha256": "01e3b7f6cc18c1c3e3911502ea462546bda8044cf601926f649b55d6a4bbd660",
+      "mode": "0600"
+    },
+    {
+      "path": "result.json",
+      "bytes": 2361,
+      "sha256": "0b529ef8b915bc478876172ec2736c60262ea9c088a912d8fdb279d36052156c",
+      "mode": "0600"
+    },
+    {
+      "path": "run.mjs",
+      "bytes": 6848,
+      "sha256": "2b667389271230f60505528c13aaaeef6bebc91c959680a4fddbeb579d00c6bf",
+      "mode": "0600"
+    },
+    {
+      "path": "stderr.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "mode": "0600"
+    },
+    {
+      "path": "stdout.bin",
+      "bytes": 408,
+      "sha256": "6ba85356a35876a17ccfbda4e6a4d32d10943a91ad1c0dc698416d1e6a621c9e",
+      "mode": "0600"
+    },
+    {
+      "path": "syntax-check.json",
+      "bytes": 632,
+      "sha256": "d81262b995ee21bf59f8850567277032e7e2766673ca25430f3c9db7d7df978e",
+      "mode": "0600"
+    }
+  ]
+}

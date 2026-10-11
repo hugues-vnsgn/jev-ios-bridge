@@ -1,0 +1,23 @@
+{
+  "argv": [
+    "/opt/homebrew/Cellar/node/26.8.1/bin/node",
+    "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic/.scratch/observed-integration/acceptance/host/live-resume-2026-10-11/operator-compatibility-v2/audit.mjs"
+  ],
+  "cwd": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic",
+  "environment": {
+    "PATH": "/usr/bin:/bin:/usr/sbin:/sbin",
+    "LANG": "C",
+    "LC_ALL": "C"
+  },
+  "startedAtUtc": "2026-10-11T02:15:54.691846+00:00",
+  "completedAtUtc": "2026-10-11T02:15:54.775819+00:00",
+  "returnCode": 0,
+  "stdoutBytes": 6193,
+  "stderrBytes": 0,
+  "stdoutSha256": "c805ce44dea87c8c8e0de8ab4d049c1a0c35f118ebf0372c65075a585fca09f2",
+  "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "nativeInstalledMetadataCalls": 0,
+  "nativeMetadataChildren": 0,
+  "lookupCalls": 0,
+  "scope": "Pure predicates, injected in-memory delegates and finite repository code reads; no native trial."
+}

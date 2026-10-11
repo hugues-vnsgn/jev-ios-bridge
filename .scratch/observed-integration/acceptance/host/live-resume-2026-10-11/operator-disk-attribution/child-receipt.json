@@ -1,0 +1,80 @@
+{
+  "argv": [
+    "/usr/bin/du",
+    "-sk",
+    "/Users/hugues_mini/Codes/AgentTools/jev-ios-bridge",
+    "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic",
+    "/Users/hugues_mini/orca/workspaces/jev-ios-bridge",
+    "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic/.scratch",
+    "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic/node_modules"
+  ],
+  "cwd": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic",
+  "spawnOptions": {
+    "cwd": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic",
+    "env": {
+      "HOME": "/Users/hugues_mini",
+      "PATH": "/usr/bin:/bin:/usr/sbin:/sbin",
+      "LANG": "C",
+      "LC_ALL": "C",
+      "DEVELOPER_DIR": "/Applications/Xcode.app/Contents/Developer"
+    },
+    "shell": false,
+    "stdio": [
+      "ignore",
+      "pipe",
+      "pipe"
+    ]
+  },
+  "outerEnvironmentNames": [
+    "DEVELOPER_DIR",
+    "HOME",
+    "LANG",
+    "LC_ALL",
+    "PATH",
+    "__CF_USER_TEXT_ENCODING"
+  ],
+  "startedAtUtc": "2026-10-11T03:15:18.594Z",
+  "timeoutMs": 120000,
+  "combinedOutputLimit": 65536,
+  "escalationMs": 250,
+  "events": [
+    {
+      "event": "spawn",
+      "atUtc": "2026-10-11T03:15:18.596Z"
+    },
+    {
+      "event": "stdout-data",
+      "atUtc": "2026-10-11T03:16:53.827Z",
+      "bytes": 408,
+      "retainedBytes": 408
+    },
+    {
+      "event": "exit",
+      "code": 0,
+      "signal": null,
+      "atUtc": "2026-10-11T03:16:53.828Z"
+    },
+    {
+      "event": "close",
+      "code": 0,
+      "signal": null,
+      "atUtc": "2026-10-11T03:16:53.828Z"
+    }
+  ],
+  "killCalls": [],
+  "stdoutOriginalBytes": 408,
+  "stderrOriginalBytes": 0,
+  "pid": 1342,
+  "closedAtUtc": "2026-10-11T03:16:53.828Z",
+  "exitCode": 0,
+  "signal": null,
+  "stopped": false,
+  "overflow": false,
+  "timedOut": false,
+  "error": null,
+  "captureComplete": true,
+  "retainedBytes": 408,
+  "descendantQualifier": "Only direct du child is traced; unobserved descendants are not asserted absent.",
+  "stdoutOriginalSha256": "6ba85356a35876a17ccfbda4e6a4d32d10943a91ad1c0dc698416d1e6a621c9e",
+  "stderrOriginalSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+}

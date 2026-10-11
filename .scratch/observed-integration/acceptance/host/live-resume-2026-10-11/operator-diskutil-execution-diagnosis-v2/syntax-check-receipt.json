@@ -1,0 +1,25 @@
+{
+  "argv": [
+    "/usr/bin/env",
+    "-i",
+    "HOME=/Users/hugues_mini",
+    "PATH=/usr/bin:/bin:/usr/sbin:/sbin",
+    "LANG=C",
+    "LC_ALL=C",
+    "DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer",
+    "/opt/homebrew/Cellar/node/26.8.1/bin/node",
+    "--check",
+    "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic/.scratch/observed-integration/acceptance/host/live-resume-2026-10-11/operator-diskutil-execution-diagnosis-v2/run.mjs"
+  ],
+  "cwd": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic",
+  "startedAtUtc": "2026-10-11T02:36:56.509056+00:00",
+  "completedAtUtc": "2026-10-11T02:36:56.552885+00:00",
+  "returnCode": 0,
+  "stdoutBytes": 0,
+  "stderrBytes": 0,
+  "stdoutSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "diagnosticCalls": 0,
+  "compatibilityCalls": 0,
+  "scope": "Syntax/environment only; no recorder/native command executed."
+}

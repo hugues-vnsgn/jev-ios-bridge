@@ -1,0 +1,20 @@
+{
+  "status": "READY_FOR_ROOT_INSPECTION_ONLY",
+  "lookupCalls": 0,
+  "lookupBudgetRemaining": 1,
+  "nativeFilesystemCalls": 0,
+  "nativeChildren": 0,
+  "head": "1f69ec7d3d648189cd631259c1c9427c5b8e1b0e",
+  "headEvidence": "Root follow-up states /opt/homebrew/bin/git returned exact HEAD with no stderr",
+  "prohibitedGitExecutable": "/usr/bin/git",
+  "executionWithheld": "Do not execute run.mjs/probe.mjs until Root reviews final prepared files and dispatches the once call.",
+  "pureAudit": {
+    "status": "PASS",
+    "checks": 39,
+    "returnCode": 0,
+    "stderrBytes": 0
+  },
+  "preservationBefore": true,
+  "preservationAfter": true,
+  "operatorState": "IDLE_AWAITING_ROOT_REVIEW"
+}

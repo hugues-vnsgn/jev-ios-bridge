@@ -1,0 +1,61 @@
+{
+  "verifiedAtUtc": "2026-10-11T02:52:03.149178+00:00",
+  "status": "PASS",
+  "scope": "Receipt, raw evidence, actual-close and pinned correspondence verification only; no additional native call or test execution",
+  "initialResultManifestSha256": "8b83f75600fa294b58f235390b96058cbc2bb3e9da7cf5de41a4abcc8468f48f",
+  "initialResultManifestFiles": 775,
+  "preparedFilesUnchanged": 9,
+  "lookupCalls": 1,
+  "guardFailures": 0,
+  "children": {
+    "count": 165,
+    "kinds": {
+      "plutil": 139,
+      "diskutil": 26
+    },
+    "allActualClosedExit0": true,
+    "allRawCaptureComplete": true,
+    "allEnvironmentsExact": true,
+    "killCalls": 0,
+    "descendantQualifier": "Only directly recorded production children are traced; unobserved descendants are not counted or asserted absent."
+  },
+  "mountQueryCounts": {
+    "/Library/Developer/CoreSimulator/Volumes/iOS_22G86": 6,
+    "/Library/Developer/CoreSimulator/Volumes/iOS_23E254a": 6,
+    "/private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.1.434.0.fAVCIZ": 14
+  },
+  "metadata": {
+    "count": 422,
+    "allClosed": true,
+    "allReadAndCaptureComplete": true,
+    "retainedBytes": 490270
+  },
+  "filesystemTraceEvents": 10050,
+  "identityQualifier": "Production bigint returns are serialized losslessly. Strict numeric returns delegate unchanged; two supplementary stable bigint observations at each authorized successful stat provide separate exact identities, without Number coercion or invented binding.",
+  "toleratedFilesystemErrors": [
+    {
+      "method": "lstat",
+      "path": "/Library/Developer/CoreSimulator/Profiles/Runtimes",
+      "code": "ENOENT"
+    }
+  ],
+  "referenceCounts": {
+    "source443": 443,
+    "compiled69": 69,
+    "originalHostFiles15": 15,
+    "priorEvidence": 842,
+    "sealedPreparationFailure": 13
+  },
+  "referenceMismatches": 0,
+  "actualProbeClose": "2026-10-11T02:49:26.694Z",
+  "outerToolExitCode": 0,
+  "rootAuditPath": ".scratch/observed-integration/acceptance/host/live-resume-2026-10-11/root-compatibility-v3-audit.json",
+  "rootAuditSha256": "8b8a9989dd0c54e87d7b64ba5e99af7c435eb8323f7d3e9a4682e9687ca2d6a9",
+  "liveRows": {
+    "L01": "UNVERIFIED",
+    "L02": "UNVERIFIED",
+    "L03": "UNVERIFIED",
+    "L04": "UNVERIFIED",
+    "L05": "UNVERIFIED"
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "status": "BLOCKED",
+  "firstCause": "CONFIG_INVALID: exact app-owned support directory mode0755 instead of required0700",
+  "stages": {
+    "effectiveConfig": "REFUSED",
+    "migration": "UNVERIFIED_NOT_RUN",
+    "authorityCapacity": "UNVERIFIED_NOT_RUN",
+    "conservativeStorage": "UNVERIFIED_NOT_RUN",
+    "fixtureBuild": "UNVERIFIED_NOT_RUN",
+    "weatherBuild": "UNVERIFIED_NOT_RUN"
+  },
+  "calls": {
+    "productionConfiguration": 1,
+    "migration": 0,
+    "authorityOpen": 0,
+    "storageHelper": 0,
+    "appBuilds": 0,
+    "deviceOperations": 0,
+    "compatibilityReruns": 0
+  },
+  "commandExitCode": 3,
+  "actualClose": "2026-10-11T02:57:05.998Z",
+  "captureComplete": true,
+  "sourceCompiledHostPreserved": true,
+  "allAppSourceProjectHashesPreserved": true,
+  "ownerAssertion": "Retained owner assertion, not independent proof of stopped writers or no historical roots",
+  "hostPermissionsChanged": false,
+  "configDigest": "UNVERIFIED_READER_REFUSED",
+  "configurationContentRead": false,
+  "liveRows": "L01-L05 UNVERIFIED",
+  "nextDispatch": "Root separately authorized exact-directory setup repair; failed entry seal remains preserved."
+}

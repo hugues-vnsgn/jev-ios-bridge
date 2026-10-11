@@ -1,0 +1,27 @@
+{
+  "status": "ACTUAL_COMPATIBILITY_PASS",
+  "manifestSha256": "8b83f75600fa294b58f235390b96058cbc2bb3e9da7cf5de41a4abcc8468f48f",
+  "verifiedFiles": 775,
+  "compatibility": {
+    "architecture": "arm64",
+    "runtimeVersion": "27.0",
+    "hostVersion": "27.0.1",
+    "xcodeVersion": "27.0",
+    "xcodeBuild": "27A266a",
+    "runtimeBuild": "24A434"
+  },
+  "lookupCalls": 1,
+  "guardFailures": 0,
+  "closedSuccessfulChildren": 165,
+  "metadataByteReceipts": 422,
+  "mountProofCommands": 26,
+  "verifiedReadOnlyMounts": [
+    "/Library/Developer/CoreSimulator/Volumes/iOS_22G86",
+    "/Library/Developer/CoreSimulator/Volumes/iOS_23E254a",
+    "/private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.1.434.0.fAVCIZ"
+  ],
+  "sourceCorrespondence": "443 Source,69 compiled,15 original host and prior evidence preserved before/after",
+  "operator": "term_b2a0f5b5-3228-4fad-bf5d-d08d08be3405",
+  "next": "Operational entry in roadmap order; no live allocations before entry audit.",
+  "limits": "Metadata compatibility only; live behavior, migration, storage and app artifacts unverified."
+}

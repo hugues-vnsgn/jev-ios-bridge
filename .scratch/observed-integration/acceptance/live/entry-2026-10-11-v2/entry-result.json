@@ -1,0 +1,50 @@
+{
+  "status": "BLOCKED",
+  "firstUnresolvedCause": "STORAGE_UNAVAILABLE",
+  "stages": {
+    "effectiveConfig": "PASS_ROOT_ACCEPTED_EXISTING_PRODUCTION_READ",
+    "onceMigration": "PASS",
+    "authorityCapacity": "PASS",
+    "conservativeStorage": "REFUSED_INSUFFICIENT_SPACE",
+    "fixtureBuild": "UNVERIFIED_NOT_RUN",
+    "weatherBuild": "UNVERIFIED_NOT_RUN"
+  },
+  "effectiveDigest": "0ef4ca5a076024284eef7594e40dc638ee7be61dcc69b99fca1aff3249ded77d",
+  "installationId": "d411f7ce-9db6-4aa7-9c86-f337e739020a",
+  "importedActions": 4,
+  "retainedDevices": 4,
+  "historicalSourceHashesPreserved": 10,
+  "heldAllocations": 0,
+  "reservedBytes": 0,
+  "allFourProtectedIdentitiesRetained": true,
+  "freeBytes": {
+    "simulatorFreeBytes": 17591939072,
+    "stagingFreeBytes": 17591939072
+  },
+  "calls": {
+    "v2ProductionConfigurationReads": 1,
+    "configurationRereadsAfterCorrection": 0,
+    "migration": 1,
+    "authorityOpen": 1,
+    "storageHelper": 1,
+    "storageStatfs": 2,
+    "appBuilds": 0,
+    "allocationReservations": 0,
+    "deviceOperations": 0,
+    "compatibilityReruns": 0
+  },
+  "originalConfigVariancePreserved": true,
+  "rootCorrectionAccepted": true,
+  "priorFailedEntryAndRepairSealsPreserved": true,
+  "hostChange": "The separately sealed exact-directory setup repair applied one0755 to0700 fchmod; this v2 entry performed only the authorized production migration and reads. No further chmod, manual guard clearing, reset, reconciliation or cleanup.",
+  "sourceCompiledHostPreserved": true,
+  "allAppSourcesPreserved": true,
+  "liveRows": {
+    "L01": "UNVERIFIED",
+    "L02": "UNVERIFIED",
+    "L03": "UNVERIFIED",
+    "L04": "UNVERIFIED",
+    "L05": "UNVERIFIED"
+  },
+  "next": "Return idle after separately authorized read-only disk attribution; no further entry effects without Root dispatch."
+}

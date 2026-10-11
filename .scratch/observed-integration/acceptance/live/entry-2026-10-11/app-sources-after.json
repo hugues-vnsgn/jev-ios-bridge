@@ -1,0 +1,306 @@
+{
+  "capturedAtUtc": "2026-10-11T02:59:27.027462+00:00",
+  "apps": {
+    "fixture": {
+      "root": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic/.scratch/observed-ui/live/fixture-app",
+      "count": 5,
+      "files": [
+        {
+          "path": ".scratch/observed-ui/live/fixture-app/NavigationFixture.xcodeproj/project.pbxproj",
+          "bytes": 9941,
+          "sha256": "60da2f831f987096d4499b1a6237b1ccde8e6fab116465d3cf0fee9fb86777cd",
+          "mode": "0644"
+        },
+        {
+          "path": ".scratch/observed-ui/live/fixture-app/NavigationFixture.xcodeproj/project.xcworkspace/contents.xcworkspacedata",
+          "bytes": 135,
+          "sha256": "7f3b00b5c3fdb45242d7b87e1e5c4e25d1fa8129a16c94295ecc4e8ea2235c5f",
+          "mode": "0644"
+        },
+        {
+          "path": ".scratch/observed-ui/live/fixture-app/NavigationFixture.xcodeproj/xcshareddata/xcschemes/NavigationFixture.xcscheme",
+          "bytes": 3407,
+          "sha256": "236d59e69f40206319883220ec34e4b9a80f58d4c6ad2e9751e9a773f5c2c918",
+          "mode": "0644"
+        },
+        {
+          "path": ".scratch/observed-ui/live/fixture-app/Sources/NavigationFixtureApp.swift",
+          "bytes": 785,
+          "sha256": "6242ce3f6e867de570049c71e6f1f807a8f11d8c11bef007493f09b5ced7093d",
+          "mode": "0644"
+        },
+        {
+          "path": ".scratch/observed-ui/live/fixture-app/project.yml",
+          "bytes": 704,
+          "sha256": "d3d9b9c7b887e7729e02d485224388feeff6eeb50db500580d44427112490274",
+          "mode": "0644"
+        }
+      ]
+    },
+    "weather": {
+      "root": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic/spikes/benchmarks/vendor/weather",
+      "count": 43,
+      "files": [
+        {
+          "path": "spikes/benchmarks/vendor/weather/LICENSE.upstream",
+          "bytes": 1070,
+          "sha256": "fef28fc4165c72b1f0e4ce94654ba44ad7ff7d5d2538b3d01e66e9cc5be3c4f6",
+          "mode": "0644"
+        },
+        {
+          "path": "spikes/benchmarks/vendor/weather/README.md",
+          "bytes": 2093,
+          "sha256": "e59d398f64ee96e0da618e3ebb375be08039deb21b1427c3a27bc59dbec740b7",
+          "mode": "0644"
+        },
+        {
+          "path": "spikes/benchmarks/vendor/weather/Schemas/default-locations.schema.json",
+          "bytes": 2300,
+          "sha256": "37fcab5e03b1786faeeeb015602e8643b986f9678035b2bff694393ec1966072",
+          "mode": "0644"
+        },
+        {
+          "path": "spikes/benchmarks/vendor/weather/Schemas/search-locations.schema.json",
+          "bytes": 2299,
+          "sha256": "607aa035b52867838acb338dee63e7f48119cb828b0d8c0088d9f7f7488c2c18",
+          "mode": "0644"
+        },
+        {
+          "path": "spikes/benchmarks/vendor/weather/Schemas/weather-report.schema.json",
+          "bytes": 13488,
+          "sha256": "2c8e15e32038a28088bb9cc6e100fcf9b88164bbfa65ab5b0b8da5db43109ecb",
+          "mode": "0644"
+        },
+        {
+          "path": "spikes/benchmarks/vendor/weather/Weather/AppLogger.swift",
+          "bytes": 390,
+          "sha256": "ee210a4bcd30b26545cd4eb798fdf99549061f2d851407d37be4c57e6c4505f8",
+          "mode": "0644"
+        },
+        {
+          "path": "spikes/benchmarks/vendor/weather/Weather/Assets.xcassets/AccentColor.colorset/Contents.json",
+          "bytes": 123,
+          "sha256": "9af65086fa30b49252fae1a1225731691de794f7775af74d71befeb507d12b7c",
+          "mode": "0644"
+        },
+        {
+          "path": "spikes/benchmarks/vendor/weather/Weather/Assets.xcassets/AppIcon.appiconset/Contents.json",
+          "bytes": 1429,
+          "sha256": "040294b5970a6d1d5b5a811e22086092954f6a1f503b38d0fae128bb02b4356a",
+          "mode": "0644"
+        },
+        {
+          "path": "spikes/benchmarks/vendor/weather/Weather/Assets.xcassets/Contents.json",
+          "bytes": 63,
+          "sha256": "0fd49ba3c3585c709678e0046a821c3c60685ec7063720d30d3a3448be3a208b",
+          "mode": "0644"
+        },
+        {
+          "path": "spikes/benchmarks/vendor/weather/Weather/ContentView.swift",
+          "bytes": 6977,
+          "sha256": "c4e575fac437d82101006c4a8e03d3fb4e4b4264bf96952558219b3e7b02401d",
+          "mode": "0644"
+        },
+        {
+          "path": "spikes/benchmarks/vendor/weather/Weather/Models/WeatherModels.swift",
+          "bytes": 5750,
+          "sha256": "18fd43af6773dcad50b86a6b65904791412ff672c9f91bbd0e19088357393854",
+          "mode": "0644"
+        },
+        {
+          "path": "spikes/benchmarks/vendor/weather/Weather/Services/MockWeatherAPIClient.swift",
+          "bytes": 1698,
+          "sha256": "18846c29ca36f488ce073ff6edaae70903ec29d46f66a4281b9f46855faa084b",
+          "mode": "0644"
+        },
+        {
+          "path": "spikes/benchmarks/vendor/weather/Weather/Services/MockWeatherDTOFactories.swift",
+          "bytes": 16982,
+          "sha256": "f2843400a4620c5912b5b2a42e8cf2085398e11a0b144adc6406737c7ccdabd6",
+          "mode": "0644"
+        },
+        {
+          "path": "spikes/benchmarks/vendor/weather/Weather/Services/WeatherAPIClient.swift",
+          "bytes": 2790,
+          "sha256": "f80e79024b08fc8f66a940f8fbc324d64a27b33c1bdd50729f3f6cefd1736197",
+          "mode": "0644"
+        },
+        {
+          "path": "spikes/benchmarks/vendor/weather/Weather/Services/WeatherClientDTOs.swift",
+          "bytes": 10580,
+          "sha256": "226893830293c0090c1ba1e4031d0b3e32e23dd32b2678a7702aa3535481c1b2",
+          "mode": "0644"
+        },
+        {
+          "path": "spikes/benchmarks/vendor/weather/Weather/Services/WeatherService.swift",
+          "bytes": 3080,
+          "sha256": "e56832afadaf1d6495696cf0d0225c139455ba7780ea2fd4fef08f5d87a2e5c3",
+          "mode": "0644"
+        },
+        {
+          "path": "spikes/benchmarks/vendor/weather/Weather/Services/WeatherUnitFormatter.swift",
+          "bytes": 2028,
+          "sha256": "b734c4426bf7259df04278ea51dbcfd6ec8a93ee1a26fe9aa2c85f2ac952a708",
+          "mode": "0644"
+        },
+        {
+          "path": "spikes/benchmarks/vendor/weather/Weather/Views/AtmosWeatherScreen.swift",
+          "bytes": 3242,
+          "sha256": "ad4d111a3568fd6e6fe245e000aab787254d8419bde32ee41d12816cf310b210",
+          "mode": "0644"
+        },
+        {
+          "path": "spikes/benchmarks/vendor/weather/Weather/Views/Backgrounds/AtmosBackground.swift",
+          "bytes": 10443,
+          "sha256": "a9a74ee407983f18632a908d51606f85f41445d1417b28d243ca12c88b96044d",
+          "mode": "0644"
+        },
+        {
+          "path": "spikes/benchmarks/vendor/weather/Weather/Views/Chrome/WeatherTopBar.swift",
+          "bytes": 1945,
+          "sha256": "55351b85cf2339cfd25d8e3b541d68070532e7bbd94b358353ee5d224c389dc9",
+          "mode": "0644"
+        },
+        {
+          "path": "spikes/benchmarks/vendor/weather/Weather/Views/Overlays/LocationPickerView.swift",
+          "bytes": 9269,
+          "sha256": "5d9523978632e2c056506f937a4d4e26e7efbab82a24a5973d0ef3802075e1a0",
+          "mode": "0644"
+        },
+        {
+          "path": "spikes/benchmarks/vendor/weather/Weather/Views/Overlays/LocationRows.swift",
+          "bytes": 6553,
+          "sha256": "7348d47ecbc08267887553e583bd89e7d4b55e913379cff4bdf15625753bbcd3",
+          "mode": "0644"
+        },
+        {
+          "path": "spikes/benchmarks/vendor/weather/Weather/Views/Overlays/PrecipitationDetailView.swift",
+          "bytes": 7283,
+          "sha256": "3cffdef826f9e4c3a5807872239d97f468eb92d20bf4699964dc67c95aba731f",
+          "mode": "0644"
+        },
+        {
+          "path": "spikes/benchmarks/vendor/weather/Weather/Views/Overlays/SettingsSheetView.swift",
+          "bytes": 6686,
+          "sha256": "77342601690f582f9ac1abff6b3a7764aa46d9bb8e91566fac5fb652662480b5",
+          "mode": "0644"
+        },
+        {
+          "path": "spikes/benchmarks/vendor/weather/Weather/Views/Sections/ConditionGrid.swift",
+          "bytes": 14121,
+          "sha256": "61d475b3d3e51b6d4da85f0a76891f316eb21eb4f97cc50adf8a0f95f9921f72",
+          "mode": "0644"
+        },
+        {
+          "path": "spikes/benchmarks/vendor/weather/Weather/Views/Sections/DailyForecastCard.swift",
+          "bytes": 4303,
+          "sha256": "e260a4d275c041de378d70dec68dd8ce177ca5f09ff8fa728e4a03b95d7d8477",
+          "mode": "0644"
+        },
+        {
+          "path": "spikes/benchmarks/vendor/weather/Weather/Views/Sections/HourlyForecastCard.swift",
+          "bytes": 5479,
+          "sha256": "f16ed06f16c288e8b55a0559aa5320ad40b0ac5bad0150f365c0f9278f6da60e",
+          "mode": "0644"
+        },
+        {
+          "path": "spikes/benchmarks/vendor/weather/Weather/Views/Sections/SunMiniCard.swift",
+          "bytes": 4940,
+          "sha256": "2a940dd3c80f8daecf63f226f51e0e59234312ed7bac5c1780ec7b2371faf9cd",
+          "mode": "0644"
+        },
+        {
+          "path": "spikes/benchmarks/vendor/weather/Weather/Views/Sections/WeatherHeroView.swift",
+          "bytes": 2108,
+          "sha256": "eab02b95c5a11f179d796662cc18b56ce3a7b0cfa16014c80d50707f900dad6a",
+          "mode": "0644"
+        },
+        {
+          "path": "spikes/benchmarks/vendor/weather/Weather/Views/Sections/WindCard.swift",
+          "bytes": 8558,
+          "sha256": "6326bfd65ff381ad5620f0f93166ff60dd878e2342832f7a1fe61f3c5651e593",
+          "mode": "0644"
+        },
+        {
+          "path": "spikes/benchmarks/vendor/weather/Weather/Views/Shared/AtmosGlass.swift",
+          "bytes": 4663,
+          "sha256": "b0fc347a96c3ae1f27c22c72f04aa26f9fd9ecfc986f19f97f80fa583e59f19a",
+          "mode": "0644"
+        },
+        {
+          "path": "spikes/benchmarks/vendor/weather/Weather/Views/Shared/MetricHelpers.swift",
+          "bytes": 2893,
+          "sha256": "7ef9eee295b15a28f321a352c6ae0d4ca5ddb12dfd02c2ad4724e11e6e633de2",
+          "mode": "0644"
+        },
+        {
+          "path": "spikes/benchmarks/vendor/weather/Weather/Views/Shared/WeatherIconView.swift",
+          "bytes": 1252,
+          "sha256": "bbaf305e8db542f63dee50710901417291c03c9b9e662b1349926cd73247e4c5",
+          "mode": "0644"
+        },
+        {
+          "path": "spikes/benchmarks/vendor/weather/Weather/Views/Shared/WeatherPresentation.swift",
+          "bytes": 10215,
+          "sha256": "1ad3aa07f1d1d0d07e8541aa8f6f282f4bc39d987b328e9e31fb882571c9174a",
+          "mode": "0644"
+        },
+        {
+          "path": "spikes/benchmarks/vendor/weather/Weather/WeatherApp.swift",
+          "bytes": 320,
+          "sha256": "dc59e71ef504174aa4df97c815f5688ebb947200aecf6b178b2271204737d478",
+          "mode": "0644"
+        },
+        {
+          "path": "spikes/benchmarks/vendor/weather/Weather.xcodeproj/project.pbxproj",
+          "bytes": 22929,
+          "sha256": "9e872a21a78f4e8e8d239e8ebc01b5cf63f7f5c9be3897b75fe4a37ce201e9d3",
+          "mode": "0644"
+        },
+        {
+          "path": "spikes/benchmarks/vendor/weather/Weather.xcodeproj/xcshareddata/xcschemes/Weather.xcscheme",
+          "bytes": 3813,
+          "sha256": "410ebd6f457c2a0a93ba91cbd67a3c7a581015b69e2edb24b3f387db9ce5ab96",
+          "mode": "0644"
+        },
+        {
+          "path": "spikes/benchmarks/vendor/weather/WeatherTests/Fixtures/default-locations.json",
+          "bytes": 632,
+          "sha256": "a4a57922e666726ae4972948d722dd998a2b58a8eb64b1ca6c62fb527259158d",
+          "mode": "0644"
+        },
+        {
+          "path": "spikes/benchmarks/vendor/weather/WeatherTests/Fixtures/search-locations.json",
+          "bytes": 623,
+          "sha256": "2098102a9d7dad5351520f801f2b263cd846c4aef2ba5dde24e86c9dfa078104",
+          "mode": "0644"
+        },
+        {
+          "path": "spikes/benchmarks/vendor/weather/WeatherTests/Fixtures/weather-report-loc-current-san-francisco.json",
+          "bytes": 2355,
+          "sha256": "e1ac71185e9a70489d1ad38c430596e90035e08e32684735b52493db3d6a15b3",
+          "mode": "0644"
+        },
+        {
+          "path": "spikes/benchmarks/vendor/weather/WeatherTests/WeatherTests.swift",
+          "bytes": 12163,
+          "sha256": "1fc5389c84a4f2229e30eaf7b8428f1d4a6e70d85bef9c9298c2e2ce2a8632a2",
+          "mode": "0644"
+        },
+        {
+          "path": "spikes/benchmarks/vendor/weather/WeatherUITests/WeatherUITests.swift",
+          "bytes": 2485,
+          "sha256": "109fe5f2890ba934d023a885182b946405e9a708e118ebc409a55392adc991b2",
+          "mode": "0644"
+        },
+        {
+          "path": "spikes/benchmarks/vendor/weather/WeatherUITests/WeatherUITestsLaunchTests.swift",
+          "bytes": 923,
+          "sha256": "2df220f5ed817e61cb34dca43d6da4d4a4e51fce9e7d875537dce7fb8dc348de",
+          "mode": "0644"
+        }
+      ]
+    }
+  },
+  "allBeforeHashesPreserved": true
+}

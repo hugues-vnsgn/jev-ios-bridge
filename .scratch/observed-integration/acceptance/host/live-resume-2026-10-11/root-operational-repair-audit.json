@@ -1,0 +1,18 @@
+{
+  "auditedAtUtc": "2026-10-11T03:03:40.282956+00:00",
+  "scriptSha256": "af14896b7e932f0bc956238622f0ebb4779e5f13e3b6fdbb55d59e41def2fa0c",
+  "scriptReviewedBeforeApproval": true,
+  "approval": "Owner delegated routine roadmap approvals; Root approved one displayed command using bare Enter.",
+  "status": "REPAIR_VERIFIED",
+  "fchmodCalls": 1,
+  "beforeBindingVerified": true,
+  "afterBindingVerified": true,
+  "beforePermissions": "0755",
+  "afterPermissions": "0700",
+  "actualHandleClose": {
+    "atUtc": "2026-10-11T03:02:13.160Z",
+    "completed": true
+  },
+  "originalManifestEntriesVerified": 6,
+  "scope": "Exact app-owned state directory only; no device operations by Root."
+}

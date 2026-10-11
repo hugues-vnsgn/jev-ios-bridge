@@ -1,0 +1,12 @@
+{
+  "stage": "Private recorder preparation before any account/configuration/native invocation",
+  "toolChunkId": "1cdf71",
+  "actualSubprocessReturn": 1,
+  "rawCombinedOutput": "Traceback (most recent call last):\n  File \"<stdin>\", line 5, in <module>\nAssertionError\n",
+  "cause": "Preparation editor assumed two backslashes in commands.mjs newline but the file already had the correct single-backslash newline; its assertion failed before syntax checks. Direct file inspection resolved this without changing commands.mjs. The configuration import was corrected to the exact absolute pinned module path before execution.",
+  "nativeCalls": 0,
+  "configurationCalls": 0,
+  "migrationCalls": 0,
+  "syntaxChecksPreviouslyExecuted": 0,
+  "descendantQualifier": "The preparation Python process was not process-tree traced; no assertion of zero unobserved descendants is made."
+}

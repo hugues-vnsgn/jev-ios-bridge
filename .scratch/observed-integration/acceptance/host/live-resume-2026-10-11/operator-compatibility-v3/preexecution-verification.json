@@ -1,0 +1,34 @@
+{
+  "status": "PASS",
+  "verifiedAtUtc": "2026-10-11T02:47:56.328456+00:00",
+  "scope": "Read-only repository hashes and exact preparation comparison; no new native process or pure audit execution",
+  "preparedManifestSha256": "bb5abe2e8af169c39c187ac397df4669ea8d1b5c14419762ac6a7a4d24de8764",
+  "preparedFiles": 9,
+  "byteIdenticalToAcceptedV2": [
+    "guards.mjs",
+    "recording.mjs",
+    "probe.mjs",
+    "run.mjs",
+    "audit.mjs",
+    "pure-guard-audit.json",
+    "references.json"
+  ],
+  "commonChange": "Only v2 to v3 evidence-directory string",
+  "pureAuditAssociation": "Prior v2 39/39 results retained; not rerun",
+  "referenceCounts": {
+    "source443": 443,
+    "compiled69": 69,
+    "originalHostFiles15": 15,
+    "priorEvidence": 842,
+    "sealedPreparationFailure": 13
+  },
+  "referenceMismatches": 0,
+  "headBinding": "Root-provided full HEAD plus matching explicit source/compiled/reference pins",
+  "head": "1f69ec7d3d648189cd631259c1c9427c5b8e1b0e",
+  "diagnosticSealsVerified": {
+    "initialFiles": 21,
+    "finalFiles": 28
+  },
+  "lookupCalls": 0,
+  "budgetAvailable": 1
+}

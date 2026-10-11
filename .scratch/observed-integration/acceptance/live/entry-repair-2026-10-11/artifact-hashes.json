@@ -1,0 +1,43 @@
+{
+  "sealedAtUtc": "2026-10-11T03:02:13.162Z",
+  "scope": "Every repair evidence file except this manifest itself",
+  "directoriesMode": "0700",
+  "files": [
+    {
+      "path": "preparation.json",
+      "bytes": 732,
+      "sha256": "8b1a522d0e91906498604c4de74d6a047cb536e1971a4bee38ca76db289827bc",
+      "mode": "0600"
+    },
+    {
+      "path": "repair-claimed.json",
+      "bytes": 226,
+      "sha256": "94b72ff0ac64b01f90dba637489435e3cae790079bac96df66fb6ec21f9a0294",
+      "mode": "0600"
+    },
+    {
+      "path": "report.md",
+      "bytes": 3159,
+      "sha256": "fd33f2aa7e93b09031586d0ced4fe91c68b8cc69af2bd977e92b533e2f93602d",
+      "mode": "0600"
+    },
+    {
+      "path": "result.json",
+      "bytes": 3100,
+      "sha256": "e67873c9258456f8316f65d14279d701b1d73438ef5b63ce82a197d37dedf5a2",
+      "mode": "0600"
+    },
+    {
+      "path": "run.mjs",
+      "bytes": 6929,
+      "sha256": "af14896b7e932f0bc956238622f0ebb4779e5f13e3b6fdbb55d59e41def2fa0c",
+      "mode": "0600"
+    },
+    {
+      "path": "syntax-check.json",
+      "bytes": 617,
+      "sha256": "2359f1db166f5413ffd420cc5aea25af0def65394b4a1ba55f4705c08406d1ce",
+      "mode": "0600"
+    }
+  ]
+}

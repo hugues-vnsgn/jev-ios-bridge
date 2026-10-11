@@ -1,0 +1,200 @@
+{
+  "status": "FAIL",
+  "createdAtUtc": "2026-10-11T02:14:49.696Z",
+  "scope": "Pure guard predicates, injected in-memory filesystem/children and static repository code reads only; no installedHost, production process/compatibility invocation, native metadata fs call or native child.",
+  "nativeFilesystemCalls": 0,
+  "nativeChildren": 0,
+  "lookupCalls": 0,
+  "repositoryReadsOnly": [
+    "src/observed/allocation-config.ts",
+    "dist/observed/allocation-config.js",
+    ".scratch/observed-integration/acceptance/host/live-resume-2026-10-11/operator-compatibility-v2/probe.mjs",
+    ".scratch/observed-integration/acceptance/host/live-resume-2026-10-11/operator-compatibility-v2/run.mjs"
+  ],
+  "fakeDelegationCalls": {
+    "filesystem": 7,
+    "spawn": 1
+  },
+  "passed": 35,
+  "total": 39,
+  "checks": [
+    {
+      "name": "Fixed canonical paths and all ancestors including / are allowed",
+      "pass": true
+    },
+    {
+      "name": "Account, config, journal, Devices and nonmetadata paths are denied",
+      "pass": true
+    },
+    {
+      "name": "Canonical path and basename boundaries deny aliases, NUL and excessive size",
+      "pass": true
+    },
+    {
+      "name": "Stat options exactly preserve no-options or bigint:true",
+      "pass": true
+    },
+    {
+      "name": "65536 request and bounded 65537 overflow sentinel are accepted",
+      "pass": true
+    },
+    {
+      "name": "Read overflow, positional read and invalid offsets are denied",
+      "pass": true
+    },
+    {
+      "name": "Legacy recognized mounts and strict unrecognized branch are planned from listing",
+      "pass": true
+    },
+    {
+      "name": "Cryptex namespace exact grammar is required",
+      "pass": true
+    },
+    {
+      "name": "Only discovered device/runtime plist leaf forms and their ancestors are allowed",
+      "pass": true
+    },
+    {
+      "name": "Immediate listing 1000 accepted and 1001 refused",
+      "pass": true
+    },
+    {
+      "name": "64 legacy candidates accepted and 65 refused independently",
+      "pass": true
+    },
+    {
+      "name": "64 Cryptex candidates accepted and 65 refused independently",
+      "pass": true
+    },
+    {
+      "name": "Aggregate runtime 1000 across roots accepted, final repeated listing not double counted, 1001 refused",
+      "pass": true
+    },
+    {
+      "name": "Exact production metadata processes allowed; simulator/xcrun/network/shell processes denied",
+      "pass": true
+    },
+    {
+      "name": "Exact argv, environment, cwd option and shell guard cannot be widened",
+      "pass": true
+    },
+    {
+      "name": "Output exception is solely fixed Xcode Info; ordinary plist and diskutil remain 65536",
+      "pass": true
+    },
+    {
+      "name": "Distinct bigint ino values above safe integer stay distinct",
+      "pass": true
+    },
+    {
+      "name": "Nanosecond-only ctime or mtime changes stay distinct",
+      "pass": true
+    },
+    {
+      "name": "Unsafe Number identity is qualified and cannot be presented as lossless",
+      "pass": true
+    },
+    {
+      "name": "Production bigint lstat options and returned object delegate unchanged",
+      "pass": true
+    },
+    {
+      "name": "Production numeric Stats delegate unchanged with two separate exact companions",
+      "pass": true
+    },
+    {
+      "name": "Original lstat errors delegate unchanged without companion calls",
+      "pass": true
+    },
+    {
+      "name": "Listing returned array delegates unchanged and only expands finite paths",
+      "pass": true
+    },
+    {
+      "name": "Readonly nofollow open delegates and bigint/numeric handle.stat remain unchanged",
+      "pass": false,
+      "error": {
+        "name": "Error",
+        "message": "Probe guard mismatch: file-handle-method /Applications/Xcode.app/Contents/Info.plist"
+      }
+    },
+    {
+      "name": "Read delegates identical buffer, offset, length, position and result object",
+      "pass": false,
+      "error": {
+        "name": "TypeError",
+        "message": "Cannot read properties of undefined (reading 'read')"
+      }
+    },
+    {
+      "name": "Close return delegates unchanged with exact byte receipt",
+      "pass": false,
+      "error": {
+        "name": "TypeError",
+        "message": "Cannot read properties of undefined (reading 'close')"
+      }
+    },
+    {
+      "name": "Unexpected filesystem and handle methods reject before any fake delegation",
+      "pass": false,
+      "error": {
+        "name": "AssertionError",
+        "message": "The error is expected to be an instance of \"ProbeGuardError\". Received \"TypeError\"\n\nError message:\n\nCannot read properties of undefined (reading 'write')"
+      }
+    },
+    {
+      "name": "Companion mutation refuses without inventing exact original Number identity",
+      "pass": true
+    },
+    {
+      "name": "Launch delegates exact executable/argv/options and returned ChildProcess object",
+      "pass": true
+    },
+    {
+      "name": "Kill return unchanged and delivery never counts as close",
+      "pass": true
+    },
+    {
+      "name": "Mount-only SIGKILL is observed unchanged; only actual close settles receipt",
+      "pass": true
+    },
+    {
+      "name": "Disallowed command rejected before mock/native spawn",
+      "pass": true
+    },
+    {
+      "name": "Actual child budget 8192 refuses dispatch8193",
+      "pass": true
+    },
+    {
+      "name": "Original spawn error delegates unchanged",
+      "pass": true
+    },
+    {
+      "name": "Raw output overflow hashes all original bytes, caps recoverable capture explicitly",
+      "pass": true
+    },
+    {
+      "name": "Static production source and compiled hashes match final Root pins",
+      "pass": true
+    },
+    {
+      "name": "Static pinned algorithm retains65536 read/input and private expected context in tracking",
+      "pass": true
+    },
+    {
+      "name": "Final probe uses production tracking, one lookup and one shared60s signal",
+      "pass": true
+    },
+    {
+      "name": "Execution is withheld by explicit review flags and exclusive once claim",
+      "pass": true
+    }
+  ],
+  "sourceSha256": "eb3066e230a945b87bf64110867d8743ddc5bea8bf6aa824599b5bcecbd1ecfc",
+  "compiledSha256": "4e71bfd6d540d8637011f80084176eb899d799d8c6dc0c734e1baba109a77705",
+  "probeSha256": "985daf0fdebe717a10a41355c0b6a6061b90b65450723661e725837174fb1d63",
+  "wrapperSha256": "4d8538e0355df8dc589b0e1f0de432983b82ce591e2f5b78c48c54e16e0711ce",
+  "identityQualification": "Pure fake tests prove exact bigint and nanosecond serialization, uncertain original Number qualification, unchanged return references and separate companion snapshots; no real identity was measured.",
+  "deadlineQualification": "Pure audit does not measure native completion. Production shared signal, mount-only escalation and close behavior remain delegated and still require the reviewed once lookup."
+}

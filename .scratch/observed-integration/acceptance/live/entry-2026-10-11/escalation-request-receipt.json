@@ -1,0 +1,10 @@
+{
+  "cmd": "env -u TYPESAFE_API_KEY -u NODE_OPTIONS -u NODE_NO_WARNINGS /opt/homebrew/Cellar/node/26.8.1/bin/node .scratch/observed-integration/acceptance/live/entry-2026-10-11/run-config.mjs",
+  "login": false,
+  "sandbox_permissions": "require_escalated",
+  "justification": "The owner delegated routine approvals to Root and authorized operational entry after compatibility PASS. Allow the pinned production account configuration read outside workspace-write, with no key load or configuration change?",
+  "prefix_rule": "not requested",
+  "receivedExitCode": 3,
+  "receivedToolChunkId": "a6e676",
+  "approvalQualifier": "Supported elevated tool execution completed; no approval choice or permission configuration was inspected by the operator."
+}

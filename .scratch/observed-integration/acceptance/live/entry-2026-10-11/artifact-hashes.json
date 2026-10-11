@@ -1,0 +1,127 @@
+{
+  "sealedAtUtc": "2026-10-11T02:59:27.030309+00:00",
+  "scope": "All failed-entry evidence except this manifest itself; preserve without modification",
+  "directoriesMode": "0700",
+  "files": [
+    {
+      "path": "01-config-claimed.json",
+      "bytes": 292,
+      "sha256": "4b8a681bbeda029aa96556de0e4dfe6146c0d208813d4fec9f444c1605085387",
+      "mode": "0600"
+    },
+    {
+      "path": "01-config-receipt.json",
+      "bytes": 1827,
+      "sha256": "70abf8abc3da228d91655ed06fc12cbc19bcdd73b9e230239a189f09fe774cee",
+      "mode": "0600"
+    },
+    {
+      "path": "01-config-result.json",
+      "bytes": 1637,
+      "sha256": "93f8bd707ab0e218a288631754b86d30ce0b9b8fd39c9465527b6008c51f6287",
+      "mode": "0600"
+    },
+    {
+      "path": "01-config.stderr.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "mode": "0600"
+    },
+    {
+      "path": "01-config.stdout.bin",
+      "bytes": 1156,
+      "sha256": "fbce65789cc45543aadb0271138d6a9a37b81bdc465d6fda7eb19ee089889e87",
+      "mode": "0600"
+    },
+    {
+      "path": "app-sources-after.json",
+      "bytes": 12768,
+      "sha256": "f2168dc52a64845da08afbb0373df50ba8d978efd17593c34a06dd89b16c1544",
+      "mode": "0600"
+    },
+    {
+      "path": "app-sources-before.json",
+      "bytes": 12951,
+      "sha256": "56226c100cab004fb3d09aa5b65d13822a7c662065e61c8b3c41691abf16f551",
+      "mode": "0600"
+    },
+    {
+      "path": "commands.mjs",
+      "bytes": 4210,
+      "sha256": "0d5924cf2e71f8b09a2699d9411d13a83ae51067798c97434e09860758f4f505",
+      "mode": "0600"
+    },
+    {
+      "path": "config.mjs",
+      "bytes": 2553,
+      "sha256": "7ce603b1a0437ad844721151bd4a41761c679e831117d6ba5dcf6475d0e7a1f5",
+      "mode": "0600"
+    },
+    {
+      "path": "entry-binding.json",
+      "bytes": 91447,
+      "sha256": "a587c4a72b95e709ea0a6b078e6b9006a43fc1672fce9703888db2b9745f8c98",
+      "mode": "0600"
+    },
+    {
+      "path": "entry-result.json",
+      "bytes": 1159,
+      "sha256": "59de6d08f78f5a46ced9789d2377675d6a1b721d4b95dff9671c177c1514216f",
+      "mode": "0600"
+    },
+    {
+      "path": "escalation-request-receipt.json",
+      "bytes": 751,
+      "sha256": "0faaa32a1734cee7c37beb2e165a6eb9e8e1b88be5e535ba73c91b36248ef012",
+      "mode": "0600"
+    },
+    {
+      "path": "escalation-tool-received.txt",
+      "bytes": 110,
+      "sha256": "a05a5a9f80f809543a0939e594a905bdb47e9b51f1c2ba6f7ea986a1e5d24a4e",
+      "mode": "0600"
+    },
+    {
+      "path": "escalation-tool-result.json",
+      "bytes": 249,
+      "sha256": "b24554eb57137556a25d0671258adabf0d7349ca1a5782cd87d3e260bc237b2d",
+      "mode": "0600"
+    },
+    {
+      "path": "first-confirmed-cause.json",
+      "bytes": 839,
+      "sha256": "06892cc490a2fc055dd143f8cbfb45b9fad7e50abe1d465b1787784f7bcc5ad2",
+      "mode": "0600"
+    },
+    {
+      "path": "preparation-correction.json",
+      "bytes": 878,
+      "sha256": "0959d33e05fef4403469458b95625581961d03197c6d3efaa569ec9643db2c67",
+      "mode": "0600"
+    },
+    {
+      "path": "preparation-syntax.json",
+      "bytes": 1953,
+      "sha256": "657f51a1f94e199064f91bf41bd35798ac8e0a62f82f4e4eb4e07ed4e3b2e210",
+      "mode": "0600"
+    },
+    {
+      "path": "report.md",
+      "bytes": 2197,
+      "sha256": "63f74aa80bfaf1f2ae5563dc3e31ec51518b74728969e09a93ad3719e86262fb",
+      "mode": "0600"
+    },
+    {
+      "path": "run-config.mjs",
+      "bytes": 735,
+      "sha256": "d44194b7c04f4e297966a0db85b9ebf8dee6d4364fde9d4f2c3e5ad7ebfb06e9",
+      "mode": "0600"
+    },
+    {
+      "path": "source-correspondence-after.json",
+      "bytes": 89269,
+      "sha256": "58871598bacfd2812d8ab0b85b6cae9d232ec8ed5a622f03d5571d225e8e119f",
+      "mode": "0600"
+    }
+  ]
+}

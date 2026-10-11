@@ -1,0 +1,28 @@
+{
+  "status": "DIAGNOSTIC_PRE_QUERY_GUARD_FAILURE",
+  "recordedAtUtc": "2026-10-11T02:27:41.513327+00:00",
+  "firstConfirmedCause": "Recorder outer environment exactness assertion failed at run.mjs:19 before the claim marker, baseline reads or diskutil spawn.",
+  "exactError": "Error: Outer environment differs from exact minimal environment",
+  "diagnosticDiskutilCalls": 0,
+  "compatibilityCalls": 0,
+  "nativeChildClose": "NOT_APPLICABLE; no diskutil child was created",
+  "nodeToolExitCode": 1,
+  "escalationRequested": true,
+  "automaticApprovalRejection": "No rejection was returned; tool executed Node and reported its exit1.",
+  "effectiveElevatedPermissionProfile": "Not introspected",
+  "outerCommand": "env -i HOME=/Users/hugues_mini PATH=/usr/bin:/bin:/usr/sbin:/sbin LANG=C LC_ALL=C DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer /opt/homebrew/Cellar/node/26.8.1/bin/node .scratch/observed-integration/acceptance/host/live-resume-2026-10-11/operator-diskutil-execution-diagnosis/run.mjs --elevated-once",
+  "requestedMinimalEnvironment": {
+    "HOME": "/Users/hugues_mini",
+    "PATH": "/usr/bin:/bin:/usr/sbin:/sbin",
+    "LANG": "C",
+    "LC_ALL": "C",
+    "DEVELOPER_DIR": "/Applications/Xcode.app/Contents/Developer"
+  },
+  "actualOuterEnvironment": "Unrecorded; no additional names or values inspected.",
+  "frameworkAvailability": "UNVERIFIED; no fresh diskutil output exists.",
+  "comparisonToFailedChild0134": "Not performed by the recorder because the pre-query assertion stopped it. Historical failed child remains unchanged.",
+  "nativeRetryOrAlternateRoute": false,
+  "originalCompatibilityBudget": "Previously consumed1/1; no compatibility rerun",
+  "diagnosticBudget": "No diskutil query consumed; this recorder attempt ended and will not be retried without a new dispatch.",
+  "operatorState": "IDLE_FOR_ROOT_AUDIT"
+}

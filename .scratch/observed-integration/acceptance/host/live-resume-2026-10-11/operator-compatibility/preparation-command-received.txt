@@ -1,0 +1,5 @@
+git: warning: confstr() failed with code 5: couldn't get path of DARWIN_USER_TEMP_DIR; using /tmp instead
+2026-10-11 09:05:39.717 xcodebuild[60422:1192633]  DVTFilePathFSEvents: Failed to start fs event stream.
+2026-10-11 09:05:40.066 xcodebuild[60422:1192622] [MT] DVTDeveloperPaths: Failed to get length of DARWIN_USER_CACHE_DIR from confstr(3), error = Error Domain=NSPOSIXErrorDomain Code=5 "Input/output error". Using NSCachesDirectory instead.
+git: warning: confstr() failed with code 5: couldn't get path of DARWIN_USER_TEMP_DIR; using /tmp instead
+{"status": "PIN_VERIFICATION_PASS", "head": "1f69ec7d3d648189cd631259c1c9427c5b8e1b0e", "counts": {"source443": 443, "compiled69": 69, "originalHostFiles15": 15, "priorEvidence": 842}, "mismatches": []}

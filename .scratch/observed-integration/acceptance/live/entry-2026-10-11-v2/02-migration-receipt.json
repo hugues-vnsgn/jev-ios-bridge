@@ -1,0 +1,63 @@
+{
+  "argv": [
+    "/opt/homebrew/Cellar/node/26.8.1/bin/node",
+    "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic/dist/device/admission-maintenance.js",
+    "migrate",
+    "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic/.scratch/observed-integration/acceptance/host/operational-confirmation-2026-10-09/declaration.json"
+  ],
+  "cwd": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic",
+  "spawnOptions": {
+    "cwd": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic",
+    "env": {
+      "HOME": "/Users/hugues_mini",
+      "PATH": "/usr/bin:/bin:/usr/sbin:/sbin",
+      "LANG": "C",
+      "LC_ALL": "C",
+      "DEVELOPER_DIR": "/Applications/Xcode.app/Contents/Developer",
+      "TMPDIR": "/var/folders/yd/86fjng8s4hbfhcz7_0yqcl9w0000gn/T"
+    },
+    "shell": false,
+    "stdio": [
+      "ignore",
+      "pipe",
+      "pipe"
+    ]
+  },
+  "startedAtUtc": "2026-10-11T03:06:57.319Z",
+  "timeoutMs": 60000,
+  "combinedOutputLimit": 67108864,
+  "events": [
+    {
+      "event": "spawn",
+      "atUtc": "2026-10-11T03:06:57.322Z"
+    },
+    {
+      "event": "exit",
+      "code": 0,
+      "signal": null,
+      "atUtc": "2026-10-11T03:06:57.501Z"
+    },
+    {
+      "event": "close",
+      "code": 0,
+      "signal": null,
+      "atUtc": "2026-10-11T03:06:57.501Z"
+    }
+  ],
+  "killCalls": [],
+  "stdoutOriginalBytes": 3739,
+  "stderrOriginalBytes": 0,
+  "pid": 83860,
+  "closedAtUtc": "2026-10-11T03:06:57.501Z",
+  "exitCode": 0,
+  "signal": null,
+  "timedOut": false,
+  "overflow": false,
+  "stopped": false,
+  "error": null,
+  "retainedBytes": 3739,
+  "captureComplete": true,
+  "descendantQualifier": "Only direct child close is observed; descendants are unobserved.",
+  "stdoutOriginalSha256": "a69ef5120422c46dc5e27778468a6b896ec94a985763d4ae7655784017a2f04a",
+  "stderrOriginalSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+}

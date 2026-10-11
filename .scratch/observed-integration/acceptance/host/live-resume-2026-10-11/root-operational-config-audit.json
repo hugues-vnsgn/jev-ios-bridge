@@ -1,0 +1,12 @@
+{
+  "status": "CONFIG_DIRECTORY_MODE_REFUSAL_CONFIRMED",
+  "before": "0755",
+  "required": "0700",
+  "path": "/Users/hugues_mini/Library/Application Support/jev-ios-bridge",
+  "ownerUid": 501,
+  "groupGid": 20,
+  "migrationCalls": 0,
+  "configurationFileOpened": false,
+  "repairAuthorizedByRoot": "Exact user-owned app state directory0755to0700 via verified held nonsymlink directory handle, no recursive/other permission changes; within owner autonomous operational setup request.",
+  "next": "Sole operator seals refusal, prepares exact repair then rechecks production config and proceeds only on PASS."
+}

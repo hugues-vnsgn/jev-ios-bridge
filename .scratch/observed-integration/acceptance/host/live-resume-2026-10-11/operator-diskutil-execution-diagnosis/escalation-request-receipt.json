@@ -1,0 +1,13 @@
+{
+  "sandboxPermissions": "require_escalated",
+  "justification": "The owner authorized resuming the roadmap, but workspace-write blocked a required read-only mount query. Allow this one elevated diskutil query, necessary to diagnose framework availability?",
+  "prefixRule": null,
+  "login": false,
+  "command": "env -i HOME=/Users/hugues_mini PATH=/usr/bin:/bin:/usr/sbin:/sbin LANG=C LC_ALL=C DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer /opt/homebrew/Cellar/node/26.8.1/bin/node .scratch/observed-integration/acceptance/host/live-resume-2026-10-11/operator-diskutil-execution-diagnosis/run.mjs --elevated-once",
+  "toolResultFile": "escalation-tool-result.json",
+  "outputFile": "escalation-tool-received.txt",
+  "outputUtf8Bytes": 1068,
+  "outputUtf8Sha256": "16aaf8d424dda1802e66652da32a68c68cc961315f973475e1f3762a857ac5e9",
+  "originalOSStreamsSeparatelyCaptured": false,
+  "redaction": "none"
+}

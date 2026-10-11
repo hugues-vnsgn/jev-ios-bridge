@@ -1,0 +1,48 @@
+{
+  "status": "PASS_READONLY_ATTRIBUTION_AUDIT",
+  "manifestEntriesVerified": 9,
+  "manifestSha256": "f8384fa394c4fbe993b700e58a55aeff0e477b517316b878935c9034f55e0296",
+  "childClosedAtUtc": "2026-10-11T03:16:53.828Z",
+  "totals": [
+    {
+      "path": "/Users/hugues_mini/Codes/AgentTools/jev-ios-bridge",
+      "allocatedKiB": "799220",
+      "allocatedBytes": "818401280",
+      "allocatedGiB": 0.7621955871582031
+    },
+    {
+      "path": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic",
+      "allocatedKiB": "5381380",
+      "allocatedBytes": "5510533120",
+      "allocatedGiB": 5.132083892822266
+    },
+    {
+      "path": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge",
+      "allocatedKiB": "18214616",
+      "allocatedBytes": "18651766784",
+      "allocatedGiB": 17.370811462402344
+    },
+    {
+      "path": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic/.scratch",
+      "allocatedKiB": "5094080",
+      "allocatedBytes": "5216337920",
+      "allocatedGiB": 4.85809326171875
+    },
+    {
+      "path": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic/node_modules",
+      "allocatedKiB": "217928",
+      "allocatedBytes": "223158272",
+      "allocatedGiB": 0.20783233642578125
+    }
+  ],
+  "qualification": "Overlapping totals; not proven reclaimable bytes. Protected evidence and workspaces not cleanup candidates by default.",
+  "acceptedSourceCompiledHostStillMatch": {
+    "source443": 443,
+    "compiled69": 69,
+    "originalHostFiles15": 15
+  },
+  "completionSeal": {
+    "entriesVerified": 17,
+    "manifestSha256": "f75fb2b97bb28a52f460d42dd56a5cd6cf4c85babf2af33097a6e8abbaa48395"
+  }
+}

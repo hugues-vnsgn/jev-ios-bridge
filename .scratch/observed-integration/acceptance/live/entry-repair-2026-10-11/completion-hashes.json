@@ -1,0 +1,73 @@
+{
+  "sealedAtUtc": "2026-10-11T03:02:53.854242+00:00",
+  "scope": "Every repair evidence file except this manifest itself",
+  "directoriesMode": "0700",
+  "files": [
+    {
+      "path": "artifact-hashes.json",
+      "bytes": 1181,
+      "sha256": "f98cbf4df55db104bfabee6345193da9011bd09ac89affdcb60a89fb62a990bd",
+      "mode": "0600"
+    },
+    {
+      "path": "escalation-request-receipt.json",
+      "bytes": 878,
+      "sha256": "ad960e1332477cc1db17a3b28309f683d0b9cd107d89193758d8e8346fb29446",
+      "mode": "0600"
+    },
+    {
+      "path": "escalation-tool-received.txt",
+      "bytes": 240,
+      "sha256": "bed4663bf6490195c9cd70c1cb02499dbc8402c0b8b506caebf3482ae2b827d9",
+      "mode": "0600"
+    },
+    {
+      "path": "escalation-tool-result.json",
+      "bytes": 392,
+      "sha256": "9da4b6e9f5f8f9dfe51a736ff8fc0bd41facd512bc348f98a86007e6f47568f1",
+      "mode": "0600"
+    },
+    {
+      "path": "final-verification.json",
+      "bytes": 749,
+      "sha256": "0788ac73c38b45362551fe46b9f9bc4f3770bb1521bb55ecd08edd1eabf32891",
+      "mode": "0600"
+    },
+    {
+      "path": "preparation.json",
+      "bytes": 732,
+      "sha256": "8b1a522d0e91906498604c4de74d6a047cb536e1971a4bee38ca76db289827bc",
+      "mode": "0600"
+    },
+    {
+      "path": "repair-claimed.json",
+      "bytes": 226,
+      "sha256": "94b72ff0ac64b01f90dba637489435e3cae790079bac96df66fb6ec21f9a0294",
+      "mode": "0600"
+    },
+    {
+      "path": "report.md",
+      "bytes": 3159,
+      "sha256": "fd33f2aa7e93b09031586d0ced4fe91c68b8cc69af2bd977e92b533e2f93602d",
+      "mode": "0600"
+    },
+    {
+      "path": "result.json",
+      "bytes": 3100,
+      "sha256": "e67873c9258456f8316f65d14279d701b1d73438ef5b63ce82a197d37dedf5a2",
+      "mode": "0600"
+    },
+    {
+      "path": "run.mjs",
+      "bytes": 6929,
+      "sha256": "af14896b7e932f0bc956238622f0ebb4779e5f13e3b6fdbb55d59e41def2fa0c",
+      "mode": "0600"
+    },
+    {
+      "path": "syntax-check.json",
+      "bytes": 617,
+      "sha256": "2359f1db166f5413ffd420cc5aea25af0def65394b4a1ba55f4705c08406d1ce",
+      "mode": "0600"
+    }
+  ]
+}

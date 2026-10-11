@@ -1,0 +1,15 @@
+{
+  "createdAtUtc": "2026-10-11T03:00:34.189203+00:00",
+  "target": "/Users/hugues_mini/Library/Application Support/jev-ios-bridge",
+  "expectedIdentity": {
+    "type": "nonsymlink directory",
+    "uid": 501,
+    "gid": 20,
+    "permissions": "0755"
+  },
+  "operation": "One held-directory-handle fchmod0700 after stable lossless bigint descriptor/path binding; fresh verified binding and actual close",
+  "approval": "Fresh supported require_escalated request; Root inspects this script before approving prompt",
+  "scriptSha256": "af14896b7e932f0bc956238622f0ebb4779e5f13e3b6fdbb55d59e41def2fa0c",
+  "failedEntryManifestSha256": "3859c3e7657793ace28f2d60b8ded374c25df2a944f6fb22c55223ff4c1c22f6",
+  "noOperationalCallYet": true
+}

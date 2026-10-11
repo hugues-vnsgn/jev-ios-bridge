@@ -1,0 +1,26 @@
+{
+  "status": "READY_FOR_ROOT_INSPECTION_ONLY",
+  "sealedAtUtc": "2026-10-11T02:17:17.785905+00:00",
+  "head": "1f69ec7d3d648189cd631259c1c9427c5b8e1b0e",
+  "lookupCalls": 0,
+  "lookupBudgetRemaining": 1,
+  "nativeInstalledMetadataCalls": 0,
+  "nativeMetadataChildren": 0,
+  "pureAudit": "39/39 PASS, return0, stderr0",
+  "source443": true,
+  "compiled69": true,
+  "originalHostFiles15": true,
+  "priorEvidence842": true,
+  "sealedPreparationFailure13": true,
+  "fileHashes": {
+    "probe.mjs": "985daf0fdebe717a10a41355c0b6a6061b90b65450723661e725837174fb1d63",
+    "run.mjs": "4d8538e0355df8dc589b0e1f0de432983b82ce591e2f5b78c48c54e16e0711ce",
+    "recording.mjs": "9676898e2d911cf22e2ee656913f1abfe0775396097a0dc05dcab01748ba3285",
+    "guards.mjs": "83b832cbdc1247b57fed2d18b2bafe3e3083bf9c0e6c3abadeeaca3039c765e8",
+    "common.mjs": "b7deb12ac3efe2673be04a97366f33e9b52380b33abf197e50eb7fa14e5fde28",
+    "audit.mjs": "38bf9f996dd0e2c7efb5cd54e70ca545997e543f7b92480e044c5d2b232c8b2a",
+    "pure-guard-audit.json": "c805ce44dea87c8c8e0de8ab4d049c1a0c35f118ebf0372c65075a585fca09f2"
+  },
+  "operatorState": "IDLE_AWAITING_ROOT_REVIEW",
+  "nextAction": "Root review required before any compatibility execution; no migration or L01-L05 dispatch authorized."
+}

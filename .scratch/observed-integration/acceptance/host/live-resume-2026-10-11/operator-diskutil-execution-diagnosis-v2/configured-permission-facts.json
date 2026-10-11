@@ -1,0 +1,10 @@
+{
+  "source": "Current session instructions only; no configuration or credential reads",
+  "sandbox_mode": "workspace-write",
+  "network_access": "restricted",
+  "permission_profile_type": "managed",
+  "filesystem_profile_type": "restricted",
+  "escalationMechanism": "exec_command sandbox_permissions=require_escalated",
+  "namedApprovalPolicy": "Not explicitly stated in this operator session instructions",
+  "queryExecution": "A fresh require_escalated request was submitted and the tool execution returned exit 0. No previous one-time approval was reused by the operator."
+}

@@ -1,0 +1,214 @@
+{
+  "verifiedAtUtc": "2026-10-11T02:46:46.401153+00:00",
+  "status": "PASS",
+  "checks": [
+    {
+      "name": "Private evidence directory",
+      "pass": true
+    },
+    {
+      "name": "Initial seal child-receipt.json",
+      "pass": true
+    },
+    {
+      "name": "Initial seal env-only-audit.json",
+      "pass": true
+    },
+    {
+      "name": "Initial seal env-only-check-receipt.json",
+      "pass": true
+    },
+    {
+      "name": "Initial seal env-only-check.mjs",
+      "pass": true
+    },
+    {
+      "name": "Initial seal env-only-check.stderr.bin",
+      "pass": true
+    },
+    {
+      "name": "Initial seal env-only-check.stdout.bin",
+      "pass": true
+    },
+    {
+      "name": "Initial seal failed-child0134-receipt.json",
+      "pass": true
+    },
+    {
+      "name": "Initial seal failed-child0134.stderr.bin",
+      "pass": true
+    },
+    {
+      "name": "Initial seal failed-child0134.stdout.bin",
+      "pass": true
+    },
+    {
+      "name": "Initial seal outer-environment-names.json",
+      "pass": true
+    },
+    {
+      "name": "Initial seal predecessor-preservation.json",
+      "pass": true
+    },
+    {
+      "name": "Initial seal preparation.json",
+      "pass": true
+    },
+    {
+      "name": "Initial seal query-claimed.json",
+      "pass": true
+    },
+    {
+      "name": "Initial seal report.md",
+      "pass": true
+    },
+    {
+      "name": "Initial seal result.json",
+      "pass": true
+    },
+    {
+      "name": "Initial seal run.mjs",
+      "pass": true
+    },
+    {
+      "name": "Initial seal stderr.bin",
+      "pass": true
+    },
+    {
+      "name": "Initial seal stdout.bin",
+      "pass": true
+    },
+    {
+      "name": "Initial seal syntax-check-receipt.json",
+      "pass": true
+    },
+    {
+      "name": "Initial seal syntax-check.stderr.bin",
+      "pass": true
+    },
+    {
+      "name": "Initial seal syntax-check.stdout.bin",
+      "pass": true
+    },
+    {
+      "name": "Sealed predecessor escalation-request-receipt.json",
+      "pass": true
+    },
+    {
+      "name": "Sealed predecessor escalation-tool-received.txt",
+      "pass": true
+    },
+    {
+      "name": "Sealed predecessor escalation-tool-result.json",
+      "pass": true
+    },
+    {
+      "name": "Sealed predecessor preparation.json",
+      "pass": true
+    },
+    {
+      "name": "Sealed predecessor report.md",
+      "pass": true
+    },
+    {
+      "name": "Sealed predecessor result.json",
+      "pass": true
+    },
+    {
+      "name": "Sealed predecessor run.mjs",
+      "pass": true
+    },
+    {
+      "name": "Sealed predecessor syntax-check-receipt.json",
+      "pass": true
+    },
+    {
+      "name": "Sealed predecessor artifact-hashes.json",
+      "pass": true
+    },
+    {
+      "name": "Prepared successor script unchanged",
+      "pass": true
+    },
+    {
+      "name": "Production parser pin preserved",
+      "pass": true
+    },
+    {
+      "name": "Original child0134 receipt preserved",
+      "pass": true
+    },
+    {
+      "name": "Original child0134 stdout preserved",
+      "pass": true
+    },
+    {
+      "name": "Fresh stdout raw bytes complete",
+      "pass": true
+    },
+    {
+      "name": "Original child0134 stderr preserved",
+      "pass": true
+    },
+    {
+      "name": "Fresh stderr raw bytes complete",
+      "pass": true
+    },
+    {
+      "name": "Exact argv and spawnOptions unchanged",
+      "pass": true
+    },
+    {
+      "name": "Native child five variables only",
+      "pass": true
+    },
+    {
+      "name": "Outer environment recorded as names only",
+      "pass": true
+    },
+    {
+      "name": "Receipt outerEnvironment is fixed expected env constant",
+      "pass": true
+    },
+    {
+      "name": "Single diagnostic and zero compatibility reruns",
+      "pass": true
+    },
+    {
+      "name": "Bounded protocol unchanged",
+      "pass": true
+    },
+    {
+      "name": "Actual successful close captured",
+      "pass": true
+    },
+    {
+      "name": "No timeout overflow or termination",
+      "pass": true
+    },
+    {
+      "name": "Fresh stdout and stderr within cap",
+      "pass": true
+    },
+    {
+      "name": "Production parser exact typed readonly mount",
+      "pass": true
+    },
+    {
+      "name": "Script before-after comparisons preserved",
+      "pass": true
+    },
+    {
+      "name": "Received escalation execution completed successfully",
+      "pass": true
+    }
+  ],
+  "passed": 50,
+  "total": 50,
+  "scope": "Repository evidence and parser integrity only; no additional native call. Comparison confined to failed child0134.",
+  "predecessorFilesVerified": 9,
+  "initialSealFilesVerified": 21,
+  "parserSha256": "bfa578bac5fe8b3a1101ea945b8db8f0f54bccf29c9ab4de0122831d0162df5f",
+  "preparedScriptSha256": "245be1d040fde3294f37eaba004fbc44f3bca051e4055b7415a576b7a84682be",
+  "outerEnvironmentQualifier": "Actual outer environment was recorded by names only. child-receipt.json outerEnvironment contains the fixed expected five-entry constant, identical to spawnOptions.env; it is not a serialization of actual process.env. No value of optional __CF_USER_TEXT_ENCODING was inspected, forwarded, or recorded."
+}

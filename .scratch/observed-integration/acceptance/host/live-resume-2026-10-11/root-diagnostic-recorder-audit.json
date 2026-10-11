@@ -1,0 +1,18 @@
+{
+  "status": "RECORDER_CAUSE_CONFIRMED",
+  "verifiedFiles": 8,
+  "priorManifestSha256": "bf361d6f2a9368b3feca6eb5009811cf3d723d13d607e4b17fcf94d3e402c707",
+  "priorApproval": "User approved this time; Node ran, diskutil did not.",
+  "probe": "env -i with exact five requested safe values, pinned Node26.8.1, inspect names and equality only; no metadata/native command",
+  "observed": {
+    "extraNames": [
+      "__CF_USER_TEXT_ENCODING"
+    ],
+    "missingNames": [],
+    "mismatchedNames": [],
+    "forbiddenPresent": []
+  },
+  "fix": "Allow only __CF_USER_TEXT_ENCODING in outer environment; retain exact five-value child env and no other outer extras.",
+  "nativeDiskutilQueryCount": 0,
+  "next": "Sole operator prepares successor, checks narrow fix without native work, requests supported escalation for the approved read-only diagnostic."
+}

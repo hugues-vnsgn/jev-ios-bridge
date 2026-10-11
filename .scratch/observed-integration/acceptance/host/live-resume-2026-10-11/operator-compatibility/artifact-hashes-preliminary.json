@@ -1,0 +1,62 @@
+{
+  "schemaVersion": 1,
+  "createdAtUtc": "2026-10-11T02:07:24.716996+00:00",
+  "scope": "All evidence files in this private directory; artifact-hashes.json excludes itself to avoid self-reference.",
+  "directoriesMode": "0700",
+  "files": [
+    {
+      "path": "command.json",
+      "bytes": 6548,
+      "sha256": "560b77ad07dc1335dd5a373a5cee2a25b47947c747c76bb5c4a6064895d44995",
+      "mode": "0600"
+    },
+    {
+      "path": "preflight.py",
+      "bytes": 4827,
+      "sha256": "423f4ddf927567e970272ee367499b90f9646cb2839a3a601d35dc0fb0bf7bb4",
+      "mode": "0600"
+    },
+    {
+      "path": "preparation-command-received.txt",
+      "bytes": 759,
+      "sha256": "9ddd5191c93ad701af6de921c449ccf7f5d881967d576c6f954b83bf9d1aeb92",
+      "mode": "0600"
+    },
+    {
+      "path": "preparation-receipt.json",
+      "bytes": 1212,
+      "sha256": "862594285ffd95f7ee6f217626432d5bd020b35eefdbf4a653898e42252591ca",
+      "mode": "0600"
+    },
+    {
+      "path": "references.json",
+      "bytes": 232568,
+      "sha256": "f4a51e89c87f0943ad807030fb83fe41a7ee7d206bec693204de780e39006455",
+      "mode": "0600"
+    },
+    {
+      "path": "report.md",
+      "bytes": 3097,
+      "sha256": "49770874b0c21ffb0b012dc93c09a69715b0adb6e56dfc58bc1b45a2b30edb0c",
+      "mode": "0600"
+    },
+    {
+      "path": "result.json",
+      "bytes": 1634,
+      "sha256": "02462023284152e7d21c369e919de2e8435a94e8dea7b7badb4c5c6c8ab31587",
+      "mode": "0600"
+    },
+    {
+      "path": "source-hashes-after.json",
+      "bytes": 511474,
+      "sha256": "4e54cf6b1f26615e490373ffc3f5606f00da03f0a0ba99e0ccfb8e3bd90739f2",
+      "mode": "0600"
+    },
+    {
+      "path": "source-hashes-before.json",
+      "bytes": 511572,
+      "sha256": "a838698b57a8d1a54485952f7e00f5d3455088bae7b60787397599b42c7ca031",
+      "mode": "0600"
+    }
+  ]
+}

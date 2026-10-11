@@ -1,0 +1,18 @@
+{
+  "status": "ELEVATED_READONLY_QUERY_ACCEPTED",
+  "filesVerified": 21,
+  "manifestSha256": "1330e2c2805c02ea5509c720a35739a0c3b514033d8dcb8919b0933d5a48f61e",
+  "exactArgvAndChildEnvironmentMatchPrior": true,
+  "exit": 0,
+  "stdoutBytes": 3092,
+  "stderrBytes": 0,
+  "actualClose": "2026-10-11T02:44:15.459Z",
+  "typedMount": {
+    "MountPoint": "/Library/Developer/CoreSimulator/Volumes/iOS_22G86",
+    "Writable": false,
+    "WritableMedia": false,
+    "WritableVolume": false
+  },
+  "qualification": "Execution-context difference demonstrated; precise IPC/sandbox rule not identified. Metadata compatibility remains unverified.",
+  "ownerDelegatedRoutineApprovals": true
+}

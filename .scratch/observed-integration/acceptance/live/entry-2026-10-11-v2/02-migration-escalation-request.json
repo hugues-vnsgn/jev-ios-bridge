@@ -1,0 +1,10 @@
+{
+  "cmd": "env -u TYPESAFE_API_KEY -u NODE_OPTIONS -u NODE_NO_WARNINGS /opt/homebrew/Cellar/node/26.8.1/bin/node .scratch/observed-integration/acceptance/live/entry-2026-10-11-v2/run-migration.mjs",
+  "login": false,
+  "sandbox_permissions": "require_escalated",
+  "justification": "Root accepted the existing default configuration and authorized one pinned production migration using the verified private declaration. Allow this once migration at the fixed account authority, preserving historical sources and issuing no device commands?",
+  "prefix_rule": "not requested",
+  "receivedToolExitCode": 0,
+  "receivedToolChunkId": "fcbcc2",
+  "approvalQualifier": "Fresh supported requests completed; no approval UI selection or permission configuration inspected by the operator."
+}

@@ -1,0 +1,57 @@
+{
+  "status": "PASS",
+  "scope": "Environment assertion only; repository script read, no native command or recorder execution.",
+  "outerEnvironmentNames": [
+    "DEVELOPER_DIR",
+    "HOME",
+    "LANG",
+    "LC_ALL",
+    "PATH",
+    "__CF_USER_TEXT_ENCODING"
+  ],
+  "extraNames": [
+    "__CF_USER_TEXT_ENCODING"
+  ],
+  "missingNames": [],
+  "mismatchedNames": [],
+  "forbiddenPresent": [],
+  "checks": [
+    {
+      "name": "Actual env-i process satisfies five values with only optional Apple name",
+      "pass": true
+    },
+    {
+      "name": "No optional Apple entry accepted",
+      "pass": true
+    },
+    {
+      "name": "Optional Apple entry accepted without inspecting its value",
+      "pass": true
+    },
+    {
+      "name": "Every other extra name rejected",
+      "pass": true
+    },
+    {
+      "name": "Missing expected entry rejected",
+      "pass": true
+    },
+    {
+      "name": "Changed expected entry rejected",
+      "pass": true
+    },
+    {
+      "name": "Forbidden names still rejected",
+      "pass": true
+    },
+    {
+      "name": "Native child receives fixed env object, no outer extras forwarded",
+      "pass": true
+    }
+  ],
+  "passed": 8,
+  "total": 8,
+  "diagnosticCalls": 0,
+  "compatibilityCalls": 0,
+  "scriptSha256": "245be1d040fde3294f37eaba004fbc44f3bca051e4055b7415a576b7a84682be"
+}

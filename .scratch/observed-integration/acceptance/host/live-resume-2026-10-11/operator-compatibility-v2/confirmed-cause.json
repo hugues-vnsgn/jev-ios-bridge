@@ -1,0 +1,62 @@
+{
+  "status": "HOST_PREREQUISITE_MISSING",
+  "compatibility": "UNVERIFIED",
+  "lookupCalls": 1,
+  "lookupBudgetRemaining": 0,
+  "guardFailures": 0,
+  "firstConfirmedCause": "Fresh legacy read-only mount proof could not run: exact diskutil command exited1 and reported inability to use DiskManagement framework.",
+  "underlyingCause": "UNKNOWN; sandbox/IPC/framework-service attribution not tested or confirmed.",
+  "sourceFailurePredicate": {
+    "sourceFile": "src/observed/allocation-config.ts",
+    "line": 187,
+    "compiledFile": "dist/observed/allocation-config.js",
+    "lineCompiled": 249,
+    "predicate": "result.exitCode !== 0 causes Unconfirmed mounted root before parse/authorization; public compatibility catch returns HOST_PREREQUISITE_MISSING."
+  },
+  "child": {
+    "index": 134,
+    "pid": 86448,
+    "argv": [
+      "/usr/sbin/diskutil",
+      "info",
+      "-plist",
+      "/Library/Developer/CoreSimulator/Volumes/iOS_22G86"
+    ],
+    "startedAtUtc": "2026-10-11T02:18:45.208Z",
+    "closedAtUtc": "2026-10-11T02:18:45.219Z",
+    "exitCode": 1,
+    "signal": null,
+    "killCalls": [],
+    "stdoutBytes": 0,
+    "stderrBytes": 203,
+    "stderrSha256": "2374e28f61a1ab9e76bbc1f72178ff880d59c566fea05511ad2cf8c2d52567f6",
+    "stderrFile": "children/0134.stderr.bin"
+  },
+  "stderrExact": "Unable to run because unable to use the DiskManagement framework.\nCommon reasons include, but are not limited to, the DiskArbitration\nframework being unavailable due to being booted in single-user mode.\n",
+  "earlierToleratedFilesystemError": {
+    "path": "/Library/Developer/CoreSimulator/Profiles/Runtimes",
+    "code": "ENOENT",
+    "disposition": "ENOENT is explicitly tolerated by production bundles(); execution continued to diskutil."
+  },
+  "coverage": {
+    "plutilChildren": 134,
+    "diskutilChildren": 1,
+    "childrenWithConfirmedClose": 135,
+    "childCapturesComplete": true,
+    "metadataReads": 402,
+    "metadataCapturesComplete": true,
+    "legacyCandidates": 2,
+    "cryptexCandidates": 1,
+    "runtimeBundlesListed": 0,
+    "runtimeMetadataRead": false,
+    "sharedSignalAbortEvents": 0
+  },
+  "operatorState": "IDLE_FOR_ROOT_AUDIT",
+  "liveRows": {
+    "L01": "UNVERIFIED",
+    "L02": "UNVERIFIED",
+    "L03": "UNVERIFIED",
+    "L04": "UNVERIFIED",
+    "L05": "UNVERIFIED"
+  }
+}

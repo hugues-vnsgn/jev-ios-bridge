@@ -1,0 +1,15 @@
+The one elevated read-only diskutil query succeeded. The unchanged production parser confirmed MountPoint `/Library/Developer/CoreSimulator/Volumes/iOS_22G86` with typed booleans `Writable=false`, `WritableMedia=false`, and `WritableVolume=false`.
+
+The recorded query used exactly the failed child0134 argv and five-variable spawnOptions environment, with shell false. It started at 2026-10-11T02:44:15.346Z and actually closed at 2026-10-11T02:44:15.459Z, exit 0, signal null. Raw stdout is 3,092 bytes; raw stderr is empty. Capture is complete. The 10-second deadline, 65,536-byte combined cap, and SIGTERM then 250ms SIGKILL policy were unchanged; no timeout, overflow, or kill occurred. The fresh supported require_escalated request returned outer exit 0; its exact command, request, return, and received output are preserved alongside this report. No previous one-time approval was reused by the operator.
+
+Failed child0134 returned exit 1 with the retained 203-byte DiskManagement refusal. Its raw bytes and receipt remain unchanged. The same argv and child environment now succeed in the elevated execution context. This supports execution context as relevant to the earlier framework refusal; it does not identify a specific sandbox/framework/IPC rule or establish that host state could not have changed between queries.
+
+The env-only assertion audit passed 8/8 and syntax checks passed before the query. Only optional `__CF_USER_TEXT_ENCODING` was present beyond the five expected outer names. Its value was never read for the assertion, recorded, or forwarded to the child. Actual outer environment evidence contains names only. The `outerEnvironment` field inherited in the child receipt is the fixed expected five-entry constant, identical to `spawnOptions.env`, rather than a capture of actual outer values.
+
+The prepared script, pinned production parser, initial v2 evidence seal, and all nine sealed failed-diagnosis files passed final integrity verification. Evidence is private: directories 0700 and files 0600. The original sealed failure and prepared v2 files were preserved. `artifact-hashes.json` remains the original query seal; `completion-hashes.json` covers it and every final evidence file except itself.
+
+This dispatch consumed one diagnostic query and zero compatibility reruns. It does not pass production compatibility; the earlier compatibility result remains HOST_PREREQUISITE_MISSING, and its once budget remains consumed. Only the directly spawned diskutil child is traced here; any descendants are unobserved. No further native query, compatibility run, host/runtime/account/device mutation, SDK/network/app build, migration, or L01-L05 execution was performed.
+
+Configured session facts are workspace-write sandbox, restricted network, and a managed/restricted filesystem profile. The session offers supported require_escalated execution; a named approval_policy is not explicitly stated. These facts came from session instructions, without inspecting configuration or credential values.
+
+Operator idle for Root audit.

@@ -1,0 +1,10 @@
+{
+  "cmd": "env -u TYPESAFE_API_KEY -u NODE_OPTIONS -u NODE_NO_WARNINGS /opt/homebrew/Cellar/node/26.8.1/bin/node .scratch/observed-integration/acceptance/live/entry-2026-10-11-v2/run-authority.mjs",
+  "login": false,
+  "sandbox_permissions": "require_escalated",
+  "justification": "Migration passed and Root authorized the next read-only authority check. Allow production activation, capacity and four protected-identity reads outside workspace-write, with no reservation, reconciliation or claim change?",
+  "prefix_rule": "not requested",
+  "receivedToolExitCode": 0,
+  "receivedToolChunkId": "4458f2",
+  "approvalQualifier": "Fresh supported requests completed; no approval UI selection or permission configuration inspected by the operator."
+}

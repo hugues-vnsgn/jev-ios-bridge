@@ -1,0 +1,10 @@
+{
+  "cmd": "env -i HOME=/Users/hugues_mini PATH=/usr/bin:/bin:/usr/sbin:/sbin LANG=C LC_ALL=C DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer /opt/homebrew/Cellar/node/26.8.1/bin/node .scratch/observed-integration/acceptance/host/live-resume-2026-10-11/operator-disk-attribution/run.mjs --read-only-once",
+  "login": false,
+  "sandbox_permissions": "require_escalated",
+  "justification": "Root authorized one bounded read-only /usr/bin/du -sk attribution over the three exact workspace roots and integration .scratch/node_modules after the storage stop. Allow this metadata-only scan outside workspace-write, with no content read, deletion, movement, build or reservation?",
+  "prefix_rule": "not requested",
+  "initialToolSessionId": 5917,
+  "completionToolExitCode": 0,
+  "approvalQualifier": "Fresh supported escalation execution completed; no approval selection or permission configuration inspected by the operator."
+}

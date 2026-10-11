@@ -1,0 +1,58 @@
+{
+  "verifiedAtUtc": "2026-10-11T03:13:08.384065+00:00",
+  "status": "PASS_EVIDENCE_INTEGRITY",
+  "stageReceipts": [
+    {
+      "stage": "01-config",
+      "exitCode": 3,
+      "signal": null,
+      "actualClose": "2026-10-11T03:03:16.598Z",
+      "stdoutBytes": 2017,
+      "stderrBytes": 0,
+      "captureComplete": true
+    },
+    {
+      "stage": "02-migration",
+      "exitCode": 0,
+      "signal": null,
+      "actualClose": "2026-10-11T03:06:57.501Z",
+      "stdoutBytes": 3739,
+      "stderrBytes": 0,
+      "captureComplete": true
+    },
+    {
+      "stage": "03-authority",
+      "exitCode": 0,
+      "signal": null,
+      "actualClose": "2026-10-11T03:08:34.708Z",
+      "stdoutBytes": 5264,
+      "stderrBytes": 0,
+      "captureComplete": true
+    },
+    {
+      "stage": "04-storage",
+      "exitCode": 3,
+      "signal": null,
+      "actualClose": "2026-10-11T03:10:10.563Z",
+      "stdoutBytes": 1635,
+      "stderrBytes": 0,
+      "captureComplete": true
+    }
+  ],
+  "originalConfigPinsPreserved": true,
+  "declarationHashPreserved": true,
+  "referenceCounts": {
+    "source443": 443,
+    "compiled69": 69,
+    "originalHostFiles15": 15
+  },
+  "appSourceFileCounts": {
+    "fixture": 5,
+    "weather": 43
+  },
+  "priorSealsVerified": {
+    "failedEntry": 20,
+    "repair": 11
+  },
+  "nativeOperationQualifier": "Only directly recorded command closes and historical source-handle closes are evidenced; unobserved descendants are not asserted absent. No further account/native read was performed for this sealing verification."
+}

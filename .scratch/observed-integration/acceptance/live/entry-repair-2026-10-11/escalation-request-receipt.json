@@ -1,0 +1,10 @@
+{
+  "cmd": "env -i HOME=/Users/hugues_mini PATH=/usr/bin:/bin:/usr/sbin:/sbin LANG=C LC_ALL=C DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer /opt/homebrew/Cellar/node/26.8.1/bin/node .scratch/observed-integration/acceptance/live/entry-repair-2026-10-11/run.mjs --repair-once-after-root-review",
+  "login": false,
+  "sandbox_permissions": "require_escalated",
+  "justification": "Root authorized one exact app-owned directory repair and will inspect run.mjs SHA af14896b7e932f0bc956238622f0ebb4779e5f13e3b6fdbb55d59e41def2fa0c. Allow its guarded one-time fchmod from 0755 to 0700 on /Users/hugues_mini/Library/Application Support/jev-ios-bridge only?",
+  "prefix_rule": "not requested",
+  "toolExitCode": 0,
+  "toolChunkId": "7592ac",
+  "approvalQualifier": "Fresh supported escalation returned normally; no approval selection or permission configuration inspected."
+}

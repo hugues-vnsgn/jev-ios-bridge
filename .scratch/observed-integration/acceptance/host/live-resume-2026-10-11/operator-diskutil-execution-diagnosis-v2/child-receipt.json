@@ -1,0 +1,77 @@
+{
+  "argv": [
+    "/usr/sbin/diskutil",
+    "info",
+    "-plist",
+    "/Library/Developer/CoreSimulator/Volumes/iOS_22G86"
+  ],
+  "cwd": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic",
+  "spawnOptions": {
+    "shell": false,
+    "env": {
+      "HOME": "/Users/hugues_mini",
+      "PATH": "/usr/bin:/bin:/usr/sbin:/sbin",
+      "LANG": "C",
+      "LC_ALL": "C",
+      "DEVELOPER_DIR": "/Applications/Xcode.app/Contents/Developer"
+    },
+    "stdio": [
+      "ignore",
+      "pipe",
+      "pipe"
+    ]
+  },
+  "startedAtUtc": "2026-10-11T02:44:15.346Z",
+  "outputCap": 65536,
+  "timeoutMs": 10000,
+  "escalationMs": 250,
+  "events": [
+    {
+      "atUtc": "2026-10-11T02:44:15.350Z",
+      "event": "spawn"
+    },
+    {
+      "atUtc": "2026-10-11T02:44:15.459Z",
+      "event": "stdout-data",
+      "bytes": 3092,
+      "sha256": "ff3e54d0e243e5474b06dd31e481d5a8da23a2109afd5b31205035a9be5690ee",
+      "retainedBytes": 3092
+    },
+    {
+      "atUtc": "2026-10-11T02:44:15.459Z",
+      "event": "exit",
+      "code": 0,
+      "signal": null
+    },
+    {
+      "atUtc": "2026-10-11T02:44:15.459Z",
+      "event": "close",
+      "code": 0,
+      "signal": null
+    }
+  ],
+  "killCalls": [],
+  "stdoutOriginalBytes": 3092,
+  "stderrOriginalBytes": 0,
+  "retainedCombinedBytes": 3092,
+  "permissionRequest": "exec_command require_escalated; one bounded read-only diagnostic only",
+  "outerEnvironment": {
+    "HOME": "/Users/hugues_mini",
+    "PATH": "/usr/bin:/bin:/usr/sbin:/sbin",
+    "LANG": "C",
+    "LC_ALL": "C",
+    "DEVELOPER_DIR": "/Applications/Xcode.app/Contents/Developer"
+  },
+  "pid": 35965,
+  "closedAtUtc": "2026-10-11T02:44:15.459Z",
+  "exitCode": 0,
+  "signal": null,
+  "timedOut": false,
+  "overflow": false,
+  "stopped": false,
+  "childError": null,
+  "stdoutOriginalSha256": "ff3e54d0e243e5474b06dd31e481d5a8da23a2109afd5b31205035a9be5690ee",
+  "stderrOriginalSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "captureComplete": true,
+  "redaction": "none"
+}

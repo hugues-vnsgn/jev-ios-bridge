@@ -1,0 +1,17 @@
+{
+  "verifiedAtUtc": "2026-10-11T03:06:13.196893+00:00",
+  "head": "1f69ec7d3d648189cd631259c1c9427c5b8e1b0e",
+  "sourceCounts": {
+    "source443": 443,
+    "compiled69": 69,
+    "originalHostFiles15": 15
+  },
+  "allMatch": true,
+  "declarationPath": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic/.scratch/observed-integration/acceptance/host/operational-confirmation-2026-10-09/declaration.json",
+  "declarationSha256": "676e554a08bcf44403da1ffef4737d5508c36e1f00e6793951f338fbf280e25b",
+  "effectiveDigestAccepted": "0ef4ca5a076024284eef7594e40dc638ee7be61dcc69b99fca1aff3249ded77d",
+  "appSourceProjectsPreserved": true,
+  "migrationBudget": 1,
+  "migrationCalls": 0,
+  "ownerQuiescenceAndRoots": "Operational assertion retained; production collector rejects any observed live historical iOS lease or unsafe historical state. Not independent proof."
+}

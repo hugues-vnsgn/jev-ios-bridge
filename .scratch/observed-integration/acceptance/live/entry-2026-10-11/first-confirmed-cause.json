@@ -1,0 +1,22 @@
+{
+  "status": "CONFIRMED",
+  "reason": "CONFIG_INVALID",
+  "path": "/Users/hugues_mini/Library/Application Support/jev-ios-bridge",
+  "recordedMetadata": {
+    "type": "directory",
+    "uid": 501,
+    "gid": 20,
+    "mode": 16877,
+    "nlink": 4,
+    "size": 128,
+    "identityQualifier": "Original numeric stat returned unchanged; not a lossless nanosecond identity proof."
+  },
+  "observedPermissions": "0755",
+  "requiredPermissions": "0700",
+  "safeIntegerModeQualifier": "Permission/uid/gid fields here are safe integers; this receipt does not claim lossless inode or nanosecond identity.",
+  "predicate": "part === directory && (s.mode & 0o777) !== 0o700",
+  "source": "src/observed/allocation-config.ts:58",
+  "compiled": "dist/observed/allocation-config.js:72",
+  "configurationFileOpened": false,
+  "laterStagesExecuted": false
+}

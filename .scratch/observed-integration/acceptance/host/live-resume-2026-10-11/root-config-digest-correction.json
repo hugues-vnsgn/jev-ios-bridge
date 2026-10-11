@@ -1,0 +1,14 @@
+{
+  "auditedAtUtc": "2026-10-11T03:04:31.741831+00:00",
+  "status": "DEFAULT_CONFIGURATION_ACCEPTED_HANDOFF_DIGEST_CORRECTED",
+  "incorrectHandoffDigest": "b6519649edbaf203e5323a15c80273321a42a5cb49850551297268e6ee1f5f0a",
+  "incorrectDigestSource": ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/permission-candidate-evidence/accepted-source437.json:src/observed/allocation-config.ts",
+  "actualEffectiveDigest": "0ef4ca5a076024284eef7594e40dc638ee7be61dcc69b99fca1aff3249ded77d",
+  "canonicalEffectiveJson": "{\"bootTimeoutMs\":120000,\"createTimeoutMs\":60000,\"installTimeoutMs\":120000,\"inventory\":[],\"launchTimeoutMs\":30000,\"maxArtifactBytes\":2147483648,\"maxConcurrentPreparations\":1,\"maxReservedBytes\":68719476736,\"maxRetainedAllocations\":8,\"minFreeBytes\":21474836480,\"readinessTimeoutMs\":30000,\"readyTtlMs\":300000,\"reservationBytesPerAllocation\":8589934592,\"timeoutMs\":360000,\"version\":1}",
+  "budgetsEqualAcceptedDefaults": true,
+  "productionAlgorithm": "sha256(canonicalJson({version:1,...budgets,inventory:[]}))",
+  "independentCalculation": "Python sorted compact JSON SHA256; all primitive numeric values exact integers",
+  "evidencePath": ".scratch/observed-integration/acceptance/live/entry-2026-10-11-v2/01-config-result.json",
+  "evidenceSha256": "8cfb75ece75cddb96d338ea0a5a56bcafa757e1574c9c42e8b501aaef725a637",
+  "decision": "Accept existing production read as default configuration; preserve CONFIG_VARIANCE wrapper result and record correction separately. No config mutation, limit change or reread required. Once migration may proceed after declaration binding."
+}

@@ -1,0 +1,7 @@
+{
+  "chunk_id": "37a38e",
+  "wall_time_seconds": 6.875e-06,
+  "exit_code": 1,
+  "original_token_count": 267,
+  "output": "file:///Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic/.scratch/observed-integration/acceptance/host/live-resume-2026-10-11/operator-diskutil-execution-diagnosis/run.mjs:19\nif(Object.keys(process.env).sort().join(',')!==Object.keys(env).sort().join(',')||Object.entries(env).some(([k,v])=>process.env[k]!==v))throw new Error('Outer environment differs from exact minimal environment');\n                                                                                                                                              ^\n\nError: Outer environment differs from exact minimal environment\n    at file:///Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic/.scratch/observed-integration/acceptance/host/live-resume-2026-10-11/operator-diskutil-execution-diagnosis/run.mjs:19:143\n    at ModuleJob.run (node:internal/modules/esm/module_job:569:25)\n    at async node:internal/modules/esm/loader:650:26\n    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5)\n\nNode.js v26.8.1\n"
+}

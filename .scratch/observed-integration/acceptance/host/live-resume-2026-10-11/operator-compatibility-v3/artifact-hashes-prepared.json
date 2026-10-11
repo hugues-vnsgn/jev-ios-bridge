@@ -1,0 +1,61 @@
+{
+  "schemaVersion": 1,
+  "createdAtUtc": "2026-10-11T02:46:44.616169+00:00",
+  "scope": "Root prepared files; only evidence path changed from accepted v2 probe;39check results retain original association.",
+  "files": [
+    {
+      "path": "audit.mjs",
+      "bytes": 19430,
+      "sha256": "38bf9f996dd0e2c7efb5cd54e70ca545997e543f7b92480e044c5d2b232c8b2a",
+      "mode": "0600"
+    },
+    {
+      "path": "common.mjs",
+      "bytes": 3744,
+      "sha256": "dabcf380d2c0e9948264ef0238d6a02e6008680491de32200a23f2934121b957",
+      "mode": "0600"
+    },
+    {
+      "path": "guards.mjs",
+      "bytes": 7206,
+      "sha256": "83b832cbdc1247b57fed2d18b2bafe3e3083bf9c0e6c3abadeeaca3039c765e8",
+      "mode": "0600"
+    },
+    {
+      "path": "probe.mjs",
+      "bytes": 5365,
+      "sha256": "985daf0fdebe717a10a41355c0b6a6061b90b65450723661e725837174fb1d63",
+      "mode": "0600"
+    },
+    {
+      "path": "pure-guard-audit.json",
+      "bytes": 6193,
+      "sha256": "c805ce44dea87c8c8e0de8ab4d049c1a0c35f118ebf0372c65075a585fca09f2",
+      "mode": "0600"
+    },
+    {
+      "path": "recording.mjs",
+      "bytes": 9573,
+      "sha256": "9676898e2d911cf22e2ee656913f1abfe0775396097a0dc05dcab01748ba3285",
+      "mode": "0600"
+    },
+    {
+      "path": "references.json",
+      "bytes": 234965,
+      "sha256": "c95f5cc22892697cb5efd394b333e11241609ef9537da09a0531535a8c0895ef",
+      "mode": "0600"
+    },
+    {
+      "path": "root-dispatch.json",
+      "bytes": 997,
+      "sha256": "a1d297e2f9130108025c5d0074b8300e2ca8a807234f50dbced1f2c5dbbfe48e",
+      "mode": "0600"
+    },
+    {
+      "path": "run.mjs",
+      "bytes": 7055,
+      "sha256": "4d8538e0355df8dc589b0e1f0de432983b82ce591e2f5b78c48c54e16e0711ce",
+      "mode": "0600"
+    }
+  ]
+}

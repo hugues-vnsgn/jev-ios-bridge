@@ -1,0 +1,12 @@
+{
+  "status": "ROOT_REVIEWED_ONCE_ELEVATED_COMPATIBILITY",
+  "head": "1f69ec7d3d648189cd631259c1c9427c5b8e1b0e",
+  "reason": "Same exact mount query passed elevated after sandbox refusal; bounded new once metadata compatibility dispatch, no device replay.",
+  "copiedFrom": ".scratch/observed-integration/acceptance/host/live-resume-2026-10-11/operator-compatibility-v2",
+  "changes": "Only common.mjs evidence directory changes; guards/recording/probe/run/audit bytes identical.",
+  "pureAuditAssociation": "Prior39/39audit reused for unchanged guard/recording/probe/run bytes; no new pure-audit execution claimed. Evidence-path-only common change reviewed by Root.",
+  "lookupBudget": 1,
+  "operator": "term_b2a0f5b5-3228-4fad-bf5d-d08d08be3405",
+  "permissions": "Use supported require_escalated execution; owner delegated routine approval handling to coordinator.",
+  "stop": "Stop after once result; no additional lookup, migration, app build or device operation until Root audits result."
+}

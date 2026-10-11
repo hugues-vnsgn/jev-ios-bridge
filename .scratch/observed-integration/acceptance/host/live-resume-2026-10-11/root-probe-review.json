@@ -1,0 +1,16 @@
+{
+  "status": "PASS_FOR_ONCE_COMPATIBILITY",
+  "manifestSha256": "5a0b753d4a94cbe7cfa9715cc86951aea73cec10d54774ddb0b033429a8577bf",
+  "filesVerified": 37,
+  "pureGuardChecks": 39,
+  "reviewed": [
+    "guards.mjs",
+    "recording.mjs",
+    "common.mjs",
+    "probe.mjs",
+    "run.mjs"
+  ],
+  "scope": "Read-only guard review: production tracking preserves private expectation context; exact argv/environment, bounded metadata reads, bigint identity observations qualified separately, actual child close tracing, exclusive dispatch marker; no native operation by Root.",
+  "lookupBudget": 1,
+  "operator": "term_b2a0f5b5-3228-4fad-bf5d-d08d08be3405"
+}

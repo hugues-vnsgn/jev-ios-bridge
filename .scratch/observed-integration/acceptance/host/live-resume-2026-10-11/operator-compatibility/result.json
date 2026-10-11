@@ -1,0 +1,39 @@
+{
+  "status": "PROBE_FAILURE",
+  "stage": "preparation",
+  "firstConfirmedCause": "Unexpected xcodebuild diagnostics during the /usr/bin/git rev-parse HEAD pin-verification command; diagnostic argv, parentage and close are untraced. Stop-on-uncertainty applies.",
+  "causeEvidence": "preparation-command-received.txt lines 2-3 and command.json",
+  "compatibility": "UNVERIFIED",
+  "lookupCalls": 0,
+  "lookupBudget": 1,
+  "lookupBudgetRemaining": 1,
+  "installedMetadataCalls": 0,
+  "guardMismatch": null,
+  "guardPreparation": "Stopped before executable guard preparation; no guard or lookup was executed.",
+  "pinnedHead": "1f69ec7d3d648189cd631259c1c9427c5b8e1b0e",
+  "hashCounts": {
+    "source443": 443,
+    "compiled69": 69,
+    "originalHostFiles15": 15,
+    "priorEvidence": 842
+  },
+  "preservationBefore": true,
+  "preservationAfter": true,
+  "mismatches": [],
+  "nativeChildren": {
+    "deliberateMetadataChildren": 0,
+    "unexpectedXcodebuildDiagnosticPID": 60422,
+    "completeProcessTraceAvailable": false
+  },
+  "qualification": "preparation-receipt.json nativeChildren:0 denotes no deliberate metadata children; it predates classification of the unexpected xcodebuild diagnostics and cannot certify zero native subprocesses.",
+  "unknownEffects": "No process or filesystem tracing was active for the Apple git preflight. Incidental xcodebuild arguments, reads, writes and completion cannot be certified.",
+  "workStopped": true,
+  "liveRows": {
+    "L01": "UNVERIFIED",
+    "L02": "UNVERIFIED",
+    "L03": "UNVERIFIED",
+    "L04": "UNVERIFIED",
+    "L05": "UNVERIFIED"
+  },
+  "operatorState": "IDLE_FOR_ROOT_AUDIT"
+}

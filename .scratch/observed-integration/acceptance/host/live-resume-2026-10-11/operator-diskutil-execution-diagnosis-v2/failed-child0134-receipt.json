@@ -1,0 +1,80 @@
+{
+  "sequence": 22215,
+  "atUtc": "2026-10-11T02:18:45.208Z",
+  "index": 134,
+  "kind": "diskutil",
+  "argv": [
+    "/usr/sbin/diskutil",
+    "info",
+    "-plist",
+    "/Library/Developer/CoreSimulator/Volumes/iOS_22G86"
+  ],
+  "cwd": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic",
+  "spawnOptions": {
+    "shell": false,
+    "env": {
+      "HOME": "/Users/hugues_mini",
+      "PATH": "/usr/bin:/bin:/usr/sbin:/sbin",
+      "LANG": "C",
+      "LC_ALL": "C",
+      "DEVELOPER_DIR": "/Applications/Xcode.app/Contents/Developer"
+    },
+    "stdio": [
+      "ignore",
+      "pipe",
+      "pipe"
+    ]
+  },
+  "outputCap": 65536,
+  "events": [
+    {
+      "sequence": 22216,
+      "atUtc": "2026-10-11T02:18:45.210Z",
+      "event": "spawn"
+    },
+    {
+      "sequence": 22217,
+      "atUtc": "2026-10-11T02:18:45.218Z",
+      "event": "stderr-data",
+      "bytes": 203,
+      "sha256": "2374e28f61a1ab9e76bbc1f72178ff880d59c566fea05511ad2cf8c2d52567f6",
+      "retainedBytes": 203
+    },
+    {
+      "sequence": 22218,
+      "atUtc": "2026-10-11T02:18:45.219Z",
+      "event": "exit",
+      "code": 1,
+      "signal": null
+    },
+    {
+      "sequence": 22219,
+      "atUtc": "2026-10-11T02:18:45.219Z",
+      "event": "close",
+      "code": 1,
+      "signal": null
+    }
+  ],
+  "killCalls": [],
+  "stdoutOriginalBytes": 0,
+  "stderrOriginalBytes": 203,
+  "retainedCombinedBytes": 203,
+  "launchStack": "Error\n    at launch (file:///Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic/.scratch/observed-integration/acceptance/host/live-resume-2026-10-11/operator-compatibility-v2/recording.mjs:84:247)\n    at file:///Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic/dist/observed/allocation-config.js:375:25\n    at new Promise (<anonymous>)\n    at run (file:///Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic/dist/observed/allocation-config.js:367:27)\n    at invoke (file:///Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic/dist/observed/allocation-config.js:436:123)\n    at async file:///Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic/.scratch/observed-integration/acceptance/host/live-resume-2026-10-11/operator-compatibility-v2/probe.mjs:21:21\n    at async readonlyMountedRoot (file:///Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic/dist/observed/allocation-config.js:246:20)\n    at async mountedBundles (file:///Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic/dist/observed/allocation-config.js:568:23)\n    at async verifyInstalledCompatibility (file:///Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic/dist/observed/allocation-config.js:651:32)\n    at async file:///Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic/.scratch/observed-integration/acceptance/host/live-resume-2026-10-11/operator-compatibility-v2/probe.mjs:30:36",
+  "pid": 86448,
+  "closedAtUtc": "2026-10-11T02:18:45.219Z",
+  "exitCode": 1,
+  "signal": null,
+  "stdoutOriginalSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "stderrOriginalSha256": "2374e28f61a1ab9e76bbc1f72178ff880d59c566fea05511ad2cf8c2d52567f6",
+  "captureComplete": true,
+  "rawFiles": {
+    "stdout": "children/0134.stdout.bin",
+    "stderr": "children/0134.stderr.bin",
+    "stdoutRetainedBytes": 0,
+    "stderrRetainedBytes": 203,
+    "stdoutRetainedSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stderrRetainedSha256": "2374e28f61a1ab9e76bbc1f72178ff880d59c566fea05511ad2cf8c2d52567f6",
+    "complete": true,
+    "redaction": "none"
+  }
+}

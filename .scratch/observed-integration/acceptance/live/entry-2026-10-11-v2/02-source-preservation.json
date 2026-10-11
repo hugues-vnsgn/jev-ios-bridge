@@ -1,0 +1,258 @@
+{
+  "scope": "Compare only production migration collector source byte hashes to stable re-read after migration; no source writes or cleanup",
+  "verifiedAtUtc": "2026-10-11T03:06:57.502Z",
+  "allMatch": true,
+  "files": [
+    {
+      "path": "/Users/hugues_mini/Library/Application Support/jev-ios-bridge/observed-actions/2fbd334417cfd0019bede26d507fc4a91a92f79b427921d153faba8e63e80e0f/cdb99068b1d33a3aa6679b05f928f586bd11c3ddc6312026dcd715d62b1ff8f1.intent.json",
+      "bytes": 543,
+      "collectorSha256": "0e19de91b92d8045dbfd5fc711c6e29711f54c623dba1350a4d7c4d786d1a0b2",
+      "afterSha256": "0e19de91b92d8045dbfd5fc711c6e29711f54c623dba1350a4d7c4d786d1a0b2",
+      "match": true,
+      "actualHandleClose": "2026-10-11T03:06:57.503Z",
+      "identity": {
+        "dev": "16777233",
+        "ino": "133328766",
+        "uid": "501",
+        "gid": "20",
+        "mode": "33152",
+        "nlink": "1",
+        "size": "543",
+        "mtimeNs": "1791421214918271306",
+        "ctimeNs": "1791421214925975468"
+      }
+    },
+    {
+      "path": "/Users/hugues_mini/Library/Application Support/jev-ios-bridge/observed-actions/2fbd334417cfd0019bede26d507fc4a91a92f79b427921d153faba8e63e80e0f/cdb99068b1d33a3aa6679b05f928f586bd11c3ddc6312026dcd715d62b1ff8f1.result.json",
+      "bytes": 576,
+      "collectorSha256": "346af606d0c1d5a21d98953186b0bb5a61c1426a2bc451b7e68bf447827e880f",
+      "afterSha256": "346af606d0c1d5a21d98953186b0bb5a61c1426a2bc451b7e68bf447827e880f",
+      "match": true,
+      "actualHandleClose": "2026-10-11T03:06:57.503Z",
+      "identity": {
+        "dev": "16777233",
+        "ino": "133329114",
+        "uid": "501",
+        "gid": "20",
+        "mode": "33152",
+        "nlink": "1",
+        "size": "576",
+        "mtimeNs": "1791421244917847191",
+        "ctimeNs": "1791421244925423602"
+      }
+    },
+    {
+      "path": "/Users/hugues_mini/Library/Application Support/jev-ios-bridge/observed-actions/2fbd334417cfd0019bede26d507fc4a91a92f79b427921d153faba8e63e80e0f/quarantine.json",
+      "bytes": 84,
+      "collectorSha256": "ec39c6b23e01679fb468b5608ec66dc99c78073f3cd8dfbcf1a6a5801357618c",
+      "afterSha256": "ec39c6b23e01679fb468b5608ec66dc99c78073f3cd8dfbcf1a6a5801357618c",
+      "match": true,
+      "actualHandleClose": "2026-10-11T03:06:57.503Z",
+      "identity": {
+        "dev": "16777233",
+        "ino": "133329111",
+        "uid": "501",
+        "gid": "20",
+        "mode": "33152",
+        "nlink": "1",
+        "size": "84",
+        "mtimeNs": "1791421244909686693",
+        "ctimeNs": "1791421244917387064"
+      }
+    },
+    {
+      "path": "/Users/hugues_mini/Library/Application Support/jev-ios-bridge/observed-actions/d05718444fddd9ffcd6aeb8024f89d94eb6b9f37bbb5c95c53b9a64aa5d297df/1e128b93368a5310a16cbc42ade12f6f8a78fe674d350b93be764b47626597e7.intent.json",
+      "bytes": 455,
+      "collectorSha256": "93c90be21f2d63ee69fcaf5fe4937c56e1c199c58ead3a75c382e636b15bf428",
+      "afterSha256": "93c90be21f2d63ee69fcaf5fe4937c56e1c199c58ead3a75c382e636b15bf428",
+      "match": true,
+      "actualHandleClose": "2026-10-11T03:06:57.503Z",
+      "identity": {
+        "dev": "16777233",
+        "ino": "133417854",
+        "uid": "501",
+        "gid": "20",
+        "mode": "33152",
+        "nlink": "1",
+        "size": "455",
+        "mtimeNs": "1791422102509555300",
+        "ctimeNs": "1791422102518278051"
+      }
+    },
+    {
+      "path": "/Users/hugues_mini/Library/Application Support/jev-ios-bridge/observed-actions/d05718444fddd9ffcd6aeb8024f89d94eb6b9f37bbb5c95c53b9a64aa5d297df/1e128b93368a5310a16cbc42ade12f6f8a78fe674d350b93be764b47626597e7.result.json",
+      "bytes": 563,
+      "collectorSha256": "66ed1d35a832df2f50cef2952b93af045a8395f6214cc41f95fe019cd6e6fda4",
+      "afterSha256": "66ed1d35a832df2f50cef2952b93af045a8395f6214cc41f95fe019cd6e6fda4",
+      "match": true,
+      "actualHandleClose": "2026-10-11T03:06:57.504Z",
+      "identity": {
+        "dev": "16777233",
+        "ino": "133417894",
+        "uid": "501",
+        "gid": "20",
+        "mode": "33152",
+        "nlink": "1",
+        "size": "563",
+        "mtimeNs": "1791422107940797825",
+        "ctimeNs": "1791422107953742388"
+      }
+    },
+    {
+      "path": "/Users/hugues_mini/Library/Application Support/jev-ios-bridge/observed-actions/d05718444fddd9ffcd6aeb8024f89d94eb6b9f37bbb5c95c53b9a64aa5d297df/326235deeed5670b499bbd40935d0e273489b868f6751791d6793e5c2c9784cc.intent.json",
+      "bytes": 544,
+      "collectorSha256": "cb8eb20259d2eab6c8a8c6b37e61f8c853446b6b251455f7a349bf314b108293",
+      "afterSha256": "cb8eb20259d2eab6c8a8c6b37e61f8c853446b6b251455f7a349bf314b108293",
+      "match": true,
+      "actualHandleClose": "2026-10-11T03:06:57.504Z",
+      "identity": {
+        "dev": "16777233",
+        "ino": "133417998",
+        "uid": "501",
+        "gid": "20",
+        "mode": "33152",
+        "nlink": "1",
+        "size": "544",
+        "mtimeNs": "1791422124047640154",
+        "ctimeNs": "1791422124057466411"
+      }
+    },
+    {
+      "path": "/Users/hugues_mini/Library/Application Support/jev-ios-bridge/observed-actions/d05718444fddd9ffcd6aeb8024f89d94eb6b9f37bbb5c95c53b9a64aa5d297df/326235deeed5670b499bbd40935d0e273489b868f6751791d6793e5c2c9784cc.result.json",
+      "bytes": 612,
+      "collectorSha256": "686dcb9c045da4fce71655c3d67ee2c594e74a609d40b17ed34daae768e88e4f",
+      "afterSha256": "686dcb9c045da4fce71655c3d67ee2c594e74a609d40b17ed34daae768e88e4f",
+      "match": true,
+      "actualHandleClose": "2026-10-11T03:06:57.504Z",
+      "identity": {
+        "dev": "16777233",
+        "ino": "133418052",
+        "uid": "501",
+        "gid": "20",
+        "mode": "33152",
+        "nlink": "1",
+        "size": "612",
+        "mtimeNs": "1791422131585761319",
+        "ctimeNs": "1791422131594346653"
+      }
+    },
+    {
+      "path": "/Users/hugues_mini/Library/Application Support/jev-ios-bridge/observed-actions/d05718444fddd9ffcd6aeb8024f89d94eb6b9f37bbb5c95c53b9a64aa5d297df/3a7ddb74a81795172a640a62ebf43db403055dd57e09f97f25391896ae879fe7.intent.json",
+      "bytes": 542,
+      "collectorSha256": "aa738e2a91c99789ae8b809c3591ff00364427b532459527af3e2680633c2ee2",
+      "afterSha256": "aa738e2a91c99789ae8b809c3591ff00364427b532459527af3e2680633c2ee2",
+      "match": true,
+      "actualHandleClose": "2026-10-11T03:06:57.504Z",
+      "identity": {
+        "dev": "16777233",
+        "ino": "133417538",
+        "uid": "501",
+        "gid": "20",
+        "mode": "33152",
+        "nlink": "1",
+        "size": "542",
+        "mtimeNs": "1791422049888736612",
+        "ctimeNs": "1791422049897388571"
+      }
+    },
+    {
+      "path": "/Users/hugues_mini/Library/Application Support/jev-ios-bridge/observed-actions/d05718444fddd9ffcd6aeb8024f89d94eb6b9f37bbb5c95c53b9a64aa5d297df/3a7ddb74a81795172a640a62ebf43db403055dd57e09f97f25391896ae879fe7.result.json",
+      "bytes": 647,
+      "collectorSha256": "3c5d181ad88715b2128272c8f9c13a5f3972d405536b421f3acc332c43ae896b",
+      "afterSha256": "3c5d181ad88715b2128272c8f9c13a5f3972d405536b421f3acc332c43ae896b",
+      "match": true,
+      "actualHandleClose": "2026-10-11T03:06:57.505Z",
+      "identity": {
+        "dev": "16777233",
+        "ino": "133417595",
+        "uid": "501",
+        "gid": "20",
+        "mode": "33152",
+        "nlink": "1",
+        "size": "647",
+        "mtimeNs": "1791422059609006992",
+        "ctimeNs": "1791422059617897202"
+      }
+    },
+    {
+      "path": "/Users/hugues_mini/Library/Application Support/jev-ios-bridge/observed-actions/d05718444fddd9ffcd6aeb8024f89d94eb6b9f37bbb5c95c53b9a64aa5d297df/quarantine.json",
+      "bytes": 119,
+      "collectorSha256": "ff7a89f90c0ea50eb795cfc674422fbaab26f61fc7b18625fb6c0024737914d8",
+      "afterSha256": "ff7a89f90c0ea50eb795cfc674422fbaab26f61fc7b18625fb6c0024737914d8",
+      "match": true,
+      "actualHandleClose": "2026-10-11T03:06:57.505Z",
+      "identity": {
+        "dev": "16777233",
+        "ino": "133418049",
+        "uid": "501",
+        "gid": "20",
+        "mode": "33152",
+        "nlink": "1",
+        "size": "119",
+        "mtimeNs": "1791422131576627733",
+        "ctimeNs": "1791422131585315775"
+      }
+    }
+  ],
+  "sources": [
+    {
+      "kind": "journal",
+      "root": "/Users/hugues_mini/Library/Application Support/jev-ios-bridge/observed-actions",
+      "requestedRoots": [
+        "/Users/hugues_mini/Library/Application Support/jev-ios-bridge/observed-actions"
+      ],
+      "present": true,
+      "files": [
+        {
+          "path": "/Users/hugues_mini/Library/Application Support/jev-ios-bridge/observed-actions/2fbd334417cfd0019bede26d507fc4a91a92f79b427921d153faba8e63e80e0f/cdb99068b1d33a3aa6679b05f928f586bd11c3ddc6312026dcd715d62b1ff8f1.intent.json",
+          "sha256": "0e19de91b92d8045dbfd5fc711c6e29711f54c623dba1350a4d7c4d786d1a0b2"
+        },
+        {
+          "path": "/Users/hugues_mini/Library/Application Support/jev-ios-bridge/observed-actions/2fbd334417cfd0019bede26d507fc4a91a92f79b427921d153faba8e63e80e0f/cdb99068b1d33a3aa6679b05f928f586bd11c3ddc6312026dcd715d62b1ff8f1.result.json",
+          "sha256": "346af606d0c1d5a21d98953186b0bb5a61c1426a2bc451b7e68bf447827e880f"
+        },
+        {
+          "path": "/Users/hugues_mini/Library/Application Support/jev-ios-bridge/observed-actions/2fbd334417cfd0019bede26d507fc4a91a92f79b427921d153faba8e63e80e0f/quarantine.json",
+          "sha256": "ec39c6b23e01679fb468b5608ec66dc99c78073f3cd8dfbcf1a6a5801357618c"
+        },
+        {
+          "path": "/Users/hugues_mini/Library/Application Support/jev-ios-bridge/observed-actions/d05718444fddd9ffcd6aeb8024f89d94eb6b9f37bbb5c95c53b9a64aa5d297df/1e128b93368a5310a16cbc42ade12f6f8a78fe674d350b93be764b47626597e7.intent.json",
+          "sha256": "93c90be21f2d63ee69fcaf5fe4937c56e1c199c58ead3a75c382e636b15bf428"
+        },
+        {
+          "path": "/Users/hugues_mini/Library/Application Support/jev-ios-bridge/observed-actions/d05718444fddd9ffcd6aeb8024f89d94eb6b9f37bbb5c95c53b9a64aa5d297df/1e128b93368a5310a16cbc42ade12f6f8a78fe674d350b93be764b47626597e7.result.json",
+          "sha256": "66ed1d35a832df2f50cef2952b93af045a8395f6214cc41f95fe019cd6e6fda4"
+        },
+        {
+          "path": "/Users/hugues_mini/Library/Application Support/jev-ios-bridge/observed-actions/d05718444fddd9ffcd6aeb8024f89d94eb6b9f37bbb5c95c53b9a64aa5d297df/326235deeed5670b499bbd40935d0e273489b868f6751791d6793e5c2c9784cc.intent.json",
+          "sha256": "cb8eb20259d2eab6c8a8c6b37e61f8c853446b6b251455f7a349bf314b108293"
+        },
+        {
+          "path": "/Users/hugues_mini/Library/Application Support/jev-ios-bridge/observed-actions/d05718444fddd9ffcd6aeb8024f89d94eb6b9f37bbb5c95c53b9a64aa5d297df/326235deeed5670b499bbd40935d0e273489b868f6751791d6793e5c2c9784cc.result.json",
+          "sha256": "686dcb9c045da4fce71655c3d67ee2c594e74a609d40b17ed34daae768e88e4f"
+        },
+        {
+          "path": "/Users/hugues_mini/Library/Application Support/jev-ios-bridge/observed-actions/d05718444fddd9ffcd6aeb8024f89d94eb6b9f37bbb5c95c53b9a64aa5d297df/3a7ddb74a81795172a640a62ebf43db403055dd57e09f97f25391896ae879fe7.intent.json",
+          "sha256": "aa738e2a91c99789ae8b809c3591ff00364427b532459527af3e2680633c2ee2"
+        },
+        {
+          "path": "/Users/hugues_mini/Library/Application Support/jev-ios-bridge/observed-actions/d05718444fddd9ffcd6aeb8024f89d94eb6b9f37bbb5c95c53b9a64aa5d297df/3a7ddb74a81795172a640a62ebf43db403055dd57e09f97f25391896ae879fe7.result.json",
+          "sha256": "3c5d181ad88715b2128272c8f9c13a5f3972d405536b421f3acc332c43ae896b"
+        },
+        {
+          "path": "/Users/hugues_mini/Library/Application Support/jev-ios-bridge/observed-actions/d05718444fddd9ffcd6aeb8024f89d94eb6b9f37bbb5c95c53b9a64aa5d297df/quarantine.json",
+          "sha256": "ff7a89f90c0ea50eb795cfc674422fbaab26f61fc7b18625fb6c0024737914d8"
+        }
+      ]
+    },
+    {
+      "kind": "leases",
+      "root": "/private/var/folders/yd/86fjng8s4hbfhcz7_0yqcl9w0000gn/T/jev-ios-bridge-device-locks",
+      "requestedRoots": [
+        "/var/folders/yd/86fjng8s4hbfhcz7_0yqcl9w0000gn/T/jev-ios-bridge-device-locks"
+      ],
+      "present": false,
+      "files": []
+    }
+  ]
+}

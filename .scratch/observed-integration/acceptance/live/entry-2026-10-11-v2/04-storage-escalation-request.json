@@ -1,0 +1,10 @@
+{
+  "cmd": "env -u TYPESAFE_API_KEY -u NODE_OPTIONS -u NODE_NO_WARNINGS /opt/homebrew/Cellar/node/26.8.1/bin/node .scratch/observed-integration/acceptance/live/entry-2026-10-11-v2/run-storage.mjs",
+  "login": false,
+  "sandbox_permissions": "require_escalated",
+  "justification": "Authority and capacity passed. Allow the pinned production storage helper to read filesystem free-space metadata for default CoreSimulator storage and the approved staging volume, with no reservation or device operation?",
+  "prefix_rule": "not requested",
+  "receivedToolExitCode": 3,
+  "receivedToolChunkId": "a9af98",
+  "approvalQualifier": "Fresh supported requests completed; no approval UI selection or permission configuration inspected by the operator."
+}

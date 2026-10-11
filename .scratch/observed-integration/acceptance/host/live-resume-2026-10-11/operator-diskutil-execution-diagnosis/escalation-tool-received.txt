@@ -1,0 +1,11 @@
+file:///Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic/.scratch/observed-integration/acceptance/host/live-resume-2026-10-11/operator-diskutil-execution-diagnosis/run.mjs:19
+if(Object.keys(process.env).sort().join(',')!==Object.keys(env).sort().join(',')||Object.entries(env).some(([k,v])=>process.env[k]!==v))throw new Error('Outer environment differs from exact minimal environment');
+                                                                                                                                              ^
+
+Error: Outer environment differs from exact minimal environment
+    at file:///Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic/.scratch/observed-integration/acceptance/host/live-resume-2026-10-11/operator-diskutil-execution-diagnosis/run.mjs:19:143
+    at ModuleJob.run (node:internal/modules/esm/module_job:569:25)
+    at async node:internal/modules/esm/loader:650:26
+    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5)
+
+Node.js v26.8.1

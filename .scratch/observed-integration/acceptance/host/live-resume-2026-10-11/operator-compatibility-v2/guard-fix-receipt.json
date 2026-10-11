@@ -1,0 +1,11 @@
+{
+  "changedFile": "recording.mjs",
+  "originalFile": "recording-round1.mjs",
+  "beforeSha256": "b48cd0965336901536a9e0c25689a550432a040d7398df6d9bbe2f10db85699d",
+  "afterSha256": "9676898e2d911cf22e2ee656913f1abfe0775396097a0dc05dcab01748ba3285",
+  "change": "Only file-handle Proxy get('then') returns undefined for Promise assimilation; every other unexpected method remains denied.",
+  "nativeFilesystemCalls": 0,
+  "nativeChildren": 0,
+  "lookupCalls": 0,
+  "rootReview": "Root explicitly reviewed round1 and authorized this minimal fix and pure-only rerun."
+}

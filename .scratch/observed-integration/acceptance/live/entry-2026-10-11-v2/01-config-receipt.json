@@ -1,0 +1,61 @@
+{
+  "argv": [
+    "/opt/homebrew/Cellar/node/26.8.1/bin/node",
+    "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic/.scratch/observed-integration/acceptance/live/entry-2026-10-11-v2/config.mjs"
+  ],
+  "cwd": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic",
+  "spawnOptions": {
+    "cwd": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic",
+    "env": {
+      "HOME": "/Users/hugues_mini",
+      "PATH": "/usr/bin:/bin:/usr/sbin:/sbin",
+      "LANG": "C",
+      "LC_ALL": "C",
+      "DEVELOPER_DIR": "/Applications/Xcode.app/Contents/Developer",
+      "TMPDIR": "/var/folders/yd/86fjng8s4hbfhcz7_0yqcl9w0000gn/T"
+    },
+    "shell": false,
+    "stdio": [
+      "ignore",
+      "pipe",
+      "pipe"
+    ]
+  },
+  "startedAtUtc": "2026-10-11T03:03:16.507Z",
+  "timeoutMs": 10000,
+  "combinedOutputLimit": 65536,
+  "events": [
+    {
+      "event": "spawn",
+      "atUtc": "2026-10-11T03:03:16.509Z"
+    },
+    {
+      "event": "exit",
+      "code": 3,
+      "signal": null,
+      "atUtc": "2026-10-11T03:03:16.598Z"
+    },
+    {
+      "event": "close",
+      "code": 3,
+      "signal": null,
+      "atUtc": "2026-10-11T03:03:16.598Z"
+    }
+  ],
+  "killCalls": [],
+  "stdoutOriginalBytes": 2017,
+  "stderrOriginalBytes": 0,
+  "pid": 76171,
+  "closedAtUtc": "2026-10-11T03:03:16.598Z",
+  "exitCode": 3,
+  "signal": null,
+  "timedOut": false,
+  "overflow": false,
+  "stopped": false,
+  "error": null,
+  "retainedBytes": 2017,
+  "captureComplete": true,
+  "descendantQualifier": "Only direct child close is observed; descendants are unobserved.",
+  "stdoutOriginalSha256": "0efcb050b4baab70cc9fe4c9569984c455dbdea8af2178585805311240625c3e",
+  "stderrOriginalSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+}

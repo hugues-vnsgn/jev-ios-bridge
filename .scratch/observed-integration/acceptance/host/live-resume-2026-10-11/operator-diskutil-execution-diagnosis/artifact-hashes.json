@@ -1,0 +1,57 @@
+{
+  "schemaVersion": 1,
+  "sealedAtUtc": "2026-10-11T02:27:41.514279+00:00",
+  "status": "DIAGNOSTIC_PRE_QUERY_GUARD_FAILURE_SEALED",
+  "scope": "All evidence files except this manifest itself. No native query result exists.",
+  "directoriesMode": "0700",
+  "files": [
+    {
+      "path": "escalation-request-receipt.json",
+      "bytes": 916,
+      "sha256": "2da489977023dee2a0ef6f21b8c3997a1038f11c4b3046f1de5d73f72ba1d676",
+      "mode": "0600"
+    },
+    {
+      "path": "escalation-tool-received.txt",
+      "bytes": 1068,
+      "sha256": "16aaf8d424dda1802e66652da32a68c68cc961315f973475e1f3762a857ac5e9",
+      "mode": "0600"
+    },
+    {
+      "path": "escalation-tool-result.json",
+      "bytes": 1205,
+      "sha256": "1f1499f3332b9d797ba8185b4422b231b4da7ad10438a8b426d12852ccd5f82f",
+      "mode": "0600"
+    },
+    {
+      "path": "preparation.json",
+      "bytes": 1080,
+      "sha256": "568b5c5812752ffeb9d03f12d7e946f7835fa850c06db10ea30df2b5cda1bd48",
+      "mode": "0600"
+    },
+    {
+      "path": "report.md",
+      "bytes": 1899,
+      "sha256": "bf274c365b38f7a37a357bd90dc6636391dedf5124d48212be9a4a4075bd0712",
+      "mode": "0600"
+    },
+    {
+      "path": "result.json",
+      "bytes": 1857,
+      "sha256": "b0ef35724502d1a146afef4dbbb187410b03ea154a20df2a4e8407afa3f50610",
+      "mode": "0600"
+    },
+    {
+      "path": "run.mjs",
+      "bytes": 11250,
+      "sha256": "886b3d40b3baca970d099fb6846829b7884ca48113d2e5a65c95855df06aa5e6",
+      "mode": "0600"
+    },
+    {
+      "path": "syntax-check-receipt.json",
+      "bytes": 369,
+      "sha256": "a1dc0c7f558b29be412357d28bd52ecbc11c2a3e59a158e218bb169206a2d0a2",
+      "mode": "0600"
+    }
+  ]
+}

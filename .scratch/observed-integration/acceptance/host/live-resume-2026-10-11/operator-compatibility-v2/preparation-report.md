@@ -1,0 +1,17 @@
+# Compatibility v2 preparation: ready for Root inspection
+
+**READY_FOR_ROOT_INSPECTION_ONLY. Pure audit PASS39/39. Compatibility lookup0/1; budget remains unused. Operator idle.**
+
+The preparation failure in operator-compatibility is sealed separately, including the exact git command, successful subprocess return, verbatim unexpected Xcode diagnostics and explicit unknown descendants/effects/close. V2 used Root's independently supplied full HEAD 1f69ec7d3d648189cd631259c1c9427c5b8e1b0e; no git invocation, Apple shim investigation or native trial was performed here.
+
+The first pure audit passed35/39 and exposed Promise assimilation of the returned file-handle proxy: its then getter was incorrectly denied. The sole change returns undefined for that getter. Every other unexpected handle method remains denied. Original recording code and round1 outputs are preserved. The unchanged pure audit then passed39/39, return0, stderr0; only recording.mjs syntax was repeated and passed. Initial syntax checks on all six scripts had passed.
+
+probe.mjs calls actual installedHost/allocationSourceProcess/verifyInstalledCompatibility only after the execution flag. It passes one shared60s signal and preserves the private production expected context through trackAllocationSourceProcess. run.mjs validates the sealed preparation and before/after hash groups, scrubs credential/loader environment names, records the exact outer Node subprocess and consumes a single exclusive lookup claim. Neither file was executed.
+
+guards.mjs admits only fixed installed metadata and ancestors including /, immediate discoveries under exact device/default/Volumes/Cryptex namespaces, strict v3 names, approved plist leaf forms and exact plutil/diskutil launch argv/environment/options. Device/runtime1000, namespace/listing1000, legacy/Cryptex64 each, path4096, basename255 and actual-child8192 limits apply. It accepts the bounded65537 read sentinel; production65536 input/ordinary output, fixed XcodeInfo131072 output,10s mount deadlines and mount-only SIGTERM/250ms SIGKILL remain unchanged.
+
+recording.mjs delegates original Stats, read results and buffers, errors, close values, ChildProcess objects and kill returns unchanged. Production bigint snapshots and ctime/mtime nanoseconds are serialized losslessly. For successful numeric stat calls, two additional bigint observations of the same already authorized path/handle are separately recorded and compared. Unsafe original Number fields remain qualified as uncertain; they are never converted to bigint or substituted into production. These companions are separate observations and do not certify reconstruction of a rounded original Number. Guard uncertainty stops the attempt.
+
+The pure audit uses in-memory filesystem and child fakes, plus finite repository code reads. It proves guard boundaries, bigint/nanosecond serialization, unchanged delegation, output receipts and that signal delivery or exit alone never establishes close. It provides no installed compatibility or native timing evidence.
+
+All443 source,69 compiled,15 original host,842 prior-evidence and13 sealed preparation-failure files match before/after. New evidence has directory0700/file0600 modes. artifact-hashes-prepared.json covers all prepared files except itself. Future result paths remain unused. No key load, account/config/store/Devices read, simulator/SDK/network/backend command, build, package install, compilation, full test run or commit occurred. Root review is required before the once call. Migration and L01-L05 remain unstarted.

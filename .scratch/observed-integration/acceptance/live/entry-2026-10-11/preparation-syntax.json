@@ -1,0 +1,62 @@
+{
+  "scope": "Script syntax only; no production module invoked or account configuration read",
+  "checks": [
+    {
+      "argv": [
+        "/opt/homebrew/Cellar/node/26.8.1/bin/node",
+        "--check",
+        ".scratch/observed-integration/acceptance/live/entry-2026-10-11/commands.mjs"
+      ],
+      "env": {
+        "HOME": "/Users/hugues_mini",
+        "PATH": "/usr/bin:/bin:/usr/sbin:/sbin",
+        "LANG": "C",
+        "LC_ALL": "C",
+        "DEVELOPER_DIR": "/Applications/Xcode.app/Contents/Developer"
+      },
+      "exitCode": 0,
+      "stdout": "",
+      "stderr": "",
+      "actualSubprocessCompletion": true,
+      "scriptSha256": "0d5924cf2e71f8b09a2699d9411d13a83ae51067798c97434e09860758f4f505"
+    },
+    {
+      "argv": [
+        "/opt/homebrew/Cellar/node/26.8.1/bin/node",
+        "--check",
+        ".scratch/observed-integration/acceptance/live/entry-2026-10-11/config.mjs"
+      ],
+      "env": {
+        "HOME": "/Users/hugues_mini",
+        "PATH": "/usr/bin:/bin:/usr/sbin:/sbin",
+        "LANG": "C",
+        "LC_ALL": "C",
+        "DEVELOPER_DIR": "/Applications/Xcode.app/Contents/Developer"
+      },
+      "exitCode": 0,
+      "stdout": "",
+      "stderr": "",
+      "actualSubprocessCompletion": true,
+      "scriptSha256": "7ce603b1a0437ad844721151bd4a41761c679e831117d6ba5dcf6475d0e7a1f5"
+    },
+    {
+      "argv": [
+        "/opt/homebrew/Cellar/node/26.8.1/bin/node",
+        "--check",
+        ".scratch/observed-integration/acceptance/live/entry-2026-10-11/run-config.mjs"
+      ],
+      "env": {
+        "HOME": "/Users/hugues_mini",
+        "PATH": "/usr/bin:/bin:/usr/sbin:/sbin",
+        "LANG": "C",
+        "LC_ALL": "C",
+        "DEVELOPER_DIR": "/Applications/Xcode.app/Contents/Developer"
+      },
+      "exitCode": 0,
+      "stdout": "",
+      "stderr": "",
+      "actualSubprocessCompletion": true,
+      "scriptSha256": "d44194b7c04f4e297966a0db85b9ebf8dee6d4364fde9d4f2c3e5ad7ebfb06e9"
+    }
+  ]
+}

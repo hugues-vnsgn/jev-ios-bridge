@@ -1,0 +1,25 @@
+{
+  "command": "env -u TYPESAFE_API_KEY -u NODE_OPTIONS -u NODE_NO_WARNINGS /opt/homebrew/Cellar/node/26.8.1/bin/node .scratch/observed-integration/acceptance/host/live-resume-2026-10-11/operator-compatibility-v2/run.mjs --execute-once-after-root-review",
+  "cwd": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic",
+  "login": false,
+  "firstToolChunk": "57cf68",
+  "execSessionId": 41079,
+  "completionToolChunk": "671ed2",
+  "toolReportedWrapperExitCode": 2,
+  "wrapperSignal": "Not separately exposed by exec tool",
+  "probeExitCode": 3,
+  "probeSignal": null,
+  "probeActualClose": {
+    "atUtc": "2026-10-11T02:18:45.607Z",
+    "event": "close",
+    "code": 3,
+    "signal": null
+  },
+  "receivedOutputFile": "outer-tool-received.txt",
+  "receivedUtf8Sha256": "a4bdb9d3894ea70cd1822f8bfb003bad2d852b489b7815294d5f5e5d62b57b25",
+  "rootReviewFile": "consumed-root-probe-review.json",
+  "rootReviewSha256": "3ecb549f84cb41227b1656fa94bb8517e36b8960a49d3fddb7188668d022410c",
+  "lookupCalls": 1,
+  "lookupBudgetRemaining": 0,
+  "redaction": "none"
+}

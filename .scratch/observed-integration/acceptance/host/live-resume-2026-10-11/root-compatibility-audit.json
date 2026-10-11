@@ -1,0 +1,16 @@
+{
+  "status": "HOST_PREREQUISITE_REFUSAL_CONFIRMED",
+  "manifestSha256": "b14e94c92a3cb120f526956bf52d97aaa83924e7bb702aac7e0c12a7b6552665",
+  "verifiedFiles": 734,
+  "lookupCalls": 1,
+  "guardFailures": 0,
+  "childrenClosed": 135,
+  "metadataByteReceipts": 402,
+  "plutilSuccesses": 134,
+  "diskutilExit": 1,
+  "diskutilStderrSha256": "2374e28f61a1ab9e76bbc1f72178ff880d59c566fea05511ad2cf8c2d52567f6",
+  "sourceCorrespondence": "443 Source /69 compiled /15 host and preserved historical artifacts unchanged before and after",
+  "configuredOperatorSandbox": "workspace-write",
+  "cause": "Fresh read-only mount query could not access DiskManagement framework; sandbox causation unconfirmed.",
+  "next": "Same sole operator, one read-only diskutil diagnosis through supported escalation mechanism; no compatibility retry or operational entry yet."
+}

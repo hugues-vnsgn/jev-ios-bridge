@@ -1,0 +1,19 @@
+{
+  "argv": [
+    "/opt/homebrew/Cellar/node/26.8.1/bin/node",
+    "--check",
+    "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic/.scratch/observed-integration/acceptance/live/entry-repair-2026-10-11/run.mjs"
+  ],
+  "env": {
+    "HOME": "/Users/hugues_mini",
+    "PATH": "/usr/bin:/bin:/usr/sbin:/sbin",
+    "LANG": "C",
+    "LC_ALL": "C",
+    "DEVELOPER_DIR": "/Applications/Xcode.app/Contents/Developer"
+  },
+  "exitCode": 0,
+  "stdout": "",
+  "stderr": "",
+  "scope": "Syntax only; repair module not evaluated and no target metadata read",
+  "actualSubprocessCompletion": true
+}

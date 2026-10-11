@@ -1,0 +1,29 @@
+{
+  "recordedAtUtc": "2026-10-11T02:21:59.792613+00:00",
+  "basis": "Session developer/user instructions only; no environment/config/credentials values were inspected.",
+  "configuredSandboxMode": "workspace-write",
+  "userEnvironmentPermissionProfileType": "managed",
+  "userEnvironmentFilesystemType": "restricted",
+  "networkAccess": "restricted",
+  "writableRoots": [
+    "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic",
+    "/private/tmp",
+    "/private/var/folders/yd/86fjng8s4hbfhcz7_0yqcl9w0000gn/T"
+  ],
+  "approval": {
+    "namedApprovalPolicy": "NOT_SPECIFIED_IN_SESSION_INSTRUCTIONS",
+    "documentedBehavior": "exec_command supports require_escalated approval requests; commands outside sandbox require approval or a matching existing rule.",
+    "cannotInfer": "A named policy such as never or on-request was not explicitly supplied for this operator session."
+  },
+  "actualLookupToolCall": {
+    "sandboxPermissionsArgument": "omitted; exec_command default use_default",
+    "escalationRequested": false,
+    "approvalQuestionIssued": false,
+    "login": false
+  },
+  "CODEX_SANDBOX": "Root reports the environment name was present; no value inspected or inferred.",
+  "contrastWithRoot": "Root reports danger-full-access/approval never for its own session; that is not the restored operator profile stated here.",
+  "causeLimit": "Observed diskutil DiskManagement-framework failure occurred under default workspace-write sandbox. Sandbox/IPC restrictions are a plausible explanation, not a confirmed cause; host framework availability remains UNVERIFIED.",
+  "nativeRerunOrDiagnostic": false,
+  "operatorState": "IDLE_FOR_ROOT_AUDIT"
+}

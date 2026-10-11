@@ -1,0 +1,10 @@
+{
+  "cmd": "env -u TYPESAFE_API_KEY -u NODE_OPTIONS -u NODE_NO_WARNINGS /opt/homebrew/Cellar/node/26.8.1/bin/node .scratch/observed-integration/acceptance/live/entry-2026-10-11-v2/run-config.mjs",
+  "login": false,
+  "sandbox_permissions": "require_escalated",
+  "justification": "Root authorized a new configuration attempt after the exact directory repair verified. Allow the pinned production account configuration read outside workspace-write, with no key load or configuration change?",
+  "prefix_rule": "not requested",
+  "receivedToolExitCode": 3,
+  "receivedToolChunkId": "cc3f9d",
+  "approvalQualifier": "Fresh supported requests completed; no approval UI selection or permission configuration inspected by the operator."
+}

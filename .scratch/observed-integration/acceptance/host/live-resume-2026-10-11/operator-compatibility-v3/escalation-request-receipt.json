@@ -1,0 +1,13 @@
+{
+  "recordedAtUtc": "2026-10-11T02:52:03.146089+00:00",
+  "cmd": "env -u TYPESAFE_API_KEY -u NODE_OPTIONS -u NODE_NO_WARNINGS /opt/homebrew/Cellar/node/26.8.1/bin/node .scratch/observed-integration/acceptance/host/live-resume-2026-10-11/operator-compatibility-v3/run.mjs --execute-once-after-root-review",
+  "login": false,
+  "sandbox_permissions": "require_escalated",
+  "justification": "The owner delegated routine approvals to Root and authorized this new once metadata lookup after the read-only mount query succeeded elevated. Allow the reviewed compatibility lookup outside workspace-write to access the required framework?",
+  "prefix_rule": "not requested",
+  "yield_time_ms": 1000,
+  "max_output_tokens": 2000,
+  "initialToolSessionId": 66235,
+  "completionToolExitCode": 0,
+  "approvalQualifier": "Fresh supported require_escalated execution returned normally. No approval UI choice or permission configuration was inspected or selected by the operator."
+}

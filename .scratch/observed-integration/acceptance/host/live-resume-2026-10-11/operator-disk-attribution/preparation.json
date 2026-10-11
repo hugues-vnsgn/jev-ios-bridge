@@ -1,0 +1,11 @@
+{
+  "preparedAtUtc": "2026-10-11T03:14:21.289841+00:00",
+  "scope": "One /usr/bin/du -sk invocation; three exact authorized roots plus integration .scratch and node_modules only",
+  "timeoutMs": 120000,
+  "combinedOutputBytes": 65536,
+  "termination": "SIGTERM then250msSIGKILL; await actual close",
+  "duCalls": 0,
+  "entryManifestSha256": "5938a8a11b832bbf27e733607a5635982550e518345897652869efee9c2cc02d",
+  "scriptSha256": "2b667389271230f60505528c13aaaeef6bebc91c959680a4fddbeb579d00c6bf",
+  "noCleanupAuthorized": true
+}

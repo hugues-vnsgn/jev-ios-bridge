@@ -1,0 +1,14 @@
+{
+  "claimedAtUtc": "2026-10-11T03:15:18.593Z",
+  "budget": 1,
+  "argv": [
+    "/usr/bin/du",
+    "-sk",
+    "/Users/hugues_mini/Codes/AgentTools/jev-ios-bridge",
+    "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic",
+    "/Users/hugues_mini/orca/workspaces/jev-ios-bridge",
+    "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic/.scratch",
+    "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic/node_modules"
+  ],
+  "scope": "Exactly five owner-authorized workspace root/subroot arguments; no file contents read or mutation"
+}

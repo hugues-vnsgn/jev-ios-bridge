@@ -1,0 +1,67 @@
+{
+  "auditedAtUtc": "2026-10-11T03:13:19.317848+00:00",
+  "status": "BLOCKED_STORAGE",
+  "recordedCommandsVerified": {
+    "01-config": {
+      "exitCode": 3,
+      "closedAtUtc": "2026-10-11T03:03:16.598Z",
+      "receiptSha256": "967f6e885073be267d3fd7017a2e1733bd1da3514dd71db7fc2596893d866fc9"
+    },
+    "02-migration": {
+      "exitCode": 0,
+      "closedAtUtc": "2026-10-11T03:06:57.501Z",
+      "receiptSha256": "004139ae8efab6137b2bdfd17e259050b76975a126f78fcb990843bdc2006f15"
+    },
+    "03-authority": {
+      "exitCode": 0,
+      "closedAtUtc": "2026-10-11T03:08:34.708Z",
+      "receiptSha256": "be1c4323a81cf69c1b3df2095b179fd843f28cf83e143415037ccb429530a2a4"
+    },
+    "04-storage": {
+      "exitCode": 3,
+      "closedAtUtc": "2026-10-11T03:10:10.563Z",
+      "receiptSha256": "1ebbece5bc107dde1738121a8a652656a18b290b5b28b543434c17a2804fe674"
+    }
+  },
+  "configuration": "PASS by separate root-config-digest-correction.json; original wrapper variance retained",
+  "migration": "PASS; once, four actions and devices, ten historical source hashes preserved",
+  "authority": "PASS; zero held allocations/bytes; protected devices quarantined",
+  "storage": {
+    "simulatorFreeBytes": 17591939072,
+    "stagingFreeBytes": 17591939072
+  },
+  "requirements": {
+    "existingReservations": 0,
+    "proposedAllocations": 5,
+    "proposedReservations": 42949672960,
+    "remainingFreeFloor": 21474836480,
+    "stagedArtifactAllowance": 10737418240,
+    "simulatorRequired": 64424509440,
+    "stagingRequired": 75161927680
+  },
+  "additionalStagingBytesRequired": 57569988608,
+  "additionalStagingGiBRequired": 53.61623001098633,
+  "builds": 0,
+  "liveCases": "L01-L05 UNVERIFIED; not dispatched",
+  "next": "Free storage with preservation constraints; fresh storage proof then unchanged builds and entry audit. Do not rerun migration.",
+  "finalEvidenceManifestsVerified": [
+    {
+      "directory": "live/entry-2026-10-11",
+      "manifest": "artifact-hashes.json",
+      "entriesVerified": 20,
+      "manifestSha256": "3859c3e7657793ace28f2d60b8ded374c25df2a944f6fb22c55223ff4c1c22f6"
+    },
+    {
+      "directory": "live/entry-repair-2026-10-11",
+      "manifest": "completion-hashes.json",
+      "entriesVerified": 11,
+      "manifestSha256": "0f1d17a9a9a514a255faa8d896ff834e4c0e410e970814300e0c5c8d8f934ea9"
+    },
+    {
+      "directory": "live/entry-2026-10-11-v2",
+      "manifest": "artifact-hashes.json",
+      "entriesVerified": 56,
+      "manifestSha256": "5938a8a11b832bbf27e733607a5635982550e518345897652869efee9c2cc02d"
+    }
+  ]
+}

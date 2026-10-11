@@ -1,0 +1,17 @@
+{
+  "verifiedAtUtc": "2026-10-11T03:02:53.853458+00:00",
+  "status": "PASS",
+  "fchmodCalls": 1,
+  "exactTarget": "/Users/hugues_mini/Library/Application Support/jev-ios-bridge",
+  "losslessBeforeAndAfterBindingVerified": true,
+  "actualHandleClose": {
+    "atUtc": "2026-10-11T03:02:13.160Z",
+    "completed": true
+  },
+  "allowedChange": "Exact target permissions0755 to0700; ctime changes naturally with chmod. No other target metadata changes observed. No directory contents read or changed by repair.",
+  "failedEntrySealPreserved": true,
+  "failedEntryFilesVerified": 20,
+  "failedEntryManifestSha256": "3859c3e7657793ace28f2d60b8ded374c25df2a944f6fb22c55223ff4c1c22f6",
+  "initialRepairSealPreserved": true,
+  "additionalNativeCall": false
+}

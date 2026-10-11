@@ -1,0 +1,28 @@
+{
+  "status": "CONFIRMED",
+  "reason": "STORAGE_UNAVAILABLE",
+  "productionStorageHelperReturnedSuccessfully": true,
+  "conservativeEntryGuardRefused": true,
+  "observedAvailableBytes": {
+    "simulatorFreeBytes": 17591939072,
+    "stagingFreeBytes": 17591939072
+  },
+  "availableGiB": 16.383769989013672,
+  "requiredBytes": {
+    "existingReservations": 0,
+    "proposedAllocations": 5,
+    "proposedReservations": 42949672960,
+    "remainingFreeFloor": 21474836480,
+    "stagedArtifactAllowance": 10737418240,
+    "simulatorRequired": 64424509440,
+    "stagingRequired": 75161927680
+  },
+  "deficitBytes": {
+    "simulator": 46832570368,
+    "staging": 57569988608
+  },
+  "belowFreeFloorWithoutAnyProposedReservation": true,
+  "statfsEvidence": "04-storage-result.json",
+  "commandsAndActualClose": "04-storage-receipt.json",
+  "noCleanupOrPolicyChange": true
+}

@@ -1,0 +1,11 @@
+{
+  "scope": "Repository source location only; no native recheck or changes to prepared files.",
+  "supersedes": "confirmed-cause.json sourceFailurePredicate.line only",
+  "sourceFile": "src/observed/allocation-config.ts",
+  "exitCodePredicateLine": 192,
+  "throwLine": 193,
+  "compiledFile": "dist/observed/allocation-config.js",
+  "exitCodePredicateLineCompiled": 249,
+  "throwLineCompiled": 250,
+  "qualification": "The initially recorded Source187 was a preceding root check, not the nonzero-result predicate. Cause and raw evidence remain unchanged."
+}
