@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.4.0 — 2026-10-11
+
+- Experimental observed iOS actions, durable admission and bounded simulator allocation.
+- Xcode/runtime validation and installed migration/recovery guidance.
+- Code/package validation passed; planned live simulator acceptance remains uncompleted. See [release notes](docs/releases/v1.4.0.md).
+
 jev-ios-bridge follows [semantic versioning](https://semver.org). What 1.x keeps stable: [stability](docs/guide/11-stability.md).
 
 ## 1.3.1
