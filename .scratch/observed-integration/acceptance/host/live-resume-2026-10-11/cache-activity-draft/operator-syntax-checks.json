@@ -1,0 +1,35 @@
+[
+  {
+    "label": "reviewed activity probe syntax",
+    "cmd": "env -u TYPESAFE_API_KEY -u NODE_OPTIONS -u NODE_NO_WARNINGS /opt/homebrew/Cellar/node/26.8.1/bin/node --check .scratch/observed-integration/acceptance/host/live-resume-2026-10-11/cache-activity-draft/run-probe.mjs",
+    "toolResult": {
+      "chunk_id": "8229a1",
+      "wall_time_seconds": 5.292e-06,
+      "exit_code": 0,
+      "original_token_count": 0,
+      "output": ""
+    }
+  },
+  {
+    "label": "activity recorder syntax",
+    "cmd": "env -u TYPESAFE_API_KEY -u NODE_OPTIONS -u NODE_NO_WARNINGS /opt/homebrew/Cellar/node/26.8.1/bin/node --check .scratch/observed-integration/acceptance/host/live-resume-2026-10-11/cache-activity-draft/commands.mjs",
+    "toolResult": {
+      "chunk_id": "73c427",
+      "wall_time_seconds": 4.125e-06,
+      "exit_code": 0,
+      "original_token_count": 0,
+      "output": ""
+    }
+  },
+  {
+    "label": "reviewed hash and private preparation modes",
+    "cmd": "/opt/homebrew/bin/python3 -c 'import pathlib,hashlib,stat,json\nd=pathlib.Path(\".scratch/observed-integration/acceptance/host/live-resume-2026-10-11/cache-activity-draft\")\nsha=lambda p:hashlib.sha256(p.read_bytes()).hexdigest()\nassert not d.is_symlink() and stat.S_IMODE(d.lstat().st_mode)==0o700\nassert sha(d/'\\''run-probe.mjs'\\'')=='\\''07418d27ea17ca62b6f9523af0806d60207735a94a3d8c521ddf897353668723'\\''\nassert all(not p.is_symlink() and stat.S_IMODE(p.lstat().st_mode)==0o600 for p in [d/'\\''run-probe.mjs'\\'',d/'\\''commands.mjs'\\''])\nprint(json.dumps({p.name:sha(p) for p in [d/'\\''run-probe.mjs'\\'',d/'\\''commands.mjs'\\'']}))'",
+    "toolResult": {
+      "chunk_id": "c3a818",
+      "wall_time_seconds": 7.958e-06,
+      "exit_code": 0,
+      "original_token_count": 43,
+      "output": "{\"run-probe.mjs\": \"07418d27ea17ca62b6f9523af0806d60207735a94a3d8c521ddf897353668723\", \"commands.mjs\": \"548ff1795bf9c4098d4e48e21516f64a011235cbfd3052b4c7ca934e11c11b10\"}\n"
+    }
+  }
+]

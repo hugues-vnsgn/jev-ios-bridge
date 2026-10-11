@@ -1,0 +1,22 @@
+{
+  "status": "READ_ONLY_READINESS_STOPPED",
+  "error": {
+    "name": "Error",
+    "message": "Unparsed executable-name record",
+    "code": null
+  },
+  "observations": [],
+  "processNames": null,
+  "duObservation": null,
+  "completedAtUtc": "2026-10-11T05:31:08.389Z",
+  "metadata": [],
+  "JetBrainsArchiveDecision": "PENDING_ROOT_REVIEW_NO_EXECUTION",
+  "qualification": "No-match is a momentary observation and does not prove inactivity/future quiescence or authorize archive/removal. Source is retained; no archive script ran. lstat alone does not eliminate ancestor/pathname races. Read-only metadata deadline cannot cancel underlying lstat; no filesystem mutation was started.",
+  "sourceMutations": 0,
+  "archiveCalls": 0,
+  "dataCopies": 0,
+  "deletions": 0,
+  "processStops": 0,
+  "builds": 0,
+  "operatorState": "IDLE_FOR_ROOT_AUDIT"
+}

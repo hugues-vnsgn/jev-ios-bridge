@@ -1,0 +1,61 @@
+{
+  "sealedAtUtc": "2026-10-11T05:17:32.805768+00:00",
+  "scope": "All pre-execution namespace preparation files except this manifest",
+  "directoriesMode": "0700",
+  "files": [
+    {
+      "path": "accepted-binding.json",
+      "bytes": 576,
+      "sha256": "2c24748c6931afb0ef1d3c921149309f19778aca6f3a3400d2d1579582197634",
+      "mode": "0600"
+    },
+    {
+      "path": "accepted-recheck.json",
+      "bytes": 6359,
+      "sha256": "e31eac2440fba2e04e2b9358a99eb3f274065a6970106d00134895dce067b07d",
+      "mode": "0600"
+    },
+    {
+      "path": "commands.mjs",
+      "bytes": 4262,
+      "sha256": "9bf45c16b120a8177761fe055cd3910258b1388c3a003434cf8643ec6d106b46",
+      "mode": "0600"
+    },
+    {
+      "path": "parse-sam-plist.py",
+      "bytes": 990,
+      "sha256": "574878d9eaba0297e19e9eccf8a7962a5ba9a2d60bc6dc02207ce68e13d41ffc",
+      "mode": "0600"
+    },
+    {
+      "path": "preparation-report.md",
+      "bytes": 683,
+      "sha256": "4353360f2885a9188267b681cb68f94dad645b98f4be701fb9e0770f18bae62d",
+      "mode": "0600"
+    },
+    {
+      "path": "proposed-escalation-request.json",
+      "bytes": 952,
+      "sha256": "90e2f2c367dd15ddc7407151117863955335893bafbdebac2726cfdf1f1f86af",
+      "mode": "0600"
+    },
+    {
+      "path": "root-execution-authorization.json",
+      "bytes": 637,
+      "sha256": "99a9d877169ee510eda24e966413829db9b3996abcdbf1abf06bdec429ab7132",
+      "mode": "0600"
+    },
+    {
+      "path": "run-namespace.mjs",
+      "bytes": 8051,
+      "sha256": "f9fdccf85cc0ba59c796d149409d4f939d6fd384a8f9d7fce5c4d88efadc8b19",
+      "mode": "0600"
+    },
+    {
+      "path": "syntax-checks.json",
+      "bytes": 1681,
+      "sha256": "55a252c33a578f03aa62eb2eab422cfa5d25e382e4a1ddb4137f4720060f3cce",
+      "mode": "0600"
+    }
+  ]
+}

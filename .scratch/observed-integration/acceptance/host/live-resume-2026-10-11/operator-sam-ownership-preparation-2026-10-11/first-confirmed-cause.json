@@ -1,0 +1,20 @@
+{
+  "cause": "SUDO_PASSWORD_REQUIRED",
+  "argv": [
+    "/usr/bin/sudo",
+    "-n",
+    "/usr/sbin/diskutil",
+    "enableOwnership",
+    "/Volumes/Sam"
+  ],
+  "actualDirectSudoClose": "2026-10-11T04:59:22.767Z",
+  "exitCode": 1,
+  "stderrUtf8": "sudo: a password is required\n",
+  "stderrSha256": "9b3a3b7a78f239c4473bb193476b1a860c91f1c2b4fab9c7639eceea414a60fb",
+  "rootAudit": "Root confirmed clean actual close, no timeout/kill and exact authentication refusal. Independent cache inventory remains authorized; no unresolved direct child.",
+  "ownershipSuccessClaim": false,
+  "ownershipAfterAttempt": "Not queried or verified",
+  "passwordReadOrRequested": false,
+  "sudoRetries": 0,
+  "samNamespaceOrPermissionWork": 0
+}

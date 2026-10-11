@@ -1,0 +1,21 @@
+{
+  "result": "PASS_PENDING_ROOT_AUDIT",
+  "namespace": "/Volumes/Sam/jev-ios-bridge-release-2026-10-11",
+  "createdOnly": [
+    "/Volumes/Sam/jev-ios-bridge-release-2026-10-11/build",
+    "/Volumes/Sam/jev-ios-bridge-release-2026-10-11/staging",
+    "/Volumes/Sam/jev-ios-bridge-release-2026-10-11/archive"
+  ],
+  "namespaceAndChildrenUid": 501,
+  "namespaceAndChildrenGid": 20,
+  "namespaceAndChildrenMode": "0700",
+  "aclEntries": 0,
+  "SamRootUid": 0,
+  "SamRootGid": 0,
+  "SamRootMode": "0775",
+  "GlobalPermissionsEnabled": true,
+  "VolumeUUID": "48570675-F94C-3532-89D3-B005FDCF8334",
+  "device": "disk6s3",
+  "dataMoves": 0,
+  "noActivityArchiveExecutionInNamespacePhase": true
+}

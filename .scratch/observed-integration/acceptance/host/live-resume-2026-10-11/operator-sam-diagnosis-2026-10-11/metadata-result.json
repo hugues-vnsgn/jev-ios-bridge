@@ -1,0 +1,187 @@
+{
+  "status": "RAW_SAM_FACTS_CAPTURED",
+  "samPath": "/Volumes/Sam",
+  "simulatorPath": "/Users/hugues_mini/Library/Developer/CoreSimulator",
+  "sam": {
+    "dev": "16777242",
+    "ino": "2",
+    "uid": "501",
+    "gid": "20",
+    "mode": "16893",
+    "size": "986",
+    "nlink": "27",
+    "mtimeNs": "1791692519000000000",
+    "ctimeNs": "1791692519000000000",
+    "permissions": "775",
+    "directory": true,
+    "symlink": false
+  },
+  "simulator": {
+    "dev": "16777233",
+    "ino": "32301688",
+    "uid": "501",
+    "gid": "20",
+    "mode": "16877",
+    "size": "160",
+    "nlink": "5",
+    "mtimeNs": "1778215852399288143",
+    "ctimeNs": "1778215852399288143",
+    "permissions": "755",
+    "directory": true,
+    "symlink": false
+  },
+  "samFilesystem": {
+    "type": "25",
+    "bsize": "4096",
+    "blocks": "124767232",
+    "bfree": "33321153",
+    "bavail": "33321153",
+    "files": "4294967279",
+    "ffree": "4294934367",
+    "availableBytes": "136483442688",
+    "typeHex": "0x19"
+  },
+  "simulatorFilesystem": {
+    "type": "26",
+    "bsize": "4096",
+    "blocks": "120699413",
+    "bfree": "5323919",
+    "bavail": "5323919",
+    "files": "220260078",
+    "ffree": "212956760",
+    "availableBytes": "21806772224",
+    "typeHex": "0x1a"
+  },
+  "distinctStatDevice": true,
+  "samAtLeast70GiB": true,
+  "thresholdBytes": "75161927680",
+  "sampledIdentitiesStable": true,
+  "identityQualification": "Non-following bigint lstat before/after; path reads are not an atomic mount pin.",
+  "diskutilParsing": "Raw plist retained for finite Python plistlib summary; no product parser change.",
+  "actualDiskutilClose": "2026-10-11T04:33:21.506Z",
+  "completedAtUtc": "2026-10-11T04:33:21.507Z",
+  "diskutilCalls": 1,
+  "metadata": [
+    {
+      "operation": "lstat",
+      "path": "/Volumes/Sam",
+      "startedAtUtc": "2026-10-11T04:33:21.287Z",
+      "completedAtUtc": "2026-10-11T04:33:21.287Z",
+      "value": {
+        "dev": "16777242",
+        "ino": "2",
+        "uid": "501",
+        "gid": "20",
+        "mode": "16893",
+        "size": "986",
+        "nlink": "27",
+        "mtimeNs": "1791692519000000000",
+        "ctimeNs": "1791692519000000000",
+        "permissions": "775",
+        "directory": true,
+        "symlink": false
+      }
+    },
+    {
+      "operation": "lstat",
+      "path": "/Users/hugues_mini/Library/Developer/CoreSimulator",
+      "startedAtUtc": "2026-10-11T04:33:21.287Z",
+      "completedAtUtc": "2026-10-11T04:33:21.287Z",
+      "value": {
+        "dev": "16777233",
+        "ino": "32301688",
+        "uid": "501",
+        "gid": "20",
+        "mode": "16877",
+        "size": "160",
+        "nlink": "5",
+        "mtimeNs": "1778215852399288143",
+        "ctimeNs": "1778215852399288143",
+        "permissions": "755",
+        "directory": true,
+        "symlink": false
+      }
+    },
+    {
+      "operation": "statfs",
+      "path": "/Volumes/Sam",
+      "startedAtUtc": "2026-10-11T04:33:21.287Z",
+      "completedAtUtc": "2026-10-11T04:33:21.287Z",
+      "value": {
+        "type": "25",
+        "bsize": "4096",
+        "blocks": "124767232",
+        "bfree": "33321153",
+        "bavail": "33321153",
+        "files": "4294967279",
+        "ffree": "4294934367",
+        "availableBytes": "136483442688",
+        "typeHex": "0x19"
+      }
+    },
+    {
+      "operation": "statfs",
+      "path": "/Users/hugues_mini/Library/Developer/CoreSimulator",
+      "startedAtUtc": "2026-10-11T04:33:21.287Z",
+      "completedAtUtc": "2026-10-11T04:33:21.287Z",
+      "value": {
+        "type": "26",
+        "bsize": "4096",
+        "blocks": "120699413",
+        "bfree": "5323919",
+        "bavail": "5323919",
+        "files": "220260078",
+        "ffree": "212956760",
+        "availableBytes": "21806772224",
+        "typeHex": "0x1a"
+      }
+    },
+    {
+      "operation": "lstat",
+      "path": "/Volumes/Sam",
+      "startedAtUtc": "2026-10-11T04:33:21.507Z",
+      "completedAtUtc": "2026-10-11T04:33:21.507Z",
+      "value": {
+        "dev": "16777242",
+        "ino": "2",
+        "uid": "501",
+        "gid": "20",
+        "mode": "16893",
+        "size": "986",
+        "nlink": "27",
+        "mtimeNs": "1791692519000000000",
+        "ctimeNs": "1791692519000000000",
+        "permissions": "775",
+        "directory": true,
+        "symlink": false
+      }
+    },
+    {
+      "operation": "lstat",
+      "path": "/Users/hugues_mini/Library/Developer/CoreSimulator",
+      "startedAtUtc": "2026-10-11T04:33:21.507Z",
+      "completedAtUtc": "2026-10-11T04:33:21.507Z",
+      "value": {
+        "dev": "16777233",
+        "ino": "32301688",
+        "uid": "501",
+        "gid": "20",
+        "mode": "16877",
+        "size": "160",
+        "nlink": "5",
+        "mtimeNs": "1778215852399288143",
+        "ctimeNs": "1778215852399288143",
+        "permissions": "755",
+        "directory": true,
+        "symlink": false
+      }
+    }
+  ],
+  "metadataDeadlineMs": 3000,
+  "noWritesToSam": true,
+  "recursiveScans": 0,
+  "migrationCalls": 0,
+  "builds": 0,
+  "deviceOperations": 0,
+  "relocationSupport": "Not established by this volume diagnosis"
+}

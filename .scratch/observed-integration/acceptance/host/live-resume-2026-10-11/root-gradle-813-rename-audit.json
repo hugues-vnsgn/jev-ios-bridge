@@ -1,0 +1,55 @@
+{
+  "status": "GRADLE_813_RENAME_ACCEPTED_SOURCE_RETAINED",
+  "result": {
+    "archive_sha256": "cfc0629d5e23af8d307164440a5e77033457a4f382b8a8c13d6417e44b62e98b",
+    "removed_entries": 0,
+    "root_after": {
+      "ctime_ns": 1791700662757853930,
+      "dev": 16777233,
+      "gid": 20,
+      "ino": 42722462,
+      "mode": 16877,
+      "mtime_ns": 1783656349963861858,
+      "nlink": 17,
+      "size": 544,
+      "uid": 501
+    },
+    "root_before": {
+      "ctime_ns": 1783656349963861858,
+      "dev": 16777233,
+      "gid": 20,
+      "ino": 42722462,
+      "mode": 16877,
+      "mtime_ns": 1783656349963861858,
+      "nlink": 17,
+      "size": 544,
+      "uid": 501
+    },
+    "source": "/Users/hugues_mini/.gradle/caches/8.13",
+    "status": "RETIRED_SOURCE_RETAINED",
+    "wrapper_identity": {
+      "ctime_ns": 1791700662757815263,
+      "dev": 16777233,
+      "gid": 20,
+      "ino": 152010796,
+      "mode": 16832,
+      "mtime_ns": 1791700662757815263,
+      "nlink": 3,
+      "size": 96,
+      "uid": 501
+    },
+    "wrapper_name": ".jev-retired-gradle-813-2026-10-11-01"
+  },
+  "journalEvents": 7,
+  "evidenceSha256": {
+    "result.json": "a5088f6fee44566eba00d204a115e6ca57dd8bb0bb1ea00dec771d36b185f1e7",
+    "completion.json": "665795230eff5383fc46ce5960c458fe25890b6b8b70e01a87a612268a065144",
+    "operations.jsonl": "8d998ae65a48bcdbeb22b958865bb058ed82bcb51ce3f418120dbb6097d1b379"
+  },
+  "qualification": "Root reviewed exact rename and rootctimeonlychange; source retained, no recoveredspaceclaim.",
+  "at": "2026-10-11T06:38:58.452674+00:00",
+  "operatorBundle": {
+    "filesVerified": 21,
+    "sealSha256": "460ff6bc5f8c7198be29ddd2dceb53e4aa59f360bbd1bd7e39b63114b22fa99d"
+  }
+}

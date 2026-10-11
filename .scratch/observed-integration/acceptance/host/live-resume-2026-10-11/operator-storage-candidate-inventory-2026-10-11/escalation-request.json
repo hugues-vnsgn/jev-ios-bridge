@@ -1,0 +1,8 @@
+{
+  "cmd": "env -u TYPESAFE_API_KEY -u NODE_OPTIONS -u NODE_NO_WARNINGS /opt/homebrew/Cellar/node/26.8.1/bin/node .scratch/observed-integration/acceptance/host/live-resume-2026-10-11/operator-storage-candidate-inventory-2026-10-11/run.mjs --read-only-once",
+  "login": false,
+  "sandbox_permissions": "require_escalated",
+  "justification": "Allow one owner-authorized read-only /usr/bin/du size inventory of the six exact candidate paths, with no symlink following, a 120-second limit and 64 KiB output cap? No contents will be read and no cleanup, relocation, Sam setup, build, or device operation will run.",
+  "yield_time_ms": 1000,
+  "max_output_tokens": 2500
+}

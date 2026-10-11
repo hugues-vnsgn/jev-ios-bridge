@@ -1,0 +1,28 @@
+{
+  "checkedAtUtc": "2026-10-11T05:30:16.886230+00:00",
+  "checks": [
+    {
+      "label": "readiness wrapper syntax",
+      "cmd": "env -u TYPESAFE_API_KEY -u NODE_OPTIONS -u NODE_NO_WARNINGS /opt/homebrew/Cellar/node/26.8.1/bin/node --check .scratch/observed-integration/acceptance/host/live-resume-2026-10-11/operator-cache-readiness-2026-10-11/run.mjs",
+      "toolResult": {
+        "chunk_id": "7eb873",
+        "wall_time_seconds": 4.375e-06,
+        "exit_code": 0,
+        "original_token_count": 0,
+        "output": ""
+      }
+    },
+    {
+      "label": "readiness recorder syntax",
+      "cmd": "env -u TYPESAFE_API_KEY -u NODE_OPTIONS -u NODE_NO_WARNINGS /opt/homebrew/Cellar/node/26.8.1/bin/node --check .scratch/observed-integration/acceptance/host/live-resume-2026-10-11/operator-cache-readiness-2026-10-11/commands.mjs",
+      "toolResult": {
+        "chunk_id": "14f2f4",
+        "wall_time_seconds": 5.458e-06,
+        "exit_code": 0,
+        "original_token_count": 0,
+        "output": ""
+      }
+    }
+  ],
+  "qualifier": "Actual exec_command subprocess returns preserved; descendants unobserved; prepared modules were not executed."
+}

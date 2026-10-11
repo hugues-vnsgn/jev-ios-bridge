@@ -1,0 +1,133 @@
+{
+  "sealedAtUtc": "2026-10-11T05:51:02.633767+00:00",
+  "scope": "All operator archive preparation, corrected/failed checks, actual returns, six external JSON mirrors, hash receipt and report except this manifest",
+  "directoriesMode": "0700",
+  "files": [
+    {
+      "path": "accepted-exact-candidate-check.json",
+      "bytes": 3074,
+      "sha256": "55af68ce2982907a982c5bbcd24c78a3f32a54dd7a589898f4217f9e6bbd3588",
+      "mode": "0600"
+    },
+    {
+      "path": "execution-claimed.json",
+      "bytes": 1179,
+      "sha256": "d3dc7bcf1b7b335b7f7c95887c4368710c5845357b037a39f3050a9d609275bd",
+      "mode": "0600"
+    },
+    {
+      "path": "execution-request.json",
+      "bytes": 1251,
+      "sha256": "3366f19c632e6be0815ac1b19d70d3da7cb6d85b4da854e2d0f78e924ccf063d",
+      "mode": "0600"
+    },
+    {
+      "path": "execution-tool-received.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "mode": "0600"
+    },
+    {
+      "path": "execution-tool-returns.json",
+      "bytes": 732,
+      "sha256": "0e3bc6cf2c9a413738e4379d8fa21c97263020ab0bd077f9d0e2701c070d89e0",
+      "mode": "0600"
+    },
+    {
+      "path": "external-evidence-hashes.json",
+      "bytes": 5182,
+      "sha256": "6e48dbf7bb59337cb7aabd8ed5b24a23623fd8d441048f9cf6d7d3c47ddd6990",
+      "mode": "0600"
+    },
+    {
+      "path": "external-mount-after.json",
+      "bytes": 5495,
+      "sha256": "45b591b780688ae962a473d5044b536c81b4af97a5a41a7fa1484b4edb90be13",
+      "mode": "0600"
+    },
+    {
+      "path": "external-mount-before.json",
+      "bytes": 5495,
+      "sha256": "a00fd59cd6029f58c9aa026522ad0e4deee4969a4eaaa3a5dc8ac1fe8ea9f33a",
+      "mode": "0600"
+    },
+    {
+      "path": "external-plan.json",
+      "bytes": 1165,
+      "sha256": "04e049bb4b208d6a30a50dc81a914a748e37e617418f45eb118e656120fd50e5",
+      "mode": "0600"
+    },
+    {
+      "path": "external-result.json",
+      "bytes": 2222,
+      "sha256": "b32bd02e6e4b34b73860ee014e38fee63013f7358c5e09cae8d54fc3725bec75",
+      "mode": "0600"
+    },
+    {
+      "path": "external-source-after.json",
+      "bytes": 44689,
+      "sha256": "3785f2a85589d69b0bb2af110868e93e844b2cec656b1dd12921b86173ac5143",
+      "mode": "0600"
+    },
+    {
+      "path": "external-source-before.json",
+      "bytes": 44689,
+      "sha256": "3785f2a85589d69b0bb2af110868e93e844b2cec656b1dd12921b86173ac5143",
+      "mode": "0600"
+    },
+    {
+      "path": "final-verification.json",
+      "bytes": 3310,
+      "sha256": "ce98c065c6920479dfd5426fd0e542f6a008d1e981827e899ed69469cabdcd59",
+      "mode": "0600"
+    },
+    {
+      "path": "preparation-check-after-root-mode-fix.json",
+      "bytes": 2880,
+      "sha256": "3f443f4e0a37fb532445add7d92d455f25b3361369ccef905a86fbeb6c26e1f4",
+      "mode": "0600"
+    },
+    {
+      "path": "preparation-checks-round1.json",
+      "bytes": 3538,
+      "sha256": "1d0d733c0933afc88b8f7a0c4697f21dee6d68865965d5f608fb70d5e8f449a3",
+      "mode": "0600"
+    },
+    {
+      "path": "preparation-corrections.json",
+      "bytes": 723,
+      "sha256": "3c6ea2bcb01993e28e9e7c289107a5fbe45b6a314d4191d8825f571af251ffc8",
+      "mode": "0600"
+    },
+    {
+      "path": "prepared-hashes.json",
+      "bytes": 1683,
+      "sha256": "76a3b2f874c529f79b7cf6f02af444c33a54e57a4139df85af004324c3b9ed50",
+      "mode": "0600"
+    },
+    {
+      "path": "report.md",
+      "bytes": 2186,
+      "sha256": "aa49eb75b9d90f40f18e5e6b94bb2bf87c31707b87865ccab515b6265ba707ff",
+      "mode": "0600"
+    },
+    {
+      "path": "reviewed-archive-cache.py",
+      "bytes": 16787,
+      "sha256": "1b585f7616e3856749f9d6457bb494f3283f496f174d14f1ecbfc65965635bb3",
+      "mode": "0600"
+    },
+    {
+      "path": "reviewed-jetbrains-plan.json",
+      "bytes": 1165,
+      "sha256": "886c24962acf52ba5d47b2958f5038470bbde7a5d1414cc73f2c879b0171689c",
+      "mode": "0600"
+    },
+    {
+      "path": "root-archive-audit.json",
+      "bytes": 872,
+      "sha256": "bc50a86fcf33f0c3ddd20c0cf46c0ea8aed68b4747f1a3de6fd47a9ba1e6d366",
+      "mode": "0600"
+    }
+  ]
+}

@@ -1,0 +1,30 @@
+[
+  {
+    "status": "fulfilled",
+    "value": {
+      "label": "reviewed retirement AST syntax without pycache",
+      "cmd": "env -u TYPESAFE_API_KEY -u NODE_OPTIONS -u NODE_NO_WARNINGS /opt/homebrew/bin/python3 -c 'import ast,pathlib;ast.parse(pathlib.Path(\".scratch/observed-integration/acceptance/host/live-resume-2026-10-11/cache-retirement-draft/retire-cache.py\").read_text())'",
+      "toolResult": {
+        "chunk_id": "3df89e",
+        "wall_time_seconds": 8.208e-06,
+        "exit_code": 0,
+        "original_token_count": 0,
+        "output": ""
+      }
+    }
+  },
+  {
+    "status": "fulfilled",
+    "value": {
+      "label": "exact Root rename plan/script/helper pins and prescribed scope",
+      "cmd": "/opt/homebrew/bin/python3 -c 'import pathlib,json,hashlib\nbase=pathlib.Path(\".scratch/observed-integration/acceptance/host/live-resume-2026-10-11/cache-retirement-draft\");sha=lambda p:hashlib.sha256(p.read_bytes()).hexdigest()\nassert sha(base/'\\''retire-cache.py'\\'')=='\\''8ecbc0828c56c639aa09b0da0f0089902a994ac65677016bdb7f9e347e0c9cef'\\''\nassert sha(base/'\\''root-rename-plan.json'\\'')=='\\''68a4439b18ce7bee11695f60283886ac8eaec71c64ac83fc18f669a6424ce9a4'\\''\nassert sha(base.parent/'\\''cache-archive-draft/archive-cache.py'\\'')=='\\''1b585f7616e3856749f9d6457bb494f3283f496f174d14f1ecbfc65965635bb3'\\''\nplan=json.loads((base/'\\''root-rename-plan.json'\\'').read_bytes())\nassert plan['\\''version'\\'']==1 and plan['\\''mode'\\'']=='\\''rename'\\'' and plan['\\''source'\\'']=='\\''/Users/hugues_mini/Library/Caches/JetBrains'\\''\nassert plan['\\''archive_run'\\'']=='\\''jetbrains-2026-10-11-01'\\'' and plan['\\''wrapper_name'\\'']=='\\''.jev-retired-jetbrains-2026-10-11-01'\\'' and plan['\\''attempt'\\'']=='\\''2026-10-11-01'\\''\nassert plan['\\''max_entries'\\'']==1000 and plan['\\''max_depth'\\'']==128 and plan['\\''max_source_bytes'\\'']==plan['\\''max_archive_bytes'\\'']==8589934592\nassert plan['\\''max_evidence_bytes'\\'']==16777216 and plan['\\''max_journal_events'\\'']==10000 and plan['\\''command_seconds'\\'']==30 and plan['\\''total_seconds'\\'']==300\nassert plan['\\''activity_evidence_path'\\''].endswith('\\''/operator-cache-readiness-2026-10-11-v2/readiness-03-result.json'\\'')\nassert sha(pathlib.Path(plan['\\''activity_evidence_path'\\'']))==plan['\\''activity_evidence_sha256'\\'']=='\\''dd7298d7c8094ac6c9950ee05b1e2cfda3a7efa44f9c706abe8ba6e621d14197'\\''\naudit=json.loads((base.parent/'\\''root-jetbrains-archive-audit.json'\\'').read_bytes())\nassert plan['\\''archive_sha256'\\'']==audit['\\''archiveSha256'\\''] and plan['\\''archive_result_sha256'\\'']==audit['\\''evidenceSha256'\\'']['\\''result.json'\\''] and plan['\\''archive_plan_sha256'\\'']==audit['\\''evidenceSha256'\\'']['\\''plan.json'\\'']\nassert plan['\\''source_before_sha256'\\'']==audit['\\''evidenceSha256'\\'']['\\''source-before.json'\\''] and plan['\\''source_after_sha256'\\'']==audit['\\''evidenceSha256'\\'']['\\''source-after.json'\\'']\nprint(json.dumps({'\\''scriptSha256'\\'':sha(base/'\\''retire-cache.py'\\''),'\\''planSha256'\\'':sha(base/'\\''root-rename-plan.json'\\''),'\\''mode'\\'':'\\''rename'\\'','\\''limitsMatchRootBrief'\\'':True,'\\''archiveAuditHashesMatch'\\'':True,'\\''effectsExecuted'\\'':0}))'",
+      "toolResult": {
+        "chunk_id": "4d2f70",
+        "wall_time_seconds": 5.792e-06,
+        "exit_code": 0,
+        "original_token_count": 68,
+        "output": "{\"scriptSha256\": \"8ecbc0828c56c639aa09b0da0f0089902a994ac65677016bdb7f9e347e0c9cef\", \"planSha256\": \"68a4439b18ce7bee11695f60283886ac8eaec71c64ac83fc18f669a6424ce9a4\", \"mode\": \"rename\", \"limitsMatchRootBrief\": true, \"archiveAuditHashesMatch\": true, \"effectsExecuted\": 0}\n"
+      }
+    }
+  }
+]

@@ -1,0 +1,23 @@
+{
+  "status": "GRADLE_813_ARCHIVE_ACCEPTED_SOURCE_RETAINED",
+  "archivePath": "/Volumes/Sam/jev-ios-bridge-release-2026-10-11/archive/gradle-813-2026-10-11-01/cache.tar.gz",
+  "archiveSha256": "cfc0629d5e23af8d307164440a5e77033457a4f382b8a8c13d6417e44b62e98b",
+  "archiveBytes": 2532935680,
+  "entries": 315927,
+  "sourceManifestsMatch": true,
+  "sourceManifestBytes": 160444207,
+  "sourceRemovals": 0,
+  "evidenceSha256": {
+    "result.json": "2e0729d00cff64c21e49cb183f588f7ae8a96303224e6644e344862814b4fb09",
+    "source-before.json": "0a04261d47f76b52642feaffcb0930e0e492067449a0a45fdec158bec31e0e37",
+    "source-after.json": "0a04261d47f76b52642feaffcb0930e0e492067449a0a45fdec158bec31e0e37",
+    "plan.json": "9f2a2656659bd9e66d10c2ca71b56fcc924fd106555f873a2883d0651e7f0530",
+    "cache.tar.gz": "cfc0629d5e23af8d307164440a5e77033457a4f382b8a8c13d6417e44b62e98b"
+  },
+  "qualification": "Independent streamed SHA checks; full content/path verification performed by frozen archive helper. Large manifests remain on Sam. Operator readback16MiB cap refused after successful archive; no retry required.",
+  "at": "2026-10-11T06:23:11.209880+00:00",
+  "operatorBundle": {
+    "sealSha256": "b6ad62e2fddb56ee27ec9ecd0a0c193d075a025340e8d40c8c509d34a9d1fb80",
+    "filesVerified": 29
+  }
+}

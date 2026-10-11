@@ -1,0 +1,43 @@
+{
+  "executionReturns": [
+    {
+      "request": {
+        "cmd": "/usr/bin/env -i HOME=/Users/hugues_mini PATH=/usr/bin:/bin:/usr/sbin:/sbin LANG=C LC_ALL=C TZ=UTC /opt/homebrew/bin/python3 .scratch/observed-integration/acceptance/host/live-resume-2026-10-11/cache-retirement-draft/retire-cache.py .scratch/observed-integration/acceptance/host/live-resume-2026-10-11/cache-retirement-draft/root-delete-plan.json 3813ad5edba27b1df2d402b5c00d68b1d6d23f1d4f802697da65b265856388e8",
+        "login": false,
+        "sandbox_permissions": "require_escalated",
+        "justification": "Allow the once Root-approved deletion of only the 100 verified archived JetBrains entries in the exact private retirement wrapper, followed by removing its empty wrapper? The Sam archive stays retained, any new normal JetBrains path stays untouched, and no processes or builds are started or stopped.",
+        "yield_time_ms": 1000,
+        "max_output_tokens": 5000
+      },
+      "result": {
+        "chunk_id": "fb5201",
+        "wall_time_seconds": 1.0021915,
+        "session_id": 67623,
+        "original_token_count": 0,
+        "output": ""
+      }
+    },
+    {
+      "request": {
+        "session_id": 67623,
+        "chars": "",
+        "yield_time_ms": 1000,
+        "max_output_tokens": 5000
+      },
+      "result": {
+        "chunk_id": "e15615",
+        "wall_time_seconds": 2.091658584,
+        "exit_code": 0,
+        "original_token_count": 0,
+        "output": ""
+      }
+    }
+  ],
+  "preparationSealReturn": {
+    "chunk_id": "56da51",
+    "wall_time_seconds": 7.709e-06,
+    "exit_code": 0,
+    "original_token_count": 65,
+    "output": "{\"directory\": \".scratch/observed-integration/acceptance/host/live-resume-2026-10-11/operator-cache-retirement-delete-2026-10-11\", \"files\": 7, \"preparedManifestSha256\": \"e3abf7b125fd2b35a6fd8523adeb289638db1e455d1e0a0ab1e5bfca000a8252\", \"effectsExecuted\": 0}\n"
+  }
+}

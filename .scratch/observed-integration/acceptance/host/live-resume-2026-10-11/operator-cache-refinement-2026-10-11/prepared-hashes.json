@@ -1,0 +1,49 @@
+{
+  "sealedAtUtc": "2026-10-11T05:24:29.887779+00:00",
+  "scope": "All read-only cache refinement preparation files before execution except this manifest",
+  "directoriesMode": "0700",
+  "files": [
+    {
+      "path": "commands.mjs",
+      "bytes": 4253,
+      "sha256": "e4df204fa29e2b58497ab15fec4ab595a46301a671fd35aeaa568e0b03e4c29d",
+      "mode": "0600"
+    },
+    {
+      "path": "escalation-request.json",
+      "bytes": 876,
+      "sha256": "af65f53edb21d5bf43d7aef5e2aa10eb108f58fccc80f21139f21f5af10386b5",
+      "mode": "0600"
+    },
+    {
+      "path": "existing-gradle-open-file-grouping.json",
+      "bytes": 1049,
+      "sha256": "afc01287cb5c7aab5e95e9e6b0370b51916f9e6e59ee06ecf2c9debcb29ee6ea",
+      "mode": "0600"
+    },
+    {
+      "path": "existing-wrapper-open-file-grouping.json",
+      "bytes": 657,
+      "sha256": "81f8113f1601c9a9f5178cac2e9d67cf336e5c45a541e1d21e9e4b1f1d744603",
+      "mode": "0600"
+    },
+    {
+      "path": "preparation.json",
+      "bytes": 1076,
+      "sha256": "8b9cf6264956003f013b85d77c0fe28e493268015dabe5760c82c7a87b6d20b4",
+      "mode": "0600"
+    },
+    {
+      "path": "run.mjs",
+      "bytes": 2616,
+      "sha256": "e36664851592e12b8691b75e85e3b591c1c6191541e5970a8c3b02294a7588fc",
+      "mode": "0600"
+    },
+    {
+      "path": "syntax-checks.json",
+      "bytes": 1160,
+      "sha256": "ede616f96bb8ff20fe5fc477d1de4b79e4e1e6e44edced20cf216fc932e684c1",
+      "mode": "0600"
+    }
+  ]
+}

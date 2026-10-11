@@ -1,0 +1,29 @@
+{
+  "activity_evidence_sha256": "dd7298d7c8094ac6c9950ee05b1e2cfda3a7efa44f9c706abe8ba6e621d14197",
+  "command_seconds": 600,
+  "inactivity_confirmed": true,
+  "max_archive_bytes": 8589934592,
+  "max_depth": 128,
+  "max_entries": 500000,
+  "max_metadata_bytes": 16777216,
+  "max_source_bytes": 8589934592,
+  "max_tar_bytes": 10737418240,
+  "min_sam_free_bytes": 86973087744,
+  "run_name": "jetbrains-2026-10-11-01",
+  "source": "/Users/hugues_mini/Library/Caches/JetBrains",
+  "source_identity": {
+    "ctime_ns": 1787022817195830369,
+    "dev": 16777233,
+    "gid": 20,
+    "ino": 34652077,
+    "mode": 16877,
+    "mtime_ns": 1787022817195830369,
+    "nlink": 4,
+    "size": 128,
+    "uid": 501
+  },
+  "stderr_bytes": 1048576,
+  "total_seconds": 1800,
+  "version": 1,
+  "writer_stop_contract": "Observed no JetBrains IDE executable in retained ps snapshot and no open files in two lsof snapshots. Coordinator and operator will not start JetBrains or builds during copy. This is an operational inactivity assessment, not an atomic snapshot or guarantee against future user activity; source before/after equality required. Source retained; no removal authorized."
+}

@@ -1,0 +1,8 @@
+{
+  "cmd": "/usr/bin/env -i HOME=/Users/hugues_mini PATH=/usr/bin:/bin:/usr/sbin:/sbin LANG=C LC_ALL=C TZ=UTC /opt/homebrew/bin/python3 .scratch/observed-integration/acceptance/host/live-resume-2026-10-11/cache-retirement-draft/retire-cache.py .scratch/observed-integration/acceptance/host/live-resume-2026-10-11/cache-retirement-draft/root-rename-plan.json 68a4439b18ce7bee11695f60283886ac8eaec71c64ac83fc18f669a6424ce9a4",
+  "login": false,
+  "sandbox_permissions": "require_escalated",
+  "justification": "Allow this once reviewed JetBrains cache rename into the exact private retirement wrapper, after fresh activity and complete archive/source verification? Root authorized this source-retained operation under the owner\u2019s offload approval; no deletion, process stopping, or builds.",
+  "yield_time_ms": 1000,
+  "max_output_tokens": 5000
+}

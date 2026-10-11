@@ -1,0 +1,30 @@
+{
+  "rows": [
+    {
+      "path": "/Users/hugues_mini/.konan",
+      "allocatedKiB": 13088536,
+      "allocatedBytes": 13402660864,
+      "GiB": 12.482200622558594
+    },
+    {
+      "path": "/Users/hugues_mini/.m2",
+      "allocatedKiB": 360572,
+      "allocatedBytes": 369225728,
+      "GiB": 0.3438682556152344
+    },
+    {
+      "path": "/Users/hugues_mini/.bun/install/cache",
+      "allocatedKiB": 240176,
+      "allocatedBytes": 245940224,
+      "GiB": 0.2290496826171875
+    },
+    {
+      "path": "/Users/hugues_mini/Library/Developer/Xcode/Archives",
+      "allocatedKiB": 567228,
+      "allocatedBytes": 580841472,
+      "GiB": 0.5409507751464844
+    }
+  ],
+  "missingPaths": [],
+  "qualification": "Exact aggregate allocated KiB only; no content classification, inactivity, relocation eligibility or reclaimed-byte guarantee inferred."
+}

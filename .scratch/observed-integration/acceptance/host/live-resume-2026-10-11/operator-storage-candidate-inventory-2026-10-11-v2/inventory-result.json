@@ -1,0 +1,27 @@
+{
+  "status": "RAW_INVENTORY_COMPLETE",
+  "paths": [
+    "/Users/hugues_mini/.cache",
+    "/Users/hugues_mini/.npm",
+    "/Users/hugues_mini/.gradle",
+    "/Users/hugues_mini/Documents",
+    "/Users/hugues_mini/Pictures",
+    "/Users/hugues_mini/Codes",
+    "/Users/hugues_mini/Library/Application Support",
+    "/Users/hugues_mini/orca/workspaces"
+  ],
+  "duCalls": 1,
+  "actualClose": "2026-10-11T04:51:59.993Z",
+  "exitCode": 0,
+  "signal": null,
+  "captureComplete": true,
+  "timedOut": false,
+  "overflow": false,
+  "stdoutBytes": 308,
+  "stderrBytes": 0,
+  "symlinkPolicy": "Explicit du -P: no symbolic link following",
+  "scopeQualifier": "Aggregate metadata sizes only. CoreSimulator/private admission stores and active worktrees/evidence remain excluded from relocation. The permitted broader workspace root includes the prior project subtree; this is not a repeated isolated scan of that subtree.",
+  "relocations": 0,
+  "cleanup": 0,
+  "deviceOperations": 0
+}

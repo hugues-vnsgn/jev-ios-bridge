@@ -1,0 +1,68 @@
+{
+  "argv": [
+    "/usr/bin/du",
+    "-sk",
+    "-P",
+    "/Users/hugues_mini/Downloads",
+    "/Users/hugues_mini/Desktop",
+    "/Users/hugues_mini/Movies",
+    "/Users/hugues_mini/Library/Developer/Xcode/DerivedData",
+    "/Users/hugues_mini/Library/Caches",
+    "/Users/hugues_mini/orca/workspaces/jev-ios-bridge"
+  ],
+  "cwd": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic",
+  "spawnOptions": {
+    "cwd": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic",
+    "env": {
+      "HOME": "/Users/hugues_mini",
+      "PATH": "/usr/bin:/bin:/usr/sbin:/sbin",
+      "LANG": "C",
+      "LC_ALL": "C",
+      "DEVELOPER_DIR": "/Applications/Xcode.app/Contents/Developer",
+      "TMPDIR": "/var/folders/yd/86fjng8s4hbfhcz7_0yqcl9w0000gn/T"
+    },
+    "shell": false,
+    "stdio": [
+      "ignore",
+      "pipe",
+      "pipe"
+    ]
+  },
+  "startedAtUtc": "2026-10-11T04:44:29.064Z",
+  "timeoutMs": 120000,
+  "combinedOutputLimit": 65536,
+  "events": [
+    {
+      "event": "spawn",
+      "atUtc": "2026-10-11T04:44:29.066Z"
+    },
+    {
+      "event": "exit",
+      "code": 0,
+      "signal": null,
+      "atUtc": "2026-10-11T04:45:20.760Z"
+    },
+    {
+      "event": "close",
+      "code": 0,
+      "signal": null,
+      "atUtc": "2026-10-11T04:45:20.761Z"
+    }
+  ],
+  "killCalls": [],
+  "stdoutOriginalBytes": 258,
+  "stderrOriginalBytes": 0,
+  "pid": 58885,
+  "closedAtUtc": "2026-10-11T04:45:20.761Z",
+  "exitCode": 0,
+  "signal": null,
+  "timedOut": false,
+  "overflow": false,
+  "stopped": false,
+  "error": null,
+  "retainedBytes": 258,
+  "captureComplete": true,
+  "descendantQualifier": "Only direct child close is observed; descendants are unobserved.",
+  "stdoutOriginalSha256": "0bb33d7d19125729669e6b1d073b9ac11eea7be5fa7ce128bf4f2f57023c889f",
+  "stderrOriginalSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+}

@@ -1,0 +1,25 @@
+{
+  "job": {
+    "directory": ".scratch/observed-integration/acceptance/host/live-resume-2026-10-11/operator-cache-archive-gradle-971-2026-10-11",
+    "source": "/Users/hugues_mini/.gradle/caches/9.7.1",
+    "plan": ".scratch/observed-integration/acceptance/host/live-resume-2026-10-11/cache-archive-draft/gradle-971-plan.json",
+    "planSha256": "c6b332d4fc47f99f623a082d9a257718267b7b8fb3368bff59435cad6a9922af",
+    "script": ".scratch/observed-integration/acceptance/host/live-resume-2026-10-11/cache-archive-draft/archive-cache.py"
+  },
+  "freshRequest": {
+    "cmd": "/usr/bin/env -i HOME=/Users/hugues_mini PATH=/usr/bin:/bin:/usr/sbin:/sbin LANG=C LC_ALL=C TZ=UTC /opt/homebrew/Cellar/node/26.8.1/bin/node .scratch/observed-integration/acceptance/host/live-resume-2026-10-11/operator-cache-archive-gradle-971-2026-10-11/run-fresh-root.mjs --fresh-root-once-after-root-review",
+    "login": false,
+    "sandbox_permissions": "require_escalated",
+    "justification": "Allow one read-only exact-root lsof snapshot of /Users/hugues_mini/.gradle/caches/9.7.1, bounded to 30 seconds and 2 MiB, with actual direct-child close recording? Root requires a clean no-match result before the source-retained archive; no Gradle process is started or stopped.",
+    "yield_time_ms": 1000,
+    "max_output_tokens": 3000
+  },
+  "archiveRequest": {
+    "cmd": "/usr/bin/env -i HOME=/Users/hugues_mini PATH=/usr/bin:/bin:/usr/sbin:/sbin LANG=C LC_ALL=C TZ=UTC /opt/homebrew/bin/python3 .scratch/observed-integration/acceptance/host/live-resume-2026-10-11/cache-archive-draft/archive-cache.py .scratch/observed-integration/acceptance/host/live-resume-2026-10-11/cache-archive-draft/gradle-971-plan.json c6b332d4fc47f99f623a082d9a257718267b7b8fb3368bff59435cad6a9922af",
+    "login": false,
+    "sandbox_permissions": "require_escalated",
+    "justification": "Allow the once Root-approved source-retained archive of only /Users/hugues_mini/.gradle/caches/9.7.1 into its exact private Sam archive directory, after the fresh clean lsof close? The frozen script verifies contents, links and unchanged source, limits source/archive to 12 GiB and retains an 81-GiB external reserve; no deletion, retirement, or Gradle process operation.",
+    "yield_time_ms": 1000,
+    "max_output_tokens": 5000
+  }
+}

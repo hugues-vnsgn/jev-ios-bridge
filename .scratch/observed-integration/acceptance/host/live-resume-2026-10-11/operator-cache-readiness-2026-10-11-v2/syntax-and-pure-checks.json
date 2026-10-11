@@ -1,0 +1,39 @@
+{
+  "checkedAtUtc": "2026-10-11T05:34:58.952301+00:00",
+  "checks": [
+    {
+      "label": "v2 readiness wrapper syntax",
+      "cmd": "env -u TYPESAFE_API_KEY -u NODE_OPTIONS -u NODE_NO_WARNINGS /opt/homebrew/Cellar/node/26.8.1/bin/node --check .scratch/observed-integration/acceptance/host/live-resume-2026-10-11/operator-cache-readiness-2026-10-11-v2/run.mjs",
+      "toolResult": {
+        "chunk_id": "073506",
+        "wall_time_seconds": 6e-06,
+        "exit_code": 0,
+        "original_token_count": 0,
+        "output": ""
+      }
+    },
+    {
+      "label": "v2 recorder syntax",
+      "cmd": "env -u TYPESAFE_API_KEY -u NODE_OPTIONS -u NODE_NO_WARNINGS /opt/homebrew/Cellar/node/26.8.1/bin/node --check .scratch/observed-integration/acceptance/host/live-resume-2026-10-11/operator-cache-readiness-2026-10-11-v2/commands.mjs",
+      "toolResult": {
+        "chunk_id": "98f090",
+        "wall_time_seconds": 7.667e-06,
+        "exit_code": 0,
+        "original_token_count": 0,
+        "output": ""
+      }
+    },
+    {
+      "label": "retained ps signed-UID pure audit; no native query",
+      "cmd": "env -u TYPESAFE_API_KEY -u NODE_OPTIONS -u NODE_NO_WARNINGS /opt/homebrew/Cellar/node/26.8.1/bin/node --input-type=module -e 'import * as fs from '\\''node:fs/promises'\\'';import {createHash} from '\\''node:crypto'\\'';const raw=await fs.readFile(\".scratch/observed-integration/acceptance/host/live-resume-2026-10-11/operator-cache-readiness-2026-10-11/process-names.stdout.bin\"),source=await fs.readFile(\".scratch/observed-integration/acceptance/host/live-resume-2026-10-11/operator-cache-readiness-2026-10-11-v2/run.mjs\",'\\''utf8'\\'');if(createHash('\\''sha256'\\'').update(raw).digest('\\''hex'\\'')!=='\\''1234aa8d701f81c80cb909c775415a86ca4f4cd610477ff7929b781edc5c3461'\\'')throw new Error('\\''Retained ps changed'\\'');const literal=\"/^\\\\s*([1-9]\\\\d*)\\\\s+([+-]?\\\\d+)\\\\s+(.+)$/\";if(!source.includes(literal)||source.includes(\"recordCommand('\\''process-names'\\''\"))throw new Error('\\''Unexpected parser or new ps call'\\'');const pattern=/^\\s*([1-9]\\d*)\\s+([+-]?\\d+)\\s+(.+)$/;const entries=raw.toString('\\''utf8'\\'').split('\\''\\n'\\'').filter(Boolean).map((line,i)=>{const m=pattern.exec(line);if(!m)throw new Error('\\''Unparsed retained row '\\''+(i+1));return {pid:m[1],uid:m[2],executableName:m[3].trim()};});if(pattern.test('\\''0 501 java'\\'')||pattern.test('\\''1 uid java'\\'')||!pattern.test('\\''1 -2 distnoted'\\''))throw new Error('\\''Signed UID/positive PID assertion failed'\\'');process.stdout.write(JSON.stringify({retainedRecords:entries.length,negativeUidRecords:entries.filter(x=>x.uid.startsWith('\\''-'\\'')).length,parserLiteralMatchesPreparedSource:true,newPsCalls:0,preparedModuleExecuted:false,allRetainedRowsParsed:true})+'\\''\\n'\\'');'",
+      "toolResult": {
+        "chunk_id": "a2f052",
+        "wall_time_seconds": 5.75e-06,
+        "exit_code": 0,
+        "original_token_count": 41,
+        "output": "{\"retainedRecords\":957,\"negativeUidRecords\":1,\"parserLiteralMatchesPreparedSource\":true,\"newPsCalls\":0,\"preparedModuleExecuted\":false,\"allRetainedRowsParsed\":true}\n"
+      }
+    }
+  ],
+  "qualifier": "Actual exec_command subprocess returns; prepared module not executed, no native query in pure retained-ps audit, descendant processes unobserved."
+}

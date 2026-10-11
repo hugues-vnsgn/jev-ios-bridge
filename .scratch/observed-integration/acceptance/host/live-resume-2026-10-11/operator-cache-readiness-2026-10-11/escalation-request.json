@@ -1,0 +1,8 @@
+{
+  "cmd": "env -u TYPESAFE_API_KEY -u NODE_OPTIONS -u NODE_NO_WARNINGS /opt/homebrew/Cellar/node/26.8.1/bin/node .scratch/observed-integration/acceptance/host/live-resume-2026-10-11/operator-cache-readiness-2026-10-11/run.mjs --read-only-once-after-root-review",
+  "login": false,
+  "sandbox_permissions": "require_escalated",
+  "justification": "Allow the Root-dispatched once read-only readiness snapshot for exact Gradle caches/8.13, caches/9.7.1 and Library/Caches/JetBrains: lossless lstat facts, three lsof -nP -F0pcfn +D snapshots and one ps pid/uid/ucomm snapshot (30s/2MiB per command), plus one du -sk -P on exact .konan, .m2, .bun/install/cache and Xcode/Archives (180s/64KiB), recording missing paths without fallback? No source contents, archive script, copy, deletion, process stop or build; source retained. Run file SHA5b86d853fa953a823286589eae1d7f1f525decfa21d45f76daf2de1432cd8f27.",
+  "yield_time_ms": 1000,
+  "max_output_tokens": 5000
+}

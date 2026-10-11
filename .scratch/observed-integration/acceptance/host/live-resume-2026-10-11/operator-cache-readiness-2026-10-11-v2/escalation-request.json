@@ -1,0 +1,8 @@
+{
+  "cmd": "env -u TYPESAFE_API_KEY -u NODE_OPTIONS -u NODE_NO_WARNINGS /opt/homebrew/Cellar/node/26.8.1/bin/node .scratch/observed-integration/acceptance/host/live-resume-2026-10-11/operator-cache-readiness-2026-10-11-v2/run.mjs --read-only-once-after-root-review",
+  "login": false,
+  "sandbox_permissions": "require_escalated",
+  "justification": "Allow the Root-authorized v2 continuation using pinned retained successful ps bytes, with positive PID/signed UID parser and NO second ps: execute only the three unused lsof -nP -F0pcfn +D queries on exact Gradle caches/8.13, caches/9.7.1 and Library/Caches/JetBrains (30s/2MiB each), fresh lossless lstat, then the unused du -sk -P on exact .konan, .m2, .bun/install/cache and Xcode/Archives (180s/64KiB), with actual closes and missing paths recorded without fallback? No archive, removal, copy, process stop or build; sources retained. Script SHA3e8fa798cb2bf271287f0c7975ba414c8305ab0d87f385d1158e3277cf1338a6.",
+  "yield_time_ms": 1000,
+  "max_output_tokens": 5000
+}

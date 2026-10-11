@@ -1,0 +1,29 @@
+{
+  "source": ".scratch/observed-integration/acceptance/host/live-resume-2026-10-11/cache-activity-draft/candidate-01.stdout.bin",
+  "sourceSha256": "3c016f63d45ac8ef6da615195155d020cded31d9d391042cc4c72ac85e2975a2",
+  "activityManifestSha256": "f11f073444b452848c609a27f261db431d0e5b13bc884b18a82a06e9b5499d65",
+  "positiveRecordCount": 211,
+  "matchedExecutableNames": [
+    "java"
+  ],
+  "immediateGroups": {
+    "journal-1": 2,
+    "9.1.0": 62,
+    "jars-9": 1,
+    "modules-2": 146
+  },
+  "depth2Groups": {
+    "journal-1/journal-1.lock": 1,
+    "9.1.0/fileHashes": 4,
+    "journal-1/file-access.bin": 1,
+    "9.1.0/fileContent": 1,
+    "jars-9/jars-9.lock": 1,
+    "9.1.0/generated-gradle-jars": 1,
+    "modules-2/modules-2.lock": 1,
+    "modules-2/metadata-2.107": 2,
+    "modules-2/files-2.1": 143,
+    "9.1.0/transforms": 56
+  },
+  "outsideRequestedRoot": [],
+  "qualification": "Groups are derived only from existing positive lsof records; missing groups do not prove inactivity or authorize removal. No new lsof/process query was run."
+}

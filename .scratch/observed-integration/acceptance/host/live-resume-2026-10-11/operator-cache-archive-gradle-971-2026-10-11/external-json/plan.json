@@ -1,0 +1,29 @@
+{
+  "activity_evidence_sha256": "e091122b80a760987bd937016b950ffa057cef47ce4e22d25cc476ba01be8c08",
+  "command_seconds": 600,
+  "inactivity_confirmed": true,
+  "max_archive_bytes": 12884901888,
+  "max_depth": 128,
+  "max_entries": 500000,
+  "max_metadata_bytes": 16777216,
+  "max_source_bytes": 12884901888,
+  "max_tar_bytes": 17179869184,
+  "min_sam_free_bytes": 86973087744,
+  "run_name": "gradle-971-2026-10-11-01",
+  "source": "/Users/hugues_mini/.gradle/caches/9.7.1",
+  "source_identity": {
+    "ctime_ns": 1791259549803184960,
+    "dev": 16777233,
+    "gid": 20,
+    "ino": 117298840,
+    "mode": 16877,
+    "mtime_ns": 1791259549803184960,
+    "nlink": 18,
+    "size": 576,
+    "uid": 501
+  },
+  "stderr_bytes": 1048576,
+  "total_seconds": 1800,
+  "version": 1,
+  "writer_stop_contract": "Exact old-version root had repeated no-match snapshots. Operator must require fresh exact-root lsof no-match before copy. Agents will not start Gradle or IDE work. Active9.1.0/sharedmodules are excluded. Source retained and full before/after inventory equality required; no atomic inactivity claim."
+}

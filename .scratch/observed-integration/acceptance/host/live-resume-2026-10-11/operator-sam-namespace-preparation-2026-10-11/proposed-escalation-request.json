@@ -1,0 +1,8 @@
+{
+  "cmd": "env -u TYPESAFE_API_KEY -u NODE_OPTIONS -u NODE_NO_WARNINGS /opt/homebrew/Cellar/node/26.8.1/bin/node .scratch/observed-integration/acceptance/host/live-resume-2026-10-11/operator-sam-namespace-preparation-2026-10-11/run-namespace.mjs --namespace-once-after-root-review",
+  "login": false,
+  "sandbox_permissions": "require_escalated",
+  "justification": "Allow the reviewed owner-authorized Sam namespace phase as uid501/gid20: freshly verify the exact volume/ownership and trusted root0/wheel0/0775 ancestor, require the owner-created namespace uid501/gid20/0700 with no ACL, then create ONLY absent build, staging and archive immediate children0700 with actual awaited mkdir/open/close settlement? No sudo, chmod/chown, ownership toggle, recursive permission change, data move, source removal, build or device operation. Stop on identity/access variance without cleanup or retry.",
+  "yield_time_ms": 1000,
+  "max_output_tokens": 7000
+}

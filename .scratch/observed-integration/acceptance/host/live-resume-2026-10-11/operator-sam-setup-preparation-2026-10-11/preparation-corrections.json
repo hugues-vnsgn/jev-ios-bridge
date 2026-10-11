@@ -1,0 +1,11 @@
+{
+  "round1Preserved": true,
+  "round1Sha256": "4ff74f97a95c491f33998962a04bd0a2840ecfba9a7c934a3bae972d355557ad",
+  "currentSha256": "1dbd0f9afb1a0411810184736466b381442d4ddda987102b489b36797ea8ef3d",
+  "changes": [
+    "Close missing if-condition parenthesis exposed by Node syntax check",
+    "Use sealed samIdentity field per Root reviewer; prior facts.sam was undefined"
+  ],
+  "effectsExecuted": 0,
+  "rootPermissionAcceptanceStillPending": true
+}

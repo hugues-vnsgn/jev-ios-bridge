@@ -1,0 +1,74 @@
+{
+  "archive_bytes": 2532935680,
+  "archive_sha256": "cfc0629d5e23af8d307164440a5e77033457a4f382b8a8c13d6417e44b62e98b",
+  "commands": [
+    {
+      "argv": [
+        "/usr/sbin/diskutil",
+        "info",
+        "-plist",
+        "/Volumes/Sam"
+      ],
+      "descendant_settlement": "not independently observed",
+      "direct_child_waited": true,
+      "elapsed_seconds": 0.19043887500447454,
+      "exit_code": 0,
+      "pid": 67500,
+      "settled_utc": "2026-10-11T06:14:53.878069+00:00",
+      "stderr_bytes": 0,
+      "stderr_hex": "",
+      "stdout_bytes": 2708,
+      "stdout_sha256": "b98bbdbb42afe07dcc68631929432b2048000629905eab4f721331c6eb3697f2"
+    },
+    {
+      "argv": [
+        "/usr/bin/tar",
+        "-czf",
+        "-",
+        "--format",
+        "pax",
+        "--mac-metadata",
+        "--one-file-system",
+        "-C",
+        "/Users/hugues_mini/.gradle/caches",
+        "8.13"
+      ],
+      "descendant_settlement": "not independently observed",
+      "direct_child_waited": true,
+      "elapsed_seconds": 286.2934005829957,
+      "exit_code": 0,
+      "pid": 69295,
+      "settled_utc": "2026-10-11T06:20:18.478663+00:00",
+      "stderr_bytes": 0,
+      "stderr_hex": "",
+      "stdout_bytes": 2532935680,
+      "stdout_sha256": "cfc0629d5e23af8d307164440a5e77033457a4f382b8a8c13d6417e44b62e98b"
+    },
+    {
+      "argv": [
+        "/usr/sbin/diskutil",
+        "info",
+        "-plist",
+        "/Volumes/Sam"
+      ],
+      "descendant_settlement": "not independently observed",
+      "direct_child_waited": true,
+      "elapsed_seconds": 0.20827612499851966,
+      "exit_code": 0,
+      "pid": 83580,
+      "settled_utc": "2026-10-11T06:21:35.047279+00:00",
+      "stderr_bytes": 0,
+      "stderr_hex": "",
+      "stdout_bytes": 2708,
+      "stdout_sha256": "5e3e9df8bd52f2fa3bce9c783920a4f030638eb6348676f8e0823418e1118524"
+    }
+  ],
+  "source_deletions": 0,
+  "source_stability": "endpoint inventories plus separately confirmed inactivity; not atomic snapshot",
+  "status": "COPY_VERIFIED_SOURCE_RETAINED",
+  "verification": {
+    "appledouble_entries": 315927,
+    "entries": 315927,
+    "metadata": "native best effort; ACL/xattr/timestamp fidelity not independently verified"
+  }
+}

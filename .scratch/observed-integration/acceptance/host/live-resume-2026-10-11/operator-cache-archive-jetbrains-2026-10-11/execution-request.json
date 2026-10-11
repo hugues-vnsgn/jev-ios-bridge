@@ -1,0 +1,8 @@
+{
+  "cmd": "/usr/bin/env -i HOME=/Users/hugues_mini PATH=/usr/bin:/bin:/usr/sbin:/sbin LANG=C LC_ALL=C TZ=UTC /opt/homebrew/bin/python3 .scratch/observed-integration/acceptance/host/live-resume-2026-10-11/cache-archive-draft/archive-cache.py .scratch/observed-integration/acceptance/host/live-resume-2026-10-11/cache-archive-draft/jetbrains-plan.json 886c24962acf52ba5d47b2958f5038470bbde7a5d1414cc73f2c879b0171689c",
+  "login": false,
+  "sandbox_permissions": "require_escalated",
+  "justification": "Allow the Root-reviewed one source-retained JetBrains cache archive using exact script SHA1b585f7616e3856749f9d6457bb494f3283f496f174d14f1ecbfc65965635bb3 and plan SHA886c24962acf52ba5d47b2958f5038470bbde7a5d1414cc73f2c879b0171689c: only /Users/hugues_mini/Library/Caches/JetBrains to private Sam archive/jetbrains-2026-10-11-01, max8GiB source/output, preserve81GiB external reserve including receipts, content/link stream verification and equal source before/after? Includes only two exact Sam mount proofs and one bounded bsdtar copy, 600s per child/1800s total, minimal five-variable environment. No removal/extraction, retry, process stop or build. Partial evidence retained on refusal.",
+  "yield_time_ms": 1000,
+  "max_output_tokens": 5000
+}

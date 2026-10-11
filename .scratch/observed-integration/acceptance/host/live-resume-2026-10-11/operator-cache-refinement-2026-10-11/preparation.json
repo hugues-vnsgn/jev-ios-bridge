@@ -1,0 +1,40 @@
+{
+  "preparedAtUtc": "2026-10-11T05:23:48.324349+00:00",
+  "activitySealFilesRehashed": 64,
+  "activitySealMismatches": 0,
+  "recorderChange": "Only evidence directory literal changed from the settled reviewed recorder",
+  "commandBudget": 2,
+  "commands": [
+    {
+      "argv": [
+        "/usr/bin/du",
+        "-k",
+        "-d",
+        "2",
+        "-P",
+        "/Users/hugues_mini/.gradle/caches"
+      ],
+      "timeoutMs": 180000,
+      "cap": 262144
+    },
+    {
+      "argv": [
+        "/usr/bin/du",
+        "-sk",
+        "-P",
+        "/Users/hugues_mini/Library/Caches/JetBrains",
+        "/Users/hugues_mini/Library/Caches/org.swift.swiftpm",
+        "/Users/hugues_mini/.npm/_cacache",
+        "/Users/hugues_mini/.cache/uv",
+        "/Users/hugues_mini/.cache/bazel-repo-contents-cache",
+        "/Users/hugues_mini/.cache/bazel-repo-cache",
+        "/Users/hugues_mini/.cache/huggingface"
+      ],
+      "timeoutMs": 180000,
+      "cap": 65536
+    }
+  ],
+  "wholeGradleRootsExcluded": true,
+  "copiesDeletionsProcessStopsBuilds": 0,
+  "effectsExecuted": 0
+}

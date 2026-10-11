@@ -1,0 +1,128 @@
+.Ar device
+back locally (onto that same device).
+Ownership of the affected disk is required.
+.\"
+.\"             -- enableOwnership --
+.It Sy enableOwnership Ar device
+.br
+Enable ownership of a volume.  The on-root-disk Volume Database at /var/db/volinfo.database is manipulated such that
+the User and Group ID settings of files, directories, and links (file system objects, or "FSOs") on the target volume
+are taken into account.
+.Pp
+This setting for a particular volume is persistent across ejects and injects of that volume as seen
+by the current OS, even across reboots of that OS, because of the entries in this OS's Volume Database.  Note thus
+that the setting is not kept on the target disk, nor is it in-memory.
+.Pp
+For some locations of devices (e.g. internal hard disks), consideration of ownership settings on FSOs is the default.
+For others (e.g. plug-in USB disks), it is not.
+.Pp
+When ownership is disabled, Owner and Group ID settings on FSOs appear to the user and programs as the current user and group instead
+of their actual on-disk settings, in order to
+make it easy to use a plug-in disk of which the user has physical possession.
+.Pp
+When ownership is enabled, the Owner and Group ID settings that exist on the disk are taken into account for determining
+access, and exact settings are written to the disk as FSOs are created.  A common reason for
+having to enable ownership is when a disk is to contain FSOs whose User and Group ID settings, and thus permissions
+behavior overall, is critically important, such as when the plug-in disk contains system files to be changed or added to.
+.Pp
+See also the
+.Xr vsdbutil 8
+command.  Running as root is required.
+.\"
+.\"             -- disableOwnership --
+.It Sy disableOwnership Ar device
+.br
+Disable ownership of a volume.  See
+.Sy enableOwnership
+above.
+Running as root is required.
+.\"
+.\"             -- verifyVolume --
+.It Sy verifyVolume Ar device
+.br
+
+back locally (onto that same device).
+Ownership of the affected disk is required.
+.\"
+.\"             -- enableOwnership --
+.It Sy enableOwnership Ar device
+.br
+Enable ownership of a volume.  The on-root-disk Volume Database at /var/db/volinfo.database is manipulated such that
+the User and Group ID settings of files, directories, and links (file system objects, or "FSOs") on the target volume
+are taken into account.
+.Pp
+This setting for a particular volume is persistent across ejects and injects of that volume as seen
+by the current OS, even across reboots of that OS, because of the entries in this OS's Volume Database.  Note thus
+that the setting is not kept on the target disk, nor is it in-memory.
+.Pp
+For some locations of devices (e.g. internal hard disks), consideration of ownership settings on FSOs is the default.
+For others (e.g. plug-in USB disks), it is not.
+.Pp
+When ownership is disabled, Owner and Group ID settings on FSOs appear to the user and programs as the current user and group instead
+of their actual on-disk settings, in order to
+make it easy to use a plug-in disk of which the user has physical possession.
+.Pp
+When ownership is enabled, the Owner and Group ID settings that exist on the disk are taken into account for determining
+access, and exact settings are written to the disk as FSOs are created.  A common reason for
+having to enable ownership is when a disk is to contain FSOs whose User and Group ID settings, and thus permissions
+behavior overall, is critically important, such as when the plug-in disk contains system files to be changed or added to.
+.Pp
+See also the
+.Xr vsdbutil 8
+command.  Running as root is required.
+.\"
+.\"             -- disableOwnership --
+.It Sy disableOwnership Ar device
+.br
+Disable ownership of a volume.  See
+.Sy enableOwnership
+above.
+Running as root is required.
+.\"
+.\"             -- verifyVolume --
+.It Sy verifyVolume Ar device
+.br
+Verify the file system data structures of a volume.
+
+.\"             -- disableOwnership --
+.It Sy disableOwnership Ar device
+.br
+Disable ownership of a volume.  See
+.Sy enableOwnership
+above.
+Running as root is required.
+.\"
+.\"             -- verifyVolume --
+.It Sy verifyVolume Ar device
+.br
+Verify the file system data structures of a volume.
+The appropriate fsck program is executed and
+the volume is attempted to be left mounted or unmounted as it was before the command.
+Any underlying Storage System (e.g. Core Storage, APFS) is verified before the target volume itself.
+In certain cases, "live" verify, including of the boot volume, is supported.
+Ownership of the disk to be verified is required.
+.\"
+.\"             -- repairVolume --
+.It Sy repairVolume Ar device
+.br
+Repair the file system data structures of a volume.
+The appropriate fsck program is executed and
+the volume is attempted to be left mounted or unmounted as it was before the command.
+Any underlying Storage System (e.g. Core Storage, APFS) is repaired before the given target volume.
+In most cases (e.g. except mount-read-only), the target volume must be unmountable;
+in all cases, the underlying storage media must be writable.
+"Live" repair (e.g. of a file-writable mounted volume) is not supported.
+Ownership of the affected disk is required.
+.\"
+.\"             -- verifyDisk --
+.It Sy verifyDisk Ar device
+.br
+Verify the partition map layout of a whole disk intended for booting or data use on a Macintosh.
+The checks further include, but are not limited to, the integrity of the EFI System Partition,
+the integrity of any Core Storage Physical Volume partitions,
+and provisioning of space for boot loaders.
+Ownership of the disk to be verified is required; it must be a whole disk and must have a partition map.
+.\"
+.\"             -- repairDisk --
+.It Sy repairDisk Ar device
+.br

@@ -1,0 +1,24 @@
+{
+  "constraint": "SAM_ROOT_ACTUAL_UID0_GID0_MODE0775_OUTSIDE_CONDITIONAL_UID501_REPAIR_SCOPE",
+  "samIdentity": {
+    "dev": "16777242",
+    "ino": "2",
+    "uid": "0",
+    "gid": "0",
+    "mode": "16893",
+    "size": "986",
+    "nlink": "27",
+    "mtimeNs": "1791692519000000000",
+    "ctimeNs": "1791692519000000000",
+    "directory": true,
+    "symlink": false,
+    "permissions": "775"
+  },
+  "ownershipEnabledConfirmed": true,
+  "sameVolumeDeviceConfirmed": true,
+  "aclEntries": [],
+  "repairPreconditionUid501Gid20Mode0775": false,
+  "repairScriptPrepared": false,
+  "samChmodOpenMkdir": 0,
+  "explanation": "The installed manual explains ownership-ignored volumes report current user/group in place of on-disk ownership. With ownership enabled, Sam reports actual root/wheel ownership. No new scope is inferred."
+}

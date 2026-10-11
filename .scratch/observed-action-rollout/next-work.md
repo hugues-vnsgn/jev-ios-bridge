@@ -2,7 +2,13 @@
 
 ## Active resumption: 2026-10-11
 
-Latest autonomous continuation: the sole operator rechecked storage at03:31:58 UTC. Available space is now16,436,826,112bytes (15.31GiB); staging shortfall58,725,101,568bytes (54.69GiB), plus build headroom. Root audited all28 new evidence files, raw receipt/arithmetic and527 accepted reference files. No builds or device actions followed. [Fresh audit](../observed-integration/acceptance/host/live-resume-2026-10-11/root-storage-recheck-audit.json).
+Sam is ready: ownership is enabled and `/Volumes/Sam/jev-ios-bridge-release-2026-10-11/{build,staging,archive}` are private uid501/gid20/mode0700 directories. Root audited the33-file setup record. [Workspace audit](../observed-integration/acceptance/host/live-resume-2026-10-11/root-sam-namespace-audit.json).
+
+The first offload is complete. The JetBrains cache is preserved in a verified 2.18 GiB archive on Sam; its 100 manifest entries were removed internally after a separate verified rename. Root audited the removal journal, rehashed the retained archive, and verified the operator's 24-file evidence bundle. [Offload audit](../observed-integration/acceptance/host/live-resume-2026-10-11/root-jetbrains-offload-audit.json).
+
+The latest storage snapshot reports **23.73 GiB internally** and **124.93 GiB on Sam**. Internal storage still needs **36.27 GiB** to reach the unchanged 60 GiB simulator requirement. Sam exceeds the 70 GiB staging requirement; archive plans preserve staging and build headroom. These are measured snapshots, not final production gate acceptance. [Storage audit](../observed-integration/acceptance/host/live-resume-2026-10-11/root-post-jetbrains-storage-audit.json).
+
+Next, the sole operator is archiving exact old Gradle versions 8.13 and 9.7.1 serially, after fresh activity checks. Their allocated sizes total 15.15 GiB; recovery is not claimed until verified removal and measurement. Active Gradle 9.1.0, shared caches and wrapper distributions remain excluded. Other candidate caches and the 12.48 GiB `.konan` tree still require selection and activity/content assessment. No build, device operation, migration rerun or release action has occurred during storage work.
 
 Use the [current resume runbook](storage-resume-runbook.md) and [prepared execution brief](remaining-execution-brief.md). They supersede stale operator/migration instructions. Build commands remain unexecuted. Current public-interface command recording, including the L04 pre-acknowledgement loss boundary, remains a preparation dependency; the historical experimental harness is insufficient.
 
@@ -51,7 +57,7 @@ No owner decision is pending. The sole live operator stays idle and must be rebo
 | 1 | Product fixes, both review axes, clean package/startup and integrated host checks | Complete; exact evidence above |
 | 2 | Actual iPhone17/iOS27.0 metadata compatibility | PASS |
 | 3 | Operational configuration, once migration and capacity | PASS; corrected effective digest recorded |
-| 4 | Storage and unchanged fixture/Weather generic builds | BLOCKED:15.31GiB available;70GiB required plus build margin |
+| 4 | Storage and unchanged fixture/Weather generic builds | BLOCKED:23.73 GiB internal;60 GiB required. Sam staging has124.93 GiB |
 | 5 | Serial L01–L05 via the sole operator | UNVERIFIED; requires accepted entry evidence |
 | 6 | Independent final review of completed live acceptance | Pending; code/package review already passed |
 
@@ -112,7 +118,7 @@ Before allocation, verify private effective config/store authority, default dige
 | L01 | CLI prepare → CLI action → MCP get | Fixture Home to Details; outcome_observed; attempted/acknowledged true;1touch,0relaunch,N≥2captures. |
 | L02 | MCP prepare/start → CLI report | Home already satisfied; flagsfalse;0input,1capture. |
 | L03 | CLI prepare → MCP start → CLI report | Absent Details precondition; PRECONDITION_NOT_MET; flagsfalse;0input,1capture; retain allocation. |
-| L04 | Recording MCP harness prepare/start → fresh CLI retrieval/conflict and legacy successor | Withhold one successful real touch reply before acknowledgement; UI_ACTION_UNCONFIRMED, attemptedtrue/ackfalse, quarantine; raw success retained; successors/retrieval/conflict0backend calls. Synthetic loss has only that scope. |
+| L04 | Recording MCP harness prepare/start → fresh CLI retrieval/conflict and legacy successor | Withhold one successful real touch reply before acknowledgement; UI_ACTION_UNCONFIRMED, persisted attempted null/acknowledged null, quarantine; raw success retained; successors/retrieval/conflict0backend calls. Synthetic loss has only that scope. |
 | L05 | MCP prepare → separate CLI action → MCP get | Unchanged Weather Settings sheet; outcome_observed;1touch,0relaunch,N≥2; snapshot and JPEG agree. |
 
 Each preparation uses exactly one create, boot, install and launch, with fresh unique declared IDs. Count actual listing/readiness/action captures and all backend calls. Retain five devices, including refusal and quarantine, within eight held allocations. Stop on uncertainty, unknown creation, exhausted capacity or unexplained effects; no replay, replacement, erase, delete, shutdown or reset.

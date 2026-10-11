@@ -1,0 +1,121 @@
+{
+  "sealedAtUtc": "2026-10-11T04:35:07.623501+00:00",
+  "scope": "All new Sam diagnosis evidence except this manifest itself",
+  "directoriesMode": "0700",
+  "files": [
+    {
+      "path": "commands.mjs",
+      "bytes": 4250,
+      "sha256": "6235ffbcb15d2a1aaf7fb3a1f0f240f3adf65b21078993304400fb3089ed22b6",
+      "mode": "0600"
+    },
+    {
+      "path": "diagnosis-claimed.json",
+      "bytes": 143,
+      "sha256": "bfa0a3ade89c16751325020ae12cea025cd8c0bda470c2bb8b4410c2357958a4",
+      "mode": "0600"
+    },
+    {
+      "path": "diskutil-claimed.json",
+      "bytes": 152,
+      "sha256": "64a7202d93abc9b331fa52c7e14729252fc3c641c4d2628f198f09619ff0a9f3",
+      "mode": "0600"
+    },
+    {
+      "path": "diskutil-plist-summary.json",
+      "bytes": 3467,
+      "sha256": "da347f8f01126d73a741c90d3d9ff3a58cb8b0773ab1d18bba384772cc4bb228",
+      "mode": "0600"
+    },
+    {
+      "path": "diskutil-receipt.json",
+      "bytes": 1687,
+      "sha256": "e287029c0341e7f75ebefae9c686a8f3a2dca5a3c984738d9230cce72c0d54f4",
+      "mode": "0600"
+    },
+    {
+      "path": "diskutil.stderr.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "mode": "0600"
+    },
+    {
+      "path": "diskutil.stdout.bin",
+      "bytes": 2709,
+      "sha256": "5681eeaa56d555e660a3adebd15a018877c3395d3c80bcea4ca27bc3483113fc",
+      "mode": "0600"
+    },
+    {
+      "path": "escalation-request.json",
+      "bytes": 667,
+      "sha256": "ef3c5bbb5e3db1c2e3030d628515ac0c8800bbb1f0f67a62cb151d19365c95cb",
+      "mode": "0600"
+    },
+    {
+      "path": "escalation-tool-received.txt",
+      "bytes": 3741,
+      "sha256": "c5a28da93c419fceb2be9b663daac1ed62182f7da0c9fc855ae0e50734b594a5",
+      "mode": "0600"
+    },
+    {
+      "path": "escalation-tool-result.json",
+      "bytes": 4452,
+      "sha256": "9d16972ca5c331b25ab48f2dbd39bd2a0d959f02ac14ca73ff0849e1de49f9e6",
+      "mode": "0600"
+    },
+    {
+      "path": "final-verification.json",
+      "bytes": 1154,
+      "sha256": "43e52877f860367873fce69d29ddaa546c7810790aedfc69d6e9c8af61a58ded",
+      "mode": "0600"
+    },
+    {
+      "path": "metadata-result.json",
+      "bytes": 5107,
+      "sha256": "2c66e31f107ee4371ae149cb0a9a76ac24f3be6ab1a2281ee23bad14724266e4",
+      "mode": "0600"
+    },
+    {
+      "path": "prepared-hashes.json",
+      "bytes": 170,
+      "sha256": "0923902006639d8a912dc1ae606bc8b7cf7fc9be1868b6a2ba37fd7b76745d77",
+      "mode": "0600"
+    },
+    {
+      "path": "recorder-binding.json",
+      "bytes": 528,
+      "sha256": "9b1e5d4e4c58c31f5bf3ed266dc245009f0a813966400e0f2d36544fd5028c99",
+      "mode": "0600"
+    },
+    {
+      "path": "repo-head-tool-result.json",
+      "bytes": 167,
+      "sha256": "194f707947110e8524070976837e8fa7d1578d3d1de3beaa907a8659848d7516",
+      "mode": "0600"
+    },
+    {
+      "path": "report.md",
+      "bytes": 3528,
+      "sha256": "e8ed85baa5553e052e1f993de68fbbc396bbc93d7cbaeb347ce51f269a4f60cd",
+      "mode": "0600"
+    },
+    {
+      "path": "run.mjs",
+      "bytes": 3562,
+      "sha256": "23c968d3aac9ee67146d7099b50af8029ff64c807cd8b860f9a41cc259ced722",
+      "mode": "0600"
+    },
+    {
+      "path": "sam-facts.json",
+      "bytes": 2212,
+      "sha256": "7b863824b6e7c1cbd2b495bc6b9d3aa124e449dda31b2afc1ce8ee147b17820c",
+      "mode": "0600"
+    },
+    {
+      "path": "syntax-checks.json",
+      "bytes": 397,
+      "sha256": "1c74b0b418cd68157f22687e6365dd59b3a0452dbeb9db05e15d2b86ec906e3a",
+      "mode": "0600"
+    }
+  ]
+}

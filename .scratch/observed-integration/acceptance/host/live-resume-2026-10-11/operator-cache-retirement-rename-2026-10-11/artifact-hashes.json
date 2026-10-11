@@ -1,0 +1,114 @@
+{
+  "entries": [
+    {
+      "path": "execution-request.json",
+      "bytes": 850,
+      "sha256": "c1ca6a3a9ec9192082495ef69245723563a07da627a931132a3f7c4feb9307f9"
+    },
+    {
+      "path": "execution-tool-receipts.json",
+      "bytes": 1919,
+      "sha256": "c732ee33a0eebe682bcff80465a51769de924eeb084627920ddc4fd16992460b"
+    },
+    {
+      "path": "external-evidence/activity-evidence-binding.json",
+      "bytes": 415,
+      "sha256": "72e6d29c7f18232ee04b06e51e92930e25da74ff4551a4d53dc90d01fc035520"
+    },
+    {
+      "path": "external-evidence/completion.json",
+      "bytes": 1696,
+      "sha256": "39789c5d3b5ba5cc5160dcda735f0accd85307d2ef6cb3aacbd5afb08a8f5a22"
+    },
+    {
+      "path": "external-evidence/mount-after.json",
+      "bytes": 5495,
+      "sha256": "9501702cbdf1f08cdeccc90e1a427e208199c3466340f7a67f4c43fc0d25b831"
+    },
+    {
+      "path": "external-evidence/mount-before.json",
+      "bytes": 5495,
+      "sha256": "b5e72aa5015cdc9f631d3f1332c4cfd797d4b6ece813bf787faadfc7b4f968e7"
+    },
+    {
+      "path": "external-evidence/operations.jsonl",
+      "bytes": 1711,
+      "sha256": "8654edef6e6bd56677421f28ce2e296a3a12579133d4cb4acfc0e283e76932ec"
+    },
+    {
+      "path": "external-evidence/plan.json",
+      "bytes": 1974,
+      "sha256": "7665545c7408900d3051dbc7fdc61c6416f3b3ae9a55812f10d4eaf9bf52f10d"
+    },
+    {
+      "path": "external-evidence/ps-before.json",
+      "bytes": 228053,
+      "sha256": "e31769816b3b69579cceb1567bfd6c15de14f8cbe5de12442077ef855152bb31"
+    },
+    {
+      "path": "external-evidence/result.json",
+      "bytes": 941,
+      "sha256": "f14b78389fa1b24c7c1a8cae9c5c7f74119109a095643fdab852ab66fe187adc"
+    },
+    {
+      "path": "external-readback-receipts.json",
+      "bytes": 4705,
+      "sha256": "f1ce7b8f7ba9002dd884ff05addaa9103c9fca6a039d2597a3b27e60de7e052e"
+    },
+    {
+      "path": "final-verification.json",
+      "bytes": 397,
+      "sha256": "91dca1a25013b713eb1628f3acdc9d64831075b665b6f8e711c95e7860c2a972"
+    },
+    {
+      "path": "once-submission-claim.json",
+      "bytes": 146,
+      "sha256": "58292e11d44beb165cdea21c89dc6101b1fd3e41b71a2408d478269c898c6e09"
+    },
+    {
+      "path": "preparation-checks.json",
+      "bytes": 3761,
+      "sha256": "4bfb29dbfa988c20cfd77ee19a7d6d7145f701786f6cdc52cc7faef4d3952333"
+    },
+    {
+      "path": "prepared-hashes.json",
+      "bytes": 1123,
+      "sha256": "e908da0262abccccbf84646126ff223bdb33b726d5920318ff81738adf80a641"
+    },
+    {
+      "path": "readback-tool-return.json",
+      "bytes": 2880,
+      "sha256": "0844f284e897782983c4aca5e7ade71ee21fe69ad1c189522d270ad0dd40c1b7"
+    },
+    {
+      "path": "report.md",
+      "bytes": 1227,
+      "sha256": "1c56bef61199ae99ee63d240d84997404ad0e131bddc9616c7b00d42524421f3"
+    },
+    {
+      "path": "retire-cache.py",
+      "bytes": 22648,
+      "sha256": "8ecbc0828c56c639aa09b0da0f0089902a994ac65677016bdb7f9e347e0c9cef"
+    },
+    {
+      "path": "retirement-plan.md",
+      "bytes": 6288,
+      "sha256": "17cc4fe8a7a9d39d6179566eaa4ff9f3ca7a262b5f58e51ea4968cb4fde38022"
+    },
+    {
+      "path": "root-cache-retirement-review.json",
+      "bytes": 450,
+      "sha256": "7d214bcbb1afb3131abe6ae2741f0f21da015c077035d37eddd53954b6cbc903"
+    },
+    {
+      "path": "root-jetbrains-rename-audit.json",
+      "bytes": 1603,
+      "sha256": "166b4853ee9632c8ce8424d884aaa4b63b7a91a90fce751c3b8116a3531927b7"
+    },
+    {
+      "path": "root-rename-plan.json",
+      "bytes": 1974,
+      "sha256": "68a4439b18ce7bee11695f60283886ac8eaec71c64ac83fc18f669a6424ce9a4"
+    }
+  ]
+}

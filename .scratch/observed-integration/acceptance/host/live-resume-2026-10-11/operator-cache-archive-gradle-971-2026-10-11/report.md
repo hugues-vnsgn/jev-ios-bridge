@@ -1,0 +1,9 @@
+Gradle 9.7.1 source-retained archive: PASS (COPY_VERIFIED_SOURCE_RETAINED).
+
+Exact source: /Users/hugues_mini/.gradle/caches/9.7.1. Private archive: /Volumes/Sam/jev-ios-bridge-release-2026-10-11/archive/gradle-971-2026-10-11-01/cache.tar.gz. Archive bytes: 2,674,073,600. SHA256: db865535fe48c199ffb15589797fdf17fed57d07272b5a216fd2482fda4d3900. Streaming verification accepted 289,479 entries and 288,708 AppleDouble auxiliary entries. Native metadata is best effort; ACL/xattr/timestamp fidelity was not independently verified.
+
+The fresh exact-root lsof -nP -F0pcfn +D check recorded an actual direct-child close at 2026-10-11T06:25:23.450Z, exit 1 with both streams empty, no timeout/kill/error, and unchanged lossless pinned root identity. Then the exact frozen archive script and Root plan ran once through supported approval and exited 0. Its two diskutil queries and tar were actually waited, all exit 0 with empty stderr. Descendants were not independently observed. Exact commands, scrubbed environments, raw mount output, source-retained result and close receipts are preserved.
+
+Source-before/source-after manifests are each 117,090,051 bytes and have equal streamed SHA256 774b21d13509a2cffd82ed17a111470289b183d3039b6dac4acd30dd4ea20baa. They remain on Sam and were not copied into the internal repo. Root independently rehashed both Gradle archives and matching manifests, with PASS audits retained here.
+
+The 12-GiB source/archive bounds and 81-GiB external reserve were enforced by the frozen script. Source stability is endpoint inventory equality with point-in-time inactivity evidence, not an atomic snapshot. Both serial archive copies are complete with their source trees retained. No source retirement/deletion, Gradle start/stop, build or device operation occurred in this phase. Active 9.1.0/shared roots were outside the selected sources. Preparation remains unchanged. Root has separately authorized the next 8.13 rename-only phase.

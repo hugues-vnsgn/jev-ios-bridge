@@ -1,0 +1,69 @@
+{
+  "argv": [
+    "/usr/bin/du",
+    "-sk",
+    "-P",
+    "/Users/hugues_mini/Library/Caches/JetBrains",
+    "/Users/hugues_mini/Library/Caches/org.swift.swiftpm",
+    "/Users/hugues_mini/.npm/_cacache",
+    "/Users/hugues_mini/.cache/uv",
+    "/Users/hugues_mini/.cache/bazel-repo-contents-cache",
+    "/Users/hugues_mini/.cache/bazel-repo-cache",
+    "/Users/hugues_mini/.cache/huggingface"
+  ],
+  "cwd": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic",
+  "spawnOptions": {
+    "cwd": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic",
+    "env": {
+      "HOME": "/Users/hugues_mini",
+      "PATH": "/usr/bin:/bin:/usr/sbin:/sbin",
+      "LANG": "C",
+      "LC_ALL": "C",
+      "DEVELOPER_DIR": "/Applications/Xcode.app/Contents/Developer",
+      "TMPDIR": "/var/folders/yd/86fjng8s4hbfhcz7_0yqcl9w0000gn/T"
+    },
+    "shell": false,
+    "stdio": [
+      "ignore",
+      "pipe",
+      "pipe"
+    ]
+  },
+  "startedAtUtc": "2026-10-11T05:25:10.652Z",
+  "timeoutMs": 180000,
+  "combinedOutputLimit": 65536,
+  "events": [
+    {
+      "event": "spawn",
+      "atUtc": "2026-10-11T05:25:10.653Z"
+    },
+    {
+      "event": "exit",
+      "code": 0,
+      "signal": null,
+      "atUtc": "2026-10-11T05:25:13.777Z"
+    },
+    {
+      "event": "close",
+      "code": 0,
+      "signal": null,
+      "atUtc": "2026-10-11T05:25:13.777Z"
+    }
+  ],
+  "killCalls": [],
+  "stdoutOriginalBytes": 342,
+  "stderrOriginalBytes": 0,
+  "pid": 53718,
+  "closedAtUtc": "2026-10-11T05:25:13.777Z",
+  "exitCode": 0,
+  "signal": null,
+  "timedOut": false,
+  "overflow": false,
+  "stopped": false,
+  "error": null,
+  "retainedBytes": 342,
+  "captureComplete": true,
+  "descendantQualifier": "Only direct child close is observed; descendants are unobserved.",
+  "stdoutOriginalSha256": "0f1f9933e43aca4504e11b37057a82c43ebef3b2c99b38a531fbfd69ad4f1e80",
+  "stderrOriginalSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+}

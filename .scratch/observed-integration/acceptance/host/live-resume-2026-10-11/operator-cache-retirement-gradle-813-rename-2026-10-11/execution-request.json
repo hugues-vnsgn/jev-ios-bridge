@@ -1,0 +1,8 @@
+{
+  "cmd": "/usr/bin/env -i HOME=/Users/hugues_mini PATH=/usr/bin:/bin:/usr/sbin:/sbin LANG=C LC_ALL=C TZ=UTC /opt/homebrew/bin/python3 .scratch/observed-integration/acceptance/host/live-resume-2026-10-11/cache-retirement-draft/retire-gradle-version.py .scratch/observed-integration/acceptance/host/live-resume-2026-10-11/cache-retirement-draft/root-gradle-813-rename-plan.json 30296fa1c688faf14f9c4db8e65aab60504d1daf22b39a35e7959da0e7208817",
+  "login": false,
+  "sandbox_permissions": "require_escalated",
+  "justification": "Allow the once Root-reviewed rename of only inactive Gradle 8.13 into /Users/hugues_mini/.gradle/caches/.jev-retired-gradle-813-2026-10-11-01/source, after fresh ps/lsof and full archive/source verification? The source and Sam archive remain retained; no deletion, Gradle start/stop, active 9.1.0/shared-root changes, or builds.",
+  "yield_time_ms": 1000,
+  "max_output_tokens": 5000
+}

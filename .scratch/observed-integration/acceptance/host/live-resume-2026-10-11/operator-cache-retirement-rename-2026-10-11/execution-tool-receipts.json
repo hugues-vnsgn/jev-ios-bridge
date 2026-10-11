@@ -1,0 +1,43 @@
+{
+  "executionReturns": [
+    {
+      "request": {
+        "cmd": "/usr/bin/env -i HOME=/Users/hugues_mini PATH=/usr/bin:/bin:/usr/sbin:/sbin LANG=C LC_ALL=C TZ=UTC /opt/homebrew/bin/python3 .scratch/observed-integration/acceptance/host/live-resume-2026-10-11/cache-retirement-draft/retire-cache.py .scratch/observed-integration/acceptance/host/live-resume-2026-10-11/cache-retirement-draft/root-rename-plan.json 68a4439b18ce7bee11695f60283886ac8eaec71c64ac83fc18f669a6424ce9a4",
+        "login": false,
+        "sandbox_permissions": "require_escalated",
+        "justification": "Allow this once reviewed JetBrains cache rename into the exact private retirement wrapper, after fresh activity and complete archive/source verification? Root authorized this source-retained operation under the owner\u2019s offload approval; no deletion, process stopping, or builds.",
+        "yield_time_ms": 1000,
+        "max_output_tokens": 5000
+      },
+      "result": {
+        "chunk_id": "d0b257",
+        "wall_time_seconds": 1.001235584,
+        "session_id": 12910,
+        "original_token_count": 0,
+        "output": ""
+      }
+    },
+    {
+      "request": {
+        "session_id": 12910,
+        "chars": "",
+        "yield_time_ms": 1000,
+        "max_output_tokens": 5000
+      },
+      "result": {
+        "chunk_id": "fe29f8",
+        "wall_time_seconds": 8.834e-06,
+        "exit_code": 0,
+        "original_token_count": 0,
+        "output": ""
+      }
+    }
+  ],
+  "preparationSealReturn": {
+    "chunk_id": "0bb3b0",
+    "wall_time_seconds": 6.584e-06,
+    "exit_code": 0,
+    "original_token_count": 68,
+    "output": "{\"preparedDirectory\": \".scratch/observed-integration/acceptance/host/live-resume-2026-10-11/operator-cache-retirement-rename-2026-10-11\", \"preparedFiles\": 7, \"manifestSha256\": \"e908da0262abccccbf84646126ff223bdb33b726d5920318ff81738adf80a641\", \"nativeEffectsExecuted\": 0}\n"
+  }
+}

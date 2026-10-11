@@ -1,0 +1,175 @@
+{
+  "sealedAtUtc": "2026-10-11T05:08:01.183339+00:00",
+  "scope": "All read-only post-owner Sam recheck evidence except manifest itself",
+  "directoriesMode": "0700",
+  "files": [
+    {
+      "path": "acl-claimed.json",
+      "bytes": 154,
+      "sha256": "c279ba02a2d61286c52a4a9b0ac627ea31f1dc4f3debd4003b3ef22cf8514d53",
+      "mode": "0600"
+    },
+    {
+      "path": "acl-receipt.json",
+      "bytes": 1686,
+      "sha256": "2c50f13a9a53bdcaadce6347dcd06a87654f512e60e98ab1ee7a1ab89dbc90d6",
+      "mode": "0600"
+    },
+    {
+      "path": "acl.stderr.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "mode": "0600"
+    },
+    {
+      "path": "acl.stdout.bin",
+      "bytes": 159,
+      "sha256": "a2d0339c25a69be924be5c742049293e88ad91195172f1d00910723d9309f188",
+      "mode": "0600"
+    },
+    {
+      "path": "commands.mjs",
+      "bytes": 4254,
+      "sha256": "1db9a4eaea97cc3b17537ad7e8f88fde7379f9fab486cc35d6477967bf158b87",
+      "mode": "0600"
+    },
+    {
+      "path": "escalation-request.json",
+      "bytes": 744,
+      "sha256": "d3116c760b4ba0aa72d0c1cd3f6fc37b1cf46411507108770418c0466a40ac22",
+      "mode": "0600"
+    },
+    {
+      "path": "execution-tool-received.txt",
+      "bytes": 4476,
+      "sha256": "0eeddaa200ab5b1c18c312235b67e9f1a91c6abf1c792af7d4f32c9c663e434c",
+      "mode": "0600"
+    },
+    {
+      "path": "execution-tool-returns.json",
+      "bytes": 5370,
+      "sha256": "24790b5b26cd6049f11c6267d38ece7ea8e02a09e29f58380ed11c795b4f43f4",
+      "mode": "0600"
+    },
+    {
+      "path": "final-verification.json",
+      "bytes": 622,
+      "sha256": "93ab6368c97f6783d8d4b3e0a78a092158111ad17de799ff944bdb98ae7f6939",
+      "mode": "0600"
+    },
+    {
+      "path": "first-confirmed-constraint.json",
+      "bytes": 824,
+      "sha256": "b7e0a93536015b22d80b98948fe06b696f0c6f78d9ce2dcb802bd66e5a61b0a8",
+      "mode": "0600"
+    },
+    {
+      "path": "parse-info-claimed.json",
+      "bytes": 357,
+      "sha256": "f70aa6f67e0118d514b2ce194dedd064f38d203fcc6564a980e09364e18cf20f",
+      "mode": "0600"
+    },
+    {
+      "path": "parse-info-receipt.json",
+      "bytes": 1889,
+      "sha256": "542bb1d852b4c7cb5b36ceb1b0187111515cf7da57247511e1b1dc9940db29bb",
+      "mode": "0600"
+    },
+    {
+      "path": "parse-info.stderr.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "mode": "0600"
+    },
+    {
+      "path": "parse-info.stdout.bin",
+      "bytes": 411,
+      "sha256": "ca7851d0374a4aa08c0a6ebd68b2ac683640040ccad3b5b3d354ae3488abc563",
+      "mode": "0600"
+    },
+    {
+      "path": "parse-sam-plist.py",
+      "bytes": 982,
+      "sha256": "e0d3b1f219f2da20d4a9675882ddaa14f06ff627da25f883c4eedafd44c656a9",
+      "mode": "0600"
+    },
+    {
+      "path": "preparation.json",
+      "bytes": 509,
+      "sha256": "15a4f3ade74e929384255f6a5824019195b3924402c3157e416a2fe26e1676d4",
+      "mode": "0600"
+    },
+    {
+      "path": "prepared-hashes.json",
+      "bytes": 262,
+      "sha256": "94d54b18599e48a4340506177a24b74d836071c61d4c4372bbd97124b964510b",
+      "mode": "0600"
+    },
+    {
+      "path": "recheck-claimed.json",
+      "bytes": 287,
+      "sha256": "2537761b88db9b969533b9421279581f1a50791885c0aa6dbf9dd1b8f1038a54",
+      "mode": "0600"
+    },
+    {
+      "path": "recheck-result.json",
+      "bytes": 6359,
+      "sha256": "e31eac2440fba2e04e2b9358a99eb3f274065a6970106d00134895dce067b07d",
+      "mode": "0600"
+    },
+    {
+      "path": "report.md",
+      "bytes": 2612,
+      "sha256": "35872a8e66632c501a3467ab066ec464986868f999d2585bd6edbcdcce9cfb9d",
+      "mode": "0600"
+    },
+    {
+      "path": "run.mjs",
+      "bytes": 4365,
+      "sha256": "e452a5f76eba84dee8762e213de768103dd94b7325ae7ca67886c2b68c4acadb",
+      "mode": "0600"
+    },
+    {
+      "path": "sam-before-claimed.json",
+      "bytes": 152,
+      "sha256": "688efb54d0989019903edddb19b23e1d7e806ceeae779ec5afd4f9626ac58f33",
+      "mode": "0600"
+    },
+    {
+      "path": "sam-before-receipt.json",
+      "bytes": 1686,
+      "sha256": "3220f74f3c1c325429eccbe4922ec1982f4bc939aa36d35f7fce14f8aae33412",
+      "mode": "0600"
+    },
+    {
+      "path": "sam-before.stderr.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "mode": "0600"
+    },
+    {
+      "path": "sam-before.stdout.bin",
+      "bytes": 2708,
+      "sha256": "19f4ce00c88273ad253ef7f454e0031f58260fc4e99c6c6e8d2d82226fe419b9",
+      "mode": "0600"
+    },
+    {
+      "path": "sealed-sam-binding.json",
+      "bytes": 386,
+      "sha256": "bcfb7dabde5b55f2f6c3e6f346a3a6ee40bbbab43516d22bb8218ed7dba64e71",
+      "mode": "0600"
+    },
+    {
+      "path": "sealed-sam-facts.json",
+      "bytes": 2212,
+      "sha256": "7b863824b6e7c1cbd2b495bc6b9d3aa124e449dda31b2afc1ce8ee147b17820c",
+      "mode": "0600"
+    },
+    {
+      "path": "syntax-checks.json",
+      "bytes": 626,
+      "sha256": "d5718c7be887d38c1b788fbd309da0bd3d3485dbd737e6805957935e59710790",
+      "mode": "0600"
+    }
+  ]
+}

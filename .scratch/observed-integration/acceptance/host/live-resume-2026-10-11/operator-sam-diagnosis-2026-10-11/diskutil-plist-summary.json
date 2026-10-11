@@ -1,0 +1,162 @@
+{
+  "parser": "Python standard-library plistlib.loads on retained bounded raw bytes; no native conversion or product parser modification",
+  "selectedFields": {
+    "MountPoint": {
+      "type": "str",
+      "value": "/Volumes/Sam"
+    },
+    "DeviceIdentifier": {
+      "type": "str",
+      "value": "disk6s3"
+    },
+    "DeviceNode": {
+      "type": "str",
+      "value": "/dev/disk6s3"
+    },
+    "ParentWholeDisk": {
+      "type": "str",
+      "value": "disk6"
+    },
+    "DiskUUID": {
+      "type": "str",
+      "value": "9776C4A9-99F0-4B06-A2A9-E097A2709E25"
+    },
+    "VolumeUUID": {
+      "type": "str",
+      "value": "48570675-F94C-3532-89D3-B005FDCF8334"
+    },
+    "FilesystemType": {
+      "type": "str",
+      "value": "hfs"
+    },
+    "FilesystemName": {
+      "type": "str",
+      "value": "Journaled HFS+"
+    },
+    "FilesystemUserVisibleName": {
+      "type": "str",
+      "value": "Mac OS Extended (Journaled)"
+    },
+    "Content": {
+      "type": "str",
+      "value": "Apple_HFS"
+    },
+    "VolumeName": {
+      "type": "str",
+      "value": "Sam"
+    },
+    "Writable": {
+      "type": "bool",
+      "value": true
+    },
+    "WritableMedia": {
+      "type": "bool",
+      "value": true
+    },
+    "WritableVolume": {
+      "type": "bool",
+      "value": true
+    },
+    "GlobalPermissionsEnabled": {
+      "type": "bool",
+      "value": false
+    },
+    "SupportsGlobalPermissionsDisable": {
+      "type": "bool",
+      "value": true
+    },
+    "Internal": {
+      "type": "bool",
+      "value": false
+    },
+    "Removable": {
+      "type": "bool",
+      "value": false
+    },
+    "RemovableMediaOrExternalDevice": {
+      "type": "bool",
+      "value": true
+    },
+    "Ejectable": {
+      "type": "bool",
+      "value": true
+    },
+    "BusProtocol": {
+      "type": "str",
+      "value": "USB"
+    },
+    "TotalSize": {
+      "type": "int",
+      "value": 511046582272
+    },
+    "VolumeSize": {
+      "type": "int",
+      "value": 511046582272
+    },
+    "FreeSpace": {
+      "type": "int",
+      "value": 136483442688
+    },
+    "DeviceBlockSize": {
+      "type": "int",
+      "value": 512
+    },
+    "VolumeAllocationBlockSize": {
+      "type": "int",
+      "value": 4096
+    }
+  },
+  "keys": [
+    "Bootable",
+    "BusProtocol",
+    "CanBeMadeBootable",
+    "CanBeMadeBootableRequiresDestroy",
+    "Content",
+    "DeviceBlockSize",
+    "DeviceIdentifier",
+    "DeviceNode",
+    "DeviceTreePath",
+    "DiskUUID",
+    "Ejectable",
+    "EjectableMediaAutomaticUnderSoftwareControl",
+    "EjectableOnly",
+    "FilesystemName",
+    "FilesystemType",
+    "FilesystemUserVisibleName",
+    "FreeSpace",
+    "GlobalPermissionsEnabled",
+    "IOKitSize",
+    "IORegistryEntryName",
+    "Internal",
+    "JournalOffset",
+    "JournalSize",
+    "MediaName",
+    "MediaType",
+    "MountPoint",
+    "OSInternalMedia",
+    "ParentWholeDisk",
+    "PartitionMapPartition",
+    "PartitionMapPartitionOffset",
+    "RAIDMaster",
+    "RAIDSlice",
+    "Removable",
+    "RemovableMedia",
+    "RemovableMediaOrExternalDevice",
+    "SMARTDeviceSpecificKeysMayVaryNotGuaranteed",
+    "SMARTStatus",
+    "Size",
+    "SolidState",
+    "SupportsGlobalPermissionsDisable",
+    "SystemImage",
+    "TotalSize",
+    "VolumeAllocationBlockSize",
+    "VolumeName",
+    "VolumeSize",
+    "VolumeUUID",
+    "WholeDisk",
+    "Writable",
+    "WritableMedia",
+    "WritableVolume"
+  ],
+  "rawPlistSha256": "5681eeaa56d555e660a3adebd15a018877c3395d3c80bcea4ca27bc3483113fc"
+}

@@ -1,0 +1,144 @@
+{
+  "status": "READINESS_SNAPSHOTS_ACCEPTED_FOR_SOURCE_RETAINED_COPY",
+  "manifestSha256": "c05c03017a4e4c932ada696944fd3e4e60f8d969debbef8c59f8e350342f9114",
+  "filesVerified": 38,
+  "observations": [
+    {
+      "path": "/Users/hugues_mini/.gradle/caches/8.13",
+      "startedAtUtc": "2026-10-11T05:35:24.223Z",
+      "before": {
+        "dev": "16777233",
+        "ino": "42722462",
+        "uid": "501",
+        "gid": "20",
+        "mode": "16877",
+        "size": "544",
+        "nlink": "17",
+        "mtime_ns": "1783656349963861858",
+        "ctime_ns": "1783656349963861858",
+        "directory": true,
+        "symlink": false,
+        "permissions": "755"
+      },
+      "receipt": "readiness-01-receipt.json",
+      "classification": "NO_MATCH_OBSERVED",
+      "records": {
+        "valid": true,
+        "processes": 0,
+        "files": 0
+      },
+      "after": {
+        "dev": "16777233",
+        "ino": "42722462",
+        "uid": "501",
+        "gid": "20",
+        "mode": "16877",
+        "size": "544",
+        "nlink": "17",
+        "mtime_ns": "1783656349963861858",
+        "ctime_ns": "1783656349963861858",
+        "directory": true,
+        "symlink": false,
+        "permissions": "755"
+      },
+      "completedAtUtc": "2026-10-11T05:35:35.049Z"
+    },
+    {
+      "path": "/Users/hugues_mini/.gradle/caches/9.7.1",
+      "startedAtUtc": "2026-10-11T05:35:35.050Z",
+      "before": {
+        "dev": "16777233",
+        "ino": "117298840",
+        "uid": "501",
+        "gid": "20",
+        "mode": "16877",
+        "size": "576",
+        "nlink": "18",
+        "mtime_ns": "1791259549803184960",
+        "ctime_ns": "1791259549803184960",
+        "directory": true,
+        "symlink": false,
+        "permissions": "755"
+      },
+      "receipt": "readiness-02-receipt.json",
+      "classification": "NO_MATCH_OBSERVED",
+      "records": {
+        "valid": true,
+        "processes": 0,
+        "files": 0
+      },
+      "after": {
+        "dev": "16777233",
+        "ino": "117298840",
+        "uid": "501",
+        "gid": "20",
+        "mode": "16877",
+        "size": "576",
+        "nlink": "18",
+        "mtime_ns": "1791259549803184960",
+        "ctime_ns": "1791259549803184960",
+        "directory": true,
+        "symlink": false,
+        "permissions": "755"
+      },
+      "completedAtUtc": "2026-10-11T05:35:44.140Z"
+    },
+    {
+      "path": "/Users/hugues_mini/Library/Caches/JetBrains",
+      "startedAtUtc": "2026-10-11T05:35:44.140Z",
+      "before": {
+        "dev": "16777233",
+        "ino": "34652077",
+        "uid": "501",
+        "gid": "20",
+        "mode": "16877",
+        "size": "128",
+        "nlink": "4",
+        "mtime_ns": "1787022817195830369",
+        "ctime_ns": "1787022817195830369",
+        "directory": true,
+        "symlink": false,
+        "permissions": "755"
+      },
+      "receipt": "readiness-03-receipt.json",
+      "classification": "NO_MATCH_OBSERVED",
+      "records": {
+        "valid": true,
+        "processes": 0,
+        "files": 0
+      },
+      "after": {
+        "dev": "16777233",
+        "ino": "34652077",
+        "uid": "501",
+        "gid": "20",
+        "mode": "16877",
+        "size": "128",
+        "nlink": "4",
+        "mtime_ns": "1787022817195830369",
+        "ctime_ns": "1787022817195830369",
+        "directory": true,
+        "symlink": false,
+        "permissions": "755"
+      },
+      "completedAtUtc": "2026-10-11T05:35:44.285Z"
+    }
+  ],
+  "processNames": {
+    "status": "REUSED_SUCCESSFUL_EXECUTABLE_NAMES_ONLY",
+    "receipt": "retained-process-names-receipt.json",
+    "sourceSnapshotClosedAtUtc": "2026-10-11T05:31:08.388Z",
+    "processRecords": 957,
+    "possibleJetBrainsIdeExecutableNames": [],
+    "genericJavaExecutableObserved": true,
+    "qualification": "Name-only process visibility is a point-in-time snapshot. Possible IDE names are conservative hints, not a complete absence proof; raw pid/uid/ucomm bytes remain for Root inspection. No full arguments requested."
+  },
+  "additionalAllocatedBytes": {
+    "/Users/hugues_mini/.konan": 13402660864,
+    "/Users/hugues_mini/.m2": 369225728,
+    "/Users/hugues_mini/.bun/install/cache": 245940224,
+    "/Users/hugues_mini/Library/Developer/Xcode/Archives": 580841472
+  },
+  "qualification": "No-match and name-only process visibility support a bounded source-retained copy, not guaranteed future inactivity or source-removal authorization.",
+  "atUtc": "2026-10-11T05:39:39.176403+00:00"
+}

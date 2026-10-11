@@ -1,0 +1,13 @@
+{
+  "atUtc": "2026-10-11T05:00:33.116587+00:00",
+  "status": "BLOCKED_ADMIN_AUTHENTICATION",
+  "oneSudoAttempt": true,
+  "actualClose": "2026-10-11T04:59:22.767Z",
+  "exitCode": 1,
+  "stderr": "sudo: a password is required",
+  "ownershipSuccessClaimed": false,
+  "namespaceCreated": false,
+  "relocations": 0,
+  "sourceRemovals": 0,
+  "next": "Owner runs sudo /usr/sbin/diskutil enableOwnership /Volumes/Sam locally; sole operator then freshly verifies exact identity and ownership. Cache inventory continues read-only."
+}

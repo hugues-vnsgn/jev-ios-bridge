@@ -1,0 +1,1449 @@
+{
+  "status": "COMPLETE",
+  "rootTotals": [
+    {
+      "root": "/Users/hugues_mini/.gradle",
+      "path": "/Users/hugues_mini/.gradle",
+      "name": "(root total)",
+      "kind": "root",
+      "allocatedKiB": 30474032,
+      "allocatedBytes": 31205408768,
+      "allocatedGiB": 29.062301635742188
+    },
+    {
+      "root": "/Users/hugues_mini/Library/Caches",
+      "path": "/Users/hugues_mini/Library/Caches",
+      "name": "(root total)",
+      "kind": "root",
+      "allocatedKiB": 10680452,
+      "allocatedBytes": 10936782848,
+      "allocatedGiB": 10.185672760009766
+    },
+    {
+      "root": "/Users/hugues_mini/.cache",
+      "path": "/Users/hugues_mini/.cache",
+      "name": "(root total)",
+      "kind": "root",
+      "allocatedKiB": 4523748,
+      "allocatedBytes": 4632317952,
+      "allocatedGiB": 4.314182281494141
+    }
+  ],
+  "immediateChildTotalsSorted": [
+    {
+      "root": "/Users/hugues_mini/.gradle",
+      "path": "/Users/hugues_mini/.gradle/caches",
+      "name": "caches",
+      "kind": "immediate-child",
+      "allocatedKiB": 28089964,
+      "allocatedBytes": 28764123136,
+      "allocatedGiB": 26.788677215576172
+    },
+    {
+      "root": "/Users/hugues_mini/Library/Caches",
+      "path": "/Users/hugues_mini/Library/Caches/JetBrains",
+      "name": "JetBrains",
+      "kind": "immediate-child",
+      "allocatedKiB": 5668076,
+      "allocatedBytes": 5804109824,
+      "allocatedGiB": 5.405498504638672
+    },
+    {
+      "root": "/Users/hugues_mini/.cache",
+      "path": "/Users/hugues_mini/.cache/codex-runtimes",
+      "name": "codex-runtimes",
+      "kind": "immediate-child",
+      "allocatedKiB": 1841876,
+      "allocatedBytes": 1886081024,
+      "allocatedGiB": 1.7565498352050781
+    },
+    {
+      "root": "/Users/hugues_mini/Library/Caches",
+      "path": "/Users/hugues_mini/Library/Caches/org.swift.swiftpm",
+      "name": "org.swift.swiftpm",
+      "kind": "immediate-child",
+      "allocatedKiB": 1559152,
+      "allocatedBytes": 1596571648,
+      "allocatedGiB": 1.4869232177734375
+    },
+    {
+      "root": "/Users/hugues_mini/.gradle",
+      "path": "/Users/hugues_mini/.gradle/wrapper",
+      "name": "wrapper",
+      "kind": "immediate-child",
+      "allocatedKiB": 1156364,
+      "allocatedBytes": 1184116736,
+      "allocatedGiB": 1.1027946472167969
+    },
+    {
+      "root": "/Users/hugues_mini/.cache",
+      "path": "/Users/hugues_mini/.cache/bazel-repo-contents-cache",
+      "name": "bazel-repo-contents-cache",
+      "kind": "immediate-child",
+      "allocatedKiB": 971056,
+      "allocatedBytes": 994361344,
+      "allocatedGiB": 0.9260711669921875
+    },
+    {
+      "root": "/Users/hugues_mini/Library/Caches",
+      "path": "/Users/hugues_mini/Library/Caches/Google",
+      "name": "Google",
+      "kind": "immediate-child",
+      "allocatedKiB": 965552,
+      "allocatedBytes": 988725248,
+      "allocatedGiB": 0.9208221435546875
+    },
+    {
+      "root": "/Users/hugues_mini/.cache",
+      "path": "/Users/hugues_mini/.cache/uv",
+      "name": "uv",
+      "kind": "immediate-child",
+      "allocatedKiB": 902816,
+      "allocatedBytes": 924483584,
+      "allocatedGiB": 0.860992431640625
+    },
+    {
+      "root": "/Users/hugues_mini/Library/Caches",
+      "path": "/Users/hugues_mini/Library/Caches/ms-playwright",
+      "name": "ms-playwright",
+      "kind": "immediate-child",
+      "allocatedKiB": 601192,
+      "allocatedBytes": 615620608,
+      "allocatedGiB": 0.5733413696289062
+    },
+    {
+      "root": "/Users/hugues_mini/.gradle",
+      "path": "/Users/hugues_mini/.gradle/jdks",
+      "name": "jdks",
+      "kind": "immediate-child",
+      "allocatedKiB": 556548,
+      "allocatedBytes": 569905152,
+      "allocatedGiB": 0.5307655334472656
+    },
+    {
+      "root": "/Users/hugues_mini/.gradle",
+      "path": "/Users/hugues_mini/.gradle/daemon",
+      "name": "daemon",
+      "kind": "immediate-child",
+      "allocatedKiB": 520984,
+      "allocatedBytes": 533487616,
+      "allocatedGiB": 0.49684906005859375
+    },
+    {
+      "root": "/Users/hugues_mini/Library/Caches",
+      "path": "/Users/hugues_mini/Library/Caches/ru.keepcoder.Telegram",
+      "name": "ru.keepcoder.Telegram",
+      "kind": "immediate-child",
+      "allocatedKiB": 501280,
+      "allocatedBytes": 513310720,
+      "allocatedGiB": 0.478057861328125
+    },
+    {
+      "root": "/Users/hugues_mini/Library/Caches",
+      "path": "/Users/hugues_mini/Library/Caches/orca-updater",
+      "name": "orca-updater",
+      "kind": "immediate-child",
+      "allocatedKiB": 499716,
+      "allocatedBytes": 511709184,
+      "allocatedGiB": 0.4765663146972656
+    },
+    {
+      "root": "/Users/hugues_mini/.cache",
+      "path": "/Users/hugues_mini/.cache/huggingface",
+      "name": "huggingface",
+      "kind": "immediate-child",
+      "allocatedKiB": 490208,
+      "allocatedBytes": 501972992,
+      "allocatedGiB": 0.467498779296875
+    },
+    {
+      "root": "/Users/hugues_mini/.cache",
+      "path": "/Users/hugues_mini/.cache/bazel-repo-cache",
+      "name": "bazel-repo-cache",
+      "kind": "immediate-child",
+      "allocatedKiB": 252428,
+      "allocatedBytes": 258486272,
+      "allocatedGiB": 0.24073410034179688
+    },
+    {
+      "root": "/Users/hugues_mini/Library/Caches",
+      "path": "/Users/hugues_mini/Library/Caches/Codex",
+      "name": "Codex",
+      "kind": "immediate-child",
+      "allocatedKiB": 174976,
+      "allocatedBytes": 179175424,
+      "allocatedGiB": 0.1668701171875
+    },
+    {
+      "root": "/Users/hugues_mini/Library/Caches",
+      "path": "/Users/hugues_mini/Library/Caches/ms-playwright-mcp",
+      "name": "ms-playwright-mcp",
+      "kind": "immediate-child",
+      "allocatedKiB": 165184,
+      "allocatedBytes": 169148416,
+      "allocatedGiB": 0.15753173828125
+    },
+    {
+      "root": "/Users/hugues_mini/.gradle",
+      "path": "/Users/hugues_mini/.gradle/.tmp",
+      "name": ".tmp",
+      "kind": "immediate-child",
+      "allocatedKiB": 134124,
+      "allocatedBytes": 137342976,
+      "allocatedGiB": 0.12791061401367188
+    },
+    {
+      "root": "/Users/hugues_mini/Library/Caches",
+      "path": "/Users/hugues_mini/Library/Caches/ms-playwright-go",
+      "name": "ms-playwright-go",
+      "kind": "immediate-child",
+      "allocatedKiB": 126640,
+      "allocatedBytes": 129679360,
+      "allocatedGiB": 0.1207733154296875
+    },
+    {
+      "root": "/Users/hugues_mini/Library/Caches",
+      "path": "/Users/hugues_mini/Library/Caches/Homebrew",
+      "name": "Homebrew",
+      "kind": "immediate-child",
+      "allocatedKiB": 91772,
+      "allocatedBytes": 93974528,
+      "allocatedGiB": 0.08752059936523438
+    },
+    {
+      "root": "/Users/hugues_mini/Library/Caches",
+      "path": "/Users/hugues_mini/Library/Caches/CocoaPods",
+      "name": "CocoaPods",
+      "kind": "immediate-child",
+      "allocatedKiB": 55088,
+      "allocatedBytes": 56410112,
+      "allocatedGiB": 0.0525360107421875
+    },
+    {
+      "root": "/Users/hugues_mini/Library/Caches",
+      "path": "/Users/hugues_mini/Library/Caches/GeoServices",
+      "name": "GeoServices",
+      "kind": "immediate-child",
+      "allocatedKiB": 51372,
+      "allocatedBytes": 52604928,
+      "allocatedGiB": 0.048992156982421875
+    },
+    {
+      "root": "/Users/hugues_mini/.cache",
+      "path": "/Users/hugues_mini/.cache/mole",
+      "name": "mole",
+      "kind": "immediate-child",
+      "allocatedKiB": 33576,
+      "allocatedBytes": 34381824,
+      "allocatedGiB": 0.03202056884765625
+    },
+    {
+      "root": "/Users/hugues_mini/Library/Caches",
+      "path": "/Users/hugues_mini/Library/Caches/com.apple.helpd",
+      "name": "com.apple.helpd",
+      "kind": "immediate-child",
+      "allocatedKiB": 24508,
+      "allocatedBytes": 25096192,
+      "allocatedGiB": 0.023372650146484375
+    },
+    {
+      "root": "/Users/hugues_mini/Library/Caches",
+      "path": "/Users/hugues_mini/Library/Caches/CloudKit",
+      "name": "CloudKit",
+      "kind": "immediate-child",
+      "allocatedKiB": 22120,
+      "allocatedBytes": 22650880,
+      "allocatedGiB": 0.02109527587890625
+    },
+    {
+      "root": "/Users/hugues_mini/.cache",
+      "path": "/Users/hugues_mini/.cache/node",
+      "name": "node",
+      "kind": "immediate-child",
+      "allocatedKiB": 19476,
+      "allocatedBytes": 19943424,
+      "allocatedGiB": 0.018573760986328125
+    },
+    {
+      "root": "/Users/hugues_mini/Library/Caches",
+      "path": "/Users/hugues_mini/Library/Caches/com.apple.VisualIntelligenceCore",
+      "name": "com.apple.VisualIntelligenceCore",
+      "kind": "immediate-child",
+      "allocatedKiB": 18900,
+      "allocatedBytes": 19353600,
+      "allocatedGiB": 0.018024444580078125
+    },
+    {
+      "root": "/Users/hugues_mini/Library/Caches",
+      "path": "/Users/hugues_mini/Library/Caches/com.apple.parsecd",
+      "name": "com.apple.parsecd",
+      "kind": "immediate-child",
+      "allocatedKiB": 16768,
+      "allocatedBytes": 17170432,
+      "allocatedGiB": 0.0159912109375
+    },
+    {
+      "root": "/Users/hugues_mini/.gradle",
+      "path": "/Users/hugues_mini/.gradle/kotlin-profile",
+      "name": "kotlin-profile",
+      "kind": "immediate-child",
+      "allocatedKiB": 12580,
+      "allocatedBytes": 12881920,
+      "allocatedGiB": 0.011997222900390625
+    },
+    {
+      "root": "/Users/hugues_mini/Library/Caches",
+      "path": "/Users/hugues_mini/Library/Caches/com.raycast.macos",
+      "name": "com.raycast.macos",
+      "kind": "immediate-child",
+      "allocatedKiB": 10096,
+      "allocatedBytes": 10338304,
+      "allocatedGiB": 0.0096282958984375
+    },
+    {
+      "root": "/Users/hugues_mini/Library/Caches",
+      "path": "/Users/hugues_mini/Library/Caches/dotslash",
+      "name": "dotslash",
+      "kind": "immediate-child",
+      "allocatedKiB": 7392,
+      "allocatedBytes": 7569408,
+      "allocatedGiB": 0.007049560546875
+    },
+    {
+      "root": "/Users/hugues_mini/Library/Caches",
+      "path": "/Users/hugues_mini/Library/Caches/com.apple.amsengagementd",
+      "name": "com.apple.amsengagementd",
+      "kind": "immediate-child",
+      "allocatedKiB": 5944,
+      "allocatedBytes": 6086656,
+      "allocatedGiB": 0.00566864013671875
+    },
+    {
+      "root": "/Users/hugues_mini/Library/Caches",
+      "path": "/Users/hugues_mini/Library/Caches/com.apple.CloudTelemetry",
+      "name": "com.apple.CloudTelemetry",
+      "kind": "immediate-child",
+      "allocatedKiB": 5800,
+      "allocatedBytes": 5939200,
+      "allocatedGiB": 0.00553131103515625
+    },
+    {
+      "root": "/Users/hugues_mini/Library/Caches",
+      "path": "/Users/hugues_mini/Library/Caches/com.apple.appstoreagent",
+      "name": "com.apple.appstoreagent",
+      "kind": "immediate-child",
+      "allocatedKiB": 5772,
+      "allocatedBytes": 5910528,
+      "allocatedGiB": 0.005504608154296875
+    },
+    {
+      "root": "/Users/hugues_mini/Library/Caches",
+      "path": "/Users/hugues_mini/Library/Caches/com.parallels.desktop.console",
+      "name": "com.parallels.desktop.console",
+      "kind": "immediate-child",
+      "allocatedKiB": 5268,
+      "allocatedBytes": 5394432,
+      "allocatedGiB": 0.005023956298828125
+    },
+    {
+      "root": "/Users/hugues_mini/Library/Caches",
+      "path": "/Users/hugues_mini/Library/Caches/claude-cli-nodejs",
+      "name": "claude-cli-nodejs",
+      "kind": "immediate-child",
+      "allocatedKiB": 4704,
+      "allocatedBytes": 4816896,
+      "allocatedGiB": 0.004486083984375
+    },
+    {
+      "root": "/Users/hugues_mini/Library/Caches",
+      "path": "/Users/hugues_mini/Library/Caches/com.apple.tipsd",
+      "name": "com.apple.tipsd",
+      "kind": "immediate-child",
+      "allocatedKiB": 4400,
+      "allocatedBytes": 4505600,
+      "allocatedGiB": 0.0041961669921875
+    },
+    {
+      "root": "/Users/hugues_mini/.cache",
+      "path": "/Users/hugues_mini/.cache/nvim",
+      "name": "nvim",
+      "kind": "immediate-child",
+      "allocatedKiB": 4252,
+      "allocatedBytes": 4354048,
+      "allocatedGiB": 0.004055023193359375
+    },
+    {
+      "root": "/Users/hugues_mini/.cache",
+      "path": "/Users/hugues_mini/.cache/node-systray",
+      "name": "node-systray",
+      "kind": "immediate-child",
+      "allocatedKiB": 4124,
+      "allocatedBytes": 4222976,
+      "allocatedGiB": 0.003932952880859375
+    },
+    {
+      "root": "/Users/hugues_mini/Library/Caches",
+      "path": "/Users/hugues_mini/Library/Caches/com.apple.ctcategories.service",
+      "name": "com.apple.ctcategories.service",
+      "kind": "immediate-child",
+      "allocatedKiB": 4116,
+      "allocatedBytes": 4214784,
+      "allocatedGiB": 0.003925323486328125
+    },
+    {
+      "root": "/Users/hugues_mini/Library/Caches",
+      "path": "/Users/hugues_mini/Library/Caches/com.apple.AppleMediaServices",
+      "name": "com.apple.AppleMediaServices",
+      "kind": "immediate-child",
+      "allocatedKiB": 4004,
+      "allocatedBytes": 4100096,
+      "allocatedGiB": 0.003818511962890625
+    },
+    {
+      "root": "/Users/hugues_mini/Library/Caches",
+      "path": "/Users/hugues_mini/Library/Caches/com.apple.AMPLibraryAgent",
+      "name": "com.apple.AMPLibraryAgent",
+      "kind": "immediate-child",
+      "allocatedKiB": 3904,
+      "allocatedBytes": 3997696,
+      "allocatedGiB": 0.00372314453125
+    },
+    {
+      "root": "/Users/hugues_mini/Library/Caches",
+      "path": "/Users/hugues_mini/Library/Caches/io.tailscale.ipn.macsys",
+      "name": "io.tailscale.ipn.macsys",
+      "kind": "immediate-child",
+      "allocatedKiB": 3832,
+      "allocatedBytes": 3923968,
+      "allocatedGiB": 0.00365447998046875
+    },
+    {
+      "root": "/Users/hugues_mini/Library/Caches",
+      "path": "/Users/hugues_mini/Library/Caches/com.apple.itunescloudd",
+      "name": "com.apple.itunescloudd",
+      "kind": "immediate-child",
+      "allocatedKiB": 3552,
+      "allocatedBytes": 3637248,
+      "allocatedGiB": 0.003387451171875
+    },
+    {
+      "root": "/Users/hugues_mini/Library/Caches",
+      "path": "/Users/hugues_mini/Library/Caches/com.apple.dt.Xcode",
+      "name": "com.apple.dt.Xcode",
+      "kind": "immediate-child",
+      "allocatedKiB": 3544,
+      "allocatedBytes": 3629056,
+      "allocatedGiB": 0.00337982177734375
+    },
+    {
+      "root": "/Users/hugues_mini/Library/Caches",
+      "path": "/Users/hugues_mini/Library/Caches/com.apple.amsaccountsd",
+      "name": "com.apple.amsaccountsd",
+      "kind": "immediate-child",
+      "allocatedKiB": 3420,
+      "allocatedBytes": 3502080,
+      "allocatedGiB": 0.003261566162109375
+    },
+    {
+      "root": "/Users/hugues_mini/Library/Caches",
+      "path": "/Users/hugues_mini/Library/Caches/com.apple.iTunes",
+      "name": "com.apple.iTunes",
+      "kind": "immediate-child",
+      "allocatedKiB": 3336,
+      "allocatedBytes": 3416064,
+      "allocatedGiB": 0.00318145751953125
+    },
+    {
+      "root": "/Users/hugues_mini/Library/Caches",
+      "path": "/Users/hugues_mini/Library/Caches/com.apple.managedappdistributionagent",
+      "name": "com.apple.managedappdistributionagent",
+      "kind": "immediate-child",
+      "allocatedKiB": 3300,
+      "allocatedBytes": 3379200,
+      "allocatedGiB": 0.003147125244140625
+    },
+    {
+      "root": "/Users/hugues_mini/Library/Caches",
+      "path": "/Users/hugues_mini/Library/Caches/com.apple.bookdatastored",
+      "name": "com.apple.bookdatastored",
+      "kind": "immediate-child",
+      "allocatedKiB": 3300,
+      "allocatedBytes": 3379200,
+      "allocatedGiB": 0.003147125244140625
+    },
+    {
+      "root": "/Users/hugues_mini/Library/Caches",
+      "path": "/Users/hugues_mini/Library/Caches/com.apple.askpermissiond",
+      "name": "com.apple.askpermissiond",
+      "kind": "immediate-child",
+      "allocatedKiB": 3156,
+      "allocatedBytes": 3231744,
+      "allocatedGiB": 0.003009796142578125
+    },
+    {
+      "root": "/Users/hugues_mini/.gradle",
+      "path": "/Users/hugues_mini/.gradle/native",
+      "name": "native",
+      "kind": "immediate-child",
+      "allocatedKiB": 2976,
+      "allocatedBytes": 3047424,
+      "allocatedGiB": 0.002838134765625
+    },
+    {
+      "root": "/Users/hugues_mini/Library/Caches",
+      "path": "/Users/hugues_mini/Library/Caches/com.apple.storekitagent",
+      "name": "com.apple.storekitagent",
+      "kind": "immediate-child",
+      "allocatedKiB": 2928,
+      "allocatedBytes": 2998272,
+      "allocatedGiB": 0.0027923583984375
+    },
+    {
+      "root": "/Users/hugues_mini/Library/Caches",
+      "path": "/Users/hugues_mini/Library/Caches/pip",
+      "name": "pip",
+      "kind": "immediate-child",
+      "allocatedKiB": 2888,
+      "allocatedBytes": 2957312,
+      "allocatedGiB": 0.00275421142578125
+    },
+    {
+      "root": "/Users/hugues_mini/Library/Caches",
+      "path": "/Users/hugues_mini/Library/Caches/com.apple.iCloudNotificationAgent",
+      "name": "com.apple.iCloudNotificationAgent",
+      "kind": "immediate-child",
+      "allocatedKiB": 2696,
+      "allocatedBytes": 2760704,
+      "allocatedGiB": 0.00257110595703125
+    },
+    {
+      "root": "/Users/hugues_mini/Library/Caches",
+      "path": "/Users/hugues_mini/Library/Caches/com.apple.FeatureAccessAgent",
+      "name": "com.apple.FeatureAccessAgent",
+      "kind": "immediate-child",
+      "allocatedKiB": 2348,
+      "allocatedBytes": 2404352,
+      "allocatedGiB": 0.002239227294921875
+    },
+    {
+      "root": "/Users/hugues_mini/Library/Caches",
+      "path": "/Users/hugues_mini/Library/Caches/PassKit",
+      "name": "PassKit",
+      "kind": "immediate-child",
+      "allocatedKiB": 2344,
+      "allocatedBytes": 2400256,
+      "allocatedGiB": 0.00223541259765625
+    },
+    {
+      "root": "/Users/hugues_mini/Library/Caches",
+      "path": "/Users/hugues_mini/Library/Caches/com.apple.akd",
+      "name": "com.apple.akd",
+      "kind": "immediate-child",
+      "allocatedKiB": 2300,
+      "allocatedBytes": 2355200,
+      "allocatedGiB": 0.002193450927734375
+    },
+    {
+      "root": "/Users/hugues_mini/Library/Caches",
+      "path": "/Users/hugues_mini/Library/Caches/com.apple.ap.adprivacyd",
+      "name": "com.apple.ap.adprivacyd",
+      "kind": "immediate-child",
+      "allocatedKiB": 2276,
+      "allocatedBytes": 2330624,
+      "allocatedGiB": 0.002170562744140625
+    },
+    {
+      "root": "/Users/hugues_mini/Library/Caches",
+      "path": "/Users/hugues_mini/Library/Caches/com.anthropic.claudefordesktop",
+      "name": "com.anthropic.claudefordesktop",
+      "kind": "immediate-child",
+      "allocatedKiB": 2136,
+      "allocatedBytes": 2187264,
+      "allocatedGiB": 0.00203704833984375
+    },
+    {
+      "root": "/Users/hugues_mini/Library/Caches",
+      "path": "/Users/hugues_mini/Library/Caches/com.apple.bookassetd",
+      "name": "com.apple.bookassetd",
+      "kind": "immediate-child",
+      "allocatedKiB": 2132,
+      "allocatedBytes": 2183168,
+      "allocatedGiB": 0.002033233642578125
+    },
+    {
+      "root": "/Users/hugues_mini/Library/Caches",
+      "path": "/Users/hugues_mini/Library/Caches/com.microsoft.VSCode",
+      "name": "com.microsoft.VSCode",
+      "kind": "immediate-child",
+      "allocatedKiB": 2132,
+      "allocatedBytes": 2183168,
+      "allocatedGiB": 0.002033233642578125
+    },
+    {
+      "root": "/Users/hugues_mini/Library/Caches",
+      "path": "/Users/hugues_mini/Library/Caches/com.apple.geoanalyticsd",
+      "name": "com.apple.geoanalyticsd",
+      "kind": "immediate-child",
+      "allocatedKiB": 2116,
+      "allocatedBytes": 2166784,
+      "allocatedGiB": 0.002017974853515625
+    },
+    {
+      "root": "/Users/hugues_mini/Library/Caches",
+      "path": "/Users/hugues_mini/Library/Caches/pro.betterdisplay.BetterDisplay",
+      "name": "pro.betterdisplay.BetterDisplay",
+      "kind": "immediate-child",
+      "allocatedKiB": 2072,
+      "allocatedBytes": 2121728,
+      "allocatedGiB": 0.00197601318359375
+    },
+    {
+      "root": "/Users/hugues_mini/.cache",
+      "path": "/Users/hugues_mini/.cache/mesa_shader_cache",
+      "name": "mesa_shader_cache",
+      "kind": "immediate-child",
+      "allocatedKiB": 1908,
+      "allocatedBytes": 1953792,
+      "allocatedGiB": 0.001819610595703125
+    },
+    {
+      "root": "/Users/hugues_mini/Library/Caches",
+      "path": "/Users/hugues_mini/Library/Caches/com.apple.sirittsd",
+      "name": "com.apple.sirittsd",
+      "kind": "immediate-child",
+      "allocatedKiB": 1700,
+      "allocatedBytes": 1740800,
+      "allocatedGiB": 0.001621246337890625
+    },
+    {
+      "root": "/Users/hugues_mini/Library/Caches",
+      "path": "/Users/hugues_mini/Library/Caches/com.apple.Music",
+      "name": "com.apple.Music",
+      "kind": "immediate-child",
+      "allocatedKiB": 1048,
+      "allocatedBytes": 1073152,
+      "allocatedGiB": 0.00099945068359375
+    },
+    {
+      "root": "/Users/hugues_mini/Library/Caches",
+      "path": "/Users/hugues_mini/Library/Caches/com.apple.python",
+      "name": "com.apple.python",
+      "kind": "immediate-child",
+      "allocatedKiB": 1040,
+      "allocatedBytes": 1064960,
+      "allocatedGiB": 0.0009918212890625
+    },
+    {
+      "root": "/Users/hugues_mini/Library/Caches",
+      "path": "/Users/hugues_mini/Library/Caches/com.apple.translationd",
+      "name": "com.apple.translationd",
+      "kind": "immediate-child",
+      "allocatedKiB": 1000,
+      "allocatedBytes": 1024000,
+      "allocatedGiB": 0.00095367431640625
+    },
+    {
+      "root": "/Users/hugues_mini/Library/Caches",
+      "path": "/Users/hugues_mini/Library/Caches/com.apple.passd",
+      "name": "com.apple.passd",
+      "kind": "immediate-child",
+      "allocatedKiB": 868,
+      "allocatedBytes": 888832,
+      "allocatedGiB": 0.000827789306640625
+    },
+    {
+      "root": "/Users/hugues_mini/Library/Caches",
+      "path": "/Users/hugues_mini/Library/Caches/com.google.GoogleUpdater",
+      "name": "com.google.GoogleUpdater",
+      "kind": "immediate-child",
+      "allocatedKiB": 852,
+      "allocatedBytes": 872448,
+      "allocatedGiB": 0.000812530517578125
+    },
+    {
+      "root": "/Users/hugues_mini/Library/Caches",
+      "path": "/Users/hugues_mini/Library/Caches/com.apple.betaenrollmentagent",
+      "name": "com.apple.betaenrollmentagent",
+      "kind": "immediate-child",
+      "allocatedKiB": 788,
+      "allocatedBytes": 806912,
+      "allocatedGiB": 0.000751495361328125
+    },
+    {
+      "root": "/Users/hugues_mini/Library/Caches",
+      "path": "/Users/hugues_mini/Library/Caches/com.apple.FileProviderDaemon.AppStoreService",
+      "name": "com.apple.FileProviderDaemon.AppStoreService",
+      "kind": "immediate-child",
+      "allocatedKiB": 752,
+      "allocatedBytes": 770048,
+      "allocatedGiB": 0.0007171630859375
+    },
+    {
+      "root": "/Users/hugues_mini/Library/Caches",
+      "path": "/Users/hugues_mini/Library/Caches/com.apple.textunderstandingd",
+      "name": "com.apple.textunderstandingd",
+      "kind": "immediate-child",
+      "allocatedKiB": 748,
+      "allocatedBytes": 765952,
+      "allocatedGiB": 0.000713348388671875
+    },
+    {
+      "root": "/Users/hugues_mini/Library/Caches",
+      "path": "/Users/hugues_mini/Library/Caches/bun",
+      "name": "bun",
+      "kind": "immediate-child",
+      "allocatedKiB": 724,
+      "allocatedBytes": 741376,
+      "allocatedGiB": 0.000690460205078125
+    },
+    {
+      "root": "/Users/hugues_mini/.cache",
+      "path": "/Users/hugues_mini/.cache/gh",
+      "name": "gh",
+      "kind": "immediate-child",
+      "allocatedKiB": 712,
+      "allocatedBytes": 729088,
+      "allocatedGiB": 0.00067901611328125
+    },
+    {
+      "root": "/Users/hugues_mini/Library/Caches",
+      "path": "/Users/hugues_mini/Library/Caches/com.apple.dt.Xcode.ITunesSoftwareService",
+      "name": "com.apple.dt.Xcode.ITunesSoftwareService",
+      "kind": "immediate-child",
+      "allocatedKiB": 660,
+      "allocatedBytes": 675840,
+      "allocatedGiB": 0.000629425048828125
+    },
+    {
+      "root": "/Users/hugues_mini/Library/Caches",
+      "path": "/Users/hugues_mini/Library/Caches/com.microsoft.autoupdate.fba",
+      "name": "com.microsoft.autoupdate.fba",
+      "kind": "immediate-child",
+      "allocatedKiB": 596,
+      "allocatedBytes": 610304,
+      "allocatedGiB": 0.000568389892578125
+    },
+    {
+      "root": "/Users/hugues_mini/Library/Caches",
+      "path": "/Users/hugues_mini/Library/Caches/com.apple.Safari.SafeBrowsing",
+      "name": "com.apple.Safari.SafeBrowsing",
+      "kind": "immediate-child",
+      "allocatedKiB": 596,
+      "allocatedBytes": 610304,
+      "allocatedGiB": 0.000568389892578125
+    },
+    {
+      "root": "/Users/hugues_mini/Library/Caches",
+      "path": "/Users/hugues_mini/Library/Caches/com.openai.codex",
+      "name": "com.openai.codex",
+      "kind": "immediate-child",
+      "allocatedKiB": 596,
+      "allocatedBytes": 610304,
+      "allocatedGiB": 0.000568389892578125
+    },
+    {
+      "root": "/Users/hugues_mini/.cache",
+      "path": "/Users/hugues_mini/.cache/ccstatusline",
+      "name": "ccstatusline",
+      "kind": "immediate-child",
+      "allocatedKiB": 528,
+      "allocatedBytes": 540672,
+      "allocatedGiB": 0.0005035400390625
+    },
+    {
+      "root": "/Users/hugues_mini/Library/Caches",
+      "path": "/Users/hugues_mini/Library/Caches/com.apple.businessservicesd",
+      "name": "com.apple.businessservicesd",
+      "kind": "immediate-child",
+      "allocatedKiB": 512,
+      "allocatedBytes": 524288,
+      "allocatedGiB": 0.00048828125
+    },
+    {
+      "root": "/Users/hugues_mini/Library/Caches",
+      "path": "/Users/hugues_mini/Library/Caches/com.apple.campo",
+      "name": "com.apple.campo",
+      "kind": "immediate-child",
+      "allocatedKiB": 508,
+      "allocatedBytes": 520192,
+      "allocatedGiB": 0.000484466552734375
+    },
+    {
+      "root": "/Users/hugues_mini/.gradle",
+      "path": "/Users/hugues_mini/.gradle/build-scan-data",
+      "name": "build-scan-data",
+      "kind": "immediate-child",
+      "allocatedKiB": 484,
+      "allocatedBytes": 495616,
+      "allocatedGiB": 0.000461578369140625
+    },
+    {
+      "root": "/Users/hugues_mini/Library/Caches",
+      "path": "/Users/hugues_mini/Library/Caches/com.apple.nbagent",
+      "name": "com.apple.nbagent",
+      "kind": "immediate-child",
+      "allocatedKiB": 484,
+      "allocatedBytes": 495616,
+      "allocatedGiB": 0.000461578369140625
+    },
+    {
+      "root": "/Users/hugues_mini/Library/Caches",
+      "path": "/Users/hugues_mini/Library/Caches/familycircled",
+      "name": "familycircled",
+      "kind": "immediate-child",
+      "allocatedKiB": 468,
+      "allocatedBytes": 479232,
+      "allocatedGiB": 0.000446319580078125
+    },
+    {
+      "root": "/Users/hugues_mini/Library/Caches",
+      "path": "/Users/hugues_mini/Library/Caches/com.apple.accountsd",
+      "name": "com.apple.accountsd",
+      "kind": "immediate-child",
+      "allocatedKiB": 444,
+      "allocatedBytes": 454656,
+      "allocatedGiB": 0.000423431396484375
+    },
+    {
+      "root": "/Users/hugues_mini/Library/Caches",
+      "path": "/Users/hugues_mini/Library/Caches/com.apple.ap.PromotedContentJetService",
+      "name": "com.apple.ap.PromotedContentJetService",
+      "kind": "immediate-child",
+      "allocatedKiB": 400,
+      "allocatedBytes": 409600,
+      "allocatedGiB": 0.0003814697265625
+    },
+    {
+      "root": "/Users/hugues_mini/Library/Caches",
+      "path": "/Users/hugues_mini/Library/Caches/com.apple.assistantd",
+      "name": "com.apple.assistantd",
+      "kind": "immediate-child",
+      "allocatedKiB": 352,
+      "allocatedBytes": 360448,
+      "allocatedGiB": 0.000335693359375
+    },
+    {
+      "root": "/Users/hugues_mini/.cache",
+      "path": "/Users/hugues_mini/.cache/tooling",
+      "name": "tooling",
+      "kind": "immediate-child",
+      "allocatedKiB": 352,
+      "allocatedBytes": 360448,
+      "allocatedGiB": 0.000335693359375
+    },
+    {
+      "root": "/Users/hugues_mini/Library/Caches",
+      "path": "/Users/hugues_mini/Library/Caches/com.apple.appstorecomponentsd",
+      "name": "com.apple.appstorecomponentsd",
+      "kind": "immediate-child",
+      "allocatedKiB": 344,
+      "allocatedBytes": 352256,
+      "allocatedGiB": 0.00032806396484375
+    },
+    {
+      "root": "/Users/hugues_mini/Library/Caches",
+      "path": "/Users/hugues_mini/Library/Caches/com.apple.dt.xcodebuild",
+      "name": "com.apple.dt.xcodebuild",
+      "kind": "immediate-child",
+      "allocatedKiB": 340,
+      "allocatedBytes": 348160,
+      "allocatedGiB": 0.000324249267578125
+    },
+    {
+      "root": "/Users/hugues_mini/Library/Caches",
+      "path": "/Users/hugues_mini/Library/Caches/com.apple.homed",
+      "name": "com.apple.homed",
+      "kind": "immediate-child",
+      "allocatedKiB": 296,
+      "allocatedBytes": 303104,
+      "allocatedGiB": 0.00028228759765625
+    },
+    {
+      "root": "/Users/hugues_mini/.cache",
+      "path": "/Users/hugues_mini/.cache/omp-qoder",
+      "name": "omp-qoder",
+      "kind": "immediate-child",
+      "allocatedKiB": 296,
+      "allocatedBytes": 303104,
+      "allocatedGiB": 0.00028228759765625
+    },
+    {
+      "root": "/Users/hugues_mini/Library/Caches",
+      "path": "/Users/hugues_mini/Library/Caches/com.cloudflare.1dot1dot1dot1.macos",
+      "name": "com.cloudflare.1dot1dot1dot1.macos",
+      "kind": "immediate-child",
+      "allocatedKiB": 280,
+      "allocatedBytes": 286720,
+      "allocatedGiB": 0.00026702880859375
+    },
+    {
+      "root": "/Users/hugues_mini/Library/Caches",
+      "path": "/Users/hugues_mini/Library/Caches/com.apple.SoftwareUpdateNotificationManager",
+      "name": "com.apple.SoftwareUpdateNotificationManager",
+      "kind": "immediate-child",
+      "allocatedKiB": 276,
+      "allocatedBytes": 282624,
+      "allocatedGiB": 0.000263214111328125
+    },
+    {
+      "root": "/Users/hugues_mini/Library/Caches",
+      "path": "/Users/hugues_mini/Library/Caches/com.apple.itunes.swinfo",
+      "name": "com.apple.itunes.swinfo",
+      "kind": "immediate-child",
+      "allocatedKiB": 276,
+      "allocatedBytes": 282624,
+      "allocatedGiB": 0.000263214111328125
+    },
+    {
+      "root": "/Users/hugues_mini/Library/Caches",
+      "path": "/Users/hugues_mini/Library/Caches/com.apple.icloudwebd",
+      "name": "com.apple.icloudwebd",
+      "kind": "immediate-child",
+      "allocatedKiB": 276,
+      "allocatedBytes": 282624,
+      "allocatedGiB": 0.000263214111328125
+    },
+    {
+      "root": "/Users/hugues_mini/Library/Caches",
+      "path": "/Users/hugues_mini/Library/Caches/com.apple.AuthenticationServicesCore.AuthenticationServicesAgent",
+      "name": "com.apple.AuthenticationServicesCore.AuthenticationServicesAgent",
+      "kind": "immediate-child",
+      "allocatedKiB": 276,
+      "allocatedBytes": 282624,
+      "allocatedGiB": 0.000263214111328125
+    },
+    {
+      "root": "/Users/hugues_mini/Library/Caches",
+      "path": "/Users/hugues_mini/Library/Caches/com.apple.Spotlight",
+      "name": "com.apple.Spotlight",
+      "kind": "immediate-child",
+      "allocatedKiB": 252,
+      "allocatedBytes": 258048,
+      "allocatedGiB": 0.000240325927734375
+    },
+    {
+      "root": "/Users/hugues_mini/Library/Caches",
+      "path": "/Users/hugues_mini/Library/Caches/com.mitchellh.ghostty",
+      "name": "com.mitchellh.ghostty",
+      "kind": "immediate-child",
+      "allocatedKiB": 236,
+      "allocatedBytes": 241664,
+      "allocatedGiB": 0.000225067138671875
+    },
+    {
+      "root": "/Users/hugues_mini/Library/Caches",
+      "path": "/Users/hugues_mini/Library/Caches/com.apple.Siri-Settings.extension",
+      "name": "com.apple.Siri-Settings.extension",
+      "kind": "immediate-child",
+      "allocatedKiB": 228,
+      "allocatedBytes": 233472,
+      "allocatedGiB": 0.000217437744140625
+    },
+    {
+      "root": "/Users/hugues_mini/Library/Caches",
+      "path": "/Users/hugues_mini/Library/Caches/com.apple.feedbacklogger",
+      "name": "com.apple.feedbacklogger",
+      "kind": "immediate-child",
+      "allocatedKiB": 224,
+      "allocatedBytes": 229376,
+      "allocatedGiB": 0.000213623046875
+    },
+    {
+      "root": "/Users/hugues_mini/Library/Caches",
+      "path": "/Users/hugues_mini/Library/Caches/org.python.python",
+      "name": "org.python.python",
+      "kind": "immediate-child",
+      "allocatedKiB": 212,
+      "allocatedBytes": 217088,
+      "allocatedGiB": 0.000202178955078125
+    },
+    {
+      "root": "/Users/hugues_mini/Library/Caches",
+      "path": "/Users/hugues_mini/Library/Caches/org.videolan.vlc",
+      "name": "org.videolan.vlc",
+      "kind": "immediate-child",
+      "allocatedKiB": 192,
+      "allocatedBytes": 196608,
+      "allocatedGiB": 0.00018310546875
+    },
+    {
+      "root": "/Users/hugues_mini/Library/Caches",
+      "path": "/Users/hugues_mini/Library/Caches/com.apple.remindd",
+      "name": "com.apple.remindd",
+      "kind": "immediate-child",
+      "allocatedKiB": 176,
+      "allocatedBytes": 180224,
+      "allocatedGiB": 0.0001678466796875
+    },
+    {
+      "root": "/Users/hugues_mini/Library/Caches",
+      "path": "/Users/hugues_mini/Library/Caches/com.apple.duetexpertd",
+      "name": "com.apple.duetexpertd",
+      "kind": "immediate-child",
+      "allocatedKiB": 176,
+      "allocatedBytes": 180224,
+      "allocatedGiB": 0.0001678466796875
+    },
+    {
+      "root": "/Users/hugues_mini/Library/Caches",
+      "path": "/Users/hugues_mini/Library/Caches/com.apple.proactive.eventtracker",
+      "name": "com.apple.proactive.eventtracker",
+      "kind": "immediate-child",
+      "allocatedKiB": 168,
+      "allocatedBytes": 172032,
+      "allocatedGiB": 0.00016021728515625
+    },
+    {
+      "root": "/Users/hugues_mini/Library/Caches",
+      "path": "/Users/hugues_mini/Library/Caches/com.apple.dataaccess.dataaccessd",
+      "name": "com.apple.dataaccess.dataaccessd",
+      "kind": "immediate-child",
+      "allocatedKiB": 168,
+      "allocatedBytes": 172032,
+      "allocatedGiB": 0.00016021728515625
+    },
+    {
+      "root": "/Users/hugues_mini/Library/Caches",
+      "path": "/Users/hugues_mini/Library/Caches/com.apple.appleaccountd",
+      "name": "com.apple.appleaccountd",
+      "kind": "immediate-child",
+      "allocatedKiB": 136,
+      "allocatedBytes": 139264,
+      "allocatedGiB": 0.00012969970703125
+    },
+    {
+      "root": "/Users/hugues_mini/Library/Caches",
+      "path": "/Users/hugues_mini/Library/Caches/com.apple.Software-Update-Settings.extension",
+      "name": "com.apple.Software-Update-Settings.extension",
+      "kind": "immediate-child",
+      "allocatedKiB": 132,
+      "allocatedBytes": 135168,
+      "allocatedGiB": 0.000125885009765625
+    },
+    {
+      "root": "/Users/hugues_mini/Library/Caches",
+      "path": "/Users/hugues_mini/Library/Caches/com.microsoft.autoupdate2",
+      "name": "com.microsoft.autoupdate2",
+      "kind": "immediate-child",
+      "allocatedKiB": 124,
+      "allocatedBytes": 126976,
+      "allocatedGiB": 0.000118255615234375
+    },
+    {
+      "root": "/Users/hugues_mini/Library/Caches",
+      "path": "/Users/hugues_mini/Library/Caches/com.microsoft.VSCode.ShipIt",
+      "name": "com.microsoft.VSCode.ShipIt",
+      "kind": "immediate-child",
+      "allocatedKiB": 112,
+      "allocatedBytes": 114688,
+      "allocatedGiB": 0.0001068115234375
+    },
+    {
+      "root": "/Users/hugues_mini/.cache",
+      "path": "/Users/hugues_mini/.cache/bfsone-skill-backup-2026-10-02",
+      "name": "bfsone-skill-backup-2026-10-02",
+      "kind": "immediate-child",
+      "allocatedKiB": 112,
+      "allocatedBytes": 114688,
+      "allocatedGiB": 0.0001068115234375
+    },
+    {
+      "root": "/Users/hugues_mini/Library/Caches",
+      "path": "/Users/hugues_mini/Library/Caches/com.apple.cache_delete",
+      "name": "com.apple.cache_delete",
+      "kind": "immediate-child",
+      "allocatedKiB": 92,
+      "allocatedBytes": 94208,
+      "allocatedGiB": 8.7738037109375e-05
+    },
+    {
+      "root": "/Users/hugues_mini/Library/Caches",
+      "path": "/Users/hugues_mini/Library/Caches/com.apple.finder",
+      "name": "com.apple.finder",
+      "kind": "immediate-child",
+      "allocatedKiB": 80,
+      "allocatedBytes": 81920,
+      "allocatedGiB": 7.62939453125e-05
+    },
+    {
+      "root": "/Users/hugues_mini/Library/Caches",
+      "path": "/Users/hugues_mini/Library/Caches/com.apple.dt.Xcode.sourcecontrol.Git",
+      "name": "com.apple.dt.Xcode.sourcecontrol.Git",
+      "kind": "immediate-child",
+      "allocatedKiB": 80,
+      "allocatedBytes": 81920,
+      "allocatedGiB": 7.62939453125e-05
+    },
+    {
+      "root": "/Users/hugues_mini/Library/Caches",
+      "path": "/Users/hugues_mini/Library/Caches/com.microsoft.teams2.installer_telemetry",
+      "name": "com.microsoft.teams2.installer_telemetry",
+      "kind": "immediate-child",
+      "allocatedKiB": 80,
+      "allocatedBytes": 81920,
+      "allocatedGiB": 7.62939453125e-05
+    },
+    {
+      "root": "/Users/hugues_mini/Library/Caches",
+      "path": "/Users/hugues_mini/Library/Caches/chrome_crashpad_handler",
+      "name": "chrome_crashpad_handler",
+      "kind": "immediate-child",
+      "allocatedKiB": 80,
+      "allocatedBytes": 81920,
+      "allocatedGiB": 7.62939453125e-05
+    },
+    {
+      "root": "/Users/hugues_mini/Library/Caches",
+      "path": "/Users/hugues_mini/Library/Caches/com.openai.sky.CUAService",
+      "name": "com.openai.sky.CUAService",
+      "kind": "immediate-child",
+      "allocatedKiB": 80,
+      "allocatedBytes": 81920,
+      "allocatedGiB": 7.62939453125e-05
+    },
+    {
+      "root": "/Users/hugues_mini/Library/Caches",
+      "path": "/Users/hugues_mini/Library/Caches/com.stablyai.orca",
+      "name": "com.stablyai.orca",
+      "kind": "immediate-child",
+      "allocatedKiB": 80,
+      "allocatedBytes": 81920,
+      "allocatedGiB": 7.62939453125e-05
+    },
+    {
+      "root": "/Users/hugues_mini/Library/Caches",
+      "path": "/Users/hugues_mini/Library/Caches/com.vng.zalo",
+      "name": "com.vng.zalo",
+      "kind": "immediate-child",
+      "allocatedKiB": 80,
+      "allocatedBytes": 81920,
+      "allocatedGiB": 7.62939453125e-05
+    },
+    {
+      "root": "/Users/hugues_mini/Library/Caches",
+      "path": "/Users/hugues_mini/Library/Caches/com.apple.HomeKit",
+      "name": "com.apple.HomeKit",
+      "kind": "immediate-child",
+      "allocatedKiB": 64,
+      "allocatedBytes": 65536,
+      "allocatedGiB": 6.103515625e-05
+    },
+    {
+      "root": "/Users/hugues_mini/Library/Caches",
+      "path": "/Users/hugues_mini/Library/Caches/black",
+      "name": "black",
+      "kind": "immediate-child",
+      "allocatedKiB": 32,
+      "allocatedBytes": 32768,
+      "allocatedGiB": 3.0517578125e-05
+    },
+    {
+      "root": "/Users/hugues_mini/Library/Caches",
+      "path": "/Users/hugues_mini/Library/Caches/com.anthropic.claudefordesktop.ShipIt",
+      "name": "com.anthropic.claudefordesktop.ShipIt",
+      "kind": "immediate-child",
+      "allocatedKiB": 28,
+      "allocatedBytes": 28672,
+      "allocatedGiB": 2.6702880859375e-05
+    },
+    {
+      "root": "/Users/hugues_mini/Library/Caches",
+      "path": "/Users/hugues_mini/Library/Caches/com.apple.chrono",
+      "name": "com.apple.chrono",
+      "kind": "immediate-child",
+      "allocatedKiB": 24,
+      "allocatedBytes": 24576,
+      "allocatedGiB": 2.288818359375e-05
+    },
+    {
+      "root": "/Users/hugues_mini/Library/Caches",
+      "path": "/Users/hugues_mini/Library/Caches/SentryCrash",
+      "name": "SentryCrash",
+      "kind": "immediate-child",
+      "allocatedKiB": 8,
+      "allocatedBytes": 8192,
+      "allocatedGiB": 7.62939453125e-06
+    },
+    {
+      "root": "/Users/hugues_mini/Library/Caches",
+      "path": "/Users/hugues_mini/Library/Caches/com.stablyai.orca.ShipIt",
+      "name": "com.stablyai.orca.ShipIt",
+      "kind": "immediate-child",
+      "allocatedKiB": 8,
+      "allocatedBytes": 8192,
+      "allocatedGiB": 7.62939453125e-06
+    },
+    {
+      "root": "/Users/hugues_mini/Library/Caches",
+      "path": "/Users/hugues_mini/Library/Caches/com.vng.zalo.ShipIt",
+      "name": "com.vng.zalo.ShipIt",
+      "kind": "immediate-child",
+      "allocatedKiB": 8,
+      "allocatedBytes": 8192,
+      "allocatedGiB": 7.62939453125e-06
+    },
+    {
+      "root": "/Users/hugues_mini/.cache",
+      "path": "/Users/hugues_mini/.cache/claude",
+      "name": "claude",
+      "kind": "immediate-child",
+      "allocatedKiB": 8,
+      "allocatedBytes": 8192,
+      "allocatedGiB": 7.62939453125e-06
+    },
+    {
+      "root": "/Users/hugues_mini/.gradle",
+      "path": "/Users/hugues_mini/.gradle/android",
+      "name": "android",
+      "kind": "immediate-child",
+      "allocatedKiB": 4,
+      "allocatedBytes": 4096,
+      "allocatedGiB": 3.814697265625e-06
+    },
+    {
+      "root": "/Users/hugues_mini/Library/Caches",
+      "path": "/Users/hugues_mini/Library/Caches/copilot",
+      "name": "copilot",
+      "kind": "immediate-child",
+      "allocatedKiB": 4,
+      "allocatedBytes": 4096,
+      "allocatedGiB": 3.814697265625e-06
+    },
+    {
+      "root": "/Users/hugues_mini/Library/Caches",
+      "path": "/Users/hugues_mini/Library/Caches/com.apple.Safari",
+      "name": "com.apple.Safari",
+      "kind": "immediate-child",
+      "allocatedKiB": 4,
+      "allocatedBytes": 4096,
+      "allocatedGiB": 3.814697265625e-06
+    },
+    {
+      "root": "/Users/hugues_mini/Library/Caches",
+      "path": "/Users/hugues_mini/Library/Caches/com.apple.gamed",
+      "name": "com.apple.gamed",
+      "kind": "immediate-child",
+      "allocatedKiB": 4,
+      "allocatedBytes": 4096,
+      "allocatedGiB": 3.814697265625e-06
+    },
+    {
+      "root": "/Users/hugues_mini/Library/Caches",
+      "path": "/Users/hugues_mini/Library/Caches/com.apple.DictionaryServices",
+      "name": "com.apple.DictionaryServices",
+      "kind": "immediate-child",
+      "allocatedKiB": 4,
+      "allocatedBytes": 4096,
+      "allocatedGiB": 3.814697265625e-06
+    },
+    {
+      "root": "/Users/hugues_mini/Library/Caches",
+      "path": "/Users/hugues_mini/Library/Caches/com.apple.VideoConference",
+      "name": "com.apple.VideoConference",
+      "kind": "immediate-child",
+      "allocatedKiB": 4,
+      "allocatedBytes": 4096,
+      "allocatedGiB": 3.814697265625e-06
+    },
+    {
+      "root": "/Users/hugues_mini/Library/Caches",
+      "path": "/Users/hugues_mini/Library/Caches/com.apple.commerce",
+      "name": "com.apple.commerce",
+      "kind": "immediate-child",
+      "allocatedKiB": 4,
+      "allocatedBytes": 4096,
+      "allocatedGiB": 3.814697265625e-06
+    },
+    {
+      "root": "/Users/hugues_mini/Library/Caches",
+      "path": "/Users/hugues_mini/Library/Caches/SwiftLint",
+      "name": "SwiftLint",
+      "kind": "immediate-child",
+      "allocatedKiB": 4,
+      "allocatedBytes": 4096,
+      "allocatedGiB": 3.814697265625e-06
+    },
+    {
+      "root": "/Users/hugues_mini/.cache",
+      "path": "/Users/hugues_mini/.cache/chrome-devtools-mcp",
+      "name": "chrome-devtools-mcp",
+      "kind": "immediate-child",
+      "allocatedKiB": 4,
+      "allocatedBytes": 4096,
+      "allocatedGiB": 3.814697265625e-06
+    },
+    {
+      "root": "/Users/hugues_mini/.cache",
+      "path": "/Users/hugues_mini/.cache/gsd",
+      "name": "gsd",
+      "kind": "immediate-child",
+      "allocatedKiB": 4,
+      "allocatedBytes": 4096,
+      "allocatedGiB": 3.814697265625e-06
+    },
+    {
+      "root": "/Users/hugues_mini/.gradle",
+      "path": "/Users/hugues_mini/.gradle/workers",
+      "name": "workers",
+      "kind": "immediate-child",
+      "allocatedKiB": 0,
+      "allocatedBytes": 0,
+      "allocatedGiB": 0.0
+    },
+    {
+      "root": "/Users/hugues_mini/.gradle",
+      "path": "/Users/hugues_mini/.gradle/notifications",
+      "name": "notifications",
+      "kind": "immediate-child",
+      "allocatedKiB": 0,
+      "allocatedBytes": 0,
+      "allocatedGiB": 0.0
+    },
+    {
+      "root": "/Users/hugues_mini/Library/Caches",
+      "path": "/Users/hugues_mini/Library/Caches/com.apple.AvatarKit",
+      "name": "com.apple.AvatarKit",
+      "kind": "immediate-child",
+      "allocatedKiB": 0,
+      "allocatedBytes": 0,
+      "allocatedGiB": 0.0
+    },
+    {
+      "root": "/Users/hugues_mini/Library/Caches",
+      "path": "/Users/hugues_mini/Library/Caches/com.apple.visualintelligenced",
+      "name": "com.apple.visualintelligenced",
+      "kind": "immediate-child",
+      "allocatedKiB": 0,
+      "allocatedBytes": 0,
+      "allocatedGiB": 0.0
+    },
+    {
+      "root": "/Users/hugues_mini/Library/Caches",
+      "path": "/Users/hugues_mini/Library/Caches/com.apple.cds.vbtx",
+      "name": "com.apple.cds.vbtx",
+      "kind": "immediate-child",
+      "allocatedKiB": 0,
+      "allocatedBytes": 0,
+      "allocatedGiB": 0.0
+    },
+    {
+      "root": "/Users/hugues_mini/Library/Caches",
+      "path": "/Users/hugues_mini/Library/Caches/com.apple.nsurlsessiond",
+      "name": "com.apple.nsurlsessiond",
+      "kind": "immediate-child",
+      "allocatedKiB": 0,
+      "allocatedBytes": 0,
+      "allocatedGiB": 0.0
+    },
+    {
+      "root": "/Users/hugues_mini/Library/Caches",
+      "path": "/Users/hugues_mini/Library/Caches/com.apple.containermanagerd",
+      "name": "com.apple.containermanagerd",
+      "kind": "immediate-child",
+      "allocatedKiB": 0,
+      "allocatedBytes": 0,
+      "allocatedGiB": 0.0
+    },
+    {
+      "root": "/Users/hugues_mini/Library/Caches",
+      "path": "/Users/hugues_mini/Library/Caches/com.apple.cds",
+      "name": "com.apple.cds",
+      "kind": "immediate-child",
+      "allocatedKiB": 0,
+      "allocatedBytes": 0,
+      "allocatedGiB": 0.0
+    },
+    {
+      "root": "/Users/hugues_mini/Library/Caches",
+      "path": "/Users/hugues_mini/Library/Caches/com.apple.icloudmailagent",
+      "name": "com.apple.icloudmailagent",
+      "kind": "immediate-child",
+      "allocatedKiB": 0,
+      "allocatedBytes": 0,
+      "allocatedGiB": 0.0
+    },
+    {
+      "root": "/Users/hugues_mini/Library/Caches",
+      "path": "/Users/hugues_mini/Library/Caches/com.apple.bird",
+      "name": "com.apple.bird",
+      "kind": "immediate-child",
+      "allocatedKiB": 0,
+      "allocatedBytes": 0,
+      "allocatedGiB": 0.0
+    },
+    {
+      "root": "/Users/hugues_mini/Library/Caches",
+      "path": "/Users/hugues_mini/Library/Caches/FamilyCircle",
+      "name": "FamilyCircle",
+      "kind": "immediate-child",
+      "allocatedKiB": 0,
+      "allocatedBytes": 0,
+      "allocatedGiB": 0.0
+    },
+    {
+      "root": "/Users/hugues_mini/Library/Caches",
+      "path": "/Users/hugues_mini/Library/Caches/dev.warp.Warp-Stable",
+      "name": "dev.warp.Warp-Stable",
+      "kind": "immediate-child",
+      "allocatedKiB": 0,
+      "allocatedBytes": 0,
+      "allocatedGiB": 0.0
+    },
+    {
+      "root": "/Users/hugues_mini/Library/Caches",
+      "path": "/Users/hugues_mini/Library/Caches/io.sentry",
+      "name": "io.sentry",
+      "kind": "immediate-child",
+      "allocatedKiB": 0,
+      "allocatedBytes": 0,
+      "allocatedGiB": 0.0
+    },
+    {
+      "root": "/Users/hugues_mini/Library/Caches",
+      "path": "/Users/hugues_mini/Library/Caches/com.apple.iTunesCloud",
+      "name": "com.apple.iTunesCloud",
+      "kind": "immediate-child",
+      "allocatedKiB": 0,
+      "allocatedBytes": 0,
+      "allocatedGiB": 0.0
+    },
+    {
+      "root": "/Users/hugues_mini/.cache",
+      "path": "/Users/hugues_mini/.cache/puppeteer",
+      "name": "puppeteer",
+      "kind": "immediate-child",
+      "allocatedKiB": 0,
+      "allocatedBytes": 0,
+      "allocatedGiB": 0.0
+    },
+    {
+      "root": "/Users/hugues_mini/.cache",
+      "path": "/Users/hugues_mini/.cache/bazel-disk-cache",
+      "name": "bazel-disk-cache",
+      "kind": "immediate-child",
+      "allocatedKiB": 0,
+      "allocatedBytes": 0,
+      "allocatedGiB": 0.0
+    },
+    {
+      "root": "/Users/hugues_mini/.cache",
+      "path": "/Users/hugues_mini/.cache/opencode",
+      "name": "opencode",
+      "kind": "immediate-child",
+      "allocatedKiB": 0,
+      "allocatedBytes": 0,
+      "allocatedGiB": 0.0
+    }
+  ],
+  "missingPaths": [],
+  "deniedPaths": [],
+  "actualClose": "2026-10-11T05:02:42.172Z",
+  "durationSeconds": 28.049,
+  "duCalls": 1,
+  "ownershipRefusalSealPreserved": true,
+  "inactivityChecks": 0,
+  "contentsRead": false,
+  "relocations": 0,
+  "cleanup": 0,
+  "qualification": "du default -d1 output reports immediate directories rather than every direct file; root total includes unlisted direct files. Parent and child totals overlap; do not add them. No unique/reclaimable or inactive/rebuildable classification is established."
+}

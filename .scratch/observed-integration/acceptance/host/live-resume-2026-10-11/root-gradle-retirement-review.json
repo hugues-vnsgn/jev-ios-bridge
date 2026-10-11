@@ -1,0 +1,12 @@
+{
+  "status": "SOURCE_REVIEW_ACCEPTED_PER_PHASE_PLANS_REQUIRED",
+  "hashes": {
+    "retire-gradle-version.py": "d419cf8d307b3c202392fa7b28410112a504b1b641441c1291c5ed046349ffba",
+    "gradle-version-plan.md": "c8367964fcd36df8138577462f8a13746c15e7020d0c3839139ce9b2b15c05bd"
+  },
+  "rootReview": "Full delta from accepted JetBrains script inspected; exact two-source map and manifest protections retained.",
+  "independentReviewer": "/root/sam_setup_review",
+  "independentVerdict": "GO; no new blocking issue",
+  "qualification": "Source-only review, no execution/tests. Journal fsync batches256events; crash tail may be lost. No automatic retry. Fresh per-phase activity and accepted archive evidence required.",
+  "at": "2026-10-11T06:15:07.061176+00:00"
+}

@@ -1,0 +1,8 @@
+{
+  "status": "SUPERSEDED_UNEXECUTED_PREPARATION",
+  "rootInstruction": "Do not run current run-setup. Prepare separate ownership-only script, no Sam mkdir/open/chmod. Timeout mutation state remains unresolved; no recovery query without separately reviewed scope. Future exact Sam-root0775->0755 held-descriptor repair is a separate dispatch if uid501 persists.",
+  "originalSyntaxFailurePreserved": true,
+  "samIdentityCorrectionPreserved": true,
+  "setupExecutionCalls": 0,
+  "samMutations": 0
+}

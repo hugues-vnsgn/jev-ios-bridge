@@ -1,0 +1,17 @@
+{
+  "status": "SOURCE_REVIEW_ACCEPTED_FOR_SOURCE_RETAINED_COPY_ONLY",
+  "reviewer": "/root/sam_setup_review",
+  "rootReadReview": true,
+  "reviewedOriginalSha256": "33d773a86296e00797a1c44be6ba9e2b5d79f85b974b95b28c9680f3b88a56d1",
+  "currentSha256": "1b585f7616e3856749f9d6457bb494f3283f496f174d14f1ecbfc65965635bb3",
+  "declaredDelta": "HOME constant renamed OWNER_HOME; exact Gradle8.13 and9.7.1 roots added; plan qualifications clarified.",
+  "blockingFindings": 0,
+  "qualifications": [
+    "No execution or tests yet.",
+    "Copy only; source removal requires separate verified receipt and continued inactivity assessment.",
+    "Reserve space for manifests and receipts.",
+    "Timeout or overflow requires settlement review before another attempt."
+  ],
+  "selectedFirstCandidatePendingFreshReadiness": "/Users/hugues_mini/Library/Caches/JetBrains",
+  "atUtc": "2026-10-11T05:26:37.176482+00:00"
+}

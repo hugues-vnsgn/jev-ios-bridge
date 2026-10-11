@@ -1,0 +1,51 @@
+{
+  "verifiedAtUtc": "2026-10-11T05:27:34.615453+00:00",
+  "preparedFilesRehashed": 7,
+  "preparedMismatches": 0,
+  "activitySealFilesRehashed": 64,
+  "activitySealMismatches": 0,
+  "directChildCloses": [
+    {
+      "name": "gradle-depth2",
+      "argv": [
+        "/usr/bin/du",
+        "-k",
+        "-d",
+        "2",
+        "-P",
+        "/Users/hugues_mini/.gradle/caches"
+      ],
+      "closedAtUtc": "2026-10-11T05:25:10.650Z",
+      "exitCode": 0,
+      "stdoutBytes": 121578,
+      "stderrBytes": 0
+    },
+    {
+      "name": "other-seven",
+      "argv": [
+        "/usr/bin/du",
+        "-sk",
+        "-P",
+        "/Users/hugues_mini/Library/Caches/JetBrains",
+        "/Users/hugues_mini/Library/Caches/org.swift.swiftpm",
+        "/Users/hugues_mini/.npm/_cacache",
+        "/Users/hugues_mini/.cache/uv",
+        "/Users/hugues_mini/.cache/bazel-repo-contents-cache",
+        "/Users/hugues_mini/.cache/bazel-repo-cache",
+        "/Users/hugues_mini/.cache/huggingface"
+      ],
+      "closedAtUtc": "2026-10-11T05:25:13.777Z",
+      "exitCode": 0,
+      "stdoutBytes": 342,
+      "stderrBytes": 0
+    }
+  ],
+  "gradleRows": 1511,
+  "otherRootRows": 7,
+  "missingDeniedPaths": [],
+  "rawCaptureComplete": true,
+  "sourceMutationCopiesDeletionsProcessStopsBuilds": 0,
+  "nativeReruns": 0,
+  "descendantQualifier": "Only direct child closes are recorded; descendants unobserved.",
+  "operatorState": "IDLE_FOR_ROOT_AUDIT"
+}

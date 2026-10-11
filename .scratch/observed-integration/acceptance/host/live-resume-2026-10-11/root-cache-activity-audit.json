@@ -1,0 +1,47 @@
+{
+  "status": "CACHE_ACTIVITY_SNAPSHOTS_AUDITED",
+  "auditedAtUtc": "2026-10-11T05:23:02.592326+00:00",
+  "manifestSha256": "f11f073444b452848c609a27f261db431d0e5b13bc884b18a82a06e9b5499d65",
+  "filesVerified": 64,
+  "candidates": [
+    {
+      "path": "/Users/hugues_mini/.gradle/caches",
+      "classification": "OPEN_FILES_OBSERVED"
+    },
+    {
+      "path": "/Users/hugues_mini/.gradle/wrapper/dists",
+      "classification": "OPEN_FILES_OBSERVED"
+    },
+    {
+      "path": "/Users/hugues_mini/Library/Caches/JetBrains",
+      "classification": "NO_MATCH_OBSERVED"
+    },
+    {
+      "path": "/Users/hugues_mini/Library/Caches/org.swift.swiftpm",
+      "classification": "NO_MATCH_OBSERVED"
+    },
+    {
+      "path": "/Users/hugues_mini/.npm/_cacache",
+      "classification": "NO_MATCH_OBSERVED"
+    },
+    {
+      "path": "/Users/hugues_mini/.cache/uv",
+      "classification": "NO_MATCH_OBSERVED"
+    },
+    {
+      "path": "/Users/hugues_mini/.cache/bazel-repo-contents-cache",
+      "classification": "NO_MATCH_OBSERVED"
+    },
+    {
+      "path": "/Users/hugues_mini/.cache/bazel-repo-cache",
+      "classification": "NO_MATCH_OBSERVED"
+    },
+    {
+      "path": "/Users/hugues_mini/.cache/huggingface",
+      "classification": "NO_MATCH_OBSERVED"
+    }
+  ],
+  "decision": "Exclude whole Gradle caches and wrapper roots: open files observed. Seven no-match snapshots are candidates only, not evidence of sustained inactivity. Refine sizes and unused older Gradle subtrees before selecting archive scope.",
+  "sourceRemovals": 0,
+  "archiveCopies": 0
+}

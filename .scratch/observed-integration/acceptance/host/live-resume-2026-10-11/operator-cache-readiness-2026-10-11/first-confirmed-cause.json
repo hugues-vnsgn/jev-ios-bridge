@@ -1,0 +1,30 @@
+{
+  "cause": "RECORDER_PARSER_REJECTED_SIGNED_UID",
+  "nativePsSucceeded": true,
+  "psArgv": [
+    "/bin/ps",
+    "-ax",
+    "-o",
+    "pid=,uid=,ucomm="
+  ],
+  "psActualExitCode": 0,
+  "psActualClosedAtUtc": "2026-10-11T05:31:08.388Z",
+  "rawStdoutSha256": "1234aa8d701f81c80cb909c775415a86ca4f4cd610477ff7929b781edc5c3461",
+  "rawStdoutBytes": 27753,
+  "unparsedRecords": [
+    {
+      "lineNumber": 92,
+      "verbatimRecord": "  339    -2 distnoted       "
+    }
+  ],
+  "failingAssumption": "UID was restricted to unsigned decimal in the name-only ps parser. Observed ps UID -2 is signed decimal.",
+  "wrapperActualExitCode": 3,
+  "lstatCalls": 0,
+  "lsofCalls": 0,
+  "duCalls": 0,
+  "remainingBudgets": {
+    "lsof": 3,
+    "du": 1
+  },
+  "correctionAuthorization": "Root accepts signed UID parser correction in fresh v2 evidence, reuse retained successful ps bytes, no second ps. Failed directory remains sealed."
+}

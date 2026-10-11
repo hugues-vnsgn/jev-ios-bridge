@@ -1,0 +1,77 @@
+{
+  "verifiedAtUtc": "2026-10-11T05:38:34.038977+00:00",
+  "preparedFilesRehashed": 6,
+  "preparedMismatches": 0,
+  "preservedFailureSealEntriesRehashed": 17,
+  "preservedFailureMismatches": 0,
+  "nativePsQueries": 0,
+  "retainedPsActualCloseUtc": "2026-10-11T05:31:08.388Z",
+  "retainedPsRecordsParsed": 957,
+  "negativeUidRecordsAccepted": 1,
+  "directChildCloses": [
+    {
+      "name": "readiness-01",
+      "argv": [
+        "/usr/sbin/lsof",
+        "-nP",
+        "-F0pcfn",
+        "+D",
+        "/Users/hugues_mini/.gradle/caches/8.13"
+      ],
+      "exitCode": 1,
+      "closedAtUtc": "2026-10-11T05:35:35.048Z",
+      "stdoutBytes": 0,
+      "stderrBytes": 0
+    },
+    {
+      "name": "readiness-02",
+      "argv": [
+        "/usr/sbin/lsof",
+        "-nP",
+        "-F0pcfn",
+        "+D",
+        "/Users/hugues_mini/.gradle/caches/9.7.1"
+      ],
+      "exitCode": 1,
+      "closedAtUtc": "2026-10-11T05:35:44.139Z",
+      "stdoutBytes": 0,
+      "stderrBytes": 0
+    },
+    {
+      "name": "readiness-03",
+      "argv": [
+        "/usr/sbin/lsof",
+        "-nP",
+        "-F0pcfn",
+        "+D",
+        "/Users/hugues_mini/Library/Caches/JetBrains"
+      ],
+      "exitCode": 1,
+      "closedAtUtc": "2026-10-11T05:35:44.284Z",
+      "stdoutBytes": 0,
+      "stderrBytes": 0
+    },
+    {
+      "name": "other-four",
+      "argv": [
+        "/usr/bin/du",
+        "-sk",
+        "-P",
+        "/Users/hugues_mini/.konan",
+        "/Users/hugues_mini/.m2",
+        "/Users/hugues_mini/.bun/install/cache",
+        "/Users/hugues_mini/Library/Developer/Xcode/Archives"
+      ],
+      "exitCode": 0,
+      "closedAtUtc": "2026-10-11T05:35:51.239Z",
+      "stdoutBytes": 169,
+      "stderrBytes": 0
+    }
+  ],
+  "lstatReceipts": 6,
+  "losslessIdentitiesUnchanged": true,
+  "sourcesRetained": true,
+  "archiveCopiesRemovalProcessStopsBuilds": 0,
+  "descendantQualifier": "Only recorded direct child closes are observed; descendants unobserved.",
+  "operatorState": "IDLE_FOR_ROOT_AUDIT"
+}

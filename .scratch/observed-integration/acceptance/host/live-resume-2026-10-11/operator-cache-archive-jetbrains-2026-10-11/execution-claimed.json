@@ -1,0 +1,25 @@
+{
+  "claimedAtUtc": "2026-10-11T05:44:46.012059+00:00",
+  "budget": 1,
+  "supportedApprovalRequired": true,
+  "exactCommand": "/usr/bin/env -i HOME=/Users/hugues_mini PATH=/usr/bin:/bin:/usr/sbin:/sbin LANG=C LC_ALL=C TZ=UTC /opt/homebrew/bin/python3 .scratch/observed-integration/acceptance/host/live-resume-2026-10-11/cache-archive-draft/archive-cache.py .scratch/observed-integration/acceptance/host/live-resume-2026-10-11/cache-archive-draft/jetbrains-plan.json 886c24962acf52ba5d47b2958f5038470bbde7a5d1414cc73f2c879b0171689c",
+  "sourceRetained": true,
+  "coordinatorAndOperatorDoNotStartIdeOrBuilds": true,
+  "quiescenceIsOperationalNotAtomic": true,
+  "childConfiguredEnvironment": {
+    "PATH": "/usr/bin:/bin:/usr/sbin:/sbin",
+    "HOME": "/Users/hugues_mini",
+    "LANG": "C",
+    "LC_ALL": "C",
+    "TZ": "UTC"
+  },
+  "sourceLogicalAndOutputCaps": 8589934592,
+  "minSamFreeBytesIncludingReceiptReserve": 86973087744,
+  "nativeChildBudget": {
+    "diskutil": 2,
+    "tar": 1
+  },
+  "childCommandSeconds": 600,
+  "totalSeconds": 1800,
+  "permissionProfile": "workspace-write; archive requires supported require_escalated; approval policy not independently specified"
+}

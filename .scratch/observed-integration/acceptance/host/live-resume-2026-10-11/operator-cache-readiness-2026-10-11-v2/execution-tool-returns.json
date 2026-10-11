@@ -1,0 +1,23 @@
+[
+  {
+    "chunk_id": "67d45a",
+    "wall_time_seconds": 1.003073125,
+    "session_id": 1268,
+    "original_token_count": 0,
+    "output": ""
+  },
+  {
+    "chunk_id": "6207c5",
+    "wall_time_seconds": 20.001830167,
+    "session_id": 1268,
+    "original_token_count": 67,
+    "output": "{\"path\":\"/Users/hugues_mini/.gradle/caches/8.13\",\"classification\":\"NO_MATCH_OBSERVED\"}\n{\"path\":\"/Users/hugues_mini/.gradle/caches/9.7.1\",\"classification\":\"NO_MATCH_OBSERVED\"}\n{\"path\":\"/Users/hugues_mini/Library/Caches/JetBrains\",\"classification\":\"NO_MATCH_OBSERVED\"}\n"
+  },
+  {
+    "chunk_id": "45815b",
+    "wall_time_seconds": 6.042e-06,
+    "exit_code": 0,
+    "original_token_count": 59,
+    "output": "{\"status\":\"READ_ONLY_READINESS_SNAPSHOTS_COMPLETE\",\"observations\":3,\"possibleJetBrainsIdeExecutableNames\":[],\"duObservation\":{\"receipt\":\"other-four-receipt.json\",\"exitCode\":0,\"missingPaths\":[],\"status\":\"DU_COMPLETE\",\"noFallback\":true}}\n"
+  }
+]

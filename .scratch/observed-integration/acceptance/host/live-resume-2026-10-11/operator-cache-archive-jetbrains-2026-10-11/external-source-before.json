@@ -1,0 +1,1578 @@
+{
+  "JetBrains": {
+    "identity": {
+      "ctime_ns": 1787022817195830369,
+      "dev": 16777233,
+      "gid": 20,
+      "ino": 34652077,
+      "mode": 16877,
+      "mtime_ns": 1787022817195830369,
+      "nlink": 4,
+      "size": 128,
+      "uid": 501
+    },
+    "type": "dir"
+  },
+  "JetBrains/.DS_Store": {
+    "identity": {
+      "ctime_ns": 1783648036875001167,
+      "dev": 16777233,
+      "gid": 20,
+      "ino": 60775185,
+      "mode": 33188,
+      "mtime_ns": 1783648036875001167,
+      "nlink": 1,
+      "size": 6148,
+      "uid": 501
+    },
+    "sha256": "d65165279105ca6773180500688df4bdc69a2c7b771752f0a46ef120b7fd8ec3",
+    "size": 6148,
+    "type": "file"
+  },
+  "JetBrains/analyzer": {
+    "identity": {
+      "ctime_ns": 1787022817195871370,
+      "dev": 16777233,
+      "gid": 20,
+      "ino": 77416350,
+      "mode": 16877,
+      "mtime_ns": 1787022817195871370,
+      "nlink": 3,
+      "size": 96,
+      "uid": 501
+    },
+    "type": "dir"
+  },
+  "JetBrains/analyzer/workspaces": {
+    "identity": {
+      "ctime_ns": 1787900922972752511,
+      "dev": 16777233,
+      "gid": 20,
+      "ino": 77416351,
+      "mode": 16877,
+      "mtime_ns": 1787900922972752511,
+      "nlink": 5,
+      "size": 160,
+      "uid": 501
+    },
+    "type": "dir"
+  },
+  "JetBrains/analyzer/workspaces/1d49075752b2ea0bbfdb50da2cca88bd": {
+    "identity": {
+      "ctime_ns": 1787901007799993775,
+      "dev": 16777233,
+      "gid": 20,
+      "ino": 84128938,
+      "mode": 16877,
+      "mtime_ns": 1787901007799993775,
+      "nlink": 4,
+      "size": 128,
+      "uid": 501
+    },
+    "type": "dir"
+  },
+  "JetBrains/analyzer/workspaces/1d49075752b2ea0bbfdb50da2cca88bd/rocks": {
+    "identity": {
+      "ctime_ns": 1787900922976768713,
+      "dev": 16777233,
+      "gid": 20,
+      "ino": 84128939,
+      "mode": 16877,
+      "mtime_ns": 1787900922976768713,
+      "nlink": 3,
+      "size": 96,
+      "uid": 501
+    },
+    "type": "dir"
+  },
+  "JetBrains/analyzer/workspaces/1d49075752b2ea0bbfdb50da2cca88bd/rocks/v241": {
+    "identity": {
+      "ctime_ns": 1787901045083784241,
+      "dev": 16777233,
+      "gid": 20,
+      "ino": 84128940,
+      "mode": 16877,
+      "mtime_ns": 1787901045083784241,
+      "nlink": 36,
+      "size": 1152,
+      "uid": 501
+    },
+    "type": "dir"
+  },
+  "JetBrains/analyzer/workspaces/1d49075752b2ea0bbfdb50da2cca88bd/rocks/v241/000004.log": {
+    "identity": {
+      "ctime_ns": 1787901018708779879,
+      "dev": 16777233,
+      "gid": 20,
+      "ino": 84128947,
+      "mode": 33188,
+      "mtime_ns": 1787901018708779879,
+      "nlink": 1,
+      "size": 224034424,
+      "uid": 501
+    },
+    "sha256": "4fa4b13de6bbf7447e5bc66f00bc0871f2d8f8951665a915bf92af9068417cd3",
+    "size": 224034424,
+    "type": "file"
+  },
+  "JetBrains/analyzer/workspaces/1d49075752b2ea0bbfdb50da2cca88bd/rocks/v241/000008.log": {
+    "identity": {
+      "ctime_ns": 1787901021581533326,
+      "dev": 16777233,
+      "gid": 20,
+      "ino": 84230585,
+      "mode": 33188,
+      "mtime_ns": 1787901021581533326,
+      "nlink": 1,
+      "size": 228091800,
+      "uid": 501
+    },
+    "sha256": "d5bbe0233a284aa3c1a6ca1f4403b53f7af59f02cb78d89aac8308966ef27e09",
+    "size": 228091800,
+    "type": "file"
+  },
+  "JetBrains/analyzer/workspaces/1d49075752b2ea0bbfdb50da2cca88bd/rocks/v241/000010.log": {
+    "identity": {
+      "ctime_ns": 1787901023332295825,
+      "dev": 16777233,
+      "gid": 20,
+      "ino": 84230602,
+      "mode": 33188,
+      "mtime_ns": 1787901023332295825,
+      "nlink": 1,
+      "size": 202936115,
+      "uid": 501
+    },
+    "sha256": "96951545366f5533fb20222fd667a410a94c95839a0e8a27de6e9f782c5683fe",
+    "size": 202936115,
+    "type": "file"
+  },
+  "JetBrains/analyzer/workspaces/1d49075752b2ea0bbfdb50da2cca88bd/rocks/v241/000011.sst": {
+    "identity": {
+      "ctime_ns": 1787901021798535533,
+      "dev": 16777233,
+      "gid": 20,
+      "ino": 84230603,
+      "mode": 33188,
+      "mtime_ns": 1787901021798535533,
+      "nlink": 1,
+      "size": 35054027,
+      "uid": 501
+    },
+    "sha256": "692be5740d263cde105d55aace41d9b911337eac47d8cf2b7bdb95b8c7dc2e11",
+    "size": 35054027,
+    "type": "file"
+  },
+  "JetBrains/analyzer/workspaces/1d49075752b2ea0bbfdb50da2cca88bd/rocks/v241/000014.log": {
+    "identity": {
+      "ctime_ns": 1787901024990531757,
+      "dev": 16777233,
+      "gid": 20,
+      "ino": 84230616,
+      "mode": 33188,
+      "mtime_ns": 1787901024990531757,
+      "nlink": 1,
+      "size": 232883207,
+      "uid": 501
+    },
+    "sha256": "16ba0307bc477332ac079aaddc854b6e92812d811a07a4c0475a6ea1f4cdc777",
+    "size": 232883207,
+    "type": "file"
+  },
+  "JetBrains/analyzer/workspaces/1d49075752b2ea0bbfdb50da2cca88bd/rocks/v241/000018.log": {
+    "identity": {
+      "ctime_ns": 1787901026592788320,
+      "dev": 16777233,
+      "gid": 20,
+      "ino": 84230631,
+      "mode": 33188,
+      "mtime_ns": 1787901026592788320,
+      "nlink": 1,
+      "size": 176837959,
+      "uid": 501
+    },
+    "sha256": "4986211553b94a3e17892ca98887b39e3cafc2dc3eee5543358d20c4be90def2",
+    "size": 176837959,
+    "type": "file"
+  },
+  "JetBrains/analyzer/workspaces/1d49075752b2ea0bbfdb50da2cca88bd/rocks/v241/000022.log": {
+    "identity": {
+      "ctime_ns": 1787901028339960203,
+      "dev": 16777233,
+      "gid": 20,
+      "ino": 84230648,
+      "mode": 33188,
+      "mtime_ns": 1787901028339960203,
+      "nlink": 1,
+      "size": 215422009,
+      "uid": 501
+    },
+    "sha256": "d2a818d5ee97be710b1a63905483d2c868b0906454284f6e8efc2a5d45a5be68",
+    "size": 215422009,
+    "type": "file"
+  },
+  "JetBrains/analyzer/workspaces/1d49075752b2ea0bbfdb50da2cca88bd/rocks/v241/000028.log": {
+    "identity": {
+      "ctime_ns": 1787901029760067867,
+      "dev": 16777233,
+      "gid": 20,
+      "ino": 84230663,
+      "mode": 33188,
+      "mtime_ns": 1787901029760067867,
+      "nlink": 1,
+      "size": 193440259,
+      "uid": 501
+    },
+    "sha256": "7b551f2916002db9347a435a26d9714c53f059de51928f328ff2b119e6ca28a9",
+    "size": 193440259,
+    "type": "file"
+  },
+  "JetBrains/analyzer/workspaces/1d49075752b2ea0bbfdb50da2cca88bd/rocks/v241/000032.sst": {
+    "identity": {
+      "ctime_ns": 1787901029668231389,
+      "dev": 16777233,
+      "gid": 20,
+      "ino": 84230672,
+      "mode": 33188,
+      "mtime_ns": 1787901029668231389,
+      "nlink": 1,
+      "size": 33402564,
+      "uid": 501
+    },
+    "sha256": "8d1e8d1ec3b8957ff8f1530929edcc6de828947020a8040823c8bf785f2c6b13",
+    "size": 33402564,
+    "type": "file"
+  },
+  "JetBrains/analyzer/workspaces/1d49075752b2ea0bbfdb50da2cca88bd/rocks/v241/000033.log": {
+    "identity": {
+      "ctime_ns": 1787901031476004266,
+      "dev": 16777233,
+      "gid": 20,
+      "ino": 84230676,
+      "mode": 33188,
+      "mtime_ns": 1787901031476004266,
+      "nlink": 1,
+      "size": 185877120,
+      "uid": 501
+    },
+    "sha256": "7f322fd1a26a7a3b5108de402bb6b5962ab93c9594e9a31370211bc2497feb2c",
+    "size": 185877120,
+    "type": "file"
+  },
+  "JetBrains/analyzer/workspaces/1d49075752b2ea0bbfdb50da2cca88bd/rocks/v241/000038.log": {
+    "identity": {
+      "ctime_ns": 1787901033225971842,
+      "dev": 16777233,
+      "gid": 20,
+      "ino": 84230687,
+      "mode": 33188,
+      "mtime_ns": 1787901033225971842,
+      "nlink": 1,
+      "size": 199941180,
+      "uid": 501
+    },
+    "sha256": "455a7c30bb494144f1bdb7500fc3962d9f12330d68375e95535b38256ad07857",
+    "size": 199941180,
+    "type": "file"
+  },
+  "JetBrains/analyzer/workspaces/1d49075752b2ea0bbfdb50da2cca88bd/rocks/v241/000041.sst": {
+    "identity": {
+      "ctime_ns": 1787901034064014491,
+      "dev": 16777233,
+      "gid": 20,
+      "ino": 84230696,
+      "mode": 33188,
+      "mtime_ns": 1787901034064014491,
+      "nlink": 1,
+      "size": 67576550,
+      "uid": 501
+    },
+    "sha256": "6811bcb91c9a5c014258ffdf82658f1beffba0b608487fd45f835ad16049ef57",
+    "size": 67576550,
+    "type": "file"
+  },
+  "JetBrains/analyzer/workspaces/1d49075752b2ea0bbfdb50da2cca88bd/rocks/v241/000042.log": {
+    "identity": {
+      "ctime_ns": 1787901034752936532,
+      "dev": 16777233,
+      "gid": 20,
+      "ino": 84230700,
+      "mode": 33188,
+      "mtime_ns": 1787901034752936532,
+      "nlink": 1,
+      "size": 164330394,
+      "uid": 501
+    },
+    "sha256": "4b39bbe81b3dac66700bbbdd23d932fcc51ce02f84a3d45fcbce95aaaf022ad9",
+    "size": 164330394,
+    "type": "file"
+  },
+  "JetBrains/analyzer/workspaces/1d49075752b2ea0bbfdb50da2cca88bd/rocks/v241/000044.sst": {
+    "identity": {
+      "ctime_ns": 1787901034221831717,
+      "dev": 16777233,
+      "gid": 20,
+      "ino": 84230704,
+      "mode": 33188,
+      "mtime_ns": 1787901034221831717,
+      "nlink": 1,
+      "size": 23669161,
+      "uid": 501
+    },
+    "sha256": "756ffeac8e0e29d64ecffe9b9fc7f145035e01d8e24db2851dc0b75f126c8323",
+    "size": 23669161,
+    "type": "file"
+  },
+  "JetBrains/analyzer/workspaces/1d49075752b2ea0bbfdb50da2cca88bd/rocks/v241/000045.sst": {
+    "identity": {
+      "ctime_ns": 1787901035972156713,
+      "dev": 16777233,
+      "gid": 20,
+      "ino": 84230709,
+      "mode": 33188,
+      "mtime_ns": 1787901035972156713,
+      "nlink": 1,
+      "size": 67679280,
+      "uid": 501
+    },
+    "sha256": "2968e7b14ccfe3e6a14102bb0d7f44885c2d4cd282a100743ea4551ceae9161e",
+    "size": 67679280,
+    "type": "file"
+  },
+  "JetBrains/analyzer/workspaces/1d49075752b2ea0bbfdb50da2cca88bd/rocks/v241/000046.log": {
+    "identity": {
+      "ctime_ns": 1787914594546774856,
+      "dev": 16777233,
+      "gid": 20,
+      "ino": 84230711,
+      "mode": 33188,
+      "mtime_ns": 1787914594546774856,
+      "nlink": 1,
+      "size": 4598047,
+      "uid": 501
+    },
+    "sha256": "c104578aa4cb12345bb3757721d6d618c7af44cddbe5fe7373e3e0c5b4baacfc",
+    "size": 4598047,
+    "type": "file"
+  },
+  "JetBrains/analyzer/workspaces/1d49075752b2ea0bbfdb50da2cca88bd/rocks/v241/000047.sst": {
+    "identity": {
+      "ctime_ns": 1787901034957105792,
+      "dev": 16777233,
+      "gid": 20,
+      "ino": 84230712,
+      "mode": 33188,
+      "mtime_ns": 1787901034957105792,
+      "nlink": 1,
+      "size": 31532278,
+      "uid": 501
+    },
+    "sha256": "96b9be4d5a7635a88bbdb10bd493cbc54a43e2d28d23179e0f1d18fd861dfbca",
+    "size": 31532278,
+    "type": "file"
+  },
+  "JetBrains/analyzer/workspaces/1d49075752b2ea0bbfdb50da2cca88bd/rocks/v241/000048.sst": {
+    "identity": {
+      "ctime_ns": 1787901035450488524,
+      "dev": 16777233,
+      "gid": 20,
+      "ino": 84230713,
+      "mode": 33188,
+      "mtime_ns": 1787901035450488524,
+      "nlink": 1,
+      "size": 22156275,
+      "uid": 501
+    },
+    "sha256": "ea784c57111a7bff282c9304c2018de2424d2374ff483c789be42868b888ceaa",
+    "size": 22156275,
+    "type": "file"
+  },
+  "JetBrains/analyzer/workspaces/1d49075752b2ea0bbfdb50da2cca88bd/rocks/v241/000050.sst": {
+    "identity": {
+      "ctime_ns": 1787901036671833932,
+      "dev": 16777233,
+      "gid": 20,
+      "ino": 84230728,
+      "mode": 33188,
+      "mtime_ns": 1787901036671833932,
+      "nlink": 1,
+      "size": 39966077,
+      "uid": 501
+    },
+    "sha256": "0cec7a7921bba32dff6818f1392d4e10806b7c6f58bdbb68ae723bb7d8e1d99d",
+    "size": 39966077,
+    "type": "file"
+  },
+  "JetBrains/analyzer/workspaces/1d49075752b2ea0bbfdb50da2cca88bd/rocks/v241/000051.sst": {
+    "identity": {
+      "ctime_ns": 1787901037544007382,
+      "dev": 16777233,
+      "gid": 20,
+      "ino": 84230730,
+      "mode": 33188,
+      "mtime_ns": 1787901037544007382,
+      "nlink": 1,
+      "size": 68631645,
+      "uid": 501
+    },
+    "sha256": "ebb1ef2dc2928c53d2dd4cb47dd865643faf118d64542aafd5b1d9a2d5ff77ab",
+    "size": 68631645,
+    "type": "file"
+  },
+  "JetBrains/analyzer/workspaces/1d49075752b2ea0bbfdb50da2cca88bd/rocks/v241/000052.sst": {
+    "identity": {
+      "ctime_ns": 1787901038607391895,
+      "dev": 16777233,
+      "gid": 20,
+      "ino": 84230733,
+      "mode": 33188,
+      "mtime_ns": 1787901038607391895,
+      "nlink": 1,
+      "size": 67287022,
+      "uid": 501
+    },
+    "sha256": "4e373ac3a5260da5922a22a0698db076bc83f7ae6b8f4b8b5c5e5dc3326e552c",
+    "size": 67287022,
+    "type": "file"
+  },
+  "JetBrains/analyzer/workspaces/1d49075752b2ea0bbfdb50da2cca88bd/rocks/v241/000053.sst": {
+    "identity": {
+      "ctime_ns": 1787901039817529746,
+      "dev": 16777233,
+      "gid": 20,
+      "ino": 84230740,
+      "mode": 33188,
+      "mtime_ns": 1787901039817529746,
+      "nlink": 1,
+      "size": 67276926,
+      "uid": 501
+    },
+    "sha256": "2da695bee34c59e74f1fbb1f9258aa8cedd615506837e7adf112853fb57aa982",
+    "size": 67276926,
+    "type": "file"
+  },
+  "JetBrains/analyzer/workspaces/1d49075752b2ea0bbfdb50da2cca88bd/rocks/v241/000054.sst": {
+    "identity": {
+      "ctime_ns": 1787901040906159941,
+      "dev": 16777233,
+      "gid": 20,
+      "ino": 84230745,
+      "mode": 33188,
+      "mtime_ns": 1787901040906159941,
+      "nlink": 1,
+      "size": 67270748,
+      "uid": 501
+    },
+    "sha256": "4db64c5dc6199b79bd52e5284302aac275f6c7d2317e8878744d00c02ffa5248",
+    "size": 67270748,
+    "type": "file"
+  },
+  "JetBrains/analyzer/workspaces/1d49075752b2ea0bbfdb50da2cca88bd/rocks/v241/000055.sst": {
+    "identity": {
+      "ctime_ns": 1787901041823254955,
+      "dev": 16777233,
+      "gid": 20,
+      "ino": 84230750,
+      "mode": 33188,
+      "mtime_ns": 1787901041823254955,
+      "nlink": 1,
+      "size": 67282798,
+      "uid": 501
+    },
+    "sha256": "669448d4b35c1f76331c0dc251f4348bd4db995ae6aa1faeaf772d53b2c584d4",
+    "size": 67282798,
+    "type": "file"
+  },
+  "JetBrains/analyzer/workspaces/1d49075752b2ea0bbfdb50da2cca88bd/rocks/v241/000056.sst": {
+    "identity": {
+      "ctime_ns": 1787901042276697708,
+      "dev": 16777233,
+      "gid": 20,
+      "ino": 84230756,
+      "mode": 33188,
+      "mtime_ns": 1787901042276697708,
+      "nlink": 1,
+      "size": 36552803,
+      "uid": 501
+    },
+    "sha256": "efc604978a49f9107fb4848e0fd50bb71c85af64f29a55f5c6e01d2b5cfdd3ed",
+    "size": 36552803,
+    "type": "file"
+  },
+  "JetBrains/analyzer/workspaces/1d49075752b2ea0bbfdb50da2cca88bd/rocks/v241/000057.sst": {
+    "identity": {
+      "ctime_ns": 1787901043602789916,
+      "dev": 16777233,
+      "gid": 20,
+      "ino": 84230764,
+      "mode": 33188,
+      "mtime_ns": 1787901043602789916,
+      "nlink": 1,
+      "size": 67578606,
+      "uid": 501
+    },
+    "sha256": "a35f91448e4b45be777aabbce07de9b44f20cc4be668192c86728d19b3358cf8",
+    "size": 67578606,
+    "type": "file"
+  },
+  "JetBrains/analyzer/workspaces/1d49075752b2ea0bbfdb50da2cca88bd/rocks/v241/000058.sst": {
+    "identity": {
+      "ctime_ns": 1787901044926020724,
+      "dev": 16777233,
+      "gid": 20,
+      "ino": 84230767,
+      "mode": 33188,
+      "mtime_ns": 1787901044926020724,
+      "nlink": 1,
+      "size": 67586597,
+      "uid": 501
+    },
+    "sha256": "153c33e9d92ebdc0270f7c2889cc87b5e9c93f6251d450c330ce3ce112354811",
+    "size": 67586597,
+    "type": "file"
+  },
+  "JetBrains/analyzer/workspaces/1d49075752b2ea0bbfdb50da2cca88bd/rocks/v241/000059.sst": {
+    "identity": {
+      "ctime_ns": 1787901045065998168,
+      "dev": 16777233,
+      "gid": 20,
+      "ino": 84230773,
+      "mode": 33188,
+      "mtime_ns": 1787901045065998168,
+      "nlink": 1,
+      "size": 6487469,
+      "uid": 501
+    },
+    "sha256": "caa1da3af2eeb0062004dbcf96215b802f710e18876bd709a51fb79d785b7344",
+    "size": 6487469,
+    "type": "file"
+  },
+  "JetBrains/analyzer/workspaces/1d49075752b2ea0bbfdb50da2cca88bd/rocks/v241/CURRENT": {
+    "identity": {
+      "ctime_ns": 1787900923033774341,
+      "dev": 16777233,
+      "gid": 20,
+      "ino": 84128949,
+      "mode": 33188,
+      "mtime_ns": 1787900923030692897,
+      "nlink": 1,
+      "size": 16,
+      "uid": 501
+    },
+    "sha256": "9c283f6e81028b9eb0760d918ee4bc0aa256ed3b926393c1734c760c4bd724fd",
+    "size": 16,
+    "type": "file"
+  },
+  "JetBrains/analyzer/workspaces/1d49075752b2ea0bbfdb50da2cca88bd/rocks/v241/IDENTITY": {
+    "identity": {
+      "ctime_ns": 1787900922989742619,
+      "dev": 16777233,
+      "gid": 20,
+      "ino": 84128943,
+      "mode": 33188,
+      "mtime_ns": 1787900922978468478,
+      "nlink": 1,
+      "size": 36,
+      "uid": 501
+    },
+    "sha256": "21615c9222179207591cd4678cb4c2bb4552da2808b423a81c9fa8be0503a17a",
+    "size": 36,
+    "type": "file"
+  },
+  "JetBrains/analyzer/workspaces/1d49075752b2ea0bbfdb50da2cca88bd/rocks/v241/LOCK": {
+    "identity": {
+      "ctime_ns": 1787900922978251267,
+      "dev": 16777233,
+      "gid": 20,
+      "ino": 84128942,
+      "mode": 33188,
+      "mtime_ns": 1787900922978238934,
+      "nlink": 1,
+      "size": 0,
+      "uid": 501
+    },
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "size": 0,
+    "type": "file"
+  },
+  "JetBrains/analyzer/workspaces/1d49075752b2ea0bbfdb50da2cca88bd/rocks/v241/LOG": {
+    "identity": {
+      "ctime_ns": 1787914594556207997,
+      "dev": 16777233,
+      "gid": 20,
+      "ino": 84128941,
+      "mode": 33188,
+      "mtime_ns": 1787914594556207997,
+      "nlink": 1,
+      "size": 379595,
+      "uid": 501
+    },
+    "sha256": "e80cdfbd2a03f36e78637de31d18e2a9a38592f6754762535f0f6d7916392640",
+    "size": 379595,
+    "type": "file"
+  },
+  "JetBrains/analyzer/workspaces/1d49075752b2ea0bbfdb50da2cca88bd/rocks/v241/MANIFEST-000005": {
+    "identity": {
+      "ctime_ns": 1787914594547415779,
+      "dev": 16777233,
+      "gid": 20,
+      "ino": 84128948,
+      "mode": 33188,
+      "mtime_ns": 1787914594547415779,
+      "nlink": 1,
+      "size": 6524,
+      "uid": 501
+    },
+    "sha256": "8293084f86eaee6c675472fede88803e79c91918954982d7ce0e9c66ffa3deb5",
+    "size": 6524,
+    "type": "file"
+  },
+  "JetBrains/analyzer/workspaces/1d49075752b2ea0bbfdb50da2cca88bd/rocks/v241/OPTIONS-000007": {
+    "identity": {
+      "ctime_ns": 1787900923064454445,
+      "dev": 16777233,
+      "gid": 20,
+      "ino": 84128950,
+      "mode": 33188,
+      "mtime_ns": 1787900923058547310,
+      "nlink": 1,
+      "size": 38383,
+      "uid": 501
+    },
+    "sha256": "7a8d04916af5476601833e65020ea2adf81766f3f8e5d2cc5cac54aaa03deb26",
+    "size": 38383,
+    "type": "file"
+  },
+  "JetBrains/analyzer/workspaces/1d49075752b2ea0bbfdb50da2cca88bd/workspace-model.cache": {
+    "identity": {
+      "ctime_ns": 1787901007799993733,
+      "dev": 16777233,
+      "gid": 20,
+      "ino": 84230497,
+      "mode": 33152,
+      "mtime_ns": 1787901007799380853,
+      "nlink": 1,
+      "size": 188215,
+      "uid": 501
+    },
+    "sha256": "72a00657f89da8bf44fecf166adfd47eb098660b5184a5bf32b6368eb8fdd964",
+    "size": 188215,
+    "type": "file"
+  },
+  "JetBrains/analyzer/workspaces/2ed54b44e6f846af6660f67b0ea64ffa": {
+    "identity": {
+      "ctime_ns": 1787022864769384087,
+      "dev": 16777233,
+      "gid": 20,
+      "ino": 77416352,
+      "mode": 16877,
+      "mtime_ns": 1787022864769384087,
+      "nlink": 4,
+      "size": 128,
+      "uid": 501
+    },
+    "type": "dir"
+  },
+  "JetBrains/analyzer/workspaces/2ed54b44e6f846af6660f67b0ea64ffa/rocks": {
+    "identity": {
+      "ctime_ns": 1787022817198744670,
+      "dev": 16777233,
+      "gid": 20,
+      "ino": 77416353,
+      "mode": 16877,
+      "mtime_ns": 1787022817198744670,
+      "nlink": 3,
+      "size": 96,
+      "uid": 501
+    },
+    "type": "dir"
+  },
+  "JetBrains/analyzer/workspaces/2ed54b44e6f846af6660f67b0ea64ffa/rocks/v241": {
+    "identity": {
+      "ctime_ns": 1787047867145929729,
+      "dev": 16777233,
+      "gid": 20,
+      "ino": 77416354,
+      "mode": 16877,
+      "mtime_ns": 1787047867145929729,
+      "nlink": 34,
+      "size": 1088,
+      "uid": 501
+    },
+    "type": "dir"
+  },
+  "JetBrains/analyzer/workspaces/2ed54b44e6f846af6660f67b0ea64ffa/rocks/v241/000004.log": {
+    "identity": {
+      "ctime_ns": 1787022872929070413,
+      "dev": 16777233,
+      "gid": 20,
+      "ino": 77416360,
+      "mode": 33188,
+      "mtime_ns": 1787022872929070413,
+      "nlink": 1,
+      "size": 145727606,
+      "uid": 501
+    },
+    "sha256": "666ddfe7e3e919cca98a3d3257c546af44a4be8486a5121e8fd50466a7c32d84",
+    "size": 145727606,
+    "type": "file"
+  },
+  "JetBrains/analyzer/workspaces/2ed54b44e6f846af6660f67b0ea64ffa/rocks/v241/000008.log": {
+    "identity": {
+      "ctime_ns": 1787022874277636891,
+      "dev": 16777233,
+      "gid": 20,
+      "ino": 77420014,
+      "mode": 33188,
+      "mtime_ns": 1787022874277636891,
+      "nlink": 1,
+      "size": 163751843,
+      "uid": 501
+    },
+    "sha256": "69b7aa3d60d961b020d52abbaedb4723954c60f6be6652a9b028f251174f7326",
+    "size": 163751843,
+    "type": "file"
+  },
+  "JetBrains/analyzer/workspaces/2ed54b44e6f846af6660f67b0ea64ffa/rocks/v241/000010.log": {
+    "identity": {
+      "ctime_ns": 1787022875959797332,
+      "dev": 16777233,
+      "gid": 20,
+      "ino": 77420017,
+      "mode": 33188,
+      "mtime_ns": 1787022875959797332,
+      "nlink": 1,
+      "size": 169681184,
+      "uid": 501
+    },
+    "sha256": "f996d91d1d398b9ee7390142df5562c129e62d8aba38ef20571e58395c3c48c9",
+    "size": 169681184,
+    "type": "file"
+  },
+  "JetBrains/analyzer/workspaces/2ed54b44e6f846af6660f67b0ea64ffa/rocks/v241/000013.log": {
+    "identity": {
+      "ctime_ns": 1787022877378011795,
+      "dev": 16777233,
+      "gid": 20,
+      "ino": 77420021,
+      "mode": 33188,
+      "mtime_ns": 1787022877378011795,
+      "nlink": 1,
+      "size": 146654045,
+      "uid": 501
+    },
+    "sha256": "6cc83887f8e4330260dc05239e19f7b556cc88351aa159e794be1919df595d06",
+    "size": 146654045,
+    "type": "file"
+  },
+  "JetBrains/analyzer/workspaces/2ed54b44e6f846af6660f67b0ea64ffa/rocks/v241/000015.sst": {
+    "identity": {
+      "ctime_ns": 1787022876911255385,
+      "dev": 16777233,
+      "gid": 20,
+      "ino": 77420023,
+      "mode": 33188,
+      "mtime_ns": 1787022876911255385,
+      "nlink": 1,
+      "size": 29033947,
+      "uid": 501
+    },
+    "sha256": "e7c8cfda1ad4c0a602285911c00c779330dbe63ed8954cdad665a9cd5bc899c8",
+    "size": 29033947,
+    "type": "file"
+  },
+  "JetBrains/analyzer/workspaces/2ed54b44e6f846af6660f67b0ea64ffa/rocks/v241/000016.log": {
+    "identity": {
+      "ctime_ns": 1787022878728879563,
+      "dev": 16777233,
+      "gid": 20,
+      "ino": 77420024,
+      "mode": 33188,
+      "mtime_ns": 1787022878728879563,
+      "nlink": 1,
+      "size": 155493494,
+      "uid": 501
+    },
+    "sha256": "df1a5ed209378e1db4114a1426cfd35b3cff56700e80b10f0090e45e9d0f7652",
+    "size": 155493494,
+    "type": "file"
+  },
+  "JetBrains/analyzer/workspaces/2ed54b44e6f846af6660f67b0ea64ffa/rocks/v241/000019.sst": {
+    "identity": {
+      "ctime_ns": 1787022878074930789,
+      "dev": 16777233,
+      "gid": 20,
+      "ino": 77420027,
+      "mode": 33188,
+      "mtime_ns": 1787022878074930789,
+      "nlink": 1,
+      "size": 38119235,
+      "uid": 501
+    },
+    "sha256": "3811948720b2b85476f9f5a8c47f8c83d02b0c360c3c87acf1104a2e37aaefa0",
+    "size": 38119235,
+    "type": "file"
+  },
+  "JetBrains/analyzer/workspaces/2ed54b44e6f846af6660f67b0ea64ffa/rocks/v241/000021.log": {
+    "identity": {
+      "ctime_ns": 1787022880088939869,
+      "dev": 16777233,
+      "gid": 20,
+      "ino": 77420029,
+      "mode": 33188,
+      "mtime_ns": 1787022880088939869,
+      "nlink": 1,
+      "size": 133876246,
+      "uid": 501
+    },
+    "sha256": "8e307e1ebed005b8d9bb13349fa700446c8cb3bc338c2834f6cac4b12a2c057b",
+    "size": 133876246,
+    "type": "file"
+  },
+  "JetBrains/analyzer/workspaces/2ed54b44e6f846af6660f67b0ea64ffa/rocks/v241/000024.log": {
+    "identity": {
+      "ctime_ns": 1787022881271000600,
+      "dev": 16777233,
+      "gid": 20,
+      "ino": 77420033,
+      "mode": 33188,
+      "mtime_ns": 1787022881271000600,
+      "nlink": 1,
+      "size": 131207579,
+      "uid": 501
+    },
+    "sha256": "6ee49f19ff50801398fcb57322eca76193e8e804838137655091f8c5b36c9831",
+    "size": 131207579,
+    "type": "file"
+  },
+  "JetBrains/analyzer/workspaces/2ed54b44e6f846af6660f67b0ea64ffa/rocks/v241/000025.sst": {
+    "identity": {
+      "ctime_ns": 1787022880571839107,
+      "dev": 16777233,
+      "gid": 20,
+      "ino": 77420034,
+      "mode": 33188,
+      "mtime_ns": 1787022880571839107,
+      "nlink": 1,
+      "size": 32973241,
+      "uid": 501
+    },
+    "sha256": "4da95722cee4bb527d1191c8dc57f4c09540ac6eaf2fdc496dc6bbf8be960f7b",
+    "size": 32973241,
+    "type": "file"
+  },
+  "JetBrains/analyzer/workspaces/2ed54b44e6f846af6660f67b0ea64ffa/rocks/v241/000027.log": {
+    "identity": {
+      "ctime_ns": 1787022884400078679,
+      "dev": 16777233,
+      "gid": 20,
+      "ino": 77420039,
+      "mode": 33188,
+      "mtime_ns": 1787022884400078679,
+      "nlink": 1,
+      "size": 241583545,
+      "uid": 501
+    },
+    "sha256": "2f65335edb1a81ff026591fe3e65702fd641019d107fd53d990f72d2ec6f7dd9",
+    "size": 241583545,
+    "type": "file"
+  },
+  "JetBrains/analyzer/workspaces/2ed54b44e6f846af6660f67b0ea64ffa/rocks/v241/000030.sst": {
+    "identity": {
+      "ctime_ns": 1787022883262949579,
+      "dev": 16777233,
+      "gid": 20,
+      "ino": 77420042,
+      "mode": 33188,
+      "mtime_ns": 1787022883262949579,
+      "nlink": 1,
+      "size": 67290545,
+      "uid": 501
+    },
+    "sha256": "64f51b6c379cae404df886a103da30da4c8342c5a06d34003aa32f9b50e6d107",
+    "size": 67290545,
+    "type": "file"
+  },
+  "JetBrains/analyzer/workspaces/2ed54b44e6f846af6660f67b0ea64ffa/rocks/v241/000031.sst": {
+    "identity": {
+      "ctime_ns": 1787022884283926243,
+      "dev": 16777233,
+      "gid": 20,
+      "ino": 77420043,
+      "mode": 33188,
+      "mtime_ns": 1787022884283926243,
+      "nlink": 1,
+      "size": 67293631,
+      "uid": 501
+    },
+    "sha256": "40b4d4958fcfbca5cc78d6f98de2ee137884a39573f0e9c2209c5f252d1b5bbe",
+    "size": 67293631,
+    "type": "file"
+  },
+  "JetBrains/analyzer/workspaces/2ed54b44e6f846af6660f67b0ea64ffa/rocks/v241/000032.sst": {
+    "identity": {
+      "ctime_ns": 1787022885363967954,
+      "dev": 16777233,
+      "gid": 20,
+      "ino": 77420044,
+      "mode": 33188,
+      "mtime_ns": 1787022885363967954,
+      "nlink": 1,
+      "size": 59688884,
+      "uid": 501
+    },
+    "sha256": "a1231b97f8efeec14494db7718d37560bc8720362bd676906f802c49f0b276dc",
+    "size": 59688884,
+    "type": "file"
+  },
+  "JetBrains/analyzer/workspaces/2ed54b44e6f846af6660f67b0ea64ffa/rocks/v241/000033.log": {
+    "identity": {
+      "ctime_ns": 1787022887160627843,
+      "dev": 16777233,
+      "gid": 20,
+      "ino": 77420045,
+      "mode": 33188,
+      "mtime_ns": 1787022887160627843,
+      "nlink": 1,
+      "size": 213432885,
+      "uid": 501
+    },
+    "sha256": "310ad009ac4060faca9a0ad0518bb5cfb68f72d08925c7c7ab016b5fce4c10a4",
+    "size": 213432885,
+    "type": "file"
+  },
+  "JetBrains/analyzer/workspaces/2ed54b44e6f846af6660f67b0ea64ffa/rocks/v241/000034.sst": {
+    "identity": {
+      "ctime_ns": 1787022884616021929,
+      "dev": 16777233,
+      "gid": 20,
+      "ino": 77420046,
+      "mode": 33188,
+      "mtime_ns": 1787022884616021929,
+      "nlink": 1,
+      "size": 34553860,
+      "uid": 501
+    },
+    "sha256": "abc6e23a4f6dec3ea9343a464ad177e4fce9df782f75e9c01028a92663395982",
+    "size": 34553860,
+    "type": "file"
+  },
+  "JetBrains/analyzer/workspaces/2ed54b44e6f846af6660f67b0ea64ffa/rocks/v241/000035.sst": {
+    "identity": {
+      "ctime_ns": 1787022885042867213,
+      "dev": 16777233,
+      "gid": 20,
+      "ino": 77420047,
+      "mode": 33188,
+      "mtime_ns": 1787022885042867213,
+      "nlink": 1,
+      "size": 29799704,
+      "uid": 501
+    },
+    "sha256": "97cb4b2a6903dd789440bc378ebc47c41d7a522bafbbff365db6cdaa751dfae8",
+    "size": 29799704,
+    "type": "file"
+  },
+  "JetBrains/analyzer/workspaces/2ed54b44e6f846af6660f67b0ea64ffa/rocks/v241/000037.log": {
+    "identity": {
+      "ctime_ns": 1787022888761018248,
+      "dev": 16777233,
+      "gid": 20,
+      "ino": 77420051,
+      "mode": 33188,
+      "mtime_ns": 1787022888761018248,
+      "nlink": 1,
+      "size": 172760065,
+      "uid": 501
+    },
+    "sha256": "f4a46a8faa74cb89e5420d98aea725b1496c34add6a0e15d958bd4dea45be532",
+    "size": 172760065,
+    "type": "file"
+  },
+  "JetBrains/analyzer/workspaces/2ed54b44e6f846af6660f67b0ea64ffa/rocks/v241/000039.sst": {
+    "identity": {
+      "ctime_ns": 1787022889563073817,
+      "dev": 16777233,
+      "gid": 20,
+      "ino": 77420055,
+      "mode": 33188,
+      "mtime_ns": 1787022889563073817,
+      "nlink": 1,
+      "size": 67577284,
+      "uid": 501
+    },
+    "sha256": "c05e37597cca7868d658463cacb9cc507090cee4588b6b29dc5c8e47c70dc6e2",
+    "size": 67577284,
+    "type": "file"
+  },
+  "JetBrains/analyzer/workspaces/2ed54b44e6f846af6660f67b0ea64ffa/rocks/v241/000040.sst": {
+    "identity": {
+      "ctime_ns": 1787022888399272285,
+      "dev": 16777233,
+      "gid": 20,
+      "ino": 77420056,
+      "mode": 33188,
+      "mtime_ns": 1787022888399272285,
+      "nlink": 1,
+      "size": 33192882,
+      "uid": 501
+    },
+    "sha256": "a00c79ba3c24e54fa7c730cda09614ad21d0a0299c5dae0c7d6175c46557a0a6",
+    "size": 33192882,
+    "type": "file"
+  },
+  "JetBrains/analyzer/workspaces/2ed54b44e6f846af6660f67b0ea64ffa/rocks/v241/000041.log": {
+    "identity": {
+      "ctime_ns": 1787049872188045116,
+      "dev": 16777233,
+      "gid": 20,
+      "ino": 77420057,
+      "mode": 33188,
+      "mtime_ns": 1787049872188045116,
+      "nlink": 1,
+      "size": 19,
+      "uid": 501
+    },
+    "sha256": "2e40bef36a0b997aa9de59653555fd16b845e3ee5126a4cd86b0f7513def3319",
+    "size": 19,
+    "type": "file"
+  },
+  "JetBrains/analyzer/workspaces/2ed54b44e6f846af6660f67b0ea64ffa/rocks/v241/000042.sst": {
+    "identity": {
+      "ctime_ns": 1787022889259354176,
+      "dev": 16777233,
+      "gid": 20,
+      "ino": 77420058,
+      "mode": 33188,
+      "mtime_ns": 1787022889259354176,
+      "nlink": 1,
+      "size": 22657179,
+      "uid": 501
+    },
+    "sha256": "b3c38425dd768d98aeb02eaf9e48a0bfaf2d05ca502e983ba151a7ef740e2df6",
+    "size": 22657179,
+    "type": "file"
+  },
+  "JetBrains/analyzer/workspaces/2ed54b44e6f846af6660f67b0ea64ffa/rocks/v241/000043.sst": {
+    "identity": {
+      "ctime_ns": 1787022889940561809,
+      "dev": 16777233,
+      "gid": 20,
+      "ino": 77420059,
+      "mode": 33188,
+      "mtime_ns": 1787022889940561809,
+      "nlink": 1,
+      "size": 64133991,
+      "uid": 501
+    },
+    "sha256": "38c911e362cc84f3665c62d60d0d6faed70c5eca2139e6d8d7a8d946eb2e3556",
+    "size": 64133991,
+    "type": "file"
+  },
+  "JetBrains/analyzer/workspaces/2ed54b44e6f846af6660f67b0ea64ffa/rocks/v241/000044.sst": {
+    "identity": {
+      "ctime_ns": 1787022891372481682,
+      "dev": 16777233,
+      "gid": 20,
+      "ino": 77420060,
+      "mode": 33188,
+      "mtime_ns": 1787022891372481682,
+      "nlink": 1,
+      "size": 67670168,
+      "uid": 501
+    },
+    "sha256": "e345b5bce613e2ab28d081f2eed93df2480076de99a19709fb65bc41e9a9ea2a",
+    "size": 67670168,
+    "type": "file"
+  },
+  "JetBrains/analyzer/workspaces/2ed54b44e6f846af6660f67b0ea64ffa/rocks/v241/000045.sst": {
+    "identity": {
+      "ctime_ns": 1787022891920279697,
+      "dev": 16777233,
+      "gid": 20,
+      "ino": 77420062,
+      "mode": 33188,
+      "mtime_ns": 1787022891920279697,
+      "nlink": 1,
+      "size": 30640762,
+      "uid": 501
+    },
+    "sha256": "f6f9e1ea19e41d68a66a7a003bc5f0408889668abe3663d87fc016ffdc54d8ac",
+    "size": 30640762,
+    "type": "file"
+  },
+  "JetBrains/analyzer/workspaces/2ed54b44e6f846af6660f67b0ea64ffa/rocks/v241/CURRENT": {
+    "identity": {
+      "ctime_ns": 1787022817241407594,
+      "dev": 16777233,
+      "gid": 20,
+      "ino": 77416362,
+      "mode": 33188,
+      "mtime_ns": 1787022817236839472,
+      "nlink": 1,
+      "size": 16,
+      "uid": 501
+    },
+    "sha256": "9c283f6e81028b9eb0760d918ee4bc0aa256ed3b926393c1734c760c4bd724fd",
+    "size": 16,
+    "type": "file"
+  },
+  "JetBrains/analyzer/workspaces/2ed54b44e6f846af6660f67b0ea64ffa/rocks/v241/IDENTITY": {
+    "identity": {
+      "ctime_ns": 1787022817204570441,
+      "dev": 16777233,
+      "gid": 20,
+      "ino": 77416357,
+      "mode": 33188,
+      "mtime_ns": 1787022817199381015,
+      "nlink": 1,
+      "size": 36,
+      "uid": 501
+    },
+    "sha256": "f89937e6a23e2a4a4798de30947ce6a911fee8f72cc85b8864b39ec0c354157a",
+    "size": 36,
+    "type": "file"
+  },
+  "JetBrains/analyzer/workspaces/2ed54b44e6f846af6660f67b0ea64ffa/rocks/v241/LOCK": {
+    "identity": {
+      "ctime_ns": 1787022817199223846,
+      "dev": 16777233,
+      "gid": 20,
+      "ino": 77416356,
+      "mode": 33188,
+      "mtime_ns": 1787022817199206512,
+      "nlink": 1,
+      "size": 0,
+      "uid": 501
+    },
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "size": 0,
+    "type": "file"
+  },
+  "JetBrains/analyzer/workspaces/2ed54b44e6f846af6660f67b0ea64ffa/rocks/v241/LOG": {
+    "identity": {
+      "ctime_ns": 1787047867148377827,
+      "dev": 16777233,
+      "gid": 20,
+      "ino": 77672604,
+      "mode": 33188,
+      "mtime_ns": 1787047867148377827,
+      "nlink": 1,
+      "size": 19998,
+      "uid": 501
+    },
+    "sha256": "69ea576e397f2edecc5d8b1bd8cb9e12091da89d34c70442dd85a0e0f5a4f27f",
+    "size": 19998,
+    "type": "file"
+  },
+  "JetBrains/analyzer/workspaces/2ed54b44e6f846af6660f67b0ea64ffa/rocks/v241/LOG.old.1787047867145530": {
+    "identity": {
+      "ctime_ns": 1787049872212845916,
+      "dev": 16777233,
+      "gid": 20,
+      "ino": 77416355,
+      "mode": 33188,
+      "mtime_ns": 1787049872212845916,
+      "nlink": 1,
+      "size": 410416,
+      "uid": 501
+    },
+    "sha256": "5f4019905073cdd7d22ca0d377d47fcaabb6ddeb33a6838b5a65a07e9c2be87a",
+    "size": 410416,
+    "type": "file"
+  },
+  "JetBrains/analyzer/workspaces/2ed54b44e6f846af6660f67b0ea64ffa/rocks/v241/MANIFEST-000005": {
+    "identity": {
+      "ctime_ns": 1787049872188477955,
+      "dev": 16777233,
+      "gid": 20,
+      "ino": 77416361,
+      "mode": 33188,
+      "mtime_ns": 1787049872188477955,
+      "nlink": 1,
+      "size": 4805,
+      "uid": 501
+    },
+    "sha256": "5cab71bf852fcaa1026a82e5c33952d0c2d49b374920ea4de5982d3d7e3e022d",
+    "size": 4805,
+    "type": "file"
+  },
+  "JetBrains/analyzer/workspaces/2ed54b44e6f846af6660f67b0ea64ffa/rocks/v241/OPTIONS-000007": {
+    "identity": {
+      "ctime_ns": 1787022817279732525,
+      "dev": 16777233,
+      "gid": 20,
+      "ino": 77416363,
+      "mode": 33188,
+      "mtime_ns": 1787022817271013578,
+      "nlink": 1,
+      "size": 38383,
+      "uid": 501
+    },
+    "sha256": "7a8d04916af5476601833e65020ea2adf81766f3f8e5d2cc5cac54aaa03deb26",
+    "size": 38383,
+    "type": "file"
+  },
+  "JetBrains/analyzer/workspaces/2ed54b44e6f846af6660f67b0ea64ffa/workspace-model.cache": {
+    "identity": {
+      "ctime_ns": 1787022864769384046,
+      "dev": 16777233,
+      "gid": 20,
+      "ino": 77420010,
+      "mode": 33152,
+      "mtime_ns": 1787022864768919954,
+      "nlink": 1,
+      "size": 117917,
+      "uid": 501
+    },
+    "sha256": "86a8fd31eebc1818a835ec5a335babd42f5b933bda54a3efd18c8628f7f36c1f",
+    "size": 117917,
+    "type": "file"
+  },
+  "JetBrains/analyzer/workspaces/ec6e8960d715aa63d1731cdf8e6644b9": {
+    "identity": {
+      "ctime_ns": 1787802534577494847,
+      "dev": 16777233,
+      "gid": 20,
+      "ino": 83418552,
+      "mode": 16877,
+      "mtime_ns": 1787802534577494847,
+      "nlink": 4,
+      "size": 128,
+      "uid": 501
+    },
+    "type": "dir"
+  },
+  "JetBrains/analyzer/workspaces/ec6e8960d715aa63d1731cdf8e6644b9/rocks": {
+    "identity": {
+      "ctime_ns": 1787802522300509783,
+      "dev": 16777233,
+      "gid": 20,
+      "ino": 83418553,
+      "mode": 16877,
+      "mtime_ns": 1787802522300509783,
+      "nlink": 3,
+      "size": 96,
+      "uid": 501
+    },
+    "type": "dir"
+  },
+  "JetBrains/analyzer/workspaces/ec6e8960d715aa63d1731cdf8e6644b9/rocks/v241": {
+    "identity": {
+      "ctime_ns": 1787802539724979554,
+      "dev": 16777233,
+      "gid": 20,
+      "ino": 83418554,
+      "mode": 16877,
+      "mtime_ns": 1787802539724979554,
+      "nlink": 20,
+      "size": 640,
+      "uid": 501
+    },
+    "type": "dir"
+  },
+  "JetBrains/analyzer/workspaces/ec6e8960d715aa63d1731cdf8e6644b9/rocks/v241/000004.log": {
+    "identity": {
+      "ctime_ns": 1787802537574729044,
+      "dev": 16777233,
+      "gid": 20,
+      "ino": 83418560,
+      "mode": 33188,
+      "mtime_ns": 1787802537574729044,
+      "nlink": 1,
+      "size": 145012044,
+      "uid": 501
+    },
+    "sha256": "a369ba182484264172b77801b6a17f06c66bf5a174dcfce809ea76a5340430c9",
+    "size": 145012044,
+    "type": "file"
+  },
+  "JetBrains/analyzer/workspaces/ec6e8960d715aa63d1731cdf8e6644b9/rocks/v241/000008.log": {
+    "identity": {
+      "ctime_ns": 1787802538021794631,
+      "dev": 16777233,
+      "gid": 20,
+      "ino": 83419356,
+      "mode": 33188,
+      "mtime_ns": 1787802538021794631,
+      "nlink": 1,
+      "size": 32147941,
+      "uid": 501
+    },
+    "sha256": "1d934cf7556ed80e3343a20e19f76c5a97456a1ca6ffbacc3eff4664f302fc8a",
+    "size": 32147941,
+    "type": "file"
+  },
+  "JetBrains/analyzer/workspaces/ec6e8960d715aa63d1731cdf8e6644b9/rocks/v241/000009.sst": {
+    "identity": {
+      "ctime_ns": 1787802538001518090,
+      "dev": 16777233,
+      "gid": 20,
+      "ino": 83419357,
+      "mode": 33188,
+      "mtime_ns": 1787802538001518090,
+      "nlink": 1,
+      "size": 36424622,
+      "uid": 501
+    },
+    "sha256": "66b1ab3968f98d697db82b4be68b8086a4a95e21043d5b09c7126cc27a023e89",
+    "size": 36424622,
+    "type": "file"
+  },
+  "JetBrains/analyzer/workspaces/ec6e8960d715aa63d1731cdf8e6644b9/rocks/v241/000010.log": {
+    "identity": {
+      "ctime_ns": 1787802538454789083,
+      "dev": 16777233,
+      "gid": 20,
+      "ino": 83419358,
+      "mode": 33188,
+      "mtime_ns": 1787802538454789083,
+      "nlink": 1,
+      "size": 54095998,
+      "uid": 501
+    },
+    "sha256": "9f5dfe1473b97b160204ee9ab55e53b8081e2a145d76a91aac114b3a865b8fa1",
+    "size": 54095998,
+    "type": "file"
+  },
+  "JetBrains/analyzer/workspaces/ec6e8960d715aa63d1731cdf8e6644b9/rocks/v241/000011.sst": {
+    "identity": {
+      "ctime_ns": 1787802538437835223,
+      "dev": 16777233,
+      "gid": 20,
+      "ino": 83419363,
+      "mode": 33188,
+      "mtime_ns": 1787802538437835223,
+      "nlink": 1,
+      "size": 27307204,
+      "uid": 501
+    },
+    "sha256": "5a4cbc21603826aa7e7f818520be4d7ffd5fa859d103d19d1750c3137471b7c3",
+    "size": 27307204,
+    "type": "file"
+  },
+  "JetBrains/analyzer/workspaces/ec6e8960d715aa63d1731cdf8e6644b9/rocks/v241/000012.log": {
+    "identity": {
+      "ctime_ns": 1787802538459854208,
+      "dev": 16777233,
+      "gid": 20,
+      "ino": 83419364,
+      "mode": 33188,
+      "mtime_ns": 1787802538459854208,
+      "nlink": 1,
+      "size": 37403985,
+      "uid": 501
+    },
+    "sha256": "fae8affd5a2ba21e411b3646776af95a82e456d32a561fbe51f35fb39c17a8c6",
+    "size": 37403985,
+    "type": "file"
+  },
+  "JetBrains/analyzer/workspaces/ec6e8960d715aa63d1731cdf8e6644b9/rocks/v241/000013.log": {
+    "identity": {
+      "ctime_ns": 1787802539337079812,
+      "dev": 16777233,
+      "gid": 20,
+      "ino": 83419367,
+      "mode": 33188,
+      "mtime_ns": 1787802539337079812,
+      "nlink": 1,
+      "size": 138811630,
+      "uid": 501
+    },
+    "sha256": "c9152c76c0927bf785813ba723744eb5178a31818558b49a5f353f827f1229ad",
+    "size": 138811630,
+    "type": "file"
+  },
+  "JetBrains/analyzer/workspaces/ec6e8960d715aa63d1731cdf8e6644b9/rocks/v241/000014.sst": {
+    "identity": {
+      "ctime_ns": 1787802538864354647,
+      "dev": 16777233,
+      "gid": 20,
+      "ino": 83419368,
+      "mode": 33188,
+      "mtime_ns": 1787802538864354647,
+      "nlink": 1,
+      "size": 28109328,
+      "uid": 501
+    },
+    "sha256": "f44fcb4326190939d0aa5601a38719e75817387e219b79a25f8c448c1ef21124",
+    "size": 28109328,
+    "type": "file"
+  },
+  "JetBrains/analyzer/workspaces/ec6e8960d715aa63d1731cdf8e6644b9/rocks/v241/000015.sst": {
+    "identity": {
+      "ctime_ns": 1787802539319756163,
+      "dev": 16777233,
+      "gid": 20,
+      "ino": 83419372,
+      "mode": 33188,
+      "mtime_ns": 1787802539319756163,
+      "nlink": 1,
+      "size": 41195849,
+      "uid": 501
+    },
+    "sha256": "504cd36ccb23af11e8f6ba8404eed541ba629c8016988ef863ba506dba0a9702",
+    "size": 41195849,
+    "type": "file"
+  },
+  "JetBrains/analyzer/workspaces/ec6e8960d715aa63d1731cdf8e6644b9/rocks/v241/000016.log": {
+    "identity": {
+      "ctime_ns": 1787805803736903321,
+      "dev": 16777233,
+      "gid": 20,
+      "ino": 83419376,
+      "mode": 33188,
+      "mtime_ns": 1787805803736903321,
+      "nlink": 1,
+      "size": 21456,
+      "uid": 501
+    },
+    "sha256": "8fbcecc665323ac5f79ae54e870f370ed10413e42d459d06c2abfcd7d2d223c3",
+    "size": 21456,
+    "type": "file"
+  },
+  "JetBrains/analyzer/workspaces/ec6e8960d715aa63d1731cdf8e6644b9/rocks/v241/000017.sst": {
+    "identity": {
+      "ctime_ns": 1787802539710098469,
+      "dev": 16777233,
+      "gid": 20,
+      "ino": 83419378,
+      "mode": 33188,
+      "mtime_ns": 1787802539710098469,
+      "nlink": 1,
+      "size": 47701406,
+      "uid": 501
+    },
+    "sha256": "32a9ad46a4d3f03d71d3bf46378e22fe3c5cc6a3a7dce3067fc9466dee378216",
+    "size": 47701406,
+    "type": "file"
+  },
+  "JetBrains/analyzer/workspaces/ec6e8960d715aa63d1731cdf8e6644b9/rocks/v241/000018.sst": {
+    "identity": {
+      "ctime_ns": 1787802540178428087,
+      "dev": 16777233,
+      "gid": 20,
+      "ino": 83419381,
+      "mode": 33188,
+      "mtime_ns": 1787802540178428087,
+      "nlink": 1,
+      "size": 30021718,
+      "uid": 501
+    },
+    "sha256": "ead6cd1940d6aae648daabfc2aa9bae7555f9af7592bb07c4e3d882ddb235854",
+    "size": 30021718,
+    "type": "file"
+  },
+  "JetBrains/analyzer/workspaces/ec6e8960d715aa63d1731cdf8e6644b9/rocks/v241/CURRENT": {
+    "identity": {
+      "ctime_ns": 1787802522348799757,
+      "dev": 16777233,
+      "gid": 20,
+      "ino": 83418562,
+      "mode": 33188,
+      "mtime_ns": 1787802522343845465,
+      "nlink": 1,
+      "size": 16,
+      "uid": 501
+    },
+    "sha256": "9c283f6e81028b9eb0760d918ee4bc0aa256ed3b926393c1734c760c4bd724fd",
+    "size": 16,
+    "type": "file"
+  },
+  "JetBrains/analyzer/workspaces/ec6e8960d715aa63d1731cdf8e6644b9/rocks/v241/IDENTITY": {
+    "identity": {
+      "ctime_ns": 1787802522313800964,
+      "dev": 16777233,
+      "gid": 20,
+      "ino": 83418557,
+      "mode": 33188,
+      "mtime_ns": 1787802522301155902,
+      "nlink": 1,
+      "size": 36,
+      "uid": 501
+    },
+    "sha256": "fc6b729766c58169a92372500475c6026d4a859f0e5a232b710995c6ffc8318b",
+    "size": 36,
+    "type": "file"
+  },
+  "JetBrains/analyzer/workspaces/ec6e8960d715aa63d1731cdf8e6644b9/rocks/v241/LOCK": {
+    "identity": {
+      "ctime_ns": 1787802522301072112,
+      "dev": 16777233,
+      "gid": 20,
+      "ino": 83418556,
+      "mode": 33188,
+      "mtime_ns": 1787802522301056445,
+      "nlink": 1,
+      "size": 0,
+      "uid": 501
+    },
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "size": 0,
+    "type": "file"
+  },
+  "JetBrains/analyzer/workspaces/ec6e8960d715aa63d1731cdf8e6644b9/rocks/v241/LOG": {
+    "identity": {
+      "ctime_ns": 1787805525611995588,
+      "dev": 16777233,
+      "gid": 20,
+      "ino": 83418555,
+      "mode": 33188,
+      "mtime_ns": 1787805525611995588,
+      "nlink": 1,
+      "size": 188907,
+      "uid": 501
+    },
+    "sha256": "c5d6a939186b2da228fc611e8abfc8f16f75460659151b6e41031e3a4f9c5a0c",
+    "size": 188907,
+    "type": "file"
+  },
+  "JetBrains/analyzer/workspaces/ec6e8960d715aa63d1731cdf8e6644b9/rocks/v241/MANIFEST-000005": {
+    "identity": {
+      "ctime_ns": 1787802540187992341,
+      "dev": 16777233,
+      "gid": 20,
+      "ino": 83418561,
+      "mode": 33188,
+      "mtime_ns": 1787802540187992341,
+      "nlink": 1,
+      "size": 1432,
+      "uid": 501
+    },
+    "sha256": "4fc4d6bf36cedd3249907cf94d1ce1a30620c7c9246a0ba346cfaed8aa886587",
+    "size": 1432,
+    "type": "file"
+  },
+  "JetBrains/analyzer/workspaces/ec6e8960d715aa63d1731cdf8e6644b9/rocks/v241/OPTIONS-000007": {
+    "identity": {
+      "ctime_ns": 1787802522386486445,
+      "dev": 16777233,
+      "gid": 20,
+      "ino": 83418563,
+      "mode": 33188,
+      "mtime_ns": 1787802522380374371,
+      "nlink": 1,
+      "size": 38383,
+      "uid": 501
+    },
+    "sha256": "7a8d04916af5476601833e65020ea2adf81766f3f8e5d2cc5cac54aaa03deb26",
+    "size": 38383,
+    "type": "file"
+  },
+  "JetBrains/analyzer/workspaces/ec6e8960d715aa63d1731cdf8e6644b9/workspace-model.cache": {
+    "identity": {
+      "ctime_ns": 1787802534577494806,
+      "dev": 16777233,
+      "gid": 20,
+      "ino": 83419331,
+      "mode": 33152,
+      "mtime_ns": 1787802534577057684,
+      "nlink": 1,
+      "size": 40059,
+      "uid": 501
+    },
+    "sha256": "f92a955c8af3181c1f1ec2e04677fe18419acdc12af5646212229011d3b65ae8",
+    "size": 40059,
+    "type": "file"
+  }
+}

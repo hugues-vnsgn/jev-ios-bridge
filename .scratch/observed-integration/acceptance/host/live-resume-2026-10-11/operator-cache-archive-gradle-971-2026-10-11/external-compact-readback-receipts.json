@@ -1,0 +1,169 @@
+{
+  "directory": {
+    "path": "/Volumes/Sam/jev-ios-bridge-release-2026-10-11/archive/gradle-971-2026-10-11-01",
+    "before": {
+      "dev": 16777242,
+      "ino": 79964,
+      "uid": 501,
+      "gid": 20,
+      "mode": 16832,
+      "size": 306,
+      "nlink": 9,
+      "mtime_ns": 1791700317000000000,
+      "ctime_ns": 1791700317000000000
+    },
+    "after": {
+      "dev": 16777242,
+      "ino": 79964,
+      "uid": 501,
+      "gid": 20,
+      "mode": 16832,
+      "size": 306,
+      "nlink": 9,
+      "mtime_ns": 1791700317000000000,
+      "ctime_ns": 1791700317000000000
+    },
+    "descriptorClosed": true,
+    "closedAt": "2026-10-11T06:32:41.729850+00:00"
+  },
+  "entries": [
+    {
+      "name": "cache.tar.gz",
+      "before": {
+        "dev": 16777242,
+        "ino": 79968,
+        "uid": 501,
+        "gid": 20,
+        "mode": 33152,
+        "size": 2674073600,
+        "nlink": 1,
+        "mtime_ns": 1791700245000000000,
+        "ctime_ns": 1791700245000000000
+      },
+      "bytes": 2674073600,
+      "contentReadByOperator": false,
+      "hashAuthority": "Frozen archive script full streaming verification; Root independent audit pending",
+      "descriptorClosed": true,
+      "closedAt": "2026-10-11T06:32:41.545101+00:00",
+      "sha256": "db865535fe48c199ffb15589797fdf17fed57d07272b5a216fd2482fda4d3900"
+    },
+    {
+      "name": "mount-after.json",
+      "before": {
+        "dev": 16777242,
+        "ino": 79970,
+        "uid": 501,
+        "gid": 20,
+        "mode": 33152,
+        "size": 5495,
+        "nlink": 1,
+        "mtime_ns": 1791700317000000000,
+        "ctime_ns": 1791700317000000000
+      },
+      "bytes": 5495,
+      "sha256": "69b9870eaa4b4ea7605df86e723384f0dc0609145a0b78d0f5a0f1257f3f7fab",
+      "copiedIntoRepo": true,
+      "descriptorClosed": true,
+      "closedAt": "2026-10-11T06:32:41.545541+00:00"
+    },
+    {
+      "name": "mount-before.json",
+      "before": {
+        "dev": 16777242,
+        "ino": 79966,
+        "uid": 501,
+        "gid": 20,
+        "mode": 33152,
+        "size": 5495,
+        "nlink": 1,
+        "mtime_ns": 1791699965000000000,
+        "ctime_ns": 1791699965000000000
+      },
+      "bytes": 5495,
+      "sha256": "af8b7ff51f80a6c874e5542cf3f5a0409578f79d3654acb964f1e9831c45563b",
+      "copiedIntoRepo": true,
+      "descriptorClosed": true,
+      "closedAt": "2026-10-11T06:32:41.550859+00:00"
+    },
+    {
+      "name": "plan.json",
+      "before": {
+        "dev": 16777242,
+        "ino": 79965,
+        "uid": 501,
+        "gid": 20,
+        "mode": 33152,
+        "size": 1099,
+        "nlink": 1,
+        "mtime_ns": 1791699965000000000,
+        "ctime_ns": 1791699965000000000
+      },
+      "bytes": 1099,
+      "sha256": "4bffa7191bf6b3d3b3e8ee912d011d886fd7a89ddc93de50df1e91f427c2c452",
+      "copiedIntoRepo": true,
+      "descriptorClosed": true,
+      "closedAt": "2026-10-11T06:32:41.551303+00:00"
+    },
+    {
+      "name": "result.json",
+      "before": {
+        "dev": 16777242,
+        "ino": 79971,
+        "uid": 501,
+        "gid": 20,
+        "mode": 33152,
+        "size": 2226,
+        "nlink": 1,
+        "mtime_ns": 1791700317000000000,
+        "ctime_ns": 1791700317000000000
+      },
+      "bytes": 2226,
+      "sha256": "b537efb21305d74e38294c3646fed16beab2ab89ccc524d6827c706bab7e0ed8",
+      "copiedIntoRepo": true,
+      "descriptorClosed": true,
+      "closedAt": "2026-10-11T06:32:41.551441+00:00"
+    },
+    {
+      "name": "source-after.json",
+      "before": {
+        "dev": 16777242,
+        "ino": 79969,
+        "uid": 501,
+        "gid": 20,
+        "mode": 33152,
+        "size": 117090051,
+        "nlink": 1,
+        "mtime_ns": 1791700314000000000,
+        "ctime_ns": 1791700314000000000
+      },
+      "bytes": 117090051,
+      "sha256": "774b21d13509a2cffd82ed17a111470289b183d3039b6dac4acd30dd4ea20baa",
+      "streamedBytes": 117090051,
+      "copiedIntoRepo": false,
+      "descriptorClosed": true,
+      "closedAt": "2026-10-11T06:32:41.596855+00:00"
+    },
+    {
+      "name": "source-before.json",
+      "before": {
+        "dev": 16777242,
+        "ino": 79967,
+        "uid": 501,
+        "gid": 20,
+        "mode": 33152,
+        "size": 117090051,
+        "nlink": 1,
+        "mtime_ns": 1791700006000000000,
+        "ctime_ns": 1791700006000000000
+      },
+      "bytes": 117090051,
+      "sha256": "774b21d13509a2cffd82ed17a111470289b183d3039b6dac4acd30dd4ea20baa",
+      "streamedBytes": 117090051,
+      "copiedIntoRepo": false,
+      "descriptorClosed": true,
+      "closedAt": "2026-10-11T06:32:41.729534+00:00"
+    }
+  ],
+  "sourceManifestsEqual": true,
+  "sourceManifestsRemainExternal": true
+}

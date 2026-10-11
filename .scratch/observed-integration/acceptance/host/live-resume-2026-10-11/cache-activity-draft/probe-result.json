@@ -1,0 +1,1126 @@
+{
+  "status": "READ_ONLY_SNAPSHOTS_COMPLETE",
+  "processNamesComplete": true,
+  "npmStatus": "IMMEDIATE_NAMES_ONLY",
+  "observations": [
+    {
+      "path": "/Users/hugues_mini/.gradle/caches",
+      "startedAt": "2026-10-11T05:20:27.510Z",
+      "lsofCalls": 1,
+      "before": {
+        "/": {
+          "dev": "16777233",
+          "ino": "2",
+          "uid": "0",
+          "gid": "0",
+          "mode": "16877",
+          "size": "736",
+          "mtimeNs": "1790233837000000000",
+          "ctimeNs": "1790233837000000000"
+        },
+        "/Users": {
+          "dev": "16777233",
+          "ino": "17197",
+          "uid": "0",
+          "gid": "80",
+          "mode": "16877",
+          "size": "160",
+          "mtimeNs": "1791211398913144926",
+          "ctimeNs": "1791211398913144926"
+        },
+        "/Users/hugues_mini": {
+          "dev": "16777233",
+          "ino": "281563",
+          "uid": "501",
+          "gid": "20",
+          "mode": "16876",
+          "size": "4448",
+          "mtimeNs": "1791696010006829991",
+          "ctimeNs": "1791696010006829991"
+        },
+        "/Users/hugues_mini/.gradle": {
+          "dev": "16777233",
+          "ino": "8794116",
+          "uid": "501",
+          "gid": "20",
+          "mode": "16877",
+          "size": "480",
+          "mtimeNs": "1790848563401419579",
+          "ctimeNs": "1790848563401419579"
+        },
+        "/Users/hugues_mini/.gradle/caches": {
+          "dev": "16777233",
+          "ino": "8794511",
+          "uid": "501",
+          "gid": "20",
+          "mode": "16832",
+          "size": "544",
+          "mtimeNs": "1791522408830037257",
+          "ctimeNs": "1791522408830037257"
+        }
+      },
+      "receipt": "candidate-01-receipt.json",
+      "classification": "OPEN_FILES_OBSERVED",
+      "records": {
+        "valid": true,
+        "processes": 2,
+        "files": 211
+      },
+      "after": {
+        "/": {
+          "dev": "16777233",
+          "ino": "2",
+          "uid": "0",
+          "gid": "0",
+          "mode": "16877",
+          "size": "736",
+          "mtimeNs": "1790233837000000000",
+          "ctimeNs": "1790233837000000000"
+        },
+        "/Users": {
+          "dev": "16777233",
+          "ino": "17197",
+          "uid": "0",
+          "gid": "80",
+          "mode": "16877",
+          "size": "160",
+          "mtimeNs": "1791211398913144926",
+          "ctimeNs": "1791211398913144926"
+        },
+        "/Users/hugues_mini": {
+          "dev": "16777233",
+          "ino": "281563",
+          "uid": "501",
+          "gid": "20",
+          "mode": "16876",
+          "size": "4448",
+          "mtimeNs": "1791696010006829991",
+          "ctimeNs": "1791696010006829991"
+        },
+        "/Users/hugues_mini/.gradle": {
+          "dev": "16777233",
+          "ino": "8794116",
+          "uid": "501",
+          "gid": "20",
+          "mode": "16877",
+          "size": "480",
+          "mtimeNs": "1790848563401419579",
+          "ctimeNs": "1790848563401419579"
+        },
+        "/Users/hugues_mini/.gradle/caches": {
+          "dev": "16777233",
+          "ino": "8794511",
+          "uid": "501",
+          "gid": "20",
+          "mode": "16832",
+          "size": "544",
+          "mtimeNs": "1791522408830037257",
+          "ctimeNs": "1791522408830037257"
+        }
+      },
+      "completedAt": "2026-10-11T05:20:53.470Z"
+    },
+    {
+      "path": "/Users/hugues_mini/.gradle/wrapper/dists",
+      "startedAt": "2026-10-11T05:20:53.471Z",
+      "lsofCalls": 1,
+      "before": {
+        "/": {
+          "dev": "16777233",
+          "ino": "2",
+          "uid": "0",
+          "gid": "0",
+          "mode": "16877",
+          "size": "736",
+          "mtimeNs": "1790233837000000000",
+          "ctimeNs": "1790233837000000000"
+        },
+        "/Users": {
+          "dev": "16777233",
+          "ino": "17197",
+          "uid": "0",
+          "gid": "80",
+          "mode": "16877",
+          "size": "160",
+          "mtimeNs": "1791211398913144926",
+          "ctimeNs": "1791211398913144926"
+        },
+        "/Users/hugues_mini": {
+          "dev": "16777233",
+          "ino": "281563",
+          "uid": "501",
+          "gid": "20",
+          "mode": "16876",
+          "size": "4448",
+          "mtimeNs": "1791696010006829991",
+          "ctimeNs": "1791696010006829991"
+        },
+        "/Users/hugues_mini/.gradle": {
+          "dev": "16777233",
+          "ino": "8794116",
+          "uid": "501",
+          "gid": "20",
+          "mode": "16877",
+          "size": "480",
+          "mtimeNs": "1790848563401419579",
+          "ctimeNs": "1790848563401419579"
+        },
+        "/Users/hugues_mini/.gradle/wrapper": {
+          "dev": "16777233",
+          "ino": "8794117",
+          "uid": "501",
+          "gid": "20",
+          "mode": "16877",
+          "size": "96",
+          "mtimeNs": "1774493852074459377",
+          "ctimeNs": "1774493852074459377"
+        },
+        "/Users/hugues_mini/.gradle/wrapper/dists": {
+          "dev": "16777233",
+          "ino": "8794118",
+          "uid": "501",
+          "gid": "20",
+          "mode": "16877",
+          "size": "288",
+          "mtimeNs": "1791522381420662927",
+          "ctimeNs": "1791522381420662927"
+        }
+      },
+      "receipt": "candidate-02-receipt.json",
+      "classification": "OPEN_FILES_OBSERVED",
+      "records": {
+        "valid": true,
+        "processes": 1,
+        "files": 296
+      },
+      "after": {
+        "/": {
+          "dev": "16777233",
+          "ino": "2",
+          "uid": "0",
+          "gid": "0",
+          "mode": "16877",
+          "size": "736",
+          "mtimeNs": "1790233837000000000",
+          "ctimeNs": "1790233837000000000"
+        },
+        "/Users": {
+          "dev": "16777233",
+          "ino": "17197",
+          "uid": "0",
+          "gid": "80",
+          "mode": "16877",
+          "size": "160",
+          "mtimeNs": "1791211398913144926",
+          "ctimeNs": "1791211398913144926"
+        },
+        "/Users/hugues_mini": {
+          "dev": "16777233",
+          "ino": "281563",
+          "uid": "501",
+          "gid": "20",
+          "mode": "16876",
+          "size": "4448",
+          "mtimeNs": "1791696010006829991",
+          "ctimeNs": "1791696010006829991"
+        },
+        "/Users/hugues_mini/.gradle": {
+          "dev": "16777233",
+          "ino": "8794116",
+          "uid": "501",
+          "gid": "20",
+          "mode": "16877",
+          "size": "480",
+          "mtimeNs": "1790848563401419579",
+          "ctimeNs": "1790848563401419579"
+        },
+        "/Users/hugues_mini/.gradle/wrapper": {
+          "dev": "16777233",
+          "ino": "8794117",
+          "uid": "501",
+          "gid": "20",
+          "mode": "16877",
+          "size": "96",
+          "mtimeNs": "1774493852074459377",
+          "ctimeNs": "1774493852074459377"
+        },
+        "/Users/hugues_mini/.gradle/wrapper/dists": {
+          "dev": "16777233",
+          "ino": "8794118",
+          "uid": "501",
+          "gid": "20",
+          "mode": "16877",
+          "size": "288",
+          "mtimeNs": "1791522381420662927",
+          "ctimeNs": "1791522381420662927"
+        }
+      },
+      "completedAt": "2026-10-11T05:20:53.671Z"
+    },
+    {
+      "path": "/Users/hugues_mini/Library/Caches/JetBrains",
+      "startedAt": "2026-10-11T05:20:53.671Z",
+      "lsofCalls": 1,
+      "before": {
+        "/": {
+          "dev": "16777233",
+          "ino": "2",
+          "uid": "0",
+          "gid": "0",
+          "mode": "16877",
+          "size": "736",
+          "mtimeNs": "1790233837000000000",
+          "ctimeNs": "1790233837000000000"
+        },
+        "/Users": {
+          "dev": "16777233",
+          "ino": "17197",
+          "uid": "0",
+          "gid": "80",
+          "mode": "16877",
+          "size": "160",
+          "mtimeNs": "1791211398913144926",
+          "ctimeNs": "1791211398913144926"
+        },
+        "/Users/hugues_mini": {
+          "dev": "16777233",
+          "ino": "281563",
+          "uid": "501",
+          "gid": "20",
+          "mode": "16876",
+          "size": "4448",
+          "mtimeNs": "1791696010006829991",
+          "ctimeNs": "1791696010006829991"
+        },
+        "/Users/hugues_mini/Library": {
+          "dev": "16777233",
+          "ino": "281570",
+          "uid": "501",
+          "gid": "20",
+          "mode": "16832",
+          "size": "3232",
+          "mtimeNs": "1791212053893740850",
+          "ctimeNs": "1791212053893740850"
+        },
+        "/Users/hugues_mini/Library/Caches": {
+          "dev": "16777233",
+          "ino": "281605",
+          "uid": "501",
+          "gid": "20",
+          "mode": "16832",
+          "size": "4320",
+          "mtimeNs": "1791692656643870330",
+          "ctimeNs": "1791692656643870330"
+        },
+        "/Users/hugues_mini/Library/Caches/JetBrains": {
+          "dev": "16777233",
+          "ino": "34652077",
+          "uid": "501",
+          "gid": "20",
+          "mode": "16877",
+          "size": "128",
+          "mtimeNs": "1787022817195830369",
+          "ctimeNs": "1787022817195830369"
+        }
+      },
+      "receipt": "candidate-03-receipt.json",
+      "classification": "NO_MATCH_OBSERVED",
+      "records": {
+        "valid": true,
+        "processes": 0,
+        "files": 0
+      },
+      "after": {
+        "/": {
+          "dev": "16777233",
+          "ino": "2",
+          "uid": "0",
+          "gid": "0",
+          "mode": "16877",
+          "size": "736",
+          "mtimeNs": "1790233837000000000",
+          "ctimeNs": "1790233837000000000"
+        },
+        "/Users": {
+          "dev": "16777233",
+          "ino": "17197",
+          "uid": "0",
+          "gid": "80",
+          "mode": "16877",
+          "size": "160",
+          "mtimeNs": "1791211398913144926",
+          "ctimeNs": "1791211398913144926"
+        },
+        "/Users/hugues_mini": {
+          "dev": "16777233",
+          "ino": "281563",
+          "uid": "501",
+          "gid": "20",
+          "mode": "16876",
+          "size": "4448",
+          "mtimeNs": "1791696010006829991",
+          "ctimeNs": "1791696010006829991"
+        },
+        "/Users/hugues_mini/Library": {
+          "dev": "16777233",
+          "ino": "281570",
+          "uid": "501",
+          "gid": "20",
+          "mode": "16832",
+          "size": "3232",
+          "mtimeNs": "1791212053893740850",
+          "ctimeNs": "1791212053893740850"
+        },
+        "/Users/hugues_mini/Library/Caches": {
+          "dev": "16777233",
+          "ino": "281605",
+          "uid": "501",
+          "gid": "20",
+          "mode": "16832",
+          "size": "4320",
+          "mtimeNs": "1791692656643870330",
+          "ctimeNs": "1791692656643870330"
+        },
+        "/Users/hugues_mini/Library/Caches/JetBrains": {
+          "dev": "16777233",
+          "ino": "34652077",
+          "uid": "501",
+          "gid": "20",
+          "mode": "16877",
+          "size": "128",
+          "mtimeNs": "1787022817195830369",
+          "ctimeNs": "1787022817195830369"
+        }
+      },
+      "completedAt": "2026-10-11T05:20:53.810Z"
+    },
+    {
+      "path": "/Users/hugues_mini/Library/Caches/org.swift.swiftpm",
+      "startedAt": "2026-10-11T05:20:53.810Z",
+      "lsofCalls": 1,
+      "before": {
+        "/": {
+          "dev": "16777233",
+          "ino": "2",
+          "uid": "0",
+          "gid": "0",
+          "mode": "16877",
+          "size": "736",
+          "mtimeNs": "1790233837000000000",
+          "ctimeNs": "1790233837000000000"
+        },
+        "/Users": {
+          "dev": "16777233",
+          "ino": "17197",
+          "uid": "0",
+          "gid": "80",
+          "mode": "16877",
+          "size": "160",
+          "mtimeNs": "1791211398913144926",
+          "ctimeNs": "1791211398913144926"
+        },
+        "/Users/hugues_mini": {
+          "dev": "16777233",
+          "ino": "281563",
+          "uid": "501",
+          "gid": "20",
+          "mode": "16876",
+          "size": "4448",
+          "mtimeNs": "1791696010006829991",
+          "ctimeNs": "1791696010006829991"
+        },
+        "/Users/hugues_mini/Library": {
+          "dev": "16777233",
+          "ino": "281570",
+          "uid": "501",
+          "gid": "20",
+          "mode": "16832",
+          "size": "3232",
+          "mtimeNs": "1791212053893740850",
+          "ctimeNs": "1791212053893740850"
+        },
+        "/Users/hugues_mini/Library/Caches": {
+          "dev": "16777233",
+          "ino": "281605",
+          "uid": "501",
+          "gid": "20",
+          "mode": "16832",
+          "size": "4320",
+          "mtimeNs": "1791692656643870330",
+          "ctimeNs": "1791692656643870330"
+        },
+        "/Users/hugues_mini/Library/Caches/org.swift.swiftpm": {
+          "dev": "16777233",
+          "ino": "103281773",
+          "uid": "501",
+          "gid": "20",
+          "mode": "16877",
+          "size": "288",
+          "mtimeNs": "1790156784298455575",
+          "ctimeNs": "1790156784298455575"
+        }
+      },
+      "receipt": "candidate-04-receipt.json",
+      "classification": "NO_MATCH_OBSERVED",
+      "records": {
+        "valid": true,
+        "processes": 0,
+        "files": 0
+      },
+      "after": {
+        "/": {
+          "dev": "16777233",
+          "ino": "2",
+          "uid": "0",
+          "gid": "0",
+          "mode": "16877",
+          "size": "736",
+          "mtimeNs": "1790233837000000000",
+          "ctimeNs": "1790233837000000000"
+        },
+        "/Users": {
+          "dev": "16777233",
+          "ino": "17197",
+          "uid": "0",
+          "gid": "80",
+          "mode": "16877",
+          "size": "160",
+          "mtimeNs": "1791211398913144926",
+          "ctimeNs": "1791211398913144926"
+        },
+        "/Users/hugues_mini": {
+          "dev": "16777233",
+          "ino": "281563",
+          "uid": "501",
+          "gid": "20",
+          "mode": "16876",
+          "size": "4448",
+          "mtimeNs": "1791696010006829991",
+          "ctimeNs": "1791696010006829991"
+        },
+        "/Users/hugues_mini/Library": {
+          "dev": "16777233",
+          "ino": "281570",
+          "uid": "501",
+          "gid": "20",
+          "mode": "16832",
+          "size": "3232",
+          "mtimeNs": "1791212053893740850",
+          "ctimeNs": "1791212053893740850"
+        },
+        "/Users/hugues_mini/Library/Caches": {
+          "dev": "16777233",
+          "ino": "281605",
+          "uid": "501",
+          "gid": "20",
+          "mode": "16832",
+          "size": "4320",
+          "mtimeNs": "1791692656643870330",
+          "ctimeNs": "1791692656643870330"
+        },
+        "/Users/hugues_mini/Library/Caches/org.swift.swiftpm": {
+          "dev": "16777233",
+          "ino": "103281773",
+          "uid": "501",
+          "gid": "20",
+          "mode": "16877",
+          "size": "288",
+          "mtimeNs": "1790156784298455575",
+          "ctimeNs": "1790156784298455575"
+        }
+      },
+      "completedAt": "2026-10-11T05:20:53.981Z"
+    },
+    {
+      "path": "/Users/hugues_mini/.npm/_cacache",
+      "startedAt": "2026-10-11T05:20:53.981Z",
+      "lsofCalls": 1,
+      "before": {
+        "/": {
+          "dev": "16777233",
+          "ino": "2",
+          "uid": "0",
+          "gid": "0",
+          "mode": "16877",
+          "size": "736",
+          "mtimeNs": "1790233837000000000",
+          "ctimeNs": "1790233837000000000"
+        },
+        "/Users": {
+          "dev": "16777233",
+          "ino": "17197",
+          "uid": "0",
+          "gid": "80",
+          "mode": "16877",
+          "size": "160",
+          "mtimeNs": "1791211398913144926",
+          "ctimeNs": "1791211398913144926"
+        },
+        "/Users/hugues_mini": {
+          "dev": "16777233",
+          "ino": "281563",
+          "uid": "501",
+          "gid": "20",
+          "mode": "16876",
+          "size": "4448",
+          "mtimeNs": "1791696010006829991",
+          "ctimeNs": "1791696010006829991"
+        },
+        "/Users/hugues_mini/.npm": {
+          "dev": "16777233",
+          "ino": "838431",
+          "uid": "501",
+          "gid": "20",
+          "mode": "16877",
+          "size": "288",
+          "mtimeNs": "1791260112596687384",
+          "ctimeNs": "1791260112596687384"
+        },
+        "/Users/hugues_mini/.npm/_cacache": {
+          "dev": "16777233",
+          "ino": "123987516",
+          "uid": "501",
+          "gid": "20",
+          "mode": "16877",
+          "size": "160",
+          "mtimeNs": "1791260112623303219",
+          "ctimeNs": "1791260112623303219"
+        }
+      },
+      "receipt": "candidate-05-receipt.json",
+      "classification": "NO_MATCH_OBSERVED",
+      "records": {
+        "valid": true,
+        "processes": 0,
+        "files": 0
+      },
+      "after": {
+        "/": {
+          "dev": "16777233",
+          "ino": "2",
+          "uid": "0",
+          "gid": "0",
+          "mode": "16877",
+          "size": "736",
+          "mtimeNs": "1790233837000000000",
+          "ctimeNs": "1790233837000000000"
+        },
+        "/Users": {
+          "dev": "16777233",
+          "ino": "17197",
+          "uid": "0",
+          "gid": "80",
+          "mode": "16877",
+          "size": "160",
+          "mtimeNs": "1791211398913144926",
+          "ctimeNs": "1791211398913144926"
+        },
+        "/Users/hugues_mini": {
+          "dev": "16777233",
+          "ino": "281563",
+          "uid": "501",
+          "gid": "20",
+          "mode": "16876",
+          "size": "4448",
+          "mtimeNs": "1791696010006829991",
+          "ctimeNs": "1791696010006829991"
+        },
+        "/Users/hugues_mini/.npm": {
+          "dev": "16777233",
+          "ino": "838431",
+          "uid": "501",
+          "gid": "20",
+          "mode": "16877",
+          "size": "288",
+          "mtimeNs": "1791260112596687384",
+          "ctimeNs": "1791260112596687384"
+        },
+        "/Users/hugues_mini/.npm/_cacache": {
+          "dev": "16777233",
+          "ino": "123987516",
+          "uid": "501",
+          "gid": "20",
+          "mode": "16877",
+          "size": "160",
+          "mtimeNs": "1791260112623303219",
+          "ctimeNs": "1791260112623303219"
+        }
+      },
+      "completedAt": "2026-10-11T05:20:54.456Z"
+    },
+    {
+      "path": "/Users/hugues_mini/.cache/uv",
+      "startedAt": "2026-10-11T05:20:54.457Z",
+      "lsofCalls": 1,
+      "before": {
+        "/": {
+          "dev": "16777233",
+          "ino": "2",
+          "uid": "0",
+          "gid": "0",
+          "mode": "16877",
+          "size": "736",
+          "mtimeNs": "1790233837000000000",
+          "ctimeNs": "1790233837000000000"
+        },
+        "/Users": {
+          "dev": "16777233",
+          "ino": "17197",
+          "uid": "0",
+          "gid": "80",
+          "mode": "16877",
+          "size": "160",
+          "mtimeNs": "1791211398913144926",
+          "ctimeNs": "1791211398913144926"
+        },
+        "/Users/hugues_mini": {
+          "dev": "16777233",
+          "ino": "281563",
+          "uid": "501",
+          "gid": "20",
+          "mode": "16876",
+          "size": "4448",
+          "mtimeNs": "1791696010006829991",
+          "ctimeNs": "1791696010006829991"
+        },
+        "/Users/hugues_mini/.cache": {
+          "dev": "16777233",
+          "ino": "29745796",
+          "uid": "501",
+          "gid": "20",
+          "mode": "16877",
+          "size": "768",
+          "mtimeNs": "1791279262551845119",
+          "ctimeNs": "1791279262551845119"
+        },
+        "/Users/hugues_mini/.cache/uv": {
+          "dev": "16777233",
+          "ino": "65613849",
+          "uid": "501",
+          "gid": "20",
+          "mode": "16877",
+          "size": "320",
+          "mtimeNs": "1791524476402246640",
+          "ctimeNs": "1791524476402246640"
+        }
+      },
+      "receipt": "candidate-06-receipt.json",
+      "classification": "NO_MATCH_OBSERVED",
+      "records": {
+        "valid": true,
+        "processes": 0,
+        "files": 0
+      },
+      "after": {
+        "/": {
+          "dev": "16777233",
+          "ino": "2",
+          "uid": "0",
+          "gid": "0",
+          "mode": "16877",
+          "size": "736",
+          "mtimeNs": "1790233837000000000",
+          "ctimeNs": "1790233837000000000"
+        },
+        "/Users": {
+          "dev": "16777233",
+          "ino": "17197",
+          "uid": "0",
+          "gid": "80",
+          "mode": "16877",
+          "size": "160",
+          "mtimeNs": "1791211398913144926",
+          "ctimeNs": "1791211398913144926"
+        },
+        "/Users/hugues_mini": {
+          "dev": "16777233",
+          "ino": "281563",
+          "uid": "501",
+          "gid": "20",
+          "mode": "16876",
+          "size": "4448",
+          "mtimeNs": "1791696010006829991",
+          "ctimeNs": "1791696010006829991"
+        },
+        "/Users/hugues_mini/.cache": {
+          "dev": "16777233",
+          "ino": "29745796",
+          "uid": "501",
+          "gid": "20",
+          "mode": "16877",
+          "size": "768",
+          "mtimeNs": "1791279262551845119",
+          "ctimeNs": "1791279262551845119"
+        },
+        "/Users/hugues_mini/.cache/uv": {
+          "dev": "16777233",
+          "ino": "65613849",
+          "uid": "501",
+          "gid": "20",
+          "mode": "16877",
+          "size": "320",
+          "mtimeNs": "1791524476402246640",
+          "ctimeNs": "1791524476402246640"
+        }
+      },
+      "completedAt": "2026-10-11T05:20:55.550Z"
+    },
+    {
+      "path": "/Users/hugues_mini/.cache/bazel-repo-contents-cache",
+      "startedAt": "2026-10-11T05:20:55.550Z",
+      "lsofCalls": 1,
+      "before": {
+        "/": {
+          "dev": "16777233",
+          "ino": "2",
+          "uid": "0",
+          "gid": "0",
+          "mode": "16877",
+          "size": "736",
+          "mtimeNs": "1790233837000000000",
+          "ctimeNs": "1790233837000000000"
+        },
+        "/Users": {
+          "dev": "16777233",
+          "ino": "17197",
+          "uid": "0",
+          "gid": "80",
+          "mode": "16877",
+          "size": "160",
+          "mtimeNs": "1791211398913144926",
+          "ctimeNs": "1791211398913144926"
+        },
+        "/Users/hugues_mini": {
+          "dev": "16777233",
+          "ino": "281563",
+          "uid": "501",
+          "gid": "20",
+          "mode": "16876",
+          "size": "4448",
+          "mtimeNs": "1791696010006829991",
+          "ctimeNs": "1791696010006829991"
+        },
+        "/Users/hugues_mini/.cache": {
+          "dev": "16777233",
+          "ino": "29745796",
+          "uid": "501",
+          "gid": "20",
+          "mode": "16877",
+          "size": "768",
+          "mtimeNs": "1791279262551845119",
+          "ctimeNs": "1791279262551845119"
+        },
+        "/Users/hugues_mini/.cache/bazel-repo-contents-cache": {
+          "dev": "16777233",
+          "ino": "108075995",
+          "uid": "501",
+          "gid": "20",
+          "mode": "16877",
+          "size": "1120",
+          "mtimeNs": "1790518089069694000",
+          "ctimeNs": "1790518089069713626"
+        }
+      },
+      "receipt": "candidate-07-receipt.json",
+      "classification": "NO_MATCH_OBSERVED",
+      "records": {
+        "valid": true,
+        "processes": 0,
+        "files": 0
+      },
+      "after": {
+        "/": {
+          "dev": "16777233",
+          "ino": "2",
+          "uid": "0",
+          "gid": "0",
+          "mode": "16877",
+          "size": "736",
+          "mtimeNs": "1790233837000000000",
+          "ctimeNs": "1790233837000000000"
+        },
+        "/Users": {
+          "dev": "16777233",
+          "ino": "17197",
+          "uid": "0",
+          "gid": "80",
+          "mode": "16877",
+          "size": "160",
+          "mtimeNs": "1791211398913144926",
+          "ctimeNs": "1791211398913144926"
+        },
+        "/Users/hugues_mini": {
+          "dev": "16777233",
+          "ino": "281563",
+          "uid": "501",
+          "gid": "20",
+          "mode": "16876",
+          "size": "4448",
+          "mtimeNs": "1791696010006829991",
+          "ctimeNs": "1791696010006829991"
+        },
+        "/Users/hugues_mini/.cache": {
+          "dev": "16777233",
+          "ino": "29745796",
+          "uid": "501",
+          "gid": "20",
+          "mode": "16877",
+          "size": "768",
+          "mtimeNs": "1791279262551845119",
+          "ctimeNs": "1791279262551845119"
+        },
+        "/Users/hugues_mini/.cache/bazel-repo-contents-cache": {
+          "dev": "16777233",
+          "ino": "108075995",
+          "uid": "501",
+          "gid": "20",
+          "mode": "16877",
+          "size": "1120",
+          "mtimeNs": "1790518089069694000",
+          "ctimeNs": "1790518089069713626"
+        }
+      },
+      "completedAt": "2026-10-11T05:20:57.813Z"
+    },
+    {
+      "path": "/Users/hugues_mini/.cache/bazel-repo-cache",
+      "startedAt": "2026-10-11T05:20:57.813Z",
+      "lsofCalls": 1,
+      "before": {
+        "/": {
+          "dev": "16777233",
+          "ino": "2",
+          "uid": "0",
+          "gid": "0",
+          "mode": "16877",
+          "size": "736",
+          "mtimeNs": "1790233837000000000",
+          "ctimeNs": "1790233837000000000"
+        },
+        "/Users": {
+          "dev": "16777233",
+          "ino": "17197",
+          "uid": "0",
+          "gid": "80",
+          "mode": "16877",
+          "size": "160",
+          "mtimeNs": "1791211398913144926",
+          "ctimeNs": "1791211398913144926"
+        },
+        "/Users/hugues_mini": {
+          "dev": "16777233",
+          "ino": "281563",
+          "uid": "501",
+          "gid": "20",
+          "mode": "16876",
+          "size": "4448",
+          "mtimeNs": "1791696010006829991",
+          "ctimeNs": "1791696010006829991"
+        },
+        "/Users/hugues_mini/.cache": {
+          "dev": "16777233",
+          "ino": "29745796",
+          "uid": "501",
+          "gid": "20",
+          "mode": "16877",
+          "size": "768",
+          "mtimeNs": "1791279262551845119",
+          "ctimeNs": "1791279262551845119"
+        },
+        "/Users/hugues_mini/.cache/bazel-repo-cache": {
+          "dev": "16777233",
+          "ino": "108076001",
+          "uid": "501",
+          "gid": "20",
+          "mode": "16877",
+          "size": "96",
+          "mtimeNs": "1790517217761337617",
+          "ctimeNs": "1790517217761337617"
+        }
+      },
+      "receipt": "candidate-08-receipt.json",
+      "classification": "NO_MATCH_OBSERVED",
+      "records": {
+        "valid": true,
+        "processes": 0,
+        "files": 0
+      },
+      "after": {
+        "/": {
+          "dev": "16777233",
+          "ino": "2",
+          "uid": "0",
+          "gid": "0",
+          "mode": "16877",
+          "size": "736",
+          "mtimeNs": "1790233837000000000",
+          "ctimeNs": "1790233837000000000"
+        },
+        "/Users": {
+          "dev": "16777233",
+          "ino": "17197",
+          "uid": "0",
+          "gid": "80",
+          "mode": "16877",
+          "size": "160",
+          "mtimeNs": "1791211398913144926",
+          "ctimeNs": "1791211398913144926"
+        },
+        "/Users/hugues_mini": {
+          "dev": "16777233",
+          "ino": "281563",
+          "uid": "501",
+          "gid": "20",
+          "mode": "16876",
+          "size": "4448",
+          "mtimeNs": "1791696010006829991",
+          "ctimeNs": "1791696010006829991"
+        },
+        "/Users/hugues_mini/.cache": {
+          "dev": "16777233",
+          "ino": "29745796",
+          "uid": "501",
+          "gid": "20",
+          "mode": "16877",
+          "size": "768",
+          "mtimeNs": "1791279262551845119",
+          "ctimeNs": "1791279262551845119"
+        },
+        "/Users/hugues_mini/.cache/bazel-repo-cache": {
+          "dev": "16777233",
+          "ino": "108076001",
+          "uid": "501",
+          "gid": "20",
+          "mode": "16877",
+          "size": "96",
+          "mtimeNs": "1790517217761337617",
+          "ctimeNs": "1790517217761337617"
+        }
+      },
+      "completedAt": "2026-10-11T05:20:57.963Z"
+    },
+    {
+      "path": "/Users/hugues_mini/.cache/huggingface",
+      "startedAt": "2026-10-11T05:20:57.964Z",
+      "lsofCalls": 1,
+      "before": {
+        "/": {
+          "dev": "16777233",
+          "ino": "2",
+          "uid": "0",
+          "gid": "0",
+          "mode": "16877",
+          "size": "736",
+          "mtimeNs": "1790233837000000000",
+          "ctimeNs": "1790233837000000000"
+        },
+        "/Users": {
+          "dev": "16777233",
+          "ino": "17197",
+          "uid": "0",
+          "gid": "80",
+          "mode": "16877",
+          "size": "160",
+          "mtimeNs": "1791211398913144926",
+          "ctimeNs": "1791211398913144926"
+        },
+        "/Users/hugues_mini": {
+          "dev": "16777233",
+          "ino": "281563",
+          "uid": "501",
+          "gid": "20",
+          "mode": "16876",
+          "size": "4448",
+          "mtimeNs": "1791696010006829991",
+          "ctimeNs": "1791696010006829991"
+        },
+        "/Users/hugues_mini/.cache": {
+          "dev": "16777233",
+          "ino": "29745796",
+          "uid": "501",
+          "gid": "20",
+          "mode": "16877",
+          "size": "768",
+          "mtimeNs": "1791279262551845119",
+          "ctimeNs": "1791279262551845119"
+        },
+        "/Users/hugues_mini/.cache/huggingface": {
+          "dev": "16777233",
+          "ino": "56680594",
+          "uid": "501",
+          "gid": "20",
+          "mode": "16877",
+          "size": "160",
+          "mtimeNs": "1783169381357630954",
+          "ctimeNs": "1783169381357630954"
+        }
+      },
+      "receipt": "candidate-09-receipt.json",
+      "classification": "NO_MATCH_OBSERVED",
+      "records": {
+        "valid": true,
+        "processes": 0,
+        "files": 0
+      },
+      "after": {
+        "/": {
+          "dev": "16777233",
+          "ino": "2",
+          "uid": "0",
+          "gid": "0",
+          "mode": "16877",
+          "size": "736",
+          "mtimeNs": "1790233837000000000",
+          "ctimeNs": "1790233837000000000"
+        },
+        "/Users": {
+          "dev": "16777233",
+          "ino": "17197",
+          "uid": "0",
+          "gid": "80",
+          "mode": "16877",
+          "size": "160",
+          "mtimeNs": "1791211398913144926",
+          "ctimeNs": "1791211398913144926"
+        },
+        "/Users/hugues_mini": {
+          "dev": "16777233",
+          "ino": "281563",
+          "uid": "501",
+          "gid": "20",
+          "mode": "16876",
+          "size": "4448",
+          "mtimeNs": "1791696010006829991",
+          "ctimeNs": "1791696010006829991"
+        },
+        "/Users/hugues_mini/.cache": {
+          "dev": "16777233",
+          "ino": "29745796",
+          "uid": "501",
+          "gid": "20",
+          "mode": "16877",
+          "size": "768",
+          "mtimeNs": "1791279262551845119",
+          "ctimeNs": "1791279262551845119"
+        },
+        "/Users/hugues_mini/.cache/huggingface": {
+          "dev": "16777233",
+          "ino": "56680594",
+          "uid": "501",
+          "gid": "20",
+          "mode": "16877",
+          "size": "160",
+          "mtimeNs": "1783169381357630954",
+          "ctimeNs": "1783169381357630954"
+        }
+      },
+      "completedAt": "2026-10-11T05:20:58.102Z"
+    }
+  ],
+  "completedAt": "2026-10-11T05:20:58.103Z",
+  "qualification": "No-match is only a momentary observation under this process visibility. It does not prove inactivity, future quiescence, complete system process visibility, or authorize relocation. Ancestor checks do not eliminate pathname races. No cache contents were read by this script; lsof walks metadata.",
+  "sourceMutations": 0,
+  "processSignalsByIntent": 0,
+  "timeoutQualifier": "The command recorder may signal only its own probe child on deadline or output overflow; only direct child close is observed.",
+  "operatorState": "IDLE_FOR_ROOT_AUDIT"
+}

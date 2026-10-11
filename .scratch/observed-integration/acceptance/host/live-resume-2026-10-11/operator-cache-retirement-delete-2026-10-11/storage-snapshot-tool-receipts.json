@@ -1,0 +1,44 @@
+{
+  "storagePreparationReturn": {
+    "chunk_id": "2dbbf5",
+    "wall_time_seconds": 6.5e-06,
+    "exit_code": 0,
+    "original_token_count": 61,
+    "output": "{\"scriptPath\": \".scratch/observed-integration/acceptance/host/live-resume-2026-10-11/operator-cache-retirement-delete-2026-10-11/storage-snapshot.mjs\", \"sha256\": \"36f74974efaa590ac871ff226494d9d159a909ab3eb1acd4bdcd4aa9fd566624\", \"effects\": 0}\n"
+  },
+  "storageSyntaxCheck": {
+    "request": {
+      "cmd": "/usr/bin/env -i HOME=/Users/hugues_mini PATH=/usr/bin:/bin:/usr/sbin:/sbin LANG=C LC_ALL=C TZ=UTC /opt/homebrew/Cellar/node/26.8.1/bin/node --check .scratch/observed-integration/acceptance/host/live-resume-2026-10-11/operator-cache-retirement-delete-2026-10-11/storage-snapshot.mjs",
+      "login": false,
+      "max_output_tokens": 1500
+    },
+    "result": {
+      "chunk_id": "1d247e",
+      "wall_time_seconds": 6.916e-06,
+      "exit_code": 0,
+      "original_token_count": 0,
+      "output": ""
+    }
+  },
+  "storageExecutionReturns": [
+    {
+      "request": {
+        "cmd": "/usr/bin/env -i HOME=/Users/hugues_mini PATH=/usr/bin:/bin:/usr/sbin:/sbin LANG=C LC_ALL=C TZ=UTC /opt/homebrew/Cellar/node/26.8.1/bin/node .scratch/observed-integration/acceptance/host/live-resume-2026-10-11/operator-cache-retirement-delete-2026-10-11/storage-snapshot.mjs --read-only-once",
+        "login": false,
+        "sandbox_permissions": "require_escalated",
+        "justification": "Allow the one Root-authorized read-only statfs snapshot of internal CoreSimulator and the verified Sam staging directory after successful JetBrains retirement? It has a 10-second deadline and 64-KiB output bound, with no writes, builds, or device operations.",
+        "yield_time_ms": 1000,
+        "max_output_tokens": 5000
+      },
+      "requestedAt": "2026-10-11T06:02:39.706Z",
+      "result": {
+        "chunk_id": "2c7863",
+        "wall_time_seconds": 6.417e-06,
+        "exit_code": 0,
+        "original_token_count": 416,
+        "output": "{\"status\":\"READ_ONLY_STORAGE_SNAPSHOT_COMPLETE\",\"started\":\"2026-10-11T06:06:02.952Z\",\"completed\":\"2026-10-11T06:06:02.959Z\",\"elapsedNs\":\"6043750\",\"node\":\"v26.8.1\",\"statfsCalls\":2,\"paths\":[{\"role\":\"internalCoreSimulator\",\"path\":\"/Users/hugues_mini/Library/Developer/CoreSimulator\",\"queriedAt\":\"2026-10-11T06:06:02.954Z\",\"before\":{\"dev\":\"16777233\",\"ino\":\"32301688\",\"uid\":\"501\",\"gid\":\"20\",\"mode\":\"16877\",\"size\":\"160\",\"nlink\":\"5\",\"mtimeNs\":\"1778215852399288143\",\"ctimeNs\":\"1778215852399288143\"},\"after\":{\"dev\":\"16777233\",\"ino\":\"32301688\",\"uid\":\"501\",\"gid\":\"20\",\"mode\":\"16877\",\"size\":\"160\",\"nlink\":\"5\",\"mtimeNs\":\"1778215852399288143\",\"ctimeNs\":\"1778215852399288143\"},\"rawStatFs\":{\"type\":\"26\",\"bsize\":\"4096\",\"frsize\":\"4096\",\"blocks\":\"120699413\",\"bfree\":\"6220390\",\"bavail\":\"6220390\",\"files\":\"256124250\",\"ffree\":\"248815600\"},\"availableBytes\":\"25478717440\",\"requiredBytes\":\"64424509440\",\"shortfallBytes\":\"38945792000\",\"meetsRequirement\":false},{\"role\":\"samStaging\",\"path\":\"/Volumes/Sam/jev-ios-bridge-release-2026-10-11/staging\",\"queriedAt\":\"2026-10-11T06:06:02.959Z\",\"before\":{\"dev\":\"16777242\",\"ino\":\"79928\",\"uid\":\"501\",\"gid\":\"20\",\"mode\":\"16832\",\"size\":\"68\",\"nlink\":\"2\",\"mtimeNs\":\"1791695871000000000\",\"ctimeNs\":\"1791695871000000000\"},\"after\":{\"dev\":\"16777242\",\"ino\":\"79928\",\"uid\":\"501\",\"gid\":\"20\",\"mode\":\"16832\",\"size\":\"68\",\"nlink\":\"2\",\"mtimeNs\":\"1791695871000000000\",\"ctimeNs\":\"1791695871000000000\"},\"rawStatFs\":{\"type\":\"25\",\"bsize\":\"4096\",\"frsize\":\"4096\",\"blocks\":\"124767232\",\"bfree\":\"32750657\",\"bavail\":\"32750657\",\"files\":\"4294967279\",\"ffree\":\"4294934337\"},\"availableBytes\":\"134146691072\",\"requiredBytes\":\"75161927680\",\"shortfallBytes\":\"0\",\"meetsRequirement\":true}]}\n"
+      },
+      "observedAt": "2026-10-11T06:06:03.124Z"
+    }
+  ]
+}

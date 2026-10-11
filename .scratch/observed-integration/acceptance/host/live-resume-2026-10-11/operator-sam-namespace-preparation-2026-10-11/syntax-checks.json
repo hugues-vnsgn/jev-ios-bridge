@@ -1,0 +1,39 @@
+{
+  "checkedAtUtc": "2026-10-11T05:17:32.675Z",
+  "checks": [
+    {
+      "label": "run-namespace syntax",
+      "cmd": "env -u TYPESAFE_API_KEY -u NODE_OPTIONS -u NODE_NO_WARNINGS /opt/homebrew/Cellar/node/26.8.1/bin/node --check .scratch/observed-integration/acceptance/host/live-resume-2026-10-11/operator-sam-namespace-preparation-2026-10-11/run-namespace.mjs",
+      "toolResult": {
+        "chunk_id": "b67e87",
+        "wall_time_seconds": 4.75e-06,
+        "exit_code": 0,
+        "original_token_count": 0,
+        "output": ""
+      }
+    },
+    {
+      "label": "recorder syntax",
+      "cmd": "env -u TYPESAFE_API_KEY -u NODE_OPTIONS -u NODE_NO_WARNINGS /opt/homebrew/Cellar/node/26.8.1/bin/node --check .scratch/observed-integration/acceptance/host/live-resume-2026-10-11/operator-sam-namespace-preparation-2026-10-11/commands.mjs",
+      "toolResult": {
+        "chunk_id": "67b1c0",
+        "wall_time_seconds": 5.667e-06,
+        "exit_code": 0,
+        "original_token_count": 0,
+        "output": ""
+      }
+    },
+    {
+      "label": "parser AST only",
+      "cmd": "/opt/homebrew/bin/python3 -c 'import ast,pathlib; ast.parse(pathlib.Path(\".scratch/observed-integration/acceptance/host/live-resume-2026-10-11/operator-sam-namespace-preparation-2026-10-11/parse-sam-plist.py\").read_text())'",
+      "toolResult": {
+        "chunk_id": "dfdd83",
+        "wall_time_seconds": 6.292e-06,
+        "exit_code": 0,
+        "original_token_count": 0,
+        "output": ""
+      }
+    }
+  ],
+  "qualifier": "Actual exec_command subprocess returns preserved; descendant processes were not traced. Node --check and Python AST parse did not execute prepared modules."
+}

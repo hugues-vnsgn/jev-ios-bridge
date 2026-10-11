@@ -1,0 +1,64 @@
+{
+  "argv": [
+    "/usr/sbin/lsof",
+    "-nP",
+    "-F0pcfn",
+    "+D",
+    "/Users/hugues_mini/.gradle/caches/9.7.1"
+  ],
+  "cwd": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic",
+  "spawnOptions": {
+    "cwd": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic",
+    "env": {
+      "HOME": "/Users/hugues_mini",
+      "PATH": "/usr/bin:/bin:/usr/sbin:/sbin",
+      "LANG": "C",
+      "LC_ALL": "C",
+      "DEVELOPER_DIR": "/Applications/Xcode.app/Contents/Developer",
+      "TMPDIR": "/tmp"
+    },
+    "shell": false,
+    "stdio": [
+      "ignore",
+      "pipe",
+      "pipe"
+    ]
+  },
+  "startedAtUtc": "2026-10-11T06:25:14.050Z",
+  "timeoutMs": 30000,
+  "combinedOutputLimit": 2097152,
+  "events": [
+    {
+      "event": "spawn",
+      "atUtc": "2026-10-11T06:25:14.052Z"
+    },
+    {
+      "event": "exit",
+      "code": 1,
+      "signal": null,
+      "atUtc": "2026-10-11T06:25:23.450Z"
+    },
+    {
+      "event": "close",
+      "code": 1,
+      "signal": null,
+      "atUtc": "2026-10-11T06:25:23.450Z"
+    }
+  ],
+  "killCalls": [],
+  "stdoutOriginalBytes": 0,
+  "stderrOriginalBytes": 0,
+  "pid": 91681,
+  "closedAtUtc": "2026-10-11T06:25:23.450Z",
+  "exitCode": 1,
+  "signal": null,
+  "timedOut": false,
+  "overflow": false,
+  "stopped": false,
+  "error": null,
+  "retainedBytes": 0,
+  "captureComplete": true,
+  "descendantQualifier": "Only direct child close is observed; descendants are unobserved.",
+  "stdoutOriginalSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "stderrOriginalSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+}

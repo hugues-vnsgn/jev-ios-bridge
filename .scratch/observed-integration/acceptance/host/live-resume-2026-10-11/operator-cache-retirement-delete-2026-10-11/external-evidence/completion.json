@@ -1,0 +1,61 @@
+{
+  "archive_retained": true,
+  "commands": [
+    {
+      "argv": [
+        "/usr/sbin/diskutil",
+        "info",
+        "-plist",
+        "/Volumes/Sam"
+      ],
+      "descendant_settlement": "not independently observed",
+      "direct_child_waited": true,
+      "elapsed_seconds": 0.1719241669998155,
+      "exit_code": 0,
+      "pid": 38895,
+      "settled_utc": "2026-10-11T06:00:50.566256+00:00",
+      "stderr_bytes": 0,
+      "stderr_hex": "",
+      "stdout_bytes": 2708,
+      "stdout_sha256": "1a96653e9c9f214df782384848dd40aca4b993da486c69d80dda3bec29b7c63f"
+    },
+    {
+      "argv": [
+        "/bin/ps",
+        "-axo",
+        "uid=,comm="
+      ],
+      "descendant_settlement": "not independently observed",
+      "direct_child_waited": true,
+      "elapsed_seconds": 0.031145875000220258,
+      "exit_code": 0,
+      "pid": 39015,
+      "settled_utc": "2026-10-11T06:00:53.226420+00:00",
+      "stderr_bytes": 0,
+      "stderr_hex": "",
+      "stdout_bytes": 110971,
+      "stdout_sha256": "66e122d553d6873315432e99267f42fd025596c0fc7fd403e27c7a2d413c25d4"
+    },
+    {
+      "argv": [
+        "/usr/sbin/diskutil",
+        "info",
+        "-plist",
+        "/Volumes/Sam"
+      ],
+      "descendant_settlement": "not independently observed",
+      "direct_child_waited": true,
+      "elapsed_seconds": 0.22416783399967244,
+      "exit_code": 0,
+      "pid": 39113,
+      "settled_utc": "2026-10-11T06:00:56.753059+00:00",
+      "stderr_bytes": 0,
+      "stderr_hex": "",
+      "stdout_bytes": 2708,
+      "stdout_sha256": "b4a122639224f3c1641dbb341eb783d691af32ede3fd6a7f336a4117848d2bc0"
+    }
+  ],
+  "journal_events": 293,
+  "phase": "delete",
+  "status": "PHASE_COMPLETED"
+}

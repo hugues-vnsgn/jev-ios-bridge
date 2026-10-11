@@ -1,0 +1,10 @@
+{
+  "status": "SOURCE_REVIEW_PASS_RENAME_PLAN_REQUIRED",
+  "scriptSha256": "8ecbc0828c56c639aa09b0da0f0089902a994ac65677016bdb7f9e347e0c9cef",
+  "reviewer": "/root/sam_setup_review",
+  "rootFullReadAndDeltaReviewed": true,
+  "blockingFindings": 0,
+  "journalPolicy": "Keep per-event fsync for100entry candidate",
+  "authorizedExecution": false,
+  "deletePhase": "Separate plan after accepted rename evidence; not authorized by this source review."
+}

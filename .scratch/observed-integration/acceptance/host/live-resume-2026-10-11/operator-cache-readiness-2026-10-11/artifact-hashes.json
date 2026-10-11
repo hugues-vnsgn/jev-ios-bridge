@@ -1,0 +1,109 @@
+{
+  "sealedAtUtc": "2026-10-11T05:33:04.245022+00:00",
+  "scope": "All stopped readiness preparation and successful ps evidence except this manifest",
+  "directoriesMode": "0700",
+  "files": [
+    {
+      "path": "commands.mjs",
+      "bytes": 4252,
+      "sha256": "c38208bc826b0f8265a31e0d6deefe3be363b63434d55417a36690b101ac9fdf",
+      "mode": "0600"
+    },
+    {
+      "path": "escalation-request.json",
+      "bytes": 959,
+      "sha256": "e6751bb7233b1137f28e27e39d7c07b39aa1532fd5560f498f4bbba91db83162",
+      "mode": "0600"
+    },
+    {
+      "path": "execution-tool-received.txt",
+      "bytes": 122,
+      "sha256": "ef57989c941eab88009eb0504e2e6d7e5b4fe2eea78815374941fca9884737f8",
+      "mode": "0600"
+    },
+    {
+      "path": "execution-tool-returns.json",
+      "bytes": 276,
+      "sha256": "b03b907dd5f3e73ec8026030d96b08146e852b94a302b856269c661cc3c70ebe",
+      "mode": "0600"
+    },
+    {
+      "path": "final-verification.json",
+      "bytes": 482,
+      "sha256": "506773fa745ec2b8a4902f97ccf582631b0cc5510441464c09f4a81c56bafe74",
+      "mode": "0600"
+    },
+    {
+      "path": "first-confirmed-cause.json",
+      "bytes": 922,
+      "sha256": "e875b07a8304d6906f3160599fe80a507d5b7a3622d70263bb8509a04537f66a",
+      "mode": "0600"
+    },
+    {
+      "path": "preparation.json",
+      "bytes": 694,
+      "sha256": "088c366e36155bad15cfad7afbb26d5c7a1d5daaa656d11bb909bbf86f861e9e",
+      "mode": "0600"
+    },
+    {
+      "path": "prepared-hashes.json",
+      "bytes": 1060,
+      "sha256": "614959357299cde86053ce86377d8295edeef0bf73118329cfe5974a623e0f24",
+      "mode": "0600"
+    },
+    {
+      "path": "process-names-claimed.json",
+      "bytes": 140,
+      "sha256": "bae5fa3e46e407b43dd64503e8d2f14eab811f4d13aea4bca94b90a3ca6cb979",
+      "mode": "0600"
+    },
+    {
+      "path": "process-names-receipt.json",
+      "bytes": 1679,
+      "sha256": "3c79e7185b401fb39e10059d95dd016cc69cb81d87225112385ad3142805c20c",
+      "mode": "0600"
+    },
+    {
+      "path": "process-names.stderr.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "mode": "0600"
+    },
+    {
+      "path": "process-names.stdout.bin",
+      "bytes": 27753,
+      "sha256": "1234aa8d701f81c80cb909c775415a86ca4f4cd610477ff7929b781edc5c3461",
+      "mode": "0600"
+    },
+    {
+      "path": "readiness-claimed.json",
+      "bytes": 617,
+      "sha256": "151d71f11df205bd7f52b490ac0859a0f58ed61addc43c88d6d0d38421c5f7ea",
+      "mode": "0600"
+    },
+    {
+      "path": "readiness-result.json",
+      "bytes": 846,
+      "sha256": "102eb9245c8160aa23b3c3a8bff5e10a734384c5d6828f4724b8313a8154ad90",
+      "mode": "0600"
+    },
+    {
+      "path": "report.md",
+      "bytes": 1072,
+      "sha256": "975b336124ebdf1e615ccfd188243c9a9a0cd355f7a211eab19e91ffc7ef7a64",
+      "mode": "0600"
+    },
+    {
+      "path": "run.mjs",
+      "bytes": 7396,
+      "sha256": "5b86d853fa953a823286589eae1d7f1f525decfa21d45f76daf2de1432cd8f27",
+      "mode": "0600"
+    },
+    {
+      "path": "syntax-checks.json",
+      "bytes": 1159,
+      "sha256": "81cc1a3f49be8caa4deb2bd576a1c5950f4c89b8457d80827dceccae8a5b759a",
+      "mode": "0600"
+    }
+  ]
+}

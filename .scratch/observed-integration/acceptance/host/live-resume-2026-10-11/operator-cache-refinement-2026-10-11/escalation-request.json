@@ -1,0 +1,8 @@
+{
+  "cmd": "env -u TYPESAFE_API_KEY -u NODE_OPTIONS -u NODE_NO_WARNINGS /opt/homebrew/Cellar/node/26.8.1/bin/node .scratch/observed-integration/acceptance/host/live-resume-2026-10-11/operator-cache-refinement-2026-10-11/run.mjs --read-only-once-after-root-review",
+  "login": false,
+  "sandbox_permissions": "require_escalated",
+  "justification": "Allow the owner-authorized Root-dispatched once read-only cache attribution: /usr/bin/du -k -d2 -P on exact /Users/hugues_mini/.gradle/caches (180s/256KiB), then one du -sk -P on the seven exact no-match candidate cache roots (180s/64KiB), using the settled shell:false recorder and actual direct-child close capture? No cache content read, process stop, copy, archive, deletion or build; both whole Gradle caches and wrapper roots remain excluded from archive/removal.",
+  "yield_time_ms": 1000,
+  "max_output_tokens": 5000
+}

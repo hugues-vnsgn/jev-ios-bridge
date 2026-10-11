@@ -1,0 +1,103 @@
+{
+  "sealedAtUtc": "2026-10-11T05:04:03.351141+00:00",
+  "scope": "All cache child inventory evidence except manifest itself",
+  "directoriesMode": "0700",
+  "files": [
+    {
+      "path": "cache-child-totals.json",
+      "bytes": 48376,
+      "sha256": "79830d8f149ace9030d65c0d263f99943051e4dac745652e7c385c72024186e9",
+      "mode": "0600"
+    },
+    {
+      "path": "commands.mjs",
+      "bytes": 4258,
+      "sha256": "55a7a42eb585e2b9b1a3968ca0e4b21958b5f228728a069ae6e733b3d9b917c2",
+      "mode": "0600"
+    },
+    {
+      "path": "du-claimed.json",
+      "bytes": 246,
+      "sha256": "113a6d6378f958f4f4b3d66d3f830b507b09308eeb9ded96c0eb9d54c857f3e8",
+      "mode": "0600"
+    },
+    {
+      "path": "du-receipt.json",
+      "bytes": 1782,
+      "sha256": "a4547a935d76236be8773c3e79b7ec445414e227a3229722d4c9535913783d25",
+      "mode": "0600"
+    },
+    {
+      "path": "du.stderr.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "mode": "0600"
+    },
+    {
+      "path": "du.stdout.bin",
+      "bytes": 8962,
+      "sha256": "a406f31d1549ebd4b0d5a6056d6cf73a0829e92c773a36e9bd3bc4a08bb3ca06",
+      "mode": "0600"
+    },
+    {
+      "path": "escalation-request.json",
+      "bytes": 729,
+      "sha256": "e9fea7f8ccd4e3bfca036df53ce2970394805ceebd335bb7c3cc1c266bf368bc",
+      "mode": "0600"
+    },
+    {
+      "path": "escalation-tool-received.txt",
+      "bytes": 514,
+      "sha256": "44eb1f51a1d150f085d656ed77e496701df690a039a5f25bc2a0470bc1405aa0",
+      "mode": "0600"
+    },
+    {
+      "path": "escalation-tool-returns.json",
+      "bytes": 853,
+      "sha256": "2854dff819525d67385d822aaf32bc10fc94a4a36d03fddcf9f72d9d508a04da",
+      "mode": "0600"
+    },
+    {
+      "path": "final-verification.json",
+      "bytes": 369,
+      "sha256": "8505d8c4b3fa8e33fe4321f729bd2afee0907925bcf018b9385fe9142942dc30",
+      "mode": "0600"
+    },
+    {
+      "path": "inventory-result.json",
+      "bytes": 605,
+      "sha256": "fd6202aa1eb0edbe3a7ae791f8c24150e3bc5b913c588a70da60ee823dd89a70",
+      "mode": "0600"
+    },
+    {
+      "path": "preparation.json",
+      "bytes": 819,
+      "sha256": "0c1c8ed88e513c1c80b2af137e8c5592397d9353783fbb8b743b6369b4f3ab1d",
+      "mode": "0600"
+    },
+    {
+      "path": "prepared-hashes.json",
+      "bytes": 170,
+      "sha256": "c03f6e6f3f89159bd53322a3deb45e4f6fee7517379a4fc5d6cc8f71b97862f5",
+      "mode": "0600"
+    },
+    {
+      "path": "report.md",
+      "bytes": 13649,
+      "sha256": "5b6fe68024f0ca1ff9e3b990ee6d2c67a22c52601c960a0fadb8185ff186b48f",
+      "mode": "0600"
+    },
+    {
+      "path": "run.mjs",
+      "bytes": 1097,
+      "sha256": "fe713eb56f03ed1a2c3e0a0aaba8fbf572b0c449a7d7b391ef0bff73b07b0cce",
+      "mode": "0600"
+    },
+    {
+      "path": "syntax-checks.json",
+      "bytes": 396,
+      "sha256": "4fc8772d7f02db728b10a4a179fae3c206f07ec8d871aa03bef86c288c165b70",
+      "mode": "0600"
+    }
+  ]
+}

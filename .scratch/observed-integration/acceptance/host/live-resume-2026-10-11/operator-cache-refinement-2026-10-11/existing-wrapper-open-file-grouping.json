@@ -1,0 +1,13 @@
+{
+  "source": ".scratch/observed-integration/acceptance/host/live-resume-2026-10-11/cache-activity-draft/candidate-02.stdout.bin",
+  "sourceSha256": "7896a6448f8526772f6530f1b7e4592e8a18db2d9d9370cb93f16f5197d14527",
+  "activityManifestSha256": "f11f073444b452848c609a27f261db431d0e5b13bc884b18a82a06e9b5499d65",
+  "positiveRecordCount": 296,
+  "immediateGroups": {
+    "gradle-9.1.0-bin": 296
+  },
+  "depth2Groups": {
+    "gradle-9.1.0-bin/9agqghryom9wkf8r80qlhnts3": 296
+  },
+  "qualification": "Existing positive records only, no new native query. Missing groups are not inactivity proof or removal authorization; whole wrapper root remains excluded."
+}

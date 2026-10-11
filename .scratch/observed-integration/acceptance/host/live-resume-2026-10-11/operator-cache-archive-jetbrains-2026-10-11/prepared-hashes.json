@@ -1,0 +1,55 @@
+{
+  "sealedAtUtc": "2026-10-11T05:44:46.012623+00:00",
+  "scope": "All exact archive preparation and preserved failed checks except this manifest",
+  "directoriesMode": "0700",
+  "files": [
+    {
+      "path": "accepted-exact-candidate-check.json",
+      "bytes": 3074,
+      "sha256": "55af68ce2982907a982c5bbcd24c78a3f32a54dd7a589898f4217f9e6bbd3588",
+      "mode": "0600"
+    },
+    {
+      "path": "execution-claimed.json",
+      "bytes": 1179,
+      "sha256": "d3dc7bcf1b7b335b7f7c95887c4368710c5845357b037a39f3050a9d609275bd",
+      "mode": "0600"
+    },
+    {
+      "path": "execution-request.json",
+      "bytes": 1251,
+      "sha256": "3366f19c632e6be0815ac1b19d70d3da7cb6d85b4da854e2d0f78e924ccf063d",
+      "mode": "0600"
+    },
+    {
+      "path": "preparation-check-after-root-mode-fix.json",
+      "bytes": 2880,
+      "sha256": "3f443f4e0a37fb532445add7d92d455f25b3361369ccef905a86fbeb6c26e1f4",
+      "mode": "0600"
+    },
+    {
+      "path": "preparation-checks-round1.json",
+      "bytes": 3538,
+      "sha256": "1d0d733c0933afc88b8f7a0c4697f21dee6d68865965d5f608fb70d5e8f449a3",
+      "mode": "0600"
+    },
+    {
+      "path": "preparation-corrections.json",
+      "bytes": 723,
+      "sha256": "3c6ea2bcb01993e28e9e7c289107a5fbe45b6a314d4191d8825f571af251ffc8",
+      "mode": "0600"
+    },
+    {
+      "path": "reviewed-archive-cache.py",
+      "bytes": 16787,
+      "sha256": "1b585f7616e3856749f9d6457bb494f3283f496f174d14f1ecbfc65965635bb3",
+      "mode": "0600"
+    },
+    {
+      "path": "reviewed-jetbrains-plan.json",
+      "bytes": 1165,
+      "sha256": "886c24962acf52ba5d47b2958f5038470bbde7a5d1414cc73f2c879b0171689c",
+      "mode": "0600"
+    }
+  ]
+}

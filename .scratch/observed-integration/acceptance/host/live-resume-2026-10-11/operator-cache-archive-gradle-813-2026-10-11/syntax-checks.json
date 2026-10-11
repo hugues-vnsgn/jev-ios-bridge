@@ -1,0 +1,40 @@
+[
+  {
+    "status": "fulfilled",
+    "value": {
+      "directory": ".scratch/observed-integration/acceptance/host/live-resume-2026-10-11/operator-cache-archive-gradle-813-2026-10-11",
+      "name": "commands.mjs",
+      "request": {
+        "cmd": "/usr/bin/env -i HOME=/Users/hugues_mini PATH=/usr/bin:/bin:/usr/sbin:/sbin LANG=C LC_ALL=C TZ=UTC /opt/homebrew/Cellar/node/26.8.1/bin/node --check .scratch/observed-integration/acceptance/host/live-resume-2026-10-11/operator-cache-archive-gradle-813-2026-10-11/commands.mjs",
+        "login": false,
+        "max_output_tokens": 1500
+      },
+      "result": {
+        "chunk_id": "910eb3",
+        "wall_time_seconds": 8.584e-06,
+        "exit_code": 0,
+        "original_token_count": 0,
+        "output": ""
+      }
+    }
+  },
+  {
+    "status": "fulfilled",
+    "value": {
+      "directory": ".scratch/observed-integration/acceptance/host/live-resume-2026-10-11/operator-cache-archive-gradle-813-2026-10-11",
+      "name": "run-fresh-root.mjs",
+      "request": {
+        "cmd": "/usr/bin/env -i HOME=/Users/hugues_mini PATH=/usr/bin:/bin:/usr/sbin:/sbin LANG=C LC_ALL=C TZ=UTC /opt/homebrew/Cellar/node/26.8.1/bin/node --check .scratch/observed-integration/acceptance/host/live-resume-2026-10-11/operator-cache-archive-gradle-813-2026-10-11/run-fresh-root.mjs",
+        "login": false,
+        "max_output_tokens": 1500
+      },
+      "result": {
+        "chunk_id": "22a152",
+        "wall_time_seconds": 4.792e-06,
+        "exit_code": 0,
+        "original_token_count": 0,
+        "output": ""
+      }
+    }
+  }
+]

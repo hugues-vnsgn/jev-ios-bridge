@@ -1,0 +1,109 @@
+{
+  "entries": [
+    {
+      "path": "execution-request.json",
+      "bytes": 915,
+      "sha256": "9227878752d8cc82bd43cd9b7ed69fea330218a413824e983b770398350ada44"
+    },
+    {
+      "path": "execution-tool-receipts.json",
+      "bytes": 2321,
+      "sha256": "d37e0a8917b08fa4741e1a8c08d5e61fcdfce48073ca47eff5dbabd1d8f753c0"
+    },
+    {
+      "path": "external-evidence/activity-evidence-binding.json",
+      "bytes": 419,
+      "sha256": "68ac417ea80604a410858ec994cbd01e6db1c0c349d3133e0ba54b532fae7bfb"
+    },
+    {
+      "path": "external-evidence/completion.json",
+      "bytes": 1696,
+      "sha256": "665795230eff5383fc46ce5960c458fe25890b6b8b70e01a87a612268a065144"
+    },
+    {
+      "path": "external-evidence/mount-after.json",
+      "bytes": 5495,
+      "sha256": "6d59fba71188f831f610738296d99ad41c87f8432196ee2dd6e1fbc96fa92c51"
+    },
+    {
+      "path": "external-evidence/mount-before.json",
+      "bytes": 5495,
+      "sha256": "8a27a774a832bc44f7b493d817677b630989409d3f7c4d6a9b3ae41a75d6d7a9"
+    },
+    {
+      "path": "external-evidence/operations.jsonl",
+      "bytes": 1740,
+      "sha256": "8d998ae65a48bcdbeb22b958865bb058ed82bcb51ce3f418120dbb6097d1b379"
+    },
+    {
+      "path": "external-evidence/plan.json",
+      "bytes": 1971,
+      "sha256": "f2f1b5c2e05192cb43a680e7a77589e8cd5eee1b6ac0edddf4efeb55d22d688c"
+    },
+    {
+      "path": "external-evidence/ps-before.json",
+      "bytes": 201995,
+      "sha256": "aee92378df196292343e0553352b92325b5f1532807e27a4e9d5e894dbdeb839"
+    },
+    {
+      "path": "external-evidence/result.json",
+      "bytes": 939,
+      "sha256": "a5088f6fee44566eba00d204a115e6ca57dd8bb0bb1ea00dec771d36b185f1e7"
+    },
+    {
+      "path": "external-readback-receipts.json",
+      "bytes": 4706,
+      "sha256": "8e81e698abe47d3dc5c51de9ea0242257b744a78d9258074dbd2d4be411a69b6"
+    },
+    {
+      "path": "final-verification.json",
+      "bytes": 594,
+      "sha256": "2d54881b91c06ccf7fca5cae0a630ba9e7290d97f71b38a1474ea07f5d5e66da"
+    },
+    {
+      "path": "once-submission-claim.json",
+      "bytes": 171,
+      "sha256": "2dcaf569b769175f70222af112d1a532b0e67b0c8528e8598fc9ce2f0e0a9934"
+    },
+    {
+      "path": "preparation-checks.json",
+      "bytes": 4501,
+      "sha256": "53dd814f6318b5ebdc3b1b5748b5afc55a9e62e61bfbbbd843106a2e3fbd022a"
+    },
+    {
+      "path": "prepared-hashes.json",
+      "bytes": 1160,
+      "sha256": "09f6e43ddcb61f7ed95a93856cf23de3c0c83abac0a3c28a0c6dd4517dd7d1bb"
+    },
+    {
+      "path": "readback-tool-return.json",
+      "bytes": 4526,
+      "sha256": "9c2313a0d46d8779e0463a7837f1c248d22b503424f6c26618c94c6a32580f5a"
+    },
+    {
+      "path": "report.md",
+      "bytes": 2367,
+      "sha256": "75a00ef73a6762c4d94003227e74415d514891ff9a1bcd005f448a49d600b798"
+    },
+    {
+      "path": "retire-gradle-version.py",
+      "bytes": 22797,
+      "sha256": "d419cf8d307b3c202392fa7b28410112a504b1b641441c1291c5ed046349ffba"
+    },
+    {
+      "path": "root-gradle-813-archive-audit.json",
+      "bytes": 1291,
+      "sha256": "63866ceb7e3cddfce072274a100ad09416d1dfdc0e7c63f98bde2ab76207ad63"
+    },
+    {
+      "path": "root-gradle-813-rename-plan.json",
+      "bytes": 1971,
+      "sha256": "30296fa1c688faf14f9c4db8e65aab60504d1daf22b39a35e7959da0e7208817"
+    },
+    {
+      "path": "root-gradle-813-rename-review.json",
+      "bytes": 397,
+      "sha256": "7cf809a0ff869cc3d902d5fcada5d192ed1bedca13891920e4d8eefe47e7283f"
+    }
+  ]
+}

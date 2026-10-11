@@ -1,0 +1,79 @@
+{
+  "sealedAtUtc": "2026-10-11T04:59:05.470017+00:00",
+  "scope": "All ownership-only prepared evidence except manifest itself, before native attempt",
+  "directoriesMode": "0700",
+  "files": [
+    {
+      "path": "commands.mjs",
+      "bytes": 4262,
+      "sha256": "04b19768122f326b43e49bdb0fcf28797b3a8187c97f80bc69f11f28999a97f9",
+      "mode": "0600"
+    },
+    {
+      "path": "manual-binding.json",
+      "bytes": 534,
+      "sha256": "e538ace19524932a9e38ede57102f2a637481fef4a3c8c962c139571a6971761",
+      "mode": "0600"
+    },
+    {
+      "path": "ownership-manual-excerpt.txt",
+      "bytes": 5704,
+      "sha256": "01eeffc7964731fe4219e849cff7eb220250845d7333132c6a6ca84c0212b48f",
+      "mode": "0600"
+    },
+    {
+      "path": "parse-sam-plist.py",
+      "bytes": 990,
+      "sha256": "a3028c2e9f5ff593811e06711d1972186729cfdd44f2a30804a3a6f06166f124",
+      "mode": "0600"
+    },
+    {
+      "path": "preparation-binding.json",
+      "bytes": 773,
+      "sha256": "b3c329b89a7262f78e34323b974ce5ad4516c47fe06860a858d638d33cd255a3",
+      "mode": "0600"
+    },
+    {
+      "path": "preparation-report.md",
+      "bytes": 1457,
+      "sha256": "808d38f405726f34901ad4a394afbe8167e0f49a82d5b80b04d2aaace379b8c8",
+      "mode": "0600"
+    },
+    {
+      "path": "proposed-escalation-request.json",
+      "bytes": 1041,
+      "sha256": "21792cc3959bcff430d72510880dff6fa71baafd4050d66ae7d8812fad221c94",
+      "mode": "0600"
+    },
+    {
+      "path": "root-approved-snapshot.json",
+      "bytes": 621,
+      "sha256": "4583203b3820b4527850ca3696d15757fed46a3e636556297fe3bb36be6f8077",
+      "mode": "0600"
+    },
+    {
+      "path": "run-ownership.mjs",
+      "bytes": 6093,
+      "sha256": "3cf7f328fb04d16dcee6e7c211036a0a691aac298679970d9c66d259474f5870",
+      "mode": "0600"
+    },
+    {
+      "path": "sealed-sam-binding.json",
+      "bytes": 386,
+      "sha256": "bcfb7dabde5b55f2f6c3e6f346a3a6ee40bbbab43516d22bb8218ed7dba64e71",
+      "mode": "0600"
+    },
+    {
+      "path": "sealed-sam-facts.json",
+      "bytes": 2212,
+      "sha256": "7b863824b6e7c1cbd2b495bc6b9d3aa124e449dda31b2afc1ce8ee147b17820c",
+      "mode": "0600"
+    },
+    {
+      "path": "syntax-checks.json",
+      "bytes": 627,
+      "sha256": "fc837654f8228876fa657cae715caf5e75ce1ffe368c476b956a849da425daf3",
+      "mode": "0600"
+    }
+  ]
+}

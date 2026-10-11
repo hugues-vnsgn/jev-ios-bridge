@@ -1,0 +1,163 @@
+{
+  "receipts": [
+    {
+      "request": {
+        "cmd": "/usr/bin/env -i HOME=/Users/hugues_mini PATH=/usr/bin:/bin:/usr/sbin:/sbin LANG=C LC_ALL=C TZ=UTC /opt/homebrew/bin/python3 .scratch/observed-integration/acceptance/host/live-resume-2026-10-11/cache-archive-draft/archive-cache.py .scratch/observed-integration/acceptance/host/live-resume-2026-10-11/cache-archive-draft/gradle-813-plan.json 683551f5779c8367a17d22c0e10c29c0cff55fc1dd5170cec0f013290b2cb927",
+        "login": false,
+        "sandbox_permissions": "require_escalated",
+        "justification": "Allow the once Root-approved source-retained archive of only /Users/hugues_mini/.gradle/caches/8.13 into its exact private Sam archive directory, after the fresh clean lsof close? The frozen script verifies contents, links and unchanged source, limits source/archive to 12 GiB and retains an 81-GiB external reserve; no deletion, retirement, or Gradle process operation.",
+        "yield_time_ms": 1000,
+        "max_output_tokens": 5000
+      },
+      "result": {
+        "chunk_id": "8f299f",
+        "wall_time_seconds": 1.000675875,
+        "session_id": 28841,
+        "original_token_count": 0,
+        "output": ""
+      }
+    },
+    {
+      "request": {
+        "session_id": 28841,
+        "chars": "",
+        "yield_time_ms": 30000,
+        "max_output_tokens": 5000
+      },
+      "result": {
+        "chunk_id": "eb00ee",
+        "wall_time_seconds": 30.002559083,
+        "session_id": 28841,
+        "original_token_count": 0,
+        "output": ""
+      }
+    },
+    {
+      "request": {
+        "session_id": 28841,
+        "chars": "",
+        "yield_time_ms": 30000,
+        "max_output_tokens": 5000
+      },
+      "result": {
+        "chunk_id": "8eee97",
+        "wall_time_seconds": 30.00211225,
+        "session_id": 28841,
+        "original_token_count": 0,
+        "output": ""
+      }
+    },
+    {
+      "request": {
+        "session_id": 28841,
+        "chars": "",
+        "yield_time_ms": 30000,
+        "max_output_tokens": 5000
+      },
+      "result": {
+        "chunk_id": "980cd2",
+        "wall_time_seconds": 30.00352725,
+        "session_id": 28841,
+        "original_token_count": 0,
+        "output": ""
+      }
+    },
+    {
+      "request": {
+        "session_id": 28841,
+        "chars": "",
+        "yield_time_ms": 30000,
+        "max_output_tokens": 5000
+      },
+      "result": {
+        "chunk_id": "d0e944",
+        "wall_time_seconds": 30.001259541,
+        "session_id": 28841,
+        "original_token_count": 0,
+        "output": ""
+      }
+    },
+    {
+      "request": {
+        "session_id": 28841,
+        "chars": "",
+        "yield_time_ms": 30000,
+        "max_output_tokens": 5000
+      },
+      "result": {
+        "chunk_id": "f155a9",
+        "wall_time_seconds": 30.003006625,
+        "session_id": 28841,
+        "original_token_count": 0,
+        "output": ""
+      }
+    },
+    {
+      "request": {
+        "session_id": 28841,
+        "chars": "",
+        "yield_time_ms": 30000,
+        "max_output_tokens": 5000
+      },
+      "result": {
+        "chunk_id": "90032d",
+        "wall_time_seconds": 30.001362166,
+        "session_id": 28841,
+        "original_token_count": 0,
+        "output": ""
+      }
+    },
+    {
+      "request": {
+        "session_id": 28841,
+        "chars": "",
+        "yield_time_ms": 30000,
+        "max_output_tokens": 5000
+      },
+      "result": {
+        "chunk_id": "183edd",
+        "wall_time_seconds": 30.000949333,
+        "session_id": 28841,
+        "original_token_count": 0,
+        "output": ""
+      }
+    },
+    {
+      "request": {
+        "session_id": 28841,
+        "chars": "",
+        "yield_time_ms": 30000,
+        "max_output_tokens": 5000
+      },
+      "result": {
+        "chunk_id": "917a3b",
+        "wall_time_seconds": 30.003179833,
+        "session_id": 28841,
+        "original_token_count": 0,
+        "output": ""
+      }
+    },
+    {
+      "request": {
+        "session_id": 28841,
+        "chars": "",
+        "yield_time_ms": 30000,
+        "max_output_tokens": 5000
+      },
+      "result": {
+        "chunk_id": "1b3b37",
+        "wall_time_seconds": 27.948025625,
+        "exit_code": 0,
+        "original_token_count": 0,
+        "output": ""
+      }
+    }
+  ],
+  "submissionPreparation": {
+    "chunk_id": "040626",
+    "wall_time_seconds": 6.833e-06,
+    "exit_code": 0,
+    "original_token_count": 26,
+    "output": "{\"status\": \"FRESH_PROOF_ACCEPTED_COPY_SUBMISSION_CLAIMED\", \"closedAtUtc\": \"2026-10-11T06:13:59.676Z\"}\n"
+  }
+}

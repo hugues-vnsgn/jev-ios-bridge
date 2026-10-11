@@ -1,0 +1,9 @@
+{
+  "decision": "Root reviewed script as written and approved one supported execution after syntax checks",
+  "reviewedRunSha256": "f9fdccf85cc0ba59c796d149409d4f939d6fd384a8f9d7fce5c4d88efadc8b19",
+  "syntaxAllPassed": true,
+  "priorRecheckFilesRehashed": 28,
+  "priorRecheckMismatches": 0,
+  "activityArchiveDraftsRemainUnderReview": true,
+  "approvedCommand": "env -u TYPESAFE_API_KEY -u NODE_OPTIONS -u NODE_NO_WARNINGS /opt/homebrew/Cellar/node/26.8.1/bin/node .scratch/observed-integration/acceptance/host/live-resume-2026-10-11/operator-sam-namespace-preparation-2026-10-11/run-namespace.mjs --namespace-once-after-root-review"
+}

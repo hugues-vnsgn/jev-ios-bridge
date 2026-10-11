@@ -1,0 +1,11 @@
+{
+  "claimedAtUtc": "2026-10-11T05:20:53.672Z",
+  "budget": 1,
+  "argv": [
+    "/usr/sbin/lsof",
+    "-nP",
+    "-F0pcfn",
+    "+D",
+    "/Users/hugues_mini/Library/Caches/JetBrains"
+  ]
+}

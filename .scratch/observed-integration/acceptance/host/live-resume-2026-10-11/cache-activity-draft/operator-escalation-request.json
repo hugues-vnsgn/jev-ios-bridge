@@ -1,0 +1,8 @@
+{
+  "cmd": "env -u TYPESAFE_API_KEY -u NODE_OPTIONS -u NODE_NO_WARNINGS /opt/homebrew/Cellar/node/26.8.1/bin/node .scratch/observed-integration/acceptance/host/live-resume-2026-10-11/cache-activity-draft/run-probe.mjs --read-only-once-after-root-review",
+  "login": false,
+  "sandbox_permissions": "require_escalated",
+  "justification": "Allow the Root-reviewed once read-only cache activity probe: one ps snapshot requesting PID, UID and executable names only, immediate npm entry names, and nine exact candidate lsof metadata snapshots, each command bounded to30s/2MiB with actual direct-child close capture? No cache content read, archive, deletion, source mutation, process stop or build. No-match does not authorize relocation.",
+  "yield_time_ms": 1000,
+  "max_output_tokens": 4000
+}

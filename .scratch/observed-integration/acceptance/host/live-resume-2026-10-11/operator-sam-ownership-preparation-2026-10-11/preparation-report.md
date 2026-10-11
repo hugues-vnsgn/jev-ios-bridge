@@ -1,0 +1,7 @@
+# Approved ownership-only preparation
+
+Root and independent reviewer accepted the exact three pinned files in root-approved-snapshot.json. Original failed syntax source/receipt and corrected superseded namespace draft remain sealed separately; the superseded run-setup must never run. Ownership-only syntax and parser AST checks pass without execution.
+
+Installed manual confirms enableOwnership device and requires root. Proposed supported prompt uses one noninteractive sudo -n diskutil enableOwnership /Volumes/Sam, guarded by fresh sealed UUID/device/mount/HFS+/writable fields and nonsymlink bigint ancestor/ACL checks. Fresh same-volume typed verification follows only a clean successful direct sudo close. Command uncertainty has unresolved mutation state and no automatic recovery query. Only the direct sudo child close is observed; diskutil descendants are unobserved. No mount/unmount/repartition commands, no Sam mkdir/open/chmod, no recursive permission changes, no copy/remove/build/device operations. Exact Sam root remains0775/staff-group writable pending separate Root permission repair and namespace review.
+
+Supported require_escalated invocation is in proposed-escalation-request.json. All native commands deadline10s/output64KiB/shellfalse, TERM then250ms KILL if necessary with direct-child actual close capture. Native-effects budget unused at preparation seal. New actual outcome must be sealed separately, preserving this manifest.

@@ -1,0 +1,30 @@
+[
+  {
+    "status": "fulfilled",
+    "value": {
+      "label": "retirement AST syntax without pycache",
+      "cmd": "/usr/bin/env -i HOME=/Users/hugues_mini PATH=/usr/bin:/bin:/usr/sbin:/sbin LANG=C LC_ALL=C TZ=UTC /opt/homebrew/bin/python3 -c 'import ast,pathlib;ast.parse(pathlib.Path(\".scratch/observed-integration/acceptance/host/live-resume-2026-10-11/cache-retirement-draft/retire-cache.py\").read_text())'",
+      "toolResult": {
+        "chunk_id": "a47018",
+        "wall_time_seconds": 6.833e-06,
+        "exit_code": 0,
+        "original_token_count": 0,
+        "output": ""
+      }
+    }
+  },
+  {
+    "status": "fulfilled",
+    "value": {
+      "label": "exact delete script/plan/helper and accepted receipt pins",
+      "cmd": "/usr/bin/env -i HOME=/Users/hugues_mini PATH=/usr/bin:/bin:/usr/sbin:/sbin LANG=C LC_ALL=C TZ=UTC /opt/homebrew/bin/python3 -c 'import pathlib,json,hashlib,stat\nh=pathlib.Path(\".scratch/observed-integration/acceptance/host/live-resume-2026-10-11\");d=h/'\\''cache-retirement-draft'\\'';sha=lambda p:hashlib.sha256(p.read_bytes()).hexdigest()\nassert sha(d/'\\''retire-cache.py'\\'')=='\\''8ecbc0828c56c639aa09b0da0f0089902a994ac65677016bdb7f9e347e0c9cef'\\''\nassert sha(d/'\\''root-delete-plan.json'\\'')=='\\''3813ad5edba27b1df2d402b5c00d68b1d6d23f1d4f802697da65b265856388e8'\\''\nassert sha(h/'\\''cache-archive-draft/archive-cache.py'\\'')=='\\''1b585f7616e3856749f9d6457bb494f3283f496f174d14f1ecbfc65965635bb3'\\''\np=json.loads((d/'\\''root-delete-plan.json'\\'').read_bytes())\nassert p['\\''version'\\'']==1 and p['\\''mode'\\'']=='\\''delete'\\'' and p['\\''source'\\'']=='\\''/Users/hugues_mini/Library/Caches/JetBrains'\\''\nassert p['\\''archive_run'\\'']=='\\''jetbrains-2026-10-11-01'\\'' and p['\\''wrapper_name'\\'']=='\\''.jev-retired-jetbrains-2026-10-11-01'\\'' and p['\\''attempt'\\'']=='\\''2026-10-11-01'\\''\nassert p['\\''rename_evidence_name'\\'']=='\\''rename-2026-10-11-01'\\''\nassert p['\\''max_entries'\\'']==1000 and p['\\''max_depth'\\'']==128 and p['\\''max_source_bytes'\\'']==p['\\''max_archive_bytes'\\'']==8589934592\nassert p['\\''max_evidence_bytes'\\'']==16777216 and p['\\''max_journal_events'\\'']==10000 and p['\\''command_seconds'\\'']==30 and p['\\''total_seconds'\\'']==300\nm=h/'\\''operator-cache-retirement-rename-2026-10-11/external-evidence'\\''\nassert sha(m/'\\''result.json'\\'')==p['\\''rename_result_sha256'\\''] and sha(m/'\\''completion.json'\\'')==p['\\''rename_completion_sha256'\\'']\nassert sha(pathlib.Path(p['\\''activity_evidence_path'\\'']))==p['\\''activity_evidence_sha256'\\'']=='\\''dd7298d7c8094ac6c9950ee05b1e2cfda3a7efa44f9c706abe8ba6e621d14197'\\''\na=json.loads((h/'\\''root-jetbrains-archive-audit.json'\\'').read_bytes())\nassert p['\\''archive_sha256'\\'']==a['\\''archiveSha256'\\''] and p['\\''archive_result_sha256'\\'']==a['\\''evidenceSha256'\\'']['\\''result.json'\\''] and p['\\''archive_plan_sha256'\\'']==a['\\''evidenceSha256'\\'']['\\''plan.json'\\'']\nassert p['\\''source_before_sha256'\\'']==a['\\''evidenceSha256'\\'']['\\''source-before.json'\\''] and p['\\''source_after_sha256'\\'']==a['\\''evidenceSha256'\\'']['\\''source-after.json'\\'']\nprint(json.dumps({'\\''status'\\'':'\\''PREPARATION_PINS_PASS'\\'','\\''mode'\\'':'\\''delete'\\'','\\''planSha256'\\'':sha(d/'\\''root-delete-plan.json'\\''),'\\''scriptSha256'\\'':sha(d/'\\''retire-cache.py'\\''),'\\''limitsMatch'\\'':True,'\\''acceptedRenamePinsMatch'\\'':True,'\\''effectsExecuted'\\'':0}))\n'",
+      "toolResult": {
+        "chunk_id": "d063bd",
+        "wall_time_seconds": 4.333e-06,
+        "exit_code": 0,
+        "original_token_count": 74,
+        "output": "{\"status\": \"PREPARATION_PINS_PASS\", \"mode\": \"delete\", \"planSha256\": \"3813ad5edba27b1df2d402b5c00d68b1d6d23f1d4f802697da65b265856388e8\", \"scriptSha256\": \"8ecbc0828c56c639aa09b0da0f0089902a994ac65677016bdb7f9e347e0c9cef\", \"limitsMatch\": true, \"acceptedRenamePinsMatch\": true, \"effectsExecuted\": 0}\n"
+      }
+    }
+  }
+]

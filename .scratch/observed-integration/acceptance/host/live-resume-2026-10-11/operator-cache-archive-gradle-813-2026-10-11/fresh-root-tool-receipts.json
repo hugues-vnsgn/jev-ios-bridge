@@ -1,0 +1,34 @@
+[
+  {
+    "request": {
+      "cmd": "/usr/bin/env -i HOME=/Users/hugues_mini PATH=/usr/bin:/bin:/usr/sbin:/sbin LANG=C LC_ALL=C TZ=UTC /opt/homebrew/Cellar/node/26.8.1/bin/node .scratch/observed-integration/acceptance/host/live-resume-2026-10-11/operator-cache-archive-gradle-813-2026-10-11/run-fresh-root.mjs --fresh-root-once-after-root-review",
+      "login": false,
+      "sandbox_permissions": "require_escalated",
+      "justification": "Allow one read-only exact-root lsof snapshot of /Users/hugues_mini/.gradle/caches/8.13, bounded to 30 seconds and 2 MiB, with actual direct-child close recording? Root requires a clean no-match result before the source-retained archive; no Gradle process is started or stopped.",
+      "yield_time_ms": 1000,
+      "max_output_tokens": 3000
+    },
+    "result": {
+      "chunk_id": "415bde",
+      "wall_time_seconds": 1.002402334,
+      "session_id": 56734,
+      "original_token_count": 0,
+      "output": ""
+    }
+  },
+  {
+    "request": {
+      "session_id": 56734,
+      "chars": "",
+      "yield_time_ms": 1000,
+      "max_output_tokens": 3000
+    },
+    "result": {
+      "chunk_id": "0a1770",
+      "wall_time_seconds": 4.065366416,
+      "exit_code": 0,
+      "original_token_count": 153,
+      "output": "{\"status\":\"FRESH_EXACT_ROOT_NO_MATCH_CLOSED\",\"source\":\"/Users/hugues_mini/.gradle/caches/8.13\",\"scope\":\"Exact-root read-only lsof; no copy or removal\",\"qualification\":\"Point-in-time no-match is not atomic quiescence.\",\"before\":{\"dev\":\"16777233\",\"ino\":\"42722462\",\"uid\":\"501\",\"gid\":\"20\",\"mode\":\"16877\",\"size\":\"544\",\"nlink\":\"17\",\"mtime_ns\":\"1783656349963861858\",\"ctime_ns\":\"1783656349963861858\"},\"after\":{\"dev\":\"16777233\",\"ino\":\"42722462\",\"uid\":\"501\",\"gid\":\"20\",\"mode\":\"16877\",\"size\":\"544\",\"nlink\":\"17\",\"mtime_ns\":\"1783656349963861858\",\"ctime_ns\":\"1783656349963861858\"},\"receipt\":\"fresh-root-lsof-receipt.json\"}\n"
+    }
+  }
+]

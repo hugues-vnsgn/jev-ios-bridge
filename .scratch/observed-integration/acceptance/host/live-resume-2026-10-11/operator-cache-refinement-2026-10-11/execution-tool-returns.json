@@ -1,0 +1,23 @@
+[
+  {
+    "chunk_id": "b3a620",
+    "wall_time_seconds": 1.000431125,
+    "session_id": 35898,
+    "original_token_count": 0,
+    "output": ""
+  },
+  {
+    "chunk_id": "ee6804",
+    "wall_time_seconds": 5.001012958,
+    "session_id": 35898,
+    "original_token_count": 0,
+    "output": ""
+  },
+  {
+    "chunk_id": "15c154",
+    "wall_time_seconds": 13.116996041,
+    "exit_code": 0,
+    "original_token_count": 174,
+    "output": "{\"status\":\"READ_ONLY_ATTRIBUTION_COMPLETE\",\"observations\":[{\"name\":\"gradle-depth2\",\"receipt\":\"gradle-depth2-receipt.json\",\"ok\":true,\"exitCode\":0,\"closedAtUtc\":\"2026-10-11T05:25:10.650Z\"},{\"name\":\"other-seven\",\"receipt\":\"other-seven-receipt.json\",\"ok\":true,\"exitCode\":0,\"closedAtUtc\":\"2026-10-11T05:25:13.777Z\"}],\"completedAtUtc\":\"2026-10-11T05:25:13.778Z\",\"qualification\":\"du -P allocated KiB totals are point-in-time metadata attribution, not unique/reclaimable byte guarantees or inactivity proof. Gradle whole roots remain excluded; no-match does not authorize relocation.\",\"sourceMutations\":0,\"dataCopies\":0,\"deletions\":0,\"processStops\":0,\"builds\":0,\"operatorState\":\"IDLE_FOR_ROOT_AUDIT\"}\n"
+  }
+]

@@ -1,0 +1,36 @@
+{
+  "verdict": "NO_GO",
+  "reviewer": "/root/sam_setup_review",
+  "reviewedHashes": {
+    "receipts.mjs": "b641552c12fa5234a5e75f23db29351f82a0f7772d5ae1bf5aa754a19b0b57a3",
+    "dispatch.json": "7ac215d706e567aecfba37daf434fabcd924a75c5c8d3f8c8b8a91778c3823d3",
+    "l04-callback-decision.mjs": "5335164b12e508b59f4e17717dcd4815aa21b224bb323388695a403b689c0bc4",
+    "controller.mjs": "5ba14cf5c8680e30681bc0084aabd802cd30a06f1629384467c4fc13d2ae2c80",
+    "README.md": "38a7cdf457291581e9104008714274e91543b7e752bda8753045bda58aa90893",
+    "process-preload.mjs": "24cd7a2329411a8b994fe6ab4ab07cfedc6685583acddf2b74615cd536036ac4",
+    "command-policy.mjs": "50a787e667762e89ab041504a72d0d6cf239ff33de658385be56491d16a36604"
+  },
+  "mode": "Source-only; no execution or tests.",
+  "findings": [
+    {
+      "priority": "P1",
+      "file": "command-policy.mjs:32",
+      "issue": "Staged plist requires allocation identity bound only by later create; first preparation rejects after reservation."
+    },
+    {
+      "priority": "P1",
+      "file": "controller.mjs:138",
+      "issue": "Key-free CLIrun refuses before legacy admission; use reviewed key-free public MCPpath."
+    },
+    {
+      "priority": "P2",
+      "file": "controller.mjs:117",
+      "issue": "Ready result immediately starts action; required persisted-readiness inspection gate absent."
+    },
+    {
+      "priority": "P2",
+      "file": "controller.mjs",
+      "issue": "CLI replies parsed without exact public-contract exit-code validation."
+    }
+  ]
+}

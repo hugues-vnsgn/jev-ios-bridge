@@ -1,0 +1,23 @@
+{
+  "status": "GRADLE_971_ARCHIVE_ACCEPTED_SOURCE_RETAINED",
+  "archivePath": "/Volumes/Sam/jev-ios-bridge-release-2026-10-11/archive/gradle-971-2026-10-11-01/cache.tar.gz",
+  "archiveSha256": "db865535fe48c199ffb15589797fdf17fed57d07272b5a216fd2482fda4d3900",
+  "archiveBytes": 2674073600,
+  "entries": 289479,
+  "sourceManifestsMatch": true,
+  "sourceManifestBytes": 117090051,
+  "sourceRemovals": 0,
+  "evidenceSha256": {
+    "result.json": "b537efb21305d74e38294c3646fed16beab2ab89ccc524d6827c706bab7e0ed8",
+    "source-before.json": "774b21d13509a2cffd82ed17a111470289b183d3039b6dac4acd30dd4ea20baa",
+    "source-after.json": "774b21d13509a2cffd82ed17a111470289b183d3039b6dac4acd30dd4ea20baa",
+    "plan.json": "4bffa7191bf6b3d3b3e8ee912d011d886fd7a89ddc93de50df1e91f427c2c452",
+    "cache.tar.gz": "db865535fe48c199ffb15589797fdf17fed57d07272b5a216fd2482fda4d3900"
+  },
+  "qualification": "Independent streamedSHA checks; frozenarchivehelper fullcontent/path verification. Large manifests retained on Sam.",
+  "at": "2026-10-11T06:32:54.344210+00:00",
+  "operatorBundle": {
+    "sealSha256": "e8387cefe9a8d0628f05b5ec634e9cc78eef97e9249dfcf96504f2fc80cbce41",
+    "filesVerified": 29
+  }
+}

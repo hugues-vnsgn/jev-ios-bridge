@@ -1,0 +1,71 @@
+{
+  "status": "MOUNTED_DISTINCT_WRITABLE_VOLUME_WITH_AT_LEAST_70_GIB",
+  "observedAtUtc": "2026-10-11T04:33:21.507Z",
+  "samPath": "/Volumes/Sam",
+  "exactMountPointConfirmed": true,
+  "distinctStatDevice": true,
+  "samAvailableBytes": 136483442688,
+  "requiredStagingBytes": 75161927680,
+  "samStagingMarginBytes": 61321515008,
+  "samAvailableGiB": 127.11011123657227,
+  "writableFlags": {
+    "Writable": true,
+    "WritableMedia": true,
+    "WritableVolume": true
+  },
+  "filesystem": {
+    "FilesystemType": "hfs",
+    "FilesystemName": "Journaled HFS+",
+    "FilesystemUserVisibleName": "Mac OS Extended (Journaled)"
+  },
+  "ownership": {
+    "GlobalPermissionsEnabled": false,
+    "SupportsGlobalPermissionsDisable": true,
+    "qualification": "diskutil reports global permission controls, currently disabled; no write or permission-enforcement test was performed."
+  },
+  "samIdentity": {
+    "dev": "16777242",
+    "ino": "2",
+    "uid": "501",
+    "gid": "20",
+    "mode": "16893",
+    "size": "986",
+    "nlink": "27",
+    "mtimeNs": "1791692519000000000",
+    "ctimeNs": "1791692519000000000",
+    "permissions": "775",
+    "directory": true,
+    "symlink": false
+  },
+  "deviceIdentity": {
+    "DeviceIdentifier": "disk6s3",
+    "DeviceNode": "/dev/disk6s3",
+    "ParentWholeDisk": "disk6",
+    "DiskUUID": "9776C4A9-99F0-4B06-A2A9-E097A2709E25",
+    "VolumeUUID": "48570675-F94C-3532-89D3-B005FDCF8334"
+  },
+  "simulatorIdentity": {
+    "dev": "16777233",
+    "ino": "32301688",
+    "uid": "501",
+    "gid": "20",
+    "mode": "16877",
+    "size": "160",
+    "nlink": "5",
+    "mtimeNs": "1778215852399288143",
+    "ctimeNs": "1778215852399288143",
+    "permissions": "755",
+    "directory": true,
+    "symlink": false
+  },
+  "simulatorAvailableBytes": 21806772224,
+  "simulatorAvailableGiB": 20.309139251708984,
+  "unchangedSimulatorRequirementBytes": 64424509440,
+  "simulatorShortfallBytes": 42617737216,
+  "overallEntryStorageResolved": false,
+  "relocationSupported": "Not established",
+  "diagnosticCalls": 1,
+  "actualDiskutilClose": "2026-10-11T04:33:21.506Z",
+  "rawPlistSha256": "5681eeaa56d555e660a3adebd15a018877c3395d3c80bcea4ca27bc3483113fc",
+  "operatorState": "IDLE_FOR_ROOT_AUDIT"
+}

@@ -1,0 +1,53 @@
+{
+  "status": "COMPLETE",
+  "observedAtUtc": "2026-10-11T04:45:20.761Z",
+  "sortedTotals": [
+    {
+      "path": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge",
+      "allocatedKiB": 18215308,
+      "allocatedBytes": 18652475392,
+      "allocatedGiB": 17.371471405029297
+    },
+    {
+      "path": "/Users/hugues_mini/Library/Caches",
+      "allocatedKiB": 10679420,
+      "allocatedBytes": 10935726080,
+      "allocatedGiB": 10.184688568115234
+    },
+    {
+      "path": "/Users/hugues_mini/Downloads",
+      "allocatedKiB": 679636,
+      "allocatedBytes": 695947264,
+      "allocatedGiB": 0.6481513977050781
+    },
+    {
+      "path": "/Users/hugues_mini/Desktop",
+      "allocatedKiB": 269228,
+      "allocatedBytes": 275689472,
+      "allocatedGiB": 0.2567558288574219
+    },
+    {
+      "path": "/Users/hugues_mini/Movies",
+      "allocatedKiB": 68,
+      "allocatedBytes": 69632,
+      "allocatedGiB": 6.4849853515625e-05
+    },
+    {
+      "path": "/Users/hugues_mini/Library/Developer/Xcode/DerivedData",
+      "allocatedKiB": 0,
+      "allocatedBytes": 0,
+      "allocatedGiB": 0.0
+    }
+  ],
+  "missingPaths": [],
+  "deniedPaths": [],
+  "nestedOverlapsAmongSixRoots": [],
+  "overlapWithEarlierEvidence": "The Orca project-workspace parent includes the integration workspace and its .scratch/node_modules totals already recorded; do not add those previous nested totals to this parent.",
+  "allocationQualifier": "du allocated blocks are not unique/reclaimable bytes; cross-path hard-link deduplication, clones/shared extents and concurrent changes may affect totals. No additive aggregate or file suitability proof is claimed.",
+  "excludedFromRelocation": "Active worktrees, protected stores/unknown guards, CoreSimulator and all evidence remain excluded. The authorized aggregate workspace scan does not authorize their movement.",
+  "actualClose": "2026-10-11T04:45:20.761Z",
+  "durationSeconds": 51.697,
+  "duCalls": 1,
+  "samEvidencePreserved": true,
+  "operatorState": "STOPPED_FOR_EXACT_RELOCATION_SCOPE"
+}

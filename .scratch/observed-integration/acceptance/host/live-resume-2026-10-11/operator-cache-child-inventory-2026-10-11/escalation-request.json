@@ -1,0 +1,8 @@
+{
+  "cmd": "env -u TYPESAFE_API_KEY -u NODE_OPTIONS -u NODE_NO_WARNINGS /opt/homebrew/Cellar/node/26.8.1/bin/node .scratch/observed-integration/acceptance/host/live-resume-2026-10-11/operator-cache-child-inventory-2026-10-11/run.mjs --read-only-once",
+  "login": false,
+  "sandbox_permissions": "require_escalated",
+  "justification": "Allow the already authorized metadata-only du -k -d 1 -P inventory of exactly .gradle, Library/Caches and .cache, with a 180-second deadline and 64 KiB cap? All prior direct children closed. No file contents, inactivity probes, cache deletion/moves, Sam ownership retry, namespace/permission work, builds or device operations will run.",
+  "yield_time_ms": 1000,
+  "max_output_tokens": 3000
+}

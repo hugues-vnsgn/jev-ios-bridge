@@ -1,0 +1,128 @@
+{
+  "completedAtUtc": "2026-10-11T05:20:58.103Z",
+  "candidates": [
+    {
+      "path": "/Users/hugues_mini/.gradle/caches",
+      "classification": "OPEN_FILES_OBSERVED",
+      "records": {
+        "valid": true,
+        "processes": 2,
+        "files": 211
+      },
+      "matchedExecutableNames": [
+        "java"
+      ],
+      "wholeRootExcludedFromArchiveRemoval": true,
+      "relocationAuthorized": false,
+      "noMatchQualifier": "Momentary no-match only; not inactivity or removal authorization."
+    },
+    {
+      "path": "/Users/hugues_mini/.gradle/wrapper/dists",
+      "classification": "OPEN_FILES_OBSERVED",
+      "records": {
+        "valid": true,
+        "processes": 1,
+        "files": 296
+      },
+      "matchedExecutableNames": [
+        "java"
+      ],
+      "wholeRootExcludedFromArchiveRemoval": true,
+      "relocationAuthorized": false,
+      "noMatchQualifier": "Momentary no-match only; not inactivity or removal authorization."
+    },
+    {
+      "path": "/Users/hugues_mini/Library/Caches/JetBrains",
+      "classification": "NO_MATCH_OBSERVED",
+      "records": {
+        "valid": true,
+        "processes": 0,
+        "files": 0
+      },
+      "matchedExecutableNames": [],
+      "wholeRootExcludedFromArchiveRemoval": false,
+      "relocationAuthorized": false,
+      "noMatchQualifier": "Momentary no-match only; not inactivity or removal authorization."
+    },
+    {
+      "path": "/Users/hugues_mini/Library/Caches/org.swift.swiftpm",
+      "classification": "NO_MATCH_OBSERVED",
+      "records": {
+        "valid": true,
+        "processes": 0,
+        "files": 0
+      },
+      "matchedExecutableNames": [],
+      "wholeRootExcludedFromArchiveRemoval": false,
+      "relocationAuthorized": false,
+      "noMatchQualifier": "Momentary no-match only; not inactivity or removal authorization."
+    },
+    {
+      "path": "/Users/hugues_mini/.npm/_cacache",
+      "classification": "NO_MATCH_OBSERVED",
+      "records": {
+        "valid": true,
+        "processes": 0,
+        "files": 0
+      },
+      "matchedExecutableNames": [],
+      "wholeRootExcludedFromArchiveRemoval": false,
+      "relocationAuthorized": false,
+      "noMatchQualifier": "Momentary no-match only; not inactivity or removal authorization."
+    },
+    {
+      "path": "/Users/hugues_mini/.cache/uv",
+      "classification": "NO_MATCH_OBSERVED",
+      "records": {
+        "valid": true,
+        "processes": 0,
+        "files": 0
+      },
+      "matchedExecutableNames": [],
+      "wholeRootExcludedFromArchiveRemoval": false,
+      "relocationAuthorized": false,
+      "noMatchQualifier": "Momentary no-match only; not inactivity or removal authorization."
+    },
+    {
+      "path": "/Users/hugues_mini/.cache/bazel-repo-contents-cache",
+      "classification": "NO_MATCH_OBSERVED",
+      "records": {
+        "valid": true,
+        "processes": 0,
+        "files": 0
+      },
+      "matchedExecutableNames": [],
+      "wholeRootExcludedFromArchiveRemoval": false,
+      "relocationAuthorized": false,
+      "noMatchQualifier": "Momentary no-match only; not inactivity or removal authorization."
+    },
+    {
+      "path": "/Users/hugues_mini/.cache/bazel-repo-cache",
+      "classification": "NO_MATCH_OBSERVED",
+      "records": {
+        "valid": true,
+        "processes": 0,
+        "files": 0
+      },
+      "matchedExecutableNames": [],
+      "wholeRootExcludedFromArchiveRemoval": false,
+      "relocationAuthorized": false,
+      "noMatchQualifier": "Momentary no-match only; not inactivity or removal authorization."
+    },
+    {
+      "path": "/Users/hugues_mini/.cache/huggingface",
+      "classification": "NO_MATCH_OBSERVED",
+      "records": {
+        "valid": true,
+        "processes": 0,
+        "files": 0
+      },
+      "matchedExecutableNames": [],
+      "wholeRootExcludedFromArchiveRemoval": false,
+      "relocationAuthorized": false,
+      "noMatchQualifier": "Momentary no-match only; not inactivity or removal authorization."
+    }
+  ],
+  "rootDecision": "Exclude both whole Gradle caches and wrapper distribution roots from archive/removal",
+  "qualification": "No-match is only a momentary observation under this process visibility. It does not prove inactivity, future quiescence, complete system process visibility, or authorize relocation. Ancestor checks do not eliminate pathname races. No cache contents were read by this script; lsof walks metadata."
+}

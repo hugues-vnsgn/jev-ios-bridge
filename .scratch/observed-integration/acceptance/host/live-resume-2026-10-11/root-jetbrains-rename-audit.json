@@ -1,0 +1,52 @@
+{
+  "status": "JETBRAINS_RENAME_ACCEPTED_SOURCE_RETAINED",
+  "evidencePath": "/Volumes/Sam/jev-ios-bridge-release-2026-10-11/archive/jetbrains-2026-10-11-01/rename-2026-10-11-01",
+  "hashes": {
+    "result.json": "f14b78389fa1b24c7c1a8cae9c5c7f74119109a095643fdab852ab66fe187adc",
+    "completion.json": "39789c5d3b5ba5cc5160dcda735f0accd85307d2ef6cb3aacbd5afb08a8f5a22",
+    "operations.jsonl": "8654edef6e6bd56677421f28ce2e296a3a12579133d4cb4acfc0e283e76932ec"
+  },
+  "result": {
+    "archive_sha256": "fad113703eb31adf6587571eb8fa252efcdb64ce47f109f8d8b2ae9eac70c52d",
+    "removed_entries": 0,
+    "root_after": {
+      "ctime_ns": 1791698266713466002,
+      "dev": 16777233,
+      "gid": 20,
+      "ino": 34652077,
+      "mode": 16877,
+      "mtime_ns": 1787022817195830369,
+      "nlink": 4,
+      "size": 128,
+      "uid": 501
+    },
+    "root_before": {
+      "ctime_ns": 1787022817195830369,
+      "dev": 16777233,
+      "gid": 20,
+      "ino": 34652077,
+      "mode": 16877,
+      "mtime_ns": 1787022817195830369,
+      "nlink": 4,
+      "size": 128,
+      "uid": 501
+    },
+    "source": "/Users/hugues_mini/Library/Caches/JetBrains",
+    "status": "RETIRED_SOURCE_RETAINED",
+    "wrapper_identity": {
+      "ctime_ns": 1791698266713424752,
+      "dev": 16777233,
+      "gid": 20,
+      "ino": 151398819,
+      "mode": 16832,
+      "mtime_ns": 1791698266713424752,
+      "nlink": 3,
+      "size": 96,
+      "uid": 501
+    },
+    "wrapper_name": ".jev-retired-jetbrains-2026-10-11-01"
+  },
+  "freshActivityNoMatch": true,
+  "sourceRemovals": 0,
+  "atUtc": "2026-10-11T05:58:24.154211+00:00"
+}

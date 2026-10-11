@@ -1,0 +1,74 @@
+{
+  "status": "COMPLETE",
+  "sortedTotals": [
+    {
+      "path": "/Users/hugues_mini/Codes",
+      "allocatedKiB": 37560496,
+      "allocatedBytes": 38461947904,
+      "allocatedGiB": 35.82048034667969
+    },
+    {
+      "path": "/Users/hugues_mini/.gradle",
+      "allocatedKiB": 30471360,
+      "allocatedBytes": 31202672640,
+      "allocatedGiB": 29.05975341796875
+    },
+    {
+      "path": "/Users/hugues_mini/Library/Application Support",
+      "allocatedKiB": 27687900,
+      "allocatedBytes": 28352409600,
+      "allocatedGiB": 26.40523910522461
+    },
+    {
+      "path": "/Users/hugues_mini/orca/workspaces",
+      "allocatedKiB": 18220560,
+      "allocatedBytes": 18657853440,
+      "allocatedGiB": 17.376480102539062
+    },
+    {
+      "path": "/Users/hugues_mini/Documents",
+      "allocatedKiB": 4654096,
+      "allocatedBytes": 4765794304,
+      "allocatedGiB": 4.4384918212890625
+    },
+    {
+      "path": "/Users/hugues_mini/.cache",
+      "allocatedKiB": 4523748,
+      "allocatedBytes": 4632317952,
+      "allocatedGiB": 4.314182281494141
+    },
+    {
+      "path": "/Users/hugues_mini/.npm",
+      "allocatedKiB": 1907244,
+      "allocatedBytes": 1953017856,
+      "allocatedGiB": 1.8188896179199219
+    },
+    {
+      "path": "/Users/hugues_mini/Pictures",
+      "allocatedKiB": 455748,
+      "allocatedBytes": 466685952,
+      "allocatedGiB": 0.4346351623535156
+    }
+  ],
+  "missingPaths": [],
+  "deniedPaths": [],
+  "nestedOverlapsAmongEightRoots": [],
+  "priorOverlaps": [
+    "/Users/hugues_mini/orca/workspaces includes prior /Users/hugues_mini/orca/workspaces/jev-ios-bridge and its integration evidence/worktrees",
+    "/Users/hugues_mini/Codes includes prior /Users/hugues_mini/Codes/AgentTools/jev-ios-bridge"
+  ],
+  "aggregationQualification": "No sum; du estimates allocated blocks, not unique/reclaimable bytes. Hard links/shared extents/clones and concurrent changes remain qualified.",
+  "relocationExclusions": [
+    "CoreSimulator",
+    "private admission stores",
+    "active worktrees",
+    "evidence",
+    "unknown guards"
+  ],
+  "actualClose": "2026-10-11T04:51:59.993Z",
+  "durationSeconds": 106.277,
+  "duCalls": 1,
+  "firstInventorySealPreserved": true,
+  "relocations": 0,
+  "cleanup": 0
+}

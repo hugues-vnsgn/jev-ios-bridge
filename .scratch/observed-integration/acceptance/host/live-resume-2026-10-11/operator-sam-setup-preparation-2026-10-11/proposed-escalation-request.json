@@ -1,0 +1,8 @@
+{
+  "cmd": "env -u TYPESAFE_API_KEY -u NODE_OPTIONS -u NODE_NO_WARNINGS /opt/homebrew/Cellar/node/26.8.1/bin/node .scratch/observed-integration/acceptance/host/live-resume-2026-10-11/operator-sam-setup-preparation-2026-10-11/run-setup.mjs --execute-once-after-root-review",
+  "login": false,
+  "sandbox_permissions": "require_escalated",
+  "justification": "Allow the owner-approved narrow Sam setup: freshly verify the sealed /Volumes/Sam identity, enable ownership on only that volume once using sudo -n, requery it, and exclusively create only jev-ios-bridge-release-2026-10-11 plus build/staging/archive with uid501 and 0700, then inspect ACLs/ancestors? The manual requires root; supported sandbox approval does not itself change UID. Any sudo refusal or identity/access variance stops the attempt without retry or alternate route. No existing content, permission modes, mounts, sources, devices or candidate files will be changed or moved.",
+  "yield_time_ms": 1000,
+  "max_output_tokens": 6000
+}

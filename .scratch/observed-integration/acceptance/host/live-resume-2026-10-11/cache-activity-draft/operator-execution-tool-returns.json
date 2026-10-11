@@ -1,0 +1,37 @@
+[
+  {
+    "chunk_id": "c1b1cd",
+    "wall_time_seconds": 1.002005416,
+    "session_id": 7628,
+    "original_token_count": 0,
+    "output": ""
+  },
+  {
+    "chunk_id": "b8724d",
+    "wall_time_seconds": 5.000453458,
+    "session_id": 7628,
+    "original_token_count": 0,
+    "output": ""
+  },
+  {
+    "chunk_id": "3ba1b4",
+    "wall_time_seconds": 5.001884375,
+    "session_id": 7628,
+    "original_token_count": 0,
+    "output": ""
+  },
+  {
+    "chunk_id": "b63777",
+    "wall_time_seconds": 5.001731,
+    "session_id": 7628,
+    "original_token_count": 132,
+    "output": "{\"path\":\"/Users/hugues_mini/.gradle/caches\",\"classification\":\"OPEN_FILES_OBSERVED\"}\n{\"path\":\"/Users/hugues_mini/.gradle/wrapper/dists\",\"classification\":\"OPEN_FILES_OBSERVED\"}\n{\"path\":\"/Users/hugues_mini/Library/Caches/JetBrains\",\"classification\":\"NO_MATCH_OBSERVED\"}\n{\"path\":\"/Users/hugues_mini/Library/Caches/org.swift.swiftpm\",\"classification\":\"NO_MATCH_OBSERVED\"}\n{\"path\":\"/Users/hugues_mini/.npm/_cacache\",\"classification\":\"NO_MATCH_OBSERVED\"}\n{\"path\":\"/Users/hugues_mini/.cache/uv\",\"classification\":\"NO_MATCH_OBSERVED\"}\n"
+  },
+  {
+    "chunk_id": "636ec3",
+    "wall_time_seconds": 1.0667e-05,
+    "exit_code": 0,
+    "original_token_count": 84,
+    "output": "{\"path\":\"/Users/hugues_mini/.cache/bazel-repo-contents-cache\",\"classification\":\"NO_MATCH_OBSERVED\"}\n{\"path\":\"/Users/hugues_mini/.cache/bazel-repo-cache\",\"classification\":\"NO_MATCH_OBSERVED\"}\n{\"path\":\"/Users/hugues_mini/.cache/huggingface\",\"classification\":\"NO_MATCH_OBSERVED\"}\n{\"status\":\"READ_ONLY_SNAPSHOTS_COMPLETE\",\"observations\":9}\n"
+  }
+]

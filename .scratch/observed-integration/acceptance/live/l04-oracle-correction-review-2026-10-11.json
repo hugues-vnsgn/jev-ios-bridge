@@ -1,0 +1,13 @@
+{
+  "verdict": "PASS",
+  "reviewer": "/root/sam_setup_review",
+  "scope": "Three L04 oracle rows and correction note; unrelated storage changes excluded.",
+  "preserved": "One real touch, retained raw success, pre-acknowledgement withholding, quarantine, silent retrieval/repeat/conflict/refused successor. L04 unverified.",
+  "mode": "Source and documentation review only; no tests executed.",
+  "hashes": {
+    ".scratch/observed-integration/evidence/validation-matrix.md": "1e3aa3409ad1b59c5dbb05325b608980f327f3513b6fc7f2eba35262e4ebbefd",
+    ".scratch/observed-action-rollout/next-work.md": "b368ad22094b93da65c41129c5b4396fa7ff987308d5ae86521dcdff49005ae2",
+    ".scratch/observed-action-rollout/remaining-execution-brief.md": "55c99e45076adf33220dce1c572a02478b517532c03e9aab377c57a55820d909",
+    ".scratch/observed-integration/acceptance/live/l04-oracle-correction-2026-10-11.md": "a183bd7672bb9bfebf2f9178246c26b32edd1216d40542f25f3da4359adc1f04"
+  }
+}

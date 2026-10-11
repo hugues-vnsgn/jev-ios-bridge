@@ -1,0 +1,32 @@
+[
+  {
+    "status": "fulfilled",
+    "value": {
+      "chunk_id": "0a719f",
+      "wall_time_seconds": 7.292e-06,
+      "exit_code": 0,
+      "original_token_count": 0,
+      "output": ""
+    }
+  },
+  {
+    "status": "fulfilled",
+    "value": {
+      "chunk_id": "2e42f8",
+      "wall_time_seconds": 6.792e-06,
+      "exit_code": 1,
+      "original_token_count": 145,
+      "output": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic/.scratch/observed-integration/acceptance/host/live-resume-2026-10-11/operator-sam-setup-preparation-2026-10-11/run-setup.mjs:39\n if(!same(await stat(root),identity(await bounded('fstat',root,()=>held.stat({bigint:true}))))throw new Error('Final namespace descriptor/path mismatch');\n                                                                                              ^^^^^\n\nSyntaxError: Unexpected token 'throw'\n    at checkSyntax (node:internal/main/check_syntax:84:5)\n\nNode.js v26.8.1\n"
+    }
+  },
+  {
+    "status": "fulfilled",
+    "value": {
+      "chunk_id": "d0474a",
+      "wall_time_seconds": 6.334e-06,
+      "exit_code": 0,
+      "original_token_count": 9,
+      "output": "Parser syntax PASS; not executed\n"
+    }
+  }
+]

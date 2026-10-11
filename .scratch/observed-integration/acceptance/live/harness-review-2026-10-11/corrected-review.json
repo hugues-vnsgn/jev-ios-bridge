@@ -1,0 +1,30 @@
+{
+  "verdict": "PASS_SOURCE_REVIEW_DISPATCH_DISABLED",
+  "reviewers": [
+    "/root/sam_setup_review",
+    "/root/cache_archive_draft"
+  ],
+  "reviewedHashes": {
+    "legacy-guard.mjs": "ea09661877b09002ba02ffa5f6069c5bf4e304e45bfcdb6aaee774e7f76f34ef",
+    "readiness-barrier.mjs": "a08f8ea44a8eef0e6b1b167b14af4eb2b2eea80f8236a0cc1b8f7f497917c514",
+    "legacy-bootstrap.mjs": "d58868636175aca606a3ab2ed4da63ded8ba417f99db9a3a1d96ffa73e806b1e",
+    "receipts.mjs": "b641552c12fa5234a5e75f23db29351f82a0f7772d5ae1bf5aa754a19b0b57a3",
+    "dispatch.json": "f4cdb657aba43bfe2f9faa59951b23b6f8650769aeb5fce1cef91249c0910620",
+    "l04-callback-decision.mjs": "5335164b12e508b59f4e17717dcd4815aa21b224bb323388695a403b689c0bc4",
+    "controller.mjs": "1c9a14383b7a370c88b2ee293a23579aff656b50615b5349f18d557cdc8391a9",
+    "README.md": "46c07d97d62f2c0374bddb381e23b012a28e92fd532cfb47201f58f13c9607b0",
+    "process-preload.mjs": "5f98e5a07471ea910233f6ee6a12655ecd48f130ee22c83dd261b869976a1b66",
+    "command-policy.mjs": "95185bce4e663aedfa66ae394e4a7d05646932af1e91761702b6a1ed4c539b26",
+    "legacy-exception.md": "d8022ba2d8295d1bbe64eb28c77d1141857e9b8bf0b5d3dbf5e35bb99f69624f"
+  },
+  "resolved": [
+    "Stagedplist beforecreate",
+    "Key-freelegacy cannotreachadmission: explicitguardedlegacycredentialexception",
+    "Rootreadinessbarrier beforeinput",
+    "ExactCLIexits",
+    "Publicpipedrainage"
+  ],
+  "qualification": "Source-only; no tests/execution/credential access. Runtime callback transparency remains unproven. Exact dispatch/build/runtime pins, storage acceptance, appbuilds and per-row readiness acceptance required.",
+  "rootDecision": "Accept narrowly scoped legacy-only realkey load under ownerAGENTS and autonomousauthority; observed flows remainkeyfree. NoAPIauthentication/model/networkproof. See reviewedlegacy-exception.md.",
+  "at": "2026-10-11T06:38:03.390502+00:00"
+}

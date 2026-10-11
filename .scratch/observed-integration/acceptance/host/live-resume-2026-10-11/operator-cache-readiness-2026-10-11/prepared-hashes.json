@@ -1,0 +1,37 @@
+{
+  "sealedAtUtc": "2026-10-11T05:30:16.887261+00:00",
+  "scope": "All readiness preparation files before supported once execution except this manifest",
+  "directoriesMode": "0700",
+  "files": [
+    {
+      "path": "commands.mjs",
+      "bytes": 4252,
+      "sha256": "c38208bc826b0f8265a31e0d6deefe3be363b63434d55417a36690b101ac9fdf",
+      "mode": "0600"
+    },
+    {
+      "path": "escalation-request.json",
+      "bytes": 959,
+      "sha256": "e6751bb7233b1137f28e27e39d7c07b39aa1532fd5560f498f4bbba91db83162",
+      "mode": "0600"
+    },
+    {
+      "path": "preparation.json",
+      "bytes": 694,
+      "sha256": "088c366e36155bad15cfad7afbb26d5c7a1d5daaa656d11bb909bbf86f861e9e",
+      "mode": "0600"
+    },
+    {
+      "path": "run.mjs",
+      "bytes": 7396,
+      "sha256": "5b86d853fa953a823286589eae1d7f1f525decfa21d45f76daf2de1432cd8f27",
+      "mode": "0600"
+    },
+    {
+      "path": "syntax-checks.json",
+      "bytes": 1159,
+      "sha256": "81cc1a3f49be8caa4deb2bd576a1c5950f4c89b8457d80827dceccae8a5b759a",
+      "mode": "0600"
+    }
+  ]
+}

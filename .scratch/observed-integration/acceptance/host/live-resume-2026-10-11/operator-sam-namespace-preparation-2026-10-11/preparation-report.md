@@ -1,0 +1,3 @@
+Root reviewed the namespace script as written and approved one supported execution after syntax checks. Both exact Node26.8.1 syntax checks and the parser AST check returned 0 with empty output. The script bytes are unchanged. All 28 files in the accepted ownership recheck seal were rehashed with no mismatch.
+
+Only the owner-created private namespace and its ancestors will be freshly verified, then only absent build, staging and archive immediate children will be created0700. Filesystem calls and real handle closes await actual settlement. No permission change, sudo, source removal or data move is authorized in this run. Activity and archive drafts remain under Root review.

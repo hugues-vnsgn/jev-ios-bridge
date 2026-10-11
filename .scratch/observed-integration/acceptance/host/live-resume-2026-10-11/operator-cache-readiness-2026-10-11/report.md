@@ -1,0 +1,5 @@
+The readiness attempt stopped on an operator parser defect, before any target lstat, lsof or four-root du. The exact command /bin/ps -ax -o pid=,uid=,ucomm= succeeded with actual exit0 and direct close at 2026-10-11T05:31:08.388Z. Its complete27753-byte stdout and empty stderr are retained; no timeout, overflow or kill occurred. The outer Node wrapper returned3.
+
+Parser regex incorrectly required an unsigned UID. Verbatim rejected line92 is retained in first-confirmed-cause.json and raw stdout: '  339    -2 distnoted       '. UID -2 must be accepted as signed decimal; PID remains positive decimal. No native framework or process-list refusal is established.
+
+The reviewed script and all five preparation hashes are preserved unchanged. All three lsof queries and the four-root du remain unused, and no archive/removal, content read, process stop or build occurred. Root authorized a fresh v2 continuation with only the narrow parser correction and retained successful ps bytes; no second ps, native retry or completed-phase restart. Evidence is dirs0700/files0600.

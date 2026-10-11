@@ -1,0 +1,43 @@
+{
+  "sealedAtUtc": "2026-10-11T05:34:58.953285+00:00",
+  "scope": "All narrow v2 readiness preparation before once execution except this manifest",
+  "directoriesMode": "0700",
+  "files": [
+    {
+      "path": "accepted-ps-binding.json",
+      "bytes": 602,
+      "sha256": "080f5a8ba6c118c5994f6aad8e8dffaa1e4ff32832c4ab6ff91062f1a9df0c82",
+      "mode": "0600"
+    },
+    {
+      "path": "commands.mjs",
+      "bytes": 4255,
+      "sha256": "ccc7ed9c7331f54e36bbfef91ddb43e7621b5ff5c792edd15c95dff193e7434c",
+      "mode": "0600"
+    },
+    {
+      "path": "escalation-request.json",
+      "bytes": 1023,
+      "sha256": "81f640fc4153c793f11b8d0d7b731947ee43b8d4f24945831c173e7034911fee",
+      "mode": "0600"
+    },
+    {
+      "path": "preparation.json",
+      "bytes": 521,
+      "sha256": "b647a7882d2ccba10eaa74fbe4831cd9c633bbc6d2da9ffe407ef65d1fa88bcb",
+      "mode": "0600"
+    },
+    {
+      "path": "run.mjs",
+      "bytes": 8444,
+      "sha256": "3e8fa798cb2bf271287f0c7975ba414c8305ab0d87f385d1158e3277cf1338a6",
+      "mode": "0600"
+    },
+    {
+      "path": "syntax-and-pure-checks.json",
+      "bytes": 3354,
+      "sha256": "fa0bcc272abbe19a20818b28a49fcb7c6c69efbc6ca64f6e65ed5c24205dceb5",
+      "mode": "0600"
+    }
+  ]
+}

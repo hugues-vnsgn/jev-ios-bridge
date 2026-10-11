@@ -1,0 +1,28 @@
+{
+  "status": "DISABLED_PENDING_REVIEW_AND_BUILD_PINS",
+  "review": null,
+  "node": null,
+  "cli": null,
+  "vendor": null,
+  "cwd": null,
+  "runsDir": null,
+  "evidenceDir": null,
+  "environment": null,
+  "sourceEnvironment": null,
+  "fileHashes": {},
+  "metadataCommands": [],
+  "protocolVersion": null,
+  "rows": [],
+  "limits": {
+    "publicProcessMs": 420000,
+    "publicOutputBytes": 16777216,
+    "childMs": 130000,
+    "childBytes": 8388608,
+    "childrenPerProcess": 1200,
+    "rpcMs": 380000,
+    "closeMs": 10000,
+    "killGraceMs": 1000,
+    "maxListingsPerPreparation": 160,
+    "maxMetadataPerPreparation": 1000
+  }
+}

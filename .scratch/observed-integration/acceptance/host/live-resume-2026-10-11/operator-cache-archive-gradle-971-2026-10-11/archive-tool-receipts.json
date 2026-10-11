@@ -1,0 +1,133 @@
+{
+  "receipts": [
+    {
+      "request": {
+        "cmd": "/usr/bin/env -i HOME=/Users/hugues_mini PATH=/usr/bin:/bin:/usr/sbin:/sbin LANG=C LC_ALL=C TZ=UTC /opt/homebrew/bin/python3 .scratch/observed-integration/acceptance/host/live-resume-2026-10-11/cache-archive-draft/archive-cache.py .scratch/observed-integration/acceptance/host/live-resume-2026-10-11/cache-archive-draft/gradle-971-plan.json c6b332d4fc47f99f623a082d9a257718267b7b8fb3368bff59435cad6a9922af",
+        "login": false,
+        "sandbox_permissions": "require_escalated",
+        "justification": "Allow the once Root-approved source-retained archive of only /Users/hugues_mini/.gradle/caches/9.7.1 into its exact private Sam archive directory, after the fresh clean lsof close? The frozen script verifies contents, links and unchanged source, limits source/archive to 12 GiB and retains an 81-GiB external reserve; no deletion, retirement, or Gradle process operation.",
+        "yield_time_ms": 1000,
+        "max_output_tokens": 5000
+      },
+      "result": {
+        "chunk_id": "ff221e",
+        "wall_time_seconds": 1.003257583,
+        "session_id": 25484,
+        "original_token_count": 0,
+        "output": ""
+      }
+    },
+    {
+      "request": {
+        "session_id": 25484,
+        "chars": "",
+        "yield_time_ms": 30000,
+        "max_output_tokens": 5000
+      },
+      "result": {
+        "chunk_id": "4aa48f",
+        "wall_time_seconds": 30.003089583,
+        "session_id": 25484,
+        "original_token_count": 0,
+        "output": ""
+      }
+    },
+    {
+      "request": {
+        "session_id": 25484,
+        "chars": "",
+        "yield_time_ms": 30000,
+        "max_output_tokens": 5000
+      },
+      "result": {
+        "chunk_id": "1493af",
+        "wall_time_seconds": 30.00207575,
+        "session_id": 25484,
+        "original_token_count": 0,
+        "output": ""
+      }
+    },
+    {
+      "request": {
+        "session_id": 25484,
+        "chars": "",
+        "yield_time_ms": 30000,
+        "max_output_tokens": 5000
+      },
+      "result": {
+        "chunk_id": "75e8c0",
+        "wall_time_seconds": 30.003274917,
+        "session_id": 25484,
+        "original_token_count": 0,
+        "output": ""
+      }
+    },
+    {
+      "request": {
+        "session_id": 25484,
+        "chars": "",
+        "yield_time_ms": 30000,
+        "max_output_tokens": 5000
+      },
+      "result": {
+        "chunk_id": "225309",
+        "wall_time_seconds": 30.001220583,
+        "session_id": 25484,
+        "original_token_count": 0,
+        "output": ""
+      }
+    },
+    {
+      "request": {
+        "session_id": 25484,
+        "chars": "",
+        "yield_time_ms": 30000,
+        "max_output_tokens": 5000
+      },
+      "result": {
+        "chunk_id": "364a10",
+        "wall_time_seconds": 30.000589334,
+        "session_id": 25484,
+        "original_token_count": 0,
+        "output": ""
+      }
+    },
+    {
+      "request": {
+        "session_id": 25484,
+        "chars": "",
+        "yield_time_ms": 30000,
+        "max_output_tokens": 5000
+      },
+      "result": {
+        "chunk_id": "cc72c7",
+        "wall_time_seconds": 30.001220291,
+        "session_id": 25484,
+        "original_token_count": 0,
+        "output": ""
+      }
+    },
+    {
+      "request": {
+        "session_id": 25484,
+        "chars": "",
+        "yield_time_ms": 30000,
+        "max_output_tokens": 5000
+      },
+      "result": {
+        "chunk_id": "281cc2",
+        "wall_time_seconds": 24.770015083,
+        "exit_code": 0,
+        "original_token_count": 0,
+        "output": ""
+      }
+    }
+  ],
+  "submissionPreparation": {
+    "chunk_id": "a3fe73",
+    "wall_time_seconds": 6.916e-06,
+    "exit_code": 0,
+    "original_token_count": 26,
+    "output": "{\"status\": \"FRESH_PROOF_ACCEPTED_COPY_SUBMISSION_CLAIMED\", \"closedAtUtc\": \"2026-10-11T06:25:23.450Z\"}\n"
+  }
+}

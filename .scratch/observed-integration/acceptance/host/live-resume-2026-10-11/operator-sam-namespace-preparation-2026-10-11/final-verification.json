@@ -1,0 +1,75 @@
+{
+  "verifiedAtUtc": "2026-10-11T05:18:55.760547+00:00",
+  "status": "PASS_PENDING_ROOT_AUDIT",
+  "preparedFilesRehashed": 9,
+  "preparedMismatches": 0,
+  "priorRecheckFilesRehashed": 28,
+  "priorRecheckMismatches": 0,
+  "rawToolOutputMatchesCanonicalResult": true,
+  "mkdirActualSettlements": 3,
+  "directoryHandleActualCloses": 4,
+  "expectedAbsentENOENTReceipts": 6,
+  "directChildCloses": [
+    {
+      "name": "sam-before",
+      "argv": [
+        "/usr/sbin/diskutil",
+        "info",
+        "-plist",
+        "/Volumes/Sam"
+      ],
+      "closedAtUtc": "2026-10-11T05:17:51.762Z",
+      "exitCode": 0,
+      "stdoutBytes": 2708,
+      "stderrBytes": 0
+    },
+    {
+      "name": "parse-info",
+      "argv": [
+        "/opt/homebrew/bin/python3",
+        "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic/.scratch/observed-integration/acceptance/host/live-resume-2026-10-11/operator-sam-namespace-preparation-2026-10-11/parse-sam-plist.py",
+        "sam-before.stdout.bin"
+      ],
+      "closedAtUtc": "2026-10-11T05:17:51.795Z",
+      "exitCode": 0,
+      "stdoutBytes": 411,
+      "stderrBytes": 0
+    },
+    {
+      "name": "acl-before",
+      "argv": [
+        "/bin/ls",
+        "-ldneO",
+        "/",
+        "/Volumes",
+        "/Volumes/Sam",
+        "/Volumes/Sam/jev-ios-bridge-release-2026-10-11"
+      ],
+      "closedAtUtc": "2026-10-11T05:17:51.799Z",
+      "exitCode": 0,
+      "stdoutBytes": 267,
+      "stderrBytes": 0
+    },
+    {
+      "name": "acl-after",
+      "argv": [
+        "/bin/ls",
+        "-ldneO",
+        "/",
+        "/Volumes",
+        "/Volumes/Sam",
+        "/Volumes/Sam/jev-ios-bridge-release-2026-10-11",
+        "/Volumes/Sam/jev-ios-bridge-release-2026-10-11/build",
+        "/Volumes/Sam/jev-ios-bridge-release-2026-10-11/staging",
+        "/Volumes/Sam/jev-ios-bridge-release-2026-10-11/archive"
+      ],
+      "closedAtUtc": "2026-10-11T05:17:51.805Z",
+      "exitCode": 0,
+      "stdoutBytes": 577,
+      "stderrBytes": 0
+    }
+  ],
+  "descendantQualifier": "Only recorded direct child closes are observed; descendants are unobserved.",
+  "nativeReruns": 0,
+  "operatorState": "IDLE_FOR_ROOT_AUDIT"
+}

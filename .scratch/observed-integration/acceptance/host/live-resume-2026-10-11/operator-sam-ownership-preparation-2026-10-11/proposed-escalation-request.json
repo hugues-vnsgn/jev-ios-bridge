@@ -1,0 +1,8 @@
+{
+  "cmd": "env -u TYPESAFE_API_KEY -u NODE_OPTIONS -u NODE_NO_WARNINGS /opt/homebrew/Cellar/node/26.8.1/bin/node .scratch/observed-integration/acceptance/host/live-resume-2026-10-11/operator-sam-ownership-preparation-2026-10-11/run-ownership.mjs --ownership-once-after-root-review",
+  "login": false,
+  "sandbox_permissions": "require_escalated",
+  "justification": "Allow the owner-approved ownership-only Sam phase after Root review: fresh exact UUID/device/mount/HFS+/writable/ancestor/ACL checks, ONE sudo -n diskutil enableOwnership /Volumes/Sam, then a typed same-volume query only after a clean successful direct sudo close? The installed manual requires root; supported sandbox approval alone does not change UID. No Sam mkdir/open/chmod, mounts/unmounts/repartition, data moves, source removals, builds or device actions. Any refusal or command uncertainty stops without retry or recovery query; mutation state remains unresolved pending separately reviewed recovery scope.",
+  "yield_time_ms": 1000,
+  "max_output_tokens": 6000
+}

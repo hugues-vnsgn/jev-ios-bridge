@@ -1,0 +1,102 @@
+{
+  "verifiedAtUtc": "2026-10-11T05:22:41.178481+00:00",
+  "status": "READ_ONLY_SNAPSHOTS_SEALED_PENDING_ROOT_AUDIT",
+  "preparedFilesRehashed": 5,
+  "preparedMismatches": 0,
+  "directChildCloses": [
+    {
+      "name": "process-names",
+      "exitCode": 0,
+      "signal": null,
+      "closedAtUtc": "2026-10-11T05:20:27.508Z",
+      "stdoutBytes": 27405,
+      "stderrBytes": 0
+    },
+    {
+      "name": "candidate-01",
+      "exitCode": 1,
+      "signal": null,
+      "closedAtUtc": "2026-10-11T05:20:53.468Z",
+      "stdoutBytes": 34252,
+      "stderrBytes": 0
+    },
+    {
+      "name": "candidate-02",
+      "exitCode": 1,
+      "signal": null,
+      "closedAtUtc": "2026-10-11T05:20:53.669Z",
+      "stdoutBytes": 42427,
+      "stderrBytes": 0
+    },
+    {
+      "name": "candidate-03",
+      "exitCode": 1,
+      "signal": null,
+      "closedAtUtc": "2026-10-11T05:20:53.809Z",
+      "stdoutBytes": 0,
+      "stderrBytes": 0
+    },
+    {
+      "name": "candidate-04",
+      "exitCode": 1,
+      "signal": null,
+      "closedAtUtc": "2026-10-11T05:20:53.980Z",
+      "stdoutBytes": 0,
+      "stderrBytes": 0
+    },
+    {
+      "name": "candidate-05",
+      "exitCode": 1,
+      "signal": null,
+      "closedAtUtc": "2026-10-11T05:20:54.456Z",
+      "stdoutBytes": 0,
+      "stderrBytes": 0
+    },
+    {
+      "name": "candidate-06",
+      "exitCode": 1,
+      "signal": null,
+      "closedAtUtc": "2026-10-11T05:20:55.549Z",
+      "stdoutBytes": 0,
+      "stderrBytes": 0
+    },
+    {
+      "name": "candidate-07",
+      "exitCode": 1,
+      "signal": null,
+      "closedAtUtc": "2026-10-11T05:20:57.812Z",
+      "stdoutBytes": 0,
+      "stderrBytes": 0
+    },
+    {
+      "name": "candidate-08",
+      "exitCode": 1,
+      "signal": null,
+      "closedAtUtc": "2026-10-11T05:20:57.962Z",
+      "stdoutBytes": 0,
+      "stderrBytes": 0
+    },
+    {
+      "name": "candidate-09",
+      "exitCode": 1,
+      "signal": null,
+      "closedAtUtc": "2026-10-11T05:20:58.102Z",
+      "stdoutBytes": 0,
+      "stderrBytes": 0
+    }
+  ],
+  "allRawCapturesComplete": true,
+  "npmImmediateEntryCount": 7,
+  "npmDirectoryHandleClosedAt": "2026-10-11T05:20:27.510Z",
+  "outerActualExecReturnCode": 0,
+  "lsofActualReturnQualification": "All nine lsof children returned1 with empty stderr, actual close and no timeout/kill. Two returned valid positive records; seven returned no records. No completeness of system visibility is inferred.",
+  "descendantQualifier": "Only direct child close is observed; descendants are unobserved.",
+  "effects": {
+    "archive": 0,
+    "deletion": 0,
+    "sourceMutation": 0,
+    "processStop": 0,
+    "build": 0
+  },
+  "operatorState": "IDLE_FOR_ROOT_AUDIT"
+}

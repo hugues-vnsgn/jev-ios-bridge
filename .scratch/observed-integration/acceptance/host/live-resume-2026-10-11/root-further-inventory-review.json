@@ -1,0 +1,9 @@
+{
+  "verdict": "PASS_SOURCE_REVIEW_ONLY",
+  "hashes": {
+    "run.mjs": "f114ea2df288c4ee73107cb3d41a08b39e13a61e84d15e91704ce8d71a1bf0ba",
+    "commands.mjs": "46310e76ee1e7281e35a60b3fffb610b0194450ceca08eb94df379db1898587a"
+  },
+  "scope": "Shallow .konan metadata; exact four finite ps/lsof/du commands. No contents/archive/removal. Once claims, byte/time caps, actual directchild close, nofollow checks.",
+  "qualification": "No tests/execution; momentary activity and allocated sizes do not authorize retirement. No descendant settlement or cancellable synchronous filesystem guarantee."
+}

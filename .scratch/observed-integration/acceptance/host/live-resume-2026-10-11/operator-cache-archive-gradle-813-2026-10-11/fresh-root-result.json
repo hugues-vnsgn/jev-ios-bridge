@@ -1,0 +1,29 @@
+{
+  "status": "FRESH_EXACT_ROOT_NO_MATCH_CLOSED",
+  "source": "/Users/hugues_mini/.gradle/caches/8.13",
+  "scope": "Exact-root read-only lsof; no copy or removal",
+  "qualification": "Point-in-time no-match is not atomic quiescence.",
+  "before": {
+    "dev": "16777233",
+    "ino": "42722462",
+    "uid": "501",
+    "gid": "20",
+    "mode": "16877",
+    "size": "544",
+    "nlink": "17",
+    "mtime_ns": "1783656349963861858",
+    "ctime_ns": "1783656349963861858"
+  },
+  "after": {
+    "dev": "16777233",
+    "ino": "42722462",
+    "uid": "501",
+    "gid": "20",
+    "mode": "16877",
+    "size": "544",
+    "nlink": "17",
+    "mtime_ns": "1783656349963861858",
+    "ctime_ns": "1783656349963861858"
+  },
+  "receipt": "fresh-root-lsof-receipt.json"
+}

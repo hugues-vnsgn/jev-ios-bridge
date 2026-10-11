@@ -1,0 +1,7 @@
+{
+  "chunk_id": "7a9dc1",
+  "wall_time_seconds": 8.833e-06,
+  "exit_code": 1,
+  "original_token_count": 43,
+  "output": "Traceback (most recent call last):\n  File \"<string>\", line 26, in <module>\n    assert before.st_size<=16777216;chunks=[]\n           ^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError\n"
+}

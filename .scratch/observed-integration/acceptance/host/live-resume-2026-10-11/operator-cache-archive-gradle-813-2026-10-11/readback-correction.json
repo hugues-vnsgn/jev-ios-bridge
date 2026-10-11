@@ -1,0 +1,8 @@
+{
+  "cause": "Operator reporting cap of 16MiB was incorrectly applied to large source manifests",
+  "archiveFailure": false,
+  "rootConfirmedStatus": "COPY_VERIFIED_SOURCE_RETAINED",
+  "rootConfirmedManifestBytesEach": 160444207,
+  "correction": "Stream SHA256 and byte counts; retain large manifests on Sam; copy only small result, plan and mount receipts",
+  "archiveRetry": false
+}

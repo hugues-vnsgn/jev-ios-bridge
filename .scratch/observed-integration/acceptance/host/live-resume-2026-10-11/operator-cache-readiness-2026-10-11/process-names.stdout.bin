@@ -1,0 +1,957 @@
+    1     0 launchd         
+  104     0 logd            
+  107     0 UserEventAgent  
+  109     0 fseventsd       
+  110     0 mediaremoted    
+  114     0 systemstats     
+  118     0 configd         
+  120     0 powerd          
+  121     0 IOMFB_bics_daemo
+  125     0 remoted         
+  129   306 corespeechd_syst
+  131     0 watchdogd       
+  134     0 mds             
+  136     0 kernelmanagerd  
+  137     0 diskarbitrationd
+  141     0 syslogd         
+  143     0 thermalmonitord 
+  144     0 contextstored   
+  145     0 xprotectd       
+  146     0 opendirectoryd  
+  147     0 apsd            
+  148     0 launchservicesd 
+  149   266 timed           
+  150   213 usbmuxd         
+  151     0 securityd       
+  153   205 locationd       
+  156     0 autofsd         
+  157     0 dasd            
+  158     0 kdc             
+  161   241 distnoted       
+  164     0 logind          
+  165     0 revisiond       
+  166     0 KernelEventAgent
+  170     0 bluetoothd      
+  171     0 notifyd         
+  172     0 sandboxd        
+  173     0 corebrightnessd 
+  174     0 com.apple.cmio.r
+  176    88 WindowServer    
+  177     0 tccd            
+  179     0 cfprefsd        
+  180   501 loginwindow     
+  181     0 runningboardd   
+  216     0 securityd_system
+  217     0 coreservicesd   
+  220   282 trustd          
+  225    65 mDNSResponder   
+  226     0 clocksyncd      
+  227     0 lsd             
+  229   242 nsurlsessiond   
+  236     0 apfsd           
+  237   263 analyticsd      
+  242     0 corercd         
+  243     0 airportd        
+  247    24 symptomsd       
+  250     0 syspolicyd      
+  251     0 systemstatusd   
+  252     0 mDNSResponderHel
+  254     0 cryptexd        
+  255     0 socketfilterfw  
+  256     0 eligibilityd    
+  267    88 distnoted       
+  268     0 authd           
+  275     0 com.apple.CodeSi
+  276   289 biomed          
+  278     0 distnoted       
+  279     0 backupd         
+  281   308 mds_stores      
+  282     0 storagekitd     
+  285     0 WirelessRadioMan
+  286     0 backgroundtaskma
+  288     0 searchpartyd    
+  289   205 com.apple.geod  
+  290   205 distnoted       
+  292     0 service         
+  294     0 CloudflareWARP  
+  295     0 wifiman-desktopd
+  296     0 com.docker.vmnet
+  308     0 gamepolicyd     
+  312    55 appleeventsd    
+  313   262 distnoted       
+  315   262 com.apple.cmio.v
+  317   262 cameracaptured  
+  318   262 UVCAssistant    
+  322   202 coreaudiod      
+  323    89 distnoted       
+  324    55 distnoted       
+  335   270 com.apple.Driver
+  336   270 com.apple.Driver
+  337   270 com.apple.AppleU
+  338     0 suhelperd       
+  339    -2 distnoted       
+  346   202 distnoted       
+  353   202 com.apple.audio.
+  355   242 distnoted       
+  360   200 distnoted       
+  365     0 sharedfilelistd 
+  374   294 audiomxd        
+  377   294 distnoted       
+  383     0 cloudtelemetryd 
+  384     0 BTLEServer      
+  388     0 coreauthd       
+  390   501 distnoted       
+  391   501 cfprefsd        
+  394   501 secd            
+  397   501 UserEventAgent  
+  402   501 audioaccessoryd 
+  403   501 rapportd        
+  407   501 universalaccessd
+  409   501 pboard          
+  410   501 WindowManager   
+  412   501 usernotification
+  413   501 lsd             
+  414   501 accountsd       
+  415   501 BiomeAgent      
+  416   501 identityservices
+  417   501 cloudd          
+  418   501 tccd            
+  419   501 trustd          
+  420   501 callservicesd   
+  421   501 containermanager
+  422   501 sharingd        
+  423   501 linkd           
+  424   501 homed           
+  426   501 WallpaperAgent  
+  428   501 Dock            
+  430   260 distnoted       
+  431   501 ControlCenter   
+  432   501 MenuBarAgent    
+  433   501 SystemUIServer  
+  435   501 Finder          
+  436   501 imagent         
+  440   501 nsurlsessiond   
+  442   501 AccessibilityUIS
+  444   501 sharedfilelistd 
+  449   501 fontd           
+  451   501 ViewBridgeAuxili
+  452   501 usernoted       
+  453     0 automountd      
+  454   501 fileproviderd   
+  457   501 AMPDeviceDiscove
+  462   501 fontworker      
+  464   501 WallpaperAerials
+  465   501 WallpaperImageEx
+  466   501 FinderSyncExtens
+  469   501 ctkd            
+  471   501 Siri AI         
+  472   501 coreauthd       
+  473   259 ctkd            
+  475   501 corespotlightd  
+  477   501 ContinuityCaptur
+  482   501 chronod         
+  486     0 fskitd          
+  490   501 CoreLocationAgen
+  493   501 fskit_agent     
+  497   501 agentstored     
+  499   501 useractivityd   
+  501   501 com.apple.dock.e
+  502   501 com.apple.dock.e
+  503   501 com.apple.dock.e
+  504     0 filecoordination
+  507   501 mediaanalysisd  
+  511   501 ReportCrash     
+  516   501 photolibraryd   
+  526   501 networkservicepr
+  529   268 nearbyd         
+  534   501 com.apple.fskit.
+  539   501 CMFSyncAgent    
+  540   501 ContextStoreAgen
+  545   501 NotificationCent
+  549   501 corespeechd     
+  552   501 routined        
+  553   501 Python          
+  554   501 node            
+  557   501 imklaunchagent  
+  559   501 icdd            
+  562   501 context-engine-r
+  566   501 AirPlayUIAgent  
+  569   501 diagnostics_agen
+  570   501 TextInputMenuAge
+  572   501 Python          
+  573   501 Python          
+  574   501 com.microsoft.te
+  576   501 ctkahp          
+  577   501 CursorUIViewServ
+  586   501 com.apple.CloudD
+  587     0 parentalcontrols
+  590   501 Raycast         
+  592   501 WiFiAgent       
+  594   501 CalendarWidgetEx
+  611   501 BetterDisplay   
+  613   501 Tailscale       
+  617   501 Google Drive    
+  621   501 siriactionsd    
+  622   501 ARDAgent        
+  659   501 assistantd      
+  661   501 akd             
+  679   501 crashpad_handler
+  682   501 Google Drive    
+  688   501 com.apple.WebKit
+  690     0 CVMServer       
+  695   501 com.apple.WebKit
+  704   501 com.apple.WebKit
+  705   501 com.apple.WebKit
+  708   501 com.apple.WebKit
+  710   501 mscamerad-xpc   
+  711   501 ptpcamerad      
+  714     0 coresymbolicatio
+  716   501 com.apple.WebKit
+  730   501 HomeWidget      
+  731   501 HomeEnergyWidget
+  732   501 ScreenTimeWidget
+  733   501 FindMyWidgetItem
+  737   501 RecordWidgetExte
+  739   501 ScreenTimeWidget
+  742   501 StocksWidget    
+  746   501 FindMyWidgetPeop
+  749   501 VoiceMemosSettin
+  755   501 BatteriesAvocado
+  758   501 HomeWidgetIntent
+  760   501 PodcastsWidget  
+  763   501 JournalWidgetsSe
+  769   501 JournalWidgets  
+  770   501 NewsTag         
+  773   501 WorldClockWidget
+  865   501 NewsToday2      
+  877   501 WeatherIntents  
+  891   501 SSMenuAgent     
+  916   501 MobileTimerInten
+  984   501 NewsTodayIntents
+  994   278 distnoted       
+ 1104   501 postgres        
+ 1109   501 postgres        
+ 1111   501 postgres        
+ 1112   501 postgres        
+ 1113   501 postgres        
+ 1114   501 postgres        
+ 1116   501 postgres        
+ 1118   501 postgres        
+ 1119   501 postgres        
+ 1127   501 Python          
+ 1158     0 com.apple.Ambien
+ 1168   501 mediaremoteagent
+ 1169   501 avconferenced   
+ 1170   501 analyticsagent  
+ 1218   270 IOUserBluetoothS
+ 1225   501 mdbulkimport    
+ 1247   501 Claude          
+ 1248   247 distnoted       
+ 1260   501 chrome_crashpad_
+ 1261   501 Claude Helper   
+ 1263   501 Claude Helper   
+ 1287   501 Claude Helper (R
+ 1323   501 Claude Helper (R
+ 1615   501 Claude Helper   
+ 1620   501 Claude Helper   
+ 1621   501 Claude Helper   
+ 1665   501 Claude Helper   
+ 1666   501 Claude Helper   
+ 1667   501 disclaimer      
+ 1668   501 node            
+ 1704   501 node            
+ 1715     0 systemstats     
+ 1719   501 passd           
+ 1720   501 Python          
+ 1722   501 knowledgeconstru
+ 1725   274 distnoted       
+ 1738   501 RaycastAppIntent
+ 1739   501 SafariLinkExtens
+ 1740   501 CalendarIntentsE
+ 1741   501 MessagesActionEx
+ 1744   501 Claude Helper   
+ 1749   501 disclaimer      
+ 1751   501 claude-ios-sim  
+ 1757   501 disclaimer      
+ 1758   501 claude          
+ 1917   501 node            
+ 1918   501 node            
+ 1919   501 node            
+ 1920   501 node            
+ 1983   501 com.apple.CoreSi
+ 2088     0 simdiskimaged   
+ 2116   501 java            
+ 2143   271 diskimagesiod   
+ 2154   271 diskimagesiod   
+ 2165   271 diskimagesiod   
+ 2170   501 SimLaunchHost.ar
+ 2194   501 node            
+ 2218   501 node            
+ 2219   501 SimulatorTrampol
+ 2248     0 com.apple.geod  
+ 2309   501 com.apple.Notes.
+ 2312   501 ssh-agent       
+ 2315   265 fairplayd       
+ 2328   501 java            
+ 2341   501 SimStreamProcess
+ 2343   501 SimAudioProcesso
+ 2349     0 CrashReporterSup
+ 2473     0 usermanagerd    
+ 2482   247 gamecontrollerd 
+ 2499   501 VTEncoderXPCServ
+ 2509   501 VTDecoderXPCServ
+ 2510     0 taskgated       
+ 2519   501 Google Chrome   
+ 2521   501 chrome_crashpad_
+ 2530   501 Google Chrome He
+ 2531   501 Google Chrome He
+ 2532   501 Google Chrome He
+ 2576   501 Google Chrome He
+ 2578   501 Google Chrome He
+ 2580   501 com.apple.Safari
+ 2583   501 Google Chrome He
+ 2585   501 PasswordManagerB
+ 2611   501 iii             
+ 2662   501 node            
+ 2677   501 replayd         
+ 2758   501 photoanalysisd  
+ 2787   501 photoanalysisd  
+ 2880   501 spotlightknowled
+ 2909   501 calaccessd      
+ 3160     0 mobileassetd    
+ 3271     0 SubmitDiagInfo  
+ 3274   501 Google Chrome He
+ 3287   501 Google Chrome He
+ 3288   501 Google Chrome He
+ 3301   501 searchpartyusera
+ 3310   307 diagnosticservic
+ 3311     0 osanalyticshelpe
+ 3348   501 ManagedSettingsA
+ 3438   501 context-engine-r
+ 3476   277 distnoted       
+ 3731   501 IntelligencePlat
+ 4036   501 tmux            
+ 4062   501 secinitd        
+ 4225   501 bash            
+ 4256   501 ManagedSettingsA
+ 4510   265 distnoted       
+ 4779   501 spotlightknowled
+ 5438   501 mlhostd         
+ 6984   501 BatterySettingsI
+ 6989   501 NotificationsSet
+ 7040   501 BluetoothSetting
+ 7044   501 KeyboardSettings
+ 7046   501 ClassroomDeviceE
+ 7047   501 DateTimeIntentsE
+ 7049   501 SiriSetupSetting
+ 7052   501 PlaceholderSetti
+ 7055   501 BiometricsAndPas
+ 7056   501 StartupDiskWidge
+ 7057   501 FamilyIntents   
+ 7058   501 ScreenTimeAppInt
+ 7059   501 VpnSettingsInten
+ 7062   501 SpotlightSetting
+ 7063   501 ControlCenterSet
+ 7064   501 DesktopSettingsI
+ 7065   501 ProfilesSettings
+ 7066   501 AccountsUISettin
+ 7067   501 WiFiMacSettingsI
+ 7070   501 PasswordSettings
+ 7071   501 WallpaperSetting
+ 7123   501 TimeMachineSetti
+ 7124   501 CDsAndDvDsSettin
+ 7125   501 MouseIntentsExte
+ 7129   501 PrefPaneSearchIn
+ 7132   501 AppleAccountInte
+ 7135   501 GameCenterSettin
+ 7136   501 DoNotDisturbAppI
+ 7139   501 ClassKitAppInten
+ 7142   501 StorageSettingsI
+ 7143   501 SoftwareUpdateSe
+ 7146   501 GameControllerSe
+ 7147   501 TrackpadIntentsE
+ 7148   501 InternationalSet
+ 7152   501 AccessibilitySet
+ 7934   501 mapssyncd       
+ 9384     0 PowerUIAgent    
+10416   501 CoreServicesUIAg
+11143   501 adb             
+11784     0 amfid           
+11947   501 CoreDeviceServic
+11948   501 remotepairingd  
+11958   501 DeviceFS        
+11961   501 DeviceFS        
+11985   501 stickersd       
+12190   501 SimRenderServer 
+12201   501 SimMetalHost    
+12202   501 SimMetalHost    
+12203   501 SimMetalHost    
+12205   501 launchd_sim     
+12218   501 UserEventAgent  
+12219   501 SpringBoard     
+12220   501 logd            
+12224   501 assistantd      
+12225   501 runningboardd   
+12227   501 replicatord     
+12228   501 accountsd       
+12229   501 mediaremoted    
+12233   501 ids_simd        
+12234   501 tccd            
+12236   501 biomed          
+12237   501 fileindexerd    
+12239   501 identityservices
+12240   501 syslogd         
+12243   501 backboardd      
+12244   501 sharingd        
+12246   501 locationd       
+12248   501 dasd            
+12250   501 distnoted       
+12251   501 passd           
+12252   501 CoreSimulatorBri
+12253   501 navd            
+12255   501 revisiond       
+12256   501 rapportd        
+12258   501 configd_sim     
+12260   501 notifyd         
+12261   501 dtdeviceinfod   
+12265   501 dtappserviced   
+12267   501 diagnosticd     
+12269   501 dtpasteboardd   
+12270   501 cfprefsd        
+12282   501 nsurlsessiond   
+12283   501 apsd            
+12284   501 containermanager
+12285   501 securityd       
+12286   501 DeviceHub       
+12289   501 lsd             
+12292   501 cloudd          
+12293   501 containermanager
+12309   501 mobileassetd    
+12310   501 eligibilityd    
+12352   501 fontservicesd   
+12359   501 searchd         
+12374   501 webbookmarksd   
+12377   501 maild           
+12381   501 passwordbreachd 
+12384   501 appleaccountd   
+12385   501 linkd           
+12389   501 assistant_cdmd  
+12392   501 AccessibilityUIS
+12393   501 geod            
+12469   501 homed           
+12481   501 chronod         
+12483   501 familycircled   
+12506   501 InputUI         
+12509   501 dmd             
+12545   501 PosterBoard     
+12664   501 WidgetRenderer_D
+12687   501 ContextService  
+12691   501 MercuryPosterExt
+12701   501 Spotlight       
+12755   501 com.apple.Mobile
+12757   501 UserFontManager 
+12813   501 AppIntentsLiveEn
+12832   501 appstored       
+12833   501 AegirPoster     
+12834   501 CollectionsPoste
+12835   501 AmbientPhotoFram
+12836   501 ExtragalacticPos
+12837   501 Unity2025Poster 
+12838   501 ImagePlaygroundP
+12839   501 EmojiPosterExten
+12840   501 UnityPoster     
+12841   501 PridePosterExten
+12842   501 ClockPosterExten
+12852   501 MercuryPosterExt
+12855   501 WeatherPoster   
+12866   501 InfographPoster 
+12871   501 GradientPosterEx
+12879   501 PhotosPosterProv
+12890   501 SetStoreUpdateSe
+12992   501 itunesstored    
+12994   501 akd             
+12995   501 com.apple.Mobile
+12999   501 filecoordination
+13011   501 PhotosReliveWidg
+13012   501 AdaptiveMusicWid
+13013   501 AdaptiveMusicCon
+13025   501 AccessibilityCon
+13100   501 syncdefaultsd   
+13442   501 ShortcutsTopHits
+14130   501 transparencyd   
+14210     0 XProtectBridgeSe
+14465   501 ScreenTimeSettin
+14556   501 ScreenTimeWidget
+14750   501 NewsToday2      
+14875   501 NewsScoringServi
+15818   501 siriactionsd    
+17064   501 CalendarIntentsE
+17091   501 SafariLinkExtens
+17795   501 ghostty         
+18294     0 audioanalyticsd 
+18474   501 UniversalControl
+18531   501 siriknowledged  
+18548   501 GeneralMapsWidge
+18549   501 BatteriesAvocado
+18613   501 com.apple.MapKit
+18614   501 geoanalyticsd   
+18705     0 wifip2pd        
+18708     0 PerfPowerTelemet
+18848   501 maild           
+18849   501 siriinferenced  
+18921   501 SetStoreUpdateSe
+19029   501 contactsd       
+19042     0 ospredictiond   
+19044   501 MessagesActionEx
+19054   501 CalendarWidgetEx
+19081   501 MobileCal       
+19250   501 ScopedBookmarkAg
+19372   501 HealthBalanceWid
+19647   501 HealthCycleTrack
+21629   501 SetStoreUpdateSe
+23032   501 akd             
+23033   501 securityd       
+23036   501 newsd           
+23193   501 bird            
+25100   308 mds_stores      
+25151   501 DiskUnmountWatch
+25222   501 nsattributedstri
+25223   501 nsattributedstri
+25252   501 com.apple.access
+25253   501 com.apple.access
+25659   501 postgres        
+25801   501 intelligenceflow
+26131   501 addressbooksyncd
+26132   501 companionappd   
+26133   501 bulletindistribu
+26135   501 eventkitsyncd   
+26136   501 appconduitd     
+26139   501 NPKCompanionAgen
+27776     0 sysmond         
+28751   501 duetexpertd     
+29379     0 wifivelocityd   
+29711     0 backupd-helper  
+29740     0 nehelper        
+29743   501 neagent         
+30154   501 SetStoreUpdateSe
+30214   501 CommCenter      
+30227   501 AssetCacheLocato
+31005   501 ContainerMetadat
+31026   501 ShortcutsViewSer
+31027   501 liveactivitiesd 
+31067   501 StatusKitAgent  
+31595   501 knowledge-agent 
+31596   501 contactsd       
+31683   501 remindd         
+31728   501 findmylocateagen
+32179   501 findmydevice-use
+32497   501 AppPredictionInt
+32702   501 HealthCycleTrack
+32924   501 SetStoreUpdateSe
+33534   501 AuthenticationSe
+34556   501 com.apple.geod  
+35046   501 liveactivitiesd 
+35089   501 nanoappregistryd
+35370   501 ChatGPT         
+35380   501 browser_crashpad
+35382   501 browser_crashpad
+35403   501 Codex (Service) 
+35406   501 Codex (Service) 
+35411   501 Codex (Service) 
+35596   501 zsh             
+35610   501 bash            
+35771   501 bare-modifier-mo
+35774   501 Codex (Renderer)
+35775   501 Codex (Renderer)
+35776   501 codex           
+35897   501 Codex (Service) 
+35963   501 SkyComputerUseSe
+35964   501 com.apple.Safari
+35999   501 Codex (Renderer)
+36017   501 Codex (Renderer)
+36093   501 codex           
+36175   501 Codex (Renderer)
+36177   501 Codex (Renderer)
+36227   501 Codex (Renderer)
+36229   501 Codex (Renderer)
+36230   501 Codex (Renderer)
+36496   501 Codex (Renderer)
+36889   501 Orca            
+36970   501 chrome_crashpad_
+36983   501 Orca Helper     
+36988   501 Orca Helper     
+37021   501 Orca Helper     
+37110   501 Orca Helper (Ren
+37149   501 Orca Helper     
+37185   501 Orca Helper     
+38140   501 Dictionary      
+38155   501 com.apple.WebKit
+38171   501 com.apple.WebKit
+38179   501 com.apple.WebKit
+38669   501 com.apple.Safari
+40061   501 codex-code-mode-
+41193   501 sirittsd        
+41194   501 fitcored        
+41216   501 SeymourMetricsSe
+41217   501 SeymourAppStoreS
+41218   501 activityawardsd 
+41221   501 healthd         
+41243   501 SeymourAssetServ
+41254   501 imageplaygroundd
+41299   501 nanomapscd      
+41415   501 modelcatalogd   
+41416   501 triald          
+41429   501 TrialArchivingSe
+41430   501 axassetsd       
+41457   501 promotedcontentd
+41470   501 amsengagementd  
+41471   501 sleepd          
+41482   501 followupd       
+41484   501 donotdisturbd   
+41574   501 SetStoreUpdateSe
+41586   501 pkd             
+41599   501 systemstatusd   
+41611   501 activitysharingd
+41624   501 MauiAUSP        
+41625   501 MacinTalkAUSP   
+41626   501 SiriAUSP        
+42126     0 ReportCrash     
+43677   501 trustd          
+45600   501 Codex (Service) 
+46298   265 adid            
+46463   501 ScreenTimeSettin
+46630   501 usernotification
+47352   501 UsageTrackingAge
+47739   501 managedassetsd  
+47805   501 trustd          
+47810   501 SimRenderServer 
+47811   501 SimMetalHost    
+47812   501 SimMetalHost    
+47813   501 SimMetalHost    
+47814   501 launchd_sim     
+47816   501 UserEventAgent  
+47817   501 SpringBoard     
+47818   501 logd            
+47819   501 assistantd      
+47820   501 runningboardd   
+47822   501 replicatord     
+47823   501 accountsd       
+47824   501 mediaremoted    
+47826   501 axassetsd       
+47828   501 ids_simd        
+47829   501 tccd            
+47831   501 biomed          
+47832   501 fileindexerd    
+47834   501 identityservices
+47835   501 syslogd         
+47838   501 backboardd      
+47839   501 sharingd        
+47841   501 locationd       
+47843   501 dasd            
+47845   501 distnoted       
+47846   501 passd           
+47847   501 CoreSimulatorBri
+47848   501 navd            
+47850   501 revisiond       
+47851   501 rapportd        
+47853   501 configd_sim     
+47855   501 notifyd         
+47856   501 dtdeviceinfod   
+47862   501 dtappserviced   
+47864   501 diagnosticd     
+47866   501 dtpasteboardd   
+47867   501 cfprefsd        
+47868   501 apsd            
+47869   501 nsurlsessiond   
+47870   501 containermanager
+47874   501 lsd             
+47876   501 containermanager
+47880   501 cloudd          
+47885   501 usernotification
+47887   501 chronod         
+47888   501 mobileassetd    
+47890   501 AccessibilityUIS
+47893   501 familycircled   
+47894   501 geod            
+47898   222 netbiosd        
+47921   501 ssh             
+47960   501 eligibilityd    
+47961   501 homed           
+47964   501 assistant_cdmd  
+47975   501 searchd         
+48001   501 webbookmarksd   
+48038   501 InputUI         
+48039   501 dmd             
+48077   501 fontservicesd   
+48095   501 PosterBoard     
+48110   501 com.apple.Mobile
+48111   501 AccessibilityCon
+48116   501 WidgetRenderer_D
+48124   501 MercuryPosterExt
+48125   501 UserFontManager 
+48129   501 Spotlight       
+48130   501 ContextService  
+48132   501 BatteriesAvocado
+48134   501 AppIntentsLiveEn
+48140   501 AdaptiveMusicWid
+48141   501 AdaptiveMusicCon
+48210   501 SetStoreUpdateSe
+48254   501 GeneralMapsWidge
+48255   501 appstored       
+48256   501 PhotosPosterProv
+48258   501 UnityPoster     
+48260   501 ClockPosterExten
+48263   501 InfographPoster 
+48264   501 GradientPosterEx
+48265   501 EmojiPosterExten
+48266   501 WeatherPoster   
+48267   501 ImagePlaygroundP
+48268   501 AmbientPhotoFram
+48269   501 CollectionsPoste
+48270   501 MercuryPosterExt
+48271   501 Unity2025Poster 
+48272   501 PridePosterExten
+48273   501 ExtragalacticPos
+48274   501 AegirPoster     
+48379   501 filecoordination
+48383   501 mediaanalysisd  
+48387   501 itunesstored    
+48393   501 com.apple.Mobile
+48408   501 com.apple.MapKit
+48409   501 geoanalyticsd   
+48414   501 MobileCal       
+48417   501 CalendarWidgetEx
+48421   501 MauiAUSP        
+48425   501 passwordbreachd 
+48439   501 SiriAUSP        
+48440   501 MacinTalkAUSP   
+48571   501 replicatord     
+48581   501 addressbooksyncd
+48582   501 companionappd   
+48583   501 bulletindistribu
+48585   501 eventkitsyncd   
+48586   501 appconduitd     
+48589   501 NPKCompanionAgen
+48624   501 SetStoreUpdateSe
+48699   501 kbd             
+48710   501 zsh             
+48723   501 bash            
+48863   501 zsh             
+48869   501 AuthenticationSe
+48880   501 bash            
+48925   501 nebulad         
+49016   501 HealthBalanceWid
+49507   501 siriactionsd    
+49610   501 assetsd         
+49621   501 mobiletimerd    
+50184   501 siriinferenced  
+50185   501 managedassetsd  
+50186   501 intelligenceflow
+50276   501 intelligencecont
+50277   501 mediaanalysisd  
+50290   501 biomesyncd      
+50291   501 siriknowledged  
+50378   501 triald          
+50391   501 TrialArchivingSe
+50392   501 assetsubscriptio
+50403   501 promotedcontentd
+51059   501 imageplaygroundd
+51060   501 stickersd       
+51722   501 biomesyncd      
+52228   501 qemu-system-aarc
+52232   501 crashpad_handler
+52285   501 crashpad_handler
+52304   501 netsimd         
+53039   501 ScreenTimeWidget
+53063   501 stickersd       
+53291   501 photoanalysisd  
+53716   501 dataaccessd     
+53806   501 imageplaygroundd
+53944   501 caffeinate      
+56898   501 SafariBookmarksS
+56916   501 sociallayerd    
+56918   501 SafariLaunchAgen
+57675   501 assetsd         
+57790   200 softwareupdated 
+57809     0 com.apple.Mobile
+57810     0 mobileactivation
+57814     0 smd             
+57829   501 com.apple.Safari
+57845   200 softwareupdated 
+57860     0 com.apple.Mobile
+57934   501 deleted         
+57937   501 pkd             
+57941     0 deleted_helper  
+57952     0 triald_system   
+57953   235 AssetCache      
+57954   501 triald          
+57955     0 installd        
+57956   501 geodMachServiceB
+57957     0 cloudd          
+57958     0 system_installd 
+57959   501 com.apple.quickl
+57960     0 AssetCacheTether
+57961     0 TrialArchivingSe
+57962   501 TrialArchivingSe
+58363   501 java            
+59606   501 calaccessd      
+59986   501 commerce        
+60155   501 appprotectiond  
+60167   501 zsh             
+60176   501 sleep           
+60177   501 communicationtru
+60340     0 AirPlayXPCHelper
+60376   501 feedbackd       
+60399   501 ind             
+60437   501 gamecontrollerag
+60438     0 XprotectService 
+60461   501 assessmentagent 
+60535     0 diagnosticd     
+60556   501 tipsd           
+60624   501 devicecheckd    
+60655   501 itunescloudd    
+60675   501 medialibraryd   
+60756   501 ind             
+60801   501 merchantd       
+60871   501 siriinferenced  
+61082   501 Keychain Circle 
+61378   501 SiriSuggestionsB
+61725   501 NewsToday2      
+61732   501 NewsScoringServi
+61798   501 routined        
+61859   501 syncdefaultsd   
+61890   501 liveactivitiesd 
+62026   501 profiled        
+63115   501 dataaccessd     
+63126   501 calaccessd      
+63139   501 communicationtru
+63140   501 familycircled   
+63152   501 followupd       
+63153   501 appleaccountd   
+63156   501 com.apple.iCloud
+63461   501 icloudmailagent 
+63475   501 icloudmailagent 
+64169   501 WeatherWidget   
+64587   501 appleaccountd   
+65276   501 Google Chrome He
+65692   501 heard           
+66182   501 mdworker_shared 
+66497     0 findmybeaconingd
+66840   501 ScreenTimeSettin
+66876   501 FamilyControlsAg
+66877   501 DeviceConfigurat
+66878   501 deviceconfigurat
+66879   501 UsageTrackingAge
+67365   501 sleep           
+67812   501 Google Chrome He
+67839   501 Google Chrome He
+67929   501 Google Chrome He
+68042   205 trustd          
+68053     0 trustdFileHelper
+68254   501 zsh             
+68273   501 sleep           
+68331   501 ScreenTimeAgent 
+68332   501 dmd             
+68334   501 zsh             
+68343   501 ManagedSettingsA
+68345   501 bash            
+68352   501 mdworker_shared 
+68366   501 DeviceConfigurat
+68368     0 containermanager
+68369     0 deviceconfigurat
+68377   501 mdworker_shared 
+68477     0 countryd        
+68663   501 sleep           
+68769   501 com.apple.hiserv
+68770   278 accessoryupdater
+68771   278 UARPUpdaterServi
+68823   501 sleep           
+68944   501 mdworker_shared 
+68945   501 mdworker_shared 
+68960   501 sleep           
+68986   501 bash            
+69124   501 mdworker_shared 
+69125   501 node            
+69127   501 node            
+69161   501 adb             
+69162   501 xpcproxy_sim    
+69163   501 xpcproxy_sim    
+69164   501 bash            
+69165     0 ps              
+70373   501 logd_helper     
+70691   501 syncdefaultsd   
+70741   501 callservicesd   
+71152   501 com.apple.FaceTi
+71164   501 com.apple.CallKi
+71755   501 suggestd        
+73500   501 IntelligencePlat
+74692   501 sleepd          
+80154   501 PhotosReliveWidg
+80736     0 peakpowermanager
+83120   501 donotdisturbd   
+87951   501 callservicesd   
+87952   501 storekitd       
+87954   501 linkd           
+87959   501 tvremoted       
+88121   501 nanoappregistryd
+88123   501 nanotimekitcompa
+88273   501 com.apple.FaceTi
+88274   501 com.apple.CallKi
+88694   501 ShortcutsTopHits
+89811     0 coreduetd       
+90269   501 disclaimer      
+90274   501 simctl          
+90340   501 log             
+92968   501 coresymbolicatio
+95529   501 Claude Helper   
+95966   501 postgres        
+96404   501 siriknowledged  
+98500     0 PerfPowerService
+98983   501 keyboardservices
+ 4299   501 caffeinate      
+ 1756   501 zsh             
+ 4796   501 tmux            
+ 4303   501 2.1.293         
+ 4373   501 node            
+ 4374   501 node            
+ 4407   501 node            
+64304   501 caffeinate      
+17810     0 login           
+17811   501 zsh             
+49962     0 login           
+49969   501 zsh             
+50558   501 codex           
+50753   501 node            
+50754   501 node_repl       
+50779   501 node            
+50801   501 node_repl       
+54410   501 codex-code-mode-
+16553     0 login           
+16564   501 zsh             
+17742   501 codex           
+17926   501 node            
+17928   501 node_repl       
+17950   501 node            
+17952   501 node            
+18010   501 node_repl       
+20790   501 codex-code-mode-
+13798   501 node            
+21485   501 node            
+21487   501 node_repl       
+21509   501 node            
+21511   501 node            
+21646   501 node_repl       
+38719     0 login           
+38848   501 zsh             
+42244   501 codex           
+42395   501 node_repl       
+42396   501 node            
+42412   501 node            
+42420   501 node            
+42483   501 node_repl       
+44650   501 codex-code-mode-
+55134   501 node            
+87089   501 node_repl       
+87090   501 node            
+87111   501 node            
+87149   501 node_repl       

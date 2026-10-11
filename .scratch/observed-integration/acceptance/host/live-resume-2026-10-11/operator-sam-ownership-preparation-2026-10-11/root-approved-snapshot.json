@@ -1,0 +1,13 @@
+{
+  "acceptedAtUtc": "2026-10-11T04:59:05.468703+00:00",
+  "authority": "Root user dispatch and independent review approve this ownership-only snapshot",
+  "sha256": {
+    "run-ownership.mjs": "3cf7f328fb04d16dcee6e7c211036a0a691aac298679970d9c66d259474f5870",
+    "parse-sam-plist.py": "a3028c2e9f5ff593811e06711d1972186729cfdd44f2a30804a3a6f06166f124",
+    "commands.mjs": "04b19768122f326b43e49bdb0fcf28797b3a8187c97f80bc69f11f28999a97f9"
+  },
+  "sudoBudget": 1,
+  "noSamNamespaceOrRootChmod": true,
+  "noPasswordRequestOrRetry": true,
+  "subsequentCacheDrilldown": "Only if no unresolved in-flight process remains"
+}
