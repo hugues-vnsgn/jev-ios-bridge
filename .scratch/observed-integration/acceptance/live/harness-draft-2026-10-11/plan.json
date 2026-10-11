@@ -1,0 +1,40 @@
+{
+  "status": "DRAFT_DISABLED_UNEXECUTED",
+  "reviewedDispatchTokenSha256": null,
+  "integratedSha": null,
+  "sourceManifestSha256": null,
+  "compiledManifestSha256": null,
+  "exactCommandAllowlist": [],
+  "rowActionIds": {},
+  "effectBudgets": {
+    "rows": 5,
+    "concurrentPreparations": 1,
+    "retainedAllocationsMaximum": 8,
+    "perRowCreate": 1,
+    "perRowBoot": 1,
+    "perRowInstall": 1,
+    "perRowLaunch": 1,
+    "perRowPreparationTimeoutMs": 360000,
+    "perRowReadinessCapturesMaximum": 31,
+    "perRowActionTimeoutMs": 10000,
+    "perRowActionCapturesMaximum": 102,
+    "perRowFinalizationMs": 5000,
+    "perRowTouchesMaximum": {"L01": 1, "L02": 0, "L03": 0, "L04": 1, "L05": 1},
+    "semanticTaps": 0,
+    "relaunchesDuringAction": 0,
+    "backendCallsForReadRepeatConflictRefusedSuccessor": 0,
+    "deviceCleanupCalls": 0,
+    "replacementAllocations": 0,
+    "preparationListingCounts": "Measure V per row; no numeric ceiling is supplied by the matrix.",
+    "metadataCommandLimits": "Preserve the production SourceProcess limits; do not infer a whole-row cap from prior compatibility totals."
+  },
+  "controller": {
+    "backend": "real",
+    "productionComposition": "productionObservedComposition unchanged",
+    "rowOrder": ["L01", "L02", "L03", "L04", "L05"],
+    "requestAndArtifactHashes": null,
+    "l04ExactTouchBinding": null,
+    "publicRequestAllowlist": [],
+    "state": "NOT_IMPLEMENTED_NO_ENABLE_PATH"
+  }
+}

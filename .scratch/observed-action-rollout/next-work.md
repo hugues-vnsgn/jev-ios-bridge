@@ -2,6 +2,10 @@
 
 ## Active resumption: 2026-10-11
 
+Latest autonomous continuation: the sole operator rechecked storage at03:31:58 UTC. Available space is now16,436,826,112bytes (15.31GiB); staging shortfall58,725,101,568bytes (54.69GiB), plus build headroom. Root audited all28 new evidence files, raw receipt/arithmetic and527 accepted reference files. No builds or device actions followed. [Fresh audit](../observed-integration/acceptance/host/live-resume-2026-10-11/root-storage-recheck-audit.json).
+
+Use the [current resume runbook](storage-resume-runbook.md) and [prepared execution brief](remaining-execution-brief.md). They supersede stale operator/migration instructions. Build commands remain unexecuted. Current public-interface command recording, including the L04 pre-acknowledgement loss boundary, remains a preparation dependency; the historical experimental harness is insufficient.
+
 The owner explicitly approved resuming the remaining live roadmap: “ok, follow the map and go ahead”, following the stated compatibility → operational entry → L01–L05 → final review order. This supersedes the earlier deferral for these stages; it does not authorize merge, push or publication. Code/package acceptance remains complete. Root restored the sole GPT-6.1-Sol xhigh operator after the prior pane disappeared at restart and verified all 443 Source, 69 compiled and 15 preserved host files against the accepted final manifest. Actual metadata compatibility passed. Operational entry passed configuration, migration and capacity, then stopped at insufficient disk space. Live cases await storage and builds. Current binding: [2026-10-11 Root binding](../observed-integration/acceptance/host/live-resume-2026-10-11/root-binding.json). Historical deferral/status sections below describe earlier checkpoints.
 
 ### Current live checkpoint
@@ -47,7 +51,7 @@ No owner decision is pending. The sole live operator stays idle and must be rebo
 | 1 | Product fixes, both review axes, clean package/startup and integrated host checks | Complete; exact evidence above |
 | 2 | Actual iPhone17/iOS27.0 metadata compatibility | PASS |
 | 3 | Operational configuration, once migration and capacity | PASS; corrected effective digest recorded |
-| 4 | Storage and unchanged fixture/Weather generic builds | BLOCKED:16.38GiB available;70GiB required plus build margin |
+| 4 | Storage and unchanged fixture/Weather generic builds | BLOCKED:15.31GiB available;70GiB required plus build margin |
 | 5 | Serial L01–L05 via the sole operator | UNVERIFIED; requires accepted entry evidence |
 | 6 | Independent final review of completed live acceptance | Pending; code/package review already passed |
 

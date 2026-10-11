@@ -1,7 +1,7 @@
 {
   "status": "BLOCKED_STORAGE",
   "operator": "term_b2a0f5b5-3228-4fad-bf5d-d08d08be3405",
-  "reason": "Production helper reports16.38GiB available versus70GiB required before builds.",
+  "reason": "Fresh storage proof:15.31GiB available versus70GiB required before builds.",
   "completed": [
     "Compatibility v3 PASS; Root audited775 result files,165 children and422 metadata receipts.",
     "Exact directory repair verified, one fchmod and actual close.",
@@ -9,16 +9,17 @@
     "Once migration passed: four actions/four devices; ten historical source hashes preserved.",
     "Capacity passed: zero allocations/bytes; five cases fit; all four protected devices retained."
   ],
-  "next": "Free storage with preservation constraints; fresh storage proof then unchanged builds and entry audit. Do not rerun migration.",
+  "next": "Resolve storage preserving evidence/stores/devices; prepare and review current public-interface recording harness; fresh storage/capacity then unchanged builds. Never repeat migration.",
   "ownerApprovalPolicy": "Owner explicitly delegated routine approval handling to Root; supported prompts may be approved within authorized roadmap.",
   "compatibilityAudit": "root-compatibility-v3-audit.json",
   "repairAudit": "root-operational-repair-audit.json",
   "release": "No merge/push/publication; L01-L05 unverified",
   "configurationDigest": "0ef4ca5a076024284eef7594e40dc638ee7be61dcc69b99fca1aff3249ded77d",
   "installationId": "d411f7ce-9db6-4aa7-9c86-f337e739020a",
-  "updatedAtUtc": "2026-10-11T03:09:19.205418+00:00",
+  "updatedAtUtc": "2026-10-11T03:33:38.392593+00:00",
   "entryAudit": "root-operational-entry-audit.json",
-  "additionalStagingBytesRequired": 57569988608,
+  "additionalStagingBytesRequired": 58725101568,
   "diskAttributionAudit": "root-disk-attribution-audit.json",
-  "operatorState": "Entry complete to storage blocker; no builds/reservations/live dispatch; attribution complete; sealing and idle."
+  "operatorState": "Idle after sealed storage refusal; no builds or live dispatch.",
+  "storageRecheckAudit": "root-storage-recheck-audit.json"
 }

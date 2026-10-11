@@ -1,0 +1,57 @@
+{
+  "status": "STORAGE_UNAVAILABLE",
+  "helper": "pinned production allocationStorage",
+  "simulatorVolume": "/Users/hugues_mini/Library/Developer/CoreSimulator",
+  "approvedStagingVolume": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic/.scratch/observed-integration/acceptance/live/entry-2026-10-11-v2",
+  "storage": {
+    "simulatorFreeBytes": 17591939072,
+    "stagingFreeBytes": 17591939072
+  },
+  "requirements": {
+    "existingReservations": 0,
+    "proposedAllocations": 5,
+    "proposedReservations": 42949672960,
+    "remainingFreeFloor": 21474836480,
+    "stagedArtifactAllowance": 10737418240,
+    "simulatorRequired": 64424509440,
+    "stagingRequired": 75161927680
+  },
+  "margin": {
+    "simulatorBytes": -46832570368,
+    "stagingBytes": -57569988608
+  },
+  "statfsTrace": [
+    {
+      "path": "/Users/hugues_mini/Library/Developer/CoreSimulator",
+      "atUtc": "2026-10-11T03:10:10.559Z",
+      "returned": {
+        "type": 26,
+        "bsize": 4096,
+        "blocks": 120699413,
+        "bfree": 4294907,
+        "bavail": 4294907,
+        "files": 179138391,
+        "ffree": 171796280
+      },
+      "returnQualifier": "Original production numeric StatFs returned unchanged; calculated free bytes must be safe integers."
+    },
+    {
+      "path": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic/.scratch/observed-integration/acceptance/live/entry-2026-10-11-v2",
+      "atUtc": "2026-10-11T03:10:10.559Z",
+      "returned": {
+        "type": 26,
+        "bsize": 4096,
+        "blocks": 120699413,
+        "bfree": 4294907,
+        "bavail": 4294907,
+        "files": 179138391,
+        "ffree": 171796280
+      },
+      "returnQualifier": "Original production numeric StatFs returned unchanged; calculated free bytes must be safe integers."
+    }
+  ],
+  "estimatesAreNotQuotas": true,
+  "externalConsumptionUnfenced": true,
+  "productionPerPreparationChecksRemainEnabled": true,
+  "reservationsMade": 0
+}

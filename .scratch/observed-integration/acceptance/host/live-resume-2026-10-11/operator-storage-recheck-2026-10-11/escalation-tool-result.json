@@ -1,0 +1,7 @@
+{
+  "chunk_id": "6be037",
+  "wall_time_seconds": 0.013406667,
+  "exit_code": 3,
+  "original_token_count": 133,
+  "output": "{\"stage\":\"fresh-read-only-conservative-storage\",\"status\":\"STORAGE_UNAVAILABLE\",\"storage\":{\"simulatorFreeBytes\":16436826112,\"stagingFreeBytes\":16436826112},\"requirements\":{\"existingReservations\":0,\"proposedAllocations\":5,\"proposedReservations\":42949672960,\"remainingFreeFloor\":21474836480,\"stagedArtifactAllowance\":10737418240,\"simulatorRequired\":64424509440,\"stagingRequired\":75161927680},\"shortfall\":{\"simulatorBytes\":47987683328,\"stagingBytes\":58725101568},\"helperCalls\":1,\"exitCode\":3,\"actualClose\":\"2026-10-11T03:31:58.299Z\"}\n"
+}

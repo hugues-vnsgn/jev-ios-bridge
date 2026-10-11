@@ -1,0 +1,8 @@
+{
+  "cmd": "env -u TYPESAFE_API_KEY -u NODE_OPTIONS -u NODE_NO_WARNINGS /opt/homebrew/Cellar/node/26.8.1/bin/node .scratch/observed-integration/acceptance/host/live-resume-2026-10-11/operator-storage-recheck-2026-10-11/run.mjs --read-only-once",
+  "login": false,
+  "sandbox_permissions": "require_escalated",
+  "justification": "Allow the owner-authorized sole operator to record one read-only production storage proof on the two unchanged simulator/staging paths? Supported elevation is required because the workspace-write sandbox cannot serve host prerequisites. No migration, build, reservation, cleanup, or device action will run.",
+  "max_output_tokens": 4000,
+  "yield_time_ms": 1000
+}

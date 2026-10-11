@@ -1,0 +1,19 @@
+{
+  "command": [
+    "/opt/homebrew/bin/git",
+    "rev-parse",
+    "HEAD"
+  ],
+  "login": false,
+  "exitCode": 0,
+  "stdout": "7482f2a4d31de989117f039de142ef16bb428466\n",
+  "stderr": "",
+  "actualToolReturn": {
+    "chunk_id": "651619",
+    "wall_time_seconds": 7.667e-06,
+    "exit_code": 0,
+    "original_token_count": 11,
+    "output": "7482f2a4d31de989117f039de142ef16bb428466\n"
+  },
+  "qualifier": "Finite repository read, not a native diagnostic; descendants unobserved."
+}

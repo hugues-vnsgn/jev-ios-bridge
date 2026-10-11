@@ -1,0 +1,16 @@
+{
+  "auditedAtUtc": "2026-10-11T03:33:38.392593+00:00",
+  "status": "ACCEPTED_STORAGE_REFUSAL",
+  "manifestFiles": 28,
+  "manifestSha256": "b53eb1fdfcba50f5ff01c0595c4d55b8d0b1561a9505db2e7c93739b850bd764",
+  "referenceFiles": 527,
+  "actualClose": "2026-10-11T03:31:58.299Z",
+  "availableBytes": 16436826112,
+  "stagingRequiredBytes": 75161927680,
+  "shortfallBytes": 58725101568,
+  "helperCalls": 1,
+  "migrationRerun": false,
+  "builds": 0,
+  "deviceActions": 0,
+  "capacityQualifier": "Prior accepted zero reservations used for planning; fresh capacity required before later allocation."
+}
