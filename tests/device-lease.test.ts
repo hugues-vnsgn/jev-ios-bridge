@@ -1,3 +1,5 @@
+import { mkdirSync, realpathSync } from 'node:fs';
+import { Admission } from '../src/device/admission.js';
 import assert from 'node:assert/strict';
 import { mkdtemp, readFile, readdir, rm, writeFile } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
@@ -6,7 +8,7 @@ import { test } from 'node:test';
 import { MobileBuildMcpDriver, type CliRunner } from '../src/device/index.js';
 import { DeviceLease, DeviceLeaseKeptError } from '../src/device/lease.js';
 
-const udid = '0E42FDE2-5E09-42D3-9876-9EF0037FCBE7';
+const udid = 'ABCDEF00-0000-4000-8000-000000000001';
 const scenario = { app: { bundleId: 'com.example.app' }, device: { udid } };
 
 function reply(args: string[]): string {
@@ -18,7 +20,7 @@ const runner: CliRunner = async (args) => ({ stdout: reply(args), stderr: '', ex
 
 test('the iOS driver writes the lease file a 1.1 bridge reads: exactly pid, token, deviceId, createdAt', async () => {
   const root = await mkdtemp(join(tmpdir(), 'jev-device-lease-shape-'));
-  const driver = new MobileBuildMcpDriver({ cwd: root, lockRoot: root, runner });
+  const driver = fakeDriver({ cwd: root, lockRoot: root, runner });
   try {
     await driver.prepare(scenario, new AbortController().signal);
     const written = JSON.parse(await readFile(join(root, `${udid}.lock`), 'utf8')) as Record<string, unknown>;
@@ -33,13 +35,13 @@ test('the iOS driver writes the lease file a 1.1 bridge reads: exactly pid, toke
 
 test('a lease file that can no longer be read at release makes close fail and stays in place', async () => {
   const root = await mkdtemp(join(tmpdir(), 'jev-device-lease-corrupt-'));
-  const driver = new MobileBuildMcpDriver({ cwd: root, lockRoot: root, runner });
+  const driver = fakeDriver({ cwd: root, lockRoot: root, runner });
   try {
     await driver.prepare(scenario, new AbortController().signal);
     const path = join(root, `${udid}.lock`);
     await writeFile(path, '{not json');
     await assert.rejects(driver.close(new AbortController().signal), SyntaxError);
-    assert.deepEqual(await readdir(root), [`${udid}.lock`]);
+    assert.deepEqual((await readdir(root)).sort(), [`${udid}.lock`, 'admission'].sort());
     assert.equal(await readFile(path, 'utf8'), '{not json');
   } finally { await rm(root, { recursive: true, force: true }); }
 });
@@ -109,3 +111,12 @@ test('settled(kind) is true only when every command of that kind exited or was f
     assert.equal(lease.settled('agent'), true, 'fenced');
   });
 });
+
+function fakeDriver(options: import('../src/device/index.js').MobileBuildMcpDriverOptions): MobileBuildMcpDriver {
+  const storeRoot = join(options.cwd, 'admission');
+  mkdirSync(storeRoot, { recursive: true, mode: 0o700 });
+  const admission = Admission.forTesting({ root: realpathSync(storeRoot), backend: 'fake' });
+  return new MobileBuildMcpDriver({ ...options, admission,
+    deviceWindow: options.deviceWindow ?? (async () => {}),
+    fakeBackend: { runner: options.runner!, window: options.deviceWindow } });
+}

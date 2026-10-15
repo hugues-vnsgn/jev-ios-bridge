@@ -11,7 +11,7 @@ import { processAlive } from '../process.js';
  * on the device. Until that can be shown, the lease is kept.
  */
 
-/** Where device leases live. Documented so a person can inspect one; the bridge clears stale ones itself. */
+/** Compatibility lease location. Android may reclaim a confirmed dead holder; updated iOS never does. */
 export const DEFAULT_LEASE_ROOT = join(tmpdir(), 'jev-ios-bridge-device-locks');
 
 /**
@@ -43,10 +43,11 @@ interface LeaseFile {
 }
 
 export class DeviceLeaseBusyError extends Error {
-  constructor(readonly deviceIdentity: string, readonly holder: LeaseHolder | undefined, readonly path: string) {
+  constructor(readonly deviceIdentity: string, readonly holder: LeaseHolder | undefined, readonly path: string, reclaimDeadHolder = true) {
     const description = holder?.processId !== undefined ? `bridge process ${String(holder.processId)}` : 'another bridge process';
     super(`Device ${deviceIdentity} is locked by ${description} (lock file ${path}). ` +
-      'Wait for that run to finish, or stop that process; the next run then clears the lock.');
+      (reclaimDeadHolder ? 'Wait for that run to finish, or stop that process; the next run then clears the lock.'
+        : 'Wait for that run to finish. A prior iOS lease is never reclaimed from process death.'));
     this.name = 'DeviceLeaseBusyError';
   }
 }
@@ -96,6 +97,7 @@ export class DeviceLease {
   private readonly root: string;
   private readonly processId: number;
   private readonly writeTempFile: TempFileWriter;
+  private readonly reclaimDeadHolder: boolean;
   private readonly operations = new Set<Promise<unknown>>();
   private readonly commands = new Set<{ kind: DeviceCommandKind; state: DeviceCommandState }>();
   private owned: string[] = [];
@@ -103,7 +105,9 @@ export class DeviceLease {
   private late: Promise<void> | undefined;
   private writeQueue: Promise<void> = Promise.resolve();
 
-  constructor(options: { root?: string; processId?: number; writeTempFile?: TempFileWriter } = {}) {
+  /** iOS passes reclaimDeadHolder:false; Android retains its existing recovery protocol. */
+  constructor(options: { root?: string; processId?: number; writeTempFile?: TempFileWriter; reclaimDeadHolder?: boolean } = {}) {
+    this.reclaimDeadHolder = options.reclaimDeadHolder ?? true;
     this.root = options.root ?? DEFAULT_LEASE_ROOT;
     this.processId = options.processId ?? process.pid;
     this.writeTempFile = options.writeTempFile ?? defaultWriteTempFile;
@@ -127,12 +131,12 @@ export class DeviceLease {
         if ((error as NodeJS.ErrnoException).code !== 'EEXIST') throw error;
         const existing = await readHolderFile(path);
         // A holder whose bridge process has exited can't be protecting an in-flight command.
-        if (attempt === 0 && existing && !processAlive(existing.pid)) {
+        if (this.reclaimDeadHolder && attempt === 0 && existing && !processAlive(existing.pid)) {
           deadHolder = holderOf(existing);
           await unlink(path).catch((unlinkError: NodeJS.ErrnoException) => { if (unlinkError.code !== 'ENOENT') throw unlinkError; });
           continue;
         }
-        throw new DeviceLeaseBusyError(deviceIdentity, existing && holderOf(existing), path);
+        throw new DeviceLeaseBusyError(deviceIdentity, existing && holderOf(existing), path, this.reclaimDeadHolder);
       }
     }
     const content: LeaseFile = { pid: this.processId, token: randomUUID(), deviceId: deviceIdentity,

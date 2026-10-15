@@ -15,7 +15,7 @@ import sys
 
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 import binding
-from device_guard import DeviceGuard, DeviceGuardError
+from device_guard import DeviceGuard, DeviceGuardError, default_ownership_root
 
 UDID = "0E42FDE2-5E09-42D3-9876-9EF0037FCBE7"
 NAME = "jev-ios-bridge"
@@ -38,11 +38,17 @@ class Configuration:
     device_id: str = UDID
     lease_root: Path | None = None
     build_binding: Path | None = None
+    ownership_root: Path | None = None
+
+def admission_clock():
+    """Shared host/simulator clock; never use process-relative restarted seconds."""
+    return time.clock_gettime(time.CLOCK_MONOTONIC_RAW)
+
 
 @dataclass(frozen=True)
 class Dependencies:
     tools: object
-    now: object = time.monotonic
+    now: object = admission_clock
     sleep: object = time.sleep
 
 @dataclass(frozen=True)
@@ -206,6 +212,60 @@ def _bounded_strings(value, depth=0):
             _bounded_strings(item, depth + 1)
 
 
+def _parent_edge(details, outcome):
+    """Recognize parent diagnostics without letting phase metadata hide an edge."""
+    phase = details.get("phase")
+    if "phase" not in details:
+        if outcome != "observed":
+            return False  # Historical ABI/exception/admission failures have no phase.
+        phase = "edge"  # Historical observed records used exactly the edge fields.
+    fields = set(details) - {"phase"}
+    text = lambda name: type(details.get(name)) is str and bool(details[name])
+    number = lambda name: type(details.get(name)) is int and details[name] >= 0
+    if phase == "edge":
+        valid = (fields == {"source", "reference", "parentPresent", "parent", "edge", "originalContainment"}
+            and outcome == "observed" and details["source"] == "parentAccessibilityElement"
+            and text("reference") and number("edge") and details["edge"] >= 1
+            and type(details["parentPresent"]) is bool
+            and (text("parent") if details["parentPresent"] else details["parent"] is None)
+            and details["originalContainment"] == "unestablished")
+    elif phase in ("root-factory", "comparison-method"):
+        valid = (fields == {"source", "provenance"} and outcome == "observed"
+            and details["source"] == ("elementWithProcessIdentifier:" if phase == "root-factory" else "isEqual:")
+            and type(details["provenance"]) is dict and bool(details["provenance"]))
+    elif phase == "independent-root":
+        present = details.get("rootPresent")
+        valid = (fields == {"source", "expectedFixturePID", "rootPresent", "rootScope",
+                          "rootReference" if present is True else "reason"}
+            and type(present) is bool and details["source"] == "elementWithProcessIdentifier:"
+            and number("expectedFixturePID") and 2 <= details["expectedFixturePID"] <= 2147483647
+            and details["rootScope"] == "pid-factory-observation-only"
+            and ((outcome == "observed" and text("rootReference")) if present else
+                 (outcome == "failed" and details.get("reason") == "nil-application-root")))
+    elif phase == "native-comparison":
+        valid = (fields == {"purpose", "source", "reference", "otherReference", "nativeEqual",
+                            "sameLocalObject", "associationScope"}
+            and outcome == "observed" and details["source"] == "isEqual:"
+            and details["purpose"] in ("independent-root", "cycle")
+            and text("reference") and text("otherReference")
+            and type(details["nativeEqual"]) is bool and type(details["sameLocalObject"]) is bool
+            and details["associationScope"] == "unestablished")
+    elif phase == "termination":
+        reasons = {"native-root-equal", "root-unavailable", "native-equality-unavailable",
+                   "local-object-cycle", "native-reference-cycle", "parent-limit",
+                   "snapshot-unavailable", "parent-unavailable", "nil-parent-before-root"}
+        valid = (fields == {"reason", "edges", "originalContainment", "rootScope"}
+            and text("reason") and details["reason"] in reasons and number("edges") and details["edges"] <= 32
+            and details["originalContainment"] == "unestablished"
+            and details["rootScope"] == "pid-factory-observation-only"
+            and outcome == ("observed" if details["reason"] == "native-root-equal" else "failed"))
+    else:
+        valid = False
+    if not valid:
+        raise _Refusal("PARENT_RECORD_INVALID")
+    return phase == "edge"
+
+
 def _decode(data):
     def invalid_constant(_):
         raise ValueError("nonfinite JSON")
@@ -272,6 +332,10 @@ class _Stream:
         if self.plan == "metadata" and record["operation"] != "metadata":
             raise _Refusal("METADATA_ADMITTED_QUERY")
         details = record["details"]
+        if self.plan == "metadata" and details.get("source") == "requestElementAtPoint:reply:":
+            raise _Refusal("METADATA_ADMITTED_QUERY")
+        if "nativeSettled" in details and details["nativeSettled"] is not False:
+            raise _Refusal("CONTRADICTORY_SETTLEMENT")
         if record["kind"] in ("started", "finished"):
             if details["plan"] != self.plan:
                 raise _Refusal("RECORD_PLAN")
@@ -287,10 +351,25 @@ class _Stream:
                         "independentAssociations":"unestablished"}
             if details["coverage"] != expected:
                 raise _Refusal("CONTRADICTORY_COVERAGE")
-        if record["operation"] == "parent" and record["outcome"] == "observed":
+        if record["operation"] == "parent" and _parent_edge(details, record["outcome"]):
             self.parent_edges += 1
             if self.parent_edges > 32:
                 raise _Refusal("PARENT_EDGE_LIMIT")
+        if record["kind"] == "finished":
+            callbacks = details["pointCallbacks"]
+            if self.plan == "metadata" and any(callbacks[name] != 0 for name in
+                    ("started", "sendReturned", "replyReceived", "pending", "late", "duplicate", "retainedObjects")):
+                raise _Refusal("METADATA_ADMITTED_QUERY")
+            if callbacks["retainedObjects"] and details["localReferencesReleased"]:
+                raise _Refusal("CALLBACK_REFERENCES_UNCONFIRMED")
+            started, replies = callbacks["started"], callbacks["replyReceived"]
+            if (started > 2 or started > details["appElementQueries"]
+                    or callbacks["sendReturned"] > started or replies > started
+                    or callbacks["pending"] != started - replies
+                    or callbacks["retainedObjects"] > 2 * started
+                    or (not replies and any(callbacks[name] for name in ("late", "duplicate", "retainedObjects")))
+                    or (callbacks["sendReturned"] < started and details["localMethodsReturned"])):
+                raise _Refusal("CALLBACK_ACCOUNTING_INVALID")
         self.finished = record["kind"] == "finished"
         self.records.append(record)
         self.on_record(record)
@@ -325,6 +404,8 @@ class _Study:
         self.binding_digest = None
         self.guard = None
         self.guard_error = None
+        self.persistent_guard = None
+        self.persistent_guard_error = None
         self.env = {key: os.environ[key] for key in
                     ("PATH", "HOME", "TMPDIR", "LANG", "LC_ALL", "DEVELOPER_DIR", "TOOLCHAINS")
                     if key in os.environ}
@@ -341,51 +422,77 @@ class _Study:
     def ledger(self):
         self.save("ownership.json", {"requestId":self.request, "plan":self.plan,
                   "deviceId":UDID, "commands":self.commands, "resources":self.resources,
-                  "deviceGuard":self.guard_facts(), "studyIdentity":self.identity,
+                  "deviceGuard":self.guard_facts(), "persistentGuard":self.guard_facts(True),
+                  "studyIdentity":self.identity,
                   "buildBindingSHA256":self.binding_digest,
                   "nativeSettlement":"unconfirmed"})
 
-    def guard_facts(self):
-        if self.guard is None:
+    def guard_facts(self, persistent=False):
+        guard = self.persistent_guard if persistent else self.guard
+        if guard is None:
             return None
-        return {"kind":"device-guard", **self.guard.provenance,
-                "created":self.guard.created, "released":self.guard.released,
-                "uncertainty":self.guard_error}
+        return {"kind":"persistent-device-guard" if persistent else "device-guard",
+                **guard.provenance, "created":guard.created, "released":guard.released,
+                "uncertainty":self.persistent_guard_error if persistent else self.guard_error}
+
+    def guard_failure(self, persistent, error):
+        if persistent:
+            self.persistent_guard_error = error.reason
+        else:
+            self.guard_error = error.reason
+        raise _Refusal(error.reason) from None
 
     def acquire_guard(self):
         self.admit()
+        root = self.config.ownership_root
+        self.persistent_guard = DeviceGuard(root if root is not None else default_ownership_root(),
+            UDID, self.request, self.output / "persistent-ownership")
         self.guard = DeviceGuard(self.config.lease_root, UDID, self.request, self.output)
-        self.ledger()  # Proposed ownership is durable before exclusive acquisition.
-        try:
-            self.guard.take()
-        except DeviceGuardError as error:
-            self.guard_error = error.reason
-            raise _Refusal(error.reason) from None
-        finally:
-            self.ledger()
+        self.ledger()  # Proposed ownership precedes each exclusive acquisition.
+        for persistent, guard in ((True, self.persistent_guard), (False, self.guard)):
+            try:
+                guard.take()
+            except DeviceGuardError as error:
+                self.guard_failure(persistent, error)
+            finally:
+                self.ledger()
 
     def check_guard(self):
-        if self.guard is None:
+        if self.guard is None or self.persistent_guard is None:
             raise _Refusal("DEVICE_GUARD_NOT_HELD")
-        try:
-            self.guard.check()
-        except DeviceGuardError as error:
-            self.guard_error = error.reason
-            self.ledger()
-            raise _Refusal(error.reason) from None
+        for persistent, guard in ((True, self.persistent_guard), (False, self.guard)):
+            try:
+                guard.check()
+            except DeviceGuardError as error:
+                try:
+                    self.guard_failure(persistent, error)
+                finally:
+                    self.ledger()
 
     def release_guard(self):
-        if self.guard is None or not self.guard.created or self.guard.released:
-            return
         if any(entry["state"] != "exited" for entry in self.commands):
             raise _Refusal("DEVICE_GUARD_WORK_PENDING")
-        try:
-            self.guard.release()
-        except DeviceGuardError as error:
-            self.guard_error = error.reason
-            raise _Refusal(error.reason) from None
-        finally:
-            self.ledger()
+        # Validate every owned claim before removing either. Partial acquisition
+        # can release only the fresh complete claim, without touching a busy one.
+        for persistent, guard in ((True, self.persistent_guard), (False, self.guard)):
+            if guard is not None and guard.created and not guard.released:
+                try:
+                    guard.check()
+                except DeviceGuardError as error:
+                    try:
+                        self.guard_failure(persistent, error)
+                    finally:
+                        self.ledger()
+        # The persistent claim remains authoritative until temporary release succeeds.
+        for persistent, guard in ((False, self.guard), (True, self.persistent_guard)):
+            if guard is None or not guard.created or guard.released:
+                continue
+            try:
+                guard.release()
+            except DeviceGuardError as error:
+                self.guard_failure(persistent, error)
+            finally:
+                self.ledger()
 
     def admit(self):
         if self.record_refusal is not None:
@@ -772,7 +879,7 @@ class _Study:
         environment = {
             "JEV_NATIVE_OWNER_REQUEST_ID":self.request,
             "JEV_NATIVE_OWNER_PLAN":self.plan,
-            "JEV_NATIVE_OWNER_ADMISSION_SECONDS":str(self.deadline-self.dep.now()),
+            "JEV_NATIVE_OWNER_ADMISSION_DEADLINE":str(self.deadline),
             "JEV_NATIVE_OWNER_STOP_FILE":str(self.stop_file),
         }
         if self.fixture_documents:
@@ -962,8 +1069,9 @@ class _Study:
         if status == "retained":
             self.stop_file.touch(mode=0o600, exist_ok=True)
         retained = tuple(self.resources) + tuple(entry for entry in self.commands if entry["state"] != "exited")
-        if self.guard is not None and self.guard.created and not self.guard.released:
-            retained += (self.guard_facts(),)
+        for persistent, guard in ((False, self.guard), (True, self.persistent_guard)):
+            if guard is not None and guard.created and not guard.released:
+                retained += (self.guard_facts(persistent),)
         result = StudyResult(status, reason, self.request, str(self.output), tuple(self.records),
                              retained if status == "retained" else ())
         self.save("result.json", asdict(result))

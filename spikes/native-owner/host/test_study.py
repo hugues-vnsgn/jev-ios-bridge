@@ -94,6 +94,8 @@ def records(request, plan="metadata"):
             record(3, "finished", {"plan":plan, "runnerPID":22222,
                 "appElementQueries":0 if plan == "metadata" else 3,
                 "localMethodsReturned":True, "localReferencesReleased":True,
+                "pointCallbacks":{"started":0,"sendReturned":0,"replyReceived":0,"pending":0,
+                    "late":0,"duplicate":0,"retainedObjects":0,"observationClosed":True,"nativeSettled":False},
                 "nativeSettlement":"unconfirmed", "coverage":{
                     "originalAncestry":"unestablished",
                     "referenceLifetime":"unestablished",
@@ -196,7 +198,7 @@ def configuration(root, seconds=90, plan="metadata"):
     project.mkdir()
     (project/"project.pbxproj").write_text("// generated synthetic project")
     config=Configuration(root/"derived",root/"evidence",source,admission_seconds=seconds,
-                         lease_root=root/"leases",build_binding=root/"binding.json")
+                         lease_root=root/"leases",build_binding=root/"binding.json", ownership_root=root/"persistent-claims")
     bind(config,plan)
     return config
 
@@ -205,6 +207,13 @@ class NoTools:
         raise AssertionError("a refused device must start no process")
 
 class Admission(unittest.TestCase):
+    def test_default_admission_clock_uses_the_shared_raw_clock(self):
+        before = time.clock_gettime(time.CLOCK_MONOTONIC_RAW)
+        actual = Dependencies(NoTools()).now()
+        after = time.clock_gettime(time.CLOCK_MONOTONIC_RAW)
+        self.assertLessEqual(before, actual)
+        self.assertLessEqual(actual, after)
+
     def test_wrong_device_refuses_before_tools_or_evidence(self):
         with tempfile.TemporaryDirectory() as root:
             evidence = Path(root) / "evidence"
@@ -369,6 +378,20 @@ class Refusals(unittest.TestCase):
         result,tools=self.exercise(lambda c,k,t:None,plan="tap")
         self.assertEqual(result.reason,"PLAN_UNSUPPORTED")
         self.assertEqual(tools.commands,[])
+
+    def test_delayed_startup_receives_the_original_absolute_deadline(self):
+        class SlowPreparation(Tools):
+            def start(self, argv, env, cwd):
+                if argv[0] != "xcodebuild": self.clock.value += 0.5
+                return super().start(argv, env, cwd)
+        with tempfile.TemporaryDirectory() as root:
+            config = configuration(root, 90); clock = Clock(); clock.value = 100
+            tools = SlowPreparation(clock, config)
+            result = run_study("metadata", config, Dependencies(tools, clock.now, clock.sleep))
+            self.assertEqual(result.status, "completed")
+            self.assertEqual(tools.environment.get("JEV_NATIVE_OWNER_ADMISSION_DEADLINE"), "190")
+            self.assertNotIn("JEV_NATIVE_OWNER_ADMISSION_SECONDS", tools.environment)
+            self.assertGreater(clock.value, 100)
 
     def test_all_commands_share_the_initial_deadline_and_receive_pre_spawn_ownership(self):
         class SlowTools(Tools):
@@ -535,6 +558,121 @@ class BuildOwnership(unittest.TestCase):
 
 class Streams(unittest.TestCase):
     exercise = Refusals.exercise
+    def test_missing_callback_summary_cannot_authorize_metadata_cleanup(self):
+        def mutate(rows):
+            rows[-1]["details"].pop("pointCallbacks", None)
+            return rows
+        result, tools = self.exercise(lambda c, k, t: setattr(t, "mutate", mutate))
+        self.assertEqual(result.status, "retained")
+        self.assertEqual(result.reason, "RECORD_SCHEMA")
+        self.assertFalse(any("uninstall" in command for command in tools.commands))
+
+    def test_contradictory_callback_accounting_retains_reference_resources(self):
+        base = {"started":1,"sendReturned":1,"replyReceived":1,"pending":0,
+                "late":0,"duplicate":0,"retainedObjects":1,"observationClosed":True,"nativeSettled":False}
+        for change in ({"started":3}, {"sendReturned":2}, {"replyReceived":2}, {"pending":1}):
+            with self.subTest(change=change):
+                def mutate(rows):
+                    rows[-1]["details"]["pointCallbacks"] = {**base, **change}
+                    rows[-1]["details"]["localReferencesReleased"] = False
+                    return rows
+                result, tools = self.exercise(lambda c, k, t: setattr(t, "mutate", mutate), "reference-study")
+                self.assertEqual(result.reason, "CALLBACK_ACCOUNTING_INVALID")
+                self.assertEqual(result.status, "retained")
+                self.assertFalse(any("uninstall" in command for command in tools.commands))
+
+    def test_metadata_rejects_each_callback_count_and_reference_release_conflict(self):
+        for field in ("started", "sendReturned", "replyReceived", "pending", "late", "duplicate", "retainedObjects"):
+            with self.subTest(field=field):
+                def mutate(rows):
+                    counts = rows[-1]["details"]["pointCallbacks"]
+                    counts[field] = 1
+                    if field in ("started", "sendReturned", "replyReceived", "pending"):
+                        counts.update(started=1, sendReturned=1, replyReceived=0, pending=1)
+                    return rows
+                result, tools = self.exercise(lambda c, k, t: setattr(t, "mutate", mutate))
+                self.assertEqual(result.reason, "METADATA_ADMITTED_QUERY")
+                self.assertFalse(any("uninstall" in command for command in tools.commands))
+        def retained(rows):
+            rows[-1]["details"]["pointCallbacks"].update(started=1, sendReturned=1,
+                replyReceived=1, retainedObjects=1)
+            return rows
+        result, _ = self.exercise(lambda c, k, t: setattr(t, "mutate", retained), "reference-study")
+        self.assertEqual(result.reason, "CALLBACK_REFERENCES_UNCONFIRMED")
+
+    def test_point_sends_cannot_exceed_reported_app_queries(self):
+        def mutate(rows):
+            rows[-1]["details"].update(appElementQueries=0,
+                pointCallbacks={"started":1,"sendReturned":1,"replyReceived":0,"pending":1,
+                    "late":0,"duplicate":0,"retainedObjects":0,"observationClosed":True,"nativeSettled":False})
+            return rows
+        result, _ = self.exercise(lambda c, k, t: setattr(t, "mutate", mutate), "reference-study")
+        self.assertEqual(result.reason, "CALLBACK_ACCOUNTING_INVALID")
+
+    def test_impossible_callback_events_and_send_return_claims_are_rejected(self):
+        base = {"started":1,"sendReturned":1,"replyReceived":0,"pending":1,
+                "late":0,"duplicate":0,"retainedObjects":0,"observationClosed":True,"nativeSettled":False}
+        cases = [("late",1), ("duplicate",1), ("retainedObjects",1), ("sendReturned",0)]
+        for field, value in cases:
+            with self.subTest(field=field):
+                def mutate(rows):
+                    rows[-1]["details"].update(pointCallbacks={**base, field:value}, localReferencesReleased=False)
+                    return rows
+                result, _ = self.exercise(lambda c, k, t: setattr(t, "mutate", mutate), "reference-study")
+                self.assertEqual(result.reason, "CALLBACK_ACCOUNTING_INVALID")
+        def too_many(rows):
+            rows[-1]["details"].update(pointCallbacks={**base, "replyReceived":1,"pending":0,"retainedObjects":3},
+                                      localReferencesReleased=False)
+            return rows
+        result, _ = self.exercise(lambda c, k, t: setattr(t, "mutate", too_many), "reference-study")
+        self.assertEqual(result.reason, "CALLBACK_ACCOUNTING_INVALID")
+
+    def test_callback_summary_requires_integer_counts_and_exact_boolean_claims(self):
+        cases = [(field, value) for field in ("started", "sendReturned", "replyReceived", "pending",
+                  "late", "duplicate", "retainedObjects") for value in (True, 0.0, -1)]
+        cases += [("observationClosed", value) for value in (False, 1, "true")]
+        cases += [("nativeSettled", value) for value in (True, 0, "false")]
+        for field, value in cases:
+            with self.subTest(field=field, value=value):
+                def mutate(rows):
+                    rows[-1]["details"]["pointCallbacks"][field] = value
+                    return rows
+                result, tools = self.exercise(lambda c, k, t: setattr(t, "mutate", mutate))
+                self.assertEqual(result.reason, "RECORD_SCHEMA")
+                self.assertEqual(result.status, "retained")
+                self.assertFalse(any("uninstall" in command for command in tools.commands))
+
+    def test_valid_pending_late_and_successful_callback_summaries_keep_reference_ownership(self):
+        cases = [
+            {"started":0,"sendReturned":0,"replyReceived":0,"pending":0,"late":0,"duplicate":0,"retainedObjects":0},
+            {"started":1,"sendReturned":1,"replyReceived":0,"pending":1,"late":0,"duplicate":0,"retainedObjects":0},
+            {"started":1,"sendReturned":0,"replyReceived":1,"pending":0,"late":1,"duplicate":1,"retainedObjects":1},
+            {"started":2,"sendReturned":2,"replyReceived":2,"pending":0,"late":0,"duplicate":0,"retainedObjects":2}]
+        for counts in cases:
+            with self.subTest(counts=counts):
+                def mutate(rows):
+                    rows[-1]["details"]["pointCallbacks"] = {**counts, "observationClosed":True,"nativeSettled":False}
+                    rows[-1]["details"]["localReferencesReleased"] = counts["retainedObjects"] == 0
+                    rows[-1]["details"]["localMethodsReturned"] = counts["sendReturned"] == counts["started"]
+                    return rows
+                result, tools = self.exercise(lambda c, k, t: setattr(t, "mutate", mutate), "reference-study")
+                self.assertEqual(result.reason, "NATIVE_SETTLEMENT_UNCONFIRMED")
+                self.assertEqual(result.status, "retained")
+                self.assertFalse(any("uninstall" in command for command in tools.commands))
+                self.assertTrue(any(item["kind"] == "device-guard" for item in result.retained_resources))
+
+    def test_point_send_disguised_as_metadata_and_claimed_native_settlement_refuse(self):
+        for details, reason in (({"source":"requestElementAtPoint:reply:"}, "METADATA_ADMITTED_QUERY"),
+                                ({"nativeSettled":True}, "CONTRADICTORY_SETTLEMENT"),
+                                ({"nativeSettled":0}, "CONTRADICTORY_SETTLEMENT")):
+            with self.subTest(details=details):
+                def mutate(rows):
+                    rows[2]["details"] = details
+                    return rows
+                result, tools = self.exercise(lambda c, k, t: setattr(t, "mutate", mutate))
+                self.assertEqual(result.reason, reason)
+                self.assertFalse(any("uninstall" in command for command in tools.commands))
+
     def test_unknown_changed_duplicate_missing_and_invalid_records_retain(self):
         changes={
             "wrong-request":lambda rows:[{**r,"requestId":"foreign"} for r in rows],
@@ -648,13 +786,53 @@ class Streams(unittest.TestCase):
                     result=list(rows[:2])
                     for i in range(1,count+1):
                         result.append({**rows[2],"sequence":i+1,"elapsedMs":i+1,"operation":"parent",
-                                       "details":{"edge":i,"parentPresent":True}})
+                                       "details":{"edge":i,"parentPresent":True,"source":"parentAccessibilityElement",
+                                           "reference":f"local-{i}","parent":f"local-{i+1}",
+                                           "originalContainment":"unestablished"}})
                     result.append({**rows[2],"sequence":count+2,"elapsedMs":count+2,
                                    "operation":"parent","outcome":"failed","details":{"edges":32,"reason":"parent-limit"}})
                     result.append({**rows[-1],"sequence":count+3,"elapsedMs":count+3})
                     return result
                 result,_=self.exercise(lambda c,k,t:setattr(t,"mutate",parents),"reference-study")
                 self.assertEqual(result.reason,"NATIVE_SETTLEMENT_UNCONFIRMED" if count==32 else "PARENT_EDGE_LIMIT")
+
+    def test_parent_phase_metadata_does_not_consume_edge_allowance(self):
+        for count in (32, 33):
+            with self.subTest(count=count):
+                def parents(rows):
+                    result = list(rows[:2])
+                    for edge in range(1, count+1):
+                        for details in (
+                            {"phase":"comparison-method", "source":"isEqual:", "provenance":{"image":"fixture"}},
+                            {"phase":"native-comparison", "purpose":"independent-root", "source":"isEqual:",
+                             "reference":f"local-{edge}", "otherReference":"root", "nativeEqual":False,
+                             "sameLocalObject":False, "associationScope":"unestablished"},
+                            {"phase":"edge", "source":"parentAccessibilityElement", "reference":f"local-{edge}",
+                             "parentPresent":True,"parent":f"local-{edge+1}","edge":edge,
+                             "originalContainment":"unestablished"}):
+                            result.append({**rows[2], "sequence":len(result), "elapsedMs":len(result),
+                                "operation":"parent", "details":details})
+                    result.append({**rows[-1], "sequence":len(result), "elapsedMs":len(result)})
+                    return result
+                result, _ = self.exercise(lambda c,k,t:setattr(t,"mutate",parents), "reference-study")
+                self.assertEqual(result.reason, "NATIVE_SETTLEMENT_UNCONFIRMED" if count==32 else "PARENT_EDGE_LIMIT")
+
+    def test_parent_phase_cannot_disguise_an_edge_or_unknown_record(self):
+        cases = [
+            {"phase":"unknown"}, {"phase":None}, {"phase":"edge", "edge":True},
+            {"edge":1,"parentPresent":True},
+            {"phase":"comparison-method", "source":"isEqual:", "provenance":{} ,"edge":33},
+            {"phase":"termination", "reason":"native-root-equal", "edges":0},
+            {"phase":"native-comparison", "purpose":"cycle", "source":"isEqual:",
+             "reference":"a","otherReference":"b","nativeEqual":1,"sameLocalObject":False,
+             "associationScope":"unestablished"}]
+        for details in cases:
+            with self.subTest(details=details):
+                def malformed(rows):
+                    rows[2].update(operation="parent", details=details)
+                    return rows
+                result, _ = self.exercise(lambda c,k,t:setattr(t,"mutate",malformed), "reference-study")
+                self.assertEqual(result.reason, "PARENT_RECORD_INVALID")
 
     def test_programmatic_recreation_is_one_owned_write_and_setup_activation_is_not_a_request(self):
         with tempfile.TemporaryDirectory() as root:

@@ -258,11 +258,18 @@ class _Reconciliation:
                 diagnostic=_decode(json.dumps(record))
                 if record.get("kind")=="finished":
                     details=record.get("details",{})
-                    if (any(type(details.get(key)) is not int or details[key]!=1 for key in ("localMethodsReturned","localReferencesReleased")) or
+                    if ("pointCallbacks" in details or any(type(details.get(key)) is not int or details[key]!=1 for key in ("localMethodsReturned","localReferencesReleased")) or
                         type(details.get("appElementQueries")) is not int or details["appElementQueries"]!=0):
                         raise _Refusal("HISTORICAL_WIRE_DEFECT_MISMATCH")
                     diagnostic["details"]["localMethodsReturned"]=True
                     diagnostic["details"]["localReferencesReleased"]=True
+                    # Only this source-bound historical zero-query defect may be
+                    # adapted. Original records and their invalid verdict stay intact.
+                    diagnostic["details"]["pointCallbacks"] = {
+                        "started":0, "sendReturned":0, "replyReceived":0, "pending":0,
+                        "late":0, "duplicate":0, "retainedObjects":0,
+                        "observationClosed":True, "nativeSettled":False}
+
                 stream.feed("stdout",PREFIX+json.dumps(diagnostic).encode()+b"\n")
             else:
                 stream.feed("stdout",line+b"\n")

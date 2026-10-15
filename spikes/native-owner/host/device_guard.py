@@ -16,6 +16,11 @@ import stat
 import uuid
 
 
+def default_ownership_root():
+    """Persistent macOS research authority; temporary-directory changes do not move it."""
+    return Path.home() / "Library" / "Application Support" / "jev-ios-bridge" / "native-owner" / "claims"
+
+
 def default_lease_root():
     """Match Node os.tmpdir() on the native study's Unix host, without caching."""
     return Path(os.environ.get("TMPDIR") or os.environ.get("TMP") or

@@ -432,7 +432,8 @@ test('contract: the driver translates unknown vendor roles to other and keeps kn
 
 test('contract: the CLI prints the release version', { timeout: 20_000 }, async () => {
   const { stdout } = await execute(process.execPath, ['--import', import.meta.resolve('tsx'), join(process.cwd(), 'src/cli.ts'), '--version']);
-  assert.equal(stdout, '1.3.1\n');
+  const { version } = JSON.parse(await readFile('package.json', 'utf8'));
+  assert.equal(stdout, `${version}\n`);
 });
 
 test('contract: the CLI prints the schema message for an unversioned script', { timeout: 20_000 }, async () => {
@@ -516,6 +517,13 @@ async function captureWithForeignAgent(): Promise<number> {
 }
 
 test('contract: capture refusals print the reason code on stderr and need no TYPESAFE_API_KEY', { timeout: 20_000 }, async () => {
+  // Only this complete Node24 runtime notice precedes the unchanged program diagnostic.
+  const withoutSqliteNotice = (text: string) => text.replace(/^\(node:\d+\) ExperimentalWarning: SQLite is an experimental feature and might change at any time\n\(Use `node --trace-warnings \.\.\.` to show where the warning was created\)\n/, '');
+  const notice = '(node:123) ExperimentalWarning: SQLite is an experimental feature and might change at any time\n(Use `node --trace-warnings ...` to show where the warning was created)\n';
+  assert.equal(withoutSqliteNotice(notice + 'NO_DEVICE: expected\n'), 'NO_DEVICE: expected\n');
+  for (const other of [notice.split('\n')[0]! + '\n', notice.replace('SQLite', 'Other'), notice.replace('node --trace-warnings ...', 'different hint'), 'prefix\n' + notice]) {
+    assert.equal(withoutSqliteNotice(other + 'NO_DEVICE: expected\n'), other + 'NO_DEVICE: expected\n');
+  }
   const root = await mkdtemp(join(tmpdir(), 'jev-contract-capture-message-'));
   try {
     const empty = join(root, 'empty');
@@ -528,6 +536,7 @@ test('contract: capture refusals print the reason code on stderr and need no TYP
     for (const [args, code] of [[[], 'NO_DEVICE'], [['--serial', 'has a space'], 'INVALID_DEVICE'],
       [['--avd', 'jev-actions-api31'], 'ANDROID_TOOLS_UNAVAILABLE']] as const) {
       const refused = await capture([...args]);
+      refused.stderr = withoutSqliteNotice(refused.stderr);
       assert.equal(refused.code, 3);
       assert.match(refused.stderr, new RegExp(`^${code}: \\S`));
       assert.equal(refused.stdout, '');

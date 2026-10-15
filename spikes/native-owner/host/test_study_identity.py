@@ -29,7 +29,7 @@ class BoundStudies(unittest.TestCase):
                         "run.py","--plan","metadata","--derived-data",str(link if field == "derived" else config.derived_data),
                         "--build-binding",str(link if field == "binding" else config.build_binding),
                         "--evidence-directory",str(config.evidence_directory)]), \
-                        patch.dict("os.environ",{"TMPDIR":str(root/"cli-temp")}), redirect_stdout(stdout):
+                        patch.dict("os.environ",{"TMPDIR":str(root/"cli-temp"), "HOME":str(root/"cli-home")}), redirect_stdout(stdout):
                     code = cli.main()
                 result = json.loads(stdout.getvalue())
                 self.assertEqual((code,result["status"]),(2,"refused"))

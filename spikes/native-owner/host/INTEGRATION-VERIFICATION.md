@@ -46,3 +46,34 @@ durability is not promised; crash reappearance would conservatively keep it busy
 
 The original metadata failure, lost historical exit code and archive remain
 unchanged. These changes accept none of the 23 production capability requirements.
+
+## Callback diagnostic host verification (2026-10-07)
+
+The callback host slice passes 117 host tests with ResourceWarning treated as
+an error. The test boundary is `run_study` with scripted process output and real
+temporary receipts/files; no device commands execute. Red/green logs and the
+clock check are in `.scratch/native-callback-implementation/verification/host/`.
+
+The startup regression proves that host preparation consumes the original
+allowance: native receives an absolute deadline of 190 when host admission
+started at 100 with 90 seconds, even after preparation advances the fake clock.
+`JEV_NATIVE_OWNER_ADMISSION_SECONDS` is no longer produced. Both native and host
+use `clock_gettime(CLOCK_MONOTONIC_RAW)` on the same Mac. Installed SDK headers
+and Python identify clock 4, and a tiny owned C host process produces a reading
+between Python's before/after readings. Apple's Libc implementation maps that
+clock to `mach_continuous_time`; Apple's WWDC19 Simulator architecture describes
+Simulator userspace running on the Mac kernel. This supports a shared clock for
+this same-host simulator design. It is not a live simulator measurement or a
+physical-device guarantee.
+
+Finished records require exact callback count/Boolean fields. Tests cover
+missing summaries, invalid arithmetic and types, nonzero metadata callback
+counts, false reference-release claims, pending/late and ordinary replies.
+Every reference study retains ownership. Zero-query metadata still cleans up
+only after all its existing process and identity gates pass.
+
+Historical reconciliation remains limited to its registered, source-bound
+numeric-flags defect. After validating zero queries and the exact old defect,
+it supplies a zero callback summary only in the diagnostic parsing copy. It
+rejects an original callback-summary field; original bytes and the invalid
+stream verdict remain unchanged. Fresh studies never use this conversion.

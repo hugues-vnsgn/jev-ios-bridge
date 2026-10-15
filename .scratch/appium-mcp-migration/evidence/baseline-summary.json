@@ -1,0 +1,102 @@
+{
+  "source": "0d3e54a9d1d80c1a9188c8c5e5717254e9a95994",
+  "node": "v26.8.1",
+  "original": {
+    "tests": 2258,
+    "pass": 2253,
+    "fail": 5,
+    "cancelled": 0,
+    "skipped": 0,
+    "duration_ms": 150317.027667
+  },
+  "failures": [
+    "contract: the CLI prints the release version",
+    "shipped docs link only to files inside the package, and every link resolves",
+    "shipped docs link to this repo's other files at the v1.3.1 tag, and each linked path exists here",
+    "the bridge version is 1.3.1",
+    "stdio server negotiates and exposes start/report/cancel without a key"
+  ],
+  "initialRepairs": {
+    "tests": 67,
+    "pass": 65,
+    "fail": 2,
+    "cancelled": 0,
+    "skipped": 0,
+    "duration_ms": 9431.49725
+  },
+  "finalDocs": {
+    "tests": 27,
+    "pass": 27,
+    "fail": 0,
+    "cancelled": 0,
+    "skipped": 0,
+    "duration_ms": 177.448834
+  },
+  "otherTargetedTests": {
+    "tests": 40,
+    "pass": 40,
+    "fail": 0
+  },
+  "installedProof": {
+    "status": "PASS",
+    "installations": 2,
+    "commandCount": 37,
+    "forbiddenEffects": 0,
+    "tarballSha256": "d5d03301665c1b679120fdd6a24144672cc8be78806e76adaf523e400cb54a22",
+    "pluginSha256": "e57ef56d331dfa0e3ebd4f7601ce51e9125c533accbadf8454e7001365abff8e"
+  },
+  "deadlineHarness": {
+    "isolatedOriginal": {
+      "tests": 1,
+      "pass": 1,
+      "fail": 0,
+      "cancelled": 0,
+      "skipped": 0,
+      "duration_ms": 364.278875
+    },
+    "delayedOriginal": {
+      "tests": 1,
+      "pass": 0,
+      "fail": 0,
+      "cancelled": 1,
+      "skipped": 0,
+      "duration_ms": 5355.8835
+    },
+    "delayedRepaired": {
+      "tests": 1,
+      "pass": 1,
+      "fail": 0,
+      "cancelled": 0,
+      "skipped": 0,
+      "duration_ms": 428.214667
+    },
+    "repairedFile": {
+      "tests": 259,
+      "pass": 259,
+      "fail": 0,
+      "cancelled": 0,
+      "skipped": 0,
+      "duration_ms": 15580.290542
+    },
+    "interruptedFullCheck": {
+      "tests": 2198,
+      "pass": 2197,
+      "fail": 1,
+      "cancelled": 0,
+      "skipped": 0,
+      "duration_ms": 313729.864125
+    },
+    "interruption": "Only the stuck fake-process test worker was terminated; no complete suite verdict."
+  },
+  "finalCheck": {
+    "command": "npm run check",
+    "typecheck": "PASS",
+    "tests": 2258,
+    "pass": 2258,
+    "fail": 0,
+    "cancelled": 0,
+    "skipped": 0,
+    "duration_ms": 170025.075209,
+    "build": "PASS"
+  }
+}

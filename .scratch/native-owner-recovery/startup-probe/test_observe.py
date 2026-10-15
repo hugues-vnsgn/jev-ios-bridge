@@ -31,7 +31,7 @@ class Restoration(unittest.TestCase):
             config = SimpleNamespace(evidence_directory=output,source_root=root/'spikes/native-owner')
             tools = Tools(Clock(),config)
             def isolated_study(plan,configuration,dependencies):
-                return _Study(plan,replace(configuration,lease_root=root/'leases'),dependencies)
+                return _Study(plan,replace(configuration,lease_root=root/'leases',ownership_root=root/'ownership'),dependencies)
             stdout = io.StringIO()
             with patch.object(probe,'REPOSITORY',root), patch.object(probe,'ProcessTools',lambda path:tools), patch.object(probe,'_Study',isolated_study), patch.object(sys,'argv',['observe.py','--evidence-directory',str(output)]), redirect_stdout(stdout):
                 code = probe.main()
@@ -59,7 +59,7 @@ class Restoration(unittest.TestCase):
                         return super().start(argv, env, cwd)
                 tools = ChangedTools(Clock(),config)
                 def isolated_study(plan, configuration, dependencies):
-                    return _Study(plan,replace(configuration,lease_root=root/'leases'),dependencies)
+                    return _Study(plan,replace(configuration,lease_root=root/'leases',ownership_root=root/'ownership'),dependencies)
                 stdout = io.StringIO()
                 with patch.object(probe,'REPOSITORY',root), patch.object(probe,'ProcessTools',lambda path:tools), patch.object(probe,'_Study',isolated_study), patch.object(sys,'argv',['observe.py','--evidence-directory',str(output)]), redirect_stdout(stdout):
                     code = probe.main()

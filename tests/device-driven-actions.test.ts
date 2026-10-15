@@ -1,3 +1,5 @@
+import { mkdirSync, realpathSync } from 'node:fs';
+import { Admission } from '../src/device/admission.js';
 import assert from 'node:assert/strict';
 import { mkdtemp, rm } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
@@ -11,7 +13,7 @@ import { DeviceCliError, MobileBuildMcpDriver, type CliResult, type CliRunner } 
  * MobileBuildMCP CLI. MobileBuildMCP 2.7.1 has no tap at a point, so tapAt is refused on iOS.
  */
 
-const udid = '0E42FDE2-5E09-42D3-9876-9EF0037FCBE7';
+const udid = 'ABCDEF00-0000-4000-8000-000000000001';
 const scenario: ActionScenarioContext = { app: { bundleId: 'com.example.app' }, values: {}, device: { udid } };
 const signal = () => new AbortController().signal;
 const ok = (stdout: string): CliResult => ({ stdout, stderr: '', exitCode: 0 });
@@ -62,7 +64,7 @@ async function withDriver(screens: Element[][], fn: (fake: Fake) => Promise<void
     }
     return ok(envelope('mobilebuildmcp.output.ui-action-result', { action: { type: args[1] } }));
   };
-  const driver = new MobileBuildMcpDriver({ cwd: root, lockRoot: root, runner, capture: 'full', screenshots: true });
+  const driver = fakeDriver({ cwd: root, lockRoot: root, runner, capture: 'full', screenshots: true });
   try {
     await driver.prepare(scenario, signal());
     await fn({ calls, driver });
@@ -170,3 +172,12 @@ test('tapAt is UNSUPPORTED_ACTION on iOS before any device command: MobileBuildM
     assert.equal(fake.driver.actPath(), undefined);
   });
 });
+
+function fakeDriver(options: import('../src/device/index.js').MobileBuildMcpDriverOptions): MobileBuildMcpDriver {
+  const storeRoot = join(options.cwd, 'admission');
+  mkdirSync(storeRoot, { recursive: true, mode: 0o700 });
+  const admission = Admission.forTesting({ root: realpathSync(storeRoot), backend: 'fake' });
+  return new MobileBuildMcpDriver({ ...options, admission,
+    deviceWindow: options.deviceWindow ?? (async () => {}),
+    fakeBackend: { runner: options.runner!, window: options.deviceWindow } });
+}
