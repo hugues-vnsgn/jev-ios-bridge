@@ -10,7 +10,7 @@ import { Admission } from '../src/device/admission.js';
 import { MobileBuildMcpDriver } from '../src/device/index.js';
 import { migrateAdmissionForTesting, type MigrationDeclaration } from '../src/device/admission-migration.js';
 import { runObservedExperiment } from '../src/experimental/observed-run.js';
-import { hostFixture, actionRequest } from './fixtures/observed-host/harness.js';
+import { withH01CliFixture, type H01CliFixture, hostFixture, actionRequest } from './fixtures/observed-host/harness.js';
 import { allocatorPublic } from './fixtures/observed-host/allocator-public.js';
 import { fixtureDevice, runtimeProfilePath } from './fixtures/observed-allocation-backend.js';
 import { parsePrepareAllocation } from '../src/observed/allocation-schema.js';
@@ -18,10 +18,11 @@ import { parsePrepareAllocation } from '../src/observed/allocation-schema.js';
 const unknownId = 'ABCDEF00-0000-4000-8000-000000000099';
 const deviceCalls = (calls: string[]) => calls.filter(value => !['open', 'plist'].includes(value));
 for (const transport of ['cli', 'mcp'] as const) {
-  test(`H01.01 ${transport} strict action/preparation rejection leaves no calls or reservations`, { timeout: 30000 }, async t => {
-    const f = await hostFixture(t); const server = transport === 'mcp' ? await f.mcp() : undefined;
+  test(`H01.01 ${transport} strict action/preparation rejection leaves no calls or reservations`, { timeout: transport === 'cli' ? (1 + 32) * 30000 : 30000 }, async t => {
+    const run = async (f: H01CliFixture | Awaited<ReturnType<typeof hostFixture>>) => {
+    const server = 'test' in f ? undefined : transport === 'mcp' ? await f.mcp() : undefined;
     const action = actionRequest(unknownId); const prep = f.request('one');
-    const pristine = await f.database();
+    const pristine = 'pristine' in f ? f.pristine : await f.database();
     const actionCases: [string, unknown][] = [
       ['missing-version', { ...action, version: undefined }], ['unsupported-version', { ...action, version: 2 }],
       ['extra-field', { ...action, privateVendor: 'never-echo' }], ['raw-udid', { ...action, deviceId: fixtureDevice }],
@@ -47,6 +48,20 @@ for (const transport of ['cli', 'mcp'] as const) {
       ['source-extra', { ...prep, source: { ...prep.source, cleanup: true } }],
     ];
     for (const [kind, cases] of [['action', actionCases], ['preparation', preparationCases]] as const) for (const [id, request] of cases) {
+      if ('test' in f) {
+        await f.test({ name: `${kind}/${id}`, command: kind === 'action' ? 'observed-action' : 'observed-allocate', request, verify: facts => {
+          const response = facts.response;
+          const expected = id === 'unsupported-version' || kind === 'action' && id === 'missing-version' ? 'UNSUPPORTED_VERSION' : 'INVALID_REQUEST';
+          assert.equal(replyKind(response.reply), 'observed-operation-error', id); assert.equal(errorCode(response.reply), expected, id);
+          assert.equal(operationError(response.reply).acceptance, 'no', id); assert.equal(operationError(response.reply).acceptanceKind, kind, id);
+          assert.equal(response.code, 3, id); assert.equal(response.signal, null, id);
+          assert.ok(!JSON.stringify(response.reply).includes('never-echo'), id);
+          assert.deepEqual(facts.calls, [], id); assert.equal(facts.allocationForOne, undefined, id);
+          assert.deepEqual(facts.capacity, { heldAllocations: 0, reservedBytes: 0 }, id); assert.deepEqual(facts.database, pristine, id);
+          return undefined;
+        } });
+        continue;
+      }
       const response = server ? await server.call(kind === 'action' ? 'start_observed_action' : 'prepare_observed_allocation', request as object)
         : await f.cli(kind === 'action' ? 'observed-action' : 'observed-allocate', await f.requestFile(request));
       const expected = id === 'unsupported-version' || kind === 'action' && id === 'missing-version' ? 'UNSUPPORTED_VERSION' : 'INVALID_REQUEST';
@@ -58,6 +73,9 @@ for (const transport of ['cli', 'mcp'] as const) {
       assert.deepEqual(f.admission().readAllocationCapacity(), { heldAllocations: 0, reservedBytes: 0 }, id); assert.deepEqual(await f.database(), pristine, id);
     }
     if (server) await server.close();
+    };
+    if (transport === 'cli') await withH01CliFixture({ context: t, requestCount: 32 }, run);
+    else await run(await hostFixture(t));
   });
 
   test(`H01.02 ${transport} valid ID/guard/selector/timeout boundaries reach authority without effects`, { timeout: 15000 }, async t => {

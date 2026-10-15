@@ -20,13 +20,14 @@ export const fixtureBudgets = { maxRetainedAllocations: 8, maxConcurrentPreparat
   reservationBytesPerAllocation: 1000, maxReservedBytes: 8000, minFreeBytes: 2000, maxArtifactBytes: 1024,
   createTimeoutMs: 10000, bootTimeoutMs: 10000, installTimeoutMs: 10000, launchTimeoutMs: 10000,
   readinessTimeoutMs: 10000, readyTtlMs: 300000 };
-export async function allocationFixture(options: { now?: () => number; fault?: NonNullable<Parameters<typeof Admission.forTesting>[0]['fault']> } = {}) {
-  const root = realpathSync(mkdtempSync(join(tmpdir(), 'observed-allocator-')));
+export async function allocationFixture(options: { now?: () => number; fault?: NonNullable<Parameters<typeof Admission.forTesting>[0]['fault']>; ownedRoot?: string } = {}) {
+  const { ownedRoot, ...admissionOptions } = options;
+  const root = ownedRoot ?? realpathSync(mkdtempSync(join(tmpdir(), 'observed-allocator-')));
   await fs.chmod(root, 0o700); const home = join(root, 'home'); const runsDir = join(root, 'runs');
   mkdirSync(home, { mode: 0o700 }); mkdirSync(runsDir, { mode: 0o700 });
   mkdirSync(join(home, 'Library/Developer/CoreSimulator'), { recursive: true, mode: 0o700 });
   const store = join(root, 'store'); mkdirSync(store, { mode: 0o700 });
-  const admission = Admission.forTesting({ root: store, backend: 'fake', ...options });
+  const admission = Admission.forTesting({ root: store, backend: 'fake', ...admissionOptions });
   const configDirectory = join(home, 'Library/Application Support/jev-ios-bridge'); mkdirSync(configDirectory, { recursive: true, mode: 0o700 });
   const configPath = join(configDirectory, 'allocation.json');
   const configure = (settings: Record<string, unknown> = {}) => writeFileSync(configPath, JSON.stringify({ version: 1, ...fixtureBudgets, inventory: [], ...settings }), { mode: 0o600 });

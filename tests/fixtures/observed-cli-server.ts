@@ -22,8 +22,8 @@ export const mapPublicFixturePath = (root: string, path: string) =>
   path === root || path.startsWith(root + '/') ? path
     : path === '/' || /^\/(?:Applications|Library|System|usr|private)(?:\/|$)/.test(path) ? join(root, 'host', path) : path;
 
-export async function setupPublicFixture(root: string) {
-  const fixture = await allocationFixture();
+export async function setupPublicFixture(root: string, ownership?: { backendRoot: string }) {
+  const fixture = await allocationFixture(ownership ? { ownedRoot: ownership.backendRoot } : {});
   const context = { root: fixture.root, home: fixture.home, store: fixture.store, runsDir: fixture.runsDir, app: fixture.app };
   await fs.writeFile(join(root, 'fixture.json'), JSON.stringify(context), { mode: 0o600 });
   return { ...context, request: fixture.request, cleanup: fixture.cleanup, configPath: fixture.configPath };
