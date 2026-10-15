@@ -99,8 +99,6 @@ test('H06.04 duplicate finalization and stale token cannot change a genuine publ
   const f = await hostFixture(t); const allocation = await f.prepare();
   const result = await f.cli('observed-action', await f.requestFile(actionRequest(allocation.allocationId))); assert.equal(snapshot(result.reply).outcome, 'outcome_observed');
   const attempt = f.admission().readAttempt({ kind: 'observed', id: 'one' })!; const bytes = await f.database();
-  // Supplemental primitive checks use the exact identity/terminal produced by
-  // the public owner; they do not replace any owner-kill case above.
   const store = new AdmissionSqlite({ root: f.store, mode: 'test' });
   assert.deepEqual(store.finalize(attempt.owner, attempt.terminal!), attempt);
   assert.throws(() => store.finalize({ ...attempt.owner, token: 'stale-token' }, attempt.terminal!), { code: 'STALE_OWNER' });

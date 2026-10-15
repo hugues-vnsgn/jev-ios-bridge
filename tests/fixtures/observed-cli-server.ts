@@ -14,6 +14,7 @@ import { runCli } from '../../src/cli.js';
 import type { AdmissionDependencies } from '../../src/device/admission.js';
 import type { ObservedEvidenceStore } from '../../src/observed/evidence.js';
 import { createObservedComposition, isObservedCommand, validateObservedStartConfiguration } from '../../src/observed/cli.js';
+import { ObservedOperationError } from '../../src/observed/schema.js';
 import { fixtureObserver } from './public-contention.js';
 import { allocationFixture, fixtureDevice } from './observed-allocation-backend.js';
 
@@ -36,9 +37,16 @@ export function fixtureObserved(root: string, enabled = true, mode = 'observed',
     const context = JSON.parse(await fs.readFile(join(root, 'fixture.json'), 'utf8')) as {root:string;home:string;store:string;runsDir:string;app:string};
     const trace = (operation: string) => appendFileSync(join(root, 'calls.jsonl'), JSON.stringify(operation) + '\n', { mode: 0o600 });
     trace('open');
-    admission = Admission.forTesting({ root: context.store, backend: 'fake', initialize: false,
+    if (mode === 'before-admission-open') {
+      appendFileSync(join(root, 'milestones.jsonl'), JSON.stringify({ pid: process.pid, key: 'fixture:admission-open:1' }) + '\n', { mode: 0o600 });
+      const memory = new Int32Array(new SharedArrayBuffer(4));
+      while (!existsSync(join(root, 'release'))) Atomics.wait(memory, 0, 0, 10);
+    }
+    const admissionOptions: Parameters<typeof Admission.forTesting>[0] = { root: context.store, backend: 'fake', initialize: false,
       fault(point, operation) { if (point === 'afterCommit') observer.commit(operation); hooks.fault?.(point, operation); },
-      ...(mode === 'unresolved' ? { fault(point, operation) { if (point === 'beforeCommit' && operation === 'finalize') throw new Error('Fixture finalization fault'); } } : {}) });
+      ...(mode === 'unresolved' ? { fault(point, operation) { if (point === 'beforeCommit' && operation === 'finalize') throw new Error('Fixture finalization fault'); } } : {}) };
+    try { admission = Admission.forTesting(admissionOptions); }
+    catch { throw new ObservedOperationError('STORE_UNAVAILABLE', 'Existing admission authority is unavailable', { acceptance: 'unknown' }); }
     const map = (path: string) => mapPublicFixturePath(context.root, path);
     const fakeFs = { ...fs,
       lstat: ((p: string, ...args: []) => fs.lstat(map(p), ...args)) as typeof fs.lstat,

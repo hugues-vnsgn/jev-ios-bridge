@@ -7,7 +7,7 @@ import { tmpdir } from 'node:os';
 import { fileURLToPath } from 'node:url';
 import { Admission } from '../src/device/admission.js';
 import { parseObservedAction, observedActionDigest } from '../src/observed/schema.js';
-import { allocation, snapshot, actionSnapshot, operationError, errorCode, replyKind, publicAuthority, publicPolicy } from './fixtures/public-contention.js';
+import { fixtureEvents, parseCli, allocation, snapshot, actionSnapshot, operationError, errorCode, replyKind, publicAuthority, publicPolicy } from './fixtures/public-contention.js';
 import { hostFixture, actionRequest } from './fixtures/observed-host/harness.js';
 
 for (const transport of ['cli', 'mcp'] as const) {
@@ -148,7 +148,6 @@ for (const [signal, code] of [['SIGINT', 130], ['SIGTERM', 143]] as const) {
     const path = await f.requestFile({ ...actionRequest(allocation.allocationId), timeoutMs: 60000 });
     const owner = f.spawnOwner('cli', 'observed-action', path, { mode: 'pending-resource' });
     await f.milestone('backend:snapshot-ui:1', owner.child.pid);
-    // resource-live is the producer's durable backend trace; wait until it exists.
     const end = Date.now() + 5000; while (!f.calls().includes('resource-live')) { assert.ok(Date.now() < end); await new Promise(done => setTimeout(done, 10)); }
     const before = f.calls();
     const started = Date.now(); owner.child.kill(signal); const result = await owner.exited;
@@ -276,4 +275,70 @@ test('H05.10 MCP transport-cancelled preparation wait preserves durable cancella
   assert.deepEqual((await server.call('get_observed_allocation', { allocationId })).reply, initial); assert.deepEqual(await f.database(), bytes); assert.equal(snapshot(initial).cancellationRequested, false);
   assert.equal(received, false, 'SDK suppresses cancelled reply after a synchronized public get while owner is still held');
   await f.release(); assert.equal((await owner.exited).code, 0); await server.close();
+});
+
+const preparingSchedules = [
+  ['reserved', 'afterCommit:reserveAllocation:1'],
+  ['creating', 'backend:create:1'],
+  ['admitting', 'afterCommit:admitAllocation:1'],
+  ['booting', 'backend:boot:1'],
+  ['installing', 'backend:install:1'],
+  ['launching', 'backend:launch-app:1'],
+  ['readiness', 'backend:snapshot-ui:1'],
+] as const;
+for (const [phase, gate] of preparingSchedules) test(`H03.01 legal preparing ${phase} reconciles CLI and MCP prefixes`, { timeout: 20000 }, async t => {
+  const f = await hostFixture(t); const request = f.request('one'); const path = await f.requestFile(request);
+  const owner = f.spawnOwner('cli', 'observed-allocate', path, { gate });
+  let prefixes: typeof f.observations = [];
+  try {
+    await f.milestone(gate, owner.child.pid);
+    const before = f.admission().readAllocationForAction('one'); assert.ok(before);
+    assert.equal(before.state, 'preparing'); assert.equal(before.phase, phase);
+    assert.equal(before.readyAt, null); assert.equal(before.expiresAt, null);
+    assert.equal(before.actionDigest, null); assert.equal(before.actionRequest, null); assert.equal(before.actionEvidence, null);
+    const duplicate = await f.cli('observed-allocate', path); const reader = await f.mcp();
+    const repeated = await reader.call('prepare_observed_allocation', request);
+    const read = await reader.call('get_observed_allocation', { allocationId: before.allocationId, waitMs: 0 });
+    prefixes = f.observations.slice();
+    for (const result of [duplicate, repeated, read]) {
+      const reply = allocation(result.reply); assert.equal(reply.state, 'preparing'); assert.equal(reply.phase, phase);
+      assert.equal(reply.authority, 'committed'); assert.equal(reply.outcome, null); assert.equal(reply.reason, null);
+      assert.deepEqual(reply.readinessEvidence, []); assert.equal(reply.reservation.capacityHeld, true);
+    }
+    assert.deepEqual(f.admission().readAllocationForAction('one'), before, 'Duplicate and read preserve the preparing owner');
+    await writeFile(join(f.root, 'preparing-prefixes.json'), JSON.stringify({ before, prefixes }), { mode: 0o600 });
+  } finally { await f.release(); }
+  const finished = await owner.exited; assert.equal(finished.code, 0, finished.stdout + finished.stderr);
+  const ready = allocation(parseCli(finished)); assert.equal(ready.state, 'ready'); assert.equal(ready.phase, 'parked');
+  const after = f.admission().readAllocationForAction('one'); assert.ok(after);
+  assert.equal(after.owner.generation, 2); assert.deepEqual(after.owner.process, { pid: 0, incarnation: 'parked' });
+  assert.ok(after.readyAt !== null && after.expiresAt !== null); assert.ok(after.readinessEvidence.length > 0);
+  assert.equal(after.actionDigest, null); assert.equal(after.capacityHeld, true);
+  const { events } = await f.closeOwners();
+  for (const operation of ['create', 'boot', 'install', 'launch-app']) assert.equal(f.calls().filter(op => op === operation).length, 1, operation);
+  assert.equal(f.calls().filter(op => op === 'touch').length, 0);
+  for (const observation of prefixes) publicPolicy({ observations: [{ operation: observation.operation, request, reply: observation.reply }] });
+  publicAuthority({ admission: f.admission(), requests: [request], events, observations: prefixes, requireOutcome: 'prepared' });
+});
+
+test('H03.01 preparing authority rejects late phases, premature readiness and backwards progression', { timeout: 20000 }, async t => {
+  const f = await hostFixture(t); const request = f.request('one'); const path = await f.requestFile(request);
+  const gate = 'backend:boot:1'; const owner = f.spawnOwner('cli', 'observed-allocate', path, { gate });
+  try {
+    await f.milestone(gate, owner.child.pid);
+    const before = f.admission().readAllocationForAction('one'); assert.ok(before); assert.equal(before.phase, 'booting');
+    const reply = allocation((await f.cli('observed-allocate', path)).reply); const events = fixtureEvents(f.root);
+    const authority = (prefix: typeof reply) => publicAuthority({ admission: f.admission(), requests: [request], events, observations: [{ operation: 'observed-allocate', argument: request, reply: prefix }] });
+    authority(reply);
+    for (const phase of ['parked', 'action', 'terminal'] as const) assert.throws(() => publicPolicy({ observations: [{ operation: 'observed-allocate', request, reply: { ...reply, phase } }] }), /Coherent source-backed allocation prefix/);
+    for (const change of [{ readinessEvidence: [join(f.root, 'premature.json')] }, { device: null }, { hostCreationBlocked: true }]) {
+      assert.throws(() => publicPolicy({ observations: [{ operation: 'observed-allocate', request, reply: { ...reply, ...change } }] }), /Coherent source-backed allocation prefix/);
+    }
+    assert.throws(() => authority({ ...reply, phase: 'readiness' }), /Allocation phase prefix is durable/);
+    assert.deepEqual(f.admission().readAllocationForAction('one'), before, 'Counterexamples never mutate actual booting authority');
+    await writeFile(join(f.root, 'preparing-counterexamples.json'), JSON.stringify({ before, reply, latePhases: ['parked', 'action', 'terminal'], backwardsPhase: 'readiness' }), { mode: 0o600 });
+  } finally { await f.release(); }
+  const finished = await owner.exited; assert.equal(finished.code, 0, finished.stdout + finished.stderr); assert.equal(allocation(parseCli(finished)).state, 'ready');
+  const { events } = await f.closeOwners();
+  publicAuthority({ admission: f.admission(), requests: [request], events, observations: f.observations, requireOutcome: 'prepared' });
 });

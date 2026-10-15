@@ -1,6 +1,8 @@
 import assert from 'node:assert/strict';
 import test, { type TestContext } from 'node:test';
 import { spawn } from 'node:child_process';
+import { DatabaseSync } from 'node:sqlite';
+import { hostFixture } from './fixtures/observed-host/harness.js';
 import { readFileSync } from 'node:fs';
 import { mkdtemp, rm, writeFile, readFile, symlink, cp, mkdir } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
@@ -242,3 +244,50 @@ for (const [signal, code] of [['SIGINT', 130], ['SIGTERM', 143]] as const) {
     } finally { if (worker.child.exitCode === null) { worker.child.kill('SIGKILL'); await worker.result; } }
   });
 }
+
+test('direct fixture CLI keeps null context failures outside store refusal mapping', { timeout: 15000 }, async t => {
+  const f = await prepare(t); const admission = Admission.forTesting({ root: f.store, backend: 'fake', initialize: false });
+  const before = admission.readAllocationForAction('one'); const bytes = await readFile(join(f.store, 'admission.sqlite')); const calls = fixtureCalls(f.root);
+  const path = join(f.root, 'null-context-action.json'); await writeFile(path, JSON.stringify(actionRequest(f.allocationId)));
+  await writeFile(join(f.root, 'before-null-context.sqlite'), bytes, { mode: 0o600 });
+  await writeFile(join(f.root, 'fixture.json'), 'null', { mode: 0o600 });
+  const worker = f.command({ command: 'observed-action', argument: path }); const result = await worker.result;
+  const after = admission.readAllocationForAction('one'); const events = fixtureEvents(f.root);
+  await writeFile(join(f.root, 'null-context.json'), JSON.stringify({ argv: worker.child.spawnargs, cwd: process.cwd(), before, after, callsBefore: calls, callsAfter: fixtureCalls(f.root), result, events }), { mode: 0o600 });
+  assert.equal(await readFile(join(f.root, 'fixture.json'), 'utf8'), 'null');
+  assert.equal(result.code, 3); assert.equal(result.signal, null);
+  assert.equal(operationError(result.reply).acceptance, 'unknown'); assert.equal(operationError(result.reply).acceptanceKind, 'action');
+  assert.deepEqual(after, before); assert.deepEqual(await readFile(join(f.store, 'admission.sqlite')), bytes);
+  assert.deepEqual(fixtureCalls(f.root), [...calls, 'open']);
+  traceOracle({ events, actors: [...new Set(events.map(event => event.actor))] });
+  assert.ok(events.some(event => event.actor === result.actor && event.kind === 'close-end'), 'Invalid context closes its fixture normally');
+  assert.equal(errorCode(result.reply), 'INTERNAL_ERROR');
+});
+
+for (const boundary of ['outer-startup', 'inner-open'] as const) test(`CLI ${boundary} locked store refuses safely and leaves useful ready stock`, { timeout: 20000 }, async t => {
+  const f = await hostFixture(t); const prepared = await f.prepare();
+  const before = f.admission().readAllocationForAction('one'); const calls = f.calls(); const bytes = await f.database();
+  const path = await f.requestFile(actionRequest(prepared.allocationId), 'action.json');
+  const owner = boundary === 'inner-open' ? f.spawnOwner('cli', 'observed-action', path, { mode: 'before-admission-open' }) : undefined;
+  if (owner) await f.milestone('fixture:admission-open:1', owner.child.pid);
+  const database = new DatabaseSync(join(f.store, 'admission.sqlite')); database.exec('BEGIN EXCLUSIVE');
+  let receipt: Awaited<ReturnType<typeof f.spawnOwner>['exited']>; let receiptActor: number;
+  try { const blocked = owner ?? f.spawnOwner('cli', 'observed-action', path); receiptActor = blocked.child.pid!; await f.release(); receipt = await blocked.exited; }
+  finally { database.exec('ROLLBACK'); database.close(); }
+  const reply = parseCli(receipt); const error = operationError(reply);
+  await writeFile(join(f.root, 'locked-open.json'), JSON.stringify({ boundary, before, calls, receipt, reply }), { mode: 0o600 });
+  assert.deepEqual(f.admission().readAllocationForAction('one'), before); assert.deepEqual(await f.database(), bytes);
+  assert.deepEqual(f.calls(), calls); assert.equal(receipt.code, 3); assert.equal(receipt.signal, null);
+  assert.equal(error.code, 'STORE_UNAVAILABLE'); assert.equal(error.acceptance, 'unknown'); assert.equal(error.acceptanceKind, 'action');
+  publicPolicy({ observations: [{ operation: 'observed-action', request: actionRequest(prepared.allocationId), reply }] });
+  const unexpected: typeof error = { ...error, code: 'INTERNAL_ERROR' };
+  for (const operation of ['observed-action', 'start_observed_action', 'observed-report', 'get_observed_action', 'observed-allocation', 'get_observed_allocation']) {
+    assert.throws(() => publicPolicy({ observations: [{ operation, request: actionRequest(prepared.allocationId), reply: unexpected }] }), /Eligible public operation\/code relation/);
+  }
+  const completed = await f.cli('observed-action', path); assert.equal(actionSnapshot(completed.reply).outcome, 'outcome_observed');
+  assert.equal(f.calls().filter(op => op === 'touch').length, 1);
+  const events = fixtureEvents(f.root);
+  traceOracle({ events, actors: [...new Set(events.map(event => event.actor))] });
+  if (boundary === 'outer-startup') assert.equal(events.some(event => event.actor === receiptActor), false, 'Outer refusal precedes fixture construction');
+  else assert.ok(events.some(event => event.actor === receiptActor && event.kind === 'close-end'), 'Inner refusal closes its fixture normally');
+});
