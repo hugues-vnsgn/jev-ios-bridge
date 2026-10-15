@@ -47,6 +47,7 @@ for (const transport of ['cli', 'mcp'] as const) {
       ['source-extra', { ...prep, source: { ...prep.source, cleanup: true } }],
     ];
     for (const [kind, cases] of [['action', actionCases], ['preparation', preparationCases]] as const) for (const [id, request] of cases) {
+      f.lifecycle?.request(kind, id, request);
       const response = server ? await server.call(kind === 'action' ? 'start_observed_action' : 'prepare_observed_allocation', request as object)
         : await f.cli(kind === 'action' ? 'observed-action' : 'observed-allocate', await f.requestFile(request));
       const expected = id === 'unsupported-version' || kind === 'action' && id === 'missing-version' ? 'UNSUPPORTED_VERSION' : 'INVALID_REQUEST';
@@ -56,8 +57,10 @@ for (const transport of ['cli', 'mcp'] as const) {
       assert.ok(!JSON.stringify(response.reply).includes('never-echo'), id);
       assert.deepEqual(f.calls(), [], id); assert.equal(f.admission().readAllocationForAction('one'), undefined, id);
       assert.deepEqual(f.admission().readAllocationCapacity(), { heldAllocations: 0, reservedBytes: 0 }, id); assert.deepEqual(await f.database(), pristine, id);
+      f.lifecycle?.assertionsComplete();
     }
     if (server) await server.close();
+    f.lifecycle?.bodyComplete();
   });
 
   test(`H01.02 ${transport} valid ID/guard/selector/timeout boundaries reach authority without effects`, { timeout: 15000 }, async t => {

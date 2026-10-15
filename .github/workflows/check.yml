@@ -19,6 +19,8 @@ jobs:
           cache: npm
       - run: npm ci
       - run: npm run check
+        env:
+          H0101_LIFECYCLE_DIR: ${{ runner.temp }}/h0101-lifecycle-${{ github.run_id }}-${{ github.run_attempt }}-${{ matrix.node }}
       - name: Native observation host regressions
         run: python3 -W error::ResourceWarning -m unittest discover -s spikes/native-owner/host -p 'test_*.py' -v
       - name: Startup container diagnostic regression
@@ -26,3 +28,11 @@ jobs:
       - name: Mandatory clean installed observed CLI/MCP and plugin proof
         run: node tests/fixtures/observed-packaging/proof.mjs
       - run: npm pack --dry-run
+      - name: Retain bounded H01.01 CLI lifecycle diagnostic
+        if: ${{ always() }}
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
+        with:
+          name: h0101-lifecycle-node-${{ matrix.node }}-run-${{ github.run_id }}-attempt-${{ github.run_attempt }}
+          path: ${{ runner.temp }}/h0101-lifecycle-${{ github.run_id }}-${{ github.run_attempt }}-${{ matrix.node }}/h0101-cli-*/lifecycle.jsonl
+          if-no-files-found: warn
+          retention-days: 7
