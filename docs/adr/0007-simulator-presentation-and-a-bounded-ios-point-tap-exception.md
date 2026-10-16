@@ -5,7 +5,7 @@ date: 2026-10-02
 
 # Simulator presentation and a bounded iOS point-tap exception
 
-[ADR-0002](0002-mobilebuildmcp-as-device-layer.md) says the bridge drives an iOS simulator only through pinned MobileBuildMCP, with no direct `simctl`, AXe or other device automation. Version 1.3 needs two things MobileBuildMCP 2.7.1 can't do. They aren't the same kind of thing, so this record treats them separately. Showing the simulator's window is presentation and never changes the app's screen. Claude's point tap changes the app's screen, and it's the only device automation the bridge may run outside MobileBuildMCP. Both stay behind the existing `MobileBuildMcpDriver`: the window in `prepare`, the tap in `act`.
+[ADR-0002](0002-mobilebuildmcp-as-device-layer.md) says the bridge drives an iOS simulator only through pinned MobileBuildMCP, with no direct `simctl`, AXe or other device automation. Version 1.3 needs two things MobileBuildMCP 2.7.1 can't do. They aren't the same kind of thing, so this record treats them separately. Showing the simulator's window is presentation and never changes the app's screen. Claude's point tap changes the app's screen, and it's the only direct UI input the bridge may run outside MobileBuildMCP. [ADR-0009](0009-bounded-simulator-creation.md) separately governs bounded simulator creation and does not extend this UI input permission. Both stay behind the existing `MobileBuildMcpDriver`: the window in `prepare`, the tap in `act`.
 
 ```
 MobileBuildMcpDriver
@@ -13,7 +13,7 @@ MobileBuildMcpDriver
 │   └── deviceWindow → open Simulator      optional presentation
 └── act
     ├── ordinary actions → MobileBuildMCP
-    └── Claude's tapAt → bundled AXe       the one automation exception
+    └── Claude's tapAt → bundled AXe       the UI input exception
 ```
 
 ## Presentation: the simulator window
@@ -21,10 +21,10 @@ MobileBuildMcpDriver
 During `prepare` the driver runs `open -a Simulator --args -CurrentDeviceUDID <udid>` so a person can watch the run (live-test finding, 2026-10-01). MobileBuildMCP's `simulator open` takes no device ID.
 
 - **Booted first.** Opening Simulator on a device that isn't running boots it, so the driver reads the device's state through MobileBuildMCP first. It opens the window only when the run's simulator is already booted, and fails the run as not booted otherwise, exactly as it would without a window. If the state can't be read, it skips the window with a warning.
-- **Never fatal.** If `open` fails or takes more than 10 seconds, the run gets a warning and carries on.
+- **Bounded and fenced.** `open` has a deadline of at most 10 seconds. An acknowledged terminal failure produces a warning when device issuance remains open. Cancellation, timeout or an unconfirmed outcome closes issuance and fails preparation; an unconfirmed operation keeps the lease.
 - **Optional.** On by default; `--no-device-window` or `JEV_DEVICE_WINDOW=off` turns it off.
 
-The window doesn't touch the app's screen, so it isn't an action, isn't in the device lease's command ledger, and needs no hand-back rules.
+The window shows the simulator without app input or a hand-back. Its invocation passes through durable shared iOS admission and the device lease's command ledger. Releasing the lease requires confirming local settlement; these checks do not establish native device settlement or release. This admission amendment was recorded on 2026-10-10; [ADR-0008](0008-durable-ios-admission.md) defines the shared authority and conservative quarantine rules.
 
 ## Automation: Claude's `tapAt` through bundled AXe
 

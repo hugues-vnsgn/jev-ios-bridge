@@ -376,12 +376,12 @@ test('through the service, a pause points at the screenshot in the run\'s eviden
 
 // ---------- 5. version ----------
 
-test('the bridge version is 1.3.1', async () => {
-  assert.equal(BRIDGE_VERSION, '1.3.1');
-  assert.equal(JSON.parse(await readFile('package.json', 'utf8')).version, '1.3.1');
+test('the bridge and lockfile versions agree with the package', async () => {
+  const { version } = JSON.parse(await readFile('package.json', 'utf8'));
+  assert.equal(BRIDGE_VERSION, version);
   const lock = JSON.parse(await readFile('package-lock.json', 'utf8'));
-  assert.equal(lock.version, '1.3.1');
-  assert.equal(lock.packages[''].version, '1.3.1');
+  assert.equal(lock.version, version);
+  assert.equal(lock.packages[''].version, version);
 });
 
 // ---------- 6. no second search scroll on an unscrollable screen that one left unchanged ----------

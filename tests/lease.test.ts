@@ -365,3 +365,16 @@ test('settle waits for every tracked operation, including one started meanwhile,
   });
 });
 
+
+test('iOS compatibility mode refuses dead holders without changing their lease bytes', async () => {
+  const root = await mkdtemp(join(tmpdir(), 'jev-ios-dead-lease-'));
+  const path = join(root, 'IOS-FIXTURE.lock');
+  const content = JSON.stringify({ pid: deadPid(), token: 'old', deviceId: 'IOS-FIXTURE', createdAt: 'old' });
+  try {
+    await writeFile(path, content);
+    const lease = new DeviceLease({ root, reclaimDeadHolder: false });
+    await assert.rejects(lease.take('ios-fixture'), DeviceLeaseBusyError);
+    assert.equal(await readFile(path, 'utf8'), content);
+    assert.equal(lease.held, false);
+  } finally { await rm(root, { recursive: true, force: true }); }
+});

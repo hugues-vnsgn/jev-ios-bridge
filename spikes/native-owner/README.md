@@ -77,17 +77,28 @@ container through a derived `.xctestrun`. A native recreation request causes one
 programmatic `Documents/recreate.request` write; setup activation is separate.
 It never uses a touch, UID re-query, shared-daemon reset or another simulator.
 
-Both study and reconciliation hold the Bridge's device lease in the default
-temporary-directory namespace. The research claim records an unknown native
-owner (`pid: null`) and the actual host PID separately. It remains busy after
-frontend exit. Settled metadata cleanup releases the claim; retained work keeps
-it. Existing claims are never taken over. This excludes cooperating Bridge runs
-in that namespace; external tools and custom lease roots require separate
-coordination.
+Both study and reconciliation first acquire a persistent research claim under
+`~/Library/Application Support/jev-ios-bridge/native-owner/claims`, then hold the
+Bridge's device lease in the default temporary-directory namespace. Both record
+an unknown native owner (`pid: null`) and the actual host PID separately. Both
+are checked before device work. Settled metadata cleanup releases the temporary
+claim first, then the persistent claim; retained work keeps both. Existing claims
+are never taken over. `Configuration.ownership_root` isolates the persistent
+store for controlled callers and tests; the CLI always uses the default.
+
+The persistent claim prevents a new study after its temporary claim or receipts
+are lost. It does not establish native settlement, adopt an older retained study,
+or authorize cleanup. The historical reference study predates this mechanism and
+still requires separate reviewed ownership accounting before live admission.
+Bridge consumers know only the temporary lease; deleting it does not make them
+consult this research store. External tools, custom roots, and manual deletion
+of both stores remain outside this exclusion guarantee.
 
 The CLI exits 0 for metadata completion, 2 for refusal before owned native work,
-and 3 for retained ownership. A single monotonic allowance covers preparation
-and testing. Expiry writes `stop-admission`, stops new host work and returns
+and 3 for retained ownership. One absolute `CLOCK_MONOTONIC_RAW` deadline covers preparation
+and testing, including runner startup. The host passes it in
+`JEV_NATIVE_OWNER_ADMISSION_DEADLINE`; the simulator does not restart an allowance.
+This clock is shared only within the same Mac, not with a physical device. Expiry writes `stop-admission`, stops new host work and returns
 retained ownership without a terminating signal or replay. An already-started
 native call may continue. Retained subprocess output uses files, so frontend
 exit does not close a pipe and signal the child.
@@ -98,7 +109,8 @@ Observed process exit is recorded independently of record acceptance. Neither
 fact alone permits metadata cleanup.
 
 Metadata cleanup requires the schema-valid complete stream, zero explicit
-native app-element queries, both local completion flags, normal test-class
+native app-element queries, a required zero-count `pointCallbacks` summary,
+both local completion flags, normal test-class
 completion, successful `xcodebuild`, and positive absence of the exact runner
 PID. It removes only the newly installed runner and verifies final app absence
 and initial device states. PID inspection uncertainty retains ownership.
@@ -109,7 +121,10 @@ the host rechecks its initial telemetry before the single recreation write.
 
 A reference study **always retains** the device, fixture and runner resources
 while native settlement is unconfirmed, even when local calls returned and
-references were released. Runner absence is not an accessibility fence. Read
+references were released. Callback summaries record send returns, received,
+pending, late and duplicate replies, plus retained objects. Their final snapshot
+closes observation, not native work; later callbacks may update retained state
+but emit no records after `finished`. Runner absence is not an accessibility fence. Read
 `result.json` and `ownership.json` before any manual follow-up; the host provides
 no automatic force-cleanup or resume command.
 

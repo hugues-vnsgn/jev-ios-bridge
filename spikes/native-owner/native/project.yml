@@ -28,6 +28,12 @@ targets:
     sources:
       - path: ObservationStudy.h
       - path: ObservationStudy.m
+      - path: PointRequest.h
+      - path: PointRequest.m
+      - path: NativeProvenance.h
+      - path: NativeProvenance.m
+      - path: ReferenceAccess.h
+      - path: ReferenceAccess.m
       - path: RecordEncoding.h
       - path: RecordEncoding.m
       - path: NativeOwnerStudy.m
@@ -47,6 +53,12 @@ targets:
     sources:
       - path: ObservationStudy.h
       - path: ObservationStudy.m
+      - path: PointRequest.h
+      - path: PointRequest.m
+      - path: NativeProvenance.h
+      - path: NativeProvenance.m
+      - path: ReferenceAccess.h
+      - path: ReferenceAccess.m
       - path: RecordEncoding.h
       - path: RecordEncoding.m
       - path: ObservationStudyTests.m

@@ -134,3 +134,15 @@ Don't use `pkill -f com.mobilenext.mobilecli.DeviceServer`: it also stops a fore
 ## Limits and control
 
 **`STEP_LIMIT`, `WALL_LIMIT`**: the run hit `--max-steps` or `--timeout-ms`. **`CANCELLED`**: someone cancelled it. **`INTERRUPTED`**: the bridge process stopped before recording a verdict. That run's evidence is kept, but it proves nothing.
+
+## Observed actions (experimental)
+
+Use the [observed workflow](14-observed-actions.md) and [format reference](reference/observed-format.md) for these separate outcomes and errors.
+
+`OBSERVED_DISABLED`: set the exact `JEV_EXPERIMENTAL_OBSERVED=1` after offline migration; reads/cancellation/retirement stay available when off. `MIGRATION_REQUIRED`, `STORE_UNAVAILABLE` or `STATE_UNAVAILABLE`: preserve storage and investigate the declaration, historical roots and installation state. Never delete the store to reset authority.
+
+`ACTION_ID_CONFLICT`: keep the original request and IDs. `ALLOCATION_NOT_READY` or `ACTION_NOT_STARTED`: retrieve the original allocation; neither authorizes replacement. After a lost reply, use original-identity retrieval, never a new ID/device for the same uncertain business action.
+
+`HOST_CREATION_UNRESOLVED`: preserve the blocking allocation ID/evidence. Creation may have produced an unidentified simulator, so new iOS admission remains blocked pending separate ownership reconciliation. `BUDGET_EXHAUSTED` or `INVENTORY_EXHAUSTED`: retained allocations are not reusable stock; retirement frees no device or capacity. A further distinct action needs explicit valid capacity and storage.
+
+`ALLOCATION_BUSY`: cancel preparation with allocation cancellation, or cancel its executing action with action cancellation. Cancellation may leave already authorized input outstanding. Quarantine, unconfirmed authority and null outcomes remain unresolved even if a late callback or provisional file appears successful. There is no automatic recovery replay or device cleanup.
