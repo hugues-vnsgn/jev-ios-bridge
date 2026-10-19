@@ -304,19 +304,21 @@ function recoverUpgrade(options:StoreOptions,declaration:UpgradeDeclaration,chec
   try {
     const lock=join(options.root,'migration.lock');rootPath(options.root);secure(lock,false);
     const guard=upgradeGuardSchema.parse(JSON.parse(readFileSync(lock,'utf8')));
-    if(guard.from!==declaration.from||guard.to!==declaration.to||guard.declarationDigest!==sha(JSON.stringify(declaration))||guard.backup===null||guard.backupDirectory!==join(options.root,'backups',guard.token)) throw new AdmissionError('STATE_UNAVAILABLE','Upgrade recovery declaration or backup conflicts');
+    if(guard.from!==declaration.from||guard.to!==declaration.to||guard.declarationDigest!==sha(JSON.stringify(declaration))||guard.backupDirectory!==join(options.root,'backups',guard.token)) throw new AdmissionError('STATE_UNAVAILABLE','Upgrade recovery declaration or backup conflicts');
     const backup=guard.backup;
-    if(backup.path!==join(guard.backupDirectory,'admission.sqlite')||backup.installationPath!==join(guard.backupDirectory,'installation.json')) throw new AdmissionError('STATE_UNAVAILABLE','Upgrade backup path conflicts');
-    secure(join(options.root,'backups'),true);secure(guard.backupDirectory,true);secure(backup.path,false);secure(backup.installationPath,false);
-    if(sha(readFileSync(backup.path))!==backup.sha256||sha(readFileSync(backup.installationPath))!==backup.installationSha256||!readFileSync(backup.installationPath).equals(readFileSync(join(options.root,'installation.json')))) throw new AdmissionError('STATE_UNAVAILABLE','Upgrade backup hash or installation changed');
-    const backupDb=new DatabaseSync(backup.path,{readOnly:true});
-    try {if(Number(backupDb.prepare('SELECT schema_version FROM metadata').get()?.schema_version)!==2||sha(databaseSnapshot(backupDb))!==guard.sourceFingerprint)throw new AdmissionError('STATE_UNAVAILABLE','Recorded backup does not match source');}finally{backupDb.close();}
+    if(backup!==null) {
+      if(backup.path!==join(guard.backupDirectory,'admission.sqlite')||backup.installationPath!==join(guard.backupDirectory,'installation.json')) throw new AdmissionError('STATE_UNAVAILABLE','Upgrade backup path conflicts');
+      secure(join(options.root,'backups'),true);secure(guard.backupDirectory,true);secure(backup.path,false);secure(backup.installationPath,false);
+      if(sha(readFileSync(backup.path))!==backup.sha256||sha(readFileSync(backup.installationPath))!==backup.installationSha256||!readFileSync(backup.installationPath).equals(readFileSync(join(options.root,'installation.json')))) throw new AdmissionError('STATE_UNAVAILABLE','Upgrade backup hash or installation changed');
+      const backupDb=new DatabaseSync(backup.path,{readOnly:true});
+      try {if(Number(backupDb.prepare('SELECT schema_version FROM metadata').get()?.schema_version)!==2||sha(databaseSnapshot(backupDb))!==guard.sourceFingerprint)throw new AdmissionError('STATE_UNAVAILABLE','Recorded backup does not match source');}finally{backupDb.close();}
+    }
     db=maintenanceDatabase(options,guard.token);db.exec('BEGIN IMMEDIATE');
     const meta=db.prepare('SELECT * FROM metadata').get() as Row;
     if(meta.installation_id!==guard.installationId)throw new AdmissionError('STATE_UNAVAILABLE','Recovery installation mismatch');
     const version=Number(meta.schema_version);
     let receiptId:string|null=null;
-    if(version===3) {const receipt=completedUpgrade(db,declaration,guard.token);if(!isDeepStrictEqual(receipt.backup,backup))throw new AdmissionError('STATE_UNAVAILABLE','Recovery receipt backup mismatch');receiptId=receipt.id;}
+    if(version===3&&backup!==null) {const receipt=completedUpgrade(db,declaration,guard.token);if(!isDeepStrictEqual(receipt.backup,backup))throw new AdmissionError('STATE_UNAVAILABLE','Recovery receipt backup mismatch');receiptId=receipt.id;}
     else if(version!==2)throw new AdmissionError('STATE_UNAVAILABLE',`Cannot recover schema ${version}`);
     const result:UpgradeRecovery={version:1,kind:'upgrade-recovery',guardToken:guard.token,schemaVersion:version,receiptId};
     const detail={...result,declarationDigest:guard.declarationDigest,installationId:guard.installationId};
@@ -394,6 +396,14 @@ export class AdmissionSqlite {
       checkpoint?.('guarded');
       const plan = scan();
       if (initialFiles.length) {
+        const db = maintenanceDatabase(options, token);
+        let version: number;
+        try { version = Number(db.prepare('SELECT schema_version FROM metadata WHERE singleton=1').get()?.schema_version); }
+        finally { db.close(); }
+        if (version !== schemaVersion) {
+          completed = true;
+          throw new AdmissionError('STATE_UNAVAILABLE', `Store schema ${version}; this binary requires schema ${schemaVersion}. Run admission-maintenance upgrade <declaration>`);
+        }
         const previous = new AdmissionSqlite(options, token).activation();
         if (!isDeepStrictEqual(previous.declaration, plan.declaration) || !isDeepStrictEqual(previous.sources, plan.sources)) throw new AdmissionError('STATE_UNAVAILABLE', 'Initialized admission cannot be reimported from changed sources');
         completed = true;
