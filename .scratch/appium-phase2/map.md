@@ -36,6 +36,7 @@ real-store migration needs a separate owner go-ahead.
 - [Evidenced release with immutable outcomes](issues/04-evidenced-release-state.md): authority-verified fence receipts free the lease; outcomes, capacity and append-only quarantines stay; historical, exclusion and unknown-creation quarantines not liftable in Phase 2; late replies are evidence only.
 - [Store schema evolution](issues/05-store-schema-evolution.md): explicit offline forward-only upgrades, exact version match, tool-taken backup, append-only receipts, checked recover, (category, value) key, immutability triggers, no downgrade (ADR-0012).
 - [Retiring DeviceLease as an ownership authority](issues/06-device-lease-retirement.md): admission is the only owner record; lock file kept as an old-binary marker; every command recorded; dead owners recovered at admission by generation-bound sweep; adb stop evidence; class renamed.
+- [Spec consistency gaps](issues/08-spec-consistency-gaps.md): ten cross-section gaps closed in one batch: recovery claim, settled MobileBuildMCP evidence, upgrade recovery event, fresh-store mode, `observed` outcome, budget fields, multi-transport ambiguity, release refusal order, identity refusal reasons, reused PIDs.
 
 ## Route
 
@@ -49,16 +50,18 @@ flowchart LR
     T05["05 Store schema evolution<br/><small>grilling</small>"]
     T06["06 Retiring DeviceLease as an ownership authority<br/><small>grilling</small>"]
     T07["07 Legacy lease import<br/><small>grilling</small>"]
+    T08["08 Spec consistency gaps<br/><small>grilling</small>"]
     T02 --> T03
     T03 --> T05
     T04 --> T05
     T04 --> T06
     T06 --> T07
+    T06 --> T08
     classDef resolved fill:#e4e4e7,stroke:#a1a1aa,color:#52525b
     classDef claimed fill:#dbeafe,stroke:#2563eb,color:#1e3a8a
     classDef frontier fill:#dcfce7,stroke:#16a34a,color:#14532d,stroke-width:2px
     classDef blocked fill:#ffffff,stroke:#a1a1aa,color:#18181b
-    class T01,T02,T03,T04,T05,T06 resolved
+    class T01,T02,T03,T04,T05,T06,T08 resolved
     class T07 claimed
 ```
 <!-- route:end -->

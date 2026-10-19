@@ -49,7 +49,11 @@ disagreement refuses with `PROFILE_CONFLICT` before any effect; aliases agree.
 
 **Budgets.** A profile's budgets are the default and the ceiling; request `limits`
 may only tighten them (minimum wins); a wider request refuses with
-`PROFILE_CONFLICT`. Without a profile, `limits` behave as today.
+`PROFILE_CONFLICT`. Without a profile, `limits` behave as today. Budget fields are
+`startupMs`, `operationMs` and `cleanupMs` (integer milliseconds), each with an
+explicit default and bound written into the profile schema; requests carry the
+same names and are compared field by field. `maxSteps`, `wallTimeMs` and driven
+`handbackTimeoutMs` stay independent existing limits, not profile budgets.
 
 **Binding.** The resolved profile (name plus content digest) is recorded on the run
 and in the admission attempt intent. Hand-back, retrieval and recovery use the
@@ -82,7 +86,9 @@ Existing iOS rows keep their bare uppercase UUID values with category
 rewritten. Allocation IDs get their own normalizer (`canonicalAllocationId`,
 uppercase UUID) instead of `canonicalDevice`; every existing ID stays valid.
 `-id` clones and `-read-only` second instances of one AVD share its key and
-serialize.
+serialize. A device name that reaches more than one live transport (two running
+instances of one AVD) refuses `DEVICE_AMBIGUOUS` unless an explicit serial
+selects one; all instances keep the one admission key.
 
 **Resolution.** Every admission resolves the device name (script, profile, env
 or vendor file) live; nothing caches a name-to-identity mapping. A name matching
@@ -90,7 +96,11 @@ two live identities refuses `DEVICE_AMBIGUOUS`, none refuses `DEVICE_NOT_FOUND`.
 The `avd || name` serial fallback is removed: missing provenance refuses. Sources
 that disagree (console name versus guest property, one inode under two paths,
 serialno versus USB serial) refuse `DEVICE_IDENTITY_CONFLICT` and record the
-reason without quarantining the device. A moved or renamed AVD is a new identity;
+reason without quarantining the device. A required source that cannot be read
+or is not admissible refuses `DEVICE_IDENTITY_UNAVAILABLE` with exactly one reason
+from a closed set: `NONDEFAULT_DEVICE_SET`, `EMULATOR_VERSION_UNSUPPORTED`,
+`REMOTE_CONSOLE`, `MALFORMED_PROVENANCE`, `PROVENANCE_INACCESSIBLE`,
+`PROBE_TIMEOUT`; the "named reasons" below are these. A moved or renamed AVD is a new identity;
 the old record keeps its state and a same-name match only adds a note, never an
 adoption (name-only legacy records are never upgraded by name).
 
@@ -196,7 +206,10 @@ and the guard behind; a crash after COMMIT leaves the new version and the guard.
 `upgrade --recover <declaration>` removes the guard only when it is an upgrade
 guard and the store is in one of two clean states: old version and identical to
 the recorded backup, or new version with the receipt for that guard's token.
-Otherwise it refuses. It appends the recovery to the receipt. A migration guard
+Otherwise it refuses. It records the recovery as its own immutable maintenance
+event (in a maintenance journal that exists at both versions), linked to the
+guard token and to the step receipt when one committed; the step receipt itself
+is never edited. A migration guard
 or unknown guard still needs operator investigation.
 
 **Device key.** Tables key a device on (category, value). The `devices` key
@@ -233,7 +246,10 @@ from `outstanding`, a quarantine's covering receipt from null.
 
 **Fresh and test stores.** Offline migration creates schema 2 and applies every
 step in the same transaction, so there is one definition of each version; test
-fixture stores use the same chain.
+fixture stores use the same chain. This fresh initialization is a separate mode:
+it reuses each step's schema and data changes inside its one transaction and keeps
+the original migration receipt. The per-step backup and `upgrades` receipt rules
+apply only to upgrading an existing committed store.
 
 **No downgrade.** Forward only. Restoring a backup after the upgraded store has
 recorded work drops that work and its guarantees; the help text says so, and a
@@ -246,8 +262,9 @@ Decided in [Evidenced release with immutable outcomes](../../appium-phase2/issue
 **Separate records.** Release touches only the device lease. Everything else is
 set once or appended:
 
-- *Attempt outcome* (completed, refused, inconclusive): published at dispatch
-  closure, immutable.
+- *Attempt outcome* (observed, completed, refused, inconclusive): published at
+  dispatch closure, immutable. `observed` keeps its v1.4.0 meaning and stored
+  values.
 - *Command disposition*: `outstanding`, then `settled` or `uncertain`, once.
   Each command records the native component it was sent through. A creation
   request whose reply is lost stays an outstanding command. Closure turns every
@@ -275,7 +292,12 @@ settled or listed; inventory complete and every recorded component, including
 each listed command's component, covered by stop evidence. On any failure it
 refuses (`DISPATCH_OPEN`, `COMMANDS_UNFENCED`, `COVERAGE_UNKNOWN`,
 `COVERAGE_INCOMPLETE`, `STALE_OWNER`, `UNBOUND_PROOF`, `NOT_COVERABLE`) and
-changes nothing. An accepted receipt releases the live owner's lease or covers
+changes nothing. Checks run in this order and the first failure names the code:
+wrong owner or generation `STALE_OWNER`; missing binding `UNBOUND_PROOF`; a
+forbidden quarantine kind or unknown creation `NOT_COVERABLE`; open dispatch
+`DISPATCH_OPEN`; otherwise incomplete inventory `COVERAGE_UNKNOWN`; a non-settled
+command not listed `COMMANDS_UNFENCED`; a component without stop proof
+`COVERAGE_INCOMPLETE`. An accepted receipt releases the live owner's lease or covers
 that generation's `native` quarantine. An inconclusive outcome does not block
 release: the outcome stays inconclusive and the allocation stays quarantined.
 
@@ -363,7 +385,11 @@ commits the recovery: closure and a `native` quarantine for that generation. The
 run then sweeps exactly that generation's recorded components, submits the stop
 evidence as a fence receipt, and proceeds only if the authority accepts it.
 Otherwise it refuses `DEVICE_QUARANTINED` and the quarantine stays. A later run
-may retry the same generation-bound sweep. iOS and Android behave the same: iOS
+may retry the same generation-bound sweep. The sweep runs under one durable,
+exclusive recovery claim per target generation: only the claim holder issues
+sweep commands, each recorded like any other command; a competing claimant
+causes no device effect, and ordinary admission of the device waits until the
+claim closes with its receipt accepted. iOS and Android behave the same: iOS
 gains this recovery, and Android loses reclaim on process death alone.
 
 **Stop evidence in Phase 2.** Besides the device agent's existing stop check:
@@ -374,7 +400,10 @@ gains this recovery, and Android loses reclaim on process death alone.
 - Mac-side streams and port forwards: their process has exited or the forward
   is gone.
 - MobileBuildMCP commands get no stop evidence, so an uncertain one keeps its
-  device quarantined, as v1.4.0 keeps the iOS lease today.
+  device quarantined, as v1.4.0 keeps the iOS lease today. A settled one-shot
+  MobileBuildMCP command whose invocation is confirmed complete is its own
+  terminal evidence for that command's component; persistent components still
+  need stop evidence.
 
 Appium session and driver evidence is Phase 3 adapter work.
 
@@ -405,8 +434,10 @@ Through existing admission/maintenance and public integration seams, cover:
   unavailable until proof; immutable history and capacity unchanged afterward.
 - Lease retirement: an owner killed with outstanding adb, agent and stream
   components recovers at the next admission only after verified stop evidence;
-  a reused PID, an offline device, an unknown marker and an uncertain
-  MobileBuildMCP command each refuse; markers appear and disappear only with
+  a reused owner PID proves the old owner gone and permits recovery, while a
+  reused component PID never authorizes stopping the new process and release
+  refuses without independent proof; an offline device, an unknown marker and an
+  uncertain MobileBuildMCP command each refuse; markers appear and disappear only with
   admission ownership.
 - Store upgrades on isolated stores: 2 to 3 with preserved row counts and
   digests, crashes before and after COMMIT with checked `--recover`, identical
