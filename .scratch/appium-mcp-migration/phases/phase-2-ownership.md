@@ -56,9 +56,11 @@ same names and are compared field by field. `maxSteps`, `wallTimeMs` and driven
 `handbackTimeoutMs` stay independent existing limits, not profile budgets. Defaults keep today's behaviour (Decision 9): `startupMs` caps
 `driver.prepare` and `operationMs` caps one step's device operation, and neither
 has a default, so without one preparation and steps stay under `wallTimeMs` as
-today; `cleanupMs` defaults to the existing `DEFAULT_CLEANUP_MS` (45000).
+today; `cleanupMs` is the existing internal `cleanupTimeMs` limit, default
+`DEFAULT_CLEANUP_MS` (45000).
 `wallTimeMs` stays the outer limit over all three. Bounds are 1000 to 600000 for
-`startupMs` and `operationMs` and 1000 to 300000 for `cleanupMs`, provisional
+`startupMs` and `operationMs` and 1000 to 120000 for `cleanupMs` (the existing
+maximum, never widened), provisional
 until the owner approves them at P2.2's review (main agent, 2026-10-19).
 
 **Binding.** The resolved profile (name plus content digest) is recorded on the run
