@@ -10,6 +10,7 @@ import { migrateAdmissionForTesting, type MigrationDeclaration } from '../src/de
 import { DatabaseSync } from 'node:sqlite';
 import { fileURLToPath } from 'node:url';
 import { runAdmissionMaintenance } from '../src/device/admission-maintenance.js';
+import type { AllocationRecord } from '../src/device/admission-allocation.js';
 
 /** Test-only historical disk format, compared with the pinned original writer before its retirement. */
 class HistoricalJournalFixture {
@@ -386,6 +387,68 @@ test('offline schema stop receipt membership binds one generation and seals on r
   assert.equal(db.prepare("SELECT covering_receipt_id FROM quarantines WHERE id='native-a'").get()?.covering_receipt_id, 'receipt-a');
 });
 
+test('offline schema upgrade preserves parked allocations and the host unknown-creation guard', async t => {
+  const f = fixture(t);
+  migrateAdmissionForTesting(declaration, { ...f.options, schemaVersion: 2 });
+  const allocationId = 'ABCDEF00-0000-4000-8000-000000000010';
+  const unknownId = 'ABCDEF00-0000-4000-8000-000000000011';
+  const hash = 'a'.repeat(64);
+  const parked: AllocationRecord = {
+    allocationId, actionId: 'parked-upgrade', preparationDigest: hash, preparation: { version: 1, actionId: 'parked-upgrade' },
+    appBundleId: 'dev.fixture', source: { kind: 'create', deviceTypeId: 'fixture-device', runtimeId: 'fixture-runtime' },
+    inspectedContentDigest: hash, artifactBytes: 100, configVersion: 1, configDigest: hash,
+    budgets: { maxRetainedAllocations: 8, maxConcurrentPreparations: 2, reservationBytesPerAllocation: 800, maxReservedBytes: 6400,
+      minFreeBytes: 2000, maxArtifactBytes: 200, createTimeoutMs: 60000, bootTimeoutMs: 120000, installTimeoutMs: 120000,
+      launchTimeoutMs: 30000, readinessTimeoutMs: 30000, readyTtlMs: 300000, timeoutMs: 360000 },
+    evidenceDirectory: '/isolated/evidence/parked', intendedName: `jev-observed-${allocationId}`,
+    staged: { stagedPath: '/isolated/staged/Fixture.app', contentDigest: hash, bytes: 100, maxBytes: 200,
+      metadata: { bundleId: 'dev.fixture', executable: 'Fixture', architecture: 'arm64', minimumOSVersion: '27.0', build: { id: 'build', origin: 'fixture' } } },
+    device, creationReceipt: { status: 'created', udid: device, provenance: { kind: 'simctl-create', allocationId,
+      name: `jev-observed-${allocationId}`, deviceTypeId: 'fixture-device', runtimeId: 'fixture-runtime' } },
+    actionDigest: null, actionRequest: null, state: 'ready', phase: 'parked', reason: null, outcome: 'prepared',
+    capacityHeld: true, reservationBytes: 800, cancellationRequested: false,
+    owner: { allocationId, token: 'parked-token', generation: 2, process: { pid: 0, incarnation: 'parked' } },
+    createdAt: 100, readyAt: 200, expiresAt: 300200, readinessEvidence: ['/isolated/readiness.json'],
+    evidenceRefs: ['/isolated/preparation.json'], actionEvidence: null, hostCreationBlocked: false,
+  };
+  const unknown: AllocationRecord = { ...parked, allocationId: unknownId, actionId: 'unknown-upgrade',
+    preparation: { version: 1, actionId: 'unknown-upgrade' }, intendedName: `jev-observed-${unknownId}`,
+    device: null, creationReceipt: null, state: 'preparing', phase: 'creating', outcome: null,
+    owner: { allocationId: unknownId, token: 'unknown-token', generation: 1, process: { pid: process.pid, incarnation: 'fixture' } },
+    readyAt: null, expiresAt: null, readinessEvidence: [], evidenceRefs: [] };
+  const recordStrings = [parked, unknown].map(record => JSON.stringify(record, null, 2));
+  const old = new DatabaseSync(join(f.root, 'admission.sqlite'));
+  try {
+    old.prepare("INSERT INTO devices(device,state,generation) VALUES (?,'active',2)").run(device);
+    old.prepare("INSERT INTO attempts(kind,id,device,digest,intent,token,generation,pid,incarnation,state) VALUES ('preparation',?,?,?,'{}','preparation-token',1,?,'fixture','parked')").run(allocationId, device, hash, process.pid);
+    for (const [index, record] of [parked, unknown].entries()) {
+      const text = recordStrings[index]!;
+      old.prepare('INSERT INTO allocations VALUES (?,?,?,NULL,?,?)').run(record.allocationId, record.actionId, record.device, text, digest(text));
+    }
+    old.prepare('INSERT INTO unknown_creation VALUES (1,?)').run(unknownId);
+  } finally { old.close(); }
+  const { upgradeAdmissionForTesting } = await import('../src/device/admission-upgrade.js');
+  const receipt = upgradeAdmissionForTesting(upgradeDeclaration, { root: f.root, backend: 'fake', now: () => 250 });
+  assert.deepEqual(receipt.preserved.before, receipt.preserved.after);
+  assert.equal(receipt.preserved.after.allocations?.count, 2);
+  assert.equal(receipt.preserved.after.unknown_creation?.count, 1);
+  assert.deepEqual(f.open().readAllocation(allocationId.toLowerCase()), { ...parked, hostCreationBlocked: true });
+  assert.deepEqual(f.open().readAllocation(unknownId), { ...unknown, hostCreationBlocked: true });
+  assert.deepEqual(f.open().acquire({ device: otherDevice, attempt: { kind: 'legacy', id: 'blocked-after-upgrade' }, digest: hash, intent: {} }),
+    { kind: 'refused', reason: 'HOST_CREATION_UNRESOLVED', blockingAllocationId: unknownId });
+  const upgraded = new DatabaseSync(join(f.root, 'admission.sqlite'));
+  try {
+    assert.deepEqual(upgraded.prepare('SELECT record,checksum FROM allocations ORDER BY id').all().map(row => ({ ...row })),
+      recordStrings.map(record => ({ record, checksum: digest(record) })));
+    assert.deepEqual(upgraded.prepare('SELECT token,owner_kind,inventory_unknown_reason,dispatch_closed_at FROM owner_generations ORDER BY token').all().map(row => ({ ...row })),
+      [{ token: 'parked-token', owner_kind: 'parked', inventory_unknown_reason: null, dispatch_closed_at: 250 },
+        { token: 'preparation-token', owner_kind: 'device', inventory_unknown_reason: 'schema2-inventory', dispatch_closed_at: 250 },
+        { token: 'unknown-token', owner_kind: 'allocation', inventory_unknown_reason: 'schema2-inventory', dispatch_closed_at: null }]);
+    assert.equal(upgraded.prepare('SELECT count(*) AS count FROM components').get()?.count, 0);
+    assert.deepEqual({ ...upgraded.prepare('SELECT singleton,allocation_id FROM unknown_creation').get() }, { singleton: 1, allocation_id: unknownId });
+  } finally { upgraded.close(); }
+});
+
 test('offline schema upgrade refuses active attempt identities without settling or changing them', async t => {
   const f = fixture(t);
   migrateAdmissionForTesting(declaration, { ...f.options, schemaVersion: 2 });
@@ -652,6 +715,8 @@ test('activation revalidates persisted manifest and rejects missing initialized 
   migrateAdmissionForTesting(declaration, f.options);
   const admission = f.open();
   const db = new DatabaseSync(join(f.root, 'admission.sqlite'));
+  assert.throws(() => db.prepare('UPDATE metadata SET migration_manifest=?').run('{}'), /Immutable metadata binding/);
+  db.exec('DROP TRIGGER metadata_binding_immutable');
   db.prepare('UPDATE metadata SET migration_manifest=?').run('{}'); db.close();
   assert.throws(() => admission.acquire({ attempt: { kind: 'legacy', id: 'bad-manifest' }, device, digest: 'one', intent: {} }), { code: 'STATE_UNAVAILABLE' });
   assert.throws(() => admission.inspect(device), { code: 'STATE_UNAVAILABLE' });
