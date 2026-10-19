@@ -199,7 +199,7 @@ Each live lane runs on its own cloud VM at the PR head. Drive through `control-u
 - [ ] Create `src/device/admission-upgrade.ts`.
 - [ ] Edit `src/device/admission.ts`, `src/device/admission-sqlite.ts`, `src/device/admission-maintenance.ts`, `src/device/admission-migration.ts`, `src/device/admission-allocation.ts`, `src/scripted/vocabulary.ts`, `docs/guide/reference/reason-codes.md`, `tests/golden/vocabulary.json`, `tests/contract.test.ts`.
 - [ ] Edit `src/device/index.ts` at admission call sites only.
-- [ ] Edit `tests/admission-core.test.ts`, `tests/admission-allocation.test.ts`, `tests/admission-migration.test.ts`, `tests/admission-maintenance-entry.test.ts`, `tests/fixtures/admission-migration/crash-worker.ts`, `tests/fixtures/admission-core-protocol.ts`.
+- [ ] Edit `tests/admission-core.test.ts`, `tests/admission-allocation.test.ts`, `tests/admission-migration.test.ts`, `tests/admission-maintenance-entry.test.ts`, `tests/fixtures/admission-migration/crash-worker.ts`, and any `tests/fixtures/*` file whose strict schema validates admission owner, request or view shapes, for the category field only.
 
 **Build.**
 
