@@ -145,6 +145,7 @@ Each live lane runs on its own cloud VM at the PR head. Drive through `control-u
 
 - [ ] Parse `.jev/profiles.json` version 1 in `src/profiles.ts` per Profile selection behavior, with the name pattern, reserved keys and unknown keys refused (`INVALID_PROFILE_FILE`, `PROFILE_NOT_FOUND`).
 - [ ] Add `--profile` to `run` and `capture`, and `profile` to MCP `start_scenario`. Apply the precedence explicit, then `defaultProfile`, then the unchanged legacy order.
+- [ ] Detect profile and scenario conflicts by name, with no device probe. Same-kind names compare as written (UDIDs case-insensitively), and mixed kinds such as an AVD name against a serial refuse `PROFILE_CONFLICT`, fail closed until P2.4 adds identity agreement.
 - [ ] Add budgets `startupMs`, `operationMs` and `cleanupMs`. Defaults are today's hard-coded timeouts for those phases. Requests only tighten, else `PROFILE_CONFLICT`. Propose the upper bounds in the code-ready report for the operator's approval.
 - [ ] Record the binding (name plus content digest) on the run and inside the attempt intent JSON. Hand-back and recovery read the binding, never the file.
 
@@ -260,6 +261,7 @@ Each live lane runs on its own cloud VM at the PR head. Drive through `control-u
 - [ ] Resolve every device name live per Resolution, with `DEVICE_AMBIGUOUS` (including one AVD on several transports), `DEVICE_NOT_FOUND`, `DEVICE_IDENTITY_CONFLICT` and `DEVICE_IDENTITY_UNAVAILABLE` with its closed reasons. Refuse `ios-phone` with `CATEGORY_NOT_ENABLED`.
 - [ ] Read emulator provenance through the read-only runner in `probe.ts` per Emulator provenance and Pre-admission identity probes. Remove the `avd || name` fallback in `driver.ts`.
 - [ ] Run every check in Identity and preflight before effects, and record the probe replies in the attempt intent once admitted.
+- [ ] Replace P2.2's fail-closed mixed-kind profile conflict with identity agreement, so aliases of one device agree and different identities refuse `PROFILE_CONFLICT`.
 - [ ] Run one live trial on the private AVD only. Capture the exact console stdout for success, missing, empty and mismatched token, `offline` and a `-read-only` second instance as fixtures.
 
 **You see.**
