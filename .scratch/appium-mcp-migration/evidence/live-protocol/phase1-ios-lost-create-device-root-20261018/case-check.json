@@ -1,0 +1,26 @@
+{
+  "case": "phase1-ios-lost-create-device-root-20261018",
+  "platform": "ios",
+  "faultMode": "lost-create",
+  "status": "failed",
+  "checks": {
+    "casePassed": false,
+    "oneCreation": true,
+    "expectedActions": true,
+    "dispatchClosed": true,
+    "completeNativeFence": false,
+    "hostStopped": true,
+    "childrenStopped": true,
+    "onePostStopScan": true,
+    "coverageVerified": false,
+    "sharedServicesPreserved": true,
+    "nativeFenceWhileRunning": true,
+    "housekeepingOffline": true,
+    "researchLeaseRetained": true,
+    "commandsAccounted": true,
+    "localRefusalWithoutWire": true,
+    "inconclusiveFault": true
+  },
+  "passed": false,
+  "evidence": ".scratch/appium-mcp-migration/evidence/live-protocol/phase1-ios-lost-create-device-root-20261018"
+}

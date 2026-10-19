@@ -1,0 +1,26 @@
+{
+  "case": "phase1-ios-lost-action-post-reboot-20261019",
+  "platform": "ios",
+  "faultMode": "lost-action",
+  "status": "passed-live-fault-control",
+  "checks": {
+    "casePassed": true,
+    "oneCreation": true,
+    "expectedActions": true,
+    "dispatchClosed": true,
+    "completeNativeFence": true,
+    "hostStopped": true,
+    "childrenStopped": true,
+    "onePostStopScan": true,
+    "coverageVerified": true,
+    "sharedServicesPreserved": true,
+    "nativeFenceWhileRunning": true,
+    "housekeepingOffline": true,
+    "researchLeaseRetained": true,
+    "commandsAccounted": true,
+    "localRefusalWithoutWire": true,
+    "inconclusiveFault": true
+  },
+  "passed": true,
+  "evidence": ".scratch/appium-mcp-migration/evidence/live-protocol/phase1-ios-lost-action-post-reboot-20261019"
+}

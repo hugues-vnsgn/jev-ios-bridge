@@ -1,0 +1,13 @@
+import { spawn, execFileSync } from 'node:child_process';
+import { readFileSync, writeFileSync } from 'node:fs';
+import { fileURLToPath } from 'node:url';
+const helper = spawn(process.execPath, ['-e', 'setInterval(() => {}, 1000)'], { stdio: 'ignore' });
+const ownerPath = process.env.JEV_STOP_GROUP_RECORD;
+const owner = JSON.parse(readFileSync(ownerPath, 'utf8'));
+const birth = execFileSync('ps', ['-p', String(helper.pid), '-o', 'lstart='], { encoding: 'utf8' }).trim().replace(/\s+/g, ' ');
+const identity = fileURLToPath(new URL('../../.scratch/appium-mcp-migration/candidate-stack/experiments/stop-group.py', import.meta.url));
+const incarnation = JSON.parse(execFileSync('python3', [identity, 'identities', String(helper.pid)], { encoding: 'utf8' }))[0].incarnation;
+owner.members = [{ pid: helper.pid, birth, incarnation }];
+writeFileSync(ownerPath, JSON.stringify(owner));
+console.log(JSON.stringify({ helperPid: helper.pid }));
+setInterval(() => {}, 1000);

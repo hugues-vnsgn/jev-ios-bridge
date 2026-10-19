@@ -1,0 +1,1305 @@
+{
+  "version": 1,
+  "platform": "ios",
+  "readOnly": true,
+  "commands": [
+    {
+      "args": [
+        "xcrun",
+        "simctl",
+        "--set",
+        "/Users/hugues_mini/Codes/AgentTools/jev-ios-bridge/.worktrees/feat/appium-mcp-migration/.scratch/appium-mcp-migration/runtime/devices/simulators",
+        "list",
+        "devices",
+        "-j"
+      ],
+      "exitCode": 0
+    },
+    {
+      "args": [
+        "xcrun",
+        "simctl",
+        "--set",
+        "/Users/hugues_mini/Codes/AgentTools/jev-ios-bridge/.worktrees/feat/appium-mcp-migration/.scratch/appium-mcp-migration/runtime/devices/simulators",
+        "spawn",
+        "15013501-2535-42EB-A67F-45B015DF18F4",
+        "launchctl",
+        "list"
+      ],
+      "exitCode": 0
+    },
+    {
+      "args": [
+        "xcrun",
+        "simctl",
+        "--set",
+        "/Users/hugues_mini/Codes/AgentTools/jev-ios-bridge/.worktrees/feat/appium-mcp-migration/.scratch/appium-mcp-migration/runtime/devices/simulators",
+        "get_app_container",
+        "15013501-2535-42EB-A67F-45B015DF18F4",
+        "com.facebook.WebDriverAgentRunner.xctrunner",
+        "app"
+      ],
+      "exitCode": 0
+    }
+  ],
+  "device": {
+    "dataPath": "/Users/hugues_mini/Codes/AgentTools/jev-ios-bridge/.worktrees/feat/appium-mcp-migration/.scratch/appium-mcp-migration/runtime/devices/simulators/15013501-2535-42EB-A67F-45B015DF18F4/data",
+    "dataPathSize": 2159517696,
+    "logPath": "/Users/hugues_mini/Library/Logs/CoreSimulator/15013501-2535-42EB-A67F-45B015DF18F4",
+    "udid": "15013501-2535-42EB-A67F-45B015DF18F4",
+    "lastUsedAt": "2026-10-19T00:58:19Z",
+    "isAvailable": true,
+    "logPathSize": 614400,
+    "deviceTypeIdentifier": "com.apple.CoreSimulator.SimDeviceType.iPhone-17",
+    "state": "Booted",
+    "name": "jev-appium-phase1-20261018"
+  },
+  "services": [
+    {
+      "pid": 40538,
+      "label": "com.apple.homed",
+      "incarnation": "darwin:1792371505:986989",
+      "automation": false
+    },
+    {
+      "pid": 40858,
+      "label": "com.apple.modelcatalogd",
+      "incarnation": "darwin:1792371510:805105",
+      "automation": false
+    },
+    {
+      "pid": 40641,
+      "label": "com.apple.dataaccess.dataaccessd",
+      "incarnation": "darwin:1792371509:14958",
+      "automation": false
+    },
+    {
+      "pid": 41508,
+      "label": "com.apple.bird",
+      "incarnation": "darwin:1792371520:678457",
+      "automation": false
+    },
+    {
+      "pid": 40613,
+      "label": "com.apple.fitnesscoachingd",
+      "incarnation": "darwin:1792371508:524070",
+      "automation": false
+    },
+    {
+      "pid": 40190,
+      "label": "com.apple.biomed",
+      "incarnation": "darwin:1792371501:630148",
+      "automation": false
+    },
+    {
+      "pid": 40447,
+      "label": "com.apple.nsurlsessiond",
+      "incarnation": "darwin:1792371503:301389",
+      "automation": false
+    },
+    {
+      "pid": 41636,
+      "label": "com.apple.activityawardsd",
+      "incarnation": "darwin:1792371525:703260",
+      "automation": false
+    },
+    {
+      "pid": 40614,
+      "label": "com.apple.ind",
+      "incarnation": "darwin:1792371508:545442",
+      "automation": false
+    },
+    {
+      "pid": 40783,
+      "label": "com.apple.iconservices.iconservicesagent",
+      "incarnation": "darwin:1792371509:731380",
+      "automation": false
+    },
+    {
+      "pid": 40616,
+      "label": "com.apple.diagnosticextensionsd",
+      "incarnation": "darwin:1792371508:589459",
+      "automation": false
+    },
+    {
+      "pid": 40610,
+      "label": "com.apple.SafariBookmarksSyncAgent",
+      "incarnation": "darwin:1792371508:488009",
+      "automation": false
+    },
+    {
+      "pid": 40193,
+      "label": "com.apple.syslogd",
+      "incarnation": "darwin:1792371501:630687",
+      "automation": false
+    },
+    {
+      "pid": 40586,
+      "label": "com.apple.localizationswitcherd",
+      "incarnation": "darwin:1792371507:621079",
+      "automation": false
+    },
+    {
+      "pid": 40176,
+      "label": "com.apple.SpringBoard",
+      "incarnation": "darwin:1792371501:611490",
+      "automation": false
+    },
+    {
+      "pid": 41018,
+      "label": "UIKitApplication:com.apple.Spotlight[1bb0][rb-legacy]",
+      "incarnation": "darwin:1792371513:595165",
+      "automation": false
+    },
+    {
+      "pid": 40199,
+      "label": "com.apple.ManagedSettingsAgent",
+      "incarnation": "darwin:1792371501:632939",
+      "automation": false
+    },
+    {
+      "pid": 41935,
+      "label": "com.apple.datamigrator",
+      "incarnation": "darwin:1792371533:46745",
+      "automation": false
+    },
+    {
+      "pid": 40461,
+      "label": "com.apple.securityd",
+      "incarnation": "darwin:1792371503:449584",
+      "automation": false
+    },
+    {
+      "pid": 41464,
+      "label": "com.apple.MapKit.SnapshotService",
+      "incarnation": "darwin:1792371519:380081",
+      "automation": false
+    },
+    {
+      "pid": 40175,
+      "label": "com.apple.UserEventAgent-System",
+      "incarnation": "darwin:1792371501:608408",
+      "automation": false
+    },
+    {
+      "pid": 41278,
+      "label": "com.apple.itunesstored",
+      "incarnation": "darwin:1792371516:732465",
+      "automation": false
+    },
+    {
+      "pid": 41902,
+      "label": "com.apple.assistant_service",
+      "incarnation": "darwin:1792371531:956025",
+      "automation": false
+    },
+    {
+      "pid": 40180,
+      "label": "com.apple.peopled",
+      "incarnation": "darwin:1792371501:628087",
+      "automation": false
+    },
+    {
+      "pid": 40588,
+      "label": "com.apple.fontservicesd",
+      "incarnation": "darwin:1792371507:914727",
+      "automation": false
+    },
+    {
+      "pid": 40585,
+      "label": "com.apple.PosterBoard",
+      "incarnation": "darwin:1792371507:577502",
+      "automation": false
+    },
+    {
+      "pid": 40181,
+      "label": "com.apple.replicatord",
+      "incarnation": "darwin:1792371501:628278",
+      "automation": false
+    },
+    {
+      "pid": 40183,
+      "label": "com.apple.mediaremoted",
+      "incarnation": "darwin:1792371501:628645",
+      "automation": false
+    },
+    {
+      "pid": 40185,
+      "label": "com.apple.accessibility.axassetsd",
+      "incarnation": "darwin:1792371501:629048",
+      "automation": false
+    },
+    {
+      "pid": 40187,
+      "label": "com.apple.ids_simd",
+      "incarnation": "darwin:1792371501:629448",
+      "automation": false
+    },
+    {
+      "pid": 42057,
+      "label": "com.apple.xpc.launchd.oneshot.0x10000003.launchctl",
+      "incarnation": null,
+      "automation": false
+    },
+    {
+      "pid": 40195,
+      "label": "com.apple.wcd",
+      "incarnation": "darwin:1792371501:631203",
+      "automation": false
+    },
+    {
+      "pid": 41899,
+      "label": "com.apple.voicebankingd",
+      "incarnation": "darwin:1792371531:528490",
+      "automation": false
+    },
+    {
+      "pid": 40810,
+      "label": "com.apple.countryd",
+      "incarnation": "darwin:1792371510:304933",
+      "automation": false
+    },
+    {
+      "pid": 41567,
+      "label": "com.apple.ScreenTimeAgent",
+      "incarnation": "darwin:1792371522:943545",
+      "automation": false
+    },
+    {
+      "pid": 40478,
+      "label": "com.apple.cloudd",
+      "incarnation": "darwin:1792371504:60141",
+      "automation": false
+    },
+    {
+      "pid": 40582,
+      "label": "com.apple.carkitd",
+      "incarnation": "darwin:1792371507:389493",
+      "automation": false
+    },
+    {
+      "pid": 40624,
+      "label": "com.apple.ap.adprivacyd",
+      "incarnation": "darwin:1792371508:802663",
+      "automation": false
+    },
+    {
+      "pid": 41618,
+      "label": "com.apple.ap.promotedcontentd",
+      "incarnation": "darwin:1792371524:578969",
+      "automation": false
+    },
+    {
+      "pid": 40266,
+      "label": "com.apple.aslmanager",
+      "incarnation": "darwin:1792371502:640747",
+      "automation": false
+    },
+    {
+      "pid": 40467,
+      "label": "com.apple.nanoregistryd",
+      "incarnation": "darwin:1792371503:953144",
+      "automation": false
+    },
+    {
+      "pid": 41528,
+      "label": "com.apple.amsondevicestoraged",
+      "incarnation": "darwin:1792371520:745275",
+      "automation": false
+    },
+    {
+      "pid": 40179,
+      "label": "com.apple.runningboardd",
+      "incarnation": "darwin:1792371501:627881",
+      "automation": false
+    },
+    {
+      "pid": 40186,
+      "label": "com.apple.healthd",
+      "incarnation": "darwin:1792371501:629269",
+      "automation": false
+    },
+    {
+      "pid": 40566,
+      "label": "com.apple.triald",
+      "incarnation": "darwin:1792371507:266290",
+      "automation": false
+    },
+    {
+      "pid": 40188,
+      "label": "com.apple.tccd",
+      "incarnation": "darwin:1792371501:629625",
+      "automation": false
+    },
+    {
+      "pid": 40537,
+      "label": "com.apple.StatusKitAgent",
+      "incarnation": "darwin:1792371505:882655",
+      "automation": false
+    },
+    {
+      "pid": 41513,
+      "label": "com.apple.storekitd",
+      "incarnation": "darwin:1792371520:719398",
+      "automation": false
+    },
+    {
+      "pid": 40953,
+      "label": "UIKitApplication:com.apple.chrono.WidgetRenderer-Default[d619][rb-legacy]",
+      "incarnation": "darwin:1792371511:597969",
+      "automation": false
+    },
+    {
+      "pid": 41566,
+      "label": "com.apple.textunderstandingd",
+      "incarnation": "darwin:1792371522:857765",
+      "automation": false
+    },
+    {
+      "pid": 40479,
+      "label": "com.apple.liveactivitiesd",
+      "incarnation": "darwin:1792371504:122989",
+      "automation": false
+    },
+    {
+      "pid": 41238,
+      "label": "com.apple.akd",
+      "incarnation": "darwin:1792371516:406459",
+      "automation": false
+    },
+    {
+      "pid": 41300,
+      "label": "com.apple.mobile.installd",
+      "incarnation": "darwin:1792371517:995998",
+      "automation": false
+    },
+    {
+      "pid": 41847,
+      "label": "com.apple.jetpackassetd",
+      "incarnation": "darwin:1792371529:581970",
+      "automation": false
+    },
+    {
+      "pid": 41898,
+      "label": "com.apple.homeeventsd",
+      "incarnation": "darwin:1792371531:522497",
+      "automation": false
+    },
+    {
+      "pid": 41299,
+      "label": "com.apple.assetsd",
+      "incarnation": "darwin:1792371517:956497",
+      "automation": false
+    },
+    {
+      "pid": 41281,
+      "label": "com.apple.xpc.launchd.oneshot.0x10000001.log",
+      "incarnation": "darwin:1792371517:57101",
+      "automation": false
+    },
+    {
+      "pid": 40194,
+      "label": "com.apple.appprotectiond",
+      "incarnation": "darwin:1792371501:630968",
+      "automation": false
+    },
+    {
+      "pid": 41846,
+      "label": "com.apple.managedassetsd",
+      "incarnation": "darwin:1792371529:581453",
+      "automation": false
+    },
+    {
+      "pid": 40196,
+      "label": "com.apple.askpermissiond",
+      "incarnation": "darwin:1792371501:631411",
+      "automation": false
+    },
+    {
+      "pid": 40197,
+      "label": "com.apple.backboardd",
+      "incarnation": "darwin:1792371501:631646",
+      "automation": false
+    },
+    {
+      "pid": 40465,
+      "label": "com.apple.lsd",
+      "incarnation": "darwin:1792371503:771879",
+      "automation": false
+    },
+    {
+      "pid": 40637,
+      "label": "com.apple.avatarsd",
+      "incarnation": "darwin:1792371508:856067",
+      "automation": false
+    },
+    {
+      "pid": 40931,
+      "label": "com.apple.siri.context.service",
+      "incarnation": "darwin:1792371511:53361",
+      "automation": false
+    },
+    {
+      "pid": 40562,
+      "label": "com.apple.pluginkit.pkd",
+      "incarnation": "darwin:1792371507:5614",
+      "automation": false
+    },
+    {
+      "pid": 40206,
+      "label": "com.apple.CoreSimulator.bridge",
+      "incarnation": "darwin:1792371501:636568",
+      "automation": false
+    },
+    {
+      "pid": 40208,
+      "label": "com.apple.remindd",
+      "incarnation": "darwin:1792371501:636982",
+      "automation": false
+    },
+    {
+      "pid": 40576,
+      "label": "com.apple.findmy.findmylocated",
+      "incarnation": "darwin:1792371507:377043",
+      "automation": false
+    },
+    {
+      "pid": 40629,
+      "label": "com.apple.searchd",
+      "incarnation": "darwin:1792371508:832330",
+      "automation": false
+    },
+    {
+      "pid": 41473,
+      "label": "com.apple.nanoregistrylaunchd",
+      "incarnation": "darwin:1792371519:830825",
+      "automation": false
+    },
+    {
+      "pid": 40623,
+      "label": "com.apple.weatherd",
+      "incarnation": "darwin:1792371508:785004",
+      "automation": false
+    },
+    {
+      "pid": 41619,
+      "label": "com.apple.tvremoted",
+      "incarnation": "darwin:1792371524:586305",
+      "automation": false
+    },
+    {
+      "pid": 41622,
+      "label": "com.apple.modelmanagerd",
+      "incarnation": "darwin:1792371524:826892",
+      "automation": false
+    },
+    {
+      "pid": 40584,
+      "label": "com.apple.appleaccountd",
+      "incarnation": "darwin:1792371507:529180",
+      "automation": false
+    },
+    {
+      "pid": 40189,
+      "label": "com.apple.parsecd",
+      "incarnation": "darwin:1792371501:629927",
+      "automation": false
+    },
+    {
+      "pid": 41520,
+      "label": "com.apple.TextInput.kbd",
+      "incarnation": "darwin:1792371520:726848",
+      "automation": false
+    },
+    {
+      "pid": 40561,
+      "label": "com.apple.dmd",
+      "incarnation": "darwin:1792371506:734147",
+      "automation": false
+    },
+    {
+      "pid": 41543,
+      "label": "com.apple.parsec-fbf",
+      "incarnation": "darwin:1792371521:705116",
+      "automation": false
+    },
+    {
+      "pid": 40611,
+      "label": "com.apple.followupd",
+      "incarnation": "darwin:1792371508:497859",
+      "automation": false
+    },
+    {
+      "pid": 40192,
+      "label": "com.apple.identityservicesd",
+      "incarnation": "darwin:1792371501:630497",
+      "automation": false
+    },
+    {
+      "pid": 40534,
+      "label": "com.apple.telephonyutilities.callservicesd",
+      "incarnation": "darwin:1792371505:842341",
+      "automation": false
+    },
+    {
+      "pid": 41284,
+      "label": "com.apple.MobileInstallationHelperService",
+      "incarnation": "darwin:1792371517:370973",
+      "automation": false
+    },
+    {
+      "pid": 40856,
+      "label": "com.apple.generativeexperiencesd",
+      "incarnation": "darwin:1792371510:801102",
+      "automation": false
+    },
+    {
+      "pid": 40617,
+      "label": "com.apple.WebBookmarks.webbookmarksd",
+      "incarnation": "darwin:1792371508:604829",
+      "automation": false
+    },
+    {
+      "pid": 40200,
+      "label": "com.apple.locationd",
+      "incarnation": "darwin:1792371501:633185",
+      "automation": false
+    },
+    {
+      "pid": 40490,
+      "label": "com.apple.containermanagerd",
+      "incarnation": "darwin:1792371504:279274",
+      "automation": false
+    },
+    {
+      "pid": 40201,
+      "label": "com.apple.nanoprefsyncd.2",
+      "incarnation": "darwin:1792371501:633424",
+      "automation": false
+    },
+    {
+      "pid": 40210,
+      "label": "com.apple.rapportd",
+      "incarnation": "darwin:1792371501:637416",
+      "automation": false
+    },
+    {
+      "pid": 41947,
+      "label": "com.apple.assetsubscriptiond",
+      "incarnation": "darwin:1792371533:794072",
+      "automation": false
+    },
+    {
+      "pid": 40182,
+      "label": "com.apple.accountsd",
+      "incarnation": "darwin:1792371501:628469",
+      "automation": false
+    },
+    {
+      "pid": 40535,
+      "label": "com.apple.cdpd",
+      "incarnation": "darwin:1792371505:869205",
+      "automation": false
+    },
+    {
+      "pid": 40184,
+      "label": "com.apple.routined",
+      "incarnation": "darwin:1792371501:628849",
+      "automation": false
+    },
+    {
+      "pid": 40495,
+      "label": "com.apple.siriactionsd",
+      "incarnation": "darwin:1792371504:460312",
+      "automation": false
+    },
+    {
+      "pid": 41617,
+      "label": "com.apple.FileCoordination",
+      "incarnation": "darwin:1792371524:575775",
+      "automation": false
+    },
+    {
+      "pid": 41526,
+      "label": "com.apple.healthappd",
+      "incarnation": "darwin:1792371520:731074",
+      "automation": false
+    },
+    {
+      "pid": 40463,
+      "label": "com.apple.pasteboard.pasted",
+      "incarnation": "darwin:1792371503:515244",
+      "automation": false
+    },
+    {
+      "pid": 41506,
+      "label": "com.apple.videosubscriptionsd",
+      "incarnation": "darwin:1792371520:672949",
+      "automation": false
+    },
+    {
+      "pid": 41659,
+      "label": "com.apple.FileProvider",
+      "incarnation": "darwin:1792371526:299542",
+      "automation": false
+    },
+    {
+      "pid": 40191,
+      "label": "com.apple.mobiletimerd",
+      "incarnation": "darwin:1792371501:630320",
+      "automation": false
+    },
+    {
+      "pid": 40644,
+      "label": "com.apple.featureaccessd",
+      "incarnation": "darwin:1792371509:204287",
+      "automation": false
+    },
+    {
+      "pid": 40857,
+      "label": "com.apple.siriknowledged",
+      "incarnation": "darwin:1792371510:803494",
+      "automation": false
+    },
+    {
+      "pid": 40198,
+      "label": "com.apple.sharingd",
+      "incarnation": "darwin:1792371501:631974",
+      "automation": false
+    },
+    {
+      "pid": 40523,
+      "label": "com.apple.trustd",
+      "incarnation": "darwin:1792371505:526719",
+      "automation": false
+    },
+    {
+      "pid": 40536,
+      "label": "com.apple.familycircled",
+      "incarnation": "darwin:1792371505:877130",
+      "automation": false
+    },
+    {
+      "pid": 40621,
+      "label": "com.apple.assistant_cdmd",
+      "incarnation": "darwin:1792371508:725870",
+      "automation": false
+    },
+    {
+      "pid": 41373,
+      "label": "com.apple.photoanalysisd",
+      "incarnation": "darwin:1792371518:803811",
+      "automation": false
+    },
+    {
+      "pid": 40204,
+      "label": "com.apple.distnoted.xpc.daemon",
+      "incarnation": "darwin:1792371501:635498",
+      "automation": false
+    },
+    {
+      "pid": 41044,
+      "label": "com.apple.suggestd",
+      "incarnation": "darwin:1792371514:878235",
+      "automation": false
+    },
+    {
+      "pid": 40207,
+      "label": "com.apple.navd",
+      "incarnation": "darwin:1792371501:636777",
+      "automation": false
+    },
+    {
+      "pid": 40612,
+      "label": "com.apple.purplebuddy.budd",
+      "incarnation": "darwin:1792371508:513466",
+      "automation": false
+    },
+    {
+      "pid": 40209,
+      "label": "com.apple.revisiond",
+      "incarnation": "darwin:1792371501:637180",
+      "automation": false
+    },
+    {
+      "pid": 40211,
+      "label": "com.apple.amsaccountsd",
+      "incarnation": "darwin:1792371501:637707",
+      "automation": false
+    },
+    {
+      "pid": 41527,
+      "label": "com.apple.Maps.mapssyncd",
+      "incarnation": "darwin:1792371520:738008",
+      "automation": false
+    },
+    {
+      "pid": 40293,
+      "label": "com.apple.cfprefsd.xpc.daemon",
+      "incarnation": "darwin:1792371502:941012",
+      "automation": false
+    },
+    {
+      "pid": 40509,
+      "label": "com.apple.usernotificationsd",
+      "incarnation": "darwin:1792371504:916367",
+      "automation": false
+    },
+    {
+      "pid": 41514,
+      "label": "com.apple.FamilyControlsAgent",
+      "incarnation": "darwin:1792371520:725002",
+      "automation": false
+    },
+    {
+      "pid": 40178,
+      "label": "com.apple.assistantd",
+      "incarnation": "darwin:1792371501:627596",
+      "automation": false
+    },
+    {
+      "pid": 40615,
+      "label": "com.apple.siriinferenced",
+      "incarnation": "darwin:1792371508:571658",
+      "automation": false
+    },
+    {
+      "pid": 40622,
+      "label": "com.apple.financed",
+      "incarnation": "darwin:1792371508:777184",
+      "automation": false
+    },
+    {
+      "pid": 41871,
+      "label": "com.apple.mediaanalysisd",
+      "incarnation": "darwin:1792371530:259268",
+      "automation": false
+    },
+    {
+      "pid": 41662,
+      "label": "com.apple.dt.automationmode-writer",
+      "incarnation": "darwin:1792371526:639384",
+      "automation": false
+    },
+    {
+      "pid": 41637,
+      "label": "com.apple.testmanagerd",
+      "incarnation": "darwin:1792371526:889",
+      "automation": false
+    },
+    {
+      "pid": 41675,
+      "label": "com.apple.dt.AutomationModeUI",
+      "incarnation": "darwin:1792371527:82405",
+      "automation": false
+    },
+    {
+      "pid": 41468,
+      "label": "com.apple.biomesyncd",
+      "incarnation": "darwin:1792371519:710526",
+      "automation": false
+    },
+    {
+      "pid": 40640,
+      "label": "com.apple.UsageTrackingAgent",
+      "incarnation": "darwin:1792371508:993026",
+      "automation": false
+    },
+    {
+      "pid": 40643,
+      "label": "com.apple.email.maild",
+      "incarnation": "darwin:1792371509:174503",
+      "automation": false
+    },
+    {
+      "pid": 40464,
+      "label": "com.apple.donotdisturbd",
+      "incarnation": "darwin:1792371503:576239",
+      "automation": false
+    },
+    {
+      "pid": 41510,
+      "label": "com.apple.coreidvd",
+      "incarnation": "darwin:1792371520:689534",
+      "automation": false
+    },
+    {
+      "pid": 40583,
+      "label": "com.apple.gamed",
+      "incarnation": "darwin:1792371507:495417",
+      "automation": false
+    },
+    {
+      "pid": 40507,
+      "label": "com.apple.AccessibilityUIServer",
+      "incarnation": "darwin:1792371504:796580",
+      "automation": false
+    },
+    {
+      "pid": 41578,
+      "label": "com.apple.communicationtrustd",
+      "incarnation": "darwin:1792371523:18327",
+      "automation": false
+    },
+    {
+      "pid": 41579,
+      "label": "com.apple.icloudmailagent",
+      "incarnation": "darwin:1792371523:173887",
+      "automation": false
+    },
+    {
+      "pid": 41633,
+      "label": "UIKitApplication:com.facebook.WebDriverAgentRunner.xctrunner[0c17][rb-legacy]",
+      "incarnation": "darwin:1792371525:325909",
+      "automation": true
+    },
+    {
+      "pid": 40205,
+      "label": "com.apple.passd",
+      "incarnation": "darwin:1792371501:636313",
+      "automation": false
+    },
+    {
+      "pid": 41923,
+      "label": "UIKitApplication:dev.jevbridge.diagnostic[d3b0][rb-legacy]",
+      "incarnation": "darwin:1792371532:668684",
+      "automation": false
+    },
+    {
+      "pid": 41544,
+      "label": "com.apple.nanotimekitcompaniond",
+      "incarnation": "darwin:1792371521:707417",
+      "automation": false
+    },
+    {
+      "pid": 41045,
+      "label": "com.apple.sociallayerd",
+      "incarnation": "darwin:1792371514:883229",
+      "automation": false
+    },
+    {
+      "pid": 40638,
+      "label": "com.apple.deviceaccessd",
+      "incarnation": "darwin:1792371508:898544",
+      "automation": false
+    },
+    {
+      "pid": 40212,
+      "label": "com.apple.configd_sim",
+      "incarnation": "darwin:1792371501:639277",
+      "automation": false
+    },
+    {
+      "pid": 40520,
+      "label": "com.apple.syncdefaultsd",
+      "incarnation": "darwin:1792371505:49967",
+      "automation": false
+    },
+    {
+      "pid": 40522,
+      "label": "com.apple.chronod",
+      "incarnation": "darwin:1792371505:396452",
+      "automation": false
+    },
+    {
+      "pid": 40781,
+      "label": "com.apple.corespeechd",
+      "incarnation": "darwin:1792371509:730474",
+      "automation": false
+    },
+    {
+      "pid": 41463,
+      "label": "com.apple.geoanalyticsd",
+      "incarnation": "darwin:1792371519:375406",
+      "automation": false
+    },
+    {
+      "pid": 40564,
+      "label": "com.apple.itunescloudd",
+      "incarnation": "darwin:1792371507:232639",
+      "automation": false
+    },
+    {
+      "pid": 41621,
+      "label": "com.apple.fitcore",
+      "incarnation": "darwin:1792371524:778961",
+      "automation": false
+    },
+    {
+      "pid": 40563,
+      "label": "com.apple.mobileassetd",
+      "incarnation": "darwin:1792371507:29473",
+      "automation": false
+    },
+    {
+      "pid": 41529,
+      "label": "com.apple.privacyaccountingd",
+      "incarnation": "darwin:1792371520:758570",
+      "automation": false
+    },
+    {
+      "pid": 40565,
+      "label": "com.apple.amsengagementd",
+      "incarnation": "darwin:1792371507:257864",
+      "automation": false
+    },
+    {
+      "pid": 40568,
+      "label": "com.apple.linkd",
+      "incarnation": "darwin:1792371507:352738",
+      "automation": false
+    },
+    {
+      "pid": 40567,
+      "label": "com.apple.managedconfiguration.profiled",
+      "incarnation": "darwin:1792371507:282385",
+      "automation": false
+    },
+    {
+      "pid": 41885,
+      "label": "com.apple.spotlightknowledged.updater",
+      "incarnation": "darwin:1792371530:798496",
+      "automation": false
+    },
+    {
+      "pid": 40855,
+      "label": "com.apple.sirittsd",
+      "incarnation": "darwin:1792371510:787766",
+      "automation": false
+    },
+    {
+      "pid": 41279,
+      "label": "com.apple.installcoordinationd",
+      "incarnation": "darwin:1792371516:745411",
+      "automation": false
+    },
+    {
+      "pid": 40460,
+      "label": "com.apple.eligibilityd",
+      "incarnation": "darwin:1792371503:419630",
+      "automation": false
+    },
+    {
+      "pid": 40782,
+      "label": "com.apple.calaccessd",
+      "incarnation": "darwin:1792371509:730945",
+      "automation": false
+    },
+    {
+      "pid": 41077,
+      "label": "com.apple.appstored",
+      "incarnation": "darwin:1792371515:693471",
+      "automation": false
+    },
+    {
+      "pid": 40446,
+      "label": "com.apple.apsd",
+      "incarnation": "darwin:1792371503:258602",
+      "automation": false
+    },
+    {
+      "pid": 40508,
+      "label": "com.apple.contactsd",
+      "incarnation": "darwin:1792371504:894401",
+      "automation": false
+    },
+    {
+      "pid": 41886,
+      "label": "com.apple.fitnessintelligenced",
+      "incarnation": "darwin:1792371531:43847",
+      "automation": false
+    },
+    {
+      "pid": 41512,
+      "label": "com.apple.swcd",
+      "incarnation": "darwin:1792371520:706639",
+      "automation": false
+    },
+    {
+      "pid": 40466,
+      "label": "com.apple.GameController.gamecontrollerd",
+      "incarnation": "darwin:1792371503:843453",
+      "automation": false
+    },
+    {
+      "pid": 41507,
+      "label": "com.apple.backgroundassets.user",
+      "incarnation": "darwin:1792371520:675076",
+      "automation": false
+    },
+    {
+      "pid": 40202,
+      "label": "com.apple.dasd",
+      "incarnation": "darwin:1792371501:633646",
+      "automation": false
+    },
+    {
+      "pid": 40203,
+      "label": "com.apple.sleepd",
+      "incarnation": "darwin:1792371501:633856",
+      "automation": false
+    },
+    {
+      "pid": 41511,
+      "label": "com.apple.ClipServices.clipserviced",
+      "incarnation": "darwin:1792371520:700435",
+      "automation": false
+    },
+    {
+      "pid": 40493,
+      "label": "com.apple.systemstatusd",
+      "incarnation": "darwin:1792371504:408071",
+      "automation": false
+    },
+    {
+      "pid": 40494,
+      "label": "com.apple.geod",
+      "incarnation": "darwin:1792371504:451121",
+      "automation": false
+    }
+  ],
+  "wda": {
+    "container": "/Users/hugues_mini/Codes/AgentTools/jev-ios-bridge/.worktrees/feat/appium-mcp-migration/.scratch/appium-mcp-migration/runtime/devices/simulators/15013501-2535-42EB-A67F-45B015DF18F4/data/Containers/Bundle/Application/36312EF9-CF3A-442C-B5BE-CBEFE2660213/WebDriverAgentRunner-Runner.app",
+    "packageVersion": "16.14.2",
+    "files": [
+      {
+        "path": "AppIcon60x60@2x.png",
+        "sha256": "6f9bcb5f1619d68d5f9e583fbcb01926aed94e385f377cb7601ec81753b31344",
+        "matchesSelected": true
+      },
+      {
+        "path": "AppIcon76x76@2x~ipad.png",
+        "sha256": "e5e9bb002e740d233cf9c8901db612e6835ee2ba83520e30ff0782d79d8265a2",
+        "matchesSelected": true
+      },
+      {
+        "path": "Assets.car",
+        "sha256": "9ea252e306cb3008bd641b28d2d38994e58c0e1e54758009e705d6fbf9a45d36",
+        "matchesSelected": true
+      },
+      {
+        "path": "Frameworks/ResultDataPublisher.framework/Info.plist",
+        "sha256": "39d1fc3bdd405543dd5b689fff065b3001c316dc518459990c72a7675e8731d6",
+        "matchesSelected": true
+      },
+      {
+        "path": "Frameworks/ResultDataPublisher.framework/ResultDataPublisher",
+        "sha256": "b8e4be53756366ee4482a5b6d764fabf3f02b114108ab7254a5c54efd396ac8d",
+        "matchesSelected": true
+      },
+      {
+        "path": "Frameworks/ResultDataPublisher.framework/_CodeSignature/CodeResources",
+        "sha256": "e582e1c0b2cec61c6135e4123c34c49da28e9358b37c8f182a8054ccf8d5fb3d",
+        "matchesSelected": true
+      },
+      {
+        "path": "Frameworks/ResultDataPublisher.framework/version.plist",
+        "sha256": "21ee0f28da57411ec3d0d1fbb8af8006e37f66e514513a1c032f3d9280b1d53b",
+        "matchesSelected": true
+      },
+      {
+        "path": "Frameworks/Testing.framework/Info.plist",
+        "sha256": "6d860c294e14a4b262c20afb942a7e54764bb724dd1b9cc1e8cb9f6939b65cee",
+        "matchesSelected": true
+      },
+      {
+        "path": "Frameworks/Testing.framework/Testing",
+        "sha256": "8cb0e54e1b505901db8062fe715ab1231e2e7903530533cd12b16307a7a02ed0",
+        "matchesSelected": true
+      },
+      {
+        "path": "Frameworks/Testing.framework/_CodeSignature/CodeResources",
+        "sha256": "d6fa23913694b92115a09db9f23ef698bc516aabbce3c4d3ea730f879476bcab",
+        "matchesSelected": true
+      },
+      {
+        "path": "Frameworks/Testing.framework/version.plist",
+        "sha256": "0d6de3b591bf52bced98bbec40dfd39e0094dbfbca453d4635cbdc546e590808",
+        "matchesSelected": true
+      },
+      {
+        "path": "Frameworks/XCTAutomationSupport.framework/Info.plist",
+        "sha256": "0123b43e14fa88d50afcf4bac2167185bb752803054a19303b9ca4a54ca6dd14",
+        "matchesSelected": true
+      },
+      {
+        "path": "Frameworks/XCTAutomationSupport.framework/XCTAutomationSupport",
+        "sha256": "ca1acd92e81257f890aa7b01558d0cc437238f0ba86e9d3716fda15450a0aa73",
+        "matchesSelected": true
+      },
+      {
+        "path": "Frameworks/XCTAutomationSupport.framework/_CodeSignature/CodeResources",
+        "sha256": "001e48f19dff6b97e6e27426c7ae15d822c0c89ed9cec5ace209d57b8fd1bd82",
+        "matchesSelected": true
+      },
+      {
+        "path": "Frameworks/XCTAutomationSupport.framework/version.plist",
+        "sha256": "66f83aaea343db256d632ab45c5aa2ab0dd02b7aa66852bc66d3840346dfafc8",
+        "matchesSelected": true
+      },
+      {
+        "path": "Frameworks/XCTest.framework/Info.plist",
+        "sha256": "749d225432acd85d93ff6ba7e7e3d3038520c470723a7010f6e91fafe9d92a64",
+        "matchesSelected": true
+      },
+      {
+        "path": "Frameworks/XCTest.framework/XCTest",
+        "sha256": "7bf6c2ae415e0a70958e4e2116ed9a97bf9557fdf403674d351b566d5be4f582",
+        "matchesSelected": true
+      },
+      {
+        "path": "Frameworks/XCTest.framework/_CodeSignature/CodeResources",
+        "sha256": "cb2bcb1fa9c62a5fdfd1d2d72ff68c9288d4597c043a066b90b8274fb26f6b18",
+        "matchesSelected": true
+      },
+      {
+        "path": "Frameworks/XCTest.framework/version.plist",
+        "sha256": "66f83aaea343db256d632ab45c5aa2ab0dd02b7aa66852bc66d3840346dfafc8",
+        "matchesSelected": true
+      },
+      {
+        "path": "Frameworks/XCTestCore.framework/Info.plist",
+        "sha256": "1a2bc5cd50573a95e7bf2026ab80fd95e98db8e011325d860c8ba1e3a4621879",
+        "matchesSelected": true
+      },
+      {
+        "path": "Frameworks/XCTestCore.framework/XCTestCore",
+        "sha256": "0ee85c9db43fcfffbad9d1f8cf4555fcbe62420685dd97bfbe1b7742c84d81ef",
+        "matchesSelected": true
+      },
+      {
+        "path": "Frameworks/XCTestCore.framework/_CodeSignature/CodeResources",
+        "sha256": "6b15e9b1b61580c7744e7ff602081acba51d51267822a715758c91024c2d28e2",
+        "matchesSelected": true
+      },
+      {
+        "path": "Frameworks/XCTestCore.framework/version.plist",
+        "sha256": "66f83aaea343db256d632ab45c5aa2ab0dd02b7aa66852bc66d3840346dfafc8",
+        "matchesSelected": true
+      },
+      {
+        "path": "Frameworks/XCTestSupport.framework/Info.plist",
+        "sha256": "420b018384f723d93be15c2279b738d70c122fa6887edfff12261c8c0bd52bf4",
+        "matchesSelected": true
+      },
+      {
+        "path": "Frameworks/XCTestSupport.framework/XCTestSupport",
+        "sha256": "f72c4f56556be625c4f61ec323991fca08ddf12bb30f310ad645b866b5b6135a",
+        "matchesSelected": true
+      },
+      {
+        "path": "Frameworks/XCTestSupport.framework/_CodeSignature/CodeResources",
+        "sha256": "c969f98acdf6c4bec6d01db873de356462d836a669496bad8ea82282f45e7434",
+        "matchesSelected": true
+      },
+      {
+        "path": "Frameworks/XCTestSupport.framework/version.plist",
+        "sha256": "66f83aaea343db256d632ab45c5aa2ab0dd02b7aa66852bc66d3840346dfafc8",
+        "matchesSelected": true
+      },
+      {
+        "path": "Frameworks/XCUIAutomation.framework/Info.plist",
+        "sha256": "933750f2d2354f2b8ee45f596a6fa6229ff85db24d007b7dfe6ae0c8844fbdee",
+        "matchesSelected": true
+      },
+      {
+        "path": "Frameworks/XCUIAutomation.framework/XCUIAutomation",
+        "sha256": "7a5f92eaf8028768ea58c32b1417bc94bf8fefb4900e17c752a31b1492cdd8d7",
+        "matchesSelected": true
+      },
+      {
+        "path": "Frameworks/XCUIAutomation.framework/_CodeSignature/CodeResources",
+        "sha256": "73bf85d7bb2bac9f0411b40ce49f877b7fd0061d06e658d71fe22b1c794ff426",
+        "matchesSelected": true
+      },
+      {
+        "path": "Frameworks/XCUIAutomation.framework/version.plist",
+        "sha256": "66f83aaea343db256d632ab45c5aa2ab0dd02b7aa66852bc66d3840346dfafc8",
+        "matchesSelected": true
+      },
+      {
+        "path": "Frameworks/_Testing_Foundation.framework/Info.plist",
+        "sha256": "ee1ceee1b8f093f36892e898e5cf6b7c025fc80a27f9f367a5a42ebe347c3203",
+        "matchesSelected": true
+      },
+      {
+        "path": "Frameworks/_Testing_Foundation.framework/_CodeSignature/CodeResources",
+        "sha256": "28ce3b5ac327b5b77c1921fc1fdbd1bbd5fc0bad2cb6b1d53ae7dcdfde24e4c6",
+        "matchesSelected": true
+      },
+      {
+        "path": "Frameworks/_Testing_Foundation.framework/_Testing_Foundation",
+        "sha256": "28783e77a11c3d22bba1847c01098d2665a81018805a80a424c7f32d4e9cd54a",
+        "matchesSelected": true
+      },
+      {
+        "path": "Frameworks/_Testing_Foundation.framework/version.plist",
+        "sha256": "0d6de3b591bf52bced98bbec40dfd39e0094dbfbca453d4635cbdc546e590808",
+        "matchesSelected": true
+      },
+      {
+        "path": "Frameworks/libXCTestSwiftSupport.dylib",
+        "sha256": "f2292a327bdd324f709d316f0df07dbb92502fed14e42e7c841a4ff38db3ff06",
+        "matchesSelected": true
+      },
+      {
+        "path": "Frameworks/lib_TestingInterop.dylib",
+        "sha256": "50fc777fe5e3d726ca26d96aa125a50059643268c59403d3b0dfbd4f7198e9a9",
+        "matchesSelected": true
+      },
+      {
+        "path": "Info.plist",
+        "sha256": "5fcf23256b261c0462ddb0a0689ca611efa708c07b337a90c64298728ad9a79b",
+        "matchesSelected": true
+      },
+      {
+        "path": "PkgInfo",
+        "sha256": "82502191c9484b04d685374f9879a0066069c49b8acae7a04b01d38d07e8eca0",
+        "matchesSelected": true
+      },
+      {
+        "path": "PlugIns/WebDriverAgentRunner.xctest/AppIcon60x60@2x.png",
+        "sha256": "6f9bcb5f1619d68d5f9e583fbcb01926aed94e385f377cb7601ec81753b31344",
+        "matchesSelected": true
+      },
+      {
+        "path": "PlugIns/WebDriverAgentRunner.xctest/AppIcon76x76@2x~ipad.png",
+        "sha256": "e5e9bb002e740d233cf9c8901db612e6835ee2ba83520e30ff0782d79d8265a2",
+        "matchesSelected": true
+      },
+      {
+        "path": "PlugIns/WebDriverAgentRunner.xctest/Assets.car",
+        "sha256": "9ea252e306cb3008bd641b28d2d38994e58c0e1e54758009e705d6fbf9a45d36",
+        "matchesSelected": true
+      },
+      {
+        "path": "PlugIns/WebDriverAgentRunner.xctest/Frameworks/WebDriverAgentLib.framework/Info.plist",
+        "sha256": "4bde7787d39be186e2ad53791b49e696c5f6c9e42696a441066634c64a359645",
+        "matchesSelected": true
+      },
+      {
+        "path": "PlugIns/WebDriverAgentRunner.xctest/Frameworks/WebDriverAgentLib.framework/WebDriverAgentLib",
+        "sha256": "e76be83777577e659a0855c0be912541ab06d75b7a3010f435e52ee05332a69b",
+        "matchesSelected": true
+      },
+      {
+        "path": "PlugIns/WebDriverAgentRunner.xctest/Info.plist",
+        "sha256": "6187dffbb660ec81f99de1ea4d11ec84d282e24b2cb54e483003fbfabdbb5069",
+        "matchesSelected": true
+      },
+      {
+        "path": "PlugIns/WebDriverAgentRunner.xctest/WebDriverAgentRunner",
+        "sha256": "3bdfade53dd39c780374c2094505f507285f5c43dabcc1e6ba4ccdd2c7146bc6",
+        "matchesSelected": true
+      },
+      {
+        "path": "WebDriverAgentRunner-Runner",
+        "sha256": "28fcfad44cbcdd2d5843919131a11f1b18d81b4c9709cc92523184926f2ded28",
+        "matchesSelected": true
+      }
+    ]
+  },
+  "driverConstructor": "XCUITestDriver",
+  "sessionId": "f568703e-774d-4451-a5a2-dd5e15c6b98b",
+  "ownership": "owned"
+}

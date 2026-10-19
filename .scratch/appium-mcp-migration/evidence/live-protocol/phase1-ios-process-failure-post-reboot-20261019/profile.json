@@ -1,0 +1,20 @@
+{
+  "platform": "ios",
+  "caps": {
+    "platformName": "iOS",
+    "appium:automationName": "XCUITest",
+    "appium:udid": "15013501-2535-42EB-A67F-45B015DF18F4",
+    "appium:simulatorDevicesSetPath": "/Users/hugues_mini/Codes/AgentTools/jev-ios-bridge/.worktrees/feat/appium-mcp-migration/.scratch/appium-mcp-migration/runtime/devices/simulators",
+    "appium:bundleId": "dev.jevbridge.diagnostic",
+    "appium:usePreinstalledWDA": true,
+    "appium:prebuiltWDAPath": "/Users/hugues_mini/Codes/AgentTools/jev-ios-bridge/.worktrees/feat/appium-mcp-migration/.scratch/appium-mcp-migration/runtime/wda-16.14.2/Build/Products/Debug-iphonesimulator/WebDriverAgentRunner-Runner.app",
+    "appium:wdaLocalPort": 18100,
+    "appium:wdaLaunchTimeout": 120000,
+    "appium:mjpegServerPort": 18101,
+    "appium:shutdownOtherSimulators": false,
+    "appium:noReset": true,
+    "appium:shouldTerminateApp": true,
+    "appium:settings[pageSourceExcludedAttributes]": ""
+  },
+  "faultMode": "process-failure"
+}

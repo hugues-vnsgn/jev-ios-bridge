@@ -1,0 +1,87 @@
+{
+  "version": 2,
+  "mode": "snapshot",
+  "scanCount": 1,
+  "readOnly": true,
+  "inspectionComplete": true,
+  "sharedServicesStopped": false,
+  "verified": true,
+  "quarantined": false,
+  "candidates": [
+    {
+      "pid": 75117,
+      "ppid": 70432,
+      "pgid": 75117,
+      "state": "Ss",
+      "sid": 75117,
+      "markerState": "present",
+      "incarnation": "darwin:1792338102:798694",
+      "active": true,
+      "runMarker": "0b5fbf41e8b84be09d73bb152e066e32",
+      "launchChain": [
+        {
+          "pid": 75117,
+          "incarnation": "darwin:1792338102:798694"
+        }
+      ],
+      "owned": true,
+      "excludedSharedService": false,
+      "ownerPid": 75117,
+      "ownerIncarnation": "darwin:1792338102:798694",
+      "reason": null
+    },
+    {
+      "pid": 75630,
+      "ppid": 75117,
+      "pgid": 75117,
+      "state": "S",
+      "sid": 75117,
+      "markerState": "present",
+      "incarnation": "darwin:1792338107:300105",
+      "active": true,
+      "runMarker": "0b5fbf41e8b84be09d73bb152e066e32",
+      "launchChain": [
+        {
+          "pid": 75117,
+          "incarnation": "darwin:1792338102:798694"
+        },
+        {
+          "pid": 75630,
+          "incarnation": "darwin:1792338107:300105"
+        }
+      ],
+      "owned": true,
+      "excludedSharedService": false,
+      "ownerPid": 75117,
+      "ownerIncarnation": "darwin:1792338102:798694",
+      "reason": null
+    },
+    {
+      "pid": 75818,
+      "ppid": 75117,
+      "pgid": 75117,
+      "state": "S",
+      "sid": 75117,
+      "markerState": "present",
+      "incarnation": "darwin:1792338109:416523",
+      "active": true,
+      "runMarker": "0b5fbf41e8b84be09d73bb152e066e32",
+      "launchChain": [
+        {
+          "pid": 75117,
+          "incarnation": "darwin:1792338102:798694"
+        },
+        {
+          "pid": 75818,
+          "incarnation": "darwin:1792338109:416523"
+        }
+      ],
+      "owned": true,
+      "excludedSharedService": false,
+      "ownerPid": 75117,
+      "ownerIncarnation": "darwin:1792338102:798694",
+      "reason": null
+    }
+  ],
+  "unverifiedComponents": []
+}

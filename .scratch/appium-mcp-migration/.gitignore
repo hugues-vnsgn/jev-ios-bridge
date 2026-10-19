@@ -2,3 +2,8 @@
 /runtime/
 /evidence/installed-proof/
 /evidence/*.log
+/evidence/fault-*/vendor.log
+/evidence/stop-recovery/**/*.sqlite*
+/candidate-stack/experiments/__pycache__/
+
+/evidence/live-protocol/**/*.sqlite*

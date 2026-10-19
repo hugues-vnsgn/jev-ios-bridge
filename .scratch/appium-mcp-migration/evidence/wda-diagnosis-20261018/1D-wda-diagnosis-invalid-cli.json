@@ -1,0 +1,119 @@
+{
+  "kind": "bounded-preinstalled-wda-diagnosis",
+  "device": "15013501-2535-42EB-A67F-45B015DF18F4",
+  "set": "/Users/hugues_mini/Codes/AgentTools/jev-ios-bridge/.worktrees/feat/appium-mcp-migration/.scratch/appium-mcp-migration/runtime/devices/simulators",
+  "commands": [
+    {
+      "argv": [
+        "xcrun",
+        "simctl",
+        "--set",
+        "/Users/hugues_mini/Codes/AgentTools/jev-ios-bridge/.worktrees/feat/appium-mcp-migration/.scratch/appium-mcp-migration/runtime/devices/simulators",
+        "list",
+        "devices",
+        "-j"
+      ],
+      "environmentOverrides": {},
+      "exitCode": 0,
+      "stdout": "{\n  \"devices\" : {\n    \"com.apple.CoreSimulator.SimRuntime.iOS-27-0\" : [\n\n    ],\n    \"com.apple.CoreSimulator.SimRuntime.iOS-26-5\" : [\n      {\n        \"dataPath\" : \"\\/Users\\/hugues_mini\\/Codes\\/AgentTools\\/jev-ios-bridge\\/.worktrees\\/feat\\/appium-mcp-migration\\/.scratch\\/appium-mcp-migration\\/runtime\\/devices\\/simulators\\/15013501-2535-42EB-A67F-45B015DF18F4\\/data\",\n        \"dataPathSize\" : 1610481664,\n        \"logPath\" : \"\\/Users\\/hugues_mini\\/Library\\/Logs\\/CoreSimulator\\/15013501-2535-42EB-A67F-45B015DF18F4\",\n        \"udid\" : \"15013501-2535-42EB-A67F-45B015DF18F4\",\n        \"lastUsedAt\" : \"2026-10-18T15:23:59Z\",\n        \"isAvailable\" : true,\n        \"logPathSize\" : 307200,\n        \"deviceTypeIdentifier\" : \"com.apple.CoreSimulator.SimDeviceType.iPhone-17\",\n        \"state\" : \"Shutdown\",\n        \"name\" : \"jev-appium-phase1-20261018\"\n      }\n    ]\n  }\n}\n",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "xcrun",
+        "simctl",
+        "--set",
+        "/Users/hugues_mini/Codes/AgentTools/jev-ios-bridge/.worktrees/feat/appium-mcp-migration/.scratch/appium-mcp-migration/runtime/devices/simulators",
+        "boot",
+        "15013501-2535-42EB-A67F-45B015DF18F4"
+      ],
+      "environmentOverrides": {},
+      "exitCode": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "xcrun",
+        "simctl",
+        "--set",
+        "/Users/hugues_mini/Codes/AgentTools/jev-ios-bridge/.worktrees/feat/appium-mcp-migration/.scratch/appium-mcp-migration/runtime/devices/simulators",
+        "bootstatus",
+        "15013501-2535-42EB-A67F-45B015DF18F4",
+        "-b"
+      ],
+      "environmentOverrides": {},
+      "exitCode": 0,
+      "stdout": "Monitoring boot status for jev-appium-phase1-20261018 (15013501-2535-42EB-A67F-45B015DF18F4).\n[2026-10-18 15:32:39 +0000] Status=1, isTerminal=NO, Elapsed=00:03.\n\tWaiting on BackBoard\n\n[2026-10-18 15:32:41 +0000] Status=4, isTerminal=NO, Elapsed=00:05.\n\tWaiting on System App\n\n[2026-10-18 15:32:41 +0000] Status=4, isTerminal=NO, Elapsed=00:05.\n\tWaiting on System App\n\n[2026-10-18 15:32:42 +0000] Status=4, isTerminal=NO, Elapsed=00:06.\n\tWaiting on System App\n\n[2026-10-18 15:32:43 +0000] Status=4, isTerminal=NO, Elapsed=00:08.\n\tWaiting on System App\n\n[2026-10-18 15:32:44 +0000] Status=4, isTerminal=NO, Elapsed=00:08.\n\tWaiting on System App\n\n[2026-10-18 15:32:45 +0000] Status=4, isTerminal=NO, Elapsed=00:09.\n\tWaiting on System App\n\n[2026-10-18 15:32:46 +0000] Status=4, isTerminal=NO, Elapsed=00:10.\n\tWaiting on System App\n\n[2026-10-18 15:32:47 +0000] Status=4294967295, isTerminal=YES, Elapsed=00:11.\n\tFinished\n\n",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "xcrun",
+        "simctl",
+        "--set",
+        "/Users/hugues_mini/Codes/AgentTools/jev-ios-bridge/.worktrees/feat/appium-mcp-migration/.scratch/appium-mcp-migration/runtime/devices/simulators",
+        "get_app_container",
+        "15013501-2535-42EB-A67F-45B015DF18F4",
+        "com.facebook.WebDriverAgentRunner.xctrunner",
+        "app"
+      ],
+      "environmentOverrides": {},
+      "exitCode": 0,
+      "stdout": "/Users/hugues_mini/Codes/AgentTools/jev-ios-bridge/.worktrees/feat/appium-mcp-migration/.scratch/appium-mcp-migration/runtime/devices/simulators/15013501-2535-42EB-A67F-45B015DF18F4/data/Containers/Bundle/Application/F8FB225F-14A4-4420-9B01-33CA3BE3AD8F/WebDriverAgentRunner-Runner.app\n",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "xcrun",
+        "simctl",
+        "--set",
+        "/Users/hugues_mini/Codes/AgentTools/jev-ios-bridge/.worktrees/feat/appium-mcp-migration/.scratch/appium-mcp-migration/runtime/devices/simulators",
+        "launch",
+        "--terminate-running-process",
+        "--activate-suspended",
+        "15013501-2535-42EB-A67F-45B015DF18F4",
+        "com.facebook.WebDriverAgentRunner.xctrunner"
+      ],
+      "environmentOverrides": {
+        "SIMCTL_CHILD_USE_PORT": "18100",
+        "SIMCTL_CHILD_MJPEG_SERVER_PORT": "18101",
+        "SIMCTL_CHILD_WDA_PRODUCT_BUNDLE_IDENTIFIER": "com.facebook.WebDriverAgentRunner.xctrunner"
+      },
+      "exitCode": 148,
+      "stdout": "",
+      "stderr": "Invalid device: --activate-suspended\n"
+    },
+    {
+      "argv": [
+        "xcrun",
+        "simctl",
+        "--set",
+        "/Users/hugues_mini/Codes/AgentTools/jev-ios-bridge/.worktrees/feat/appium-mcp-migration/.scratch/appium-mcp-migration/runtime/devices/simulators",
+        "terminate",
+        "15013501-2535-42EB-A67F-45B015DF18F4",
+        "com.facebook.WebDriverAgentRunner.xctrunner"
+      ],
+      "environmentOverrides": {},
+      "exitCode": 3,
+      "stdout": "",
+      "stderr": "An error was encountered processing the command (domain=NSPOSIXErrorDomain, code=3):\nSimulator device failed to terminate com.facebook.WebDriverAgentRunner.xctrunner.\nfound nothing to terminate\nUnderlying error (domain=NSPOSIXErrorDomain, code=3):\n\tThe request to terminate \"com.facebook.WebDriverAgentRunner.xctrunner\" failed. found nothing to terminate\n\tfound nothing to terminate\n"
+    },
+    {
+      "argv": [
+        "xcrun",
+        "simctl",
+        "--set",
+        "/Users/hugues_mini/Codes/AgentTools/jev-ios-bridge/.worktrees/feat/appium-mcp-migration/.scratch/appium-mcp-migration/runtime/devices/simulators",
+        "shutdown",
+        "15013501-2535-42EB-A67F-45B015DF18F4"
+      ],
+      "environmentOverrides": {},
+      "exitCode": 0,
+      "stdout": "",
+      "stderr": ""
+    }
+  ],
+  "portSamples": [],
+  "privateSimulatorShutdown": true
+}

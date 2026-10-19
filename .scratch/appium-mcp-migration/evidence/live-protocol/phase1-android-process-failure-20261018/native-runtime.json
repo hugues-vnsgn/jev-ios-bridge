@@ -1,0 +1,215 @@
+{
+  "version": 1,
+  "platform": "android",
+  "readOnly": true,
+  "commands": [
+    {
+      "args": [
+        "adb",
+        "-s",
+        "emulator-5570",
+        "emu",
+        "avd",
+        "name"
+      ],
+      "exitCode": 0
+    },
+    {
+      "args": [
+        "adb",
+        "-s",
+        "emulator-5570",
+        "shell",
+        "cat",
+        "/proc/sys/kernel/random/boot_id"
+      ],
+      "exitCode": 0
+    },
+    {
+      "args": [
+        "adb",
+        "-s",
+        "emulator-5570",
+        "shell",
+        "getprop",
+        "ro.product.cpu.abi"
+      ],
+      "exitCode": 0
+    },
+    {
+      "args": [
+        "adb",
+        "-s",
+        "emulator-5570",
+        "shell",
+        "ps",
+        "-A",
+        "-o",
+        "PID,NAME"
+      ],
+      "exitCode": 0
+    },
+    {
+      "args": [
+        "adb",
+        "-s",
+        "emulator-5570",
+        "shell",
+        "cat",
+        "/proc/2436/stat"
+      ],
+      "exitCode": 0
+    },
+    {
+      "args": [
+        "adb",
+        "-s",
+        "emulator-5570",
+        "shell",
+        "cat",
+        "/proc/3111/stat"
+      ],
+      "exitCode": 0
+    },
+    {
+      "args": [
+        "adb",
+        "-s",
+        "emulator-5570",
+        "shell",
+        "pm",
+        "path",
+        "io.appium.uiautomator2.server"
+      ],
+      "exitCode": 0
+    },
+    {
+      "args": [
+        "adb",
+        "-s",
+        "emulator-5570",
+        "exec-out",
+        "cat",
+        "/data/app/~~YrYhh9b3If5q5KYPBqsDCw==/io.appium.uiautomator2.server-mng9zH1EuHD2LLBTTcIRPA==/base.apk"
+      ],
+      "exitCode": 0
+    },
+    {
+      "args": [
+        "adb",
+        "-s",
+        "emulator-5570",
+        "shell",
+        "pm",
+        "path",
+        "io.appium.uiautomator2.server.test"
+      ],
+      "exitCode": 0
+    },
+    {
+      "args": [
+        "adb",
+        "-s",
+        "emulator-5570",
+        "exec-out",
+        "cat",
+        "/data/app/~~EoDEL2NvTdohHwa063HhhA==/io.appium.uiautomator2.server.test-LsLtFhW_fHHUH0UatkKxYg==/base.apk"
+      ],
+      "exitCode": 0
+    },
+    {
+      "args": [
+        "adb",
+        "-s",
+        "emulator-5570",
+        "shell",
+        "pm",
+        "path",
+        "io.appium.settings"
+      ],
+      "exitCode": 0
+    },
+    {
+      "args": [
+        "adb",
+        "-s",
+        "emulator-5570",
+        "exec-out",
+        "cat",
+        "/data/app/~~TLuSI8Yjdea49KRZFw_65g==/io.appium.settings-Z2Fd16VSoF9KdZWjeK0cLg==/base.apk"
+      ],
+      "exitCode": 0
+    },
+    {
+      "args": [
+        "adb",
+        "-s",
+        "emulator-5570",
+        "shell",
+        "dumpsys",
+        "input"
+      ],
+      "exitCode": 0
+    }
+  ],
+  "device": {
+    "avd": "jev_appium_phase1_20261018",
+    "serial": "emulator-5570",
+    "bootId": "5beb4d56-be45-4332-99f5-ee1a825bd836",
+    "abi": "arm64-v8a"
+  },
+  "processes": [
+    {
+      "pid": 2436,
+      "name": "io.appium.settings",
+      "startTicks": "2515"
+    },
+    {
+      "pid": 3111,
+      "name": "io.appium.uiautomator2.server",
+      "startTicks": "3000"
+    }
+  ],
+  "packages": [
+    {
+      "package": "io.appium.uiautomator2.server",
+      "installedPath": "/data/app/~~YrYhh9b3If5q5KYPBqsDCw==/io.appium.uiautomator2.server-mng9zH1EuHD2LLBTTcIRPA==/base.apk",
+      "sha256": "8ff760a2a86b487f53090fbdcd5b0360e67d02bb811887d527a9557b0d59c80d",
+      "bytes": 17968807,
+      "selectedArtifact": {
+        "package": "io.appium.uiautomator2.server",
+        "path": "/Users/hugues_mini/Codes/AgentTools/jev-ios-bridge/.worktrees/feat/appium-mcp-migration/.scratch/appium-mcp-migration/candidate-stack/node_modules/appium-uiautomator2-driver/node_modules/appium-uiautomator2-server/apks/appium-uiautomator2-server-v10.6.6.apk",
+        "sha256": "8ff760a2a86b487f53090fbdcd5b0360e67d02bb811887d527a9557b0d59c80d"
+      }
+    },
+    {
+      "package": "io.appium.uiautomator2.server.test",
+      "installedPath": "/data/app/~~EoDEL2NvTdohHwa063HhhA==/io.appium.uiautomator2.server.test-LsLtFhW_fHHUH0UatkKxYg==/base.apk",
+      "sha256": "e6f729287d72351388fd66597c35b69988b9091a7011954bf92a55d416cb1e1c",
+      "bytes": 197183,
+      "selectedArtifact": {
+        "package": "io.appium.uiautomator2.server.test",
+        "path": "/Users/hugues_mini/Codes/AgentTools/jev-ios-bridge/.worktrees/feat/appium-mcp-migration/.scratch/appium-mcp-migration/candidate-stack/node_modules/appium-uiautomator2-driver/node_modules/appium-uiautomator2-server/apks/appium-uiautomator2-server-debug-androidTest.apk",
+        "sha256": "e6f729287d72351388fd66597c35b69988b9091a7011954bf92a55d416cb1e1c"
+      }
+    },
+    {
+      "package": "io.appium.settings",
+      "installedPath": "/data/app/~~TLuSI8Yjdea49KRZFw_65g==/io.appium.settings-Z2Fd16VSoF9KdZWjeK0cLg==/base.apk",
+      "sha256": "bcfc5e6c2547d83beb3202c43c54cd0a0d3fe48511c87e43585db214259e11f8",
+      "bytes": 3076274,
+      "selectedArtifact": {
+        "package": "io.appium.settings",
+        "path": "/Users/hugues_mini/Codes/AgentTools/jev-ios-bridge/.worktrees/feat/appium-mcp-migration/.scratch/appium-mcp-migration/candidate-stack/node_modules/appium-uiautomator2-driver/node_modules/io.appium.settings/apks/settings_apk-debug.apk",
+        "sha256": "bcfc5e6c2547d83beb3202c43c54cd0a0d3fe48511c87e43585db214259e11f8"
+      }
+    }
+  ],
+  "inputStateSha256": "bda0dfc80c5757836bad491f6cdf4ca2f7e0d54417070041f7ad498676cbc84a",
+  "inputTouchSections": [
+    "  TouchStatesByDisplay: <no displays touched>"
+  ],
+  "driverConstructor": "AndroidUiautomator2Driver",
+  "sessionId": "154c8d2f-bc5d-4ce7-abd8-cfa256c2c2cf",
+  "ownership": "owned"
+}

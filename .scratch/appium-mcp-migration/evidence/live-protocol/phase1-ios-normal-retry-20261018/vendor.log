@@ -1,0 +1,327 @@
+WARN appium-mcp Policy denied tool registration: select_device (not_in_allowlist)
+WARN appium-mcp Policy denied tool registration: appium_mobile_device_control (not_in_allowlist)
+WARN appium-mcp Policy denied tool registration: appium_geolocation (not_in_allowlist)
+WARN appium-mcp Policy denied tool registration: appium_mobile_device_info (not_in_allowlist)
+WARN appium-mcp Policy denied tool registration: appium_mobile_file (not_in_allowlist)
+WARN appium-mcp Policy denied tool registration: appium_driver_settings (not_in_allowlist)
+WARN appium-mcp Policy denied tool registration: prepare_ios_simulator (not_in_allowlist)
+WARN appium-mcp Policy denied tool registration: appium_prepare_ios_real_device (not_in_allowlist)
+WARN appium-mcp Policy denied tool registration: appium_drag_and_drop (not_in_allowlist)
+WARN appium-mcp Policy denied tool registration: appium_perform_actions (not_in_allowlist)
+WARN appium-mcp Policy denied tool registration: appium_find_element (not_in_allowlist)
+WARN appium-mcp Policy denied tool registration: appium_mobile_press_key (not_in_allowlist)
+WARN appium-mcp Policy denied tool registration: appium_set_value (not_in_allowlist)
+WARN appium-mcp Policy denied tool registration: appium_mobile_keyboard (not_in_allowlist)
+WARN appium-mcp Policy denied tool registration: appium_get_text (not_in_allowlist)
+WARN appium-mcp Policy denied tool registration: appium_get_element_attribute (not_in_allowlist)
+WARN appium-mcp Policy denied tool registration: appium_mobile_clipboard (not_in_allowlist)
+WARN appium-mcp Policy denied tool registration: appium_get_active_element (not_in_allowlist)
+WARN appium-mcp Policy denied tool registration: appium_orientation (not_in_allowlist)
+WARN appium-mcp Policy denied tool registration: appium_alert (not_in_allowlist)
+WARN appium-mcp Policy denied tool registration: appium_get_window_size (not_in_allowlist)
+WARN appium-mcp Policy denied tool registration: appium_screen_recording (not_in_allowlist)
+WARN appium-mcp Policy denied tool registration: appium_app_lifecycle (not_in_allowlist)
+WARN appium-mcp Policy denied tool registration: appium_mobile_permissions (not_in_allowlist)
+WARN appium-mcp Policy denied tool registration: appium_context (not_in_allowlist)
+WARN appium-mcp Policy denied tool registration: generate_locators (not_in_allowlist)
+WARN appium-mcp Policy denied tool registration: appium_generate_tests (not_in_allowlist)
+info appium-mcp [TOOL START] appium_session_management {
+info appium-mcp   action: 'create',
+info appium-mcp   platform: 'ios',
+info appium-mcp   capabilities: '{"platformName":"iOS","appium:automationName":"XCUITest","appium:udid":"15013501-2535-42EB-A67F-45B015DF18F4","appium:simulatorDevicesSetPath":"/Users/hugues_mini/Codes/AgentTools/jev-ios-bridge/.worktrees/feat/appium-mcp-migration/.scratch/appium-mcp-migration/runtime/devices/simulators","appium:bundleId":"dev.jevbridge.diagnostic","appium:usePreinstalledWDA":true,"appium:prebuiltWDAPath":"/Users/hugues_mini/Codes/AgentTools/jev-ios-bridge/.worktrees/feat/appium-mcp-migration/.scratch/appium-mcp-migration/runtime/wda-16.14.2/Build/Products/Debug-iphonesimulator/WebDriverAgentRunner-Runner.app","appium:wdaLocalPort":18100,"appium:mjpegServerPort":18101,"appium:shutdownOtherSimulators":false,"appium:noReset":true,"appium:shouldTerminateApp":true,"appium:settings[pageSourceExcludedAttributes]":""}'
+info appium-mcp }
+dbug appium-mcp Selected device info: undefined
+dbug appium-mcp Platform version: undefined
+info appium-mcp Creating new IOS session with capabilities: {
+info appium-mcp   "platformName": "iOS",
+info appium-mcp   "appium:automationName": "XCUITest",
+info appium-mcp   "appium:deviceName": "iPhone Simulator",
+info appium-mcp   "appium:newCommandTimeout": 300,
+info appium-mcp   "appium:settings[animationCoolOffTimeout]": 0.5,
+info appium-mcp   "appium:settings[maxTypingFrequency]": 45,
+info appium-mcp   "appium:udid": "15013501-2535-42EB-A67F-45B015DF18F4",
+info appium-mcp   "appium:simulatorDevicesSetPath": "/Users/hugues_mini/Codes/AgentTools/jev-ios-bridge/.worktrees/feat/appium-mcp-migration/.scratch/appium-mcp-migration/runtime/devices/simulators",
+info appium-mcp   "appium:bundleId": "dev.jevbridge.diagnostic",
+info appium-mcp   "appium:usePreinstalledWDA": true,
+info appium-mcp   "appium:prebuiltWDAPath": "/Users/hugues_mini/Codes/AgentTools/jev-ios-bridge/.worktrees/feat/appium-mcp-migration/.scratch/appium-mcp-migration/runtime/wda-16.14.2/Build/Products/Debug-iphonesimulator/WebDriverAgentRunner-Runner.app",
+info appium-mcp   "appium:wdaLocalPort": 18100,
+info appium-mcp   "appium:mjpegServerPort": 18101,
+info appium-mcp   "appium:shutdownOtherSimulators": false,
+info appium-mcp   "appium:noReset": true,
+info appium-mcp   "appium:shouldTerminateApp": true
+info appium-mcp }
+info appium-mcp Sending session with XCUITestDriver
+dbug XCUITestDriver@0e67 
+dbug XCUITestDriver@0e67 Creating session with W3C capabilities: {
+dbug XCUITestDriver@0e67   "alwaysMatch": {
+dbug XCUITestDriver@0e67     "platformName": "iOS",
+dbug XCUITestDriver@0e67     "appium:automationName": "XCUITest",
+dbug XCUITestDriver@0e67     "appium:deviceName": "iPhone Simulator",
+dbug XCUITestDriver@0e67     "appium:newCommandTimeout": 300,
+dbug XCUITestDriver@0e67     "appium:settings[animationCoolOffTimeout]": 0.5,
+dbug XCUITestDriver@0e67     "appium:settings[maxTypingFrequency]": 45,
+dbug XCUITestDriver@0e67     "appium:udid": "15013501-2535-42EB-A67F-45B015DF18F4",
+dbug XCUITestDriver@0e67     "appium:simulatorDevicesSetPath": "/Users/hugues_mini/Codes/AgentTools/jev-ios-bridge/.worktrees/feat/appium-mcp-migration/.scratch/appium-mcp-migration/runtime/devices/simulators",
+dbug XCUITestDriver@0e67     "appium:bundleId": "dev.jevbridge.diagnostic",
+dbug XCUITestDriver@0e67     "appium:usePreinstalledWDA": true,
+dbug XCUITestDriver@0e67     "appium:prebuiltWDAPath": "/Users/hugues_mini/Codes/AgentTools/jev-ios-bridge/.worktrees/feat/appium-mcp-migration/.scratch/appium-mcp-migration/runtime/wda-16.14.2/Build/Products/Debug-iphonesimulator/WebDriverAgentRunner-Runner.app",
+dbug XCUITestDriver@0e67     "appium:wdaLocalPort": 18100,
+dbug XCUITestDriver@0e67     "appium:mjpegServerPort": 18101,
+dbug XCUITestDriver@0e67     "appium:shutdownOtherSimulators": false,
+dbug XCUITestDriver@0e67     "appium:noReset": true,
+dbug XCUITestDriver@0e67     "appium:shouldTerminateApp": true
+dbug XCUITestDriver@0e67   },
+dbug XCUITestDriver@0e67   "firstMatch": [
+dbug XCUITestDriver@0e67     {}
+dbug XCUITestDriver@0e67   ]
+dbug XCUITestDriver@0e67 }
+WARN XCUITestDriver@0e67 The following provided capabilities were not recognized by this driver:
+WARN XCUITestDriver@0e67   settings[animationCoolOffTimeout]
+WARN XCUITestDriver@0e67   settings[maxTypingFrequency]
+WARN XCUITestDriver@0e67 'platformVersion' capability ('undefined') is not a valid version number. Consider fixing it or be ready to experience an inconsistent driver behavior.
+info XCUITestDriver@0e67 Session created with session id: 9dadae02-31e7-4de7-822f-dedc25e23595
+dbug XCUITest Current user: 'hugues_mini'
+info appium-mcp Client connected: FastMCPSession {
+info appium-mcp   _events: [Object: null prototype] {
+info appium-mcp     error: [Function: wrapper] { listener: [Function (anonymous)] }
+info appium-mcp   },
+info appium-mcp   _eventsCount: 1,
+info appium-mcp   _maxListeners: undefined,
+info appium-mcp   Symbol(shapeMode): false,
+info appium-mcp   Symbol(kCapture): false
+info appium-mcp }
+WARN XCUITest RemoteXPC devices listing unavailable: Tunnel registry port not found. Please run the tunnel creation script first See https://appium.github.io/appium-xcuitest-driver/latest/guides/remotexpc-tunnels-real-devices/ Falling back to appium-ios-device.
+info XCUITestDriver@0e67 Constructing iOS simulator for Xcode version 27.0 with udid '15013501-2535-42EB-A67F-45B015DF18F4'
+info XCUITestDriver@0e67 No platformVersion specified. Using device version: '26.5'
+info XCUITestDriver@0e67 Determining device to run tests on: udid: '15013501-2535-42EB-A67F-45B015DF18F4', real device: false
+info BaseDriver Subscribing 0e67bc09-720c-4bed-82f3-4e8e2b76eabb to topic 'xcuitest:sessionUdidClaimed'
+info BaseDriver Subscribing 0e67bc09-720c-4bed-82f3-4e8e2b76eabb to topic 'xcuitest:sessionUdidContended'
+info BaseDriver Subscribing 0e67bc09-720c-4bed-82f3-4e8e2b76eabb to topic 'xcuitest:sessionUdidReleased'
+info BaseDriver Unsubscribing 0e67bc09-720c-4bed-82f3-4e8e2b76eabb from topic 'xcuitest:sessionUdidContended'
+info BaseDriver Unsubscribing 0e67bc09-720c-4bed-82f3-4e8e2b76eabb from topic 'xcuitest:sessionUdidReleased'
+info XCUITestDriver@0e67 Setting simulator devices set path to '/Users/hugues_mini/Codes/AgentTools/jev-ios-bridge/.worktrees/feat/appium-mcp-migration/.scratch/appium-mcp-migration/runtime/devices/simulators'
+info XCUITestDriver@0e67 Using WDA path: '/Users/hugues_mini/Codes/AgentTools/jev-ios-bridge/.worktrees/feat/appium-mcp-migration/.scratch/appium-mcp-migration/candidate-stack/node_modules/appium-xcuitest-driver/node_modules/appium-webdriveragent'
+info XCUITestDriver@0e67 Using WDA agent: '/Users/hugues_mini/Codes/AgentTools/jev-ios-bridge/.worktrees/feat/appium-mcp-migration/.scratch/appium-mcp-migration/candidate-stack/node_modules/appium-xcuitest-driver/node_modules/appium-webdriveragent/WebDriverAgent.xcodeproj'
+info XCUITestDriver@0e67 Setting up simulator
+info XCUITestDriver@0e67 Simulator '15013501-2535-42EB-A67F-45B015DF18F4' is booted while its UI is not visible. Trying to restart it with the Simulator window visible
+info XCUITestDriver@0e67 Starting UI client: open -Fn /Applications/Xcode.app/Contents/Applications/DeviceHub.app
+info XCUITestDriver@0e67 Simulator with UDID 15013501-2535-42EB-A67F-45B015DF18F4 booted in 15.731s
+info XCUITestDriver@0e67 Requesting connection for device 15013501-2535-42EB-A67F-45B015DF18F4 on local port 18100
+info XCUITestDriver@0e67 Successfully requested the connection for 15013501-2535-42EB-A67F-45B015DF18F4:18100
+info XCUITestDriver@0e67 Installing prebuilt WDA at '/Users/hugues_mini/Codes/AgentTools/jev-ios-bridge/.worktrees/feat/appium-mcp-migration/.scratch/appium-mcp-migration/runtime/wda-16.14.2/Build/Products/Debug-iphonesimulator/WebDriverAgentRunner-Runner.app'. Bundle identifier: com.facebook.WebDriverAgentRunner.xctrunner.
+info XCUITestDriver@0e67 The app has been successfully installed in 13381ms
+info XCUITestDriver@0e67 Selected 'simulator' WebDriverAgent startup strategy
+info XCUITestDriver@0e67 Launching WebDriverAgent on the device without xcodebuild
+info WD Proxy connect ECONNREFUSED 127.0.0.1:18100
+info WD Proxy connect ECONNREFUSED 127.0.0.1:18100
+info WD Proxy connect ECONNREFUSED 127.0.0.1:18100
+info WD Proxy connect ECONNREFUSED 127.0.0.1:18100
+info WD Proxy connect ECONNREFUSED 127.0.0.1:18100
+info WD Proxy connect ECONNREFUSED 127.0.0.1:18100
+info WD Proxy connect ECONNREFUSED 127.0.0.1:18100
+info WD Proxy connect ECONNREFUSED 127.0.0.1:18100
+info WD Proxy connect ECONNREFUSED 127.0.0.1:18100
+info WD Proxy connect ECONNREFUSED 127.0.0.1:18100
+info WD Proxy connect ECONNREFUSED 127.0.0.1:18100
+info WD Proxy connect ECONNREFUSED 127.0.0.1:18100
+info WD Proxy connect ECONNREFUSED 127.0.0.1:18100
+info WD Proxy connect ECONNREFUSED 127.0.0.1:18100
+info WD Proxy connect ECONNREFUSED 127.0.0.1:18100
+info WD Proxy connect ECONNREFUSED 127.0.0.1:18100
+info WD Proxy connect ECONNREFUSED 127.0.0.1:18100
+info WD Proxy connect ECONNREFUSED 127.0.0.1:18100
+info WD Proxy connect ECONNREFUSED 127.0.0.1:18100
+info WD Proxy connect ECONNREFUSED 127.0.0.1:18100
+info WD Proxy connect ECONNREFUSED 127.0.0.1:18100
+info WD Proxy connect ECONNREFUSED 127.0.0.1:18100
+info WD Proxy connect ECONNREFUSED 127.0.0.1:18100
+info WD Proxy connect ECONNREFUSED 127.0.0.1:18100
+info WD Proxy connect ECONNREFUSED 127.0.0.1:18100
+info WD Proxy connect ECONNREFUSED 127.0.0.1:18100
+info WD Proxy connect ECONNREFUSED 127.0.0.1:18100
+info WD Proxy connect ECONNREFUSED 127.0.0.1:18100
+info WD Proxy connect ECONNREFUSED 127.0.0.1:18100
+info WD Proxy connect ECONNREFUSED 127.0.0.1:18100
+info WD Proxy connect ECONNREFUSED 127.0.0.1:18100
+info WD Proxy connect ECONNREFUSED 127.0.0.1:18100
+info WD Proxy connect ECONNREFUSED 127.0.0.1:18100
+info WD Proxy connect ECONNREFUSED 127.0.0.1:18100
+info WD Proxy connect ECONNREFUSED 127.0.0.1:18100
+info WD Proxy connect ECONNREFUSED 127.0.0.1:18100
+info WD Proxy connect ECONNREFUSED 127.0.0.1:18100
+info WD Proxy connect ECONNREFUSED 127.0.0.1:18100
+info WD Proxy connect ECONNREFUSED 127.0.0.1:18100
+info WD Proxy connect ECONNREFUSED 127.0.0.1:18100
+info WD Proxy connect ECONNREFUSED 127.0.0.1:18100
+info WD Proxy connect ECONNREFUSED 127.0.0.1:18100
+info WD Proxy connect ECONNREFUSED 127.0.0.1:18100
+info WD Proxy connect ECONNREFUSED 127.0.0.1:18100
+info WD Proxy connect ECONNREFUSED 127.0.0.1:18100
+info WD Proxy connect ECONNREFUSED 127.0.0.1:18100
+info WD Proxy connect ECONNREFUSED 127.0.0.1:18100
+info WD Proxy connect ECONNREFUSED 127.0.0.1:18100
+info WD Proxy connect ECONNREFUSED 127.0.0.1:18100
+info WD Proxy connect ECONNREFUSED 127.0.0.1:18100
+info WD Proxy connect ECONNREFUSED 127.0.0.1:18100
+info WD Proxy connect ECONNREFUSED 127.0.0.1:18100
+info WD Proxy connect ECONNREFUSED 127.0.0.1:18100
+info WD Proxy connect ECONNREFUSED 127.0.0.1:18100
+info WD Proxy connect ECONNREFUSED 127.0.0.1:18100
+info WD Proxy connect ECONNREFUSED 127.0.0.1:18100
+info WD Proxy connect ECONNREFUSED 127.0.0.1:18100
+info WD Proxy connect ECONNREFUSED 127.0.0.1:18100
+info WD Proxy connect ECONNREFUSED 127.0.0.1:18100
+info WD Proxy connect ECONNREFUSED 127.0.0.1:18100
+info WD Proxy connect ECONNREFUSED 127.0.0.1:18100
+info WD Proxy connect ECONNREFUSED 127.0.0.1:18100
+info WD Proxy connect ECONNREFUSED 127.0.0.1:18100
+info WD Proxy connect ECONNREFUSED 127.0.0.1:18100
+info WD Proxy connect ECONNREFUSED 127.0.0.1:18100
+info WD Proxy connect ECONNREFUSED 127.0.0.1:18100
+info WD Proxy connect ECONNREFUSED 127.0.0.1:18100
+info WD Proxy connect ECONNREFUSED 127.0.0.1:18100
+info WD Proxy connect ECONNREFUSED 127.0.0.1:18100
+info WD Proxy connect ECONNREFUSED 127.0.0.1:18100
+info WD Proxy connect ECONNREFUSED 127.0.0.1:18100
+info WD Proxy connect ECONNREFUSED 127.0.0.1:18100
+info WD Proxy connect ECONNREFUSED 127.0.0.1:18100
+info WD Proxy connect ECONNREFUSED 127.0.0.1:18100
+info WD Proxy connect ECONNREFUSED 127.0.0.1:18100
+info WD Proxy connect ECONNREFUSED 127.0.0.1:18100
+info WD Proxy connect ECONNREFUSED 127.0.0.1:18100
+info WD Proxy connect ECONNREFUSED 127.0.0.1:18100
+info WD Proxy connect ECONNREFUSED 127.0.0.1:18100
+info WD Proxy connect ECONNREFUSED 127.0.0.1:18100
+info WD Proxy connect ECONNREFUSED 127.0.0.1:18100
+info WD Proxy connect ECONNREFUSED 127.0.0.1:18100
+info WD Proxy connect ECONNREFUSED 127.0.0.1:18100
+info WD Proxy connect ECONNREFUSED 127.0.0.1:18100
+info WD Proxy connect ECONNREFUSED 127.0.0.1:18100
+info WD Proxy connect ECONNREFUSED 127.0.0.1:18100
+info WD Proxy connect ECONNREFUSED 127.0.0.1:18100
+info WD Proxy connect ECONNREFUSED 127.0.0.1:18100
+info WD Proxy connect ECONNREFUSED 127.0.0.1:18100
+info WD Proxy connect ECONNREFUSED 127.0.0.1:18100
+info WD Proxy connect ECONNREFUSED 127.0.0.1:18100
+info WD Proxy connect ECONNREFUSED 127.0.0.1:18100
+info WD Proxy connect ECONNREFUSED 127.0.0.1:18100
+info WD Proxy connect ECONNREFUSED 127.0.0.1:18100
+info WD Proxy connect ECONNREFUSED 127.0.0.1:18100
+info WD Proxy connect ECONNREFUSED 127.0.0.1:18100
+info WD Proxy connect ECONNREFUSED 127.0.0.1:18100
+info WD Proxy connect ECONNREFUSED 127.0.0.1:18100
+info WD Proxy connect ECONNREFUSED 127.0.0.1:18100
+info WD Proxy connect ECONNREFUSED 127.0.0.1:18100
+info WD Proxy connect ECONNREFUSED 127.0.0.1:18100
+info WD Proxy connect ECONNREFUSED 127.0.0.1:18100
+info WD Proxy connect ECONNREFUSED 127.0.0.1:18100
+info WD Proxy connect ECONNREFUSED 127.0.0.1:18100
+info WD Proxy connect ECONNREFUSED 127.0.0.1:18100
+info WD Proxy connect ECONNREFUSED 127.0.0.1:18100
+info WD Proxy connect ECONNREFUSED 127.0.0.1:18100
+info WD Proxy connect ECONNREFUSED 127.0.0.1:18100
+info WD Proxy connect ECONNREFUSED 127.0.0.1:18100
+info WD Proxy connect ECONNREFUSED 127.0.0.1:18100
+info WD Proxy connect ECONNREFUSED 127.0.0.1:18100
+info WD Proxy connect ECONNREFUSED 127.0.0.1:18100
+info WD Proxy connect ECONNREFUSED 127.0.0.1:18100
+info WD Proxy connect ECONNREFUSED 127.0.0.1:18100
+info WD Proxy connect ECONNREFUSED 127.0.0.1:18100
+info WD Proxy connect ECONNREFUSED 127.0.0.1:18100
+info WD Proxy connect ECONNREFUSED 127.0.0.1:18100
+info WD Proxy connect ECONNREFUSED 127.0.0.1:18100
+info WD Proxy connect ECONNREFUSED 127.0.0.1:18100
+info WD Proxy connect ECONNREFUSED 127.0.0.1:18100
+info WD Proxy connect ECONNREFUSED 127.0.0.1:18100
+info WD Proxy connect ECONNREFUSED 127.0.0.1:18100
+info WD Proxy connect ECONNREFUSED 127.0.0.1:18100
+info WD Proxy connect ECONNREFUSED 127.0.0.1:18100
+info WD Proxy connect ECONNREFUSED 127.0.0.1:18100
+info WD Proxy connect ECONNREFUSED 127.0.0.1:18100
+info WD Proxy connect ECONNREFUSED 127.0.0.1:18100
+info WD Proxy connect ECONNREFUSED 127.0.0.1:18100
+info WD Proxy connect ECONNREFUSED 127.0.0.1:18100
+info WD Proxy connect ECONNREFUSED 127.0.0.1:18100
+info WD Proxy connect ECONNREFUSED 127.0.0.1:18100
+info WD Proxy connect ECONNREFUSED 127.0.0.1:18100
+info WD Proxy connect ECONNREFUSED 127.0.0.1:18100
+info WD Proxy connect ECONNREFUSED 127.0.0.1:18100
+info WD Proxy connect ECONNREFUSED 127.0.0.1:18100
+info WD Proxy connect ECONNREFUSED 127.0.0.1:18100
+info WD Proxy connect ECONNREFUSED 127.0.0.1:18100
+info WD Proxy connect ECONNREFUSED 127.0.0.1:18100
+info WD Proxy connect ECONNREFUSED 127.0.0.1:18100
+info WD Proxy connect ECONNREFUSED 127.0.0.1:18100
+info WD Proxy connect ECONNREFUSED 127.0.0.1:18100
+info WD Proxy connect ECONNREFUSED 127.0.0.1:18100
+info WD Proxy connect ECONNREFUSED 127.0.0.1:18100
+info WD Proxy connect ECONNREFUSED 127.0.0.1:18100
+info WD Proxy connect ECONNREFUSED 127.0.0.1:18100
+info WD Proxy connect ECONNREFUSED 127.0.0.1:18100
+info WD Proxy connect ECONNREFUSED 127.0.0.1:18100
+info WD Proxy connect ECONNREFUSED 127.0.0.1:18100
+info WD Proxy connect ECONNREFUSED 127.0.0.1:18100
+info WD Proxy connect ECONNREFUSED 127.0.0.1:18100
+info WD Proxy connect ECONNREFUSED 127.0.0.1:18100
+info WD Proxy connect ECONNREFUSED 127.0.0.1:18100
+info WD Proxy connect ECONNREFUSED 127.0.0.1:18100
+info WD Proxy connect ECONNREFUSED 127.0.0.1:18100
+info WD Proxy connect ECONNREFUSED 127.0.0.1:18100
+info WD Proxy connect ECONNREFUSED 127.0.0.1:18100
+info WD Proxy connect ECONNREFUSED 127.0.0.1:18100
+info WD Proxy connect ECONNREFUSED 127.0.0.1:18100
+info WD Proxy connect ECONNREFUSED 127.0.0.1:18100
+info WD Proxy connect ECONNREFUSED 127.0.0.1:18100
+info WD Proxy connect ECONNREFUSED 127.0.0.1:18100
+info WD Proxy connect ECONNREFUSED 127.0.0.1:18100
+info WD Proxy connect ECONNREFUSED 127.0.0.1:18100
+info WD Proxy connect ECONNREFUSED 127.0.0.1:18100
+info WD Proxy connect ECONNREFUSED 127.0.0.1:18100
+info WD Proxy connect ECONNREFUSED 127.0.0.1:18100
+info WD Proxy connect ECONNREFUSED 127.0.0.1:18100
+info WD Proxy connect ECONNREFUSED 127.0.0.1:18100
+info WD Proxy connect ECONNREFUSED 127.0.0.1:18100
+info WD Proxy connect ECONNREFUSED 127.0.0.1:18100
+info WD Proxy connect ECONNREFUSED 127.0.0.1:18100
+info WD Proxy connect ECONNREFUSED 127.0.0.1:18100
+info WD Proxy connect ECONNREFUSED 127.0.0.1:18100
+info WD Proxy connect ECONNREFUSED 127.0.0.1:18100
+info WD Proxy connect ECONNREFUSED 127.0.0.1:18100
+info WD Proxy connect ECONNREFUSED 127.0.0.1:18100
+info WD Proxy connect ECONNREFUSED 127.0.0.1:18100
+info WD Proxy connect ECONNREFUSED 127.0.0.1:18100
+info WD Proxy connect ECONNREFUSED 127.0.0.1:18100
+info WD Proxy connect ECONNREFUSED 127.0.0.1:18100
+info WD Proxy connect ECONNREFUSED 127.0.0.1:18100
+info WD Proxy connect ECONNREFUSED 127.0.0.1:18100
+info WD Proxy connect ECONNREFUSED 127.0.0.1:18100
+info WD Proxy connect ECONNREFUSED 127.0.0.1:18100
+info WD Proxy connect ECONNREFUSED 127.0.0.1:18100
+info WD Proxy connect ECONNREFUSED 127.0.0.1:18100
+info WD Proxy connect ECONNREFUSED 127.0.0.1:18100
+info WD Proxy connect ECONNREFUSED 127.0.0.1:18100
+info WD Proxy connect ECONNREFUSED 127.0.0.1:18100
+info WD Proxy connect ECONNREFUSED 127.0.0.1:18100
+info WD Proxy connect ECONNREFUSED 127.0.0.1:18100
+info WD Proxy connect ECONNREFUSED 127.0.0.1:18100
+info WD Proxy connect ECONNREFUSED 127.0.0.1:18100
+info WD Proxy connect ECONNREFUSED 127.0.0.1:18100
+info WD Proxy connect ECONNREFUSED 127.0.0.1:18100
+info WD Proxy connect ECONNREFUSED 127.0.0.1:18100
+info WD Proxy connect ECONNREFUSED 127.0.0.1:18100
+info WD Proxy connect ECONNREFUSED 127.0.0.1:18100
+info XCUITestDriver@0e67 Stopping the XCTest session
+ERR! XCUITestDriver@0e67 Error: Unable to launch WebDriverAgent. Original error: Failed to start the preinstalled WebDriverAgent in 60000 ms. The WebDriverAgent might not be properly built or the device might be locked. The 'appium:wdaLaunchTimeout' capability modifies the timeout.. Make sure the application com.facebook.WebDriverAgentRunner.xctrunner exists and it is launchable.
+ERR! XCUITestDriver@0e67     at handleLaunchFailure (file:///Users/hugues_mini/Codes/AgentTools/jev-ios-bridge/.worktrees/feat/appium-mcp-migration/.scratch/appium-mcp-migration/candidate-stack/node_modules/appium-xcuitest-driver/build/lib/commands/wda/startup.js:227:15)
+ERR! XCUITestDriver@0e67     at async file:///Users/hugues_mini/Codes/AgentTools/jev-ios-bridge/.worktrees/feat/appium-mcp-migration/.scratch/appium-mcp-migration/candidate-stack/node_modules/appium-xcuitest-driver/build/lib/commands/wda/startup.js:187:13
+ERR! XCUITestDriver@0e67     at async wrapped (file:///Users/hugues_mini/Codes/AgentTools/jev-ios-bridge/.worktrees/feat/appium-mcp-migration/.scratch/appium-mcp-migration/candidate-stack/node_modules/appium-xcuitest-driver/node_modules/asyncbox/build/esm/lib/asyncbox.js:166:19)
+ERR! XCUITestDriver@0e67     at async retry (file:///Users/hugues_mini/Codes/AgentTools/jev-ios-bridge/.worktrees/feat/appium-mcp-migration/.scratch/appium-mcp-migration/candidate-stack/node_modules/appium-xcuitest-driver/node_modules/asyncbox/build/esm/lib/asyncbox.js:141:19)
+ERR! XCUITestDriver@0e67     at async retryInterval (file:///Users/hugues_mini/Codes/AgentTools/jev-ios-bridge/.worktrees/feat/appium-mcp-migration/.scratch/appium-mcp-migration/candidate-stack/node_modules/appium-xcuitest-driver/node_modules/asyncbox/build/esm/lib/asyncbox.js:177:12)
+ERR! XCUITestDriver@0e67     at async runStartupWithRetries (file:///Users/hugues_mini/Codes/AgentTools/jev-ios-bridge/.worktrees/feat/appium-mcp-migration/.scratch/appium-mcp-migration/candidate-stack/node_modules/appium-xcuitest-driver/build/lib/commands/wda/startup.js:177:5)
+ERR! XCUITestDriver@0e67     at async startUnderSynchronizationLock (file:///Users/hugues_mini/Codes/AgentTools/jev-ios-bridge/.worktrees/feat/appium-mcp-migration/.scratch/appium-mcp-migration/candidate-stack/node_modules/appium-xcuitest-driver/build/lib/commands/wda/startup.js:128:5)
+ERR! XCUITestDriver@0e67     at async file:///Users/hugues_mini/Codes/AgentTools/jev-ios-bridge/.worktrees/feat/appium-mcp-migration/.scratch/appium-mcp-migration/candidate-stack/node_modules/appium-xcuitest-driver/build/lib/commands/wda/startup.js:22:9
+info BaseDriver Unsubscribing 0e67bc09-720c-4bed-82f3-4e8e2b76eabb from topic 'xcuitest:sessionUdidClaimed'
+info XCUITestDriver@0e67 Releasing connections for 15013501-2535-42EB-A67F-45B015DF18F4 device on any port number
+info XCUITestDriver@0e67 Found cached connections to release: ["15013501-2535-42EB-A67F-45B015DF18F4:18100"]
+ERR! appium-mcp Error creating session: Unable to launch WebDriverAgent. Original error: Failed to start the preinstalled WebDriverAgent in 60000 ms. The WebDriverAgent might not be properly built or the device might be locked. The 'appium:wdaLaunchTimeout' capability modifies the timeout.. Make sure the application com.facebook.WebDriverAgentRunner.xctrunner exists and it is launchable.
+info appium-mcp {"tool":"appium_session_management","durationMs":124030,"isError":true}

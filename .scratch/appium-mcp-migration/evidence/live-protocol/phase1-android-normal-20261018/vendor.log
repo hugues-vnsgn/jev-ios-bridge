@@ -1,0 +1,300 @@
+WARN appium-mcp Policy denied tool registration: select_device (not_in_allowlist)
+WARN appium-mcp Policy denied tool registration: appium_mobile_device_control (not_in_allowlist)
+WARN appium-mcp Policy denied tool registration: appium_geolocation (not_in_allowlist)
+WARN appium-mcp Policy denied tool registration: appium_mobile_device_info (not_in_allowlist)
+WARN appium-mcp Policy denied tool registration: appium_mobile_file (not_in_allowlist)
+WARN appium-mcp Policy denied tool registration: appium_driver_settings (not_in_allowlist)
+WARN appium-mcp Policy denied tool registration: prepare_ios_simulator (not_in_allowlist)
+WARN appium-mcp Policy denied tool registration: appium_prepare_ios_real_device (not_in_allowlist)
+WARN appium-mcp Policy denied tool registration: appium_drag_and_drop (not_in_allowlist)
+WARN appium-mcp Policy denied tool registration: appium_perform_actions (not_in_allowlist)
+WARN appium-mcp Policy denied tool registration: appium_find_element (not_in_allowlist)
+WARN appium-mcp Policy denied tool registration: appium_mobile_press_key (not_in_allowlist)
+WARN appium-mcp Policy denied tool registration: appium_set_value (not_in_allowlist)
+WARN appium-mcp Policy denied tool registration: appium_mobile_keyboard (not_in_allowlist)
+WARN appium-mcp Policy denied tool registration: appium_get_text (not_in_allowlist)
+WARN appium-mcp Policy denied tool registration: appium_get_element_attribute (not_in_allowlist)
+WARN appium-mcp Policy denied tool registration: appium_mobile_clipboard (not_in_allowlist)
+WARN appium-mcp Policy denied tool registration: appium_get_active_element (not_in_allowlist)
+WARN appium-mcp Policy denied tool registration: appium_orientation (not_in_allowlist)
+WARN appium-mcp Policy denied tool registration: appium_alert (not_in_allowlist)
+WARN appium-mcp Policy denied tool registration: appium_get_window_size (not_in_allowlist)
+WARN appium-mcp Policy denied tool registration: appium_screen_recording (not_in_allowlist)
+WARN appium-mcp Policy denied tool registration: appium_app_lifecycle (not_in_allowlist)
+WARN appium-mcp Policy denied tool registration: appium_mobile_permissions (not_in_allowlist)
+WARN appium-mcp Policy denied tool registration: appium_context (not_in_allowlist)
+WARN appium-mcp Policy denied tool registration: generate_locators (not_in_allowlist)
+WARN appium-mcp Policy denied tool registration: appium_generate_tests (not_in_allowlist)
+info appium-mcp [TOOL START] appium_session_management {
+info appium-mcp   action: 'create',
+info appium-mcp   platform: 'android',
+info appium-mcp   capabilities: '{"platformName":"Android","appium:automationName":"UiAutomator2","appium:udid":"emulator-5570","appium:appPackage":"dev.jevbridge.diagnostic","appium:appActivity":".MainActivity","appium:systemPort":18200,"appium:mjpegServerPort":18201,"appium:uiautomator2ServerInstallTimeout":120000,"appium:adbExecTimeout":120000,"appium:noReset":true,"appium:shouldTerminateApp":true}'
+info appium-mcp }
+info appium-mcp Creating new ANDROID session with capabilities: {
+info appium-mcp   "platformName": "Android",
+info appium-mcp   "appium:automationName": "UiAutomator2",
+info appium-mcp   "appium:deviceName": "Android Device",
+info appium-mcp   "appium:settings[actionAcknowledgmentTimeout]": 0,
+info appium-mcp   "appium:settings[waitForIdleTimeout]": 0,
+info appium-mcp   "appium:settings[waitForSelectorTimeout]": 0,
+info appium-mcp   "appium:autoGrantPermissions": true,
+info appium-mcp   "appium:newCommandTimeout": 300,
+info appium-mcp   "appium:udid": "emulator-5570",
+info appium-mcp   "appium:appPackage": "dev.jevbridge.diagnostic",
+info appium-mcp   "appium:appActivity": ".MainActivity",
+info appium-mcp   "appium:systemPort": 18200,
+info appium-mcp   "appium:mjpegServerPort": 18201,
+info appium-mcp   "appium:uiautomator2ServerInstallTimeout": 120000,
+info appium-mcp   "appium:adbExecTimeout": 120000,
+info appium-mcp   "appium:noReset": true,
+info appium-mcp   "appium:shouldTerminateApp": true
+info appium-mcp }
+info appium-mcp Sending session with AndroidUiautomator2Driver
+dbug AndroidUiautomator2Driver@155b 
+dbug AndroidUiautomator2Driver@155b Creating session with W3C capabilities: {
+dbug AndroidUiautomator2Driver@155b   "alwaysMatch": {
+dbug AndroidUiautomator2Driver@155b     "platformName": "Android",
+dbug AndroidUiautomator2Driver@155b     "appium:automationName": "UiAutomator2",
+dbug AndroidUiautomator2Driver@155b     "appium:deviceName": "Android Device",
+dbug AndroidUiautomator2Driver@155b     "appium:settings[actionAcknowledgmentTimeout]": 0,
+dbug AndroidUiautomator2Driver@155b     "appium:settings[waitForIdleTimeout]": 0,
+dbug AndroidUiautomator2Driver@155b     "appium:settings[waitForSelectorTimeout]": 0,
+dbug AndroidUiautomator2Driver@155b     "appium:autoGrantPermissions": true,
+dbug AndroidUiautomator2Driver@155b     "appium:newCommandTimeout": 300,
+dbug AndroidUiautomator2Driver@155b     "appium:udid": "emulator-5570",
+dbug AndroidUiautomator2Driver@155b     "appium:appPackage": "dev.jevbridge.diagnostic",
+dbug AndroidUiautomator2Driver@155b     "appium:appActivity": ".MainActivity",
+dbug AndroidUiautomator2Driver@155b     "appium:systemPort": 18200,
+dbug AndroidUiautomator2Driver@155b     "appium:mjpegServerPort": 18201,
+dbug AndroidUiautomator2Driver@155b     "appium:uiautomator2ServerInstallTimeout": 120000,
+dbug AndroidUiautomator2Driver@155b     "appium:adbExecTimeout": 120000,
+dbug AndroidUiautomator2Driver@155b     "appium:noReset": true,
+dbug AndroidUiautomator2Driver@155b     "appium:shouldTerminateApp": true
+dbug AndroidUiautomator2Driver@155b   },
+dbug AndroidUiautomator2Driver@155b   "firstMatch": [
+dbug AndroidUiautomator2Driver@155b     {}
+dbug AndroidUiautomator2Driver@155b   ]
+dbug AndroidUiautomator2Driver@155b }
+WARN AndroidUiautomator2Driver@155b The following provided capabilities were not recognized by this driver:
+WARN AndroidUiautomator2Driver@155b   settings[actionAcknowledgmentTimeout]
+WARN AndroidUiautomator2Driver@155b   settings[waitForIdleTimeout]
+WARN AndroidUiautomator2Driver@155b   settings[waitForSelectorTimeout]
+info AndroidUiautomator2Driver@155b Session created with session id: 936e3e37-761f-413f-8f13-235d511be10d
+info ADB Found 5 'build-tools' folders under '/Users/hugues_mini/Library/Android/sdk' (newest first):
+info ADB     /Users/hugues_mini/Library/Android/sdk/build-tools/36.1.0
+info ADB     /Users/hugues_mini/Library/Android/sdk/build-tools/36.0.0
+info ADB     /Users/hugues_mini/Library/Android/sdk/build-tools/35.0.0
+info ADB     /Users/hugues_mini/Library/Android/sdk/build-tools/34.0.0
+info ADB     /Users/hugues_mini/Library/Android/sdk/build-tools/30.0.3
+info ADB Using 'adb' from '/Users/hugues_mini/Library/Android/sdk/platform-tools/adb'
+dbug ADB Running '/Users/hugues_mini/Library/Android/sdk/platform-tools/adb -P 5037 start-server'
+info appium-mcp Client connected: FastMCPSession {
+info appium-mcp   _events: [Object: null prototype] {
+info appium-mcp     error: [Function: wrapper] { listener: [Function (anonymous)] }
+info appium-mcp   },
+info appium-mcp   _eventsCount: 1,
+info appium-mcp   _maxListeners: undefined,
+info appium-mcp   Symbol(shapeMode): false,
+info appium-mcp   Symbol(kCapture): false
+info appium-mcp }
+info AndroidUiautomator2Driver@155b Retrieving device list
+dbug ADB Trying to find connected Android devices
+dbug ADB Getting connected devices
+dbug ADB Connected devices: [{"udid":"emulator-5570","state":"device"}]
+info AndroidUiautomator2Driver@155b Using device: emulator-5570
+dbug BaseDriver Initialized new IPC object with max object size of 1048576 bytes and max topics of 1000
+info BaseDriver Subscribing 155bc0ad-2907-4dca-9f88-24caae1a99d5 to topic 'uiautomator2:sessionUdidClaimed'
+info BaseDriver Subscribing 155bc0ad-2907-4dca-9f88-24caae1a99d5 to topic 'uiautomator2:sessionUdidContended'
+info BaseDriver Subscribing 155bc0ad-2907-4dca-9f88-24caae1a99d5 to topic 'uiautomator2:sessionUdidReleased'
+dbug BaseDriver 155bc0ad-2907-4dca-9f88-24caae1a99d5 is publishing a message to topic uiautomator2:sessionUdidClaimed
+info BaseDriver Unsubscribing 155bc0ad-2907-4dca-9f88-24caae1a99d5 from topic 'uiautomator2:sessionUdidContended'
+info BaseDriver Unsubscribing 155bc0ad-2907-4dca-9f88-24caae1a99d5 from topic 'uiautomator2:sessionUdidReleased'
+info ADB Using 'adb' from '/Users/hugues_mini/Library/Android/sdk/platform-tools/adb'
+dbug ADB Running '/Users/hugues_mini/Library/Android/sdk/platform-tools/adb -P 5037 start-server'
+dbug ADB Setting device id to emulator-5570
+info AndroidUiautomator2Driver@155b Starting 'dev.jevbridge.diagnostic' directly on the device
+dbug ADB Running '/Users/hugues_mini/Library/Android/sdk/platform-tools/adb -P 5037 -s emulator-5570 shell getprop ro.build.version.sdk'
+dbug ADB Current device property 'ro.build.version.sdk': 36
+info ADB Getting device platform version
+dbug ADB Running '/Users/hugues_mini/Library/Android/sdk/platform-tools/adb -P 5037 -s emulator-5570 shell getprop ro.build.version.release'
+dbug ADB Current device property 'ro.build.version.release': 16
+dbug ADB Device API level: 36
+info AndroidUiautomator2Driver@155b Relaxing hidden api policy
+dbug ADB Running '/Users/hugues_mini/Library/Android/sdk/platform-tools/adb -P 5037 -s emulator-5570 shell 'settings put global hidden_api_policy_pre_p_apps 1;settings put global hidden_api_policy_p_apps 1;settings put global hidden_api_policy 1''
+dbug ADB Running '/Users/hugues_mini/Library/Android/sdk/platform-tools/adb -P 5037 -s emulator-5570 wait-for-device'
+dbug ADB Running '/Users/hugues_mini/Library/Android/sdk/platform-tools/adb -P 5037 -s emulator-5570 shell echo ping'
+dbug AndroidUiautomator2Driver@155b Pushing settings apk to the device...
+dbug ADB Getting package info for 'io.appium.settings'
+dbug ADB Running '/Users/hugues_mini/Library/Android/sdk/platform-tools/adb -P 5037 -s emulator-5570 shell dumpsys package io.appium.settings'
+dbug ADB App '/Users/hugues_mini/Codes/AgentTools/jev-ios-bridge/.worktrees/feat/appium-mcp-migration/.scratch/appium-mcp-migration/candidate-stack/node_modules/appium-uiautomator2-driver/node_modules/io.appium.settings/apks/settings_apk-debug.apk' is not installed
+dbug ADB Installing '/Users/hugues_mini/Codes/AgentTools/jev-ios-bridge/.worktrees/feat/appium-mcp-migration/.scratch/appium-mcp-migration/candidate-stack/node_modules/appium-uiautomator2-driver/node_modules/io.appium.settings/apks/settings_apk-debug.apk'
+dbug ADB Running '/Users/hugues_mini/Library/Android/sdk/platform-tools/adb -P 5037 -s emulator-5570 install -g /Users/hugues_mini/Codes/AgentTools/jev-ios-bridge/.worktrees/feat/appium-mcp-migration/.scratch/appium-mcp-migration/candidate-stack/node_modules/appium-uiautomator2-driver/node_modules/io.appium.settings/apks/settings_apk-debug.apk'
+info ADB The installation of 'settings_apk-debug.apk' took 1330ms
+dbug ADB Install command stdout: Performing Streamed Install
+dbug ADB Success
+dbug ADB Running '/Users/hugues_mini/Library/Android/sdk/platform-tools/adb -P 5037 -s emulator-5570 shell dumpsys activity services io.appium.settings'
+dbug ADB Running '/Users/hugues_mini/Library/Android/sdk/platform-tools/adb -P 5037 -s emulator-5570 shell cmd notification allow_listener io.appium.settings/.NLService'
+dbug ADB Running '/Users/hugues_mini/Library/Android/sdk/platform-tools/adb -P 5037 -s emulator-5570 shell appops set io.appium.settings PROJECT_MEDIA allow'
+dbug ADB Running '/Users/hugues_mini/Library/Android/sdk/platform-tools/adb -P 5037 -s emulator-5570 shell dumpsys activity services io.appium.settings'
+dbug SettingsApp Starting Appium Settings app
+dbug ADB Running '/Users/hugues_mini/Library/Android/sdk/platform-tools/adb -P 5037 -s emulator-5570 shell am start-activity -n io.appium.settings/.Settings -a android.intent.action.MAIN -c android.intent.category.LAUNCHER'
+dbug ADB Running '/Users/hugues_mini/Library/Android/sdk/platform-tools/adb -P 5037 -s emulator-5570 shell dumpsys activity services io.appium.settings'
+dbug ADB Running '/Users/hugues_mini/Library/Android/sdk/platform-tools/adb -P 5037 -s emulator-5570 shell dumpsys activity services io.appium.settings'
+dbug ADB Running '/Users/hugues_mini/Library/Android/sdk/platform-tools/adb -P 5037 -s emulator-5570 shell dumpsys activity services io.appium.settings'
+dbug Logcat Starting logs capture with command: /Users/hugues_mini/Library/Android/sdk/platform-tools/adb -P 5037 -s emulator-5570 logcat -v threadtime
+dbug AndroidUiautomator2Driver@155b Forwarding UiAutomator2 Server port 6790 to local port 18200
+dbug AndroidUiautomator2Driver@155b MJPEG broadcasting requested, forwarding MJPEG server port 7810 to local port 18201
+dbug ADB Forwarding system: 18201 to device: 7810
+dbug ADB Running '/Users/hugues_mini/Library/Android/sdk/platform-tools/adb -P 5037 -s emulator-5570 forward tcp:18201 tcp:7810'
+dbug ADB Forwarding system: 18200 to device: 6790
+dbug ADB Running '/Users/hugues_mini/Library/Android/sdk/platform-tools/adb -P 5037 -s emulator-5570 forward tcp:18200 tcp:6790'
+dbug AndroidUiautomator2Driver@155b UIA2Proxy options: {"scheme":"http","server":"127.0.0.1","port":18200,"base":"","reqBasePath":"","sessionId":null,"timeout":240000,"keepAlive":true}
+dbug ADB Getting package info for 'io.appium.uiautomator2.server'
+dbug ADB Running '/Users/hugues_mini/Library/Android/sdk/platform-tools/adb -P 5037 -s emulator-5570 shell dumpsys package io.appium.uiautomator2.server'
+dbug ADB Getting install status for io.appium.uiautomator2.server.test
+dbug AndroidUiautomator2Driver@155b No app capability. Assuming it is already on the device
+dbug ADB Running '/Users/hugues_mini/Library/Android/sdk/platform-tools/adb -P 5037 -s emulator-5570 shell cmd package list packages --show-versioncode'
+dbug ADB App '/Users/hugues_mini/Codes/AgentTools/jev-ios-bridge/.worktrees/feat/appium-mcp-migration/.scratch/appium-mcp-migration/candidate-stack/node_modules/appium-uiautomator2-driver/node_modules/appium-uiautomator2-server/apks/appium-uiautomator2-server-v10.6.6.apk' is not installed
+dbug ADB 'io.appium.uiautomator2.server.test' is not installed
+dbug AndroidUiautomator2Driver@155b Server packages status: [{"installState":"notInstalled","appPath":"/Users/hugues_mini/Codes/AgentTools/jev-ios-bridge/.worktrees/feat/appium-mcp-migration/.scratch/appium-mcp-migration/candidate-stack/node_modules/appium-uiautomator2-driver/node_modules/appium-uiautomator2-server/apks/appium-uiautomator2-server-v10.6.6.apk","appId":"io.appium.uiautomator2.server"},{"installState":"notInstalled","appPath":"/Users/hugues_mini/Codes/AgentTools/jev-ios-bridge/.worktrees/feat/appium-mcp-migration/.scratch/appium-mcp-migration/candidate-stack/node_modules/appium-uiautomator2-driver/node_modules/appium-uiautomator2-server/apks/appium-uiautomator2-server-debug-androidTest.apk","appId":"io.appium.uiautomator2.server.test"}]
+info AndroidUiautomator2Driver@155b Server packages are going to be (re)installed
+dbug ADB Running '/Users/hugues_mini/Library/Android/sdk/platform-tools/adb -P 5037 -s emulator-5570 version'
+dbug ADB Running '/Users/hugues_mini/Library/Android/sdk/platform-tools/adb -P 5037 -s emulator-5570 features'
+dbug ADB Running '/Users/hugues_mini/Library/Android/sdk/platform-tools/adb -P 5037 -s emulator-5570 install -r --no-incremental /Users/hugues_mini/Codes/AgentTools/jev-ios-bridge/.worktrees/feat/appium-mcp-migration/.scratch/appium-mcp-migration/candidate-stack/node_modules/appium-uiautomator2-driver/node_modules/appium-uiautomator2-server/apks/appium-uiautomator2-server-v10.6.6.apk'
+dbug ADB Running '/Users/hugues_mini/Library/Android/sdk/platform-tools/adb -P 5037 -s emulator-5570 install -r --no-incremental /Users/hugues_mini/Codes/AgentTools/jev-ios-bridge/.worktrees/feat/appium-mcp-migration/.scratch/appium-mcp-migration/candidate-stack/node_modules/appium-uiautomator2-driver/node_modules/appium-uiautomator2-server/apks/appium-uiautomator2-server-debug-androidTest.apk'
+info ADB The installation of 'appium-uiautomator2-server-debug-androidTest.apk' took 1117ms
+dbug ADB Install command stdout: Performing Streamed Install
+dbug ADB Success
+info ADB The installation of 'appium-uiautomator2-server-v10.6.6.apk' took 1252ms
+dbug ADB Install command stdout: Performing Streamed Install
+dbug ADB Success
+dbug AndroidUiautomator2Driver@155b Waiting up to 30000ms for services to be available
+dbug ADB Running '/Users/hugues_mini/Library/Android/sdk/platform-tools/adb -P 5037 -s emulator-5570 shell pm list instrumentation'
+dbug AndroidUiautomator2Driver@155b Instrumentation target 'io.appium.uiautomator2.server.test/androidx.test.runner.AndroidJUnitRunner' is available
+info ADB Adding packages ["io.appium.settings","io.appium.uiautomator2.server","io.appium.uiautomator2.server.test"] to Doze whitelist
+dbug ADB Got the following command chunks to execute: [["dumpsys","deviceidle","whitelist","+io.appium.settings",";","dumpsys","deviceidle","whitelist","+io.appium.uiautomator2.server",";","dumpsys","deviceidle","whitelist","+io.appium.uiautomator2.server.test",";"]]
+dbug ADB Running '/Users/hugues_mini/Library/Android/sdk/platform-tools/adb -P 5037 -s emulator-5570 shell dumpsys deviceidle whitelist +io.appium.settings ; dumpsys deviceidle whitelist +io.appium.uiautomator2.server ; dumpsys deviceidle whitelist +io.appium.uiautomator2.server.test ;'
+dbug AndroidUiautomator2Driver@155b Performing shallow cleanup of automation leftovers
+dbug AndroidUiautomator2Driver@155b No obsolete sessions have been detected (socket hang up)
+dbug ADB Running '/Users/hugues_mini/Library/Android/sdk/platform-tools/adb -P 5037 -s emulator-5570 shell am force-stop io.appium.uiautomator2.server'
+dbug ADB Running '/Users/hugues_mini/Library/Android/sdk/platform-tools/adb -P 5037 -s emulator-5570 shell am force-stop io.appium.uiautomator2.server.test'
+info AndroidUiautomator2Driver@155b Starting UIAutomator2 server 10.6.6
+info AndroidUiautomator2Driver@155b Using UIAutomator2 server from '/Users/hugues_mini/Codes/AgentTools/jev-ios-bridge/.worktrees/feat/appium-mcp-migration/.scratch/appium-mcp-migration/candidate-stack/node_modules/appium-uiautomator2-driver/node_modules/appium-uiautomator2-server/apks/appium-uiautomator2-server-v10.6.6.apk' and test from '/Users/hugues_mini/Codes/AgentTools/jev-ios-bridge/.worktrees/feat/appium-mcp-migration/.scratch/appium-mcp-migration/candidate-stack/node_modules/appium-uiautomator2-driver/node_modules/appium-uiautomator2-server/apks/appium-uiautomator2-server-debug-androidTest.apk'
+info AndroidUiautomator2Driver@155b Waiting up to 30000ms for UiAutomator2 to be online...
+dbug ADB Creating ADB subprocess with args: ["-P","5037","-s","emulator-5570","shell","am","instrument","-w","-e","disableAnalytics","true","io.appium.uiautomator2.server.test/androidx.test.runner.AndroidJUnitRunner"]
+dbug AndroidUiautomator2Driver@155b Matched '/status' to command name 'getStatus'
+dbug AndroidUiautomator2Driver@155b Proxying [GET /status] to [GET http://127.0.0.1:18200/status] with no body
+info AndroidUiautomator2Driver@155b socket hang up
+dbug AndroidUiautomator2Driver@155b Matched '/status' to command name 'getStatus'
+dbug AndroidUiautomator2Driver@155b Proxying [GET /status] to [GET http://127.0.0.1:18200/status] with no body
+info AndroidUiautomator2Driver@155b socket hang up
+dbug AndroidUiautomator2Driver@155b Matched '/status' to command name 'getStatus'
+dbug AndroidUiautomator2Driver@155b Proxying [GET /status] to [GET http://127.0.0.1:18200/status] with no body
+info AndroidUiautomator2Driver@155b socket hang up
+dbug AndroidUiautomator2Driver@155b [Instrumentation] 
+dbug AndroidUiautomator2Driver@155b Matched '/status' to command name 'getStatus'
+dbug AndroidUiautomator2Driver@155b Proxying [GET /status] to [GET http://127.0.0.1:18200/status] with no body
+info AndroidUiautomator2Driver@155b socket hang up
+dbug AndroidUiautomator2Driver@155b Matched '/status' to command name 'getStatus'
+dbug AndroidUiautomator2Driver@155b Proxying [GET /status] to [GET http://127.0.0.1:18200/status] with no body
+dbug AndroidUiautomator2Driver@155b Got response with status 200: {"sessionId":"None","value":{"build":{"version":"10.6.6","versionCode":278},"message":"UiAutomator2 Server is ready to accept commands","ready":true}}
+dbug AndroidUiautomator2Driver@155b The initialization of the instrumentation process took 4148ms
+dbug AndroidUiautomator2Driver@155b Matched '/session' to command name 'createSession'
+dbug AndroidUiautomator2Driver@155b Proxying [POST /session] to [POST http://127.0.0.1:18200/session] with body: {"capabilities":{"firstMatch":[{"platformName":"Android","automationName":"UiAutomator2","deviceName":"emulator-5570","settings[actionAcknowledgmentTimeout]":0,"settings[waitForIdleTimeout]":0,"settings[waitForSelectorTimeout]":0,"autoGrantPermissions":true,"newCommandTimeout":300,"udid":"emulator-5570","appPackage":"dev.jevbridge.diagnostic","appActivity":".MainActivity","systemPort":18200,"mjpegServerPort":18201,"uiautomator2ServerInstallTimeout":120000,"adbExecTimeout":120000,"noReset":true,"shouldTerminateApp":true,"platform":"LINUX","webStorageEnabled":false,"takesScreenshot":true,"javascriptEnabled":true,"databaseEnabled":false,"networkConnectionEnabled":true,"locationContextEnabled":false,"warnings":{},"desired":{"platformName":"Android","automationName":"UiAutomator2","deviceName":"Android Device","settings[actionAcknowledgmentTimeout]":0,"settings[waitForIdleTimeout]":0,"settings[waitForSelectorTimeout]":0,"autoGrantPermissions":true,"newCommandTimeout":300,"udid":"emulator-5570","appPackage":"dev.j…
+dbug AndroidUiautomator2Driver@155b Got response with status 200: {"sessionId":"ce143284-cb67-4785-818b-608b149823ca","value":{"capabilities":{"firstMatch":[{"platformName":"Android","automationName":"UiAutomator2","deviceName":"emulator-5570","settings[actionAcknowledgmentTimeout]":0,"settings[waitForIdleTimeout]":0,"settings[waitForSelectorTimeout]":0,"autoGrantPermissions":true,"newCommandTimeout":300,"udid":"emulator-5570","appPackage":"dev.jevbridge.diagnostic","appActivity":".MainActivity","systemPort":18200,"mjpegServerPort":18201,"uiautomator2ServerInstallTimeout":120000,"adbExecTimeout":120000,"noReset":true,"shouldTerminateApp":true,"platform":"LINUX","webStorageEnabled":false,"takesScreenshot":true,"javascriptEnabled":true,"databaseEnabled":false,"networkConnectionEnabled":true,"locationContextEnabled":false,"warnings":{},"desired":{"platformName":"Android","automationName":"UiAutomator2","deviceName":"Android Device","settings[actionAcknowledgmentTimeout]":0,"settings[waitForIdleTimeout]":0,"settings[waitForSelectorTimeout]":0,"autoGrantPermissions":true,"newCo…
+info AndroidUiautomator2Driver@155b Determined the downstream protocol as 'W3C'
+dbug AndroidUiautomator2Driver@155b Proxying [GET /appium/device/pixel_ratio] to [GET http://127.0.0.1:18200/session/ce143284-cb67-4785-818b-608b149823ca/appium/device/pixel_ratio] with no body
+dbug AndroidUiautomator2Driver@155b Proxying [GET /appium/device/system_bars] to [GET http://127.0.0.1:18200/session/ce143284-cb67-4785-818b-608b149823ca/appium/device/system_bars] with no body
+dbug AndroidUiautomator2Driver@155b Proxying [GET /window/current/size] to [GET http://127.0.0.1:18200/session/ce143284-cb67-4785-818b-608b149823ca/window/current/size] with no body
+dbug AndroidUiautomator2Driver@155b Proxying [GET /appium/device/info] to [GET http://127.0.0.1:18200/session/ce143284-cb67-4785-818b-608b149823ca/appium/device/info] with no body
+dbug ADB Running '/Users/hugues_mini/Library/Android/sdk/platform-tools/adb -P 5037 -s emulator-5570 shell dumpsys window'
+dbug ADB Running '/Users/hugues_mini/Library/Android/sdk/platform-tools/adb -P 5037 -s emulator-5570 shell dumpsys power'
+dbug AndroidUiautomator2Driver@155b Got response with status 200: {"sessionId":"ce143284-cb67-4785-818b-608b149823ca","value":{"height":640,"width":320}}
+dbug AndroidUiautomator2Driver@155b Got response with status 200: {"sessionId":"ce143284-cb67-4785-818b-608b149823ca","value":{"statusBar":24}}
+dbug AndroidUiautomator2Driver@155b Got response with status 200: {"sessionId":"ce143284-cb67-4785-818b-608b149823ca","value":1}
+dbug AndroidUiautomator2Driver@155b Got response with status 200: {"sessionId":"ce143284-cb67-4785-818b-608b149823ca","value":{"androidId":"c8e28f9cf666c1b6","apiVersion":"36","bluetooth":{"state":"ON"},"brand":"google","carrierName":"T-Mobile","displayDensity":160,"locale":"en_US","manufacturer":"Google","model":"sdk_gphone64_arm64","networks":[{"capabilities":{"SSID":null,"linkDownBandwidthKbps":30000,"linkUpstreamBandwidthKbps":12000,"networkCapabilities":"NET_CAPABILITY_NOT_METERED,NET_CAPABILITY_INTERNET,NET_CAPABILITY_NOT_RESTRICTED,NET_CAPABILITY_TRUSTED,NET_CAPABILITY_NOT_VPN,NET_CAPABILITY_VALIDATED,NET_CAPABILITY_NOT_ROAMING,NET_CAPABILITY_FOREGROUND,NET_CAPABILITY_NOT_CONGESTED,NET_CAPABILITY_NOT_SUSPENDED","signalStrength":-50,"transportTypes":"TRANSPORT_WIFI"},"detailedState":"CONNECTED","extraInfo":"","isAvailable":true,"isConnected":true,"isFailover":false,"isRoaming":false,"state":"CONNECTED","subtype":-1,"subtypeName":"","type":1,"typeName":"WIFI"}],"platformVersion":"16","realDisplaySize":"320x640","timeZone":"Asia/Ho_Chi_Minh"}}
+info AndroidUiautomator2Driver@155b Screen already unlocked, doing nothing
+info AndroidUiautomator2Driver@155b Starting 'dev.jevbridge.diagnostic/.MainActivityand waiting for 'dev.jevbridge.diagnostic/.MainActivity'
+dbug ADB Getting IDs of all 'dev.jevbridge.diagnostic' processes
+dbug ADB Running '/Users/hugues_mini/Library/Android/sdk/platform-tools/adb -P 5037 -s emulator-5570 shell ps --help'
+dbug ADB Running '/Users/hugues_mini/Library/Android/sdk/platform-tools/adb -P 5037 -s emulator-5570 shell ps -A'
+dbug ADB Running '/Users/hugues_mini/Library/Android/sdk/platform-tools/adb -P 5037 -s emulator-5570 shell am start-activity -W -n dev.jevbridge.diagnostic/.MainActivity -S -a android.intent.action.MAIN -c android.intent.category.LAUNCHER -f 0x10200000'
+info appium-mcp ANDROID session created successfully with ID: 936e3e37-761f-413f-8f13-235d511be10d
+info appium-mcp {"tool":"appium_session_management","durationMs":12200,"isError":false}
+info appium-mcp [TOOL START] appium_get_page_source {
+info appium-mcp   saveToFile: false,
+info appium-mcp   sessionId: '936e3e37-761f-413f-8f13-235d511be10d'
+info appium-mcp }
+dbug AndroidUiautomator2Driver@155b Matched '/source' to command name 'getPageSource'
+dbug AndroidUiautomator2Driver@155b Proxying [GET /source] to [GET http://127.0.0.1:18200/session/ce143284-cb67-4785-818b-608b149823ca/source] with no body
+dbug AndroidUiautomator2Driver@155b Got response with status 200: {"sessionId":"ce143284-cb67-4785-818b-608b149823ca","value":"<?xml version='1.0' encoding='UTF-8' standalone='yes' ?>\r\n<hierarchy index=\"0\" class=\"hierarchy\" rotation=\"0\" width=\"320\" height=\"640\">\r\n  <android.widget.FrameLayout index=\"0\" package=\"dev.jevbridge.diagnostic\" class=\"android.widget.FrameLayout\" text=\"\" checkable=\"false\" checked=\"false\" clickable=\"false\" enabled=\"true\" focusable=\"false\" focused=\"false\" long-clickable=\"false\" password=\"false\" scrollable=\"false\" selected=\"false\" bounds=\"[0,0][320,640]\" displayed=\"true\" a11y-important=\"true\" screen-reader-focusable=\"false\" drawing-order=\"0\" showing-hint=\"false\" text-entry-key=\"false\" dismissable=\"false\" a11y-focused=\"false\" heading=\"false\" live-region=\"0\" context-clickable=\"false\" content-invalid=\"false\" window-id=\"8\">\r\n    <android.widget.LinearLayout index=\"0\" package=\"dev.jevbridge.diagnostic\" class=\"android.widget.LinearLayout\" text=\"\" checkable=\"false\" checked=\"fa…
+info appium-mcp {"tool":"appium_get_page_source","durationMs":139,"sessionId":"936e3e37-761f-413f-8f13-235d511be10d","isError":false}
+info appium-mcp [TOOL START] appium_find_elements {
+info appium-mcp   strategy: 'xpath',
+info appium-mcp   selector: "//*[@resource-id='choose.apple']",
+info appium-mcp   sessionId: '936e3e37-761f-413f-8f13-235d511be10d'
+info appium-mcp }
+dbug AndroidUiautomator2Driver@155b Valid locator strategies for this request: xpath, id, class name, accessibility id, css selector, -android uiautomator
+dbug AndroidUiautomator2Driver@155b Waiting up to 0 ms for condition
+dbug AndroidUiautomator2Driver@155b Matched '/elements' to command name 'findElements'
+dbug AndroidUiautomator2Driver@155b Proxying [POST /elements] to [POST http://127.0.0.1:18200/session/ce143284-cb67-4785-818b-608b149823ca/elements] with body: {"strategy":"xpath","selector":"//*[@resource-id='choose.apple']","context":"","multiple":true}
+dbug AndroidUiautomator2Driver@155b Got response with status 200: {"sessionId":"ce143284-cb67-4785-818b-608b149823ca","value":[{"ELEMENT":"00000000-0000-0008-0000-000700000004","element-6066-11e4-a52e-4f735466cecf":"00000000-0000-0008-0000-000700000004"}]}
+info appium-mcp {"tool":"appium_find_elements","durationMs":790,"sessionId":"936e3e37-761f-413f-8f13-235d511be10d","isError":false}
+info appium-mcp [TOOL START] appium_gesture {
+info appium-mcp   action: 'tap',
+info appium-mcp   elementUUID: '00000000-0000-0008-0000-000700000004',
+info appium-mcp   maxScrollAttempts: 10,
+info appium-mcp   sessionId: '936e3e37-761f-413f-8f13-235d511be10d'
+info appium-mcp }
+dbug AndroidUiautomator2Driver@155b Matched '/element/00000000-0000-0008-0000-000700000004/click' to command name 'click'
+dbug AndroidUiautomator2Driver@155b Proxying [POST /element/00000000-0000-0008-0000-000700000004/click] to [POST http://127.0.0.1:18200/session/ce143284-cb67-4785-818b-608b149823ca/element/00000000-0000-0008-0000-000700000004/click] with body: {"element":"00000000-0000-0008-0000-000700000004"}
+dbug AndroidUiautomator2Driver@155b Got response with status 200: {"sessionId":"ce143284-cb67-4785-818b-608b149823ca","value":null}
+info appium-mcp {"tool":"appium_gesture","durationMs":210,"sessionId":"936e3e37-761f-413f-8f13-235d511be10d","isError":false}
+info appium-mcp [TOOL START] appium_get_page_source {
+info appium-mcp   saveToFile: false,
+info appium-mcp   sessionId: '936e3e37-761f-413f-8f13-235d511be10d'
+info appium-mcp }
+dbug AndroidUiautomator2Driver@155b Matched '/source' to command name 'getPageSource'
+dbug AndroidUiautomator2Driver@155b Proxying [GET /source] to [GET http://127.0.0.1:18200/session/ce143284-cb67-4785-818b-608b149823ca/source] with no body
+dbug AndroidUiautomator2Driver@155b Got response with status 200: {"sessionId":"ce143284-cb67-4785-818b-608b149823ca","value":"<?xml version='1.0' encoding='UTF-8' standalone='yes' ?>\r\n<hierarchy index=\"0\" class=\"hierarchy\" rotation=\"0\" width=\"320\" height=\"640\">\r\n  <android.widget.FrameLayout index=\"0\" package=\"dev.jevbridge.diagnostic\" class=\"android.widget.FrameLayout\" text=\"\" checkable=\"false\" checked=\"false\" clickable=\"false\" enabled=\"true\" focusable=\"false\" focused=\"false\" long-clickable=\"false\" password=\"false\" scrollable=\"false\" selected=\"false\" bounds=\"[0,0][320,640]\" displayed=\"true\" a11y-important=\"true\" screen-reader-focusable=\"false\" drawing-order=\"0\" showing-hint=\"false\" text-entry-key=\"false\" dismissable=\"false\" a11y-focused=\"false\" heading=\"false\" live-region=\"0\" context-clickable=\"false\" content-invalid=\"false\" window-id=\"8\">\r\n    <android.widget.LinearLayout index=\"0\" package=\"dev.jevbridge.diagnostic\" class=\"android.widget.LinearLayout\" text=\"\" checkable=\"false\" checked=\"fa…
+info appium-mcp {"tool":"appium_get_page_source","durationMs":647,"sessionId":"936e3e37-761f-413f-8f13-235d511be10d","isError":false}
+info appium-mcp [TOOL START] appium_screenshot {
+info appium-mcp   returnRawBase64: true,
+info appium-mcp   sessionId: '936e3e37-761f-413f-8f13-235d511be10d'
+info appium-mcp }
+dbug AndroidUiautomator2Driver@155b Matched '/screenshot' to command name 'getScreenshot'
+dbug AndroidUiautomator2Driver@155b Proxying [GET /screenshot] to [GET http://127.0.0.1:18200/session/ce143284-cb67-4785-818b-608b149823ca/screenshot] with no body
+dbug AndroidUiautomator2Driver@155b Got response with status 200: {"sessionId":"ce143284-cb67-4785-818b-608b149823ca","value":"iVBORw0KGgoAAAANSUhEUgAAAUAAAAKACAIAAABi8jbUAAAAA3NCSVQICAjb4U/gAAAAAXNSR0IArs4c6QAAIABJREFUeJzt3Wd8FNXeB/D/bN9sNr0nQAghJIReBZQmYAGxoCJW7F0pevVar93ro2K9FhQb2AuioKA0pXcCKSQhjYSUTU+2ZNs8LyYMS8pmd3YDHPP7fvJicubMzNnZ/e2ZusM5zTwBAJtkZ7oBACAdAgzAMAQYgGEIMADDFGe6AQBnnQxL3huGLzc177U4rV5NqJGpJgeOXBB57RBN/25qWxuc/49Cc0REJGGukieEHkhOnJLISbybiMmJkxFxJ/741j/eSeTodKIMS95lhYu9ja4rjUy1su9rpyfDUjehZcQpiVO3K1Sf+FOdCGRHOCVxGpeFezwhgICTE1Hnn185cUriFERigOnEgIw4BXHKTqd9w/ClL+klIovT+obhy9Z2anyZU9ekbEJzKiIZEd82aZyCiG/9RuRUxCmIt3U0vYxILmlC6MlkxKmIeOJbiMjtlpqCONmJfPJETpfK3IlIy4njiHcS2dtOval5r++NtfBWEpLi9H1m7kgJMO8gsrV2widxRDLiba0ri3ec+I4kIvmJ9ShUVBI5XDLsZkKAEzghkEIC3aaCkxNxRE7inaeml07OQUg4xxHfLsA+dr9ENF435MveL7T2c2dhgDvefxB6Y7G5/MkdD05B5CDeSSR0tm1S2vmE0NMJUbQTdbDB1yneQRwRL0aXc5lS2A12EO8kTtZdH7FFkde3br0Ly1edWLiv3wwd8N9R6M7Xbus2DxHJiBTEW08NJ/Z4oUNc6yYez7s75tQBO/FCB+B6EEvgchCL57ulk/g+8ZUJwUNOBkvc027X1fvFaT2NJHTF5ERowQO+fEh4ImFbWtwT5k9sfhNxHPGObt7EE+Iq7orbO9hW9wv/BbjL1aEgkhFvJ1…
+info appium-mcp {"tool":"appium_screenshot","durationMs":438,"sessionId":"936e3e37-761f-413f-8f13-235d511be10d","isError":false}
+info appium-mcp [TOOL START] appium_session_management { action: 'delete', sessionId: '936e3e37-761f-413f-8f13-235d511be10d' }
+info appium-mcp Deleting session 936e3e37-761f-413f-8f13-235d511be10d
+info BaseDriver Unsubscribing 155bc0ad-2907-4dca-9f88-24caae1a99d5 from topic 'uiautomator2:sessionUdidClaimed'
+dbug AndroidUiautomator2Driver@155b Deleting UiAutomator2 session
+dbug AndroidUiautomator2Driver@155b Deleting UiAutomator2 server session
+dbug AndroidUiautomator2Driver@155b Proxying [DELETE /] to [DELETE http://127.0.0.1:18200/session/ce143284-cb67-4785-818b-608b149823ca] with no body
+dbug AndroidUiautomator2Driver@155b Got response with status 200: {"sessionId":"ce143284-cb67-4785-818b-608b149823ca","value":null}
+dbug ADB Getting IDs of all 'io.appium.uiautomator2.server' processes
+dbug ADB Running '/Users/hugues_mini/Library/Android/sdk/platform-tools/adb -P 5037 -s emulator-5570 shell ps -A'
+dbug AndroidUiautomator2Driver@155b [Instrumentation] io.appium.uiautomator2.server.test.AppiumUiAutomator2Server:.
+dbug AndroidUiautomator2Driver@155b [Instrumentation] 
+dbug AndroidUiautomator2Driver@155b [Instrumentation] Time: 7.293
+dbug AndroidUiautomator2Driver@155b [Instrumentation] 
+dbug AndroidUiautomator2Driver@155b [Instrumentation] OK (1 test)
+dbug AndroidUiautomator2Driver@155b [Instrumentation] 
+dbug AndroidUiautomator2Driver@155b [Instrumentation] 
+dbug AndroidUiautomator2Driver@155b [Instrumentation] The process has exited with code 0, signal null
+dbug ADB Getting IDs of all 'io.appium.uiautomator2.server' processes
+dbug ADB Running '/Users/hugues_mini/Library/Android/sdk/platform-tools/adb -P 5037 -s emulator-5570 shell ps -A'
+dbug ADB Running '/Users/hugues_mini/Library/Android/sdk/platform-tools/adb -P 5037 -s emulator-5570 shell am force-stop io.appium.uiautomator2.server'
+dbug ADB Running '/Users/hugues_mini/Library/Android/sdk/platform-tools/adb -P 5037 -s emulator-5570 shell am force-stop io.appium.uiautomator2.server.test'
+dbug ADB Running '/Users/hugues_mini/Library/Android/sdk/platform-tools/adb -P 5037 -s emulator-5570 shell dumpsys activity services io.appium.settings/.recorder.RecorderService'
+dbug ADB Running '/Users/hugues_mini/Library/Android/sdk/platform-tools/adb -P 5037 -s emulator-5570 shell am force-stop dev.jevbridge.diagnostic'
+dbug ADB Removing forwarded port socket connection: 18200 
+dbug ADB Running '/Users/hugues_mini/Library/Android/sdk/platform-tools/adb -P 5037 -s emulator-5570 forward --remove tcp:18200'
+dbug ADB Removing forwarded port socket connection: 18201 
+dbug ADB Running '/Users/hugues_mini/Library/Android/sdk/platform-tools/adb -P 5037 -s emulator-5570 forward --remove tcp:18201'
+info AndroidUiautomator2Driver@155b Restoring hidden api policy to the device default configuration
+dbug ADB Running '/Users/hugues_mini/Library/Android/sdk/platform-tools/adb -P 5037 -s emulator-5570 shell 'settings delete global hidden_api_policy_pre_p_apps;settings delete global hidden_api_policy_p_apps;settings delete global hidden_api_policy''
+dbug Logcat Stopping logcat capture
+info appium-mcp Session 936e3e37-761f-413f-8f13-235d511be10d deleted successfully.
+info appium-mcp {"tool":"appium_session_management","durationMs":1061,"sessionId":"936e3e37-761f-413f-8f13-235d511be10d","isError":false}

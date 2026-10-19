@@ -1,0 +1,24 @@
+{
+  "case": "phase1-ios-normal-owner-retry-20261018",
+  "platform": "ios",
+  "faultMode": "normal",
+  "status": "failed",
+  "checks": {
+    "casePassed": false,
+    "oneCreation": true,
+    "expectedActions": true,
+    "dispatchClosed": true,
+    "completeNativeFence": false,
+    "hostStopped": true,
+    "childrenStopped": true,
+    "onePostStopScan": true,
+    "coverageVerified": false,
+    "sharedServicesPreserved": true,
+    "nativeFenceWhileRunning": true,
+    "housekeepingOffline": true,
+    "researchLeaseRetained": true,
+    "commandsAccounted": true
+  },
+  "passed": false,
+  "evidence": ".scratch/appium-mcp-migration/evidence/live-protocol/phase1-ios-normal-owner-retry-20261018"
+}

@@ -1,0 +1,87 @@
+{
+  "case": "phase1-ios-cancel-post-reboot-20261019",
+  "readOnly": true,
+  "privateSet": "/Users/hugues_mini/Codes/AgentTools/jev-ios-bridge/.worktrees/feat/appium-mcp-migration/.scratch/appium-mcp-migration/runtime/devices/simulators",
+  "device": "15013501-2535-42EB-A67F-45B015DF18F4",
+  "loadSamples": [
+    {
+      "atUTC": "2026-10-19T00:51:22.817197+00:00",
+      "loadAverage": [
+        191.77880859375,
+        69.02294921875,
+        30.03173828125
+      ]
+    },
+    {
+      "atUTC": "2026-10-19T00:51:52.818156+00:00",
+      "loadAverage": [
+        123.48046875,
+        64.3193359375,
+        29.68408203125
+      ]
+    },
+    {
+      "atUTC": "2026-10-19T00:52:22.822807+00:00",
+      "loadAverage": [
+        75.23095703125,
+        58.26708984375,
+        28.68798828125
+      ]
+    },
+    {
+      "atUTC": "2026-10-19T00:52:52.827875+00:00",
+      "loadAverage": [
+        46.3330078125,
+        52.87353515625,
+        27.75634765625
+      ]
+    },
+    {
+      "atUTC": "2026-10-19T00:53:22.831764+00:00",
+      "loadAverage": [
+        28.51953125,
+        47.93017578125,
+        26.83349609375
+      ]
+    },
+    {
+      "atUTC": "2026-10-19T00:53:52.838033+00:00",
+      "loadAverage": [
+        17.87451171875,
+        43.49169921875,
+        25.9541015625
+      ]
+    },
+    {
+      "atUTC": "2026-10-19T00:54:22.843732+00:00",
+      "loadAverage": [
+        11.5478515625,
+        39.50927734375,
+        25.11669921875
+      ]
+    },
+    {
+      "atUTC": "2026-10-19T00:54:52.849944+00:00",
+      "loadAverage": [
+        7.33154296875,
+        35.8115234375,
+        24.27392578125
+      ]
+    }
+  ],
+  "preflightPassed": true,
+  "command": [
+    "xcrun",
+    "simctl",
+    "--set",
+    "/Users/hugues_mini/Codes/AgentTools/jev-ios-bridge/.worktrees/feat/appium-mcp-migration/.scratch/appium-mcp-migration/runtime/devices/simulators",
+    "list",
+    "devices",
+    "-j"
+  ],
+  "exitCode": 0,
+  "stdout": "{\n  \"devices\" : {\n    \"com.apple.CoreSimulator.SimRuntime.iOS-27-0\" : [\n\n    ],\n    \"com.apple.CoreSimulator.SimRuntime.iOS-26-5\" : [\n      {\n        \"dataPath\" : \"\\/Users\\/hugues_mini\\/Codes\\/AgentTools\\/jev-ios-bridge\\/.worktrees\\/feat\\/appium-mcp-migration\\/.scratch\\/appium-mcp-migration\\/runtime\\/devices\\/simulators\\/15013501-2535-42EB-A67F-45B015DF18F4\\/data\",\n        \"dataPathSize\" : 2088857600,\n        \"logPath\" : \"\\/Users\\/hugues_mini\\/Library\\/Logs\\/CoreSimulator\\/15013501-2535-42EB-A67F-45B015DF18F4\",\n        \"udid\" : \"15013501-2535-42EB-A67F-45B015DF18F4\",\n        \"lastUsedAt\" : \"2026-10-19T00:50:34Z\",\n        \"isAvailable\" : true,\n        \"logPathSize\" : 393216,\n        \"deviceTypeIdentifier\" : \"com.apple.CoreSimulator.SimDeviceType.iPhone-17\",\n        \"state\" : \"Shutdown\",\n        \"name\" : \"jev-appium-phase1-20261018\"\n      }\n    ]\n  }\n}\n",
+  "stderr": "",
+  "elapsedSeconds": 0.228,
+  "deviceState": "Shutdown"
+}

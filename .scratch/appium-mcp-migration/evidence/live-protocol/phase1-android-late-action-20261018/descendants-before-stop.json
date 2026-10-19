@@ -1,0 +1,87 @@
+{
+  "version": 2,
+  "mode": "snapshot",
+  "scanCount": 1,
+  "readOnly": true,
+  "inspectionComplete": true,
+  "sharedServicesStopped": false,
+  "verified": true,
+  "quarantined": false,
+  "candidates": [
+    {
+      "pid": 2349,
+      "ppid": 97074,
+      "pgid": 2349,
+      "state": "Ss",
+      "sid": 2349,
+      "markerState": "present",
+      "incarnation": "darwin:1792338378:717167",
+      "active": true,
+      "runMarker": "605882c151d34cc1a3d3016838dc4b1e",
+      "launchChain": [
+        {
+          "pid": 2349,
+          "incarnation": "darwin:1792338378:717167"
+        }
+      ],
+      "owned": true,
+      "excludedSharedService": false,
+      "ownerPid": 2349,
+      "ownerIncarnation": "darwin:1792338378:717167",
+      "reason": null
+    },
+    {
+      "pid": 2793,
+      "ppid": 2349,
+      "pgid": 2349,
+      "state": "S",
+      "sid": 2349,
+      "markerState": "present",
+      "incarnation": "darwin:1792338385:91811",
+      "active": true,
+      "runMarker": "605882c151d34cc1a3d3016838dc4b1e",
+      "launchChain": [
+        {
+          "pid": 2349,
+          "incarnation": "darwin:1792338378:717167"
+        },
+        {
+          "pid": 2793,
+          "incarnation": "darwin:1792338385:91811"
+        }
+      ],
+      "owned": true,
+      "excludedSharedService": false,
+      "ownerPid": 2349,
+      "ownerIncarnation": "darwin:1792338378:717167",
+      "reason": null
+    },
+    {
+      "pid": 3115,
+      "ppid": 2349,
+      "pgid": 2349,
+      "state": "S",
+      "sid": 2349,
+      "markerState": "present",
+      "incarnation": "darwin:1792338387:152947",
+      "active": true,
+      "runMarker": "605882c151d34cc1a3d3016838dc4b1e",
+      "launchChain": [
+        {
+          "pid": 2349,
+          "incarnation": "darwin:1792338378:717167"
+        },
+        {
+          "pid": 3115,
+          "incarnation": "darwin:1792338387:152947"
+        }
+      ],
+      "owned": true,
+      "excludedSharedService": false,
+      "ownerPid": 2349,
+      "ownerIncarnation": "darwin:1792338378:717167",
+      "reason": null
+    }
+  ],
+  "unverifiedComponents": []
+}

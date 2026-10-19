@@ -1,0 +1,40 @@
+{
+  "observedAtUTC": "2026-10-19T00:49:13.932758+00:00",
+  "ownerRebootReport": "2026-10-19 about 07:45 Asia/Ho_Chi_Minh",
+  "ownerDiagnosis": "Lost-action startup was environmental: hung shared CoreSimulatorService; fresh case authorized after reboot",
+  "readOnly": true,
+  "privateSet": "/Users/hugues_mini/Codes/AgentTools/jev-ios-bridge/.worktrees/feat/appium-mcp-migration/.scratch/appium-mcp-migration/runtime/devices/simulators",
+  "device": "15013501-2535-42EB-A67F-45B015DF18F4",
+  "command": [
+    "xcrun",
+    "simctl",
+    "--set",
+    "/Users/hugues_mini/Codes/AgentTools/jev-ios-bridge/.worktrees/feat/appium-mcp-migration/.scratch/appium-mcp-migration/runtime/devices/simulators",
+    "list",
+    "devices",
+    "-j"
+  ],
+  "loadAverage": [
+    11.69677734375,
+    20.6044921875,
+    10.72900390625
+  ],
+  "sharedServicesRestarted": false,
+  "otherDevicesControlled": false,
+  "cleanupVerified": true,
+  "exitCode": 0,
+  "stdout": "{\n  \"devices\" : {\n    \"com.apple.CoreSimulator.SimRuntime.iOS-27-0\" : [\n\n    ],\n    \"com.apple.CoreSimulator.SimRuntime.iOS-26-5\" : [\n      {\n        \"dataPath\" : \"\\/Users\\/hugues_mini\\/Codes\\/AgentTools\\/jev-ios-bridge\\/.worktrees\\/feat\\/appium-mcp-migration\\/.scratch\\/appium-mcp-migration\\/runtime\\/devices\\/simulators\\/15013501-2535-42EB-A67F-45B015DF18F4\\/data\",\n        \"dataPathSize\" : 2077433856,\n        \"logPath\" : \"\\/Users\\/hugues_mini\\/Library\\/Logs\\/CoreSimulator\\/15013501-2535-42EB-A67F-45B015DF18F4\",\n        \"udid\" : \"15013501-2535-42EB-A67F-45B015DF18F4\",\n        \"lastUsedAt\" : \"2026-10-18T16:19:21Z\",\n        \"isAvailable\" : true,\n        \"logPathSize\" : 540672,\n        \"deviceTypeIdentifier\" : \"com.apple.CoreSimulator.SimDeviceType.iPhone-17\",\n        \"state\" : \"Shutdown\",\n        \"name\" : \"jev-appium-phase1-20261018\"\n      }\n    ]\n  }\n}\n",
+  "stderr": "",
+  "elapsedSeconds": 0.205,
+  "deviceState": "Shutdown",
+  "ports": [
+    {
+      "port": 18100,
+      "closed": true
+    },
+    {
+      "port": 18101,
+      "closed": true
+    }
+  ]
+}
