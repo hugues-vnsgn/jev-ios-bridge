@@ -1,7 +1,8 @@
 # Canonical device identity
 
 Type: grilling
-Status: open
+Status: claimed
+Claimed by: Claude Code (owner session)
 Labels: wayfinder:grilling
 Mode: HITL
 Parent: [Appium Phase 2 decision map](../map.md)
