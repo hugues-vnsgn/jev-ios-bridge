@@ -1,6 +1,6 @@
 # Phase 2 specification: profiles and one admission authority
 
-Status: behavior specified; lease retirement and legacy import decisions open; execution paused
+Status: behavior specified; legacy import decision open; execution paused
 Authority: [published spec](../spec.md), Decisions 9, 18 through 26;
 Testing Decisions 6, 15 through 19
 Context: [master handoff](../handoff.md), ADR-0008/0009/0011
@@ -311,11 +311,63 @@ session deletion, native component settlement, device lease availability,
 immutable attempt outcome and retained allocation capacity. Safe recovery keeps
 an uncertain outcome inconclusive and cannot reclaim retained allocations.
 
-Inspect/status is read-only. Explicit recovery diagnoses a recorded abandoned
-owner; it neither resumes a scenario nor clears an old exclusion from a fresh
-unrelated proof. Missing IDs/processes, unreachable devices and unknown coverage
+Inspect/status is read-only. Recovery of a recorded abandoned owner, whether
+explicit or at admission (below), neither resumes a scenario nor clears an old
+exclusion from a fresh unrelated proof. Missing IDs/processes, unreachable devices and unknown coverage
 retain uncertainty. Identical request retrieval has zero new device effects;
 changed identity/request conflicts preserve authoritative state.
+
+## Retiring DeviceLease as an ownership authority
+
+Decided in [Retiring DeviceLease as an ownership authority](../../appium-phase2/issues/06-device-lease-retirement.md) (owner, 2026-10-19).
+
+**One owner record.** Admission is the only record of who owns a device, on
+both platforms and every entry point. `src/device/lease.ts` stops deciding
+ownership; each of its jobs moves:
+
+| Today in `lease.ts` | Phase 2 home |
+| --- | --- |
+| `$TMPDIR` lock file per device | Compatibility marker only (below) |
+| `ownedProcesses` in the lock file (Mac-side streams, port forwards, agent PIDs) | Admission's component inventory, recorded before each start |
+| In-memory per-kind command ledger (`mobilebuildmcp`, `adb`, `agent`) | Admission's commands, every one committed before it is sent, each tied to its component |
+| `fence(kind)` / `settled(kind)` | Per-component stop evidence in fence receipts |
+| Android dead-holder reclaim and sweep | Recovery at admission (below) |
+| `track`/`settle`/`releaseLate` and the write queue | Stay in-process, in the class renamed (for example `OperationTracker`); never ownership |
+
+**Every command is recorded.** Read-only adb queries, screenshots, agent
+requests and MobileBuildMCP calls each commit an outstanding command before
+they are sent and a settlement after, because even a read-only query can outlive
+its owner and hold Android's single automation slot.
+
+**Compatibility marker.** The `$TMPDIR` lock file (`DEFAULT_LEASE_ROOT`) is
+written only after admission authorizes, and removed at release. It exists so
+v1.4.0 and older binaries see the device busy. Nothing reclaims it on process
+death, and no ownership decision reads it, except as follows. A leftover marker
+whose token admission recorded is replaced once admission frees the device. A
+marker admission does not know refuses `DEVICE_BUSY`, even when its process is
+dead, until Legacy lease import decides otherwise. The exclusivity limits for
+old binaries are unchanged.
+
+**Recovery at admission.** When a run finds the device's recorded owner dead
+(by PID and process start time, so a reused PID is not that owner), admission
+commits the recovery: closure and a `native` quarantine for that generation. The
+run then sweeps exactly that generation's recorded components, submits the stop
+evidence as a fence receipt, and proceeds only if the authority accepts it.
+Otherwise it refuses `DEVICE_QUARANTINED` and the quarantine stays. A later run
+may retry the same generation-bound sweep. iOS and Android behave the same: iOS
+gains this recovery, and Android loses reclaim on process death alone.
+
+**Stop evidence in Phase 2.** Besides the device agent's existing stop check:
+
+- adb command: its host adb client process (recorded PID and start time) has
+  exited, and the device's process list shows no process matching the recorded
+  command. The outcome stays uncertain; the command can no longer take effect.
+- Mac-side streams and port forwards: their process has exited or the forward
+  is gone.
+- MobileBuildMCP commands get no stop evidence, so an uncertain one keeps its
+  device quarantined, as v1.4.0 keeps the iOS lease today.
+
+Appium session and driver evidence is Phase 3 adapter work.
 
 ## Verification and exit
 
@@ -342,6 +394,11 @@ Through existing admission/maintenance and public integration seams, cover:
 - Cancellation before/after authorization, late replies, stale-owner proof,
   absent/incomplete native coverage and complete supported recovery: lease
   unavailable until proof; immutable history and capacity unchanged afterward.
+- Lease retirement: an owner killed with outstanding adb, agent and stream
+  components recovers at the next admission only after verified stop evidence;
+  a reused PID, an offline device, an unknown marker and an uncertain
+  MobileBuildMCP command each refuse; markers appear and disappear only with
+  admission ownership.
 - Store upgrades on isolated stores: 2 to 3 with preserved row counts and
   digests, crashes before and after COMMIT with checked `--recover`, identical
   rerun retrieval, `UPGRADE_BLOCKED` on active attempts, wrong-version openers

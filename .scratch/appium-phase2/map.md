@@ -35,6 +35,7 @@ real-store migration needs a separate owner go-ahead.
 - [Canonical device identity](issues/03-canonical-device-identity.md): identity = (category, value); simulator UDID, emulator `realpath(avd path)`, phone `ro.serialno`; `ios-phone` reserved; iOS rows and allocation IDs unchanged; live resolution, conflicts refuse.
 - [Evidenced release with immutable outcomes](issues/04-evidenced-release-state.md): authority-verified fence receipts free the lease; outcomes, capacity and append-only quarantines stay; historical, exclusion and unknown-creation quarantines not liftable in Phase 2; late replies are evidence only.
 - [Store schema evolution](issues/05-store-schema-evolution.md): explicit offline forward-only upgrades, exact version match, tool-taken backup, append-only receipts, checked recover, (category, value) key, immutability triggers, no downgrade (ADR-0012).
+- [Retiring DeviceLease as an ownership authority](issues/06-device-lease-retirement.md): admission is the only owner record; lock file kept as an old-binary marker; every command recorded; dead owners recovered at admission by generation-bound sweep; adb stop evidence; class renamed.
 
 ## Route
 
@@ -57,9 +58,8 @@ flowchart LR
     classDef claimed fill:#dbeafe,stroke:#2563eb,color:#1e3a8a
     classDef frontier fill:#dcfce7,stroke:#16a34a,color:#14532d,stroke-width:2px
     classDef blocked fill:#ffffff,stroke:#a1a1aa,color:#18181b
-    class T01,T02,T03,T04,T05 resolved
-    class T06 claimed
-    class T07 blocked
+    class T01,T02,T03,T04,T05,T06 resolved
+    class T07 frontier
 ```
 <!-- route:end -->
 
