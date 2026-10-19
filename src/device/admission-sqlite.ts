@@ -194,10 +194,9 @@ function step2to3(db: DatabaseSync, time: number): { historical: number; exclusi
   for (const row of old.transitions!) put('transitions',{...row,owner_generation_id:null,command_id:null});
   for (const row of old.unknown_creation!) put('unknown_creation',row);
   for (const row of old.imported_actions!) put('imported_actions',{...row,platform:'ios-simulator'});
-  const counts={historical:0,exclusion:0};
   for (const row of old.devices!) {
     if (row.state==='quarantined') {
-      const kind=row.reason==='protected-device'?'exclusion':'historical'; counts[kind]++;
+      const kind=row.reason==='protected-device'?'exclusion':'historical';
       put('quarantines',{id:sha(JSON.stringify(['schema3',old.metadata![0]!.installation_id,'ios-simulator',row.device,kind])),platform:'ios-simulator',device:row.device,legacy_name:null,kind,cause:row.reason??'historical-uncertainty',created_at:time,owner_generation_id:null,evidence:JSON.stringify({version:1,sourceSchema:2,state:row.state,reason:row.reason,timeMeaning:'conversion'}),source_path:null,source_sha256:null,covering_receipt_id:null});
     }
     if (row.state==='active') {
@@ -205,6 +204,11 @@ function step2to3(db: DatabaseSync, time: number): { historical: number; exclusi
       if (!parked) throw new AdmissionError('STATE_UNAVAILABLE','Active device has no parked allocation');
       db.prepare('UPDATE devices SET lease_generation_id=? WHERE platform=? AND device=?').run(generationId(parked.owner.token,parked.owner.generation),'ios-simulator',row.device);
     }
+  }
+  const counts={historical:0,exclusion:0};
+  for(const row of db.prepare('SELECT kind,count(*) AS count FROM quarantines GROUP BY kind').all()) {
+    if(row.kind!=='historical'&&row.kind!=='exclusion') throw new AdmissionError('STATE_UNAVAILABLE','Unexpected quarantine conversion kind');
+    counts[row.kind]=Number(row.count);
   }
   if(counts.historical+counts.exclusion!==old.devices!.filter(row=>row.state==='quarantined').length) throw new AdmissionError('STATE_UNAVAILABLE','Quarantine conversion count mismatch');
   schema3Triggers(db);
