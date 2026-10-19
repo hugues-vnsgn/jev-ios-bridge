@@ -263,6 +263,8 @@ Each live lane runs on its own cloud VM at the PR head. Drive through `control-u
 - [ ] Read emulator provenance through the read-only runner in `probe.ts` per Emulator provenance and Pre-admission identity probes. Remove the `avd || name` fallback in `driver.ts`.
 - [ ] Run every check in Identity and preflight before effects, and record the probe replies in the attempt intent once admitted.
 - [ ] Replace P2.2's fail-closed mixed-kind profile conflict with identity agreement, so aliases of one device agree and different identities refuse `PROFILE_CONFLICT`.
+- [ ] Carry the resolved emulator provenance (AVD name and the other recorded attributes) on the admission request and store it in the device attributes, so an emulator's first admission checks legacy-name quarantines (P2.3 audit, finding A12).
+- [ ] Record the profile binding in the Android attempt intent once Android is admitted (P2.2 audit).
 - [ ] Run one live trial on the private AVD only. Capture the exact console stdout for success, missing, empty and mismatched token, `offline` and a `-read-only` second instance as fixtures.
 
 **You see.**
@@ -378,6 +380,7 @@ Each live lane runs on its own cloud VM at the PR head. Drive through `control-u
 - [ ] Record each command with its component before it is sent, and turn outstanding commands uncertain at closure, per Release state contract and Every command is recorded.
 - [ ] Validate fence receipts in the authority with the ordered refusal table in Release. Derive availability from owner and covered quarantines, replacing `terminal()` setting device state.
 - [ ] Append late replies as observations, retrieve identical retries after a lost COMMIT, and recover a dead owner at admission under one exclusive recovery claim per generation.
+- [ ] Check that an inserted receipt's typed proof agrees with its staged membership rows before it can cover anything (P2.3 audit).
 
 **You see.**
 
