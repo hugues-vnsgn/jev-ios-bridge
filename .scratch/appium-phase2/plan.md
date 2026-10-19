@@ -255,7 +255,7 @@ Each live lane runs on its own cloud VM at the PR head. Drive through `control-u
 
 - [ ] Create `src/device/identity.ts` and `src/device/android/probe.ts`.
 - [ ] Edit `src/device/index.ts`, `src/device/android/driver.ts`, `src/device/factory.ts`, `src/scripted/vocabulary.ts` (identity codes only), `docs/guide/reference/reason-codes.md`, `tests/golden/vocabulary.json`, `tests/contract.test.ts`.
-- [ ] Create fixtures under `tests/fixtures/android/console/`. Edit `tests/android-device.test.ts`, `tests/android-driver.test.ts`, `tests/device.test.ts`, and the shared fake-device fixtures `tests/fixtures/android-device.ts`, `tests/fixtures/android/**` and `tests/fixtures/adb-spawn.ts`, for console provenance replay only. Also `tests/android-capture.test.ts`, `tests/start-attach.test.ts` and `tests/device-factory.test.ts`, for the new identity refusal codes only.
+- [ ] Create fixtures under `tests/fixtures/android/console/`. Edit `tests/android-device.test.ts`, `tests/android-driver.test.ts`, `tests/device.test.ts`, and the shared fake-device fixtures `tests/fixtures/android-device.ts`, `tests/fixtures/android/**` and `tests/fixtures/adb-spawn.ts`, for console provenance replay only. Also `tests/android-capture.test.ts`, `tests/start-attach.test.ts` and `tests/device-factory.test.ts`, for the new identity refusal codes and fake-probe wiring, and `tests/device-lease.test.ts` for a fake simulator inventory only, with every lease-key assertion unchanged.
 
 **Build.**
 
