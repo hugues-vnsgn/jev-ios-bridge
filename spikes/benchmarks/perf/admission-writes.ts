@@ -1,13 +1,13 @@
 import assert from 'node:assert/strict';
 import { spawn, spawnSync } from 'node:child_process';
 import { once } from 'node:events';
-import { mkdtempSync, realpathSync } from 'node:fs';
+import { mkdtempSync, realpathSync, writeSync } from 'node:fs';
 import { tmpdir, userInfo } from 'node:os';
 import { join, relative, isAbsolute } from 'node:path';
 import { performance } from 'node:perf_hooks';
 import { createInterface } from 'node:readline';
 import { test } from 'node:test';
-import { setTimeout as delay } from 'node:timers/promises';
+import { setImmediate, setTimeout as delay } from 'node:timers/promises';
 import { fileURLToPath } from 'node:url';
 import type { Admission } from '../../../src/device/admission.js';
 
@@ -37,6 +37,12 @@ async function benchmark(commands: number): Promise<void> {
   const fromApplicationSupport = relative(applicationSupport, parent);
   assert(isAbsolute(fromApplicationSupport) || fromApplicationSupport === '..' || fromApplicationSupport.startsWith('../'), 'temporary store must be outside Application Support');
   const root = realpathSync(mkdtempSync(join(parent, 'admission-writes-')));
+  for (const signal of ['SIGTERM', 'SIGINT'] satisfies NodeJS.Signals[]) {
+    process.once(signal, () => {
+      writeSync(2, `Interrupted by ${signal}. Store retained at ${root}\n`);
+      process.exit(signal === 'SIGTERM' ? 143 : 130);
+    });
+  }
   console.log(`Fresh private store retained at ${root}`);
   const admission = Admission.forTesting({ root, backend: 'fake' });
   const attempt = { kind: 'legacy', id: 'admission-writes' } satisfies Parameters<Admission['readAttempt']>[0];
@@ -59,6 +65,7 @@ async function benchmark(commands: number): Promise<void> {
     }
     const settledAt = performance.now();
     samples.push({ dispatchToCallbackMs: callbackAt - dispatchAt, wholeDispatchMs: settledAt - dispatchAt });
+    await setImmediate();
   }
   const elapsedMs = performance.now() - started;
   assert.equal(acquired.claim.finalize({ outcome: 'completed', disposition: 'available', payload: { commands }, evidenceRefs: [] }).authority, 'committed');
@@ -130,15 +137,15 @@ function selfTest(): void {
   for (const signal of ['SIGTERM', 'SIGINT'] satisfies NodeJS.Signals[]) {
     test(`${signal} stops the bench within two seconds and names its retained store`, async () => {
       const child = spawn(process.execPath, [...process.execArgv, fileURLToPath(import.meta.url), '--commands', '1000'], { env: { ...process.env, NODE_NO_WARNINGS: '1' }, stdio: ['ignore', 'pipe', 'pipe'] });
-      const exited = once(child, 'exit');
+      const exited = once(child, 'close');
       const lines = createInterface({ input: child.stdout });
       let stderr = '';
-      child.stderr.setEncoding('utf8').on('data', chunk => { stderr += chunk; });
+      child.stderr.setEncoding('utf8').on('data', (chunk: string) => { stderr += chunk; });
       let deadline: ReturnType<typeof setTimeout> | undefined;
       let timedOut = false;
       try {
         const [banner] = await once(lines, 'line', { signal: AbortSignal.timeout(15_000) });
-        assert.equal(typeof banner, 'string');
+        assert(typeof banner === 'string');
         const store = /^Fresh private store retained at (.+)$/.exec(banner)?.[1];
         assert(store, 'child must announce its private store');
         await delay(1000);
