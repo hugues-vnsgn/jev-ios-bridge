@@ -32,6 +32,7 @@ real-store migration needs a separate owner go-ahead.
 
 - [Android emulator provenance](issues/02-emulator-provenance.md): key emulators on the console's `realpath(avd path)` plus category; exact-reply parsing; emulator 30+ with auth token; refuse on conflicts.
 - [Named-profile selection contract](issues/01-profile-selection-contract.md): versioned `.jev/profiles.json`, `--profile`/MCP `profile`, explicit > default > legacy order, scenario-only conflicts, budgets only tighten, binding recorded.
+- [Canonical device identity](issues/03-canonical-device-identity.md): identity = (category, value); simulator UDID, emulator `realpath(avd path)`, phone `ro.serialno`; `ios-phone` reserved; iOS rows and allocation IDs unchanged; live resolution, conflicts refuse.
 
 ## Route
 
@@ -52,8 +53,8 @@ flowchart LR
     classDef claimed fill:#dbeafe,stroke:#2563eb,color:#1e3a8a
     classDef frontier fill:#dcfce7,stroke:#16a34a,color:#14532d,stroke-width:2px
     classDef blocked fill:#ffffff,stroke:#a1a1aa,color:#18181b
-    class T01,T02 resolved
-    class T03,T04 claimed
+    class T01,T02,T03 resolved
+    class T04 claimed
     class T05,T06 blocked
 ```
 <!-- route:end -->

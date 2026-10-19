@@ -76,8 +76,11 @@ The run's recorded outcome: passed, failed, or inconclusive.
 What a scenario or setting uses to name a device: a simulator UDID, an adb serial, or an emulator's AVD name.
 
 **Device identity**:
-The stable identity a device name resolves to: the UDID for a simulator, the AVD name for an emulator, the serial for a phone. An emulator's serial is not one, because it changes with start order.
-_Avoid_: device ID, mobilecli ID
+The stable identity a device name resolves to, within its device category: the UDID for a simulator, the AVD's content directory for an emulator, the hardware serial for a phone. Transport details (an emulator's serial, a phone's adb serial or network address, a process) are never part of it.
+_Avoid_: device ID, mobilecli ID, AVD name (as identity)
+
+**Device category**:
+The kind of device an identity belongs to: iOS simulator, Android emulator, Android phone, or iOS phone. The iOS phone is reserved, and is refused until enabled. Two devices in different categories never share an identity.
 
 **Device lease**:
 A bridge's exclusive, recorded hold on one device for one run, keyed by its device identity. Once released, nothing the run started can still act on the device.

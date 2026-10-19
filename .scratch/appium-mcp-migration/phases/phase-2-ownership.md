@@ -64,12 +64,59 @@ suggesting a profile. Removal needs a major version.
 
 ## Identity and preflight
 
-Resolve simulator UUID/set and Android AVD/serial names by bounded read-only
-inspection. Emulator transport serial changes cannot create a new device lease.
-Record enough AVD provenance to distinguish ambiguously named/custom-root
-emulators; refuse unknown or conflicting mappings rather than guess. Tag device
-category/platform so phone serials cannot collide with emulator/simulator keys.
-Preserve existing iOS records and allocation IDs through canonicalization.
+Decided in [Canonical device identity](../../appium-phase2/issues/03-canonical-device-identity.md)
+(owner, 2026-10-19).
+
+**Identity.** A device identity is the pair (category, value), unique as a pair;
+`category:value` is a display form only. Categories are a closed list:
+`ios-simulator`, `android-emulator`, `android-phone` (enabled) and `ios-phone`
+(reserved; every entry point refuses it with `CATEGORY_NOT_ENABLED` before
+effects, including a device name shaped like a physical iPhone UDID). A new
+category needs a spec change.
+
+| Category | Value | Recorded attributes (never part of the key) |
+|---|---|---|
+| `ios-simulator` | uppercase UDID | device-set path; only the default set is admitted, others refuse with a named reason |
+| `android-emulator` | `realpath(avd path)` | AVD name, AVD id, device and inode, emulator version, serial, pid and start time |
+| `android-phone` | `getprop ro.serialno` | adb transport serial (USB, `ip:port` or mDNS), revalidated before effects |
+
+Existing iOS rows keep their bare uppercase UUID values with category
+`ios-simulator`; no stored device value or checksummed allocation record is
+rewritten. Allocation IDs get their own normalizer (`canonicalAllocationId`,
+uppercase UUID) instead of `canonicalDevice`; every existing ID stays valid.
+`-id` clones and `-read-only` second instances of one AVD share its key and
+serialize.
+
+**Resolution.** Every admission resolves the device name (script, profile, env
+or vendor file) live; nothing caches a name-to-identity mapping. A name matching
+two live identities refuses `DEVICE_AMBIGUOUS`, none refuses `DEVICE_NOT_FOUND`.
+The `avd || name` serial fallback is removed: missing provenance refuses. Sources
+that disagree (console name versus guest property, one inode under two paths,
+serialno versus USB serial) refuse `DEVICE_IDENTITY_CONFLICT` and record the
+reason without quarantining the device. A moved or renamed AVD is a new identity;
+the old record keeps its state and a same-name match only adds a note, never an
+adoption (name-only legacy records are never upgraded by name).
+
+**Emulator provenance**, per the
+[provenance research](https://github.com/hugues-vnsgn/jev-ios-bridge/blob/research/emulator-provenance/.scratch/appium-phase2/research/emulator-provenance.md)
+(Steps 0-5):
+
+- Identity comes from the console: `adb -s S emu avd name`, `avd id`, `avd path`,
+  accepting only the exact `<value>\r\nOK\r\n` reply. Empty stdout, `KO:`,
+  `NO_AVD_INFO`, an empty value or a non-absolute path refuse.
+  `ro.boot.qemu.avd_name` is a cross-check only; process argv and
+  `pid_<pid>.ini` are optional corroboration.
+- Never read or store discovery-file keys beyond `port.serial`, `avd.id`,
+  `avd.dir` and `emulator.version`; never call `avd discoverypath`; never compute
+  identity from AVD-root environment variables.
+- Emulators older than 30 refuse with a named reason. An `emulator-N` serial
+  whose console is not on this host's loopback (remote adb server) refuses.
+- Probes use a separate read-only runner with a per-command deadline that may
+  kill its child, distinct from the effect runner.
+- A provenance read that fails because the console token or discovery directory
+  lives in another home refuses with that reason; the bridge never reads another
+  user's files and never logs, stores or passes the console token or `grpc.*`
+  values.
 
 Before effects, validate profile/scenario compatibility, platform prerequisites,
 already-booted/installed-app requirements, app identity, frozen stack/artifacts,
@@ -134,6 +181,15 @@ Through existing admission/maintenance and public integration seams, cover:
   shadowed defaults and both transports; compatible launch/budget meanings.
 - Cross-process scripted/observed/capture competition and AVD/serial aliases:
   one owner, unchanged losing state and no losing backend request.
+- Identity aliasing against a fake adb and console: same AVD name under two
+  roots, two ini files naming one directory, a `-read-only` second instance,
+  serial reuse between two reads, empty/`KO:`/`NO_AVD_INFO` replies, empty
+  property with a good console, property and console disagreeing, an `offline`
+  emulator, a phone over USB then Wi-Fi, a reserved `ios-phone` name, and
+  existing iOS keys and allocation IDs unchanged.
+- One live trial on the pinned emulator captures the exact console stdout for
+  success, missing/empty/mismatched token, `offline` and a `-read-only` second
+  instance, kept as fixtures.
 - HOME/cwd/project/temp/path aliases: one production authority; fake-store
   attachment refusal and no alternate authority on corruption.
 - Existing/Android historical uncertainty, reservations, imported records,
