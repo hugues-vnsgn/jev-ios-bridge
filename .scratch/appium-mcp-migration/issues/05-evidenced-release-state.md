@@ -1,7 +1,7 @@
 # Evidenced release with immutable outcomes
 
 Type: grilling
-Status: open
+Status: out-of-scope
 Labels: wayfinder:grilling
 Mode: HITL
 Parent: [Appium migration handoff map](../map.md)
@@ -28,3 +28,7 @@ Record a sourced answer or actual owner decision, unresolved limits, and the cha
 ## Comments
 
 Charted on 2026-10-14. Implementation remains paused.
+
+## Answer
+
+Moved on 2026-10-19 to the Phase 2 decision map as [Evidenced release with immutable outcomes](../../appium-phase2/issues/04-evidenced-release-state.md); it continues there with its recorded owner input.
