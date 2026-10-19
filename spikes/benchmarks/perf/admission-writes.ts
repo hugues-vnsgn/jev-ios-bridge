@@ -111,12 +111,14 @@ function selfTest(): void {
     assert.match(result.stdout, /10 callbacks/);
     assert.match(result.stdout, /10 settled rows/);
   });
-  test('zero commands refuse with usage before creating a store', () => {
-    const result = spawnSync(process.execPath, [...process.execArgv, fileURLToPath(import.meta.url), '--commands', '0'], { encoding: 'utf8' });
-    assert.equal(result.status, 1);
-    assert.match(result.stderr, /Usage: admission-writes.ts/);
-    assert.equal(result.stdout, '');
-  });
+  for (const args of [['--commands', '0'], ['--commands', '-5'], ['--commands', 'abc'], ['--commands']]) {
+    test(`${args.join(' ')} refuses with only usage before creating a store`, () => {
+      const result = spawnSync(process.execPath, [...process.execArgv, fileURLToPath(import.meta.url), ...args], { encoding: 'utf8' });
+      assert.equal(result.status, 2);
+      assert.equal(result.stderr, 'Usage: admission-writes.ts [--commands <positive integer>] | --self-test\n');
+      assert.equal(result.stdout, '');
+    });
+  }
 }
 
 try {
