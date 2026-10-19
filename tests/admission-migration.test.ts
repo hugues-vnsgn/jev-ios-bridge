@@ -61,6 +61,38 @@ function crashMaintenance(f: ReturnType<typeof fixture>, operation: 'upgrade' | 
   assert.equal(child.error, undefined, 'The child must reach the requested maintenance checkpoint before its deadline');
 }
 
+test('offline migration rerun refuses schema 2 without leaving its guard and permits upgrade', async t => {
+  const f = fixture(t);
+  migrateAdmissionForTesting(declaration, { ...f.options, schemaVersion: 2 });
+  assert.throws(() => migrateAdmissionForTesting(declaration, f.options), { code: 'STATE_UNAVAILABLE' });
+  assert.equal(existsSync(join(f.root, 'migration.lock')), false);
+  const { upgradeAdmissionForTesting } = await import('../src/device/admission-upgrade.js');
+  assert.equal(upgradeAdmissionForTesting(upgradeDeclaration, { root: f.root, backend: 'fake' }).to, 3);
+});
+
+for (const milestone of ['guarded', 'backupVerified']) {
+  test(`offline schema upgrade death at ${milestone} recovers unchanged schema 2 and permits upgrade`, async t => {
+    const f = fixture(t);
+    migrateAdmissionForTesting(declaration, { ...f.options, schemaVersion: 2 });
+    crashMaintenance(f, 'upgrade', milestone);
+    const guard = JSON.parse(readFileSync(join(f.root, 'migration.lock'), 'utf8'));
+    assert.equal(guard.backup === null, milestone === 'guarded');
+    assert.throws(f.open, { code: 'STATE_UNAVAILABLE' });
+    const { recoverAdmissionUpgradeForTesting, upgradeAdmissionForTesting } = await import('../src/device/admission-upgrade.js');
+    const result = recoverAdmissionUpgradeForTesting(upgradeDeclaration, { root: f.root, backend: 'fake' });
+    assert.deepEqual(result, { version: 1, kind: 'upgrade-recovery', guardToken: guard.token, schemaVersion: 2, receiptId: null });
+    assert.equal(existsSync(join(f.root, 'migration.lock')), false);
+    const recovered = new DatabaseSync(join(f.root, 'admission.sqlite'));
+    try {
+      assert.equal(recovered.prepare('SELECT schema_version FROM metadata').get()?.schema_version, 2);
+      const events = recovered.prepare("SELECT attempt_id,event,detail FROM transitions WHERE kind='maintenance'").all();
+      assert.equal(events.length, 1);
+      assert.deepEqual({ ...events[0] }, { attempt_id: guard.token, event: 'upgrade-recovered', detail: JSON.stringify({ ...result, declarationDigest: guard.declarationDigest, installationId: guard.installationId }) });
+    } finally { recovered.close(); }
+    assert.equal(upgradeAdmissionForTesting(upgradeDeclaration, { root: f.root, backend: 'fake' }).to, 3);
+  });
+}
+
 test('offline schema upgrade death before commit retains authority until checked clean-old recovery', async t => {
   const f = fixture(t);
   migrateAdmissionForTesting(declaration, { ...f.options, schemaVersion: 2 });
