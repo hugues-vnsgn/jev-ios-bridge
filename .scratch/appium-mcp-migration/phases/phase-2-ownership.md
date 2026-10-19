@@ -354,7 +354,12 @@ authority. Only the owner asserts `writersStopped`, after reading the report.
 
 1. Quiesce every agent and terminal that could run the bridge (owner coordination).
 2. Run preflight.
-3. Recover any active attempt with v1.4.0, because the upgrade refuses on one.
+3. If preflight lists any active attempt, stop and report it to the owner. The
+   upgrade refuses on one, and v1.4.0 has no supported command that recovers it:
+   `recoverAbandoned()` exists in `src/observed/service.ts` and
+   `src/observed/allocation.ts` but no CLI, MCP tool or startup path calls it.
+   The owner decides each case; the runbook never forces or edits one (main
+   agent, 2026-10-19, from P2.5).
 4. Update or remove every older install, including v1.2.0 and v1.3.0 plugins,
    which ignore admission. Between this step and step 6, new binaries refuse the
    schema 2 store.
