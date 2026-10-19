@@ -41,9 +41,9 @@ Read every named check, not only `ready`. The JSON lists process PIDs and start 
 
 An unreadable or unsafe source refuses rather than counting as an empty root. A lease with a live PID fails `sources` with `HOLDER_ALIVE`, even if the holder has no recognizable bridge command line. Discovery failures also prevent readiness.
 
-## Recover active attempts before the upgrade
+## Stop if any attempt is active
 
-If preflight lists an active attempt, stop before the upgrade. Recovery must use the installed v1.4.0 implementation while the store is still schema 2. The public v1.4.0 CLI and MCP interfaces have no active-attempt recovery command. Do not invent a maintenance subcommand, resubmit the action, edit the store, or treat process death as native release. Obtain the owner's supported recovery procedure before continuing. Repeat preflight after that procedure and require an empty active-attempt list.
+If preflight lists any active attempt, stop and report it to the owner. The upgrade refuses while an attempt is active. v1.4.0 has no supported CLI, MCP tool, or startup path that recovers it. The owner decides each case. This runbook never forces or edits an attempt. Do not resubmit the action or treat process death as native release. Continue only after the owner resolves the condition and a fresh preflight reports no active attempts.
 
 ## Update or remove older installs
 
