@@ -256,6 +256,11 @@ from `outstanding`, a quarantine's covering receipt from null.
 - Each v1.4.0 `quarantined` device becomes a `historical` quarantine with its
   recorded reason. Protected devices and declared `excludedDevices` become
   `exclusion` quarantines. Available devices get no quarantine.
+  A v1.4.0 row with reason `protected-device` (protected or declared excluded)
+  becomes exactly one `exclusion` quarantine and no `historical` one; every other
+  quarantined row becomes exactly one `historical` quarantine. The step's receipt
+  checks that the two counts add up to the schema 2 quarantined count (main
+  agent, 2026-10-19, from the schema 3 design review).
 - Any attempt still `active` refuses the step with `UPGRADE_BLOCKED`, listing
   them; the operator runs the existing abandoned-owner recovery first. Parked
   preparations carry over unchanged.
