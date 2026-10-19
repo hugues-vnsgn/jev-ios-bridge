@@ -16,6 +16,8 @@ P2.1 measures the existing trunk admission implementation. Two recorded runs are
 
 Each invocation creates and retains a fresh private directory under the canonical OS temporary directory. It prints that directory before initialization. It never accepts an existing store path. Successive invocations therefore use different stores, including after a killed run.
 
+Every benchmark run leaves its store under that OS temporary directory, including `--self-test`. The self-test now leaves one ten-command store and two interrupted stores. Nothing in the bench or self-test cleans these directories up. The audit at the initial PR head measured about 0.5 MB per 1,000-command store, with 483 to 488 KB of apparent data and 476 to 532 KB on disk. To reclaim space, remove the printed `admission-writes-*` directories under the temporary directory with `rm -rf -- <printed-store-directory>` when they are no longer needed. Invalid usage creates no store.
+
 `Admission.forTesting` initializes an on-disk fake store. The bench acquires one synthetic device owner and calls `bindDriver('fake')`. It then awaits 1,000 sequential `capture` dispatches with inert callbacks. No device, Jev request, production store, in-memory SQLite database, or batch transaction participates.
 
 The source's existing `AdmissionSqlite.configure` requires DELETE journal mode and sets `synchronous=EXTRA` and `fullfsync=ON`. The bench leaves those settings unchanged.
@@ -23,6 +25,8 @@ The source's existing `AdmissionSqlite.configure` requires DELETE journal mode a
 - Dispatch-to-callback measures from immediately before `dispatch` to callback entry. It includes the complete authorization transaction, including connection open, validation, journal commit, and close. It is not an isolated COMMIT or fsync measurement.
 - Whole-dispatch measures from the same start until the awaited dispatch resolves. It includes authorization and settlement, which are two separate durable write transactions.
 - Initialization, acquisition, attachment, finalization, reopening, row verification, and summary output are outside timing. No timed command is discarded as warmup.
+
+Fix round 1 adds an event-loop yield between dispatches, after recording each sample. That yield is outside both latency measurements and inside the measured loop's elapsed time. SIGTERM and SIGINT stop the process with exit 143 and 130 respectively and one stderr line naming the retained store. A synchronous SQLite operation must return before Node can handle the signal. The recorded baseline below predates this fix; this round does not remeasure it.
 
 The clock is `performance.now()`. Percentiles use nearest rank, `ceil(p * n)`, on sorted samples. Units are milliseconds. Each run starts with no command rows and ends with 1,000 command rows, all settled. After timing, the bench finalizes the owner, reopens admission without initialization, opens a separate read-only SQLite connection, checks counts and integrity, and verifies DELETE journal mode.
 
@@ -76,7 +80,7 @@ npm run typecheck
 npm run check
 ```
 
-The four self-tests cover literal nearest-rank distributions, a singleton and empty input, mismatched settled-row counts, the ten-command CLI path, and zero-command refusal before store creation. TDD first observed the missing count assertion fail, then pass after adding it. The ten-command CLI test likewise failed before the timed path existed and passed after implementation. A count mismatch uses the same assertion invoked against the reopened database.
+The nine self-tests cover literal nearest-rank distributions, a singleton and empty input, mismatched settled-row counts, the ten-command CLI path, four usage refusals, and both termination signals. Usage refusals require exit 2, exact usage-only stderr, and no store announcement for zero, negative, nonnumeric, and missing command counts. Signal tests spawn the bench, signal its Node process, and require a nonzero exit within two seconds with the exact store message. They kill only their child on a missed deadline. TDD first observed the missing count assertion fail, then pass after adding it. The ten-command CLI test likewise failed before the timed path existed and passed after implementation. A count mismatch uses the same assertion invoked against the reopened database.
 
 The benchmark also passed a separate strict TypeScript check, because the repository's `tsconfig.json` does not include `spikes/benchmarks/perf`.
 
@@ -86,6 +90,10 @@ npm exec -- tsc --noEmit --ignoreConfig --target ES2023 --module NodeNext --modu
 
 The initial repository check passed 2,361 of 2,363 tests. Two public-core regressions failed because this fresh worktree lacked the pinned `appium-mcp` dependency. Installing the existing candidate-stack lockfile with `npm ci --ignore-scripts --no-audit --no-fund` fixed that environment prerequisite. A focused rerun passed both tests. No tracked dependency file changed.
 
-The single full-check retry passed all 2,363 tests with zero failures and built successfully. The standalone `npm run typecheck` passed. The bench's four self-tests passed. The separate `--commands 10` run printed 10 callbacks and 10 settled rows, with 10 successes and zero failures.
+The single initial full-check retry passed all 2,363 tests with zero failures and built successfully. The standalone `npm run typecheck` passed. At that head, the bench's four self-tests passed. The separate `--commands 10` run printed 10 callbacks and 10 settled rows, with 10 successes and zero failures.
+
+In fix round 1, the four stricter usage tests first failed with exit 1 instead of 2, then passed after argument validation moved ahead of SQLite imports. The signal tests first failed without the store message. Adding explicit signal handlers without yielding still failed both two-second deadlines. Adding the yield made both pass. The local red and green transcripts remain in `/tmp/jev-p2-1-fix-*.txt`. The earlier lane's npm/tsx process chain has separate wrapper and benchmark Node processes; signalling the wrapper can exercise its relay rather than the benchmark's handler. A bounded five-second probe at the original head exited promptly on this machine, so it did not reproduce the lane's earlier three-minute hang.
+
+The fix round passed `npm run typecheck`, the strict benchmark-file typecheck, all nine self-tests, and a separate ten-command run with 10 callbacks, 10 settled rows, and zero failures. `npm run check` passed all 2,363 tests with zero failures or skips, then built successfully. Separate probes under `npm exec -- tsx` signalled the actual benchmark Node process five seconds after its store announcement. Both exited within two seconds, with exit 143 for SIGTERM and 130 for SIGINT and the required store message. The benchmark's self-tests and full repository check needed execution outside the sandbox because tsx's local IPC pipe was denied inside it. No baseline was remeasured.
 
 The root owns the independent live lanes and exact-head verdict. This note does not claim those lanes have run.
