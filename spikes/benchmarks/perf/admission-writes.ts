@@ -1,10 +1,13 @@
 import assert from 'node:assert/strict';
-import { spawnSync } from 'node:child_process';
+import { spawn, spawnSync } from 'node:child_process';
+import { once } from 'node:events';
 import { mkdtempSync, realpathSync } from 'node:fs';
 import { tmpdir, userInfo } from 'node:os';
 import { join, relative, isAbsolute } from 'node:path';
 import { performance } from 'node:perf_hooks';
+import { createInterface } from 'node:readline';
 import { test } from 'node:test';
+import { setTimeout as delay } from 'node:timers/promises';
 import { fileURLToPath } from 'node:url';
 import type { Admission } from '../../../src/device/admission.js';
 
@@ -122,6 +125,36 @@ function selfTest(): void {
       assert.equal(result.status, 2);
       assert.equal(result.stderr, 'Usage: admission-writes.ts [--commands <positive integer>] | --self-test\n');
       assert.equal(result.stdout, '');
+    });
+  }
+  for (const signal of ['SIGTERM', 'SIGINT'] satisfies NodeJS.Signals[]) {
+    test(`${signal} stops the bench within two seconds and names its retained store`, async () => {
+      const child = spawn(process.execPath, [...process.execArgv, fileURLToPath(import.meta.url), '--commands', '1000'], { env: { ...process.env, NODE_NO_WARNINGS: '1' }, stdio: ['ignore', 'pipe', 'pipe'] });
+      const exited = once(child, 'exit');
+      const lines = createInterface({ input: child.stdout });
+      let stderr = '';
+      child.stderr.setEncoding('utf8').on('data', chunk => { stderr += chunk; });
+      let deadline: ReturnType<typeof setTimeout> | undefined;
+      let timedOut = false;
+      try {
+        const [banner] = await once(lines, 'line', { signal: AbortSignal.timeout(15_000) });
+        assert.equal(typeof banner, 'string');
+        const store = /^Fresh private store retained at (.+)$/.exec(banner)?.[1];
+        assert(store, 'child must announce its private store');
+        await delay(1000);
+        const started = performance.now();
+        deadline = setTimeout(() => { timedOut = true; child.kill('SIGKILL'); }, 2000);
+        assert(child.kill(signal), 'signal must reach the benchmark node');
+        const [code, exitSignal] = await exited;
+        assert(!timedOut && performance.now() - started < 2000, `${signal} did not stop the bench within two seconds`);
+        assert.equal(code, signal === 'SIGTERM' ? 143 : 130);
+        assert.equal(exitSignal, null);
+        assert.equal(stderr, `Interrupted by ${signal}. Store retained at ${store}\n`);
+      } finally {
+        clearTimeout(deadline);
+        child.kill('SIGKILL');
+        lines.close();
+      }
     });
   }
 }
