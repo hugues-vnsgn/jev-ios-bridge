@@ -4,7 +4,7 @@ import { AdmissionError } from './admission-sqlite.js';
 import { migrateAdmission, migrateAdmissionForTesting, type MigrationTestOptions } from './admission-migration.js';
 import { upgradeAdmission, upgradeAdmissionForTesting, recoverAdmissionUpgrade, recoverAdmissionUpgradeForTesting } from './admission-upgrade.js';
 
-import { importAdmission, importAdmissionForTesting, recoverImportAdmission, recoverImportAdmissionForTesting, preflightAdmission, preflightAdmissionForTesting, requireCleanPreflight, admissionStatus, admissionStatusForTesting, requireMaintenanceRecoveryHost, type HostInventory } from './admission-import.js';
+import { importAdmission, importAdmissionForTesting, recoverImportAdmission, recoverImportAdmissionForTesting, preflightAdmission, preflightAdmissionForTesting, admissionStatus, admissionStatusForTesting, requireMaintenanceRecoveryHost, type HostInventory } from './admission-import.js';
 
 const help = `Usage: node dist/device/admission-maintenance.js migrate <declaration.json>
 
@@ -86,11 +86,8 @@ export function runAdmissionMaintenance(argv: string[], output: { write(value: s
       const report=testOptions?preflightAdmissionForTesting(raw,testOptions):preflightAdmission(raw);
       output.write(JSON.stringify(report)+'\n');return report.ready?0:3;
     }
-    if(command==='upgrade') {
-      if(recover)requireMaintenanceRecoveryHost(testOptions);
-      else requireCleanPreflight(testOptions?preflightAdmissionForTesting(undefined,testOptions):preflightAdmission());
-    }
-    const upgradeOptions=testOptions?{root:testOptions.root,backend:testOptions.backend}:undefined;
+    if(command==='upgrade'&&recover)requireMaintenanceRecoveryHost(testOptions);
+    const upgradeOptions=testOptions?{root:testOptions.root,backend:testOptions.backend,defaultRoots:testOptions.defaultRoots,...(testOptions.host?{host:testOptions.host}:{})}:undefined;
     const importOptions=testOptions?{root:testOptions.root,backend:testOptions.backend,defaultRoots:testOptions.defaultRoots,...(testOptions.host?{host:testOptions.host}:{})}:undefined;
     const receipt=command==='migrate'
       ?testOptions?migrateAdmissionForTesting(raw,testOptions):migrateAdmission(raw)

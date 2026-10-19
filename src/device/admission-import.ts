@@ -19,7 +19,7 @@ export type ImportPlan = { declaration: MigrationDeclaration; sources: ImportSou
 export type ImportReceipt = { version: 1; kind: 'import'; id: string; guardToken: string; time: number;
   binaryVersion: string; declaration: MigrationDeclaration; declarationDigest: string; sourceSetDigest: string;
   backup: UpgradeReceipt['backup']; sources: ImportSource[]; skipped: { path: string; sha256: string }[];
-  quarantines: string[]; importedActions: string[]; preserved: PreservedRecords };
+  quarantines: string[]; quarantineMatches?: ({ id: string; matchedBy: 'exact-uuid'; device: string } | { id: string; matchedBy: 'legacy-name'; name: string })[]; importedActions: string[]; preserved: PreservedRecords };
 export type ImportTestOptions = { root: string; backend: 'fake'; defaultRoots: { leases: string; journal: string };
   host?: () => HostInventory;
   checkpoint?: (point: 'guarded' | 'backupVerified' | 'beforeCommit' | 'afterCommit' | 'recoveryCommitted') => void };
@@ -140,8 +140,9 @@ function readJournal(source: { root: string; files: HistoricalRecord[] }, action
   }
 }
 
-function scan(declaration: Pick<MigrationDeclaration, 'additionalLeaseRoots' | 'additionalJournalRoots' | 'excludedDevices'>, options: { root: string; defaultRoots: ImportTestOptions['defaultRoots'] }, allowLive = false): Omit<ImportPlan, 'declaration'> {
-  const plan: Omit<ImportPlan, 'declaration'> = { sources: [], quarantines: [], actions: [], exclusions: declaration.excludedDevices.map(value=>canonicalDevice(value)) };
+function scan(declaration: Pick<MigrationDeclaration, 'additionalLeaseRoots' | 'additionalJournalRoots' | 'excludedDevices'>, options: { root: string; defaultRoots: ImportTestOptions['defaultRoots']; store?: ReturnType<typeof AdmissionSqlite.inspectMaintenance> }, allowLive = false, progress?: { plan: Omit<ImportPlan, 'declaration'>; leasePaths: string[] }): Omit<ImportPlan, 'declaration'> {
+  const plan: Omit<ImportPlan, 'declaration'> = progress?.plan??{ sources: [], quarantines: [], actions: [], exclusions: [] };
+  plan.exclusions=declaration.excludedDevices.map(value=>canonicalDevice(value));
   const roots = new Set<string>(), devices=new Map<string,boolean>();
   for (const [path, required] of [[options.defaultRoots.leases, false], ...declaration.additionalLeaseRoots.map(path => [path, true] as const)] as const) {
     const root = sourceDirectory(path, required, options.root);
@@ -149,6 +150,7 @@ function scan(declaration: Pick<MigrationDeclaration, 'additionalLeaseRoots' | '
     roots.add(root);
     let names: string[];
     try { names = readdirSync(root).sort(); } catch { refused('SOURCE_UNREADABLE'); }
+    progress?.leasePaths.push(...names.map(name=>join(root,name)));
     for (const name of names) {
       const match = /^(.*)\.lock(?:\.[\da-f]{8}-[\da-f]{4}-[\da-f]{4}-[\da-f]{4}-[\da-f]{12}\.tmp)?$/i.exec(name);
       if (!match?.[1]) refused('SOURCE_INCONSISTENT');
@@ -170,8 +172,11 @@ function scan(declaration: Pick<MigrationDeclaration, 'additionalLeaseRoots' | '
     }
   }
   const actions=new Map<string,HistoricalAction>(), journals=new Set<string>();
-  for(const [path,required] of [[options.defaultRoots.journal,false],...declaration.additionalJournalRoots.map(path=>[path,true] as const)] as const) {
-    const root=sourceDirectory(path,required,options.root);
+  for(const path of declaration.additionalJournalRoots) {
+    const previous=options.store?.migration?.sources.filter(source=>source.kind==='journal')??[];
+    if(previous.some(source=>source.root===resolve(path)||source.requestedRoots.includes(resolve(path))))continue;
+    const root=sourceDirectory(path,true,options.root);
+    if(root&&previous.some(source=>source.root===root))continue;
     if(!root||journals.has(root))continue;
     if(roots.has(root))refused('SOURCE_CONFLICT');
     journals.add(root);
@@ -187,11 +192,11 @@ function scan(declaration: Pick<MigrationDeclaration, 'additionalLeaseRoots' | '
       ||action.intents.some(intent=>!isDeepStrictEqual(intent.value,action.intents[0]!.value)||!action.results.some(result=>result.directory===intent.directory))
       ||action.results.some(result=>!action.intents.some(intent=>intent.directory===result.directory)||!isDeepStrictEqual(result.value.intent,action.intents[0]?.value)||!isDeepStrictEqual(result.value.result,action.results[0]!.value.result)))devices.set(action.device,true);
   }
-  for(const device of plan.exclusions)devices.set(device,true);
   for(const action of actions.values())plan.actions.push({actionId:action.actionId,device:action.device,readOnly:true,
     outcome:devices.get(action.device)?'inconclusive':completedOutcome(action.results[0]!.value),records:action.records});
+  for(const device of plan.exclusions)devices.set(device,true);
   for(const [device,uncertain] of devices) {
-    if(!uncertain||plan.exclusions.includes(device)||plan.quarantines.some(q=>q.target.kind==='device'&&q.target.device===device))continue;
+    if(!uncertain||plan.exclusions.includes(device)||options.store?.quarantines.some(q=>q.platform==='ios-simulator'&&q.device===device&&q.covering_receipt_id===null)||plan.quarantines.some(q=>q.target.kind==='device'&&q.target.device===device))continue;
     const source=plan.sources.find(source=>source.kind==='journal'&&object(source.evidence)&&typeof source.evidence.deviceId==='string'&&source.evidence.deviceId.toUpperCase()===device);
     if(!source)refused('SOURCE_INCONSISTENT');
     plan.quarantines.push({target:{kind:'device',device},path:source.path,sha256:source.sha256,evidence:{version:1,cause:'historical-journal'}});
@@ -203,13 +208,15 @@ export function importAdmissionForTesting(raw: unknown, options: ImportTestOptio
   if (options.backend !== 'fake') throw new AdmissionError('INVALID_REQUEST', 'Import tests require a fake backend');
   const declaration = parseMigrationDeclaration(raw);
   requireCleanPreflight(preflightAdmissionForTesting(raw, options));
-  return AdmissionSqlite.importLegacy({ root: options.root, mode: 'test' }, () => ({declaration,...scan(declaration, options)}), options.checkpoint);
+  const store=AdmissionSqlite.inspectMaintenance({root:options.root,mode:'test'});
+  return AdmissionSqlite.importLegacy({ root: options.root, mode: 'test' }, () => ({declaration,...scan(declaration, {...options,store})}), options.checkpoint);
 }
 export function importAdmission(raw: unknown): ImportReceipt {
   const declaration = parseMigrationDeclaration(raw);
   const root = admissionRoot();
   requireCleanPreflight(preflightAdmission(raw));
-  return AdmissionSqlite.importLegacy({ root, mode: 'production' }, () => ({declaration,...scan(declaration, { root, defaultRoots: {
+  const store=AdmissionSqlite.inspectMaintenance({root,mode:'production'});
+  return AdmissionSqlite.importLegacy({ root, mode: 'production' }, () => ({declaration,...scan(declaration, { root, store, defaultRoots: {
     leases: DEFAULT_LEASE_ROOT, journal: join(userInfo().homedir, 'Library/Application Support/jev-ios-bridge/observed-actions'),
   } })}));
 }
@@ -226,7 +233,7 @@ export type PreflightReport = {
   checks: { name: string; passed: boolean }[];
   host: HostInventory; store: ReturnType<typeof AdmissionSqlite.inspectMaintenance>;
   sourceRefusal?: { code: 'IMPORT_REFUSED'; reason: NonNullable<AdmissionError['reason']> };
-  leases: ImportSource[]; plannedQuarantines: ImportPlan['quarantines'];
+  leases: (ImportSource | { path: string; kind: 'lease'; unavailable: true })[]; plannedQuarantines: ImportPlan['quarantines'];
 };
 export function discoverAdmissionHost(options: { root:string;home:string;project:string;
   command?:(name:string,args:string[])=>{status:number|null;stdout:string;stderr:string;failed?:boolean} }): HostInventory {
@@ -307,9 +314,10 @@ function preflight(raw: unknown, options: {root:string;mode:'test'|'production';
   const host=options.host(),store=AdmissionSqlite.inspectMaintenance(options);
   const declaration=raw===undefined?store.migration?.declaration??{additionalJournalRoots:[],additionalLeaseRoots:[],excludedDevices:[]}:parseMigrationDeclaration(raw);
   let plan:Omit<ImportPlan,'declaration'>={sources:[],quarantines:[],actions:[],exclusions:[]};
+  const leasePaths:string[]=[];
   let sourceRefusal:PreflightReport['sourceRefusal'];
   try {
-    plan=scan(declaration,options,true);
+    plan=scan(declaration,{...options,store},true,{plan,leasePaths});
     for(const source of plan.sources) {
       if(store.importedSources.some(old=>old.path===source.path&&old.sha256!==source.sha256))sourceRefusal={code:'IMPORT_REFUSED',reason:'SOURCE_CONFLICT'};
     }
@@ -329,7 +337,7 @@ function preflight(raw: unknown, options: {root:string;mode:'test'|'production';
     {name:'sources',passed:sourceRefusal===undefined},
   ];
   return {version:1,kind:'preflight',ready:checks.every(check=>check.passed),checks,host,store,
-    leases:plan.sources.filter(source=>source.kind==='lease'),plannedQuarantines:plan.quarantines.filter(quarantine=>!store.importedSources.some(old=>old.path===quarantine.path&&old.sha256===quarantine.sha256)),...(sourceRefusal?{sourceRefusal}:{})};
+    leases:leasePaths.map(path=>plan.sources.find(source=>source.kind==='lease'&&source.path===path)??{path,kind:'lease' as const,unavailable:true as const}),plannedQuarantines:plan.quarantines.filter(quarantine=>!store.importedSources.some(old=>old.path===quarantine.path&&old.sha256===quarantine.sha256)),...(sourceRefusal?{sourceRefusal}:{})};
 }
 export function preflightAdmissionForTesting(raw: unknown, options: Omit<ImportTestOptions,'checkpoint'>): PreflightReport {
   if(options.backend!=='fake')throw new AdmissionError('INVALID_REQUEST','Preflight tests require a fake backend');
