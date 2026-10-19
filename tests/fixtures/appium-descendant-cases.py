@@ -22,7 +22,7 @@ group = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(group)
 PARENT = '''import json,os,sys,subprocess
 if '--platform-child' in sys.argv:
- child=subprocess.Popen(['/bin/sleep','60'])
+ child=subprocess.Popen(['/bin/sleep','60'],env={})
  print(json.dumps({'escaped':child.pid}),flush=True)
  sys.stdin.readline();child.terminate();child.wait();sys.exit(0)
 r,w=os.pipe()
