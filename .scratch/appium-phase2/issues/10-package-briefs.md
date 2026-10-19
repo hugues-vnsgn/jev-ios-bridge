@@ -2,7 +2,7 @@
 
 Type: grilling
 Status: claimed
-Claimed by: Claude Code (owner session)
+Claimed by: Claude Code (main agent; taken over from the owner session at the owner's request, 2026-10-19)
 Labels: wayfinder:grilling
 Mode: HITL
 Parent: [Appium Phase 2 decision map](../map.md)
@@ -22,3 +22,7 @@ Input from [Activation runbook for the real store](09-activation-runbook.md): pa
 
 Record the actual owner decision (or sourced answer for research), unresolved
 limits, and the exact changes required in the Phase 2 specification.
+
+## Progress
+
+Draft answer: [Phase 2 build plan](../plan.md), nine PRs split by file ownership and built by two Codex workers in pairs. It awaits the owner's go; on the go, this ticket resolves with that decision.
