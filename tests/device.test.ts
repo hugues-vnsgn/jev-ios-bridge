@@ -1,3 +1,4 @@
+import { fakeSimulatorProbe } from './fixtures/android-device.js';
 import { mkdirSync, realpathSync } from 'node:fs';
 import { Admission } from '../src/device/admission.js';
 import assert from 'node:assert/strict';
@@ -39,6 +40,38 @@ function capture(hash = 'same', expiresAtMs = Date.now() + 60_000): unknown {
     capturedAtMs: expiresAtMs - 60_000, expiresAtMs, targets: ['e1|tap|button|Settings||Settings'], scroll: [],
     text: ['e2|text|text|Page title: Settings||'] } };
 }
+
+test('a missing simulator identity refuses before the effect runner or admission', async () => {
+  const root = await mkdtemp(join(tmpdir(), 'jev-device-identity-'));
+  const calls: string[][] = [];
+  const driver = fakeDriver({ cwd: root, lockRoot: root, identityProbe: fakeSimulatorProbe(),
+    runner: async args => { calls.push(args); return { stdout: commandEnvelope(args), stderr: '', exitCode: 0 }; } });
+  try {
+    await assert.rejects(driver.prepare(scenario, new AbortController().signal),
+      (error: unknown) => error instanceof Error && 'code' in error && error.code === 'DEVICE_NOT_FOUND');
+    assert.deepEqual(calls, []);
+  } finally { await driver.close(new AbortController().signal); await rm(root, { recursive: true, force: true }); }
+});
+
+test('a simulator shutting down during revalidation refuses before presentation or launch', async () => {
+  for (const shutdownRead of [2, 3]) {
+    const root = await mkdtemp(join(tmpdir(), 'jev-device-shutdown-'));
+    const calls: string[][] = [];
+    let reads = 0;
+    const initial = fakeSimulatorProbe(udid);
+    const probe = { ...initial, simulatorSet: async (abort: AbortSignal) => {
+      const inventory = await initial.simulatorSet(abort);
+      return ++reads >= shutdownRead ? { ...inventory, reply: inventory.reply.replaceAll('Booted', 'Shutdown') } : inventory;
+    } };
+    const driver = fakeDriver({ cwd: root, lockRoot: root, identityProbe: probe,
+      runner: async args => { calls.push(args); return { stdout: commandEnvelope(args), stderr: '', exitCode: 0 }; } });
+    try {
+      await assert.rejects(driver.prepare(scenario, new AbortController().signal),
+        (error: unknown) => error instanceof Error && 'code' in error && error.code === 'DEVICE_NOT_BOOTED');
+      assert.deepEqual(calls, []);
+    } finally { await driver.close(new AbortController().signal); await rm(root, { recursive: true, force: true }); }
+  }
+});
 
 test('runs pinned CLI actions in one workspace and normalizes compact captures', async () => {
   const root = await mkdtemp(join(tmpdir(), 'jev-device-test-'));
@@ -914,7 +947,7 @@ function fakeDriver(options: import('../src/device/index.js').MobileBuildMcpDriv
   const storeRoot = join(options.cwd, 'admission');
   mkdirSync(storeRoot, { recursive: true, mode: 0o700 });
   const admission = Admission.forTesting({ root: realpathSync(storeRoot), backend: 'fake' });
-  return new MobileBuildMcpDriver({ ...options, admission,
+  return new MobileBuildMcpDriver({ identityProbe: fakeSimulatorProbe(udid), ...options, admission,
     deviceWindow: options.deviceWindow ?? (async () => {}),
     fakeBackend: { runner: options.runner!, window: options.deviceWindow } });
 }

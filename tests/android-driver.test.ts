@@ -48,7 +48,7 @@ async function withDriver(adb: FakeAdb, fn: (setup: Setup) => Promise<void>,
   const streams = new FakeStreams(adb);
   // Phase 4's tests start no logcat stream (logFolder false); phase 5's tests name a log folder.
   const driver = new AndroidDriver({ device: { avd: 'jev-actions-api31' }, runner: adb.run, agentClient: agents.agentClient, clock,
-    leaseRoot: root, screenshotFolder: root, freePort: async () => ports.shift()!, logcat: streams, logFolder: false,
+    identityProbe: adb.identityProbe, leaseRoot: root, screenshotFolder: root, freePort: async () => ports.shift()!, logcat: streams, logFolder: false,
     tools: async () => ({ adb: '/sdk/platform-tools/adb', agent: { path: AGENT_CACHE, sha256: PINNED_AGENT_SHA256 } }), ...options });
   try {
     await fn({ adb, root, driver, agents, clock, streams });
@@ -79,21 +79,102 @@ const lockFile = async (root: string) => {
 };
 const START = ['-s', 'emulator-5554', 'shell', AGENT_START_COMMAND];
 
+test('an injected effect runner without a read-only probe refuses before device commands', async () => {
+  const calls: string[][] = [];
+  const root = await mkdtemp(join(tmpdir(), 'jev-identity-probe-required-'));
+  const driver = new AndroidDriver({ device: { serial: 'emulator-5554' }, leaseRoot: root,
+    runner: async args => { calls.push(args); return { stdout: 'List of devices attached\n', stderr: '', exitCode: 0 }; },
+    tools: async () => ({ adb: '/fake/adb', agent: { path: AGENT_CACHE, sha256: PINNED_AGENT_SHA256 } }),
+  });
+  try {
+    await assert.rejects(driver.prepare(app(), signal()), reason('DEVICE_IDENTITY_UNAVAILABLE', 'PROVENANCE_INACCESSIBLE'));
+    assert.deepEqual(calls, []);
+    assert.deepEqual(await readdir(root), []);
+  } finally { await rm(root, { recursive: true, force: true }); }
+});
+
+test('changed transport binding refuses the first effect and leaves the app and agent untouched', async () => {
+  const adb = new FakeAdb(api31());
+  adb.onCall = args => { if (args[3]?.includes("'dumpsys' 'window'")) adb.emulators.get('emulator-5554')!.avd = 'replacement'; };
+  await withDriver(adb, async ({ driver, root }) => {
+    await assert.rejects(driver.prepare(app(), signal()), reason('DEVICE_IDENTITY_CONFLICT', 'TRANSPORT_CHANGED'));
+    assert.equal(adb.shell().some(words => words[0] === 'am' || words[0] === 'kill'), false);
+    assert.equal(adb.calls.some(args => args[2] === 'push'), false);
+    assert.deepEqual(await readdir(root), []);
+  });
+});
+
+test('missing launcher identity refuses before wake, sweep, or app restart', async () => {
+  const adb = new FakeAdb(api31({ awake: false, agents: new Map([[4675, 'own']]) }));
+  const runner: AdbRunner = async (args, abort) => args[3]?.startsWith("'cmd' 'package' 'resolve-activity'")
+    ? { stdout: 'No activity found\n', stderr: '', exitCode: 0 } : adb.run(args, abort);
+  await withDriver(adb, async ({ driver }) => {
+    await assert.rejects(driver.prepare(app(), signal()), reason('DEVICE_ERROR', 'adb'));
+    assert.equal(adb.shell().some(words => ['am', 'input', 'kill'].includes(words[0]!)), false);
+    assert.equal(adb.calls.some(args => args[2] === 'push'), false);
+  }, { runner });
+});
+
+test('cancellation during binding revalidation prevents adb and agent dispatch', async () => {
+  for (const stage of ['adb', 'agent'] as const) {
+    const adb = new FakeAdb(api31());
+    const cancel = new AbortController();
+    let enabled = stage === 'adb';
+    let reads = 0;
+    const probe = { ...adb.identityProbe, android: async (abort: AbortSignal, name?: string) => {
+      const inventory = await adb.identityProbe.android(abort, name);
+      if (++reads > 1 && enabled) cancel.abort(new Error('cancel during probe'));
+      return inventory;
+    } };
+    await withDriver(adb, async ({ driver, agents }) => {
+      if (stage === 'agent') await driver.prepare(app(), signal());
+      enabled = true;
+      const before = agents.calls.length;
+      if (stage === 'adb') await assert.rejects(driver.prepare(app(), cancel.signal), /cancel during probe/);
+      else await assert.rejects(driver.observe(cancel.signal), /cancel during probe/);
+      assert.equal(agents.calls.length, before);
+      if (stage === 'adb') assert.equal(adb.shell().some(words => words[0] === 'am'), false);
+    }, { identityProbe: probe });
+  }
+});
+
+test('cleanup refuses a reused transport without mutating the replacement and keeps the marker', async () => {
+  const adb = new FakeAdb(api31());
+  await withDriver(adb, async ({ driver, root }) => {
+    await driver.prepare(app(), signal());
+    adb.emulators.get('emulator-5554')!.avd = 'replacement';
+    const before = adb.calls.length;
+    await assert.rejects(driver.close(signal()));
+    assert.equal(adb.calls.slice(before).some(args => args[2] === 'forward' || /'kill'|'am'/.test(args[3] ?? '')), false);
+    assert.deepEqual(await readdir(root), ['JEV-ACTIONS-API31.lock']);
+  });
+});
+
+test('canonical emulator provenance stays separate from its compatibility lease and preparation payload', async () => {
+  const adb = new FakeAdb(api31());
+  await withDriver(adb, async ({ driver, root }) => {
+    await driver.prepare(app(), signal());
+    assert.equal(driver.identity()?.value, '/fake/avds/jev-actions-api31.avd');
+    assert.deepEqual(await readdir(root), ['JEV-ACTIONS-API31.lock']);
+    assert.deepEqual(driver.preparation(), { deviceIdentity: 'jev-actions-api31', serial: 'emulator-5554', agentSha256: PINNED_AGENT_SHA256 });
+    assert.ok(adb.probeCalls.some(args => args.join(' ') === '-s emulator-5554 emu avd path'));
+    assert.equal(adb.calls.some(args => args[0] === 'devices' || args.includes('emu')), false);
+  });
+});
+
 test('prepares an emulator named by serial, in the release spec\'s order, and records the agent it started', async () => {
   const adb = new FakeAdb(api31());
   await withDriver(adb, async ({ driver, root }) => {
     await driver.prepare(app(), signal());
     assert.deepEqual(adb.calls, [
-      ['devices', '-l'],
-      ['-s', 'emulator-5554', 'shell', "'getprop' 'ro.boot.qemu.avd_name'"],
       ['-s', 'emulator-5554', 'shell', "'ps' '-A' '-o' 'PID,NAME,ARGS'"],
       ['forward', '--list'],
       ['-s', 'emulator-5554', 'shell', "'getprop' 'ro.build.version.sdk'"],
       ['-s', 'emulator-5554', 'shell', "'getprop' 'sys.boot_completed'"],
       ['-s', 'emulator-5554', 'shell', "'pm' 'path' 'com.example.android'"],
+      ['-s', 'emulator-5554', 'shell', "'cmd' 'package' 'resolve-activity' '--brief' '-a' 'android.intent.action.MAIN' '-c' 'android.intent.category.LAUNCHER' 'com.example.android'"],
       ['-s', 'emulator-5554', 'shell', "'dumpsys' 'window' 'policy'"],
       ['-s', 'emulator-5554', 'shell', "'am' 'force-stop' 'com.example.android'"],
-      ['-s', 'emulator-5554', 'shell', "'cmd' 'package' 'resolve-activity' '--brief' '-a' 'android.intent.action.MAIN' '-c' 'android.intent.category.LAUNCHER' 'com.example.android'"],
       ['-s', 'emulator-5554', 'shell', "'am' 'start' '-W' '-n' 'com.example.android/.MainActivity'"],
       ['-s', 'emulator-5554', 'push', AGENT_CACHE, '/data/local/tmp/jev-ios-bridge-agent.dex'],
       START,
@@ -118,7 +199,8 @@ test('the lease is taken before the first command that touches the device', asyn
   await withDriver(adb, async ({ driver, root }) => {
     adb.onCall = async args => { if ((await readdir(root)).length === 0) beforeLease.push(args.join(' ')); };
     await driver.prepare(app(), signal());
-    assert.deepEqual(beforeLease, ['devices -l', "-s emulator-5554 shell 'getprop' 'ro.boot.qemu.avd_name'"]);
+    assert.deepEqual(beforeLease, []);
+    assert.ok(adb.probeCalls.some(args => args[0] === 'devices'));
   });
 });
 
@@ -129,7 +211,7 @@ test('an AVD name resolves to the one running emulator reporting it, reading the
     'emulator-5556          device product:sdk_gphone64_arm64 transport_id:1\nemulator-5558          device product:sdk_gphone64_arm64 transport_id:2\n\n';
   await withDriver(adb, async ({ driver }) => {
     await driver.prepare(app(), signal());
-    assert.deepEqual(adb.calls.filter(call => call[3]?.includes('avd_name')).map(call => call[1]), ['emulator-5556', 'emulator-5558']);
+    assert.deepEqual([...new Set(adb.probeCalls.filter(call => call.at(-1) === 'ro.boot.qemu.avd_name').map(call => call[1]))], ['emulator-5556', 'emulator-5558']);
     assert.equal(driver.preparation().serial, 'emulator-5558');
     assert.equal(driver.preparation().deviceIdentity, 'jev-actions-api31');
   });
@@ -187,7 +269,7 @@ test('no device name at all is NO_DEVICE, before any adb command', async () => {
 for (const [name, devicesText, code] of [
   ['an unauthorized serial is DEVICE_UNAUTHORIZED', 'List of devices attached\nemulator-5554          unauthorized transport_id:1\n\n', 'DEVICE_UNAUTHORIZED'],
   ['an offline serial is DEVICE_NOT_CONNECTED', 'List of devices attached\nemulator-5554          offline transport_id:1\n\n', 'DEVICE_NOT_CONNECTED'],
-  ['a serial adb doesn\'t list is DEVICE_NOT_CONNECTED', 'List of devices attached\n\n', 'DEVICE_NOT_CONNECTED'],
+  ['a serial adb doesn\'t list is DEVICE_NOT_FOUND', 'List of devices attached\n\n', 'DEVICE_NOT_FOUND'],
 ] as const) {
   test(name, async () => {
     const adb = new FakeAdb(api31());
@@ -199,26 +281,26 @@ for (const [name, devicesText, code] of [
   });
 }
 
-test('an AVD name no running emulator reports is DEVICE_NOT_CONNECTED', async () => {
+test('an AVD name no running emulator reports is DEVICE_NOT_FOUND', async () => {
   const adb = new FakeAdb(api31({ avd: 'Medium_Phone_API_36.1' }));
   await withDriver(adb, async ({ driver }) => {
-    await assert.rejects(driver.prepare(app(), signal()), reason('DEVICE_NOT_CONNECTED'));
+    await assert.rejects(driver.prepare(app(), signal()), reason('DEVICE_NOT_FOUND'));
   });
 });
 
-test('an AVD name no running emulator reports, with an unauthorized emulator listed, is DEVICE_UNAUTHORIZED', async () => {
-  const adb = new FakeAdb(api31({ avd: 'Medium_Phone_API_36.1' }));
+test('an AVD name no console reports is DEVICE_NOT_FOUND even with an unauthorized emulator listed', async () => {
+  const adb = new FakeAdb(api31({ avd: 'Medium_Phone_API_36.1' }), api31({ serial: 'emulator-5556', avd: 'Other' }));
   adb.devicesText = 'List of devices attached\nemulator-5554          device product:sdk_gphone64_arm64 model:sdk_gphone64_arm64 device:emulator64_arm64 transport_id:1\n' +
     'emulator-5556          unauthorized transport_id:2\n\n';
   await withDriver(adb, async ({ driver, root }) => {
-    await assert.rejects(driver.prepare(app(), signal()), reason('DEVICE_UNAUTHORIZED'));
+    await assert.rejects(driver.prepare(app(), signal()), reason('DEVICE_NOT_FOUND'));
     assert.equal(adb.calls.some(call => call[1] === 'emulator-5556'), false, 'an unauthorized emulator\'s property is never read');
     assert.deepEqual(await readdir(root), [], 'no lease taken');
   });
 });
 
 test('an AVD name a running emulator reports resolves to it, even with an unauthorized emulator listed', async () => {
-  const adb = new FakeAdb(api31());
+  const adb = new FakeAdb(api31(), api31({ serial: 'emulator-5556', avd: 'Other' }));
   adb.devicesText = 'List of devices attached\nemulator-5554          device transport_id:1\nemulator-5556          unauthorized transport_id:2\n\n';
   await withDriver(adb, async ({ driver }) => {
     await driver.prepare(app(), signal());
@@ -240,7 +322,7 @@ test('a live holder of the device lease is DEVICE_BUSY with the lease\'s message
     await writeFile(join(root, 'JEV-ACTIONS-API31.lock'), JSON.stringify({ pid: process.pid, token: 'other', deviceId: 'jev-actions-api31' }));
     await assert.rejects(driver.prepare(app(), signal()), (error: unknown) => reason('DEVICE_BUSY')(error) &&
       (error as Error).message.startsWith(`Device jev-actions-api31 is locked by bridge process ${String(process.pid)}`));
-    assert.deepEqual(adb.calls.map(call => call.join(' ')), ['devices -l', "-s emulator-5554 shell 'getprop' 'ro.boot.qemu.avd_name'"]);
+    assert.deepEqual(adb.calls, []);
   });
 });
 
@@ -275,11 +357,11 @@ test('a screen that is only off is woken with KEYCODE_WAKEUP, and the run goes o
   });
 });
 
-test('a keyguard still showing after waking the screen is DEVICE_LOCKED', async () => {
+test('a detectable keyguard refuses before waking the screen', async () => {
   const adb = new FakeAdb(api31({ awake: false, keyguard: true }));
   await withDriver(adb, async ({ driver }) => {
     await assert.rejects(driver.prepare(app(), signal()), reason('DEVICE_LOCKED'));
-    assert.ok(adb.shell().some(words => words.join(' ') === 'input keyevent KEYCODE_WAKEUP'));
+    assert.equal(adb.shell().some(words => words.join(' ') === 'input keyevent KEYCODE_WAKEUP'), false);
   });
 });
 
@@ -290,7 +372,7 @@ test('a foreign agent is DEVICE_BUSY: no kill, no forward removed, the app untou
     await withDriver(adb, async ({ driver, root }) => {
       await assert.rejects(driver.prepare(app(), signal()), (error: unknown) =>
         reason('DEVICE_BUSY')(error) && /another tool's UI-automation agent/.test((error as Error).message));
-      assert.deepEqual(adb.shell().map(words => words.join(' ')), ['getprop ro.boot.qemu.avd_name', 'ps -A -o PID,NAME,ARGS', 'cat /proc/4984/environ']);
+      assert.deepEqual(adb.shell().map(words => words.join(' ')), ['ps -A -o PID,NAME,ARGS', 'cat /proc/4984/environ']);
       assert.equal(adb.calls.some(call => call[2] === 'forward'), false);
       assert.ok(adb.emulators.get('emulator-5554')!.agents!.has(4984), 'the foreign agent keeps running');
       assert.equal(adb.forwards.length, 1);
@@ -334,13 +416,14 @@ test('after a crash takeover, the dead holder\'s listed agent and forward are sw
     await writeFile(join(root, 'JEV-ACTIONS-API31.lock'), JSON.stringify({ pid: deadPid(), token: 'crashed', deviceId: 'jev-actions-api31',
       ownedProcesses: ['agent emulator-5554 4675', 'forward emulator-5554 tcp:65436', 'agent emulator-5560 3562'] }));
     await driver.prepare(app(), signal());
-    const sweep = adb.calls.slice(0, adb.calls.findIndex(call => call[3]?.includes('ro.build.version.sdk'))).map(call => call.join(' '));
-    assert.deepEqual(sweep.slice(3), [
+    const sweep = adb.calls.slice(0, adb.calls.findIndex(call => call[3]?.includes("'am' 'force-stop'")))
+      .filter(call => call[0] === 'forward' || call[2] === 'forward' || /'ps'|'cat'|'kill'/.test(call[3] ?? '')).map(call => call.join(' '));
+    assert.deepEqual(sweep, [
       "-s emulator-5554 shell 'ps' '-A' '-o' 'PID,NAME,ARGS'",
       "-s emulator-5554 shell 'cat' '/proc/4675/environ'",
+      'forward --list',
       "-s emulator-5554 shell 'kill' '4675'",
       "-s emulator-5554 shell 'cat' '/proc/4675/environ'",
-      'forward --list',
       '-s emulator-5554 forward --remove tcp:65436',
     ]);
     assert.deepEqual(adb.forwards.filter(forward => forward.serial === 'emulator-5556').map(forward => forward.local), ['tcp:49600'],
@@ -1291,16 +1374,14 @@ test('without a screenshot folder, the driver\'s own temporary folder is removed
 
 /** What `prepare` sends to an emulator named by serial, with nothing to sweep and a launcher activity to look up. */
 const PREPARE_BY_SERIAL = [
-  'devices -l',
-  "-s emulator-5554 shell 'getprop' 'ro.boot.qemu.avd_name'",
   "-s emulator-5554 shell 'ps' '-A' '-o' 'PID,NAME,ARGS'",
   'forward --list',
   "-s emulator-5554 shell 'getprop' 'ro.build.version.sdk'",
   "-s emulator-5554 shell 'getprop' 'sys.boot_completed'",
   "-s emulator-5554 shell 'pm' 'path' 'com.example.android'",
+  "-s emulator-5554 shell 'cmd' 'package' 'resolve-activity' '--brief' '-a' 'android.intent.action.MAIN' '-c' 'android.intent.category.LAUNCHER' 'com.example.android'",
   "-s emulator-5554 shell 'dumpsys' 'window' 'policy'",
   "-s emulator-5554 shell 'am' 'force-stop' 'com.example.android'",
-  "-s emulator-5554 shell 'cmd' 'package' 'resolve-activity' '--brief' '-a' 'android.intent.action.MAIN' '-c' 'android.intent.category.LAUNCHER' 'com.example.android'",
   "-s emulator-5554 shell 'am' 'start' '-W' '-n' 'com.example.android/.MainActivity'",
   `-s emulator-5554 push ${AGENT_CACHE} /data/local/tmp/jev-ios-bridge-agent.dex`,
   START.join(' '),
@@ -1447,8 +1528,7 @@ test('prepare reads the uid and device time and starts both streams after the re
     // After the force-stop, so a crash the previous instance logged before it is stamped before the start time.
     assert.deepEqual(calls.slice(from + 1, calls.indexOf(`-s emulator-5554 push ${AGENT_CACHE} /data/local/tmp/jev-ios-bridge-agent.dex`)), [
       "-s emulator-5554 shell 'am' 'force-stop' 'com.example.android'",
-      "-s emulator-5554 shell 'cmd' 'package' 'resolve-activity' '--brief' '-a' 'android.intent.action.MAIN' '-c' 'android.intent.category.LAUNCHER' 'com.example.android'",
-      "-s emulator-5554 shell 'pm' 'list' 'packages' '-U'",
+          "-s emulator-5554 shell 'pm' 'list' 'packages' '-U'",
       "-s emulator-5554 shell 'date' '+%s.%3N %z'",
       APP_LOG.join(' '),
       EVENTS.join(' '),

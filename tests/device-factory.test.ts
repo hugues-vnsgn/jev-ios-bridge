@@ -1,3 +1,4 @@
+import { fakeSimulatorProbe } from './fixtures/android-device.js';
 import { mkdirSync, realpathSync } from 'node:fs';
 import { Admission } from '../src/device/admission.js';
 import assert from 'node:assert/strict';
@@ -72,25 +73,29 @@ test('the Android driver gets the script\'s device, else JEV_ANDROID_DEVICE, fro
   const root = await mkdtemp(join(tmpdir(), 'jev-device-factory-android-device-'));
   try {
     const adbCalls: string[] = [];
+    const probeNames: (string | undefined)[] = [];
     const runner: AdbRunner = async (args) => {
       adbCalls.push(args.join(' '));
       return { stdout: 'List of devices attached\n\n', stderr: '', exitCode: 0 };
     };
     const createDriver = createDriverFactory({ mobileBuildMcp: { cwd: root, lockRoot: root },
       android: { leaseRoot: root, runner, defaultDevice: 'Default_AVD',
+        identityProbe: { android: async (_signal, name) => { probeNames.push(name); return []; },
+          simulatorSet: async () => assert.fail('Android uses no simulator inventory') },
         tools: async () => ({ adb: '/sdk/platform-tools/adb', agent: { path: '/cache/agent.dex', sha256: 'a'.repeat(64) } }) } });
     const script = (device?: { avd: string }): ScriptedScenario =>
       ({ version: 1, platform: 'android', app: { package: 'com.hugues.test_cmp' }, ...(device ? { device } : {}), values: {}, steps: [] });
     for (const [device, named] of [[{ avd: 'Script_AVD' }, 'Script_AVD'], [undefined, 'Default_AVD']] as const) {
       await assert.rejects(createDriver(script(device)).prepare({ app: { package: 'com.hugues.test_cmp' } }, new AbortController().signal),
-        (error: unknown) => error instanceof DeviceReasonError && error.code === 'DEVICE_NOT_CONNECTED' && error.message.endsWith(`named ${named}`));
+        (error: unknown) => error instanceof DeviceReasonError && error.code === 'DEVICE_NOT_FOUND' && probeNames.at(-1) === named);
     }
-    assert.deepEqual(adbCalls, ['devices -l', 'devices -l']);
+    assert.deepEqual(adbCalls, []);
+    assert.deepEqual(probeNames, ['Script_AVD', 'Default_AVD']);
   } finally { await rm(root, { recursive: true, force: true }); }
 });
 
 function fakeOptions(options: import('../src/device/index.js').MobileBuildMcpDriverOptions) {
   const storeRoot = join(options.cwd, 'admission'); mkdirSync(storeRoot, { recursive: true, mode: 0o700 });
-  return { ...options, admission: Admission.forTesting({ root: realpathSync(storeRoot), backend: 'fake' }),
+  return { identityProbe: fakeSimulatorProbe(udid), ...options, admission: Admission.forTesting({ root: realpathSync(storeRoot), backend: 'fake' }),
     deviceWindow: async () => {}, fakeBackend: { runner: options.runner!, window: undefined } };
 }

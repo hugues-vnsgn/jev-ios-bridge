@@ -1,3 +1,4 @@
+import { fakeSimulatorProbe } from './fixtures/android-device.js';
 import assert from 'node:assert/strict';
 import { spawnSync } from 'node:child_process';
 import { getEventListeners } from 'node:events';
@@ -25,7 +26,7 @@ function response(args: string[]) {
 }
 function driver(root: string, admission: Admission, runner: CliRunner, extra: Partial<MobileBuildMcpDriverOptions> = {}) {
   return new MobileBuildMcpDriver({ cwd: root, lockRoot: join(root, 'leases'), admission, runner, deviceWindow: async () => {},
-    fakeBackend: { runner, window: undefined }, ...extra });
+    identityProbe: fakeSimulatorProbe(udid), fakeBackend: { runner, window: undefined }, ...extra });
 }
 test('a competing durable observed owner blocks legacy preparation before every device effect', async () => {
   const { root, admission } = fixture(); let calls = 0;
@@ -72,7 +73,7 @@ test('preparation inventory exposes selected availability without booting or pre
   };
   const { claim } = await preparation(admission);
   const subject = createPreparationDriver({ cwd: root, lockRoot: join(root, 'leases'), admission, runner,
-    fakeBackend: { runner, window: undefined } });
+    identityProbe: fakeSimulatorProbe(udid), fakeBackend: { runner, window: undefined } });
   try {
     await subject.attachPreparation(claim, context, new AbortController().signal);
     assert.deepEqual(await subject.inventoryStatus(new AbortController().signal), { state: 'Shutdown', isAvailable: true });
@@ -92,7 +93,7 @@ test('malformed inventory error receipt cannot settle or authorize a later boot'
   };
   const { claim } = await preparation(admission);
   const subject = createPreparationDriver({ cwd: root, lockRoot: join(root, 'leases'), admission, runner,
-    fakeBackend: { runner, window: undefined } });
+    identityProbe: fakeSimulatorProbe(udid), fakeBackend: { runner, window: undefined } });
   try {
     await subject.attachPreparation(claim, context, new AbortController().signal);
     await assert.rejects(subject.inventoryStatus(new AbortController().signal),
@@ -118,7 +119,7 @@ for (const [name, entries, expected] of [
     };
     const { claim } = await preparation(admission);
     const subject = createPreparationDriver({ cwd: root, lockRoot: join(root, 'leases'), admission, runner,
-      fakeBackend: { runner, window: undefined } });
+      identityProbe: fakeSimulatorProbe(udid), fakeBackend: { runner, window: undefined } });
     try {
       await subject.attachPreparation(claim, context, new AbortController().signal);
       assert.deepEqual(await subject.inventoryStatus(new AbortController().signal), expected);
@@ -145,7 +146,7 @@ for (const [name, entries] of [
     };
     const { claim } = await preparation(admission);
     const subject = createPreparationDriver({ cwd: root, lockRoot: join(root, 'leases'), admission, runner,
-      fakeBackend: { runner, window: undefined } });
+      identityProbe: fakeSimulatorProbe(udid), fakeBackend: { runner, window: undefined } });
     try {
       await subject.attachPreparation(claim, context, new AbortController().signal);
       await assert.rejects(subject.inventoryStatus(new AbortController().signal),
@@ -163,7 +164,7 @@ test('durable preparation cancellation prevents inventory dispatch', async () =>
   const runner: CliRunner = async args => { calls++; return response(args); };
   const { claim } = await preparation(admission);
   const subject = createPreparationDriver({ cwd: root, lockRoot: join(root, 'leases'), admission, runner,
-    fakeBackend: { runner, window: undefined } });
+    identityProbe: fakeSimulatorProbe(udid), fakeBackend: { runner, window: undefined } });
   try {
     await subject.attachPreparation(claim, context, new AbortController().signal);
     claim.cancel();
@@ -180,7 +181,7 @@ test('lost inventory reply fences boot and retains the lease after a late valid 
   const runner: CliRunner = async args => { calls.push(args[1]!); return pending; };
   const { claim } = await preparation(admission);
   const subject = createPreparationDriver({ cwd: root, lockRoot: join(root, 'leases'), admission, runner,
-    fakeBackend: { runner, window: undefined } });
+    identityProbe: fakeSimulatorProbe(udid), fakeBackend: { runner, window: undefined } });
   try {
     await subject.attachPreparation(claim, context, new AbortController().signal);
     await assert.rejects(subject.inventoryStatus(new AbortController().signal, 5));
@@ -209,7 +210,7 @@ test('preparation parks settled ownership and a consumed action attaches without
   };
   const p = await preparation(admission);
   const options: MobileBuildMcpDriverOptions = { cwd: root, lockRoot: join(root, 'leases'), admission, runner,
-    deviceWindow: async () => {}, fakeBackend: { runner, window: undefined } };
+    deviceWindow: async () => {}, identityProbe: fakeSimulatorProbe(udid), fakeBackend: { runner, window: undefined } };
   const preparer = createPreparationDriver(options);
   try {
     const preparationSignal = new AbortController().signal;
@@ -272,9 +273,9 @@ test('test authority rejects the real runner or real presentation before backend
     const realWindow = deviceWindowOpener(false, {})!;
     assert.throws(() => new MobileBuildMcpDriver({ cwd: root, admission, runner: fake, deviceWindow: realWindow }), /fake runner/);
     assert.throws(() => new MobileBuildMcpDriver({ cwd: root, admission, runner: fake, deviceWindow: realWindow,
-      fakeBackend: { runner: fake, window: realWindow } }), /injected runner and window opener/);
-    assert.throws(() => new MobileBuildMcpDriver({ cwd: root, admission, fakeBackend: { runner: fake } as never }), /window opener/);
-    assert.throws(() => new MobileBuildMcpDriver({ cwd: root, fakeBackend: { runner: fake, window: undefined } }), /isolated admission/);
+      identityProbe: fakeSimulatorProbe(udid), fakeBackend: { runner: fake, window: realWindow } }), /injected runner and window opener/);
+    assert.throws(() => new MobileBuildMcpDriver({ cwd: root, admission, identityProbe: fakeSimulatorProbe(udid), fakeBackend: { runner: fake } as never }), /window opener/);
+    assert.throws(() => new MobileBuildMcpDriver({ cwd: root, identityProbe: fakeSimulatorProbe(udid), fakeBackend: { runner: fake, window: undefined } }), /isolated admission/);
   } finally { rmSync(root, { recursive: true, force: true }); }
 });
 
@@ -299,7 +300,7 @@ test('unknown creation blocks legacy attachment before launch, selected listing 
   await reserved.reservation.create(async () => ({ status: 'unknown', reason: 'CREATE_UNCONFIRMED' }));
   const runner: CliRunner = async () => assert.fail('Host guard prevents every backend');
   const window = async () => assert.fail('Host guard prevents window');
-  const subject = driver(root, admission, runner, { fakeBackend: { runner, window }, deviceWindow: window });
+  const subject = driver(root, admission, runner, { identityProbe: fakeSimulatorProbe(udid), fakeBackend: { runner, window }, deviceWindow: window });
   try { await assert.rejects(subject.prepare(context, new AbortController().signal), /HOST_CREATION_UNRESOLVED/); }
   finally { rmSync(root, { recursive: true, force: true }); }
 });
@@ -318,7 +319,7 @@ for (const phase of ['list', 'window', 'launch-app', 'snapshot-ui', 'stop'] as c
       return response(args);
     };
     const window = async () => effect('window');
-    const subject = driver(root, admission, runner, { fakeBackend: { runner, window }, deviceWindow: window });
+    const subject = driver(root, admission, runner, { identityProbe: fakeSimulatorProbe(udid), fakeBackend: { runner, window }, deviceWindow: window });
     try {
       const cancel = new AbortController();
       if (phase === 'snapshot-ui' || phase === 'stop') await subject.prepare(context, new AbortController().signal);

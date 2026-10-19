@@ -103,11 +103,20 @@ export const REASON_CODES = {
   CATEGORY_NOT_ENABLED: 'The requested device category is reserved and is not enabled.',
   STATE_UNAVAILABLE: 'Admission storage is unavailable, unsafe, incompatible, or requires offline maintenance.',
   INVALID_REQUEST: 'The admission or maintenance request is invalid.',
+  DEVICE_NOT_FOUND: 'The configured device name matches no live device identity.',
+  DEVICE_IDENTITY_CONFLICT: 'Live identity sources disagree about the device.',
+  DEVICE_IDENTITY_UNAVAILABLE: 'A required identity source cannot be read or is not admissible; exactly one identity unavailable reason identifies the cause.',
 } as const satisfies Record<string, string>;
 export type ReasonCode = keyof typeof REASON_CODES;
 
 export const IMPORT_REFUSAL_REASONS = ['HOLDER_ALIVE', 'SOURCE_UNREADABLE', 'SOURCE_UNSAFE', 'SOURCE_INCONSISTENT', 'SOURCE_CONFLICT'] as const;
 export type ImportRefusalReason = typeof IMPORT_REFUSAL_REASONS[number];
+
+export const DEVICE_IDENTITY_UNAVAILABLE_REASONS = [
+  'NONDEFAULT_DEVICE_SET', 'EMULATOR_VERSION_UNSUPPORTED', 'REMOTE_CONSOLE',
+  'MALFORMED_PROVENANCE', 'PROVENANCE_INACCESSIBLE', 'PROBE_TIMEOUT',
+] as const;
+export type DeviceIdentityUnavailableReason = typeof DEVICE_IDENTITY_UNAVAILABLE_REASONS[number];
 
 export function isReasonCode(value: unknown): value is ReasonCode {
   return typeof value === 'string' && Object.hasOwn(REASON_CODES, value);

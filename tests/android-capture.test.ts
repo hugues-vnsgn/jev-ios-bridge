@@ -79,8 +79,6 @@ test('capture runs prepare\'s parts in order without the restart or the streams,
     const driver = new AndroidDriver({ ...parts, device: { serial: 'emulator-5554' } });
     const snapshot = await driver.capture(signal());
     assert.deepEqual(adb.calls, [
-      ['devices', '-l'],
-      ['-s', 'emulator-5554', 'shell', "'getprop' 'ro.boot.qemu.avd_name'"],
       ['-s', 'emulator-5554', 'shell', "'ps' '-A' '-o' 'PID,NAME,ARGS'"],
       ['forward', '--list'],
       ['-s', 'emulator-5554', 'shell', "'getprop' 'ro.build.version.sdk'"],
@@ -128,7 +126,8 @@ test('capture holds the device lease: a live holder is DEVICE_BUSY, and nothing 
     await writeFile(join(root, 'JEV-ACTIONS-API31.lock'), JSON.stringify({ pid: process.pid, token: 'live', deviceId: 'jev-actions-api31' }));
     const driver = new AndroidDriver({ ...parts, device: { avd: 'jev-actions-api31' } });
     await assert.rejects(driver.capture(signal()), reason('DEVICE_BUSY'));
-    assert.deepEqual(adb.shell().map(words => words.join(' ')), ['getprop ro.boot.qemu.avd_name']);
+    assert.deepEqual(adb.shell().map(words => words.join(' ')), []);
+    assert.ok(adb.probeCalls.some(args => args.at(-1) === 'ro.boot.qemu.avd_name'));
   });
 });
 

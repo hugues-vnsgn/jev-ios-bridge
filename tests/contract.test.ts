@@ -74,6 +74,20 @@ test('contract: offline admission refusals have one import code and a closed rea
   }
 });
 
+test('contract: live device identity refusals have a closed unavailable reason set', () => {
+  for (const code of ['DEVICE_NOT_FOUND', 'DEVICE_IDENTITY_CONFLICT', 'DEVICE_IDENTITY_UNAVAILABLE']) {
+    assert.equal(vocabularyApi.isReasonCode(code), true, code);
+  }
+  assert.deepEqual(vocabularyApi.DEVICE_IDENTITY_UNAVAILABLE_REASONS, [
+    'NONDEFAULT_DEVICE_SET', 'EMULATOR_VERSION_UNSUPPORTED', 'REMOTE_CONSOLE',
+    'MALFORMED_PROVENANCE', 'PROVENANCE_INACCESSIBLE', 'PROBE_TIMEOUT',
+  ]);
+  for (const reason of ['NONDEFAULT_DEVICE_SET', 'EMULATOR_VERSION_UNSUPPORTED', 'REMOTE_CONSOLE',
+    'MALFORMED_PROVENANCE', 'PROVENANCE_INACCESSIBLE', 'PROBE_TIMEOUT']) {
+    assert.equal(vocabularyApi.isReasonCode(reason), false, reason);
+  }
+});
+
 // ---------- scripts ----------
 
 const scriptCases: Record<string, unknown> = {

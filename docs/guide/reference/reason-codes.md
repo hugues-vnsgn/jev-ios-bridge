@@ -134,3 +134,22 @@ A `do` step that goes back to Claude records a hand-back reason, such as `NONE_F
 | `INVALID_REQUEST` | The admission or maintenance request is invalid. |
 
 `IMPORT_REFUSED` carries exactly one reason: `HOLDER_ALIVE`, `SOURCE_UNREADABLE`, `SOURCE_UNSAFE`, `SOURCE_INCONSISTENT`, or `SOURCE_CONFLICT`. These reasons are details of the import refusal, not separate verdict codes.
+
+## Device identity
+
+| Code | Meaning |
+| --- | --- |
+| `DEVICE_NOT_FOUND` | The configured device name matches no live device identity. |
+| `DEVICE_IDENTITY_CONFLICT` | Live identity sources disagree about the device. |
+| `DEVICE_IDENTITY_UNAVAILABLE` | A required identity source cannot be read or is not admissible; exactly one identity unavailable reason identifies the cause. |
+
+`DEVICE_IDENTITY_CONFLICT` refuses admission without quarantining the device. `DEVICE_IDENTITY_UNAVAILABLE` carries exactly one of these reasons. These reasons are refusal details, not separate verdict codes.
+
+| Reason | Meaning |
+| --- | --- |
+| `NONDEFAULT_DEVICE_SET` | The iOS simulator belongs to a nondefault device set. |
+| `EMULATOR_VERSION_UNSUPPORTED` | The Android emulator version is older than 30. |
+| `REMOTE_CONSOLE` | The emulator console is not on this host's loopback. |
+| `MALFORMED_PROVENANCE` | A required provenance reply is missing, malformed, or invalid. |
+| `PROVENANCE_INACCESSIBLE` | Required provenance cannot be read, including when console access requires another user's files. |
+| `PROBE_TIMEOUT` | A read-only identity probe exceeded its command deadline. |
