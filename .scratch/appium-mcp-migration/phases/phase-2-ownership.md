@@ -61,7 +61,13 @@ today; `cleanupMs` is the existing internal `cleanupTimeMs` limit, default
 `wallTimeMs` stays the outer limit over all three. Bounds are 1000 to 600000 for
 `startupMs` and `operationMs` and 1000 to 120000 for `cleanupMs` (the existing
 maximum, never widened), provisional
-until the owner approves them at P2.2's review (main agent, 2026-10-19).
+until the owner approves them at P2.2's review (main agent, 2026-10-19). A budget the selected
+profile leaves unset has no profile ceiling: the system bound and today's default
+apply. Without a profile, a request may still carry the three new fields and they
+only tighten; "behave as today" covers the existing `maxSteps` and `wallTimeMs`.
+`capture` is Android-only, so it ignores a `defaultProfile` whose platform is iOS
+and falls back to the legacy order; an explicit iOS `--profile` on `capture`
+refuses `PROFILE_CONFLICT` (main agent, 2026-10-19).
 
 **Binding.** The resolved profile (name plus content digest) is recorded on the run
 and in the admission attempt intent. Hand-back, retrieval and recovery use the
