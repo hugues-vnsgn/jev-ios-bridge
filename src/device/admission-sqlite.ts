@@ -13,7 +13,7 @@ import type { UpgradeDeclaration, UpgradeReceipt, UpgradeRecovery, UpgradeCheckp
 import { IMPORT_REFUSAL_REASONS, type ImportRefusalReason } from '../scripted/vocabulary.js';
 import type { ImportedObservedAction, MigrationImport, MigrationReceipt, MigrationTestOptions } from './admission-migration.js';
 
-type AdmissionErrorCode = 'STATE_UNAVAILABLE' | 'INVALID_REQUEST' | 'CATEGORY_NOT_ENABLED' | 'UPGRADE_BLOCKED' | 'IMPORT_REFUSED' | 'STALE_OWNER' | 'DISPATCH_CLOSED' | 'OPERATIONS_UNSETTLED';
+type AdmissionErrorCode = 'STATE_UNAVAILABLE' | 'INVALID_REQUEST' | 'CATEGORY_NOT_ENABLED' | 'UPGRADE_BLOCKED' | 'IMPORT_REFUSED' | 'NOT_COVERABLE' | 'STALE_OWNER' | 'DISPATCH_CLOSED' | 'OPERATIONS_UNSETTLED';
 export class AdmissionError extends Error {
   readonly reason?: ImportRefusalReason;
   constructor(code: Exclude<AdmissionErrorCode,'IMPORT_REFUSED'>, message: string);

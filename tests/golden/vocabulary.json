@@ -88,7 +88,12 @@
     "IMPORT_REFUSED",
     "CATEGORY_NOT_ENABLED",
     "STATE_UNAVAILABLE",
-    "INVALID_REQUEST"
+    "INVALID_REQUEST",
+    "NOT_COVERABLE"
+  ],
+  "fenceRequestKinds": [
+    "stop",
+    "maintenance-lift"
   ],
   "exitCodes": {
     "passed": 0,

@@ -103,11 +103,14 @@ export const REASON_CODES = {
   CATEGORY_NOT_ENABLED: 'The requested device category is reserved and is not enabled.',
   STATE_UNAVAILABLE: 'Admission storage is unavailable, unsafe, incompatible, or requires offline maintenance.',
   INVALID_REQUEST: 'The admission or maintenance request is invalid.',
+  NOT_COVERABLE: 'The requested quarantine cover is not supported; maintenance-lift is reserved.',
 } as const satisfies Record<string, string>;
 export type ReasonCode = keyof typeof REASON_CODES;
 
 export const IMPORT_REFUSAL_REASONS = ['HOLDER_ALIVE', 'SOURCE_UNREADABLE', 'SOURCE_UNSAFE', 'SOURCE_INCONSISTENT', 'SOURCE_CONFLICT'] as const;
 export type ImportRefusalReason = typeof IMPORT_REFUSAL_REASONS[number];
+
+export const FENCE_REQUEST_KINDS = ['stop', 'maintenance-lift'] as const;
 
 export function isReasonCode(value: unknown): value is ReasonCode {
   return typeof value === 'string' && Object.hasOwn(REASON_CODES, value);
