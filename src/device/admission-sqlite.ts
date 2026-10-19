@@ -178,7 +178,10 @@ function step2to3(db: DatabaseSync, time: number): { historical: number; exclusi
   }
   for (const allocation of old.allocations!) {
     const record: AllocationRecord=JSON.parse(allocation.record); const o=record.owner; const id=generationId(o.token,o.generation);
-    if (!owners.has(id)) remember({id,owner_kind:o.process.pid===0&&o.process.incarnation==='parked'?'parked':'allocation',platform:o.process.pid===0?'ios-simulator':null,device:o.process.pid===0?record.device:null,allocation_id:allocation.id,attempt_kind:null,attempt_id:null,token:o.token,generation:o.generation,pid:o.process.pid,incarnation:o.process.incarnation,created_at:record.createdAt,inventory_unknown_reason:o.process.pid===0?null:'schema2-inventory',dispatch_closed_at:o.process.pid===0||!['preparing','executing'].includes(record.state)?time:null});
+    const previous=owners.get(id);
+    if (previous?.owner_kind==='device') {
+      if(previous.allocation_id!==allocation.id||previous.platform!=='ios-simulator'||previous.device!==record.device||previous.pid!==o.process.pid||previous.incarnation!==o.process.incarnation||o.allocationId!==allocation.id) throw new AdmissionError('STATE_UNAVAILABLE','Conflicting historical owner binding');
+    } else remember({id,owner_kind:o.process.pid===0&&o.process.incarnation==='parked'?'parked':'allocation',platform:o.process.pid===0?'ios-simulator':null,device:o.process.pid===0?record.device:null,allocation_id:allocation.id,attempt_kind:null,attempt_id:null,token:o.token,generation:o.generation,pid:o.process.pid,incarnation:o.process.incarnation,created_at:record.createdAt,inventory_unknown_reason:o.process.pid===0?null:'schema2-inventory',dispatch_closed_at:o.process.pid===0||!['preparing','executing'].includes(record.state)?time:null});
   }
   for (const row of owners.values()) put('owner_generations',row);
   for (const row of old.attempts!) put('attempts',{...row,platform:'ios-simulator',owner_generation_id:generationId(row.token,row.generation),transport:null});
