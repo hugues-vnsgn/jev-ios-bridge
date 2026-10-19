@@ -1,7 +1,8 @@
 # Evidenced release with immutable outcomes
 
 Type: prototype
-Status: open
+Status: claimed
+Claimed by: Claude Code (owner session)
 Labels: wayfinder:prototype
 Mode: HITL
 Parent: [Appium Phase 2 decision map](../map.md)
