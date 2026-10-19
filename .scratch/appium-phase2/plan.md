@@ -314,6 +314,7 @@ Each live lane runs on its own cloud VM at the PR head. Drive through `control-u
 
 - [ ] Create `src/device/admission-import.ts`, `tests/admission-import.test.ts` and `docs/guide/admission-activation.md`.
 - [ ] Edit `src/device/admission-maintenance.ts` (new subcommands only), `src/device/admission-migration.ts` (lease source reading only), `docs/guide/14-observed-actions.md`, `tests/admission-maintenance-entry.test.ts`.
+- [ ] Edit `src/device/admission-sqlite.ts` for import persistence and read-only preflight queries only. No schema change (P2.3) and no lifecycle logic (P2.6).
 - [ ] Read `src/device/lease.ts` but never edit it.
 
 **Build.**
