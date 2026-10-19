@@ -1,11 +1,12 @@
 import { z } from 'zod';
+import { DEVICE_CATEGORIES } from '../../src/device/admission.js';
 const attempt = z.strictObject({ kind: z.enum(['legacy','observed','preparation']), id: z.string().min(1) });
-const owner = z.strictObject({ device: z.string(), attempt, token: z.string().min(1), generation: z.number().int().positive(), process: z.strictObject({ pid: z.number().int().positive(), incarnation: z.string().min(1) }) });
+const owner = z.strictObject({ category: z.enum(DEVICE_CATEGORIES), device: z.string(), attempt, token: z.string().min(1), generation: z.number().int().positive(), process: z.strictObject({ pid: z.number().int().positive(), incarnation: z.string().min(1) }) });
 const terminal = z.strictObject({ outcome: z.enum(['completed','observed','refused','inconclusive']), disposition: z.enum(['available','quarantined']), payload: z.unknown(), evidenceRefs: z.array(z.string()) });
-const view = z.strictObject({ identity: attempt, device: z.string(), digest: z.string(), intent: z.unknown(), owner, state: z.enum(['active','parked','terminal']), cancellationRequested: z.boolean(), terminal: terminal.nullable() });
+const view = z.strictObject({ identity: attempt, category: z.enum(DEVICE_CATEGORIES), device: z.string(), digest: z.string(), intent: z.unknown(), owner, state: z.enum(['active','parked','terminal']), cancellationRequested: z.boolean(), terminal: terminal.nullable() });
 const common = { requestId: z.number().int().positive() };
 export const commandSchema = z.discriminatedUnion('operation', [
- z.strictObject({ ...common, operation: z.literal('acquire'), request: z.strictObject({ device: z.string(), attempt, digest: z.string(), intent: z.unknown() }) }),
+ z.strictObject({ ...common, operation: z.literal('acquire'), request: z.strictObject({ category: z.enum(DEVICE_CATEGORIES).optional(), device: z.string(), attempt, digest: z.string(), intent: z.unknown() }) }),
  z.strictObject({ ...common, operation: z.literal('finalize'), terminal }),
  z.strictObject({ ...common, operation: z.literal('dispatch') }),
  z.strictObject({ ...common, operation: z.literal('exit') }),

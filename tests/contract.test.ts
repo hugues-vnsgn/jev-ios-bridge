@@ -20,6 +20,7 @@ import type { ScriptedStep } from '../src/scripted/contracts.js';
 import { REPORT_VERSION } from '../src/scripted/report-json.js';
 import { SCRIPT_VERSION, scriptedScenarioSchema } from '../src/scripted/schema.js';
 import { REASON_CODES, ROLES } from '../src/scripted/vocabulary.js';
+import * as vocabularyApi from '../src/scripted/vocabulary.js';
 import { BridgeService } from '../src/service.js';
 import { captureCommand } from '../src/capture.js';
 import { PINNED_AGENT_SHA256 } from '../src/device/android/agent-supply.js';
@@ -59,6 +60,18 @@ test('contract: role, reason-code, exit-code, and version vocabularies', async (
     exitCodes: { passed: 0, failed: 1, inconclusive: 2, couldNotStart: 3, sigint: 130, sigterm: 143 },
     eventTypes: ['started', 'prepared', 'step', 'judgment', 'action', 'checkpoint', 'error', 'verdict'],
   });
+});
+
+test('contract: offline admission refusals have one import code and a closed reason set', () => {
+  for (const code of ['UPGRADE_BLOCKED', 'IMPORT_REFUSED', 'CATEGORY_NOT_ENABLED', 'STATE_UNAVAILABLE', 'INVALID_REQUEST']) {
+    assert.equal(vocabularyApi.isReasonCode(code), true, code);
+  }
+  assert.deepEqual(vocabularyApi.IMPORT_REFUSAL_REASONS, [
+    'HOLDER_ALIVE', 'SOURCE_UNREADABLE', 'SOURCE_UNSAFE', 'SOURCE_INCONSISTENT', 'SOURCE_CONFLICT',
+  ]);
+  for (const reason of ['HOLDER_ALIVE', 'SOURCE_UNREADABLE', 'SOURCE_UNSAFE', 'SOURCE_INCONSISTENT', 'SOURCE_CONFLICT']) {
+    assert.equal(vocabularyApi.isReasonCode(reason), false, reason);
+  }
 });
 
 // ---------- scripts ----------

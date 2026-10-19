@@ -6,17 +6,99 @@ import { join } from 'node:path';
 import { spawn, type ChildProcess } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
 import { DatabaseSync } from 'node:sqlite';
-import { Admission, type AdmissionRequest } from '../src/device/admission.js';
+import { Admission, canonicalDevice, type AdmissionRequest } from '../src/device/admission.js';
 
 import { messageSchema, commandSchema, faultSchema, requireAcquisition, type CoreReply, type CommandInput, type Acquisition, type Finalization, type Control } from './fixtures/admission-core-protocol.js';
 
 const device = 'abcdef00-0000-4000-8000-000000000001';
 const request = (id: string, udid = device): AdmissionRequest => ({ device: udid, attempt: { kind: 'observed', id }, digest: 'digest', intent: { tap: 'button' } });
+test('device identity normalization preserves the category and its value semantics', () => {
+  assert.deepEqual(canonicalDevice({ category: 'ios-simulator', value: device }), {
+    category: 'ios-simulator', value: 'ABCDEF00-0000-4000-8000-000000000001',
+  });
+  assert.deepEqual(canonicalDevice({ category: 'android-emulator', value: '/private/avds/Pixel.avd' }), {
+    category: 'android-emulator', value: '/private/avds/Pixel.avd',
+  });
+  assert.deepEqual(canonicalDevice({ category: 'android-phone', value: device }), {
+    category: 'android-phone', value: 'abcdef00-0000-4000-8000-000000000001',
+  });
+  assert.equal(canonicalDevice(device), 'ABCDEF00-0000-4000-8000-000000000001');
+});
+
+test('reserved iOS phone identities refuse before simulator UUID validation', () => {
+  for (const value of ['00008140-001234567890001E', device]) {
+    assert.throws(() => canonicalDevice({ category: 'ios-phone', value }), { code: 'CATEGORY_NOT_ENABLED' });
+  }
+});
+
+test('device identities reject unresolved emulator names and malformed identity pairs', () => {
+  for (const value of ['Pixel.avd', '/private/avds/../Pixel.avd', '/private/avds/Pixel.avd\0']) {
+    assert.throws(() => canonicalDevice({ category: 'android-emulator', value }), { code: 'INVALID_REQUEST' });
+  }
+  for (const raw of ['null', '{}', '{"category":"watch","value":"id"}', '{"category":"android-phone","value":""}', '{"category":"android-phone","value":"id","extra":true}']) {
+    assert.throws(() => canonicalDevice(JSON.parse(raw)), { code: 'INVALID_REQUEST' });
+  }
+});
+
 function fixture(t: TestContext) {
   const root = realpathSync(mkdtempSync(join(tmpdir(), 'admission-core-')));
   t.after(() => rmSync(root, { recursive: true, force: true }));
   return { root, admission: Admission.forTesting({ root, backend: 'fake' }) };
 }
+test('fresh fake stores are initialized at schema 3 through the upgrade chain', t => {
+  const { root } = fixture(t);
+  const db = new DatabaseSync(join(root, 'admission.sqlite'));
+  try {
+    assert.equal(db.prepare('SELECT schema_version FROM metadata').get()?.schema_version, 3);
+    assert.equal(db.prepare("SELECT count(*) AS total FROM sqlite_master WHERE type='table' AND name NOT LIKE 'sqlite_%'").get()?.total, 19);
+    assert.equal(db.prepare("SELECT count(*) AS total FROM upgrades").get()?.total, 0);
+    assert.equal(db.prepare("SELECT count(*) AS total FROM pragma_table_info('devices') WHERE name='state'").get()?.total, 0);
+  } finally { db.close(); }
+});
+
+test('admission requests and retrieved owners retain their explicit device category', t => {
+  const { admission } = fixture(t);
+  const input = { ...request('category-aware'), category: 'ios-simulator' as const };
+  const result = admission.acquire(input);
+  assert.equal(result.kind, 'acquired');
+  if (result.kind !== 'acquired') return;
+  assert.equal(result.claim.identity.category, 'ios-simulator');
+  assert.equal(admission.readAttempt(input.attempt)?.category, 'ios-simulator');
+  assert.equal(admission.inspect(device)?.category, 'ios-simulator');
+});
+
+test('reserved and unknown request categories refuse without recording an attempt', t => {
+  const { admission, root } = fixture(t);
+  const before = readFileSync(join(root, 'admission.sqlite'));
+  assert.throws(() => admission.acquire({ ...request('reserved'), category: 'ios-phone' }), { code: 'CATEGORY_NOT_ENABLED' });
+  assert.throws(() => admission.acquire(JSON.parse(JSON.stringify({ ...request('unknown'), category: 'watch' }))), { code: 'INVALID_REQUEST' });
+  assert.equal(admission.readAttempt(request('reserved').attempt), undefined);
+  assert.deepEqual(readFileSync(join(root, 'admission.sqlite')), before);
+});
+
+test('an owner from another category cannot recover a matching device value', t => {
+  const { admission, root } = fixture(t);
+  const result = admission.acquire(request('owner-category'));
+  assert.equal(result.kind, 'acquired');
+  if (result.kind !== 'acquired') return;
+  const recovery = Admission.forTesting({ root, backend: 'fake', ownerLiveness: () => 'dead' });
+  const before = readFileSync(join(root, 'admission.sqlite'));
+  assert.throws(() => recovery.quarantineAbandoned({ ...result.claim.identity, category: 'android-phone' }, 'wrong category'), { code: 'STALE_OWNER' });
+  assert.deepEqual(readFileSync(join(root, 'admission.sqlite')), before);
+});
+
+test('the same device value in different categories has independent owners', t => {
+  const { admission } = fixture(t);
+  const simulator=admission.acquire({ ...request('simulator-pair'), category: 'ios-simulator' });
+  const phone=admission.acquire({ ...request('phone-pair',device.toUpperCase()), category: 'android-phone' });
+  assert.equal(simulator.kind,'acquired');
+  assert.equal(phone.kind,'acquired');
+  if(simulator.kind!=='acquired'||phone.kind!=='acquired') return;
+  assert.notEqual(simulator.claim.identity.token,phone.claim.identity.token);
+  assert.deepEqual(admission.inspect({category:'ios-simulator',value:device})?.owner,simulator.claim.identity);
+  assert.deepEqual(admission.inspect({category:'android-phone',value:device.toUpperCase()})?.owner,phone.claim.identity);
+});
+
 test('atomic admission canonicalizes identity; competing readers preserve the owner and terminal is authoritative', t => {
   const { admission } = fixture(t);
   const result = admission.acquire(request('one'));
@@ -329,7 +411,15 @@ for (const corruption of ['schema', 'inactive', 'marker', 'database', 'permissio
     const path = join(root, 'admission.sqlite');
     if (corruption === 'schema' || corruption === 'inactive') {
       const db = new DatabaseSync(path);
-      db.exec(corruption === 'schema' ? 'UPDATE metadata SET schema_version=999' : 'UPDATE metadata SET migration_manifest=NULL'); db.close();
+      try {
+        if(corruption==='schema') {
+          assert.throws(()=>db.exec('UPDATE metadata SET schema_version=999'),/Schema version must advance by one/);
+          db.exec('UPDATE metadata SET schema_version=schema_version+1');
+        } else {
+          assert.throws(()=>db.exec("UPDATE metadata SET migration_manifest='{}'"),/Immutable metadata binding/);
+          db.exec("DROP TRIGGER metadata_binding_immutable; UPDATE metadata SET migration_manifest='{}'");
+        }
+      } finally { db.close(); }
     } else if (corruption === 'marker') { writeFileSync(join(root, 'installation.json'), '{}'); }
     else if (corruption === 'database') { writeFileSync(path, 'corrupt SQLite'); }
     else if (corruption === 'permissions') { chmodSync(path, 0o644); }

@@ -28,7 +28,7 @@ type DefaultRoots = { journal: string; leases: string };
 const protectedDevices = ['73997430-DB8A-48C8-8146-12320CE6AEFE', '2FE383F2-2D0F-4286-8797-D3ACEFCD6220',
   '6A8C5F93-F59A-456B-B157-10642209B734', '0E42FDE2-5E09-42D3-9876-9EF0037FCBE7'];
 export type MigrationTestOptions = {
-  root: string; backend: 'fake'; defaultRoots: DefaultRoots;
+  root: string; backend: 'fake'; defaultRoots: DefaultRoots; schemaVersion?: 2 | 3;
   checkpoint?: (point: 'guarded' | 'markerWritten' | 'beforeCommit' | 'afterCommit') => void;
 };
 
@@ -196,7 +196,7 @@ function collect(declaration: MigrationDeclaration, defaults: DefaultRoots): Mig
   }
   const imported: MigrationImport['actions'] = [...actions.values()].map(action => ({ actionId: action.actionId, device: action.device, readOnly: true,
     outcome: devices.get(action.device) ? 'inconclusive' : completedOutcome(action.results[0]!.value), records: action.records }));
-  const exclusions = new Set([...protectedDevices, ...declaration.excludedDevices.map(canonicalDevice)]);
+  const exclusions = new Set([...protectedDevices, ...declaration.excludedDevices.map(device => canonicalDevice(device))]);
   for (const excluded of exclusions) devices.set(excluded, true);
   return { declaration, sources, devices: [...devices].map(([device, uncertain]) => ({ device, uncertain,
     reason: exclusions.has(device) ? 'protected-device' : uncertain ? 'historical-uncertainty' : null })), actions: imported, ignoredNonIosLeases };
@@ -224,7 +224,7 @@ function verifyPriorSeparation(root: string, mode: 'test' | 'production', declar
     separate(source.root, root);
   }
 }
-function migrate(raw: unknown, root: string, mode: 'test' | 'production', defaults: DefaultRoots, checkpoint?: MigrationTestOptions['checkpoint']): MigrationReceipt {
+function migrate(raw: unknown, root: string, mode: 'test' | 'production', defaults: DefaultRoots, checkpoint?: MigrationTestOptions['checkpoint'], fixtureSchemaVersion?: 2 | 3): MigrationReceipt {
   const declaration = parseMigrationDeclaration(raw);
   try {
     if (!isAbsolute(root)) throw new AdmissionError('STATE_UNAVAILABLE', 'Admission root must be absolute');
@@ -243,9 +243,9 @@ function migrate(raw: unknown, root: string, mode: 'test' | 'production', defaul
     }
     if (resolutionFailed) {
       verifyPriorSeparation(root, mode, declaration, requests);
-      return AdmissionSqlite.migrate({ root, mode }, () => unsafeSource(), checkpoint);
+      return AdmissionSqlite.migrate({ root, mode, ...(fixtureSchemaVersion === undefined ? {} : { fixtureSchemaVersion }) }, () => unsafeSource(), checkpoint);
     }
-    return AdmissionSqlite.migrate({ root, mode }, () => collect(declaration, defaults), checkpoint);
+    return AdmissionSqlite.migrate({ root, mode, ...(fixtureSchemaVersion === undefined ? {} : { fixtureSchemaVersion }) }, () => collect(declaration, defaults), checkpoint);
   } catch (error) {
     if (error instanceof AdmissionError) throw error;
     throw new AdmissionError('STATE_UNAVAILABLE', 'Offline migration could not safely read or initialize storage');
@@ -260,5 +260,5 @@ export function migrateAdmission(raw: unknown): MigrationReceipt {
 /** Isolated stores remain test-mode stores; this cannot activate a real backend. */
 export function migrateAdmissionForTesting(raw: unknown, options: MigrationTestOptions): MigrationReceipt {
   if (options.backend !== 'fake') throw new AdmissionError('INVALID_REQUEST', 'Migration tests require a fake backend');
-  return migrate(raw, options.root, 'test', options.defaultRoots, options.checkpoint);
+  return migrate(raw, options.root, 'test', options.defaultRoots, options.checkpoint, options.schemaVersion);
 }

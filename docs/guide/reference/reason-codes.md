@@ -122,3 +122,15 @@ A `do` step that goes back to Claude records a hand-back reason, such as `NONE_F
 | `EXECUTION_ERROR` | The run stopped on an unexpected execution error. |
 | `INTERNAL_ERROR` | The bridge could not complete the run; check local setup. |
 | `INTERRUPTED` | The run log has no verdict: the bridge process stopped before recording one. |
+
+## Admission and offline maintenance
+
+| Code | Meaning |
+| --- | --- |
+| `UPGRADE_BLOCKED` | Active admission attempts prevent the offline store upgrade. |
+| `IMPORT_REFUSED` | Legacy import refused; exactly one import refusal reason identifies the cause. |
+| `CATEGORY_NOT_ENABLED` | The requested device category is reserved and is not enabled. |
+| `STATE_UNAVAILABLE` | Admission storage is unavailable, unsafe, incompatible, or requires offline maintenance. |
+| `INVALID_REQUEST` | The admission or maintenance request is invalid. |
+
+`IMPORT_REFUSED` carries exactly one reason: `HOLDER_ALIVE`, `SOURCE_UNREADABLE`, `SOURCE_UNSAFE`, `SOURCE_INCONSISTENT`, or `SOURCE_CONFLICT`. These reasons are details of the import refusal, not separate verdict codes.

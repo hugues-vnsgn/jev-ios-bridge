@@ -98,8 +98,16 @@ export const REASON_CODES = {
   APP_NOT_RUNNING: 'Start mode attach: the app isn\'t running on the iOS simulator.',
   // A driven run's checkpoint on a local-only screen, added in 1.3.
   LOCAL_ONLY_CHECKPOINT: 'A driven run\'s checkpoint was on a screen that matches a localOnlyScreens rule, so it was not sent to Jev and could not be judged.',
+  UPGRADE_BLOCKED: 'Active admission attempts prevent the offline store upgrade.',
+  IMPORT_REFUSED: 'Legacy import refused; exactly one import refusal reason identifies the cause.',
+  CATEGORY_NOT_ENABLED: 'The requested device category is reserved and is not enabled.',
+  STATE_UNAVAILABLE: 'Admission storage is unavailable, unsafe, incompatible, or requires offline maintenance.',
+  INVALID_REQUEST: 'The admission or maintenance request is invalid.',
 } as const satisfies Record<string, string>;
 export type ReasonCode = keyof typeof REASON_CODES;
+
+export const IMPORT_REFUSAL_REASONS = ['HOLDER_ALIVE', 'SOURCE_UNREADABLE', 'SOURCE_UNSAFE', 'SOURCE_INCONSISTENT', 'SOURCE_CONFLICT'] as const;
+export type ImportRefusalReason = typeof IMPORT_REFUSAL_REASONS[number];
 
 export function isReasonCode(value: unknown): value is ReasonCode {
   return typeof value === 'string' && Object.hasOwn(REASON_CODES, value);
