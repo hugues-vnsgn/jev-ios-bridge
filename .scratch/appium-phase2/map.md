@@ -34,6 +34,7 @@ real-store migration needs a separate owner go-ahead.
 - [Named-profile selection contract](issues/01-profile-selection-contract.md): versioned `.jev/profiles.json`, `--profile`/MCP `profile`, explicit > default > legacy order, scenario-only conflicts, budgets only tighten, binding recorded.
 - [Canonical device identity](issues/03-canonical-device-identity.md): identity = (category, value); simulator UDID, emulator `realpath(avd path)`, phone `ro.serialno`; `ios-phone` reserved; iOS rows and allocation IDs unchanged; live resolution, conflicts refuse.
 - [Evidenced release with immutable outcomes](issues/04-evidenced-release-state.md): authority-verified fence receipts free the lease; outcomes, capacity and append-only quarantines stay; historical, exclusion and unknown-creation quarantines not liftable in Phase 2; late replies are evidence only.
+- [Store schema evolution](issues/05-store-schema-evolution.md): explicit offline forward-only upgrades, exact version match, tool-taken backup, append-only receipts, checked recover, (category, value) key, immutability triggers, no downgrade (ADR-0012).
 
 ## Route
 
@@ -46,27 +47,27 @@ flowchart LR
     T04["04 Evidenced release with immutable outcomes<br/><small>prototype</small>"]
     T05["05 Store schema evolution<br/><small>grilling</small>"]
     T06["06 Retiring DeviceLease as an ownership authority<br/><small>grilling</small>"]
+    T07["07 Legacy lease import<br/><small>grilling</small>"]
     T02 --> T03
     T03 --> T05
     T04 --> T05
     T04 --> T06
+    T06 --> T07
     classDef resolved fill:#e4e4e7,stroke:#a1a1aa,color:#52525b
     classDef claimed fill:#dbeafe,stroke:#2563eb,color:#1e3a8a
     classDef frontier fill:#dcfce7,stroke:#16a34a,color:#14532d,stroke-width:2px
     classDef blocked fill:#ffffff,stroke:#a1a1aa,color:#18181b
-    class T01,T02,T03,T04 resolved
-    class T05 claimed
+    class T01,T02,T03,T04,T05 resolved
     class T06 frontier
+    class T07 blocked
 ```
 <!-- route:end -->
 
 ## Not yet specified
 
-- Import of legacy Android lease files and existing iOS history into the
-  upgraded store, and its receipt; depends on identity, schema evolution and
-  lease retirement.
 - Activation runbook and readiness checklist for the real per-user store
-  (writer window, backup, other agents' quiescence).
+  (writer window, backup, other agents' quiescence, and updating installed
+  v1.4.0 binaries and plugins, which refuse a schema 3 store).
 - Splitting 2A–2D into implementer briefs with token caps, stop rules and
   verification lists (including race tests H01–H03, H11, P3, P4).
 

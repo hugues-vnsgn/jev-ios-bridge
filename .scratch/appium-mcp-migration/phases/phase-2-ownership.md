@@ -1,6 +1,6 @@
 # Phase 2 specification: profiles and one admission authority
 
-Status: behavior specified; store schema and lease retirement decisions open; execution paused
+Status: behavior specified; lease retirement and legacy import decisions open; execution paused
 Authority: [published spec](../spec.md), Decisions 9, 18 through 26;
 Testing Decisions 6, 15 through 19
 Context: [master handoff](../handoff.md), ADR-0008/0009/0011
@@ -140,13 +140,95 @@ Specify a versioned offline migration receipt, transactional schema/state
 change, installation identity and interrupted-operation behavior. Keep sources
 unchanged. Repeating identical completed maintenance retrieves its receipt;
 partial/corrupt/conflicting sources or guards fail closed. No automatic fallback
-store or deletion of guards to reset authority is permitted.
+store or deletion of guards to reset authority is permitted; the checked
+`upgrade --recover` below is the only tool path that removes a guard.
 
 Test isolated stores first. Applying migration requires a recorded exclusive
 writer window, historical roots declared/excluded, whole-store backup and owner
 coordination. Do not stop another agent or declare that its writer is stopped.
 Preserve protected historical devices and unresolved native studies. Coordinate
 actual activation only after these prerequisites; it is not part of planning.
+
+## Store schema evolution
+
+Decided in [Store schema evolution](../../appium-phase2/issues/05-store-schema-evolution.md) (owner, 2026-10-19); [ADR-0012](../../../docs/adr/0012-forward-only-offline-admission-store-upgrades.md).
+
+**Upgrades.** Only `admission-maintenance upgrade <declaration>` changes the
+schema. Opening the store never upgrades it. Steps are forward-only and
+numbered (2 to 3, 3 to 4, and so on); each step is one `BEGIN IMMEDIATE`
+transaction covering schema, data reshaping, the version bump and its receipt.
+The command takes the existing `migration.lock` guard with a fresh token
+recording from, to and backup path, so every v1.4.0 and newer opener refuses
+meanwhile. The declaration is version 1 `{ "version": 1, "kind": "upgrade",
+"from": n, "to": n+1, "writersStopped": true }`; like the migration declaration,
+it is an operator assertion, not proof of quiescence.
+
+**Version match.** A binary opens only the schema version it was built for;
+any other version refuses `STATE_UNAVAILABLE`, naming the store's version and
+the upgrade command. There is no reader range. Once the real store is upgraded,
+installed v1.4.0 binaries and plugins refuse it until updated, which the
+activation runbook must schedule.
+
+**Backup.** Under the guard and before any change, the command writes
+`VACUUM INTO` a copy plus `installation.json` into a private (0700) `backups/`
+folder in the admission root, reopens the copy, verifies its schema version and
+row counts, and records path and sha256. No verified backup, no upgrade. Backups
+are never deleted by the tool.
+
+**Receipts.** A new append-only `upgrades` table holds one row per step: from,
+to, binary version, time, declaration, backup path and sha256, and per-table row
+counts and digests of preserved logical records before and after. The original
+migration receipt in `metadata` is never edited. Repeating an identical upgrade
+on a store already at its target returns the stored receipt with no change; a
+different declaration for a completed step refuses.
+
+**Interrupted upgrades.** A crash before COMMIT leaves the old version intact
+and the guard behind; a crash after COMMIT leaves the new version and the guard.
+`upgrade --recover <declaration>` removes the guard only when it is an upgrade
+guard and the store is in one of two clean states: old version and identical to
+the recorded backup, or new version with the receipt for that guard's token.
+Otherwise it refuses. It appends the recovery to the receipt. A migration guard
+or unknown guard still needs operator investigation.
+
+**Device key.** Tables key a device on (category, value). The `devices` key
+becomes the pair (category in today's `devices.platform` column), and
+`attempts`, `imported_actions`, `allocations` and the release-state tables
+carry both columns. The 2 to 3 step rebuilds these tables inside its
+transaction; existing iOS rows keep their exact uppercase UUIDs with category
+`ios-simulator`, and checksummed allocation records are not rewritten. The
+category CHECK lists `ios-simulator`, `android-emulator`, `android-phone` and
+`ios-phone` from schema 3; entry points refuse `ios-phone` with
+`CATEGORY_NOT_ENABLED`, so enabling it needs code, not an upgrade. A new
+category or record type is a new upgrade step.
+
+**Immutability in the store.** `BEFORE UPDATE` and `BEFORE DELETE` triggers abort
+any change to terminal attempt outcomes, non-outstanding command dispositions,
+quarantines, fence receipts, component inventory, `upgrades` and imported records.
+The only writes allowed are the one-time ones: outcome from null, disposition
+from `outstanding`, a quarantine's covering receipt from null.
+
+**The 2 to 3 step.** It reshapes only what the store already holds:
+
+- Adds quarantines, fence receipts, component inventory, each command's
+  component, late-reply observations and `upgrades`. Availability becomes
+  derived; `devices.state` no longer stores `available` or `quarantined`.
+- Each v1.4.0 `quarantined` device becomes a `historical` quarantine with its
+  recorded reason. Protected devices and declared `excludedDevices` become
+  `exclusion` quarantines. Available devices get no quarantine.
+- Any attempt still `active` refuses the step with `UPGRADE_BLOCKED`, listing
+  them; the operator runs the existing abandoned-owner recovery first. Parked
+  preparations carry over unchanged.
+- It scans no outside files. Importing legacy Android leases and newly declared
+  iOS history is a separate maintenance step with its own receipt (Legacy lease
+  import).
+
+**Fresh and test stores.** Offline migration creates schema 2 and applies every
+step in the same transaction, so there is one definition of each version; test
+fixture stores use the same chain.
+
+**No downgrade.** Forward only. Restoring a backup after the upgraded store has
+recorded work drops that work and its guarantees; the help text says so, and a
+restored store is treated as the older version it is.
 
 ## Release state contract
 
@@ -260,6 +342,10 @@ Through existing admission/maintenance and public integration seams, cover:
 - Cancellation before/after authorization, late replies, stale-owner proof,
   absent/incomplete native coverage and complete supported recovery: lease
   unavailable until proof; immutable history and capacity unchanged afterward.
+- Store upgrades on isolated stores: 2 to 3 with preserved row counts and
+  digests, crashes before and after COMMIT with checked `--recover`, identical
+  rerun retrieval, `UPGRADE_BLOCKED` on active attempts, wrong-version openers
+  refused both ways, trigger-blocked edits, and fresh stores built by the chain.
 - Release-state cases from the [prototype](https://github.com/hugues-vnsgn/jev-ios-bridge/blob/prototype/release-state/.scratch/appium-phase2/prototypes/release-state.prototype.html):
   happy path, late reply, lost COMMIT reply, abandoned owner, earlier-generation
   receipt, unknown creation and imported history, each with its refusal code
