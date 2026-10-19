@@ -123,6 +123,15 @@ preparation retains its bounded authorized boot/install/creation path.
 Revalidate an ephemeral transport before an effect when its identity may have
 changed; a reused serial/port is not continuation of an old owner.
 
+**Pre-admission identity probes** (owner, 2026-10-19). The read-only reads that
+resolve a device name to its identity (console `avd name`/`avd id`/`avd path`,
+`getprop`, simulator listing) run before admission and are not owner commands:
+the rule that every device command is recorded before it is sent applies from
+admission onward. They run only through the read-only probe runner above, never
+the effect runner, and change no device state. Their exact replies are recorded
+in the attempt intent once admission authorizes; a refused admission records
+nothing.
+
 ## Offline migration contract
 
 Extend the SAME per-user SQLite authority. Production root stays anchored to the
