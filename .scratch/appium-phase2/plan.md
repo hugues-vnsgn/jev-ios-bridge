@@ -255,12 +255,13 @@ Each live lane runs on its own cloud VM at the PR head. Drive through `control-u
 
 - [ ] Create `src/device/identity.ts` and `src/device/android/probe.ts`.
 - [ ] Edit `src/device/index.ts`, `src/device/android/driver.ts`, `src/device/factory.ts`, `src/scripted/vocabulary.ts` (identity codes only), `docs/guide/reference/reason-codes.md`, `tests/golden/vocabulary.json`, `tests/contract.test.ts`.
-- [ ] Create fixtures under `tests/fixtures/android/console/`. Edit `tests/android-device.test.ts`, `tests/android-driver.test.ts`, `tests/device.test.ts`, and the shared fake-device fixtures `tests/fixtures/android-device.ts`, `tests/fixtures/android/**` and `tests/fixtures/adb-spawn.ts`, for console provenance replay only.
+- [ ] Create fixtures under `tests/fixtures/android/console/`. Edit `tests/android-device.test.ts`, `tests/android-driver.test.ts`, `tests/device.test.ts`, and the shared fake-device fixtures `tests/fixtures/android-device.ts`, `tests/fixtures/android/**` and `tests/fixtures/adb-spawn.ts`, for console provenance replay only. Also `tests/android-capture.test.ts`, `tests/start-attach.test.ts` and `tests/device-factory.test.ts`, for the new identity refusal codes only.
 
 **Build.**
 
 - [ ] Resolve every device name live per Resolution, with `DEVICE_AMBIGUOUS` (including one AVD on several transports), `DEVICE_NOT_FOUND`, `DEVICE_IDENTITY_CONFLICT` and `DEVICE_IDENTITY_UNAVAILABLE` with its closed reasons. Refuse `ios-phone` with `CATEGORY_NOT_ENABLED`.
 - [ ] Read emulator provenance through the read-only runner in `probe.ts` per Emulator provenance and Pre-admission identity probes. Remove the `avd || name` fallback in `driver.ts`.
+- [ ] Keep the `$TMPDIR` lease key on the AVD name (now read from the console), never the new identity, so installed older binaries still see the device busy. `tests/device-lease.test.ts` does not change; the marker's semantics are P2.8.
 - [ ] Run every check in Identity and preflight before effects, and record the probe replies in the attempt intent once admitted.
 - [ ] Replace P2.2's fail-closed mixed-kind profile conflict with identity agreement, so aliases of one device agree and different identities refuse `PROFILE_CONFLICT`.
 - [ ] Return the resolved emulator provenance (AVD name and the other recorded attributes) as a typed value from identity resolution, ready for admission to store (P2.3 audit, finding A12; storage is P2.6).
