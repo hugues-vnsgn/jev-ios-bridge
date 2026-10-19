@@ -30,6 +30,7 @@ real-store migration needs a separate owner go-ahead.
 
 ## Decisions so far
 
+- [Android emulator provenance](issues/02-emulator-provenance.md): key emulators on the console's `realpath(avd path)` plus category; exact-reply parsing; emulator 30+ with auth token; refuse on conflicts.
 ## Route
 
 <!-- route:start -->
@@ -49,8 +50,9 @@ flowchart LR
     classDef claimed fill:#dbeafe,stroke:#2563eb,color:#1e3a8a
     classDef frontier fill:#dcfce7,stroke:#16a34a,color:#14532d,stroke-width:2px
     classDef blocked fill:#ffffff,stroke:#a1a1aa,color:#18181b
-    class T01,T02,T04 frontier
-    class T03,T05,T06 blocked
+    class T02 resolved
+    class T01,T03,T04 frontier
+    class T05,T06 blocked
 ```
 <!-- route:end -->
 
