@@ -33,6 +33,7 @@ real-store migration needs a separate owner go-ahead.
 - [Android emulator provenance](issues/02-emulator-provenance.md): key emulators on the console's `realpath(avd path)` plus category; exact-reply parsing; emulator 30+ with auth token; refuse on conflicts.
 - [Named-profile selection contract](issues/01-profile-selection-contract.md): versioned `.jev/profiles.json`, `--profile`/MCP `profile`, explicit > default > legacy order, scenario-only conflicts, budgets only tighten, binding recorded.
 - [Canonical device identity](issues/03-canonical-device-identity.md): identity = (category, value); simulator UDID, emulator `realpath(avd path)`, phone `ro.serialno`; `ios-phone` reserved; iOS rows and allocation IDs unchanged; live resolution, conflicts refuse.
+- [Evidenced release with immutable outcomes](issues/04-evidenced-release-state.md): authority-verified fence receipts free the lease; outcomes, capacity and append-only quarantines stay; historical, exclusion and unknown-creation quarantines not liftable in Phase 2; late replies are evidence only.
 
 ## Route
 
@@ -53,9 +54,8 @@ flowchart LR
     classDef claimed fill:#dbeafe,stroke:#2563eb,color:#1e3a8a
     classDef frontier fill:#dcfce7,stroke:#16a34a,color:#14532d,stroke-width:2px
     classDef blocked fill:#ffffff,stroke:#a1a1aa,color:#18181b
-    class T01,T02,T03 resolved
-    class T04 claimed
-    class T05,T06 blocked
+    class T01,T02,T03,T04 resolved
+    class T05,T06 frontier
 ```
 <!-- route:end -->
 
@@ -73,4 +73,5 @@ flowchart LR
 
 Applying the migration to the real store (separate owner go-ahead), enabling
 physical iPhones (Phase 6), physical Android acceptance (Phase 4), allocation
-reclamation (Phase 5), and the Appium adapter itself (Phase 3).
+reclamation and lifting historical, exclusion or unknown-creation quarantines
+(Phase 5 or separate owner maintenance), and the Appium adapter itself (Phase 3).

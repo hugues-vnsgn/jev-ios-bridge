@@ -96,6 +96,12 @@ Another tool's UI-automation program holding a device. Android allows only one a
 **Fence**:
 Stopping the device agent and confirming it is gone, so that no agent command whose outcome was unknown can still take effect.
 
+**Fence receipt**:
+The admission authority's record that one owner generation's fence is proven: dispatch closed, every command it issued settled or fenced, and every native component it recorded unable to act. It releases that owner's device lease or covers its quarantine. A receipt for another generation, or one naming no generation, covers nothing.
+
+**Quarantine**:
+An append-only record that work nobody has proven stopped may still act on a device, or that the device is excluded. A fence receipt covers it; nothing deletes it. A device is quarantined while any quarantine on it is uncovered, whatever its runs' outcomes were.
+
 ## Perception and evidence
 
 **Snapshot**:

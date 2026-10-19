@@ -1,6 +1,6 @@
 # Phase 2 specification: profiles and one admission authority
 
-Status: behavior specified; release-state decision open; execution paused
+Status: behavior specified; store schema and lease retirement decisions open; execution paused
 Authority: [published spec](../spec.md), Decisions 9, 18 through 26;
 Testing Decisions 6, 15 through 19
 Context: [master handoff](../handoff.md), ADR-0008/0009/0011
@@ -13,11 +13,8 @@ Require reviewed Phase 1 GO. Read `src/device/admission.ts`,
 The existing schema is iOS-simulator-only; `canonicalDevice` accepts UUIDs.
 Keep allocation UUID validation separate when generalizing device identities.
 
-Resolve the logical release-state contract in
-[Evidenced release with immutable outcomes](../issues/05-evidenced-release-state.md)
-before choosing persistence/API changes. The three-condition release predicate
-is settled; its representation must preserve old monotonic uncertainty and
-immutable outcomes instead of silently clearing them.
+The logical release-state contract is decided below (Release state contract);
+persistence for it is decided in Store schema evolution.
 
 ## Profile selection behavior
 
@@ -151,6 +148,72 @@ coordination. Do not stop another agent or declare that its writer is stopped.
 Preserve protected historical devices and unresolved native studies. Coordinate
 actual activation only after these prerequisites; it is not part of planning.
 
+## Release state contract
+
+Decided in [Evidenced release with immutable outcomes](../../appium-phase2/issues/04-evidenced-release-state.md) (owner, 2026-10-19).
+
+**Separate records.** Release touches only the device lease. Everything else is
+set once or appended:
+
+- *Attempt outcome* (completed, refused, inconclusive): published at dispatch
+  closure, immutable.
+- *Command disposition*: `outstanding`, then `settled` or `uncertain`, once.
+  Each command records the native component it was sent through. A creation
+  request whose reply is lost stays an outstanding command. Closure turns every
+  outstanding command `uncertain`.
+- *Native component inventory*: each component (session, server or driver
+  process, on-device helper) is recorded under its owner generation before it
+  starts. A lost creation reply without a session ID marks that generation's
+  inventory incomplete.
+- *Quarantine*: an append-only record on a device with kind (`native`, bound to
+  one owner generation; `historical`; `exclusion`), cause and time. Its only
+  later write is setting its covering fence receipt, once. Never deleted.
+- *Fence receipt*: append-only; binds the owner token and generation, the
+  components and non-settled commands it fences, and the stop-evidence references.
+- *Allocation capacity*: release and receipts never change it.
+
+**Availability is derived.** A device lease is available when no owner holds it
+and every quarantine on it is covered. A stored device state is at most a view.
+This replaces v1.4.0 `terminal()`, which sets the device's state from the outcome,
+so an inconclusive outcome quarantines the device permanently.
+
+**Release.** Closure publishes the outcome and leaves the lease with its owner,
+fencing. The authority, not the caller, then checks a submitted receipt against
+its own records for that one generation: dispatch durably closed; every command
+settled or listed; inventory complete and every recorded component, including
+each listed command's component, covered by stop evidence. On any failure it
+refuses (`DISPATCH_OPEN`, `COMMANDS_UNFENCED`, `COVERAGE_UNKNOWN`,
+`COVERAGE_INCOMPLETE`, `STALE_OWNER`, `UNBOUND_PROOF`, `NOT_COVERABLE`) and
+changes nothing. An accepted receipt releases the live owner's lease or covers
+that generation's `native` quarantine. An inconclusive outcome does not block
+release: the outcome stays inconclusive and the allocation stays quarantined.
+
+**Late replies.** A reply for a command that is no longer outstanding, whose
+dispatch is closed, or whose generation is not current is appended to the
+journal as an observation tied to the command. It changes no disposition,
+outcome, quarantine or receipt.
+
+**Lost COMMIT replies.** Retrying an identical issue, closure, terminal or receipt
+request retrieves the committed record with zero device effects. A new mutation
+for a command that is not settled refuses.
+
+**Abandoned owners.** Process death changes nothing. Explicit recovery of a
+recorded owner whose process is gone commits closure, turns the lease into a
+`native` quarantine for that generation, and does not resume the scenario. Only
+a receipt bound to that generation covers it.
+
+**Proof that covers nothing.** A receipt binds to exactly one generation; one
+offered for another generation refuses `STALE_OWNER`. A fresh probe naming no
+generation, components or commands ("nothing is running now") refuses
+`UNBOUND_PROOF`.
+
+**Not lifted in Phase 2.** `historical` quarantines (imported legacy Android
+leases, v1.4.0 quarantined devices and unresolved native studies), `exclusion`
+quarantines (protected and declared-excluded devices) and `native` quarantines
+with incomplete inventory (unknown creation) refuse every receipt. Reserve a
+receipt kind for lifting them, refused in Phase 2; Phase 5 or a separate
+owner-approved maintenance step defines it.
+
 ## Authoritative operation and recovery contract
 
 Authorize one owner atomically before effects. Persist owner token/generation,
@@ -197,6 +260,10 @@ Through existing admission/maintenance and public integration seams, cover:
 - Cancellation before/after authorization, late replies, stale-owner proof,
   absent/incomplete native coverage and complete supported recovery: lease
   unavailable until proof; immutable history and capacity unchanged afterward.
+- Release-state cases from the [prototype](https://github.com/hugues-vnsgn/jev-ios-bridge/blob/prototype/release-state/.scratch/appium-phase2/prototypes/release-state.prototype.html):
+  happy path, late reply, lost COMMIT reply, abandoned owner, earlier-generation
+  receipt, unknown creation and imported history, each with its refusal code
+  and unchanged outcome, quarantine and capacity records.
 
 Exit with compatible preflight, preserved migration logical records, explicit
 activation readiness, and verified authorization/recovery behavior. Repeat full
