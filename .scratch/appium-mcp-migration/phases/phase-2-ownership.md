@@ -1,6 +1,6 @@
 # Phase 2 specification: profiles and one admission authority
 
-Status: behavior specified; activation runbook and package briefs pending; execution paused
+Status: behavior specified; package briefs pending; execution paused
 Authority: [published spec](../spec.md), Decisions 9, 18 through 26;
 Testing Decisions 6, 15 through 19
 Context: [master handoff](../handoff.md), ADR-0008/0009/0011
@@ -296,6 +296,68 @@ written later by an old binary despite exclusivity, enters through a later run.
 to admission, so its quarantine, not the marker rule, refuses the device. Phase 2
 never deletes it. A legacy file that appears after import stays unknown and
 refuses `DEVICE_BUSY` until imported.
+
+## Activation runbook requirements
+
+Decided in [Activation runbook for the real store](../../appium-phase2/issues/09-activation-runbook.md) (owner, 2026-10-19).
+Applying it to the real store needs a separate owner go-ahead. Package 2B writes
+the runbook text against the commands it builds and updates
+`docs/guide/14-observed-actions.md` when it ships. The text must follow these
+rules.
+
+**Preflight.** `admission-maintenance preflight` is read-only and never stops
+anything. It lists:
+
+- processes whose command line names the bridge or its MCP server, with PID and
+  start time;
+- open handles on the store files;
+- lock files in the default and declared lease roots;
+- active attempts in the store;
+- installed bridge plugins and their versions (Claude Code, Codex, project MCP
+  configs).
+
+`upgrade` and `import` repeat these checks themselves and refuse on a live bridge
+process, an open handle, or a reachable install older than the admission
+authority. Only the owner asserts `writersStopped`, after reading the report.
+
+**Order.**
+
+1. Quiesce every agent and terminal that could run the bridge (owner coordination).
+2. Run preflight.
+3. Recover any active attempt with v1.4.0, because the upgrade refuses on one.
+4. Update or remove every older install, including v1.2.0 and v1.3.0 plugins,
+   which ignore admission. Between this step and step 6, new binaries refuse the
+   schema 2 store.
+5. Run preflight again; it must be clean.
+6. `upgrade` (2 to 3).
+7. `import`.
+8. Verify.
+
+**Verification.** First, read-only status shows:
+
+- schema 3;
+- the receipt chain (v1 migration, 2 to 3 upgrade, import);
+- preserved row counts and digests;
+- the expected quarantines, including the protected devices as `exclusion`
+  quarantines and any imported legacy leases;
+- the verified backup.
+
+Then one owner-approved smoke run on a non-protected simulator and on an
+emulator: one owner, an accepted fence receipt, and the device available
+afterwards.
+
+**Refusal.** Any refusal stops the runbook at that step and keeps the store,
+guard, backup and sources as they are. Record the output and report it to the
+owner. Never edit a declaration, delete a guard or restore a backup to get past
+a refusal. Updated installs stay updated.
+
+**Records.** Full outputs (preflight reports, receipts, verification, smoke
+result) go to a private (0700) `activation/<date>/` folder in the admission root.
+A short committed summary lists only versions, counts, quarantine totals and
+pass or fail, with no paths.
+
+**Executor.** The owner, or an agent the owner has explicitly authorized for that
+activation. The agent stops at every refusal and never asserts `writersStopped`.
 
 ## Release state contract
 
