@@ -197,7 +197,7 @@ Each live lane runs on its own cloud VM at the PR head. Drive through `control-u
 **Files.**
 
 - [ ] Create `src/device/admission-upgrade.ts`.
-- [ ] Edit `src/device/admission.ts`, `src/device/admission-sqlite.ts`, `src/device/admission-maintenance.ts`, `src/device/admission-migration.ts`, `src/device/admission-allocation.ts`, `src/scripted/vocabulary.ts`, `docs/guide/reference/reason-codes.md`.
+- [ ] Edit `src/device/admission.ts`, `src/device/admission-sqlite.ts`, `src/device/admission-maintenance.ts`, `src/device/admission-migration.ts`, `src/device/admission-allocation.ts`, `src/scripted/vocabulary.ts`, `docs/guide/reference/reason-codes.md`, `tests/golden/vocabulary.json`, `tests/contract.test.ts`.
 - [ ] Edit `src/device/index.ts` at admission call sites only.
 - [ ] Edit `tests/admission-core.test.ts`, `tests/admission-allocation.test.ts`, `tests/admission-migration.test.ts`, `tests/admission-maintenance-entry.test.ts`, `tests/fixtures/admission-migration/crash-worker.ts`, `tests/fixtures/admission-core-protocol.ts`.
 
@@ -254,7 +254,7 @@ Each live lane runs on its own cloud VM at the PR head. Drive through `control-u
 **Files.**
 
 - [ ] Create `src/device/identity.ts` and `src/device/android/probe.ts`.
-- [ ] Edit `src/device/index.ts`, `src/device/android/driver.ts`, `src/device/factory.ts`, `src/scripted/vocabulary.ts` (identity codes only), `docs/guide/reference/reason-codes.md`.
+- [ ] Edit `src/device/index.ts`, `src/device/android/driver.ts`, `src/device/factory.ts`, `src/scripted/vocabulary.ts` (identity codes only), `docs/guide/reference/reason-codes.md`, `tests/golden/vocabulary.json`, `tests/contract.test.ts`.
 - [ ] Create fixtures under `tests/fixtures/android/console/`. Edit `tests/android-device.test.ts`, `tests/android-driver.test.ts`, `tests/device.test.ts`.
 
 **Build.**
@@ -369,7 +369,7 @@ Each live lane runs on its own cloud VM at the PR head. Drive through `control-u
 
 **Files.**
 
-- [ ] Edit `src/device/admission.ts`, `src/device/admission-sqlite.ts`, `src/device/admission-allocation.ts`, `src/scripted/vocabulary.ts` (release codes only), `docs/guide/reference/reason-codes.md`.
+- [ ] Edit `src/device/admission.ts`, `src/device/admission-sqlite.ts`, `src/device/admission-allocation.ts`, `src/scripted/vocabulary.ts` (release codes only), `docs/guide/reference/reason-codes.md`, `tests/golden/vocabulary.json`, `tests/contract.test.ts`.
 - [ ] Edit `tests/admission-core.test.ts`, `tests/admission-allocation.test.ts`, `tests/admission-driver.test.ts`, `tests/fixtures/admission-core-worker.ts`, `tests/fixtures/admission-core-protocol.ts`.
 
 **Build.**
