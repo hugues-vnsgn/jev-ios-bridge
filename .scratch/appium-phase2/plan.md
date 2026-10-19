@@ -403,7 +403,7 @@ Each live lane runs on its own cloud VM at the PR head. Drive through `control-u
 - [ ] Metric. Dispatch-to-callback p95 from the P2.1 bench, now including the per-command record.
 - [ ] Probe. Three interleaved bench runs at trunk and head.
 - [ ] Baseline. Remeasure trunk first on the same machine.
-- [ ] Rule. Head p95 fails above trunk plus 25 percent or above 20 milliseconds absolute.
+- [ ] Rule. Head p95 fails above trunk plus 25 percent or above 40 milliseconds absolute. Trunk measured 19 milliseconds on the operator's Mac in P2.1, so the absolute ceiling is about twice trunk.
 
 **Review gate.** None. P2.6 is not review-gated.
 
@@ -560,7 +560,7 @@ Each live lane runs on its own cloud VM at the PR head. Drive through `control-u
 - [ ] Metric. Dispatch-to-callback p95 from the P2.1 bench at the stack head.
 - [ ] Probe. Three interleaved runs at the P2.1 trunk SHA and the stack head.
 - [ ] Baseline. Remeasure the P2.1 trunk SHA first.
-- [ ] Rule. Head p95 fails above trunk plus 30 percent or above 20 milliseconds absolute.
+- [ ] Rule. Head p95 fails above trunk plus 30 percent or above 40 milliseconds absolute.
 
 **Review gate.** None. P2.9 is not review-gated.
 
