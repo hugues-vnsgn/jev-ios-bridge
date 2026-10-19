@@ -83,3 +83,22 @@ for (const hostEntry of [undefined, '/nonexistent/jev-maintenance-import-host.mj
     assert.equal(result.stdout, 'import-inert\n');
   });
 }
+
+test('maintenance preflight and status are read-only and upgrade repeats host checks', t => {
+  const directory=realpathSync(mkdtempSync(join(tmpdir(),'jev-preflight-entry-')));
+  t.after(()=>rmSync(directory,{recursive:true,force:true}));
+  const options={root:join(directory,'admission'),backend:'fake' as const,defaultRoots:{journal:join(directory,'journal'),leases:join(directory,'leases')}};
+  migrateAdmissionForTesting({version:1,writersStopped:true,historicalRootsDeclaredOrExcluded:true,additionalJournalRoots:[],additionalLeaseRoots:[],excludedDevices:[]},{...options,schemaVersion:2});
+  let output='';
+  assert.equal(runAdmissionMaintenance(['preflight'],{write:value=>{output+=value;}},options),0,output);
+  assert.equal(JSON.parse(output).ready,true);
+  const path=join(directory,'upgrade.json');
+  writeFileSync(path,JSON.stringify({version:1,kind:'upgrade',from:2,to:3,writersStopped:true}),{mode:0o600});
+  output='';
+  const host=()=>({processes:[],handles:[{pid:99,path:join(options.root,'admission.sqlite')}],installs:[],failures:[]});
+  assert.equal(runAdmissionMaintenance(['upgrade',path],{write:value=>{output+=value;}},{...options,host}),3,output);
+  assert.equal(JSON.parse(output).code,'STATE_UNAVAILABLE');
+  output='';
+  assert.equal(runAdmissionMaintenance(['status'],{write:value=>{output+=value;}},options),0,output);
+  assert.equal(JSON.parse(output).schemaVersion,2);
+});
