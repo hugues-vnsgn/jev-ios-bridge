@@ -132,6 +132,6 @@ A `do` step that goes back to Claude records a hand-back reason, such as `NONE_F
 | `CATEGORY_NOT_ENABLED` | The requested device category is reserved and is not enabled. |
 | `STATE_UNAVAILABLE` | Admission storage is unavailable, unsafe, incompatible, or requires offline maintenance. |
 | `INVALID_REQUEST` | The admission or maintenance request is invalid. |
-| `NOT_COVERABLE` | The requested quarantine cover is not supported; `maintenance-lift` is reserved. |
+| `NOT_COVERABLE` | The requested quarantine cover is not supported; maintenance-lift is reserved. |
 
 `IMPORT_REFUSED` carries exactly one reason: `HOLDER_ALIVE`, `SOURCE_UNREADABLE`, `SOURCE_UNSAFE`, `SOURCE_INCONSISTENT`, or `SOURCE_CONFLICT`. These reasons are details of the import refusal, not separate verdict codes.
