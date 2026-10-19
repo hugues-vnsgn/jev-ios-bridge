@@ -495,7 +495,7 @@ test('contract: --help names JEV_ANDROID_DEVICE', { timeout: 10_000 }, async () 
 test('contract: --help lists capture and its options', { timeout: 10_000 }, async () => {
   const { stdout } = await execute(process.execPath,
     ['--import', import.meta.resolve('tsx'), join(process.cwd(), 'src/cli.ts'), '--help'], { cwd: process.cwd() });
-  assert.match(stdout, /jev-ios-bridge capture \[--serial S \| --avd A\] \[--jev\]/);
+  assert.match(stdout, /jev-ios-bridge capture \[--profile NAME\] \[--serial S \| --avd A\] \[--jev\]/);
 });
 
 /** The CLI's capture path against a fake device whose foreign agent holds it: the exit code, once the refusal is checked. */

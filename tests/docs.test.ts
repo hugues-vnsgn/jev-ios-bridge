@@ -138,7 +138,7 @@ test('the report.json reference lists every field of an iOS and an Android repor
 test('the running page documents capture with every option in the CLI\'s usage line', () => {
   const usage = readFileSync('src/cli.ts', 'utf8').split('\n').find(line => line.includes('jev-ios-bridge capture '))!;
   const options = [...usage.matchAll(/--[a-z-]+/g)].map(match => match[0]);
-  assert.deepEqual(options, ['--serial', '--avd', '--jev']);
+  assert.deepEqual(options, ['--profile', '--serial', '--avd', '--jev']);
   const page = guidePage('06-running.md');
   for (const text of ['`capture`', ...options.map(option => `\`${option}`), '`JEV_ANDROID_DEVICE`', '"selectable": false']) {
     assert.ok(page.includes(text), `06-running.md does not document ${text}`);

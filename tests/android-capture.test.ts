@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict';
 import { spawnSync } from 'node:child_process';
-import { mkdtemp, readdir, readFile, rm, writeFile } from 'node:fs/promises';
+import { mkdir, mkdtemp, readdir, readFile, rm, writeFile } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { test } from 'node:test';
@@ -70,6 +70,24 @@ async function withFakes(adb: FakeAdb, fn: (setup: Setup) => Promise<void>, scre
 
 /** Whether any `adb` command restarted or stopped the app. */
 const touchedApp = (adb: FakeAdb) => adb.shell().some(words => words[0] === 'am' || words[0] === 'pm' && words[1] === 'path');
+
+test('capture selects a profile over the environment and refuses a mixed-kind flag before device work', async () => {
+  await withFakes(new FakeAdb(api31()), async ({ adb, root, parts }) => {
+    await mkdir(join(root, '.jev'));
+    await writeFile(join(root, '.jev/profiles.json'), JSON.stringify({ version: 1, defaultProfile: 'pixel', profiles: {
+      pixel: { platform: 'android', deviceCategory: 'android-emulator', device: 'jev-actions-api31' },
+    } }));
+    let stderr = '';
+    const context = { projectDir: root, defaultDevice: 'Invalid_environment_AVD', driver: parts, signal: signal(),
+      write: { stdout() {}, stderr: (text: string) => { stderr += text; } } };
+    assert.equal(await captureCommand({ profile: 'pixel', serial: 'emulator-5554' }, context), 3);
+    assert.equal(stderr, 'PROFILE_CONFLICT: PROFILE_CONFLICT\n');
+    assert.equal(adb.calls.length, 0);
+    assert.equal(await captureCommand({}, context), 0);
+    assert.ok(adb.calls.some(args => args.join(' ') === 'devices -l'));
+    assert.equal(touchedApp(adb), false);
+  });
+});
 
 /* The driver's capture-only path. */
 

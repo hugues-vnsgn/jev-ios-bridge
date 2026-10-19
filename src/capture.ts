@@ -7,8 +7,11 @@ import { REASON_CODES } from './scripted/vocabulary.js';
 import { DEFAULT_CLEANUP_MS } from './scripted/run.js';
 // capture exits with the CLI's own codes (release spec open point 12): "passed" when it printed, "could not start" when not.
 import { EXIT } from './exit-codes.js';
+import { ProfileError, readProfile, profileDevice } from './profiles.js';
+import { resolve } from 'node:path';
 
 export interface CaptureRequest {
+  profile?: string | undefined;
   /** `--serial`. Wins over `--avd`. */
   serial?: string | undefined;
   /** `--avd`. */
@@ -18,6 +21,7 @@ export interface CaptureRequest {
 }
 
 export interface CaptureContext {
+  projectDir?: string;
   /** JEV_ANDROID_DEVICE. Empty counts as unset. */
   defaultDevice?: string | undefined;
   /** The Android driver's parts. Injectable for tests; the device comes from the request. */
@@ -79,7 +83,7 @@ function printable(snapshot: Snapshot, jev: boolean): string {
  * the device; any other error's might, so only the code's description is printed for it.
  */
 function refusalOf(error: unknown): { code: string; message: string } {
-  if (error instanceof DeviceReasonError || error instanceof CaptureRefusal) return { code: error.code, message: error.message };
+  if (error instanceof DeviceReasonError || error instanceof CaptureRefusal || error instanceof ProfileError) return { code: error.code, message: error.message };
   return { code: 'EXECUTION_ERROR', message: 'capture stopped on an unexpected error.' };
 }
 
@@ -97,19 +101,28 @@ export async function captureCommand(request: CaptureRequest, context: CaptureCo
   };
   let output: string;
   try {
-    const device = namedDevice(request);
+    const selected = await readProfile(context.projectDir ?? resolve(process.env.JEV_PROJECT_DIR?.trim() || process.cwd()), request.profile);
+    let device = namedDevice(request);
+    if (selected) {
+      const chosen = profileDevice(selected.profile);
+      if ('udid' in chosen || device && Object.entries(device).some(([kind, value]) =>
+        !Object.hasOwn(chosen, kind) || chosen[kind as keyof typeof chosen] !== value)) throw new ProfileError('PROFILE_CONFLICT');
+      device = chosen;
+    }
     // The device checks run here, before the driver's tools check, so a missing or malformed name is
     // reported first, as `run` does.
     selectAndroidDeviceName(device, context.defaultDevice, 'Pass --serial or --avd, or set JEV_ANDROID_DEVICE');
     const driver = new AndroidDriver({ ...context.driver, device, defaultDevice: context.defaultDevice });
+    const operationMs = selected?.profile.budgets?.operationMs;
+    const captureSignal = operationMs === undefined ? signal : AbortSignal.any([signal, AbortSignal.timeout(operationMs)]);
     try {
-      output = printable(await driver.capture(signal), request.jev === true);
+      output = printable(await driver.capture(captureSignal), request.jev === true);
     } catch (error) {
       // The capture's own reason first; a cleanup that also fails is reported after it.
       if (!signal.aborted) refuse(error);
       throw REPORTED;
     } finally {
-      try { await driver.close(AbortSignal.timeout(DEFAULT_CLEANUP_MS)); }
+      try { await driver.close(AbortSignal.timeout(selected?.profile.budgets?.cleanupMs ?? DEFAULT_CLEANUP_MS)); }
       catch (error) {
         // close's own message says whether the device lease was kept.
         throw new CaptureRefusal('CLEANUP_FAILED', `${REASON_CODES.CLEANUP_FAILED}${error instanceof DeviceReasonError ? ` ${error.message}.` : ''}`);

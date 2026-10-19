@@ -8,15 +8,16 @@ node --env-file=.env node_modules/jev-ios-bridge/dist/cli.js run checks/login.js
 
 | Command | What it does |
 | --- | --- |
-| `run <script.json>` | Runs a script. Prints the watch URL to stderr, then the report to stdout. |
+| `run <script.json> [--profile NAME]` | Runs a script. Prints the watch URL to stderr, then the report to stdout. |
 | `run <script.json> --json` | The same, but prints [`report.json`](reference/report-json.md) instead of the prose report. |
 | `report <run-id> [--json]` | Prints a recorded run's report again. |
 | `logs <run-id>` | Follows a live run's app output in this terminal. |
-| `capture [--serial S \| --avd A] [--jev]` | Android only: prints the current screen as a run sees it. See [below](#capture-an-android-screen). |
+| `capture [--profile NAME] [--serial S \| --avd A] [--jev]` | Android only: prints the current screen as a run sees it. See [below](#capture-an-android-screen). |
 | `mcp` | Starts the MCP server for Claude Code. |
 | `--version`, `--help` | |
 
 **Options for `run`:**
+- `--profile NAME` selects a named profile from `.jev/profiles.json` in `JEV_PROJECT_DIR`, or the working directory when unset.
 - `--max-steps N` (1–100, default 100) and `--timeout-ms N` (default 300 000, at most one hour) limit the whole run. They never change how claims are judged.
 - `--no-log-pane` skips the log pane window.
 - `--no-device-window` leaves the iOS simulator's window as it is ([below](#watching-a-run)).
@@ -33,6 +34,16 @@ node --env-file=.env node_modules/jev-ios-bridge/dist/cli.js run checks/login.js
 
 `report` returns the same code the run did.
 
+### Profiles
+
+`.jev/profiles.json` has `version: 1`, a `profiles` object keyed by profile name, and an optional `defaultProfile` name. Names use lowercase letters, digits and hyphens, start with a letter or digit, and contain at most 63 characters. Each profile requires `platform` (`ios` or `android`), `deviceCategory` (`ios-simulator`, `android-emulator` or `android-phone`) and `device`. An optional `app` guards the scenario's bundle ID or package. Unknown fields and reserved `capabilities`, `prerequisites` and `signing` fields refuse the file.
+
+Explicit `--profile` or MCP `profile` wins over `defaultProfile`. A selected profile shadows environment and vendor-file device defaults. Without either selector, legacy device selection keeps its order. A present but invalid file refuses with `INVALID_PROFILE_FILE`; an unknown selection refuses with `PROFILE_NOT_FOUND`.
+
+Scenario-owned device, app or platform disagreements refuse with `PROFILE_CONFLICT` before device work. Device comparisons currently use names: iOS UDIDs ignore case, Android names compare exactly, and an AVD name versus a serial refuses even if they name the same emulator. A run records the selected name and content digest; later retrieval and hand-backs keep that binding when the file changes. Observed actions and preparation ignore profiles.
+
+Optional profile `budgets` contain `startupMs`, `operationMs` and `cleanupMs`. MCP request limits may tighten these ceilings; a wider request refuses with `PROFILE_CONFLICT`. Startup and operation accept 1000 to 600000 ms and have no default. Cleanup accepts 1000 to 120000 ms and defaults to 45000 ms. The wall-time and hand-back limits remain independent.
+
 ## Capture an Android screen
 
 `capture` prints the screen that's up on an Android device right now, exactly as a run would read it. Use it to write selectors and guards from what's really there. It's for Android only in 1.2.
@@ -43,6 +54,7 @@ npx jev-ios-bridge capture --serial emulator-5554 --jev
 ```
 
 **Options:**
+- `--profile NAME` selects an Android profile. The project's `defaultProfile` applies when this option is absent. A selected profile shadows `JEV_ANDROID_DEVICE`; conflicting device flags refuse with `PROFILE_CONFLICT`.
 - `--serial S` or `--avd A` names the device. Without either, it uses `JEV_ANDROID_DEVICE`. `--serial` wins when both are given. Each must match the same pattern as the script's `device.serial` or `device.avd`.
 - `--jev` prints Jev's text for the screen instead: what a checkpoint would send, byte for byte.
 
@@ -82,7 +94,7 @@ Install the plugin as in the [quickstart](01-quickstart.md#6-let-claude-code-run
 
 | Tool | Input | Returns |
 | --- | --- | --- |
-| `start_scenario` | `scenario` (the script), optional `limits: {maxSteps, wallTimeMs}` | `{runId, watchUrl, logsCommand}` |
+| `start_scenario` | `scenario` (the script), optional `profile` name and `limits: {maxSteps, wallTimeMs, startupMs, operationMs, cleanupMs}` | `{runId, watchUrl, logsCommand}` |
 | `get_report` | `runId`, optional `waitMs` (up to 45 000) | Progress while running; the full report when done |
 | `cancel_run` | `runId` | Stops the run and waits for cleanup |
 | `resolve_step` | `runId`, `pauseId`, `answer` | Answers a paused `do` step. Published only with [driven mode](13-driven-steps.md#hand-backs-to-claude) on |

@@ -1,11 +1,36 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { spawn } from 'node:child_process';
-import { mkdir, mkdtemp, readFile, rm } from 'node:fs/promises';
+import { mkdir, mkdtemp, readFile, rm, writeFile } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { createInterface } from 'node:readline';
 import { openMcpSession } from './fixtures/mcp-session.js';
+
+test('MCP exposes profiles and refuses wider budgets before creating a run', { timeout: 10000 }, async () => {
+  const root = await mkdtemp(join(tmpdir(), 'jev-mcp-profile-'));
+  await mkdir(join(root, '.jev'));
+  await writeFile(join(root, '.jev/profiles.json'), JSON.stringify({ version: 1, profiles: {
+    pixel: { platform: 'android', deviceCategory: 'android-emulator', device: 'Pixel_API_35', budgets: { operationMs: 1000 } },
+  } }));
+  const session = await openMcpSession('profiles', { entryPoint: 'cli', env: { JEV_PROJECT_DIR: root,
+    JEV_RUNS_DIR: join(root, 'runs'), JEV_EXPERIMENTAL_OBSERVED: '0' } });
+  try {
+    const tool = (await session.listTools()).find(tool => tool.name === 'start_scenario');
+    assert.ok(tool.inputSchema.properties.profile);
+    assert.ok(tool.inputSchema.properties.limits.properties.operationMs);
+    const scenario = { version: 1, platform: 'android', app: { package: 'com.example.app' },
+      values: {}, steps: [{ id: 'check', kind: 'checkpoint', guard: { present: [{ role: 'text', label: 'Marker' }] },
+        assertions: [{ id: 'shown', claim: 'Visible' }] }] };
+    for (const [profile, limits, code] of [['pixel', { operationMs: 2000 }, 'PROFILE_CONFLICT'], ['missing', {}, 'PROFILE_NOT_FOUND']] as const) {
+      const reply = await session.callTool('start_scenario', { scenario, profile, limits });
+      assert.equal(reply.isError, true);
+      assert.equal(reply.content[0].text, code);
+    }
+    const { readdir } = await import('node:fs/promises');
+    assert.deepEqual(await readdir(root), ['.jev']);
+  } finally { await session.close(); await rm(root, { recursive: true, force: true }); }
+});
 
 test('stdio server negotiates and exposes start/report/cancel without a key', { timeout: 10_000 }, async () => {
   const env = { ...process.env, JEV_EXPERIMENTAL_OBSERVED: '0' }; delete (env as NodeJS.ProcessEnv).TYPESAFE_API_KEY;
