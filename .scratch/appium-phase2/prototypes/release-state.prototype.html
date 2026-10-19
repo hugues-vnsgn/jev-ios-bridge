@@ -1,0 +1,355 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>PROTOTYPE: evidenced release with immutable outcomes</title>
+<style>
+  :root { --accent: #2563eb; --ink: #18181b; --muted: #71717a; --line: #e4e4e7; --bad: #b91c1c; --good: #15803d; }
+  * { box-sizing: border-box; }
+  body { font: 14px/1.5 -apple-system, system-ui, sans-serif; color: var(--ink); margin: 0; padding: 28px 36px 60px; max-width: 1280px; }
+  h1 { font-size: 20px; margin: 0 0 4px; }
+  h2 { font-size: 14px; text-transform: uppercase; letter-spacing: .04em; color: var(--muted); margin: 28px 0 10px; }
+  .intro { color: #3f3f46; max-width: 900px; }
+  .tag { display: inline-block; font-size: 11px; padding: 1px 7px; border-radius: 10px; background: #fef3c7; color: #92400e; margin-left: 6px; vertical-align: middle; }
+  .grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 14px; }
+  .card { border: 1px solid var(--line); border-radius: 8px; padding: 12px 14px; }
+  .card h3 { font-size: 13px; margin: 0 0 8px; }
+  .big { font-size: 18px; font-weight: 600; }
+  .good { color: var(--good); } .bad { color: var(--bad); } .muted { color: var(--muted); }
+  table { border-collapse: collapse; width: 100%; font-size: 12.5px; }
+  td, th { text-align: left; padding: 3px 6px; border-bottom: 1px solid var(--line); vertical-align: top; }
+  th { color: var(--muted); font-weight: 500; }
+  .changed { background: #dbeafe; }
+  button { font: inherit; font-size: 13px; padding: 5px 10px; margin: 0 6px 6px 0; border: 1px solid #d4d4d8; background: #fff; border-radius: 6px; cursor: pointer; }
+  button:hover { border-color: var(--accent); }
+  button.next { border-color: var(--accent); background: var(--accent); color: #fff; }
+  button.done { opacity: .45; }
+  .tabs button.on { border-color: var(--accent); color: var(--accent); font-weight: 600; }
+  .result { margin-top: 10px; padding: 8px 12px; border-left: 3px solid var(--accent); background: #f8fafc; }
+  .result.refused { border-color: var(--bad); background: #fef2f2; }
+  .log { font: 12px/1.45 ui-monospace, Menlo, monospace; max-height: 220px; overflow: auto; background: #fafafa; border: 1px solid var(--line); border-radius: 6px; padding: 8px 10px; }
+  .scenario p { max-width: 900px; margin: 6px 0 10px; }
+  .watch { color: #92400e; }
+</style>
+</head>
+<body>
+<h1>Evidenced release with immutable outcomes <span class="tag">PROTOTYPE, throwaway</span></h1>
+<p class="intro">
+  <b>Question.</b> What records and transitions let a newly proven native fence release a device while the attempt's
+  inconclusive outcome, past quarantines, retained allocation capacity and old exclusions all stay unchanged?
+  <br><b>Model under test.</b> Device availability is <i>derived</i>, never stored. A device is free only when no owner holds it
+  and every <b>hold</b> on it is covered by a <b>fence receipt</b>. Holds, outcomes, command dispositions and receipts are append-only:
+  a receipt <i>covers</i> a hold and never deletes or edits it. A receipt is accepted only if the authority itself checks it
+  against the three release conditions for <i>that</i> owner generation: dispatch durably closed, every issued command settled or fenced,
+  and every recorded native component proven unable to act.
+</p>
+
+<h2>Current state of one device <span class="muted" style="text-transform:none">(simulator 73F0…; blue = changed by the last click)</span></h2>
+<div id="state"></div>
+<div id="result"></div>
+
+<h2>Guided walkthroughs</h2>
+<div class="tabs" id="tabs"></div>
+<div class="scenario" id="scenario"></div>
+
+<h2>Free play</h2>
+<div id="free"></div>
+
+<h2>Authority journal</h2>
+<div class="log" id="log"></div>
+
+<script>
+// ===== Pure model: (state, action) -> { state, result }. No DOM below this line until the page shell. =====
+const ReleaseModel = (() => {
+  const initial = () => ({
+    generation: 0,
+    lease: null,            // { generation, owner: 'alive'|'dead', phase: 'running'|'fencing' }
+    attempts: [],           // { id, generation, dispatch: 'open'|'closed', outcome: null|'completed'|'inconclusive' }
+    commands: [],           // { id, generation, operation, disposition: 'outstanding'|'settled'|'uncertain', lateReplies: [] }
+    components: [],         // { id, generation, kind, sessionId|null }
+    inventory: {},          // generation -> 'complete' | 'incomplete (creation reply lost, no session id)'
+    holds: [],              // { id, generation|null, kind: 'native'|'historical'|'exclusion', cause, coveredBy: null|receiptId }
+    receipts: [],           // { id, generation, coversHold|null, components, commands }
+    allocation: null,       // { id, capacity: 'reserved'|'retained'|'quarantined' }  (never touched by release)
+    journal: [],
+    nextId: 1,
+  });
+  const clone = s => JSON.parse(JSON.stringify(s));
+  const id = (s, p) => `${p}${s.nextId++}`;
+  const log = (s, t) => s.journal.push(t);
+  const refuse = (s, code, why) => ({ state: s, result: { refused: true, text: `${code}: ${why}` } });
+  const ok = (s, text) => ({ state: s, result: { refused: false, text } });
+  const attemptOf = (s, g) => s.attempts.find(a => a.generation === g);
+
+  function availability(s) {
+    if (s.lease) return { free: false, why: `held by owner generation ${s.lease.generation} (${s.lease.phase}${s.lease.owner === 'dead' ? ', owner process gone' : ''})` };
+    const open = s.holds.filter(h => !h.coveredBy);
+    if (open.length) return { free: false, why: `quarantined by ${open.length} uncovered hold(s)` };
+    return { free: true, why: 'no owner and every hold is covered' };
+  }
+
+  // The three-condition release predicate, evaluated by the authority over its own records for one generation.
+  function checkProof(s, generation, proof) {
+    const a = attemptOf(s, generation);
+    if (!a) return 'NO_SUCH_OWNER: no attempt was recorded for that generation';
+    if (a.dispatch !== 'closed') return 'DISPATCH_OPEN: condition 1 fails, dispatch is not durably closed';
+    if (s.inventory[generation] !== 'complete') return `COVERAGE_UNKNOWN: condition 3 cannot hold, the component inventory is ${s.inventory[generation]}`;
+    const owned = s.components.filter(c => c.generation === generation).map(c => c.id);
+    const missing = owned.filter(c => !proof.components.includes(c));
+    if (missing.length) return `COVERAGE_INCOMPLETE: condition 3 fails, no stop evidence for ${missing.join(', ')}`;
+    const unsettled = s.commands.filter(c => c.generation === generation && c.disposition !== 'settled').map(c => c.id);
+    const unfenced = unsettled.filter(c => !proof.commands.includes(c));
+    if (unfenced.length) return `COMMANDS_UNFENCED: condition 2 fails, ${unfenced.join(', ')} neither settled nor fenced`;
+    return null;
+  }
+  const fullProofFor = (s, g) => ({ generation: g,
+    components: s.components.filter(c => c.generation === g).map(c => c.id),
+    commands: s.commands.filter(c => c.generation === g && c.disposition !== 'settled').map(c => c.id) });
+
+  function closeDispatch(s, g, why) {
+    const a = attemptOf(s, g);
+    a.dispatch = 'closed';
+    for (const c of s.commands.filter(c => c.generation === g && c.disposition === 'outstanding')) c.disposition = 'uncertain';
+    a.outcome = s.commands.some(c => c.generation === g && c.disposition === 'uncertain') ? 'inconclusive' : 'completed';
+    if (a.outcome === 'inconclusive' && s.allocation) s.allocation.capacity = 'quarantined';
+    else if (s.allocation) s.allocation.capacity = 'retained';
+    log(s, `COMMIT dispatch closed for gen ${g} (${why}); outcome ${a.outcome} is now immutable`);
+  }
+
+  const actions = {
+    admit(s) {
+      const av = availability(s);
+      if (!av.free) return refuse(s, 'DEVICE_UNAVAILABLE', av.why);
+      const g = ++s.generation;
+      s.lease = { generation: g, owner: 'alive', phase: 'running' };
+      s.attempts.push({ id: id(s, 'attempt-'), generation: g, dispatch: 'open', outcome: null });
+      s.inventory[g] = 'complete';
+      if (!s.allocation) s.allocation = { id: 'alloc-1', capacity: 'reserved' };
+      log(s, `COMMIT admit owner gen ${g}`);
+      return ok(s, `Owner generation ${g} admitted.`);
+    },
+    startSession(s) {
+      if (!s.lease || s.lease.owner === 'dead' || attemptOf(s, s.lease.generation).dispatch !== 'open') return refuse(s, 'DISPATCH_CLOSED', 'no live owner with open dispatch');
+      const g = s.lease.generation;
+      const cid = id(s, 'component-');
+      s.components.push({ id: cid, generation: g, kind: 'Appium session + device driver', sessionId: `sess-${cid}` });
+      log(s, `COMMIT component ${cid} recorded for gen ${g} before native start; session id returned`);
+      return ok(s, `Native session ${cid} recorded before it started.`);
+    },
+    startSessionReplyLost(s) {
+      if (!s.lease || s.lease.owner === 'dead' || attemptOf(s, s.lease.generation).dispatch !== 'open') return refuse(s, 'DISPATCH_CLOSED', 'no live owner with open dispatch');
+      const g = s.lease.generation;
+      s.inventory[g] = 'incomplete (creation reply lost, no session id)';
+      s.commands.push({ id: id(s, 'create-'), generation: g, operation: 'create-session', disposition: 'outstanding', lateReplies: [] });
+      log(s, `COMMIT create-session issued for gen ${g}; reply lost; a session may exist with no id we know`);
+      return ok(s, 'Creation reply lost: the authority cannot list what may be running.');
+    },
+    issueTap(s) {
+      if (!s.lease || s.lease.owner === 'dead') return refuse(s, 'STALE_OWNER', 'no live owner');
+      const g = s.lease.generation;
+      if (attemptOf(s, g).dispatch !== 'open') return refuse(s, 'DISPATCH_CLOSED', 'dispatch is closed for this owner');
+      const cid = id(s, 'tap-');
+      s.commands.push({ id: cid, generation: g, operation: 'tap', disposition: 'outstanding', lateReplies: [] });
+      log(s, `COMMIT command ${cid} issued (outstanding) before it is sent to the device`);
+      return ok(s, `Tap ${cid} recorded as outstanding, then sent.`);
+    },
+    replyOk(s) { return actions._reply(s, true); },
+    replyFailed(s) { return actions._reply(s, false); },
+    _reply(s, success) {
+      const c = [...s.commands].reverse().find(c => c.operation === 'tap');
+      if (!c) return refuse(s, 'NO_COMMAND', 'no tap was issued');
+      const a = attemptOf(s, c.generation);
+      if (c.disposition !== 'outstanding' || a.dispatch !== 'open' || !s.lease || s.lease.generation !== c.generation || s.lease.owner === 'dead') {
+        c.lateReplies.push(success ? 'ok' : 'failed');
+        log(s, `late reply "${success ? 'ok' : 'failed'}" for ${c.id} appended as an observation; disposition stays ${c.disposition}`);
+        return ok(s, `Late reply kept as evidence only. ${c.id} stays ${c.disposition}; the outcome does not change.`);
+      }
+      c.disposition = success ? 'settled' : 'uncertain';
+      log(s, `COMMIT ${c.id} ${c.disposition}`);
+      return ok(s, `${c.id} is ${c.disposition}.`);
+    },
+    retryIdenticalIssue(s) {
+      const c = [...s.commands].reverse().find(c => c.operation === 'tap');
+      if (!c) return refuse(s, 'NO_COMMAND', 'nothing to retrieve');
+      log(s, `identical request for ${c.id} retrieved; zero new device effects`);
+      return ok(s, `The COMMIT reply was lost, so the caller retried the identical request: it gets ${c.id} back (${c.disposition}). Nothing is sent to the device again.`);
+    },
+    reissueAsNew(s) {
+      const c = [...s.commands].reverse().find(c => c.operation === 'tap');
+      if (c && c.disposition !== 'settled') return refuse(s, 'REISSUE_REFUSED', `a lost reply never authorizes reissuing a mutation; ${c.id} is still ${c.disposition}`);
+      return actions.issueTap(s);
+    },
+    closeAndPublish(s) {
+      if (!s.lease || s.lease.owner === 'dead') return refuse(s, 'STALE_OWNER', 'no live owner (use recovery)');
+      const g = s.lease.generation;
+      if (attemptOf(s, g).dispatch === 'closed') return refuse(s, 'ALREADY_CLOSED', 'dispatch already closed');
+      closeDispatch(s, g, 'owner closed');
+      s.lease.phase = 'fencing';
+      return ok(s, `Dispatch closed; outcome ${attemptOf(s, g).outcome}. The owner still holds the device until it proves the fence.`);
+    },
+    ownerDies(s) {
+      if (!s.lease) return refuse(s, 'NO_OWNER', 'nobody holds the device');
+      s.lease.owner = 'dead';
+      log(s, `owner process for gen ${s.lease.generation} exited (not a commit; settles nothing)`);
+      return ok(s, 'The owner process died. Nothing about the device changes: an old PID\'s death never settles native work.');
+    },
+    recoverAbandoned(s) {
+      if (!s.lease || s.lease.owner !== 'dead') return refuse(s, 'NOT_ABANDONED', 'recovery needs a recorded owner whose process is gone');
+      const g = s.lease.generation;
+      if (attemptOf(s, g).dispatch === 'open') closeDispatch(s, g, 'explicit recovery');
+      const hid = id(s, 'hold-');
+      s.holds.push({ id: hid, generation: g, kind: 'native', cause: 'OWNER_LOST: native work of gen ' + g + ' unproven', coveredBy: null });
+      s.lease = null;
+      log(s, `COMMIT recovery: lease of gen ${g} converted into ${hid}; scenario is not resumed`);
+      return ok(s, `Recovery recorded hold ${hid}. The device is quarantined until a fence for generation ${g} is proven.`);
+    },
+    proveFence(s) { return actions._prove(s, 'complete'); },
+    proveFenceMissingComponent(s) { return actions._prove(s, 'missing'); },
+    proveWithPriorGeneration(s) { return actions._prove(s, 'prior'); },
+    proveFreshUnrelated(s) {
+      log(s, 'fresh probe "no Appium process is running now" submitted; not bound to any owner generation');
+      return refuse(s, 'UNBOUND_PROOF', 'a fresh, unrelated observation names no owner generation, components or commands, so it covers nothing; old holds and exclusions stay');
+    },
+    _prove(s, variant) {
+      // Target: the live owner's fencing lease, else the newest uncovered native hold.
+      let target, g;
+      if (s.lease && s.lease.phase === 'fencing' && s.lease.owner === 'alive') { target = 'lease'; g = s.lease.generation; }
+      else {
+        const h = [...s.holds].reverse().find(h => !h.coveredBy);
+        if (!h) return refuse(s, 'NOTHING_TO_FENCE', 'no fencing owner and no uncovered hold');
+        if (h.kind !== 'native') return refuse(s, 'NOT_COVERABLE', `${h.id} is a ${h.kind} hold (${h.cause}); it records no owner generation or component inventory, so no fence receipt can cover it in Phase 2`);
+        target = h; g = h.generation;
+      }
+      const proofGen = variant === 'prior' ? g - 1 : g;
+      if (variant === 'prior') {
+        if (proofGen < 1 || !s.receipts.some(r => r.generation === proofGen)) return refuse(s, 'STALE_OWNER', `no earlier generation receipt exists to replay`);
+        return refuse(s, 'STALE_OWNER', `receipt for generation ${proofGen} was offered for generation ${g}; receipts bind to one owner generation and its components`);
+      }
+      const proof = fullProofFor(s, g);
+      if (variant === 'missing') proof.components = proof.components.slice(1);
+      if (variant === 'missing' && fullProofFor(s, g).components.length === 0) proof.components = []; // nothing to drop
+      const failure = checkProof(s, g, proof);
+      if (failure) { log(s, `fence proof for gen ${g} rejected: ${failure}`); return refuse(s, failure.split(':')[0], failure.split(': ').slice(1).join(': ')); }
+      const rid = id(s, 'receipt-');
+      s.receipts.push({ id: rid, generation: g, coversHold: target === 'lease' ? null : target.id, components: proof.components, commands: proof.commands });
+      if (target === 'lease') s.lease = null; else target.coveredBy = rid;
+      log(s, `COMMIT ${rid}: gen ${g} fence verified by the authority (3 conditions); ${target === 'lease' ? 'lease released' : target.id + ' covered, not deleted'}`);
+      return ok(s, `Receipt ${rid} accepted. ${target === 'lease' ? 'Lease released.' : `Hold ${target.id} is covered (still on record).`} Outcome, command dispositions and capacity are untouched.`);
+    },
+    importHistorical(s) {
+      const hid = id(s, 'hold-');
+      s.holds.push({ id: hid, generation: null, kind: 'historical', cause: 'IMPORTED: legacy lease with unknown native work', coveredBy: null });
+      log(s, `COMMIT migration imported ${hid} (historical uncertainty, no component inventory)`);
+      return ok(s, `Imported historical hold ${hid}.`);
+    },
+    declareExclusion(s) {
+      const hid = id(s, 'hold-');
+      s.holds.push({ id: hid, generation: null, kind: 'exclusion', cause: 'EXCLUDED: declared protected device', coveredBy: null });
+      log(s, `COMMIT exclusion ${hid} from the maintenance declaration`);
+      return ok(s, `Exclusion ${hid} recorded.`);
+    },
+  };
+
+  function reduce(state, action) {
+    const s = clone(state);
+    const fn = actions[action];
+    if (!fn) return { state, result: { refused: true, text: 'unknown action' } };
+    const out = fn(s);
+    // A refusal leaves authoritative state unchanged (except the journal line explaining it).
+    if (out.result.refused) { const keep = clone(state); keep.journal = s.journal; return { state: keep, result: out.result }; }
+    return out;
+  }
+  return { initial, reduce, availability };
+})();
+
+// ===== Page shell (throwaway) =====
+const LABELS = {
+  admit: 'Admit a new owner', startSession: 'Start native session', startSessionReplyLost: 'Start session, reply lost',
+  issueTap: 'Issue a tap', replyOk: 'Device replies "ok"', replyFailed: 'Device replies "failed"',
+  retryIdenticalIssue: 'Retry identical request (COMMIT reply lost)', reissueAsNew: 'Re-send tap as a new mutation',
+  closeAndPublish: 'Owner closes dispatch', ownerDies: 'Owner process dies', recoverAbandoned: 'Explicit recovery',
+  proveFence: 'Submit complete fence proof', proveFenceMissingComponent: 'Submit proof missing a component',
+  proveWithPriorGeneration: 'Submit earlier generation\'s receipt', proveFreshUnrelated: 'Submit fresh unrelated probe',
+  importHistorical: 'Migration imports historical uncertainty', declareExclusion: 'Declare a protected-device exclusion',
+};
+const SCENARIOS = [
+  { name: 'Happy path', text: 'One owner starts a session, taps, gets a reply, closes dispatch and proves its fence.',
+    watch: 'Closing dispatch alone does not free the device; only the verified receipt does.',
+    steps: ['admit', 'startSession', 'issueTap', 'replyOk', 'closeAndPublish', 'proveFence'] },
+  { name: 'Late reply', text: 'The tap reply has not arrived when the owner closes dispatch, so the tap becomes uncertain and the outcome inconclusive. The "ok" arrives afterwards.',
+    watch: 'The late "ok" is kept as evidence but changes neither the tap nor the outcome. The fence still frees the device, and the outcome stays inconclusive with capacity quarantined.',
+    steps: ['admit', 'startSession', 'issueTap', 'closeAndPublish', 'replyOk', 'proveFence'] },
+  { name: 'Lost COMMIT reply', text: 'The authority recorded the tap, but the caller never saw the confirmation.',
+    watch: 'Retrying the identical request returns the same command with no new device effect. Re-sending it as a new tap is refused.',
+    steps: ['admit', 'startSession', 'issueTap', 'retryIdenticalIssue', 'reissueAsNew', 'replyOk', 'closeAndPublish', 'proveFence'] },
+  { name: 'Abandoned owner', text: 'The owner dies mid-run with a tap outstanding. A second runner tries to take the device.',
+    watch: 'The dead PID frees nothing. Recovery turns the lease into a hold. A fresh probe and a partial proof are both refused; only the proof bound to that generation covers the hold.',
+    steps: ['admit', 'startSession', 'issueTap', 'ownerDies', 'admit', 'recoverAbandoned', 'proveFreshUnrelated', 'proveFenceMissingComponent', 'proveFence', 'admit'] },
+  { name: 'Earlier-generation proof', text: 'Generation 1 finishes cleanly. Generation 2 is abandoned; someone offers generation 1\'s receipt as proof.',
+    watch: 'Receipts bind to one generation. Generation 1\'s receipt cannot cover generation 2\'s hold.',
+    steps: ['admit', 'startSession', 'closeAndPublish', 'proveFence', 'admit', 'startSession', 'issueTap', 'ownerDies', 'recoverAbandoned', 'proveWithPriorGeneration', 'proveFence'] },
+  { name: 'Unknown creation', text: 'The session creation reply is lost, so a session may exist that the authority cannot name.',
+    watch: 'No proof can satisfy condition 3, so the device stays held, then quarantined after recovery. This is ADR-0011\'s "unknown creation without a session ID".',
+    steps: ['admit', 'startSessionReplyLost', 'closeAndPublish', 'proveFence', 'ownerDies', 'recoverAbandoned', 'proveFence'] },
+  { name: 'Imported history', text: 'Migration imports an old Android lease with unknown native work. Later a clean run is attempted.',
+    watch: 'A historical hold has no generation or component inventory, so no receipt covers it in Phase 2. The device stays quarantined and the hold is never edited.',
+    steps: ['importHistorical', 'proveFreshUnrelated', 'proveFence', 'admit'] },
+];
+
+let state = ReleaseModel.initial(), prev = state, lastResult = null, tab = 0, stepIx = 0;
+function dispatch(a) { prev = state; const out = ReleaseModel.reduce(state, a); state = out.state; lastResult = { action: a, ...out.result }; render(); }
+const mark = (now, before) => JSON.stringify(now) !== JSON.stringify(before) ? ' class="changed"' : '';
+function rows(list, prevList, cols) {
+  if (!list.length) return '<tr><td class="muted" colspan="9">none</td></tr>';
+  return list.map((r, i) => `<tr${mark(r, prevList[i])}>${cols.map(c => `<td>${c(r)}</td>`).join('')}</tr>`).join('');
+}
+function render() {
+  const av = ReleaseModel.availability(state), pav = ReleaseModel.availability(prev);
+  document.getElementById('state').innerHTML = `
+  <div class="grid">
+    <div class="card"><h3>Device lease availability (derived)</h3>
+      <div class="big ${av.free ? 'good' : 'bad'}"${mark(av, pav)}>${av.free ? 'Available' : 'Not available'}</div>
+      <div class="muted">${av.why}</div>
+      <table style="margin-top:8px"><tr><th>Owner</th><td${mark(state.lease, prev.lease)}>${state.lease ? `gen ${state.lease.generation}, ${state.lease.phase}, process ${state.lease.owner}` : 'none'}</td></tr>
+      <tr><th>Allocation capacity</th><td${mark(state.allocation, prev.allocation)}>${state.allocation ? `${state.allocation.id}: ${state.allocation.capacity}` : 'none'}</td></tr></table>
+    </div>
+    <div class="card"><h3>Attempt outcomes (immutable once set)</h3>
+      <table><tr><th>Attempt</th><th>Gen</th><th>Dispatch</th><th>Outcome</th></tr>
+      ${rows(state.attempts, prev.attempts, [a => a.id, a => a.generation, a => a.dispatch, a => a.outcome ?? '<span class="muted">pending</span>'])}</table>
+      <h3 style="margin-top:10px">Native components (recorded before start)</h3>
+      <table><tr><th>Component</th><th>Gen</th><th>Inventory</th></tr>
+      ${rows(state.components, prev.components, [c => c.id, c => c.generation, c => state.inventory[c.generation]])}
+      ${Object.entries(state.inventory).filter(([g, v]) => v !== 'complete').map(([g, v]) => `<tr class="changed"><td class="bad" colspan="3">gen ${g}: ${v}</td></tr>`).join('')}</table>
+    </div>
+    <div class="card"><h3>Command dispositions</h3>
+      <table><tr><th>Command</th><th>Gen</th><th>Disposition</th><th>Late replies</th></tr>
+      ${rows(state.commands, prev.commands, [c => c.id, c => c.generation, c => c.disposition, c => c.lateReplies.join(', ') || '<span class="muted">none</span>'])}</table>
+    </div>
+  </div>
+  <div class="grid" style="grid-template-columns:1fr 1fr;margin-top:14px">
+    <div class="card"><h3>Holds (quarantine, append-only; covered, never deleted)</h3>
+      <table><tr><th>Hold</th><th>Kind</th><th>Cause</th><th>Covered by</th></tr>
+      ${rows(state.holds, prev.holds, [h => h.id, h => h.kind, h => h.cause, h => h.coveredBy ?? '<span class="bad">uncovered</span>'])}</table>
+    </div>
+    <div class="card"><h3>Fence receipts (verified by the authority)</h3>
+      <table><tr><th>Receipt</th><th>Gen</th><th>Covers</th><th>Components / commands fenced</th></tr>
+      ${rows(state.receipts, prev.receipts, [r => r.id, r => r.generation, r => r.coversHold ?? 'own lease', r => `${r.components.join(', ') || '—'} / ${r.commands.join(', ') || '—'}`])}</table>
+    </div>
+  </div>`;
+  document.getElementById('result').innerHTML = lastResult
+    ? `<div class="result ${lastResult.refused ? 'refused' : ''}"><b>${LABELS[lastResult.action]}:</b> ${lastResult.refused ? 'Refused. ' : ''}${lastResult.text}</div>` : '';
+  document.getElementById('tabs').innerHTML = SCENARIOS.map((sc, i) => `<button class="${i === tab ? 'on' : ''}" onclick="startScenario(${i})">${sc.name}</button>`).join('');
+  const sc = SCENARIOS[tab];
+  document.getElementById('scenario').innerHTML = `<p>${sc.text}</p><p class="watch"><b>Watch for:</b> ${sc.watch}</p>
+    ${sc.steps.map((a, i) => `<button class="${i < stepIx ? 'done' : i === stepIx ? 'next' : ''}" ${i === stepIx ? `onclick="step()"` : 'disabled'}>${i + 1}. ${LABELS[a]}</button>`).join('')}
+    <button onclick="startScenario(${tab})">Restart</button>`;
+  document.getElementById('free').innerHTML = Object.keys(LABELS).map(a => `<button onclick="dispatch('${a}')">${LABELS[a]}</button>`).join('')
+    + `<button onclick="state=prev=ReleaseModel.initial();lastResult=null;stepIx=0;render()">Reset</button>`;
+  const lg = document.getElementById('log'); lg.innerHTML = state.journal.map((t, i) => `${String(i + 1).padStart(2, '0')}  ${t}`).join('<br>') || '<span class="muted">empty</span>'; lg.scrollTop = lg.scrollHeight;
+}
+function startScenario(i) { tab = i; stepIx = 0; state = prev = ReleaseModel.initial(); lastResult = null; render(); }
+function step() { const a = SCENARIOS[tab].steps[stepIx++]; dispatch(a); }
+render();
+</script>
+</body>
+</html>
