@@ -4,10 +4,9 @@ import { mkdtempSync, realpathSync } from 'node:fs';
 import { tmpdir, userInfo } from 'node:os';
 import { join, relative, isAbsolute } from 'node:path';
 import { performance } from 'node:perf_hooks';
-import { DatabaseSync } from 'node:sqlite';
 import { test } from 'node:test';
 import { fileURLToPath } from 'node:url';
-import { Admission } from '../../../src/device/admission.js';
+import type { Admission } from '../../../src/device/admission.js';
 
 type Sample = { dispatchToCallbackMs: number; wholeDispatchMs: number };
 type Distribution = { p50: number; p95: number; max: number };
@@ -28,6 +27,8 @@ function verifyCounts(callbacks: number, settledRows: number): void {
 }
 
 async function benchmark(commands: number): Promise<void> {
+  const { Admission } = await import('../../../src/device/admission.js');
+  const { DatabaseSync } = await import('node:sqlite');
   const parent = realpathSync(tmpdir());
   const applicationSupport = join(userInfo().homedir, 'Library', 'Application Support');
   const fromApplicationSupport = relative(applicationSupport, parent);
@@ -89,7 +90,11 @@ async function benchmark(commands: number): Promise<void> {
 function main(args: string[]): Promise<void> | void {
   if (args.length === 1 && args[0] === '--self-test') return selfTest();
   const commands = args.length === 0 ? 1000 : args.length === 2 && args[0] === '--commands' ? Number(args[1]) : NaN;
-  assert(Number.isSafeInteger(commands) && commands > 0, 'Usage: admission-writes.ts [--commands <positive integer>] | --self-test');
+  if (!Number.isSafeInteger(commands) || commands <= 0) {
+    console.error('Usage: admission-writes.ts [--commands <positive integer>] | --self-test');
+    process.exitCode = 2;
+    return;
+  }
   return benchmark(commands);
 }
 
