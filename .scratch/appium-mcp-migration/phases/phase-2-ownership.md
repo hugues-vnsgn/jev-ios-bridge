@@ -21,40 +21,46 @@ immutable outcomes instead of silently clearing them.
 
 ## Profile selection behavior
 
-Owner input on 2026-10-14: add optional explicit selection plus a project default,
-while preserving current inputs. The discussion is recorded in
-[Named-profile selection contract](../issues/04-profile-selection-contract.md).
+Decided in [Named-profile selection contract](../../appium-phase2/issues/01-profile-selection-contract.md) (owner, 2026-10-19).
 
-Add an optional CLI profile selector and an optional field on the MCP request
-that starts a scenario; keep the versioned scenario JSON unchanged. Document
-final names, bounded input shape and configuration location before wiring them.
-Use `--profile`/`profile` as the proposed additive spelling, not a new required
-field. Apply the same resolved configuration at CLI and MCP composition.
+**File.** `.jev/profiles.json` in the project folder (`JEV_PROJECT_DIR`, else cwd):
+`{ "version": 1, "defaultProfile"?: name, "profiles": { name: profile } }`. Read only
+when present; when present it must be valid (`INVALID_PROFILE_FILE`). `.jev/config.json`
+is unchanged and still read only for driven scripts.
 
-Select explicit profile first, then the project's configured default. With no
-profile selection/default, preserve legacy selection and precedence exactly:
-scenario iOS UUID, environment default, then legacy configured UUID; Android
-scenario serial/AVD then environment; capture serial then AVD then environment.
-Preserve the legacy project-config identity reader independently of its old UI
-provider, or provide an owner-reviewed compatible migration. Removing the vendor
-cannot make a previously valid omitted-device scenario fail silently.
+**Inputs.** `--profile <name>` on `run` and `capture`; optional `profile` on MCP
+`start_scenario`, beside `scenario` and `limits`. Scenario JSON is unchanged. No new
+environment variable. Observed actions and observed preparation ignore profiles
+(their allocation bindings and per-user `allocation.json` stay authoritative; a
+preparation hook is reserved). Names match `^[a-z0-9][a-z0-9-]{0,62}$`; an unknown
+name refuses with `PROFILE_NOT_FOUND`.
 
-Within the selected profile, compare the effective legacy/scenario app, device
-and platform after their established precedence is applied. Equivalent aliases
-are compatible; a genuine profile conflict refuses before session creation or
-other mutation. Do not reinterpret shadowed legacy settings as new conflicts.
-Resolve once and bind the result to the run; hand-back/retrieval cannot switch it.
-Observed actions use their durable allocation binding, not a newly selected
-profile or alternate device. Define profile use for allocation preparation
-without changing its immutable action/artifact/source bindings.
+**Profile v1.** `platform` (`ios`|`android`), `deviceCategory` (`ios-simulator`|
+`android-emulator`|`android-phone`), `device` (a device name, scenario validation
+rules), optional `app` (bundle ID or package; a guard only), optional `budgets`
+(startup, operation, cleanup; bounded). Reserved and refused when set:
+`capabilities`, `prerequisites`, `signing`, and categories for physical iPhones and
+later acceptance hardware. Unknown keys refuse. Credentials never appear here.
 
-Provide one validated project config with named profiles, optional default,
-platform/device category, app identity where specified, capability whitelist,
-startup/operation/cleanup budgets and prerequisite references. Keep credentials
-outside it. Reject missing/duplicate names, invalid limits, unsupported device
-categories, arbitrary remote endpoints and unsafe capability overrides. Reserve
-later signing references without enabling physical iPhones. Optional AI remains
-disabled and automation receives only required environment variables.
+**Precedence.** Explicit profile, then `defaultProfile`, then the legacy order
+unchanged: iOS scenario UUID, `JEV_DEVICE_UDID`, `.mobilebuildmcp/config.yaml`
+`simulatorId`; Android scenario serial, then AVD, then `JEV_ANDROID_DEVICE`;
+capture `--serial`, then `--avd`, then `JEV_ANDROID_DEVICE`. A selected profile
+silently shadows environment defaults and the vendor file. Only the scenario's own
+device/app/platform can conflict: after resolving both to a device identity,
+disagreement refuses with `PROFILE_CONFLICT` before any effect; aliases agree.
+
+**Budgets.** A profile's budgets are the default and the ceiling; request `limits`
+may only tighten them (minimum wins); a wider request refuses with
+`PROFILE_CONFLICT`. Without a profile, `limits` behave as today.
+
+**Binding.** The resolved profile (name plus content digest) is recorded on the run
+and in the admission attempt intent. Hand-back, retrieval and recovery use the
+recorded binding, never the current file.
+
+**Vendor file.** Keep reading `simulatorId` from `.mobilebuildmcp/config.yaml`
+read-only after Phase 3 removes MobileBuildMCP, with a one-line run-log note
+suggesting a profile. Removal needs a major version.
 
 ## Identity and preflight
 

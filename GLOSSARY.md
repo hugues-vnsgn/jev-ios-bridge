@@ -56,6 +56,10 @@ _Avoid_: target app
 **Device**:
 The simulator, emulator, or phone on which a run takes place.
 
+**Profile**:
+A named, project-level choice of platform, device category and device, optionally with an app guard and budget ceilings, that a run may select instead of naming its device directly. A run keeps the profile it was bound to at its start.
+_Avoid_: configuration, target
+
 **Launch options**:
 How the app under test is started: launch arguments on iOS; an activity and intent extras on Android.
 
