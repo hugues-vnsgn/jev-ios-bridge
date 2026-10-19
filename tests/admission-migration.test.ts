@@ -382,6 +382,28 @@ test('offline schema component target must match its owner generation', t => {
     [{ id: 'matching-component', device }]);
 });
 
+for (const kind of ['native', 'historical', 'exclusion']) {
+  test(`offline schema refuses an already covered ${kind} quarantine on insert`, t => {
+    const db = releaseSchemaFixture(t);
+    db.prepare("INSERT INTO fence_receipts VALUES ('receipt-a','generation-a','ios-simulator',?,'stop-a',?,'stop',1,'{}')").run(device, 'a'.repeat(64));
+    const before = db.prepare('SELECT * FROM quarantines ORDER BY id').all();
+    assert.throws(() => db.prepare('INSERT INTO quarantines(id,platform,device,kind,cause,created_at,owner_generation_id,evidence,covering_receipt_id) VALUES (?,\'ios-simulator\',?,?,\'fixture\',1,?,\'{}\',?)')
+      .run(`precovered-${kind}`, device, kind, kind === 'native' ? 'generation-a' : null, kind === 'native' ? 'receipt-a' : 'nonexistent-receipt'), /Quarantine must start uncovered/);
+    assert.deepEqual(db.prepare('SELECT * FROM quarantines ORDER BY id').all(), before);
+    assert.equal(db.prepare('SELECT state FROM device_state WHERE device=?').get(device)?.state, 'available');
+  });
+}
+
+test('offline schema CHECK forbids covered non-native quarantines even without the insert trigger', t => {
+  const db = releaseSchemaFixture(t);
+  db.exec('DROP TRIGGER quarantines_start_uncovered');
+  for (const kind of ['historical', 'exclusion']) {
+    assert.throws(() => db.prepare("INSERT INTO quarantines(id,platform,device,kind,cause,created_at,evidence,covering_receipt_id) VALUES (?,'ios-simulator',?,?,'fixture',1,'{}','nonexistent-receipt')")
+      .run(`precovered-${kind}`, device, kind), /CHECK constraint failed/);
+  }
+  assert.equal(db.prepare('SELECT count(*) AS count FROM quarantines WHERE device=?').get(device)?.count, 0);
+});
+
 test('offline schema stop receipt membership binds one generation and seals on receipt insertion', t => {
   const db = releaseSchemaFixture(t);
   const component = db.prepare("INSERT INTO components(id,owner_generation_id,platform,device,kind,declaration,registered_at) VALUES (?,?,'ios-simulator',?,'fixture','{\"version\":1}',1)");
