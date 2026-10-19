@@ -441,13 +441,10 @@ test('offline schema stop receipt membership binds one generation and seals on r
   assert.equal(db.prepare("SELECT covering_receipt_id FROM quarantines WHERE id='native-a'").get()?.covering_receipt_id, 'receipt-a');
 });
 
-test('offline schema upgrade preserves parked allocations and the host unknown-creation guard', async t => {
-  const f = fixture(t);
-  migrateAdmissionForTesting(declaration, { ...f.options, schemaVersion: 2 });
+function parkedAllocationRecord(): AllocationRecord {
   const allocationId = 'ABCDEF00-0000-4000-8000-000000000010';
-  const unknownId = 'ABCDEF00-0000-4000-8000-000000000011';
   const hash = 'a'.repeat(64);
-  const parked: AllocationRecord = {
+  return {
     allocationId, actionId: 'parked-upgrade', preparationDigest: hash, preparation: { version: 1, actionId: 'parked-upgrade' },
     appBundleId: 'dev.fixture', source: { kind: 'create', deviceTypeId: 'fixture-device', runtimeId: 'fixture-runtime' },
     inspectedContentDigest: hash, artifactBytes: 100, configVersion: 1, configDigest: hash,
@@ -465,6 +462,52 @@ test('offline schema upgrade preserves parked allocations and the host unknown-c
     createdAt: 100, readyAt: 200, expiresAt: 300200, readinessEvidence: ['/isolated/readiness.json'],
     evidenceRefs: ['/isolated/preparation.json'], actionEvidence: null, hostCreationBlocked: false,
   };
+}
+
+for (const mismatch of [null, 'pid', 'incarnation', 'device', 'allocation'] as const) {
+  test(`offline schema upgrade compares an allocation owner with its historical attempt (${mismatch ?? 'matching'})`, async t => {
+    const f = fixture(t);
+    migrateAdmissionForTesting(declaration, { ...f.options, schemaVersion: 2 });
+    const base = parkedAllocationRecord();
+    const allocationId = mismatch === 'allocation' ? otherDevice : base.allocationId;
+    const record: AllocationRecord = { ...base, allocationId, state: 'retained', phase: 'terminal', outcome: 'action_completed',
+      device: mismatch === 'device' ? otherDevice : device,
+      owner: { allocationId, token: 'shared-token', generation: 2,
+        process: { pid: mismatch === 'pid' ? process.pid + 1 : process.pid, incarnation: mismatch === 'incarnation' ? 'different' : 'fixture' } } };
+    const text = JSON.stringify(record);
+    const old = new DatabaseSync(join(f.root, 'admission.sqlite'));
+    try {
+      old.prepare("INSERT INTO devices(device,state,generation) VALUES (?,'available',2)").run(device);
+      old.prepare("INSERT INTO attempts(kind,id,device,digest,intent,token,generation,pid,incarnation,state,terminal) VALUES ('preparation',?,?,'original','{}','shared-token',2,?,'fixture','terminal','{\"outcome\":\"completed\"}')").run(base.allocationId, device, process.pid);
+      old.prepare('INSERT INTO allocations VALUES (?,?,?,NULL,?,?)').run(allocationId, record.actionId, record.device, text, digest(text));
+    } finally { old.close(); }
+    const { upgradeAdmissionForTesting } = await import('../src/device/admission-upgrade.js');
+    if (mismatch === null) {
+      assert.equal(upgradeAdmissionForTesting(upgradeDeclaration, { root: f.root, backend: 'fake' }).to, 3);
+      const db = new DatabaseSync(join(f.root, 'admission.sqlite'));
+      try {
+        assert.deepEqual(db.prepare('SELECT owner_kind,allocation_id,pid,incarnation FROM owner_generations').all().map(row => ({ ...row })),
+          [{ owner_kind: 'device', allocation_id: allocationId, pid: process.pid, incarnation: 'fixture' }]);
+      } finally { db.close(); }
+    } else {
+      assert.throws(() => upgradeAdmissionForTesting(upgradeDeclaration, { root: f.root, backend: 'fake' }),
+        { code: 'STATE_UNAVAILABLE', message: 'Conflicting historical owner binding' });
+      const db = new DatabaseSync(join(f.root, 'admission.sqlite'));
+      try {
+        assert.equal(db.prepare('SELECT schema_version FROM metadata').get()?.schema_version, 2);
+        assert.equal(db.prepare('SELECT record FROM allocations').get()?.record, text);
+      } finally { db.close(); }
+    }
+  });
+}
+
+test('offline schema upgrade preserves parked allocations and the host unknown-creation guard', async t => {
+  const f = fixture(t);
+  migrateAdmissionForTesting(declaration, { ...f.options, schemaVersion: 2 });
+  const allocationId = 'ABCDEF00-0000-4000-8000-000000000010';
+  const unknownId = 'ABCDEF00-0000-4000-8000-000000000011';
+  const hash = 'a'.repeat(64);
+  const parked = parkedAllocationRecord();
   const unknown: AllocationRecord = { ...parked, allocationId: unknownId, actionId: 'unknown-upgrade',
     preparation: { version: 1, actionId: 'unknown-upgrade' }, intendedName: `jev-observed-${unknownId}`,
     device: null, creationReceipt: null, state: 'preparing', phase: 'creating', outcome: null,
