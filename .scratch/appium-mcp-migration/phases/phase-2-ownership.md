@@ -217,7 +217,12 @@ the recorded backup, or new version with the receipt for that guard's token.
 Otherwise it refuses. It records the recovery as its own immutable maintenance
 event (in a maintenance journal that exists at both versions), linked to the
 guard token and to the step receipt when one committed; the step receipt itself
-is never edited. A migration guard
+is never edited. The journal is the existing `transitions` table (kind
+`maintenance`, the guard token in `attempt_id`) at schema 2, exposed as a
+`maintenance_journal` view with immutability triggers at schema 3. A retry of
+`--recover` that finds its own committed, token-bound recovery event compares the
+store with the backup excluding exactly that row; any other difference refuses
+(main agent, 2026-10-19). A migration guard
 or unknown guard still needs operator investigation.
 
 **Device key.** Tables key a device on (category, value). The `devices` key
@@ -305,6 +310,12 @@ to admission, so its quarantine, not the marker rule, refuses the device. Phase 
 never deletes it. A legacy file that appears after import stays unknown and
 refuses `DEVICE_BUSY` until imported.
 
+
+**Import refusals** (main agent, 2026-10-19). Every import refusal is
+`IMPORT_REFUSED` with exactly one reason from a closed set: `HOLDER_ALIVE`,
+`SOURCE_UNREADABLE`, `SOURCE_UNSAFE`, `SOURCE_INCONSISTENT`, `SOURCE_CONFLICT`,
+as identity refusals use `DEVICE_IDENTITY_UNAVAILABLE`. P2.3 adds the vocabulary;
+P2.5 uses it.
 ## Activation runbook requirements
 
 Decided in [Activation runbook for the real store](../../appium-phase2/issues/09-activation-runbook.md) (owner, 2026-10-19).

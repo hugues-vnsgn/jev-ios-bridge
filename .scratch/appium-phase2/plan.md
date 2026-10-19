@@ -199,7 +199,7 @@ Each live lane runs on its own cloud VM at the PR head. Drive through `control-u
 - [ ] Create `src/device/admission-upgrade.ts`.
 - [ ] Edit `src/device/admission.ts`, `src/device/admission-sqlite.ts`, `src/device/admission-maintenance.ts`, `src/device/admission-migration.ts`, `src/device/admission-allocation.ts`, `src/scripted/vocabulary.ts`, `docs/guide/reference/reason-codes.md`.
 - [ ] Edit `src/device/index.ts` at admission call sites only.
-- [ ] Edit `tests/admission-core.test.ts`, `tests/admission-allocation.test.ts`, `tests/admission-migration.test.ts`, `tests/admission-maintenance-entry.test.ts`, `tests/fixtures/admission-migration/crash-worker.ts`.
+- [ ] Edit `tests/admission-core.test.ts`, `tests/admission-allocation.test.ts`, `tests/admission-migration.test.ts`, `tests/admission-maintenance-entry.test.ts`, `tests/fixtures/admission-migration/crash-worker.ts`, `tests/fixtures/admission-core-protocol.ts`.
 
 **Build.**
 
@@ -207,7 +207,8 @@ Each live lane runs on its own cloud VM at the PR head. Drive through `control-u
 - [ ] Write the 2 to 3 step per The 2 to 3 step. Schema 3 holds every Phase 2 record type now, so 2C needs no schema 4. Those are quarantines, fence receipts, component inventory, each command's component, late-reply observations, `upgrades`, recovery claims and the maintenance journal.
 - [ ] Add `admission-maintenance upgrade` and `upgrade --recover` per Upgrades, Backup, Receipts and Interrupted upgrades, with the recovery recorded as a maintenance event.
 - [ ] Add the immutability triggers, the exact version match, and the fresh-initialization mode per Fresh and test stores.
-- [ ] Add every 2B refusal code, including the ones P2.5 uses (`UPGRADE_BLOCKED` and the import codes from Legacy lease import).
+- [ ] Add every 2B refusal code, including the ones P2.5 uses (`UPGRADE_BLOCKED` and `IMPORT_REFUSED` with its closed reasons).
+- [ ] Translate the existing lifecycle SQL to the schema 3 representation without changing behaviour. Where v1.4.0 sets a device `quarantined`, write the equivalent quarantine record with no covering receipt. New proof, release and sweep behaviour stays in P2.6.
 
 **You see.**
 
