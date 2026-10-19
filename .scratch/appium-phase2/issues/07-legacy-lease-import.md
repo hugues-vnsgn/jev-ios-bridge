@@ -1,7 +1,7 @@
 # Legacy lease import
 
 Type: grilling
-Status: claimed
+Status: resolved
 Claimed by: Claude Code (owner session)
 Labels: wayfinder:grilling
 Mode: HITL
@@ -22,3 +22,21 @@ Input from [Retiring DeviceLease as an ownership authority](06-device-lease-reti
 
 Record the actual owner decision (or sourced answer for research), unresolved
 limits, and the exact changes required in the Phase 2 specification.
+
+## Answer
+
+Owner decision, 2026-10-19 (grilling over two rounds, all recommendations accepted, summary confirmed):
+
+- **Separate step.** `admission-maintenance import <declaration>` runs after the 2 to 3 upgrade, under the same rules as upgrades: guard, writer-window declaration, tool-taken backup, append-only receipts and checked `--recover`. It scans the default `$TMPDIR` lease root plus declared lease and journal roots, so newly declared iOS history enters the same way.
+- **Every leftover legacy lease becomes a `historical` quarantine.** A live PID refuses the import; unreadable or unsafe files fail it closed. UUID names map exactly to `ios-simulator`. Any other name becomes a **name-matched quarantine**: admission refuses any emulator whose recorded AVD name matches it case-insensitively, and any phone whose serial matches. `ownedProcesses` stay as evidence only, and Phase 2 cannot lift these quarantines.
+- **Repeatable and deduplicated.** Each run has its own receipt with every file's path and sha256. Already-imported files are skipped, an identical rerun returns the same receipt, and sources never change.
+- **Markers.** An imported file counts as known, so its quarantine governs. A legacy file that appears later stays unknown (`DEVICE_BUSY`) until a later import.
+- **Glossary:** added **Legacy lease**.
+- **No ADR,** since this follows ADR-0011 and ADR-0012.
+
+Spec change: added "Legacy lease import" to [the Phase 2 specification](../../appium-mcp-migration/phases/phase-2-ownership.md), plus an import case in Verification, and updated the status line. It also adds an optional legacy-name key to quarantines, extending Store schema evolution.
+
+Facts found: v1 `readLeases` (`src/device/admission-migration.ts`) counted well-formed non-UUID leases as `ignoredNonIosLeases` and refused a live iOS lease. Old binaries name lease files by uppercased identity (AVD name or serial for Android). The default lease root on this machine held no files on 2026-10-19 (listed, not changed).
+
+Open limits: an AVD renamed or recreated since its lease isn't matched, and nothing in Phase 2 can lift these quarantines.
+

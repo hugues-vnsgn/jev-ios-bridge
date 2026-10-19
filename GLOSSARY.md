@@ -86,6 +86,9 @@ The kind of device an identity belongs to: iOS simulator, Android emulator, Andr
 A bridge's exclusive, recorded hold on one device for one run, keyed by its device identity. Once released, nothing the run started can still act on the device.
 _Avoid_: lock
 
+**Legacy lease**:
+A device lease recorded only as a lock file, by a bridge that did not use the admission authority, and named only by a device name. Its run's native work is never assumed settled: a leftover legacy lease becomes a quarantine.
+
 **Device agent**:
 The UI-automation program the bridge runs on an Android device to read its screen and act on it.
 _Avoid_: DeviceServer, server, mobilecli

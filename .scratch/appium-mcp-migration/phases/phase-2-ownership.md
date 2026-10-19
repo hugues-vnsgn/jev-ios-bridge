@@ -1,6 +1,6 @@
 # Phase 2 specification: profiles and one admission authority
 
-Status: behavior specified; legacy import decision open; execution paused
+Status: behavior specified; activation runbook and package briefs pending; execution paused
 Authority: [published spec](../spec.md), Decisions 9, 18 through 26;
 Testing Decisions 6, 15 through 19
 Context: [master handoff](../handoff.md), ADR-0008/0009/0011
@@ -255,6 +255,48 @@ apply only to upgrading an existing committed store.
 recorded work drops that work and its guarantees; the help text says so, and a
 restored store is treated as the older version it is.
 
+## Legacy lease import
+
+Decided in [Legacy lease import](../../appium-phase2/issues/07-legacy-lease-import.md) (owner, 2026-10-19).
+
+**Step.** `admission-maintenance import <declaration>` runs only on a store at the
+schema version the binary was built for (schema 3 or later), normally right after
+the 2 to 3 upgrade in the same writer window. It uses the upgrade rules: the
+`migration.lock` guard, a writer-window declaration, a verified tool-taken backup,
+append-only receipts and checked `--recover`. It scans the default `$TMPDIR`
+lease root (`jev-ios-bridge-device-locks`) and every declared lease and journal
+root; newly declared iOS journal history imports through the v1 scanner's rules.
+
+**Each leftover legacy lease becomes a `historical` quarantine.** Old binaries
+delete their lease at release, so any file left behind is a run that never
+released. This holds whether or not it lists `ownedProcesses`. A lease whose
+PID is alive refuses the import (it contradicts the writer window), and an
+unreadable, unsafe or inconsistent file fails it closed.
+
+- A UUID-named lease becomes a quarantine on (`ios-simulator`, UUID).
+- Any other name cannot be mapped to an identity: the legacy format has no
+  platform tag, the name is uppercased, and an AVD root is not recorded. It
+  becomes a quarantine keyed on its legacy name. Admission refuses any
+  `android-emulator` whose recorded AVD name matches it (case-insensitive) and
+  any `android-phone` whose serial matches. Over-matching is the intended safe
+  direction. An AVD renamed or recreated since then is not caught.
+- The lease's `ownedProcesses`, PID, token and run ID are kept as evidence on the
+  quarantine. They are not a component inventory; no receipt covers these
+  quarantines in Phase 2.
+
+This adds an optional legacy-name key to quarantines (Store schema evolution).
+
+**Repeatable.** Each run appends a receipt listing every source file's path and
+sha256 and the quarantines it created. A file already imported with the same
+path and hash is skipped; an identical rerun returns the same receipt; source
+files are never changed or deleted. A legacy lease found in a new root, or
+written later by an old binary despite exclusivity, enters through a later run.
+
+**Markers.** An imported legacy lease file (same path and sha256) counts as known
+to admission, so its quarantine, not the marker rule, refuses the device. Phase 2
+never deletes it. A legacy file that appears after import stays unknown and
+refuses `DEVICE_BUSY` until imported.
+
 ## Release state contract
 
 Decided in [Evidenced release with immutable outcomes](../../appium-phase2/issues/04-evidenced-release-state.md) (owner, 2026-10-19).
@@ -432,6 +474,9 @@ Through existing admission/maintenance and public integration seams, cover:
 - Cancellation before/after authorization, late replies, stale-owner proof,
   absent/incomplete native coverage and complete supported recovery: lease
   unavailable until proof; immutable history and capacity unchanged afterward.
+- Legacy lease import: UUID and name-keyed quarantines, case-insensitive AVD-name
+  and serial matching, live-PID and malformed-file refusal, skipped duplicates,
+  identical rerun retrieval, a later new file, and unchanged sources.
 - Lease retirement: an owner killed with outstanding adb, agent and stream
   components recovers at the next admission only after verified stop evidence;
   a reused owner PID proves the old owner gone and permits recovery, while a
