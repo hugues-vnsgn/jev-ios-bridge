@@ -3,7 +3,6 @@ import { readFile } from 'node:fs/promises';
 import { join } from 'node:path';
 import { z } from 'zod/v4';
 import { androidAvd, androidSerial } from './scripted/schema.js';
-import { DEFAULT_CLEANUP_MS } from './scripted/run.js';
 import type { ScriptedScenario } from './scripted/contracts.js';
 
 export const profileNameSchema = z.string().regex(/^[a-z0-9][a-z0-9-]{0,62}$/);
@@ -40,19 +39,20 @@ export type ProfileBudgets = z.infer<typeof profileBudgetsSchema>;
 export interface ProfileBinding { name: string; digest: string }
 export interface SelectedProfile { profile: Profile; binding: ProfileBinding }
 export class ProfileError extends Error {
-  constructor(readonly code: 'INVALID_PROFILE_FILE' | 'PROFILE_NOT_FOUND' | 'PROFILE_CONFLICT') {
-    super(code);
+  constructor(readonly code: 'INVALID_PROFILE_FILE' | 'PROFILE_NOT_FOUND' | 'PROFILE_CONFLICT',
+    message = code === 'INVALID_PROFILE_FILE' ? 'The project profiles file is invalid.' : 'The selected profile was not found.') {
+    super(message);
   }
 }
 
 export function profileLimits(selected: SelectedProfile | undefined, requested: ProfileBudgets): ProfileBudgets {
   if (!selected) return requested;
-  const ceilings = { ...selected.profile.budgets, cleanupMs: selected.profile.budgets?.cleanupMs ?? DEFAULT_CLEANUP_MS };
+  const ceilings = selected.profile.budgets ?? {};
   const limits: ProfileBudgets = { ...ceilings };
   for (const field of ['startupMs', 'operationMs', 'cleanupMs'] as const) {
     const value = requested[field];
     if (value === undefined) continue;
-    if (ceilings[field] !== undefined && value > ceilings[field]) throw new ProfileError('PROFILE_CONFLICT');
+    if (ceilings[field] !== undefined && value > ceilings[field]) throw new ProfileError('PROFILE_CONFLICT', `Requested ${field} exceeds the selected profile budget.`);
     limits[field] = value;
   }
   return limits;
@@ -68,8 +68,11 @@ export function profileScenario(scenario: ScriptedScenario, selected: SelectedPr
   const { profile } = selected;
   const android = scenario.platform === 'android';
   const app = scenario.platform === 'android' ? scenario.app.package : scenario.app.bundleId;
-  if ((android ? 'android' : 'ios') !== profile.platform || (profile.app !== undefined && profile.app !== app)) {
-    throw new ProfileError('PROFILE_CONFLICT');
+  if ((android ? 'android' : 'ios') !== profile.platform) {
+    throw new ProfileError('PROFILE_CONFLICT', 'Scenario platform conflicts with the selected profile.');
+  }
+  if (profile.app !== undefined && profile.app !== app) {
+    throw new ProfileError('PROFILE_CONFLICT', 'Scenario app conflicts with the selected profile.');
   }
   const device = profileDevice(profile);
   const own = scenario.device;
@@ -78,7 +81,7 @@ export function profileScenario(scenario: ScriptedScenario, selected: SelectedPr
       if (value === undefined) continue;
       const expected = device[kind as keyof typeof device];
       if (expected === undefined || (kind === 'udid' ? String(value).toUpperCase() !== expected : value !== expected)) {
-        throw new ProfileError('PROFILE_CONFLICT');
+        throw new ProfileError('PROFILE_CONFLICT', 'Scenario device conflicts with the selected profile.');
       }
     }
   }

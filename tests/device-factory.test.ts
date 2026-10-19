@@ -16,7 +16,7 @@ import { profileScenario } from '../src/profiles.js';
 const udid = 'ABCDEF00-0000-4000-8000-000000000001';
 const iosScript: ScriptedScenario = { version: 1, app: { bundleId: 'com.example.app' }, values: {}, steps: [] };
 
-test('profile conflicts compare names and refuse mixed kinds without device probes', () => {
+test('profile conflicts compare names exactly and refuse mixed device-name kinds', () => {
   const scenario: ScriptedScenario = { version: 1, platform: 'android', app: { package: 'com.example.app' },
     device: { avd: 'Pixel_API_35' }, values: {}, steps: [] };
   const selected = { profile: { platform: 'android', deviceCategory: 'android-emulator', device: 'Pixel_API_35' },

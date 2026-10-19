@@ -38,11 +38,11 @@ node --env-file=.env node_modules/jev-ios-bridge/dist/cli.js run checks/login.js
 
 `.jev/profiles.json` has `version: 1`, a `profiles` object keyed by profile name, and an optional `defaultProfile` name. Names use lowercase letters, digits and hyphens, start with a letter or digit, and contain at most 63 characters. Each profile requires `platform` (`ios` or `android`), `deviceCategory` (`ios-simulator`, `android-emulator` or `android-phone`) and `device`. An optional `app` guards the scenario's bundle ID or package. Unknown fields and reserved `capabilities`, `prerequisites` and `signing` fields refuse the file.
 
-Explicit `--profile` or MCP `profile` wins over `defaultProfile`. A selected profile shadows environment and vendor-file device defaults. Without either selector, legacy device selection keeps its order. A present but invalid file refuses with `INVALID_PROFILE_FILE`; an unknown selection refuses with `PROFILE_NOT_FOUND`.
+Explicit `--profile` or MCP `profile` wins over `defaultProfile`. A selected profile shadows environment and vendor-file device defaults. Without either selector, legacy device selection keeps its order. A `defaultProfile` for the other platform refuses a run with `PROFILE_CONFLICT`, even without `--profile`. Select a matching profile or change the project default. A present but invalid file refuses with `INVALID_PROFILE_FILE`; an unknown selection refuses with `PROFILE_NOT_FOUND`.
 
 Scenario-owned device, app or platform disagreements refuse with `PROFILE_CONFLICT` before device work. Device comparisons currently use names: iOS UDIDs ignore case, Android names compare exactly, and an AVD name versus a serial refuses even if they name the same emulator. A run records the selected name and content digest; later retrieval and hand-backs keep that binding when the file changes. Observed actions and preparation ignore profiles.
 
-Optional profile `budgets` contain `startupMs`, `operationMs` and `cleanupMs`. MCP request limits may tighten these ceilings; a wider request refuses with `PROFILE_CONFLICT`. Startup and operation accept 1000 to 600000 ms and have no default. Cleanup accepts 1000 to 120000 ms and defaults to 45000 ms. The wall-time and hand-back limits remain independent.
+Optional profile `budgets` contain `startupMs`, `operationMs` and `cleanupMs`. MCP request limits may tighten these ceilings; a wider request refuses with `PROFILE_CONFLICT`. A budget the profile leaves unset has no profile ceiling; request limits use the system bounds and existing defaults. Startup and operation accept 1000 to 600000 ms and have no default. Cleanup accepts 1000 to 120000 ms and defaults to 45000 ms. The wall-time and hand-back limits remain independent.
 
 ## Capture an Android screen
 
@@ -54,7 +54,7 @@ npx jev-ios-bridge capture --serial emulator-5554 --jev
 ```
 
 **Options:**
-- `--profile NAME` selects an Android profile. The project's `defaultProfile` applies when this option is absent. A selected profile shadows `JEV_ANDROID_DEVICE`; conflicting device flags refuse with `PROFILE_CONFLICT`.
+- `--profile NAME` selects an Android profile. The project's Android `defaultProfile` applies when this option is absent. Capture ignores an iOS `defaultProfile` and falls back to `--serial`, then `--avd`, then `JEV_ANDROID_DEVICE`. An explicit iOS `--profile` refuses with `PROFILE_CONFLICT`. A selected profile shadows `JEV_ANDROID_DEVICE`; conflicting device flags refuse with `PROFILE_CONFLICT`.
 - `--serial S` or `--avd A` names the device. Without either, it uses `JEV_ANDROID_DEVICE`. `--serial` wins when both are given. Each must match the same pattern as the script's `device.serial` or `device.avd`.
 - `--jev` prints Jev's text for the screen instead: what a checkpoint would send, byte for byte.
 

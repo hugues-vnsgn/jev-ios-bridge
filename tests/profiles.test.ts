@@ -2,7 +2,8 @@ import assert from 'node:assert/strict';
 import { test } from 'node:test';
 import { mkdir, mkdtemp, readFile, readdir, rm, writeFile } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
-import { join } from 'node:path';
+import { join, resolve } from 'node:path';
+import { pathToFileURL } from 'node:url';
 import { readProfile, ProfileError, profileLimits } from '../src/profiles.js';
 import { spawnSync } from 'node:child_process';
 
@@ -34,18 +35,28 @@ test('profiles are optional, and explicit selection overrides the project defaul
 
 test('profile budgets are defaults and ceilings, compared independently', async () => {
   const root = await project({ version: 1, profiles: { pixel: { ...pixel,
-    budgets: { startupMs: 6000, operationMs: 4000 } } } });
+    budgets: { startupMs: 6000, operationMs: 4000, cleanupMs: 5000 } } } });
   try {
     const selected = (await readProfile(root, 'pixel'))!;
-    assert.deepEqual(profileLimits(selected, {}), { startupMs: 6000, operationMs: 4000, cleanupMs: 45000 });
+    assert.deepEqual(profileLimits(selected, {}), { startupMs: 6000, operationMs: 4000, cleanupMs: 5000 });
     assert.deepEqual(profileLimits(selected, { startupMs: 1000, cleanupMs: 2000 }),
       { startupMs: 1000, operationMs: 4000, cleanupMs: 2000 });
-    for (const limits of [{ startupMs: 6001 }, { operationMs: 4001 }, { cleanupMs: 45001 }]) {
+    for (const limits of [{ startupMs: 6001 }, { operationMs: 4001 }, { cleanupMs: 5001 }]) {
       assert.throws(() => profileLimits(selected, limits), (error: unknown) => error instanceof ProfileError && error.code === 'PROFILE_CONFLICT');
     }
     assert.deepEqual(profileLimits(undefined, {}), {});
     assert.deepEqual(profileLimits(undefined, { startupMs: 600000, cleanupMs: 120000 }),
       { startupMs: 600000, cleanupMs: 120000 });
+  } finally { await rm(root, { recursive: true, force: true }); }
+});
+
+test('unset profile budgets have no profile ceiling', async () => {
+  const root = await project({ version: 1, profiles: { pixel } });
+  try {
+    const selected = (await readProfile(root, 'pixel'))!;
+    assert.deepEqual(profileLimits(selected, {}), {});
+    assert.deepEqual(profileLimits(selected, { startupMs: 600000, operationMs: 600000, cleanupMs: 120000 }),
+      { startupMs: 600000, operationMs: 600000, cleanupMs: 120000 });
   } finally { await rm(root, { recursive: true, force: true }); }
 });
 
@@ -83,7 +94,58 @@ test('run --profile prints the conflict code before credentials, admission or ru
     const result = spawnSync(process.execPath, ['--import', 'tsx', 'src/cli.ts', 'run', 'scenario.json', '--profile', 'pixel'],
       { env: { ...process.env, TYPESAFE_API_KEY: '', JEV_PROJECT_DIR: root, JEV_RUNS_DIR: join(root, 'runs') }, encoding: 'utf8' });
     assert.equal(result.status, 3);
-    assert.equal(result.stderr.trim(), 'PROFILE_CONFLICT');
+    assert.deepEqual(result.stderr.split(/\r?\n/).filter(line => line.startsWith('PROFILE_CONFLICT:')),
+      ['PROFILE_CONFLICT: Scenario device conflicts with the selected profile.']);
     assert.deepEqual(await readdir(root), ['.jev', 'scenario.json']);
   } finally { await rm(root, { recursive: true, force: true }); }
 });
+
+for (const initiallySelected of [true, false]) {
+  test(`CLI keeps its preflight profile snapshot when the file changes (selected=${initiallySelected})`, async () => {
+    const root = await project(initiallySelected ? { version: 1, defaultProfile: 'pixel', profiles: { pixel } } : undefined);
+    const runs = join(root, 'runs');
+    const scenario = { version: 1, platform: 'android', app: { package: 'com.example.app' }, values: {},
+      steps: [{ id: 'check', kind: 'checkpoint', guard: { present: [{ role: 'text', label: 'Marker' }] },
+        assertions: [{ id: 'shown', claim: 'Visible' }] }] };
+    await writeFile(join(root, 'scenario.json'), JSON.stringify(scenario));
+    const entry = join(root, 'cli-fixture.mjs');
+    await writeFile(entry, `
+      import { runCli } from ${JSON.stringify(pathToFileURL(resolve('src/cli.ts')).href)};
+      import { BridgeService } from ${JSON.stringify(pathToFileURL(resolve('src/service.ts')).href)};
+      import { writeFile } from 'node:fs/promises';
+      const root = ${JSON.stringify(root)};
+      let driverInput;
+      const service = new BridgeService({ baseDir: ${JSON.stringify(runs)}, env: { JEV_PROJECT_DIR: root },
+        createDriver: (scenario, run) => {
+          driverInput = { device: scenario.device ?? null, profile: run.profile ?? null };
+          return { async prepare() {}, async close() {}, async act() {}, async observe() {
+            return { deviceId: 'fixture', sequence: 1, capturedAt: Date.now(), expiresAt: Date.now() + 60000,
+              truncated: false, elements: [{ ref: 'marker', role: 'text', label: 'Marker',
+                frame: { x: 0, y: 0, width: 10, height: 10 }, state: { visible: true, enabled: true }, actions: [] }] };
+          } };
+        }, createJudge: () => ({ async judge() { return { probabilities: { shown: 1 }, inputTokens: 0,
+          latencyMs: 0, model: 'jev-1.13.0' }; } }),
+      });
+      const start = service.start.bind(service);
+      service.start = async (...args) => {
+        await writeFile(root + '/.jev/profiles.json', JSON.stringify({ version: 1, defaultProfile: 'changed', profiles: {
+          changed: { platform: 'android', deviceCategory: 'android-emulator', device: 'Changed_AVD' },
+        } }));
+        return start(...args);
+      };
+      await runCli(['run', root + '/scenario.json', '--json'], { legacy: service, projectDir: root });
+      await writeFile(root + '/driver.json', JSON.stringify(driverInput));
+    `);
+    try {
+      const result = spawnSync(process.execPath, ['--import', 'tsx', entry], { encoding: 'utf8', timeout: 10000,
+        env: { ...process.env, JEV_PROJECT_DIR: root, JEV_ANDROID_DEVICE: 'Legacy_AVD', TYPESAFE_API_KEY: 'fixture-only' } });
+      assert.equal(result.status, 0, result.stderr + result.stdout);
+      const binding = initiallySelected ? { name: 'pixel', digest: 'a7df40867c11718a4dff899139156466875a32747dd5387fb1c95a8006942cc9' } : null;
+      assert.deepEqual(JSON.parse(await readFile(join(root, 'driver.json'), 'utf8')),
+        { device: initiallySelected ? { avd: 'Pixel_API_35' } : null, profile: binding });
+      const [runId] = (await readdir(runs, { withFileTypes: true })).filter(entry => entry.isDirectory()).map(entry => entry.name);
+      const events = (await readFile(join(runs, runId!, 'run.jsonl'), 'utf8')).trim().split('\n').map(line => JSON.parse(line));
+      assert.deepEqual(events.find(event => event.type === 'started').data.profile ?? null, binding);
+    } finally { await rm(root, { recursive: true, force: true }); }
+  });
+}

@@ -24,7 +24,7 @@ import { BRIDGE_VERSION } from './version.js';
 import { attachLogPane } from './logpane/attach.js';
 import { readRunEvents } from './log/index.js';
 import { EXIT } from './exit-codes.js';
-import { ProfileError, readProfile, profileScenario } from './profiles.js';
+import { ProfileError, readProfile, profileScenario, type SelectedProfile } from './profiles.js';
 
 const USAGE = `jev-ios-bridge ${BRIDGE_VERSION}
 Usage:
@@ -176,10 +176,11 @@ async function dispatchCli(args: string[], composition: CliComposition): Promise
   }
 
   let script;
+  let selectedProfile: SelectedProfile | undefined;
   if (command === 'run') {
     script = resolveScriptValues(parseScriptedScenarioSource(await readScript(argument!)), process.env);
-    const selected = await readProfile(projectDir, parsed.values.profile);
-    const selectedScript = selected ? profileScenario(script, selected) : script;
+    selectedProfile = await readProfile(projectDir, parsed.values.profile);
+    const selectedScript = selectedProfile ? profileScenario(script, selectedProfile) : script;
     if (!process.env.TYPESAFE_API_KEY?.trim()) throw new StartError('TYPESAFE_API_KEY is not set; load your .env with node --env-file=/path/to/.env');
     if (selectedScript.platform === 'android') selectAndroidDeviceName(selectedScript.device, process.env.JEV_ANDROID_DEVICE);
     else await selectDeviceId(projectDir, selectedScript.device?.udid, process.env.JEV_DEVICE_UDID);
@@ -231,7 +232,7 @@ async function dispatchCli(args: string[], composition: CliComposition): Promise
       await print(argument!);
       return;
     }
-    const { runId, watchUrl } = await service.start(script, limits, parsed.values.profile);
+    const { runId, watchUrl } = await service.start(script, limits, { selected: selectedProfile });
     console.error(`Watch: ${watchUrl}`);
     let shownPause: string | undefined;
     while (!closing) {
@@ -260,8 +261,9 @@ export async function runCli(args = process.argv.slice(2), composition: CliCompo
       process.stdout.write((args.includes('--json') ? JSON.stringify(reply) : observedSummary(reply)) + '\n');
       process.exitCode = 3; return;
     }
-    if (error instanceof z.ZodError) console.error(`Script is invalid:\n${z.prettifyError(error)}`);
-    else if (error instanceof StartError || error instanceof ScriptValueError || error instanceof DrivenProjectError || error instanceof ProfileError ||
+    if (error instanceof ProfileError) console.error(`${error.code}: ${error.message}`);
+    else if (error instanceof z.ZodError) console.error(`Script is invalid:\n${z.prettifyError(error)}`);
+    else if (error instanceof StartError || error instanceof ScriptValueError || error instanceof DrivenProjectError ||
       isDeviceSelectionError(error)) {
       console.error(error.message);
     } else console.error('Bridge could not start. Check arguments, script, and environment.');

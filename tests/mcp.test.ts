@@ -17,8 +17,15 @@ test('MCP exposes profiles and refuses wider budgets before creating a run', { t
     JEV_RUNS_DIR: join(root, 'runs'), JEV_EXPERIMENTAL_OBSERVED: '0' } });
   try {
     const tool = (await session.listTools()).find(tool => tool.name === 'start_scenario');
-    assert.ok(tool.inputSchema.properties.profile);
-    assert.ok(tool.inputSchema.properties.limits.properties.operationMs);
+    assert.deepEqual(tool.inputSchema.properties.profile, { type: 'string', pattern: '^[a-z0-9][a-z0-9-]{0,62}$' });
+    assert.deepEqual(tool.inputSchema.required, ['scenario']);
+    assert.deepEqual(tool.inputSchema.properties.limits, { type: 'object', additionalProperties: false, properties: {
+      maxSteps: { type: 'integer', minimum: 1, maximum: 100 },
+      wallTimeMs: { type: 'integer', minimum: 1, maximum: 3600000 },
+      startupMs: { type: 'integer', minimum: 1000, maximum: 600000 },
+      operationMs: { type: 'integer', minimum: 1000, maximum: 600000 },
+      cleanupMs: { type: 'integer', minimum: 1000, maximum: 120000 },
+    } });
     const scenario = { version: 1, platform: 'android', app: { package: 'com.example.app' },
       values: {}, steps: [{ id: 'check', kind: 'checkpoint', guard: { present: [{ role: 'text', label: 'Marker' }] },
         assertions: [{ id: 'shown', claim: 'Visible' }] }] };

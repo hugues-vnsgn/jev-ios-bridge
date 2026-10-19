@@ -130,7 +130,8 @@ test('hand-back keeps the started profile binding after the file becomes invalid
     ] }, { operationMs: 1000 });
     const pause = (await service.status(runId, 3000)).pause;
     assert.ok(pause);
-    const binding = (await readRunEvents(runs, runId)).find(event => event.type === 'started')!.data.profile;
+    const binding = { name: 'ios', digest: 'ebcc4f388531872504f1ecd37097ac661fdebc013fc2307fcaf1796daed2a4a5' };
+    assert.deepEqual((await readRunEvents(runs, runId)).find(event => event.type === 'started')!.data.profile, binding);
     await writeFile(profiles, '{');
     await service.resolve(runId, pause.pauseId, { kind: 'stop' });
     assert.equal((await service.status(runId, 3000)).report.reason, 'STOPPED_BY_CLAUDE');

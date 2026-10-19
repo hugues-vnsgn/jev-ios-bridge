@@ -16,7 +16,7 @@ import type { DrivenJudge } from './driven/decide.js';
 import { createHandbackGate, DEFAULT_HANDBACK_TIMEOUT_MS, HandbackAnswerError, MAX_HANDBACK_TIMEOUT_MS,
   MIN_HANDBACK_TIMEOUT_MS, type HandbackGate, type PausePackage } from './driven/handback.js';
 import type { HandbackAnswer } from './driven/step.js';
-import { readProfile, profileLimits, profileScenario, profileBudgetsSchema, type ProfileBinding } from './profiles.js';
+import { readProfile, profileLimits, profileScenario, profileBudgetsSchema, type ProfileBinding, type SelectedProfile } from './profiles.js';
 
 /** How the live log pane is offered. Without this, runs have no pane. */
 export interface LogPaneOptions {
@@ -65,12 +65,13 @@ export class BridgeService {
     env?: Readonly<Record<string, string | undefined>>;
   }) { this.baseDir = resolve(options.baseDir); }
 
-  async start(input: unknown, requestedLimits: unknown = {}, profile?: string): Promise<{ runId: string; watchUrl: string; logsCommand?: string }> {
+  async start(input: unknown, requestedLimits: unknown = {}, profile?: string | { selected: SelectedProfile | undefined }): Promise<{ runId: string; watchUrl: string; logsCommand?: string }> {
     if (this.stopping) throw new Error('Bridge is shutting down');
     // Read once, here: from now on every part of the run (driver, redactor, log pane) sees only the text.
     const environment = this.options.env ?? process.env;
     const parsedScenario = resolveScriptValues(parseScriptedScenarioSource(input), environment);
-    const selected = await readProfile(resolve(environment.JEV_PROJECT_DIR?.trim() || process.cwd()), profile);
+    const selected = typeof profile === 'object' ? profile.selected
+      : await readProfile(resolve(environment.JEV_PROJECT_DIR?.trim() || process.cwd()), profile);
     const parsedLimits = drivenStartLimitsSchema.parse(requestedLimits);
     const budgets = profileLimits(selected, {
       ...(parsedLimits.startupMs === undefined ? {} : { startupMs: parsedLimits.startupMs }),

@@ -101,12 +101,18 @@ export async function captureCommand(request: CaptureRequest, context: CaptureCo
   };
   let output: string;
   try {
-    const selected = await readProfile(context.projectDir ?? resolve(process.env.JEV_PROJECT_DIR?.trim() || process.cwd()), request.profile);
+    let selected = await readProfile(context.projectDir ?? resolve(process.env.JEV_PROJECT_DIR?.trim() || process.cwd()), request.profile);
+    if (selected?.profile.platform === 'ios') {
+      if (request.profile !== undefined) {
+        throw new ProfileError('PROFILE_CONFLICT', 'Capture requires an Android profile; the selected profile is iOS.');
+      }
+      selected = undefined;
+    }
     let device = namedDevice(request);
     if (selected) {
       const chosen = profileDevice(selected.profile);
       if ('udid' in chosen || device && Object.entries(device).some(([kind, value]) =>
-        !Object.hasOwn(chosen, kind) || chosen[kind as keyof typeof chosen] !== value)) throw new ProfileError('PROFILE_CONFLICT');
+        !Object.hasOwn(chosen, kind) || chosen[kind as keyof typeof chosen] !== value)) throw new ProfileError('PROFILE_CONFLICT', 'Capture device flags conflict with the selected profile.');
       device = chosen;
     }
     // The device checks run here, before the driver's tools check, so a missing or malformed name is
