@@ -34,3 +34,7 @@ Owner decision, 2026-10-19: the [Phase 2 build plan](../plan.md) is approved as 
 - Live lanes run only through the fake-store observed-host harness, because the production store ignores HOME.
 
 Open limits: the profile budget upper bounds are proposed in P2.2 for the owner's approval. The plan's caps are estimates; an overrun stops the owner and comes back to the main agent.
+
+## Comments
+
+- 2026-10-19, owner session: a parallel grilling of this ticket in the owner's wayfinder session reached a four-package split (2A to 2D, with 2A and 2B in parallel). The owner then chose this ticket's nine-PR build plan instead. The four-package split would have had two workers editing `src/device/admission.ts` and `admission-sqlite.ts` at once, and the plan already covers that session's extra rules: the real store is never touched (fake-store harness only), a 20 ms p95 limit on write cost, and the adb live check. No briefs were written from that session.
