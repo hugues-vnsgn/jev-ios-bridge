@@ -1,0 +1,26 @@
+✔ test_bound_private_device_tree_excludes_only_device_internals (95.374083ms)
+✔ test_escaped_double_fork_is_found_stopped_and_foreign_process_survives (457.349708ms)
+✔ test_platform_binary_with_recorded_link_is_marker_unreadable_and_quarantined (263.076709ms)
+✔ test_completed_scan_can_verify_positive_absence_after_native_fence (556.139666ms)
+✔ test_group_signals_refuse_shared_or_unattested_members (67.357417ms)
+✔ test_recorded_shared_service_is_not_individually_signalled (555.596209ms)
+✔ test_original_reproducer_without_launch_attestation_is_not_verified (146.138875ms)
+✔ test_unverifiable_leftover_is_quarantined_and_not_signalled (463.546708ms)
+✔ test_inspection_timeout_retains_quarantine (229.737542ms)
+✔ recorded native children remain stoppable after escaping their MCP group and parent death (204.390167ms)
+✔ a second experiment process cannot enter its device lifecycle while the first holds the device (78.333291ms)
+✔ a completed native protocol cannot pass when cleanup or the recorded automation fence is missing (395.393416ms)
+✔ a fresh bridge process refuses a closed run without repeating its uncertain action (307.082958ms)
+✔ partial native evidence cannot settle uncertainty or publish a released lease (270.435291ms)
+✔ stopping the owned process group ends a surviving child and leaves an independent process alive (168.720375ms)
+✔ the native shutdown helper refuses a foreign simulator before probing or controlling devices (39.058834ms)
+✔ a bridge waits for a competing SQLite writer before closing dispatch (428.008458ms)
+✔ a complete automation-only fence settles the command while retaining its inconclusive outcome (273.997042ms)
+ℹ tests 18
+ℹ suites 0
+ℹ pass 18
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 2901.568166

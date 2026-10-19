@@ -1,0 +1,24 @@
+{
+  "case": "phase1-android-normal-20261018",
+  "platform": "android",
+  "faultMode": "normal",
+  "status": "passed-live-validated-protocol",
+  "checks": {
+    "casePassed": true,
+    "oneCreation": true,
+    "expectedActions": true,
+    "dispatchClosed": true,
+    "completeNativeFence": true,
+    "hostStopped": true,
+    "childrenStopped": true,
+    "onePostStopScan": true,
+    "coverageVerified": true,
+    "sharedServicesPreserved": true,
+    "nativeFenceWhileRunning": true,
+    "housekeepingOffline": true,
+    "researchLeaseRetained": true,
+    "commandsAccounted": true
+  },
+  "passed": true,
+  "evidence": ".scratch/appium-mcp-migration/evidence/live-protocol/phase1-android-normal-20261018"
+}

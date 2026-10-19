@@ -1,0 +1,71 @@
+{
+  "case": "phase1-ios-process-failure-post-reboot-20261019",
+  "readOnly": true,
+  "privateSet": "/Users/hugues_mini/Codes/AgentTools/jev-ios-bridge/.worktrees/feat/appium-mcp-migration/.scratch/appium-mcp-migration/runtime/devices/simulators",
+  "device": "15013501-2535-42EB-A67F-45B015DF18F4",
+  "loadSamples": [
+    {
+      "atUTC": "2026-10-19T00:59:25.301281+00:00",
+      "loadAverage": [
+        42.232421875,
+        32.58642578125,
+        25.41796875
+      ]
+    },
+    {
+      "atUTC": "2026-10-19T00:59:55.311685+00:00",
+      "loadAverage": [
+        27.1484375,
+        29.83935546875,
+        24.6689453125
+      ]
+    },
+    {
+      "atUTC": "2026-10-19T01:00:25.315765+00:00",
+      "loadAverage": [
+        18.06201171875,
+        27.38232421875,
+        23.95703125
+      ]
+    },
+    {
+      "atUTC": "2026-10-19T01:00:55.318865+00:00",
+      "loadAverage": [
+        12.4287109375,
+        25.1171875,
+        23.25244140625
+      ]
+    },
+    {
+      "atUTC": "2026-10-19T01:01:25.323913+00:00",
+      "loadAverage": [
+        8.6083984375,
+        22.95947265625,
+        22.53271484375
+      ]
+    },
+    {
+      "atUTC": "2026-10-19T01:01:55.325738+00:00",
+      "loadAverage": [
+        6.21875,
+        21.00390625,
+        21.8369140625
+      ]
+    }
+  ],
+  "preflightPassed": true,
+  "command": [
+    "xcrun",
+    "simctl",
+    "--set",
+    "/Users/hugues_mini/Codes/AgentTools/jev-ios-bridge/.worktrees/feat/appium-mcp-migration/.scratch/appium-mcp-migration/runtime/devices/simulators",
+    "list",
+    "devices",
+    "-j"
+  ],
+  "exitCode": 0,
+  "stdout": "{\n  \"devices\" : {\n    \"com.apple.CoreSimulator.SimRuntime.iOS-27-0\" : [\n\n    ],\n    \"com.apple.CoreSimulator.SimRuntime.iOS-26-5\" : [\n      {\n        \"dataPath\" : \"\\/Users\\/hugues_mini\\/Codes\\/AgentTools\\/jev-ios-bridge\\/.worktrees\\/feat\\/appium-mcp-migration\\/.scratch\\/appium-mcp-migration\\/runtime\\/devices\\/simulators\\/15013501-2535-42EB-A67F-45B015DF18F4\\/data\",\n        \"dataPathSize\" : 2162311168,\n        \"logPath\" : \"\\/Users\\/hugues_mini\\/Library\\/Logs\\/CoreSimulator\\/15013501-2535-42EB-A67F-45B015DF18F4\",\n        \"udid\" : \"15013501-2535-42EB-A67F-45B015DF18F4\",\n        \"lastUsedAt\" : \"2026-10-19T00:58:19Z\",\n        \"isAvailable\" : true,\n        \"logPathSize\" : 614400,\n        \"deviceTypeIdentifier\" : \"com.apple.CoreSimulator.SimDeviceType.iPhone-17\",\n        \"state\" : \"Shutdown\",\n        \"name\" : \"jev-appium-phase1-20261018\"\n      }\n    ]\n  }\n}\n",
+  "stderr": "",
+  "elapsedSeconds": 0.132,
+  "deviceState": "Shutdown"
+}

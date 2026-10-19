@@ -1,0 +1,159 @@
+{
+  "status": "GO",
+  "qualified": 12,
+  "required": 12,
+  "androidPassed": 6,
+  "iosQualified": 6,
+  "iosNormalUIProtocol": "passed",
+  "singleBlocker": null,
+  "cases": [
+    {
+      "platform": "android",
+      "mode": "normal",
+      "result": "pass",
+      "creationAttempts": 1,
+      "inputAttempts": 1,
+      "cleanup": "complete native fence and one verified post-stop scan; later private-device shutdown",
+      "evidence": "live-protocol/phase1-android-normal-20261018",
+      "caseCheck": "live-protocol/phase1-android-normal-20261018/case-check.json"
+    },
+    {
+      "platform": "android",
+      "mode": "lost-create",
+      "result": "pass",
+      "creationAttempts": 1,
+      "inputAttempts": 0,
+      "cleanup": "complete native fence and one verified post-stop scan; later private-device shutdown",
+      "evidence": "live-protocol/phase1-android-lost-create-20261018",
+      "caseCheck": "live-protocol/phase1-android-lost-create-20261018/case-check.json"
+    },
+    {
+      "platform": "android",
+      "mode": "lost-action",
+      "result": "pass",
+      "creationAttempts": 1,
+      "inputAttempts": 1,
+      "cleanup": "complete native fence and one verified post-stop scan; later private-device shutdown",
+      "evidence": "live-protocol/phase1-android-lost-action-20261018",
+      "caseCheck": "live-protocol/phase1-android-lost-action-20261018/case-check.json"
+    },
+    {
+      "platform": "android",
+      "mode": "cancel",
+      "result": "pass",
+      "creationAttempts": 1,
+      "inputAttempts": 1,
+      "cleanup": "complete native fence and one verified post-stop scan; later private-device shutdown",
+      "evidence": "live-protocol/phase1-android-cancel-20261018",
+      "caseCheck": "live-protocol/phase1-android-cancel-20261018/case-check.json"
+    },
+    {
+      "platform": "android",
+      "mode": "late-action",
+      "result": "pass",
+      "creationAttempts": 1,
+      "inputAttempts": 1,
+      "cleanup": "complete native fence and one verified post-stop scan; later private-device shutdown",
+      "evidence": "live-protocol/phase1-android-late-action-20261018",
+      "caseCheck": "live-protocol/phase1-android-late-action-20261018/case-check.json"
+    },
+    {
+      "platform": "android",
+      "mode": "process-failure",
+      "result": "pass",
+      "creationAttempts": 1,
+      "inputAttempts": 1,
+      "cleanup": "complete native fence and one verified post-stop scan; later private-device shutdown",
+      "evidence": "live-protocol/phase1-android-process-failure-20261018",
+      "caseCheck": "live-protocol/phase1-android-process-failure-20261018/case-check.json"
+    },
+    {
+      "platform": "ios",
+      "mode": "normal",
+      "result": "pass",
+      "creationAttempts": 1,
+      "inputAttempts": 1,
+      "cleanup": "complete native fence and one verified post-stop scan; later private-device shutdown",
+      "evidence": "live-protocol/phase1-ios-normal-device-root-20261018",
+      "caseCheck": "live-protocol/phase1-ios-normal-device-root-20261018/case-check.json"
+    },
+    {
+      "platform": "ios",
+      "mode": "lost-create",
+      "result": "pass",
+      "creationAttempts": 1,
+      "inputAttempts": 0,
+      "cleanup": "complete native fence and one verified post-stop scan; later private-device shutdown",
+      "evidence": "live-protocol/phase1-ios-lost-create-device-root-retry-20261018",
+      "caseCheck": "live-protocol/phase1-ios-lost-create-device-root-retry-20261018/case-check.json"
+    },
+    {
+      "platform": "ios",
+      "mode": "lost-action",
+      "result": "pass",
+      "creationAttempts": 1,
+      "inputAttempts": 1,
+      "cleanup": "complete native fence and one verified post-stop scan; later private-device shutdown",
+      "evidence": "live-protocol/phase1-ios-lost-action-post-reboot-20261019",
+      "caseCheck": "live-protocol/phase1-ios-lost-action-post-reboot-20261019/case-check.json",
+      "preflight": "post-reboot-20261019/preflight-lost-action.json"
+    },
+    {
+      "platform": "ios",
+      "mode": "cancel",
+      "result": "pass",
+      "creationAttempts": 1,
+      "inputAttempts": 1,
+      "cleanup": "complete native fence and one verified post-stop scan; later private-device shutdown",
+      "evidence": "live-protocol/phase1-ios-cancel-post-reboot-20261019",
+      "caseCheck": "live-protocol/phase1-ios-cancel-post-reboot-20261019/case-check.json",
+      "preflight": "post-reboot-20261019/preflight-cancel.json"
+    },
+    {
+      "platform": "ios",
+      "mode": "late-action",
+      "result": "pass",
+      "creationAttempts": 1,
+      "inputAttempts": 1,
+      "cleanup": "complete native fence and one verified post-stop scan; later private-device shutdown",
+      "evidence": "live-protocol/phase1-ios-late-action-post-reboot-20261019",
+      "caseCheck": "live-protocol/phase1-ios-late-action-post-reboot-20261019/case-check.json",
+      "preflight": "post-reboot-20261019/preflight-late-action.json"
+    },
+    {
+      "platform": "ios",
+      "mode": "process-failure",
+      "result": "pass",
+      "creationAttempts": 1,
+      "inputAttempts": 1,
+      "cleanup": "complete native fence and one verified post-stop scan; later private-device shutdown",
+      "evidence": "live-protocol/phase1-ios-process-failure-post-reboot-20261019",
+      "caseCheck": "live-protocol/phase1-ios-process-failure-post-reboot-20261019/case-check.json",
+      "preflight": "post-reboot-20261019/preflight-process-failure.json"
+    }
+  ],
+  "retainedEarlierIOSAttempts": [
+    "live-protocol/phase1-ios-normal-20261018",
+    "live-protocol/phase1-ios-normal-retry-20261018",
+    "live-protocol/phase1-ios-normal-owner-retry-20261018",
+    "live-protocol/phase1-ios-lost-create-device-root-20261018",
+    "live-protocol/phase1-ios-lost-action-device-root-20261018"
+  ],
+  "diagnosis": "wda-diagnosis-20261018",
+  "scope": "Eight earlier qualifying cases retained. Four remaining iOS cases passed serially after owner-reported reboot, each preceded by load below 8 and private simctl list under 15s. No source change, rebuild, shared-service restart or other-device control.",
+  "resolvedBlockers": [
+    {
+      "id": "IOS_HOST_COVERAGE_UNVERIFIED",
+      "resolution": "Exact argv-bound private launchd_sim subtree recorded as device-internal, with WDA/XCTest exceptions. iOS normal and lost-create retry now qualify.",
+      "proof": "live-protocol/phase1-ios-normal-device-root-20261018/device-root.json",
+      "hostTests": "phase1-device-root-host-tests-20261018.log"
+    },
+    {
+      "id": "IOS_PRIVATE_SIMCTL_UNRESPONSIVE",
+      "ownerResolution": "Mac rebooted about 07:45 on 2026-10-19; previous startup failure was environmental (hung shared CoreSimulatorService). Post-reboot private Shutdown observation verifies its cleanup; one fresh lost-action attempt authorized.",
+      "cleanupEvidence": "live-protocol/phase1-ios-lost-action-device-root-20261018/post-reboot-cleanup-20261019.json",
+      "freshCase": "live-protocol/phase1-ios-lost-action-post-reboot-20261019"
+    }
+  ],
+  "completedAtUTC": "2026-10-19T01:03:43.213077+00:00"
+}

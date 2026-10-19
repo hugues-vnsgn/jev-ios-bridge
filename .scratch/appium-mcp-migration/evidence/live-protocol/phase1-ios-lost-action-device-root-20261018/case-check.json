@@ -1,0 +1,26 @@
+{
+  "case": "phase1-ios-lost-action-device-root-20261018",
+  "platform": "ios",
+  "faultMode": "lost-action",
+  "status": "failed",
+  "checks": {
+    "casePassed": false,
+    "oneCreation": true,
+    "expectedActions": false,
+    "dispatchClosed": true,
+    "completeNativeFence": false,
+    "hostStopped": true,
+    "childrenStopped": true,
+    "onePostStopScan": true,
+    "coverageVerified": true,
+    "sharedServicesPreserved": true,
+    "nativeFenceWhileRunning": false,
+    "housekeepingOffline": false,
+    "researchLeaseRetained": true,
+    "commandsAccounted": false,
+    "localRefusalWithoutWire": false,
+    "inconclusiveFault": false
+  },
+  "passed": false,
+  "evidence": ".scratch/appium-mcp-migration/evidence/live-protocol/phase1-ios-lost-action-device-root-20261018"
+}

@@ -1,0 +1,65 @@
+{
+  "version": 2,
+  "mode": "snapshot",
+  "scanCount": 1,
+  "readOnly": true,
+  "inspectionComplete": true,
+  "sharedServicesStopped": false,
+  "verified": true,
+  "quarantined": false,
+  "candidates": [
+    {
+      "pid": 11642,
+      "ppid": 1,
+      "pgid": 11136,
+      "state": "S",
+      "sid": 11136,
+      "markerState": "present",
+      "incarnation": "darwin:1792338470:185910",
+      "active": true,
+      "runMarker": "7ab22e9fc187485697572157a8780ab6",
+      "launchChain": [
+        {
+          "pid": 11136,
+          "incarnation": "darwin:1792338465:307953"
+        },
+        {
+          "pid": 11642,
+          "incarnation": "darwin:1792338470:185910"
+        }
+      ],
+      "owned": true,
+      "excludedSharedService": false,
+      "ownerPid": 11136,
+      "ownerIncarnation": "darwin:1792338465:307953",
+      "reason": null
+    },
+    {
+      "pid": 11756,
+      "ppid": 1,
+      "pgid": 11136,
+      "state": "S",
+      "sid": 11136,
+      "markerState": "present",
+      "incarnation": "darwin:1792338472:645927",
+      "active": true,
+      "runMarker": "7ab22e9fc187485697572157a8780ab6",
+      "launchChain": [
+        {
+          "pid": 11136,
+          "incarnation": "darwin:1792338465:307953"
+        },
+        {
+          "pid": 11756,
+          "incarnation": "darwin:1792338472:645927"
+        }
+      ],
+      "owned": true,
+      "excludedSharedService": false,
+      "ownerPid": 11136,
+      "ownerIncarnation": "darwin:1792338465:307953",
+      "reason": null
+    }
+  ],
+  "unverifiedComponents": []
+}

@@ -1,0 +1,1123 @@
+{
+  "status": "frozen matrix completed: twelve qualifying cases, GO",
+  "source": {
+    "baseCommit": "51884bb1b180b3acbd1b3a4fd6b9ab0351234d63",
+    "earlierPackages": [
+      "705cedc7b",
+      "579229f96"
+    ],
+    "integratedFrom": [
+      "243c34e98",
+      "80d65fdc0"
+    ],
+    "binding": "Source files listed here are committed alongside this manifest. The base commit plus these bytes identifies the frozen matrix runner.",
+    "files": [
+      {
+        "path": ".scratch/appium-mcp-migration/android-lost-create-cause.md",
+        "sha256": "2fd819b44d99b6a35f44bf8dcc4ebd81fe961dcc164b156a3dc3964010512137"
+      },
+      {
+        "path": ".scratch/appium-mcp-migration/candidate-stack/experiments/experiment-device-lock.py",
+        "sha256": "f1966015b020c05c7e2dd28da478036245ddafbb9914e1b5db373e6803c26967"
+      },
+      {
+        "path": ".scratch/appium-mcp-migration/candidate-stack/experiments/fence-owned-automation.py",
+        "sha256": "54d19d233354c3514982823bdda8803e27d64427aa0ddc627c36cdf85f4d9120"
+      },
+      {
+        "path": ".scratch/appium-mcp-migration/candidate-stack/experiments/live-experiment-result.mjs",
+        "sha256": "0670c4022738fe63495bdc0a2a9ddf702b30b0a27a84857af486ab6b903fd10c"
+      },
+      {
+        "path": ".scratch/appium-mcp-migration/candidate-stack/experiments/live-protocol-client.mjs",
+        "sha256": "65a682f9b6e83f06d2904d760665b4a3f21400e0d26d2a0e0dbbfecf3d36ad2c"
+      },
+      {
+        "path": ".scratch/appium-mcp-migration/candidate-stack/experiments/live-protocol-ledger.mjs",
+        "sha256": "6b885a10f6826154853efae052d2f9c6e2d64c66e505c6dd248e2929f6816418"
+      },
+      {
+        "path": ".scratch/appium-mcp-migration/candidate-stack/experiments/live-protocol-server.mjs",
+        "sha256": "3dd7164545d7095cafefc66680426bb9f97115691ab30b95cbfdbb692d75798f"
+      },
+      {
+        "path": ".scratch/appium-mcp-migration/candidate-stack/experiments/native-process-exec.py",
+        "sha256": "34d8bb999eb2f848bdcc3846bb222d667b55a6f2ea20df82fba8678a97838c8e"
+      },
+      {
+        "path": ".scratch/appium-mcp-migration/candidate-stack/experiments/native-process-receipts.mjs",
+        "sha256": "af5ae85986f38b16fe47b6ff402572ec9ca1a575c2f251f97a4de8b5a4202e6d"
+      },
+      {
+        "path": ".scratch/appium-mcp-migration/candidate-stack/experiments/native-runtime-observer.py",
+        "sha256": "25530ca18aa5ea94d49381398d0ece9ff8d7ccecd3c27028b60df09e7bb88327"
+      },
+      {
+        "path": ".scratch/appium-mcp-migration/candidate-stack/experiments/owned-launcher.py",
+        "sha256": "5105235081716e29b460c55e8a9f170d6360c710cdfd553e21d8742f8396214b"
+      },
+      {
+        "path": ".scratch/appium-mcp-migration/candidate-stack/experiments/process-ownership.py",
+        "sha256": "05c3a7554bf53ba00b61eb1cdf394b3f40bf9230330f128f83a641e8f0a1d42d"
+      },
+      {
+        "path": ".scratch/appium-mcp-migration/candidate-stack/experiments/protocol-client.mjs",
+        "sha256": "635163540750640b9b092f065cdbe1c9e42c0f2e308cf7ccab2e9b06a3747475"
+      },
+      {
+        "path": ".scratch/appium-mcp-migration/candidate-stack/experiments/protocol-contract.mjs",
+        "sha256": "d77b9769bcdc05c3da824107f6dc29b0b7e09d689f2bcba1d0dc3153d6cd6d23"
+      },
+      {
+        "path": ".scratch/appium-mcp-migration/candidate-stack/experiments/protocol-extension.mjs",
+        "sha256": "c5c8154909a58ea659e943b43a8ee34c8203d6900cd08fae088ccccb71601fb5"
+      },
+      {
+        "path": ".scratch/appium-mcp-migration/candidate-stack/experiments/runtime-module-recorder.mjs",
+        "sha256": "22ef124ca44d627223d48914b681e4c7fb02d3e36c6d4bde83b44ff507e0ed5c"
+      },
+      {
+        "path": ".scratch/appium-mcp-migration/candidate-stack/experiments/stack-probe.mjs",
+        "sha256": "2dd8667301748fda9c0c5bd5c5db6df6f4addd248b0bbdfe9f101b69b3b60713"
+      },
+      {
+        "path": ".scratch/appium-mcp-migration/candidate-stack/experiments/stop-group.py",
+        "sha256": "32965318f588bd23e6912e5f35864214ca8eefcb375607c91696c5fc9d455417"
+      },
+      {
+        "path": ".scratch/appium-mcp-migration/candidate-stack/experiments/stop-journal.mjs",
+        "sha256": "24b71502197f2c0ca3f77748e0a59ff3dc755bca4aee92eb4243c41f7c6f9419"
+      },
+      {
+        "path": ".scratch/appium-mcp-migration/candidate-stack/experiments/stop-native-children.py",
+        "sha256": "8035cf928df3493b6a6267cfcc3dfffb6f05b10e0e1088dba59d89d45349a987"
+      },
+      {
+        "path": ".scratch/appium-mcp-migration/candidate-stack/experiments/stop-owned-device.py",
+        "sha256": "5ff5cbdbaea7ab449b6437ee502e9ae274e927d2e995549938c40e5b85d75af8"
+      },
+      {
+        "path": ".scratch/appium-mcp-migration/candidate-stack/experiments/stop-private-device.py",
+        "sha256": "5e38e2038e59cc9bce7d24e09588d1958503685756f064aec074a7c427f66a96"
+      },
+      {
+        "path": ".scratch/appium-mcp-migration/candidate-stack/experiments/validate-xml.py",
+        "sha256": "6f84200f5cfecc0ab10808ae01dcae2a8d2a837b1780c69518edfe459ef81f7e"
+      },
+      {
+        "path": ".scratch/appium-mcp-migration/candidate-stack/experiments/verify-native-descendants.py",
+        "sha256": "dff57a181f55a6c379f988ef451bba3fe4c883bf43bd89d86d06e6bf2a6b8052"
+      },
+      {
+        "path": ".scratch/appium-mcp-migration/candidate-stack/fixtures/protocol.json",
+        "sha256": "763a872b4985efc0f8cafdaffdd31bab8a8d5f066ca1ad66fbbb03ad2ef19c6c"
+      },
+      {
+        "path": ".scratch/appium-mcp-migration/candidate-stack/package-lock.json",
+        "sha256": "f7732565cacdbe21b42f381c23a142cc75278502f30f95406b1f9cd73724bfba"
+      },
+      {
+        "path": ".scratch/appium-mcp-migration/candidate-stack/package.json",
+        "sha256": "e7fb906b09b86ee1b7b84141bde4986fd2ef6d34f4fead064358d41d491fcad3"
+      },
+      {
+        "path": ".scratch/appium-mcp-migration/issues/07-complete-coverage-method.md",
+        "sha256": "fd99825e4f9b4ffcdc6585b7326eb75836c812fbb68dc1aca0b2abceb4d4bd5b"
+      },
+      {
+        "path": ".scratch/appium-mcp-migration/phases/phase-1-feasibility.md",
+        "sha256": "08c5ea230f29e0f99d46dcc28183a1bb3d6f5e49db33453d11289f24d45b71ec"
+      },
+      {
+        "path": ".scratch/appium-mcp-migration/phases/phase-2-ownership.md",
+        "sha256": "7d5320409b8768d74ebe23755b1227d4b2b7376ea8c1d66418a3343dda86a932"
+      },
+      {
+        "path": ".scratch/native-owner-recovery/startup-probe/test_observe.py",
+        "sha256": "97232854f2bfd57c0218bd79750b8aea9c2d2f7bb3f3ed74d9d9efb0babff1a6"
+      },
+      {
+        "path": "package-lock.json",
+        "sha256": "c45a2d39e57c6cd7c5b39cc9042feb658678144b9a277e74504b8926dd8424a3"
+      },
+      {
+        "path": "package.json",
+        "sha256": "0312825ba5604e7ed1263c3e2f86495562645159520d694432fb8905c3ad9285"
+      },
+      {
+        "path": "tests/appium-descendants.test.ts",
+        "sha256": "acc3a1bc5b80df38d85486a2504a20460b734391c63cbe36cbd319c9cfae6840"
+      },
+      {
+        "path": "tests/appium-lost-create.test.ts",
+        "sha256": "e0031001e8858eb98d9bb496d11bed0d5fb0d1ba4829adfe2544deb300102d8b"
+      },
+      {
+        "path": "tests/appium-native-processes.test.ts",
+        "sha256": "47a4dc841676d63874d2d10ac27901121857b1178a30b83a412911ad30c79338"
+      },
+      {
+        "path": "tests/appium-stop-recovery.test.ts",
+        "sha256": "0e135afe2d7279282ea2fa6bed26fc1f94e0e27b2ec591b6cf33269b7a44cfa7"
+      },
+      {
+        "path": "tests/fixtures/appium-descendant-cases.py",
+        "sha256": "44035676f754c0b9b85ddfbaa1510491364b68ff9c697afe660c1ded817b2dea"
+      },
+      {
+        "path": "tests/fixtures/appium-lost-create-public-core.mjs",
+        "sha256": "3fbf521c464883ba5a57ed8c68436240bf7e8a86ed1c56a62c40cc229e336ce1"
+      }
+    ]
+  },
+  "node": "v26.8.1",
+  "locks": [
+    {
+      "path": "package-lock.json",
+      "sha256": "c45a2d39e57c6cd7c5b39cc9042feb658678144b9a277e74504b8926dd8424a3"
+    },
+    {
+      "path": ".scratch/appium-mcp-migration/candidate-stack/package-lock.json",
+      "sha256": "f7732565cacdbe21b42f381c23a142cc75278502f30f95406b1f9cd73724bfba"
+    }
+  ],
+  "versions": {
+    "appium-mcp": "1.97.0",
+    "@modelcontextprotocol/sdk": "1.32.1",
+    "appium-uiautomator2-driver": "8.7.0",
+    "appium-xcuitest-driver": "12.17.1",
+    "appium-webdriveragent": "16.15.0",
+    "selectedWDA": "16.14.2",
+    "hoistedWDA": "16.15.0"
+  },
+  "artifacts": [
+    {
+      "label": "WDA",
+      "path": ".scratch/appium-mcp-migration/runtime/wda-16.14.2/Build/Products/Debug-iphonesimulator/WebDriverAgentRunner-Runner.app",
+      "exists": true,
+      "treeSha256": "5d1fc1c99908e253303f6de35bf26ed4a74a75817f704e7a3646b72b5271ba04"
+    },
+    {
+      "label": "iOS diagnostic app",
+      "path": "/Users/hugues_mini/Codes/AgentTools/jev-ios-bridge/.worktrees/feat/appium-mcp-migration/.scratch/appium-mcp-migration/runtime/diagnostic-ios/Build/Products/Debug-iphonesimulator/DiagnosticApp.app",
+      "exists": true,
+      "treeSha256": "b6e1092da0fdeb210931251466ec2b9a3c9e581da1603a436fc437ba735de672"
+    },
+    {
+      "label": "Android diagnostic APK",
+      "path": "/Users/hugues_mini/Codes/AgentTools/jev-ios-bridge/.worktrees/feat/appium-mcp-migration/examples/diagnostic-app-android/app/build/outputs/apk/debug/app-debug.apk",
+      "exists": true,
+      "sha256": "f5aad467b9571d42ff0d6ddc97fea977c608ef6bdbd5aea41a72b147a7c65090"
+    },
+    {
+      "label": "selected emulator",
+      "path": "/Users/hugues_mini/Codes/AgentTools/jev-ios-bridge/.worktrees/feat/appium-mcp-migration/.scratch/appium-mcp-migration/runtime/emulator-37.2.12/emulator/emulator",
+      "exists": true,
+      "sha256": "5e2249e94368759aabd8fa942d2961cfef07b980a44639a2ec9b7ced3fbe2281"
+    },
+    {
+      "label": "io.appium.uiautomator2.server.test",
+      "path": ".scratch/appium-mcp-migration/candidate-stack/node_modules/appium-uiautomator2-driver/node_modules/appium-uiautomator2-server/apks/appium-uiautomator2-server-debug-androidTest.apk",
+      "exists": true,
+      "expectedSHA256": "e6f729287d72351388fd66597c35b69988b9091a7011954bf92a55d416cb1e1c",
+      "sha256": "e6f729287d72351388fd66597c35b69988b9091a7011954bf92a55d416cb1e1c",
+      "matchesHistorical": true
+    },
+    {
+      "label": "io.appium.uiautomator2.server",
+      "path": ".scratch/appium-mcp-migration/candidate-stack/node_modules/appium-uiautomator2-driver/node_modules/appium-uiautomator2-server/apks/appium-uiautomator2-server-v10.6.6.apk",
+      "exists": true,
+      "expectedSHA256": "8ff760a2a86b487f53090fbdcd5b0360e67d02bb811887d527a9557b0d59c80d",
+      "sha256": "8ff760a2a86b487f53090fbdcd5b0360e67d02bb811887d527a9557b0d59c80d",
+      "matchesHistorical": true
+    },
+    {
+      "label": "io.appium.settings",
+      "path": ".scratch/appium-mcp-migration/candidate-stack/node_modules/appium-uiautomator2-driver/node_modules/io.appium.settings/apks/settings_apk-debug.apk",
+      "exists": true,
+      "expectedSHA256": "bcfc5e6c2547d83beb3202c43c54cd0a0d3fe48511c87e43585db214259e11f8",
+      "sha256": "bcfc5e6c2547d83beb3202c43c54cd0a0d3fe48511c87e43585db214259e11f8",
+      "matchesHistorical": true
+    }
+  ],
+  "devices": [
+    {
+      "label": "private simulator set",
+      "path": "/Users/hugues_mini/Codes/AgentTools/jev-ios-bridge/.worktrees/feat/appium-mcp-migration/.scratch/appium-mcp-migration/runtime/devices/simulators",
+      "exists": true
+    },
+    {
+      "label": "private AVD home",
+      "path": "/Users/hugues_mini/Codes/AgentTools/jev-ios-bridge/.worktrees/feat/appium-mcp-migration/.scratch/appium-mcp-migration/runtime/devices/avd",
+      "exists": true
+    },
+    {
+      "label": "private AVD",
+      "path": "/Users/hugues_mini/Codes/AgentTools/jev-ios-bridge/.worktrees/feat/appium-mcp-migration/.scratch/appium-mcp-migration/runtime/devices/android.avd",
+      "exists": true
+    }
+  ],
+  "budgets": {
+    "startupMs": 240000,
+    "callMs": 30000,
+    "androidBootMs": 180000,
+    "groupStopMs": 15000,
+    "descendantScanMs": 10000,
+    "platformFenceMs": 90000,
+    "wdaLaunchMs": 120000
+  },
+  "missing": [],
+  "checks": {
+    "typecheck": "passed",
+    "build": "passed",
+    "initialNodeSuite": {
+      "tests": 2290,
+      "pass": 2284,
+      "fail": 6,
+      "cancelled": 0,
+      "skipped": 0
+    },
+    "protocolAndRelatedRetry": {
+      "tests": 32,
+      "pass": 31,
+      "fail": 1,
+      "cancelled": 0,
+      "skipped": 0
+    },
+    "admissionCorrectRunnerRetry": {
+      "tests": 1,
+      "pass": 1,
+      "fail": 0,
+      "cancelled": 0,
+      "skipped": 0
+    },
+    "nativeHost": {
+      "tests": 125,
+      "pass": 124,
+      "fail": 1
+    },
+    "startup": {
+      "tests": 2,
+      "pass": 2,
+      "fail": 0
+    },
+    "independentReview": {
+      "Standards": "pass",
+      "Spec": "pass",
+      "openP1": 0,
+      "openP2": 0,
+      "evidence": ".scratch/appium-mcp-migration/evidence/phase1-1c-review-20261018.md",
+      "cardinality": "one reviewer; one initial review and one bounded fix confirmation"
+    },
+    "docsOwnerRetry": {
+      "tests": 27,
+      "pass": 27,
+      "fail": 0
+    },
+    "nativeHostOwnerRetry": {
+      "tests": 125,
+      "pass": 125,
+      "fail": 0
+    },
+    "fullOwnerRecheck": {
+      "tests": 2290,
+      "pass": 2289,
+      "fail": 1,
+      "cancelled": 0,
+      "skipped": 0,
+      "evidence": ".audit/phase1-finish-20261018/1C-final-check.log",
+      "failingCase": "local cancellation with a failed durable write during prolonged close cannot commit computed success",
+      "retry": "passed, 1/1 isolated; not a clean initial full run"
+    },
+    "deviceSetup": {
+      "iosInstall": "passed; WDA and diagnostic app installed only on new simulator; shut down afterward",
+      "androidAVDCreation": "passed; image 36.1 arm64, private root",
+      "evidence": [
+        ".audit/phase1-finish-20261018/1C-private-pair-create.json",
+        ".audit/phase1-finish-20261018/1C-ios-private-install.json"
+      ]
+    },
+    "cancellationIsolatedRetry": {
+      "tests": 1,
+      "pass": 1,
+      "fail": 0,
+      "skipped": 0,
+      "evidence": ".audit/phase1-finish-20261018/1C-cancellation-retry.log",
+      "outcome": "passed after transient failure in full recheck; original failure retained; resource contention is an inference"
+    },
+    "initialIndependentReview": {
+      "Standards": "pass",
+      "Spec": "fail",
+      "findings": [
+        "P1 shared services could be signalled",
+        "P2 final inventory preceded native fence"
+      ],
+      "evidence": ".audit/phase1-finish-20261018/1C-review.md",
+      "resolution": "closed by one bounded fix, 22/22 regression retry and same reviewer confirmation"
+    },
+    "reviewFixRetry": {
+      "tests": 22,
+      "pass": 22,
+      "fail": 0,
+      "skipped": 0,
+      "evidence": ".audit/phase1-finish-20261018/1C-review-fix-retry.log",
+      "redEvidence": ".audit/phase1-finish-20261018/1C-review-regression-red.log"
+    },
+    "postReviewTypecheck": "passed: .audit/phase1-finish-20261018/1C-post-review-typecheck.log",
+    "postReviewBuild": "passed: .audit/phase1-finish-20261018/1C-post-review-build.log",
+    "gateSummary": "All required host cases have passing evidence, including retained failed attempts followed by focused successful retries. The last full Node run was 2289/2290; its sole failure passed the one isolated retry. Three added regressions failed before the review fix, then the focused 22-case suite passed."
+  },
+  "protectedMissingFixtures": [],
+  "ios": {
+    "name": "jev-appium-phase1-20261018",
+    "type": "com.apple.CoreSimulator.SimDeviceType.iPhone-17",
+    "runtime": "com.apple.CoreSimulator.SimRuntime.iOS-26-5",
+    "set": "/Users/hugues_mini/Codes/AgentTools/jev-ios-bridge/.worktrees/feat/appium-mcp-migration/.scratch/appium-mcp-migration/runtime/devices/simulators",
+    "creationExitCode": 0,
+    "udid": "15013501-2535-42EB-A67F-45B015DF18F4",
+    "app": {
+      "bundleId": "dev.jevbridge.diagnostic",
+      "path": "/Users/hugues_mini/Codes/AgentTools/jev-ios-bridge/.worktrees/feat/appium-mcp-migration/.scratch/appium-mcp-migration/runtime/diagnostic-ios/Build/Products/Debug-iphonesimulator/DiagnosticApp.app",
+      "treeSha256": "b6e1092da0fdeb210931251466ec2b9a3c9e581da1603a436fc437ba735de672",
+      "executableSha256": "5e3ab6f907f6f94d9b7ea3bbab34fd719f142bf5e4f04138e5a8e00a58c066f4",
+      "files": [
+        {
+          "path": "DiagnosticApp",
+          "sha256": "5e3ab6f907f6f94d9b7ea3bbab34fd719f142bf5e4f04138e5a8e00a58c066f4",
+          "bytes": 72992
+        },
+        {
+          "path": "DiagnosticApp.debug.dylib",
+          "sha256": "c3fc1bdf2e3ab1de67f634f9f73a868d0ef25ac9cb95fc3692d82a4d357a38d5",
+          "bytes": 416280
+        },
+        {
+          "path": "Info.plist",
+          "sha256": "b4fc7f2d1977dd474c33ddd794b677bc781f0760236db88fd5957c4b5e1efdb6",
+          "bytes": 889
+        },
+        {
+          "path": "PkgInfo",
+          "sha256": "82502191c9484b04d685374f9879a0066069c49b8acae7a04b01d38d07e8eca0",
+          "bytes": 8
+        },
+        {
+          "path": "__preview.dylib",
+          "sha256": "b86bd9cebe9f391ad9b42ff4c66598e1c611788ab982ba653fca80dfed8373e0",
+          "bytes": 33144
+        }
+      ]
+    }
+  },
+  "android": {
+    "name": "jev_appium_phase1_20261018",
+    "image": "system-images;android-36.1;google_apis_playstore;arm64-v8a",
+    "avdHome": "/Users/hugues_mini/Codes/AgentTools/jev-ios-bridge/.worktrees/feat/appium-mcp-migration/.scratch/appium-mcp-migration/runtime/devices/avd",
+    "path": "/Users/hugues_mini/Codes/AgentTools/jev-ios-bridge/.worktrees/feat/appium-mcp-migration/.scratch/appium-mcp-migration/runtime/devices/android.avd",
+    "creationExitCode": 0,
+    "serial": "emulator-5570",
+    "launchArgs": [
+      "/Users/hugues_mini/Codes/AgentTools/jev-ios-bridge/.worktrees/feat/appium-mcp-migration/.scratch/appium-mcp-migration/runtime/emulator-37.2.12/emulator/emulator",
+      "-avd",
+      "jev_appium_phase1_20261018",
+      "-port",
+      "5570",
+      "-no-window",
+      "-no-audio",
+      "-no-boot-anim",
+      "-no-snapshot",
+      "-memory",
+      "1536",
+      "-gpu",
+      "swiftshader",
+      "-read-only"
+    ],
+    "app": {
+      "package": "dev.jevbridge.diagnostic",
+      "path": "/Users/hugues_mini/Codes/AgentTools/jev-ios-bridge/.worktrees/feat/appium-mcp-migration/examples/diagnostic-app-android/app/build/outputs/apk/debug/app-debug.apk",
+      "sha256": "f5aad467b9571d42ff0d6ddc97fea977c608ef6bdbd5aea41a72b147a7c65090",
+      "activity": ".MainActivity"
+    }
+  },
+  "emulator": {
+    "version": "37.2.12",
+    "channel": "stable",
+    "buildId": "16428233",
+    "hostArch": "aarch64",
+    "downloadUrl": "https://dl.google.com/android/repository/emulator-darwin_aarch64-16428233.zip",
+    "sizeBytes": 416112708,
+    "publishedSha1": "3af4fe44ce82b3d88ae5678a53735f27ad729c15",
+    "downloadSha256": "f4c4a142bda54fcec064bdb32b51f19e25bae0a45ad019197ef968bf7a48979b",
+    "repositoryXmlUrl": "https://dl.google.com/android/repository/repository2-3.xml",
+    "repositoryXmlSha256": "f5ff5fd3653bdbf631659b16c2fc384fb4c7d4fc330b3a52d8037a4152e185a5",
+    "scope": "isolated diagnostic runtime only; installed SDK unchanged",
+    "executablePath": "/Users/hugues_mini/Codes/AgentTools/jev-ios-bridge/.worktrees/feat/appium-mcp-migration/.scratch/appium-mcp-migration/runtime/emulator-37.2.12/emulator/emulator",
+    "executableSha256": "5e2249e94368759aabd8fa942d2961cfef07b980a44639a2ec9b7ced3fbe2281",
+    "versionOutput": "Android emulator version 37.2.12.0 (build_id 16428233) (CL:N/A)\nCopyright (C) 2006-2024 The Android Open Source Project and many others.\nThis program is a derivative of the QEMU CPU emulator (www.qemu.org).\n\n  This software is licensed under the terms of the GNU General Public\n  License version 2, as published by the Free Software Foundation, and\n  may be copied, distributed, and modified under those terms.\n\n  This program is distributed in the hope that it will be useful,\n  but WITHOUT ANY WARRANTY; without even the implied warranty of\n  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the\n  GNU General Public License for more details.\n\n",
+    "installedSdkEmulatorSha256": "e06caf35a5ac78c54f7d491c48b71c9b259fa5a949cfa0fbebb771913ada6a52"
+  },
+  "wda": {
+    "packageVersion": "16.14.2",
+    "runtimePath": "/Users/hugues_mini/Codes/AgentTools/jev-ios-bridge/.worktrees/feat/appium-mcp-migration/.scratch/appium-mcp-migration/runtime/wda-16.14.2/Build/Products/Debug-iphonesimulator/WebDriverAgentRunner-Runner.app",
+    "bundleIdentifier": "com.facebook.WebDriverAgentRunner.xctrunner",
+    "treeSha256": "5d1fc1c99908e253303f6de35bf26ed4a74a75817f704e7a3646b72b5271ba04",
+    "files": [
+      {
+        "path": "AppIcon60x60@2x.png",
+        "sha256": "6f9bcb5f1619d68d5f9e583fbcb01926aed94e385f377cb7601ec81753b31344",
+        "bytes": 7727
+      },
+      {
+        "path": "AppIcon76x76@2x~ipad.png",
+        "sha256": "e5e9bb002e740d233cf9c8901db612e6835ee2ba83520e30ff0782d79d8265a2",
+        "bytes": 10559
+      },
+      {
+        "path": "Assets.car",
+        "sha256": "9ea252e306cb3008bd641b28d2d38994e58c0e1e54758009e705d6fbf9a45d36",
+        "bytes": 155800
+      },
+      {
+        "path": "Frameworks/ResultDataPublisher.framework/Info.plist",
+        "sha256": "39d1fc3bdd405543dd5b689fff065b3001c316dc518459990c72a7675e8731d6",
+        "bytes": 894
+      },
+      {
+        "path": "Frameworks/ResultDataPublisher.framework/ResultDataPublisher",
+        "sha256": "b8e4be53756366ee4482a5b6d764fabf3f02b114108ab7254a5c54efd396ac8d",
+        "bytes": 2318560
+      },
+      {
+        "path": "Frameworks/ResultDataPublisher.framework/_CodeSignature/CodeResources",
+        "sha256": "e582e1c0b2cec61c6135e4123c34c49da28e9358b37c8f182a8054ccf8d5fb3d",
+        "bytes": 2018
+      },
+      {
+        "path": "Frameworks/ResultDataPublisher.framework/version.plist",
+        "sha256": "21ee0f28da57411ec3d0d1fbb8af8006e37f66e514513a1c032f3d9280b1d53b",
+        "bytes": 526
+      },
+      {
+        "path": "Frameworks/Testing.framework/Info.plist",
+        "sha256": "6d860c294e14a4b262c20afb942a7e54764bb724dd1b9cc1e8cb9f6939b65cee",
+        "bytes": 907
+      },
+      {
+        "path": "Frameworks/Testing.framework/Testing",
+        "sha256": "8cb0e54e1b505901db8062fe715ab1231e2e7903530533cd12b16307a7a02ed0",
+        "bytes": 7033984
+      },
+      {
+        "path": "Frameworks/Testing.framework/_CodeSignature/CodeResources",
+        "sha256": "d6fa23913694b92115a09db9f23ef698bc516aabbce3c4d3ea730f879476bcab",
+        "bytes": 4780
+      },
+      {
+        "path": "Frameworks/Testing.framework/version.plist",
+        "sha256": "0d6de3b591bf52bced98bbec40dfd39e0094dbfbca453d4635cbdc546e590808",
+        "bytes": 515
+      },
+      {
+        "path": "Frameworks/XCTAutomationSupport.framework/Info.plist",
+        "sha256": "0123b43e14fa88d50afcf4bac2167185bb752803054a19303b9ca4a54ca6dd14",
+        "bytes": 957
+      },
+      {
+        "path": "Frameworks/XCTAutomationSupport.framework/XCTAutomationSupport",
+        "sha256": "ca1acd92e81257f890aa7b01558d0cc437238f0ba86e9d3716fda15450a0aa73",
+        "bytes": 1535312
+      },
+      {
+        "path": "Frameworks/XCTAutomationSupport.framework/_CodeSignature/CodeResources",
+        "sha256": "001e48f19dff6b97e6e27426c7ae15d822c0c89ed9cec5ace209d57b8fd1bd82",
+        "bytes": 2018
+      },
+      {
+        "path": "Frameworks/XCTAutomationSupport.framework/version.plist",
+        "sha256": "66f83aaea343db256d632ab45c5aa2ab0dd02b7aa66852bc66d3840346dfafc8",
+        "bytes": 516
+      },
+      {
+        "path": "Frameworks/XCTest.framework/Info.plist",
+        "sha256": "749d225432acd85d93ff6ba7e7e3d3038520c470723a7010f6e91fafe9d92a64",
+        "bytes": 879
+      },
+      {
+        "path": "Frameworks/XCTest.framework/XCTest",
+        "sha256": "7bf6c2ae415e0a70958e4e2116ed9a97bf9557fdf403674d351b566d5be4f582",
+        "bytes": 208176
+      },
+      {
+        "path": "Frameworks/XCTest.framework/_CodeSignature/CodeResources",
+        "sha256": "cb2bcb1fa9c62a5fdfd1d2d72ff68c9288d4597c043a066b90b8274fb26f6b18",
+        "bytes": 17362
+      },
+      {
+        "path": "Frameworks/XCTest.framework/version.plist",
+        "sha256": "66f83aaea343db256d632ab45c5aa2ab0dd02b7aa66852bc66d3840346dfafc8",
+        "bytes": 516
+      },
+      {
+        "path": "Frameworks/XCTestCore.framework/Info.plist",
+        "sha256": "1a2bc5cd50573a95e7bf2026ab80fd95e98db8e011325d860c8ba1e3a4621879",
+        "bytes": 887
+      },
+      {
+        "path": "Frameworks/XCTestCore.framework/XCTestCore",
+        "sha256": "0ee85c9db43fcfffbad9d1f8cf4555fcbe62420685dd97bfbe1b7742c84d81ef",
+        "bytes": 4405888
+      },
+      {
+        "path": "Frameworks/XCTestCore.framework/_CodeSignature/CodeResources",
+        "sha256": "6b15e9b1b61580c7744e7ff602081acba51d51267822a715758c91024c2d28e2",
+        "bytes": 2018
+      },
+      {
+        "path": "Frameworks/XCTestCore.framework/version.plist",
+        "sha256": "66f83aaea343db256d632ab45c5aa2ab0dd02b7aa66852bc66d3840346dfafc8",
+        "bytes": 516
+      },
+      {
+        "path": "Frameworks/XCTestSupport.framework/Info.plist",
+        "sha256": "420b018384f723d93be15c2279b738d70c122fa6887edfff12261c8c0bd52bf4",
+        "bytes": 893
+      },
+      {
+        "path": "Frameworks/XCTestSupport.framework/XCTestSupport",
+        "sha256": "f72c4f56556be625c4f61ec323991fca08ddf12bb30f310ad645b866b5b6135a",
+        "bytes": 300816
+      },
+      {
+        "path": "Frameworks/XCTestSupport.framework/_CodeSignature/CodeResources",
+        "sha256": "c969f98acdf6c4bec6d01db873de356462d836a669496bad8ea82282f45e7434",
+        "bytes": 2018
+      },
+      {
+        "path": "Frameworks/XCTestSupport.framework/version.plist",
+        "sha256": "66f83aaea343db256d632ab45c5aa2ab0dd02b7aa66852bc66d3840346dfafc8",
+        "bytes": 516
+      },
+      {
+        "path": "Frameworks/XCUIAutomation.framework/Info.plist",
+        "sha256": "933750f2d2354f2b8ee45f596a6fa6229ff85db24d007b7dfe6ae0c8844fbdee",
+        "bytes": 895
+      },
+      {
+        "path": "Frameworks/XCUIAutomation.framework/XCUIAutomation",
+        "sha256": "7a5f92eaf8028768ea58c32b1417bc94bf8fefb4900e17c752a31b1492cdd8d7",
+        "bytes": 3598688
+      },
+      {
+        "path": "Frameworks/XCUIAutomation.framework/_CodeSignature/CodeResources",
+        "sha256": "73bf85d7bb2bac9f0411b40ce49f877b7fd0061d06e658d71fe22b1c794ff426",
+        "bytes": 10084
+      },
+      {
+        "path": "Frameworks/XCUIAutomation.framework/version.plist",
+        "sha256": "66f83aaea343db256d632ab45c5aa2ab0dd02b7aa66852bc66d3840346dfafc8",
+        "bytes": 516
+      },
+      {
+        "path": "Frameworks/_Testing_Foundation.framework/Info.plist",
+        "sha256": "ee1ceee1b8f093f36892e898e5cf6b7c025fc80a27f9f367a5a42ebe347c3203",
+        "bytes": 940
+      },
+      {
+        "path": "Frameworks/_Testing_Foundation.framework/_CodeSignature/CodeResources",
+        "sha256": "28ce3b5ac327b5b77c1921fc1fdbd1bbd5fc0bad2cb6b1d53ae7dcdfde24e4c6",
+        "bytes": 3382
+      },
+      {
+        "path": "Frameworks/_Testing_Foundation.framework/_Testing_Foundation",
+        "sha256": "28783e77a11c3d22bba1847c01098d2665a81018805a80a424c7f32d4e9cd54a",
+        "bytes": 237056
+      },
+      {
+        "path": "Frameworks/_Testing_Foundation.framework/version.plist",
+        "sha256": "0d6de3b591bf52bced98bbec40dfd39e0094dbfbca453d4635cbdc546e590808",
+        "bytes": 515
+      },
+      {
+        "path": "Frameworks/libXCTestSwiftSupport.dylib",
+        "sha256": "f2292a327bdd324f709d316f0df07dbb92502fed14e42e7c841a4ff38db3ff06",
+        "bytes": 2156528
+      },
+      {
+        "path": "Frameworks/lib_TestingInterop.dylib",
+        "sha256": "50fc777fe5e3d726ca26d96aa125a50059643268c59403d3b0dfbd4f7198e9a9",
+        "bytes": 137968
+      },
+      {
+        "path": "Info.plist",
+        "sha256": "5fcf23256b261c0462ddb0a0689ca611efa708c07b337a90c64298728ad9a79b",
+        "bytes": 11458
+      },
+      {
+        "path": "PkgInfo",
+        "sha256": "82502191c9484b04d685374f9879a0066069c49b8acae7a04b01d38d07e8eca0",
+        "bytes": 8
+      },
+      {
+        "path": "PlugIns/WebDriverAgentRunner.xctest/AppIcon60x60@2x.png",
+        "sha256": "6f9bcb5f1619d68d5f9e583fbcb01926aed94e385f377cb7601ec81753b31344",
+        "bytes": 7727
+      },
+      {
+        "path": "PlugIns/WebDriverAgentRunner.xctest/AppIcon76x76@2x~ipad.png",
+        "sha256": "e5e9bb002e740d233cf9c8901db612e6835ee2ba83520e30ff0782d79d8265a2",
+        "bytes": 10559
+      },
+      {
+        "path": "PlugIns/WebDriverAgentRunner.xctest/Assets.car",
+        "sha256": "9ea252e306cb3008bd641b28d2d38994e58c0e1e54758009e705d6fbf9a45d36",
+        "bytes": 155800
+      },
+      {
+        "path": "PlugIns/WebDriverAgentRunner.xctest/Frameworks/WebDriverAgentLib.framework/Info.plist",
+        "sha256": "4bde7787d39be186e2ad53791b49e696c5f6c9e42696a441066634c64a359645",
+        "bytes": 785
+      },
+      {
+        "path": "PlugIns/WebDriverAgentRunner.xctest/Frameworks/WebDriverAgentLib.framework/WebDriverAgentLib",
+        "sha256": "e76be83777577e659a0855c0be912541ab06d75b7a3010f435e52ee05332a69b",
+        "bytes": 2680816
+      },
+      {
+        "path": "PlugIns/WebDriverAgentRunner.xctest/Info.plist",
+        "sha256": "6187dffbb660ec81f99de1ea4d11ec84d282e24b2cb54e483003fbfabdbb5069",
+        "bytes": 1137
+      },
+      {
+        "path": "PlugIns/WebDriverAgentRunner.xctest/WebDriverAgentRunner",
+        "sha256": "3bdfade53dd39c780374c2094505f507285f5c43dabcc1e6ba4ccdd2c7146bc6",
+        "bytes": 86920
+      },
+      {
+        "path": "WebDriverAgentRunner-Runner",
+        "sha256": "28fcfad44cbcdd2d5843919131a11f1b18d81b4c9709cc92523184926f2ded28",
+        "bytes": 179264
+      }
+    ],
+    "architectures": [
+      "x86_64",
+      "arm64"
+    ],
+    "signing": [
+      {
+        "argv": [
+          "codesign",
+          "-dvvv",
+          "/Users/hugues_mini/Codes/AgentTools/jev-ios-bridge/.worktrees/feat/appium-mcp-migration/.scratch/appium-mcp-migration/runtime/wda-16.14.2/Build/Products/Debug-iphonesimulator/WebDriverAgentRunner-Runner.app"
+        ],
+        "exitCode": 0,
+        "stdout": "",
+        "stderr": "Executable=/Users/hugues_mini/Codes/AgentTools/jev-ios-bridge/.worktrees/feat/appium-mcp-migration/.scratch/appium-mcp-migration/runtime/wda-16.14.2/Build/Products/Debug-iphonesimulator/WebDriverAgentRunner-Runner.app/WebDriverAgentRunner-Runner\nIdentifier=com.apple.XCTRunner\nFormat=app bundle with Mach-O universal (x86_64 arm64)\nCodeDirectory v=20400 size=823 flags=0x0(none) hashes=20+2 location=embedded\nHash type=sha256 size=32\nCandidateCDHash sha256=ea15410be117352961e7aa8395943fc7090e839f\nCandidateCDHashFull sha256=ea15410be117352961e7aa8395943fc7090e839f156d155e6ecd4fe27f1c08c8\nHash choices=sha256\nCMSDigest=ea15410be117352961e7aa8395943fc7090e839f156d155e6ecd4fe27f1c08c8\nCMSDigestType=2\nCDHash=ea15410be117352961e7aa8395943fc7090e839f\nSignature size=4412\nAuthority=Software Signing\nAuthority=Apple Code Signing Certification Authority\nAuthority=Apple Root CA\nInfo.plist=not bound\nTeamIdentifier=59GAB85EFG\nSealed Resources=none\nInternal requirements count=1 size=68\nTotal signatures=1\nChosen signature=1\n"
+      },
+      {
+        "argv": [
+          "codesign",
+          "--verify",
+          "--deep",
+          "--strict",
+          "/Users/hugues_mini/Codes/AgentTools/jev-ios-bridge/.worktrees/feat/appium-mcp-migration/.scratch/appium-mcp-migration/runtime/wda-16.14.2/Build/Products/Debug-iphonesimulator/WebDriverAgentRunner-Runner.app"
+        ],
+        "exitCode": 1,
+        "stdout": "",
+        "stderr": "/Users/hugues_mini/Codes/AgentTools/jev-ios-bridge/.worktrees/feat/appium-mcp-migration/.scratch/appium-mcp-migration/runtime/wda-16.14.2/Build/Products/Debug-iphonesimulator/WebDriverAgentRunner-Runner.app: code has no resources but signature indicates they must be present\n"
+      }
+    ],
+    "architectureObservation": {
+      "argv": [
+        "lipo",
+        "-archs",
+        "/Users/hugues_mini/Codes/AgentTools/jev-ios-bridge/.worktrees/feat/appium-mcp-migration/.scratch/appium-mcp-migration/runtime/wda-16.14.2/Build/Products/Debug-iphonesimulator/WebDriverAgentRunner-Runner.app/WebDriverAgentRunner-Runner"
+      ],
+      "exitCode": 0,
+      "stdout": "x86_64 arm64\n",
+      "stderr": ""
+    }
+  },
+  "androidAutomationApks": [
+    {
+      "package": "io.appium.uiautomator2.server.test",
+      "path": "/Users/hugues_mini/Codes/AgentTools/jev-ios-bridge/.worktrees/feat/appium-mcp-migration/.scratch/appium-mcp-migration/candidate-stack/node_modules/appium-uiautomator2-driver/node_modules/appium-uiautomator2-server/apks/appium-uiautomator2-server-debug-androidTest.apk",
+      "sha256": "e6f729287d72351388fd66597c35b69988b9091a7011954bf92a55d416cb1e1c"
+    },
+    {
+      "package": "io.appium.uiautomator2.server",
+      "path": "/Users/hugues_mini/Codes/AgentTools/jev-ios-bridge/.worktrees/feat/appium-mcp-migration/.scratch/appium-mcp-migration/candidate-stack/node_modules/appium-uiautomator2-driver/node_modules/appium-uiautomator2-server/apks/appium-uiautomator2-server-v10.6.6.apk",
+      "sha256": "8ff760a2a86b487f53090fbdcd5b0360e67d02bb811887d527a9557b0d59c80d"
+    },
+    {
+      "package": "io.appium.settings",
+      "path": "/Users/hugues_mini/Codes/AgentTools/jev-ios-bridge/.worktrees/feat/appium-mcp-migration/.scratch/appium-mcp-migration/candidate-stack/node_modules/appium-uiautomator2-driver/node_modules/io.appium.settings/apks/settings_apk-debug.apk",
+      "sha256": "bcfc5e6c2547d83beb3202c43c54cd0a0d3fe48511c87e43585db214259e11f8"
+    }
+  ],
+  "recreatedPair": {
+    "recipeCommit": "2fcef41ee",
+    "oldPairGone": true,
+    "oldIOSUDID": "40A5E14C-7B08-43A0-844A-76FB94B4B34A",
+    "oldAVD": "jev_appium_phase1_20261013",
+    "iosRuntimeChange": "26.4 no longer installed; selected installed 26.5 (23F77)",
+    "creationEvidence": ".audit/phase1-finish-20261018/1C-private-pair-create.json",
+    "otherDevicesTouched": false,
+    "sharedServicesStopped": false
+  },
+  "buildEvidence": {
+    "wda": ".audit/phase1-finish-20261018/1C-wda-build.log",
+    "ios": ".audit/phase1-finish-20261018/1C-ios-build.log",
+    "android": ".audit/phase1-finish-20261018/1C-android-build.log"
+  },
+  "fixtureRestorationRecord": ".audit/phase1-finish-20261018/1C-restored-fixture-paths.json",
+  "budgetNotes": {
+    "startup": "one creation, no retry",
+    "postStopScan": "one bounded scan; incomplete inventory retains quarantine",
+    "caseOrder": "twelve cases serially, cleanup inspected before next",
+    "nativeFence": "verified while the private device stays running; later shutdown is housekeeping"
+  },
+  "toolchain": {
+    "xcode": "27.0 (27A266a)",
+    "macOS": "27.0.1",
+    "python": "Python 3.14.7",
+    "java": "Temurin 21, process-local JAVA_HOME",
+    "androidImage": "system-images;android-36.1;google_apis_playstore;arm64-v8a",
+    "iosRuntime": "26.5 (23F77)"
+  },
+  "devicesRebuiltByOwnerDecision": "Old pair and runtime were deleted. New private pair recreated by the owner-authorized 2fcef41ee recipe, with installed iOS26.5 replacing absent26.4. Other devices and shared services remain outside scope.",
+  "usageAtFreeze": {
+    "root": {
+      "input_tokens": 9859798,
+      "cached_input_tokens": 9675008,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 60241,
+      "reasoning_output_tokens": 29698,
+      "total_tokens": 9920039
+    },
+    "reviewer": {
+      "input_tokens": 2105078,
+      "cached_input_tokens": 1995392,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 9959,
+      "reasoning_output_tokens": 3923,
+      "total_tokens": 2115037
+    },
+    "combined": {
+      "input_tokens": 11964876,
+      "cached_input_tokens": 11670400,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 70200,
+      "reasoning_output_tokens": 33621,
+      "total_tokens": 12035076
+    },
+    "uncachedInputPlusOutput": 364676,
+    "cap": 80000000
+  },
+  "selection": {
+    "wrapper": {
+      "version": "1.97.0",
+      "dist.integrity": "sha512-cR1nb6o40xV/1bHlHxsv10B3AQGXcd1k8OkbXc7kZ8SbupikEjK/tJuUKF3MaoYtKAB2qXqYiXWVJHnq4OA9LQ==",
+      "dist.shasum": "6a0083c6b1920ab275600eb0628fd91d67ef9477",
+      "gitHead": "ddbfdc7a133828ecd4e4e17e680a1bb904a166cb"
+    },
+    "lockfileSha256": "f7732565cacdbe21b42f381c23a142cc75278502f30f95406b1f9cd73724bfba",
+    "packages": [
+      {
+        "path": "node_modules/@appium/base-driver",
+        "name": "@appium/base-driver",
+        "version": "10.8.1",
+        "archive": {
+          "path": "node_modules/@appium/base-driver",
+          "version": "10.8.1",
+          "resolved": "https://registry.npmjs.org/@appium/base-driver/-/base-driver-10.8.1.tgz",
+          "integrity": "sha512-7dP3hJ7DEqOqG2/SIzVikj7xdKmP5NM16HsYZXw7KcN7sfge7QJDR8mQcwTBmwI0zUIfN3DOMEbHoTaHNOL6HQ=="
+        },
+        "packageJsonSha256": "b855b31f9a2a911eff2fea9511e692b291a2125ff1a2b583ee9aa015f82d6a48"
+      },
+      {
+        "path": "node_modules/@modelcontextprotocol/sdk",
+        "name": "@modelcontextprotocol/sdk",
+        "version": "1.32.1",
+        "archive": {
+          "path": "node_modules/@modelcontextprotocol/sdk",
+          "version": "1.32.1",
+          "resolved": "https://registry.npmjs.org/@modelcontextprotocol/sdk/-/sdk-1.32.1.tgz",
+          "integrity": "sha512-2DdE+SJDtzLEEWzY1ZjY7Q+VcPhcV1KisD3zI4u0XZyktsjHum1mwbMI+JaulUBi2OZk+KJAi2uPXzxichPkdw=="
+        },
+        "packageJsonSha256": "0216319ea53177f7ed419d660b2f52ccc7e3327e57f9ee2ef03225ff543aeae4"
+      },
+      {
+        "path": "node_modules/appium",
+        "name": "appium",
+        "version": "3.8.0",
+        "archive": {
+          "path": "node_modules/appium",
+          "version": "3.8.0",
+          "resolved": "https://registry.npmjs.org/appium/-/appium-3.8.0.tgz",
+          "integrity": "sha512-hqY6TQnBfl3x3tiv6u8kW33DI4gacKEyreoWODr02ayuFUd2P390hKxPrCikeW7K3L4SVABR4rZ6+PfECbNwGw=="
+        },
+        "packageJsonSha256": "457d41a3c5a0445a8b384aec6cfbba376dfa801d69c6d3f8d1471939398219d6"
+      },
+      {
+        "path": "node_modules/appium-mcp",
+        "name": "appium-mcp",
+        "version": "1.97.0",
+        "archive": {
+          "path": "node_modules/appium-mcp",
+          "version": "1.97.0",
+          "resolved": "https://registry.npmjs.org/appium-mcp/-/appium-mcp-1.97.0.tgz",
+          "integrity": "sha512-cR1nb6o40xV/1bHlHxsv10B3AQGXcd1k8OkbXc7kZ8SbupikEjK/tJuUKF3MaoYtKAB2qXqYiXWVJHnq4OA9LQ=="
+        },
+        "packageJsonSha256": "6dddabb0b3ae693df431bd857ad09a1f68c7763bb742aa36d982a3d2eae3955f"
+      },
+      {
+        "path": "node_modules/appium-uiautomator2-driver",
+        "name": "appium-uiautomator2-driver",
+        "version": "8.7.0",
+        "archive": {
+          "path": "node_modules/appium-uiautomator2-driver",
+          "version": "8.7.0",
+          "resolved": "https://registry.npmjs.org/appium-uiautomator2-driver/-/appium-uiautomator2-driver-8.7.0.tgz",
+          "integrity": "sha512-5ABLmKeAkE13QkNB2Qd9hTOYl2nfia6ZQ5QNCXefMzlr2HOdsq7T79FZ8Ad2kOydjdI9c1hb6LZ3ctanbUUbOA=="
+        },
+        "packageJsonSha256": "e9d8cb05aed3f8d77c7e3e5b6c95e693e3772a098d12b3270e82abd4e01a2ca4"
+      },
+      {
+        "path": "node_modules/appium-uiautomator2-driver/node_modules/@appium/base-driver",
+        "name": "@appium/base-driver",
+        "version": "10.8.0",
+        "bundledIn": {
+          "path": "node_modules/appium-uiautomator2-driver",
+          "version": "8.7.0",
+          "resolved": "https://registry.npmjs.org/appium-uiautomator2-driver/-/appium-uiautomator2-driver-8.7.0.tgz",
+          "integrity": "sha512-5ABLmKeAkE13QkNB2Qd9hTOYl2nfia6ZQ5QNCXefMzlr2HOdsq7T79FZ8Ad2kOydjdI9c1hb6LZ3ctanbUUbOA=="
+        },
+        "packageJsonSha256": "ce6502cb5e35600adfd55e5206068f4eee62b6926fdccd8c45b57ec17ce40b2a"
+      },
+      {
+        "path": "node_modules/appium-webdriveragent",
+        "name": "appium-webdriveragent",
+        "version": "16.15.0",
+        "archive": {
+          "path": "node_modules/appium-webdriveragent",
+          "version": "16.15.0",
+          "resolved": "https://registry.npmjs.org/appium-webdriveragent/-/appium-webdriveragent-16.15.0.tgz",
+          "integrity": "sha512-17AesL9oajcUfOgICnMFAF6wWUEML23MwhsHWsTUXOepIdBZm1+vQvhSFfpiGIG3WEo12/xm8ILH3FKLrERZhg=="
+        },
+        "packageJsonSha256": "f239556d933aec84b2e6104a4330e23904d4aaafca8cec776b40941010d4ac28"
+      },
+      {
+        "path": "node_modules/appium-xcuitest-driver",
+        "name": "appium-xcuitest-driver",
+        "version": "12.17.1",
+        "archive": {
+          "path": "node_modules/appium-xcuitest-driver",
+          "version": "12.17.1",
+          "resolved": "https://registry.npmjs.org/appium-xcuitest-driver/-/appium-xcuitest-driver-12.17.1.tgz",
+          "integrity": "sha512-+nIyKjqkvgI48jcIBOHX8ztAq68JCpxc7ITKcTRgT1K3B7mpdfIfE7ysthvSu5MRAVPhvKGOxoZbOaMKmukIDw=="
+        },
+        "packageJsonSha256": "a404764798745ebab88cfa97baaf88f3655972db1fd36b153362cab333561b4f"
+      },
+      {
+        "path": "node_modules/appium-xcuitest-driver/node_modules/@appium/base-driver",
+        "name": "@appium/base-driver",
+        "version": "10.8.1",
+        "bundledIn": {
+          "path": "node_modules/appium-xcuitest-driver",
+          "version": "12.17.1",
+          "resolved": "https://registry.npmjs.org/appium-xcuitest-driver/-/appium-xcuitest-driver-12.17.1.tgz",
+          "integrity": "sha512-+nIyKjqkvgI48jcIBOHX8ztAq68JCpxc7ITKcTRgT1K3B7mpdfIfE7ysthvSu5MRAVPhvKGOxoZbOaMKmukIDw=="
+        },
+        "packageJsonSha256": "b855b31f9a2a911eff2fea9511e692b291a2125ff1a2b583ee9aa015f82d6a48"
+      },
+      {
+        "path": "node_modules/appium-xcuitest-driver/node_modules/appium-webdriveragent",
+        "name": "appium-webdriveragent",
+        "version": "16.14.2",
+        "bundledIn": {
+          "path": "node_modules/appium-xcuitest-driver",
+          "version": "12.17.1",
+          "resolved": "https://registry.npmjs.org/appium-xcuitest-driver/-/appium-xcuitest-driver-12.17.1.tgz",
+          "integrity": "sha512-+nIyKjqkvgI48jcIBOHX8ztAq68JCpxc7ITKcTRgT1K3B7mpdfIfE7ysthvSu5MRAVPhvKGOxoZbOaMKmukIDw=="
+        },
+        "packageJsonSha256": "986f011684e461e335190858c8efcc78c66f12dbcd6fd0dcae9815ae845c4a7c"
+      }
+    ]
+  },
+  "matrixStartupFix": {
+    "initialAttempt": "phase1-ios-normal-20261018",
+    "sourceBase": "2f198d713",
+    "failure": "stack-probe.mjs deleted before server import, zero requests or creations",
+    "correction": "Restore the exact HEAD module, bind its selected graph and rebuilt WDA to this single freeze manifest, refresh only the frozen stack payload of the protocol fixture.",
+    "scope": "No other deleted historical file restored."
+  },
+  "wdaDiagnosis": {
+    "method": "Pinned public appium-ios-simulator launchApp, private set only",
+    "http200AfterSeconds": 27.76,
+    "selectedFix": "c: wdaLaunchTimeout120s",
+    "coldStartCause": "inferred, not reproduced in this bounded launch; incompatibility and unsupported preinstalled launch not observed",
+    "evidence": ".scratch/appium-mcp-migration/evidence/wda-diagnosis-20261018/1D-wda-diagnosis.json",
+    "runnerLog": ".scratch/appium-mcp-migration/evidence/wda-diagnosis-20261018/1D-wda-runner.log",
+    "tokenUsage": {
+      "input_tokens": 4133343,
+      "cached_input_tokens": 4102144,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 8465,
+      "reasoning_output_tokens": 3190,
+      "total_tokens": 4141808
+    }
+  },
+  "matrix": {
+    "index": ".scratch/appium-mcp-migration/evidence/phase1-matrix-20261018.json",
+    "result": "GO",
+    "androidPassed": 6,
+    "iosQualified": 6,
+    "blocker": null,
+    "usageAtRecord": {
+      "root": {
+        "input_tokens": 13146848,
+        "cached_input_tokens": 13047808,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 41291,
+        "reasoning_output_tokens": 21328,
+        "total_tokens": 13188139
+      },
+      "reviewers": 0,
+      "uncachedInputPlusOutput": 140331,
+      "cap": 250000000
+    },
+    "followupUsageAtStop": {
+      "followup": {
+        "input_tokens": 4476572,
+        "cached_input_tokens": 4361984,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 30081,
+        "reasoning_output_tokens": 17149,
+        "total_tokens": 4506653
+      },
+      "followupUncachedInputPlusOutput": 144669,
+      "priorProcessed": 13188139,
+      "cumulativeProcessed": 17694792,
+      "cap": 250000000
+    },
+    "postRebootUsage": {
+      "followup": {
+        "input_tokens": 3252284,
+        "cached_input_tokens": 3110912,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 13589,
+        "reasoning_output_tokens": 9372,
+        "total_tokens": 3265873
+      },
+      "followupUncachedInputPlusOutput": 154961,
+      "priorProcessed": 17694792,
+      "cumulativeProcessed": 20960665,
+      "cap": 250000000
+    }
+  },
+  "deviceInternalClassification": {
+    "ownerDecision": "2026-10-18: exact private launchd_sim argv binding and its descendants are the running device; WDA/XCTest stay fenced; other candidates quarantine",
+    "hostTest": "18/18 focused tests passed",
+    "rootReceipt": "device-root.json retained in each new iOS case",
+    "scope": "iOS classification only; six existing Android qualifying cases retained",
+    "exitingChildCorrection": "Lost-create retained one exiting bound-subtree child with unreadable identity; require targeted ps proof of absence or zombie, otherwise quarantine. One retry only.",
+    "result": "All six iOS cases qualify; both earlier blockers resolved",
+    "newBlocker": null
+  },
+  "reportReviewFollowup": {
+    "report": ".scratch/appium-mcp-migration/phase-1-result-20261018.md",
+    "review": ".scratch/appium-mcp-migration/evidence/phase1-device-root-review-20261018.md",
+    "standardsFindings": 0,
+    "specFindings": 0,
+    "openP1P2": 0,
+    "usageAtPreparation": {
+      "rootFollowup": {
+        "input_tokens": 1008116,
+        "cached_input_tokens": 994688,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 10236,
+        "reasoning_output_tokens": 5201,
+        "total_tokens": 1018352
+      },
+      "reviewer": {
+        "input_tokens": 655459,
+        "cached_input_tokens": 559488,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 7944,
+        "reasoning_output_tokens": 2774,
+        "total_tokens": 663403
+      },
+      "combinedFollowup": {
+        "input_tokens": 1663575,
+        "cached_input_tokens": 1554176,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 18180,
+        "reasoning_output_tokens": 7975,
+        "total_tokens": 1681755
+      },
+      "followupUncachedInputPlusOutput": 127579,
+      "priorProcessed": 4772327,
+      "cumulativeProcessedAtPreparation": 6454082,
+      "cap": 50000000
+    },
+    "reportRevision": "de0132074e6cfd9b73c8e8d676da248d4abb924d",
+    "reviewedVerdict": "historical NO-GO 8/12"
+  },
+  "postRebootResume": {
+    "date": "2026-10-19",
+    "sourceBase": "de0132074e6cfd9b73c8e8d676da248d4abb924d",
+    "frozenRunnerReused": true,
+    "ownerReportedReboot": "about 07:45 Asia/Ho_Chi_Minh",
+    "previousCleanupEvidence": ".scratch/appium-mcp-migration/evidence/live-protocol/phase1-ios-lost-action-device-root-20261018/post-reboot-cleanup-20261019.json",
+    "preflightDirectory": ".scratch/appium-mcp-migration/evidence/post-reboot-20261019",
+    "requiredLoadOneMinuteBelow": 8,
+    "requiredPrivateSimctlTimeoutSeconds": 15,
+    "newQualifyingCases": [
+      "phase1-ios-lost-action-post-reboot-20261019",
+      "phase1-ios-cancel-post-reboot-20261019",
+      "phase1-ios-late-action-post-reboot-20261019",
+      "phase1-ios-process-failure-post-reboot-20261019"
+    ],
+    "sharedServicesRestarted": false,
+    "otherDevicesControlled": false,
+    "review": ".scratch/appium-mcp-migration/evidence/phase1-post-reboot-review-20261019.md",
+    "reportReview": {
+      "report": ".scratch/appium-mcp-migration/phase-1-result-20261018.md",
+      "review": ".scratch/appium-mcp-migration/evidence/phase1-post-reboot-review-20261019.md",
+      "standardsFindings": 0,
+      "specFindings": 0,
+      "openP1P2": 0,
+      "verdict": "GO 12/12",
+      "usageAtPreparation": {
+        "rootFollowup": {
+          "input_tokens": 1911772,
+          "cached_input_tokens": 1896576,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 11518,
+          "reasoning_output_tokens": 6267,
+          "total_tokens": 1923290
+        },
+        "reviewer": {
+          "input_tokens": 1177352,
+          "cached_input_tokens": 1059072,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 11408,
+          "reasoning_output_tokens": 3445,
+          "total_tokens": 1188760
+        },
+        "combinedFollowup": {
+          "input_tokens": 3089124,
+          "cached_input_tokens": 2955648,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 22926,
+          "reasoning_output_tokens": 9712,
+          "total_tokens": 3112050
+        },
+        "followupUncachedInputPlusOutput": 156402,
+        "priorProcessed": 6779294,
+        "cumulativeProcessedAtPreparation": 9891344,
+        "cap": 50000000
+      }
+    }
+  }
+}

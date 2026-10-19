@@ -1,0 +1,219 @@
+WARN appium-mcp Policy denied tool registration: select_device (not_in_allowlist)
+WARN appium-mcp Policy denied tool registration: appium_mobile_device_control (not_in_allowlist)
+WARN appium-mcp Policy denied tool registration: appium_geolocation (not_in_allowlist)
+WARN appium-mcp Policy denied tool registration: appium_mobile_device_info (not_in_allowlist)
+WARN appium-mcp Policy denied tool registration: appium_mobile_file (not_in_allowlist)
+WARN appium-mcp Policy denied tool registration: appium_driver_settings (not_in_allowlist)
+WARN appium-mcp Policy denied tool registration: prepare_ios_simulator (not_in_allowlist)
+WARN appium-mcp Policy denied tool registration: appium_prepare_ios_real_device (not_in_allowlist)
+WARN appium-mcp Policy denied tool registration: appium_drag_and_drop (not_in_allowlist)
+WARN appium-mcp Policy denied tool registration: appium_perform_actions (not_in_allowlist)
+WARN appium-mcp Policy denied tool registration: appium_find_element (not_in_allowlist)
+WARN appium-mcp Policy denied tool registration: appium_mobile_press_key (not_in_allowlist)
+WARN appium-mcp Policy denied tool registration: appium_set_value (not_in_allowlist)
+WARN appium-mcp Policy denied tool registration: appium_mobile_keyboard (not_in_allowlist)
+WARN appium-mcp Policy denied tool registration: appium_get_text (not_in_allowlist)
+WARN appium-mcp Policy denied tool registration: appium_get_element_attribute (not_in_allowlist)
+WARN appium-mcp Policy denied tool registration: appium_mobile_clipboard (not_in_allowlist)
+WARN appium-mcp Policy denied tool registration: appium_get_active_element (not_in_allowlist)
+WARN appium-mcp Policy denied tool registration: appium_orientation (not_in_allowlist)
+WARN appium-mcp Policy denied tool registration: appium_alert (not_in_allowlist)
+WARN appium-mcp Policy denied tool registration: appium_get_window_size (not_in_allowlist)
+WARN appium-mcp Policy denied tool registration: appium_screen_recording (not_in_allowlist)
+WARN appium-mcp Policy denied tool registration: appium_app_lifecycle (not_in_allowlist)
+WARN appium-mcp Policy denied tool registration: appium_mobile_permissions (not_in_allowlist)
+WARN appium-mcp Policy denied tool registration: appium_context (not_in_allowlist)
+WARN appium-mcp Policy denied tool registration: generate_locators (not_in_allowlist)
+WARN appium-mcp Policy denied tool registration: appium_generate_tests (not_in_allowlist)
+info appium-mcp [TOOL START] appium_session_management {
+info appium-mcp   action: 'create',
+info appium-mcp   platform: 'ios',
+info appium-mcp   capabilities: '{"platformName":"iOS","appium:automationName":"XCUITest","appium:udid":"15013501-2535-42EB-A67F-45B015DF18F4","appium:simulatorDevicesSetPath":"/Users/hugues_mini/Codes/AgentTools/jev-ios-bridge/.worktrees/feat/appium-mcp-migration/.scratch/appium-mcp-migration/runtime/devices/simulators","appium:bundleId":"dev.jevbridge.diagnostic","appium:usePreinstalledWDA":true,"appium:prebuiltWDAPath":"/Users/hugues_mini/Codes/AgentTools/jev-ios-bridge/.worktrees/feat/appium-mcp-migration/.scratch/appium-mcp-migration/runtime/wda-16.14.2/Build/Products/Debug-iphonesimulator/WebDriverAgentRunner-Runner.app","appium:wdaLocalPort":18100,"appium:wdaLaunchTimeout":120000,"appium:mjpegServerPort":18101,"appium:shutdownOtherSimulators":false,"appium:noReset":true,"appium:shouldTerminateApp":true,"appium:settings[pageSourceExcludedAttributes]":""}'
+info appium-mcp }
+dbug appium-mcp Selected device info: undefined
+dbug appium-mcp Platform version: undefined
+info appium-mcp Creating new IOS session with capabilities: {
+info appium-mcp   "platformName": "iOS",
+info appium-mcp   "appium:automationName": "XCUITest",
+info appium-mcp   "appium:deviceName": "iPhone Simulator",
+info appium-mcp   "appium:newCommandTimeout": 300,
+info appium-mcp   "appium:settings[animationCoolOffTimeout]": 0.5,
+info appium-mcp   "appium:settings[maxTypingFrequency]": 45,
+info appium-mcp   "appium:udid": "15013501-2535-42EB-A67F-45B015DF18F4",
+info appium-mcp   "appium:simulatorDevicesSetPath": "/Users/hugues_mini/Codes/AgentTools/jev-ios-bridge/.worktrees/feat/appium-mcp-migration/.scratch/appium-mcp-migration/runtime/devices/simulators",
+info appium-mcp   "appium:bundleId": "dev.jevbridge.diagnostic",
+info appium-mcp   "appium:usePreinstalledWDA": true,
+info appium-mcp   "appium:prebuiltWDAPath": "/Users/hugues_mini/Codes/AgentTools/jev-ios-bridge/.worktrees/feat/appium-mcp-migration/.scratch/appium-mcp-migration/runtime/wda-16.14.2/Build/Products/Debug-iphonesimulator/WebDriverAgentRunner-Runner.app",
+info appium-mcp   "appium:wdaLocalPort": 18100,
+info appium-mcp   "appium:wdaLaunchTimeout": 120000,
+info appium-mcp   "appium:mjpegServerPort": 18101,
+info appium-mcp   "appium:shutdownOtherSimulators": false,
+info appium-mcp   "appium:noReset": true,
+info appium-mcp   "appium:shouldTerminateApp": true
+info appium-mcp }
+info appium-mcp Sending session with XCUITestDriver
+dbug XCUITestDriver@bd0e 
+dbug XCUITestDriver@bd0e Creating session with W3C capabilities: {
+dbug XCUITestDriver@bd0e   "alwaysMatch": {
+dbug XCUITestDriver@bd0e     "platformName": "iOS",
+dbug XCUITestDriver@bd0e     "appium:automationName": "XCUITest",
+dbug XCUITestDriver@bd0e     "appium:deviceName": "iPhone Simulator",
+dbug XCUITestDriver@bd0e     "appium:newCommandTimeout": 300,
+dbug XCUITestDriver@bd0e     "appium:settings[animationCoolOffTimeout]": 0.5,
+dbug XCUITestDriver@bd0e     "appium:settings[maxTypingFrequency]": 45,
+dbug XCUITestDriver@bd0e     "appium:udid": "15013501-2535-42EB-A67F-45B015DF18F4",
+dbug XCUITestDriver@bd0e     "appium:simulatorDevicesSetPath": "/Users/hugues_mini/Codes/AgentTools/jev-ios-bridge/.worktrees/feat/appium-mcp-migration/.scratch/appium-mcp-migration/runtime/devices/simulators",
+dbug XCUITestDriver@bd0e     "appium:bundleId": "dev.jevbridge.diagnostic",
+dbug XCUITestDriver@bd0e     "appium:usePreinstalledWDA": true,
+dbug XCUITestDriver@bd0e     "appium:prebuiltWDAPath": "/Users/hugues_mini/Codes/AgentTools/jev-ios-bridge/.worktrees/feat/appium-mcp-migration/.scratch/appium-mcp-migration/runtime/wda-16.14.2/Build/Products/Debug-iphonesimulator/WebDriverAgentRunner-Runner.app",
+dbug XCUITestDriver@bd0e     "appium:wdaLocalPort": 18100,
+dbug XCUITestDriver@bd0e     "appium:wdaLaunchTimeout": 120000,
+dbug XCUITestDriver@bd0e     "appium:mjpegServerPort": 18101,
+dbug XCUITestDriver@bd0e     "appium:shutdownOtherSimulators": false,
+dbug XCUITestDriver@bd0e     "appium:noReset": true,
+dbug XCUITestDriver@bd0e     "appium:shouldTerminateApp": true
+dbug XCUITestDriver@bd0e   },
+dbug XCUITestDriver@bd0e   "firstMatch": [
+dbug XCUITestDriver@bd0e     {}
+dbug XCUITestDriver@bd0e   ]
+dbug XCUITestDriver@bd0e }
+WARN XCUITestDriver@bd0e The following provided capabilities were not recognized by this driver:
+WARN XCUITestDriver@bd0e   settings[animationCoolOffTimeout]
+WARN XCUITestDriver@bd0e   settings[maxTypingFrequency]
+WARN XCUITestDriver@bd0e 'platformVersion' capability ('undefined') is not a valid version number. Consider fixing it or be ready to experience an inconsistent driver behavior.
+info XCUITestDriver@bd0e Session created with session id: 493cbb44-6141-407a-a4e9-eaf3f5088e62
+dbug XCUITest Current user: 'hugues_mini'
+info appium-mcp Client connected: FastMCPSession {
+info appium-mcp   _events: [Object: null prototype] {
+info appium-mcp     error: [Function: wrapper] { listener: [Function (anonymous)] }
+info appium-mcp   },
+info appium-mcp   _eventsCount: 1,
+info appium-mcp   _maxListeners: undefined,
+info appium-mcp   Symbol(shapeMode): false,
+info appium-mcp   Symbol(kCapture): false
+info appium-mcp }
+WARN XCUITest RemoteXPC devices listing unavailable: Tunnel registry port not found. Please run the tunnel creation script first See https://appium.github.io/appium-xcuitest-driver/latest/guides/remotexpc-tunnels-real-devices/ Falling back to appium-ios-device.
+info XCUITestDriver@bd0e Constructing iOS simulator for Xcode version 27.0 with udid '15013501-2535-42EB-A67F-45B015DF18F4'
+info XCUITestDriver@bd0e No platformVersion specified. Using device version: '26.5'
+info XCUITestDriver@bd0e Determining device to run tests on: udid: '15013501-2535-42EB-A67F-45B015DF18F4', real device: false
+info BaseDriver Subscribing bd0e78ac-cd98-46cc-b9a1-b033514abc5d to topic 'xcuitest:sessionUdidClaimed'
+info BaseDriver Subscribing bd0e78ac-cd98-46cc-b9a1-b033514abc5d to topic 'xcuitest:sessionUdidContended'
+info BaseDriver Subscribing bd0e78ac-cd98-46cc-b9a1-b033514abc5d to topic 'xcuitest:sessionUdidReleased'
+info BaseDriver Unsubscribing bd0e78ac-cd98-46cc-b9a1-b033514abc5d from topic 'xcuitest:sessionUdidContended'
+info BaseDriver Unsubscribing bd0e78ac-cd98-46cc-b9a1-b033514abc5d from topic 'xcuitest:sessionUdidReleased'
+info XCUITestDriver@bd0e Setting simulator devices set path to '/Users/hugues_mini/Codes/AgentTools/jev-ios-bridge/.worktrees/feat/appium-mcp-migration/.scratch/appium-mcp-migration/runtime/devices/simulators'
+info XCUITestDriver@bd0e Using WDA path: '/Users/hugues_mini/Codes/AgentTools/jev-ios-bridge/.worktrees/feat/appium-mcp-migration/.scratch/appium-mcp-migration/candidate-stack/node_modules/appium-xcuitest-driver/node_modules/appium-webdriveragent'
+info XCUITestDriver@bd0e Using WDA agent: '/Users/hugues_mini/Codes/AgentTools/jev-ios-bridge/.worktrees/feat/appium-mcp-migration/.scratch/appium-mcp-migration/candidate-stack/node_modules/appium-xcuitest-driver/node_modules/appium-webdriveragent/WebDriverAgent.xcodeproj'
+info XCUITestDriver@bd0e Setting up simulator
+info XCUITestDriver@bd0e Both Simulator with UDID '15013501-2535-42EB-A67F-45B015DF18F4' and the UI client are currently running
+info XCUITestDriver@bd0e Requesting connection for device 15013501-2535-42EB-A67F-45B015DF18F4 on local port 18100
+info XCUITestDriver@bd0e Successfully requested the connection for 15013501-2535-42EB-A67F-45B015DF18F4:18100
+info XCUITestDriver@bd0e Installing prebuilt WDA at '/Users/hugues_mini/Codes/AgentTools/jev-ios-bridge/.worktrees/feat/appium-mcp-migration/.scratch/appium-mcp-migration/runtime/wda-16.14.2/Build/Products/Debug-iphonesimulator/WebDriverAgentRunner-Runner.app'. Bundle identifier: com.facebook.WebDriverAgentRunner.xctrunner.
+info XCUITestDriver@bd0e The app has been successfully installed in 4583ms
+info XCUITestDriver@bd0e Selected 'simulator' WebDriverAgent startup strategy
+info XCUITestDriver@bd0e Launching WebDriverAgent on the device without xcodebuild
+info WD Proxy connect ECONNREFUSED 127.0.0.1:18100
+info WD Proxy connect ECONNREFUSED 127.0.0.1:18100
+info WD Proxy connect ECONNREFUSED 127.0.0.1:18100
+info WD Proxy connect ECONNREFUSED 127.0.0.1:18100
+info WD Proxy connect ECONNREFUSED 127.0.0.1:18100
+info WD Proxy connect ECONNREFUSED 127.0.0.1:18100
+info WD Proxy connect ECONNREFUSED 127.0.0.1:18100
+info WD Proxy connect ECONNREFUSED 127.0.0.1:18100
+info WD Proxy connect ECONNREFUSED 127.0.0.1:18100
+info WD Proxy connect ECONNREFUSED 127.0.0.1:18100
+info WD Proxy connect ECONNREFUSED 127.0.0.1:18100
+info WD Proxy connect ECONNREFUSED 127.0.0.1:18100
+info WD Proxy connect ECONNREFUSED 127.0.0.1:18100
+info WD Proxy connect ECONNREFUSED 127.0.0.1:18100
+info WD Proxy connect ECONNREFUSED 127.0.0.1:18100
+info WD Proxy connect ECONNREFUSED 127.0.0.1:18100
+info WD Proxy connect ECONNREFUSED 127.0.0.1:18100
+info WD Proxy connect ECONNREFUSED 127.0.0.1:18100
+info WD Proxy connect ECONNREFUSED 127.0.0.1:18100
+info WD Proxy connect ECONNREFUSED 127.0.0.1:18100
+info WD Proxy connect ECONNREFUSED 127.0.0.1:18100
+info WD Proxy connect ECONNREFUSED 127.0.0.1:18100
+info WD Proxy connect ECONNREFUSED 127.0.0.1:18100
+info WD Proxy connect ECONNREFUSED 127.0.0.1:18100
+info WD Proxy connect ECONNREFUSED 127.0.0.1:18100
+info WD Proxy connect ECONNREFUSED 127.0.0.1:18100
+info WD Proxy connect ECONNREFUSED 127.0.0.1:18100
+info WD Proxy connect ECONNREFUSED 127.0.0.1:18100
+info WD Proxy connect ECONNREFUSED 127.0.0.1:18100
+info WD Proxy connect ECONNREFUSED 127.0.0.1:18100
+info WD Proxy connect ECONNREFUSED 127.0.0.1:18100
+info WD Proxy connect ECONNREFUSED 127.0.0.1:18100
+info WD Proxy connect ECONNREFUSED 127.0.0.1:18100
+info WD Proxy connect ECONNREFUSED 127.0.0.1:18100
+info WD Proxy connect ECONNREFUSED 127.0.0.1:18100
+info WD Proxy connect ECONNREFUSED 127.0.0.1:18100
+info WD Proxy connect ECONNREFUSED 127.0.0.1:18100
+info WD Proxy connect ECONNREFUSED 127.0.0.1:18100
+info WD Proxy connect ECONNREFUSED 127.0.0.1:18100
+info WD Proxy connect ECONNREFUSED 127.0.0.1:18100
+info XCUITestDriver@bd0e Determined the downstream protocol as 'W3C'
+info XCUITestDriver@bd0e WDA session startup took 3942ms
+info XCUITestDriver@bd0e WebDriverAgent version: '16.14.2'
+info XCUITestDriver@bd0e Requesting connection for device 15013501-2535-42EB-A67F-45B015DF18F4 on local port 18101, device port 18101
+info XCUITestDriver@bd0e Successfully requested the connection for 15013501-2535-42EB-A67F-45B015DF18F4:18101
+info appium-mcp IOS session created successfully with ID: 493cbb44-6141-407a-a4e9-eaf3f5088e62
+info appium-mcp {"tool":"appium_session_management","durationMs":110672,"isError":false}
+info appium-mcp [TOOL START] appium_get_page_source {
+info appium-mcp   saveToFile: false,
+info appium-mcp   sessionId: '493cbb44-6141-407a-a4e9-eaf3f5088e62'
+info appium-mcp }
+dbug XCUITestDriver@bd0e Matched '/source?format=xml&scope=AppiumAUT' to command name 'getPageSource'
+dbug XCUITestDriver@bd0e Proxying [GET /source?format=xml&scope=AppiumAUT] to [GET http://127.0.0.1:18100/session/6EE4BFBB-A897-4511-B06A-2D3F2C514A1D/source?format=xml&scope=AppiumAUT] with no body
+dbug XCUITestDriver@bd0e Got response with status 200: {"value":"<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<AppiumAUT>\n  <XCUIElementTypeApplication type=\"XCUIElementTypeApplication\" name=\"DiagnosticApp\" label=\"DiagnosticApp\" enabled=\"true\" visible=\"true\" accessible=\"false\" x=\"0\" y=\"0\" width=\"402\" height=\"874\" index=\"0\" traits=\"\" processId=\"55838\" bundleId=\"dev.jevbridge.diagnostic\">\n    <XCUIElementTypeWindow type=\"XCUIElementTypeWindow\" enabled=\"true\" visible=\"true\" accessible=\"false\" x=\"0\" y=\"0\" width=\"402\" height=\"874\" index=\"0\" traits=\"\">\n      <XCUIElementTypeOther type=\"XCUIElementTypeOther\" enabled=\"true\" visible=\"true\" accessible=\"false\" x=\"0\" y=\"0\" width=\"402\" height=\"874\" index=\"0\" traits=\"\">\n        <XCUIElementTypeOther type=\"XCUIElementTypeOther\" enabled=\"true\" visible=\"true\" accessible=\"false\" x=\"0\" y=\"0\" width=\"402\" height=\"874\" index=\"0\" traits=\"\">\n          <XCUIElementTypeOther type=\"XCUIElementTypeOther\" enabled=\"true\" visible=\"true\" accessibl…
+info appium-mcp {"tool":"appium_get_page_source","durationMs":335,"sessionId":"493cbb44-6141-407a-a4e9-eaf3f5088e62","isError":false}
+info appium-mcp [TOOL START] appium_find_elements {
+info appium-mcp   strategy: 'accessibility id',
+info appium-mcp   selector: 'choose.apple',
+info appium-mcp   sessionId: '493cbb44-6141-407a-a4e9-eaf3f5088e62'
+info appium-mcp }
+dbug XCUITestDriver@bd0e Valid locator strategies for this request: xpath, id, name, class name, -ios predicate string, -ios class chain, accessibility id, css selector
+dbug XCUITestDriver@bd0e Waiting up to 0 ms for condition
+dbug XCUITestDriver@bd0e Matched '/elements' to command name 'findElements'
+dbug XCUITestDriver@bd0e Proxying [POST /elements] to [POST http://127.0.0.1:18100/session/6EE4BFBB-A897-4511-B06A-2D3F2C514A1D/elements] with body: {"using":"accessibility id","value":"choose.apple"}
+dbug XCUITestDriver@bd0e Got response with status 200: {"value":[{"ELEMENT":"14000000-0000-0000-1EDA-000000000000","element-6066-11e4-a52e-4f735466cecf":"14000000-0000-0000-1EDA-000000000000"}],"sessionId":"6EE4BFBB-A897-4511-B06A-2D3F2C514A1D"}
+info appium-mcp {"tool":"appium_find_elements","durationMs":51,"sessionId":"493cbb44-6141-407a-a4e9-eaf3f5088e62","isError":false}
+info appium-mcp [TOOL START] appium_gesture {
+info appium-mcp   action: 'tap',
+info appium-mcp   elementUUID: '14000000-0000-0000-1EDA-000000000000',
+info appium-mcp   maxScrollAttempts: 10,
+info appium-mcp   sessionId: '493cbb44-6141-407a-a4e9-eaf3f5088e62'
+info appium-mcp }
+dbug XCUITestDriver@bd0e Matched '/element/14000000-0000-0000-1EDA-000000000000/click' to command name 'click'
+dbug XCUITestDriver@bd0e Proxying [POST /element/14000000-0000-0000-1EDA-000000000000/click] to [POST http://127.0.0.1:18100/session/6EE4BFBB-A897-4511-B06A-2D3F2C514A1D/element/14000000-0000-0000-1EDA-000000000000/click] with body: {}
+dbug XCUITestDriver@bd0e Got response with status 200: {"value":null,"sessionId":"6EE4BFBB-A897-4511-B06A-2D3F2C514A1D"}
+info appium-mcp {"tool":"appium_gesture","durationMs":528,"sessionId":"493cbb44-6141-407a-a4e9-eaf3f5088e62","isError":false}
+info appium-mcp [TOOL START] appium_get_page_source {
+info appium-mcp   saveToFile: false,
+info appium-mcp   sessionId: '493cbb44-6141-407a-a4e9-eaf3f5088e62'
+info appium-mcp }
+dbug XCUITestDriver@bd0e Matched '/source?format=xml&scope=AppiumAUT' to command name 'getPageSource'
+dbug XCUITestDriver@bd0e Proxying [GET /source?format=xml&scope=AppiumAUT] to [GET http://127.0.0.1:18100/session/6EE4BFBB-A897-4511-B06A-2D3F2C514A1D/source?format=xml&scope=AppiumAUT] with no body
+dbug XCUITestDriver@bd0e Got response with status 200: {"value":"<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<AppiumAUT>\n  <XCUIElementTypeApplication type=\"XCUIElementTypeApplication\" name=\"DiagnosticApp\" label=\"DiagnosticApp\" enabled=\"true\" visible=\"true\" accessible=\"false\" x=\"0\" y=\"0\" width=\"402\" height=\"874\" index=\"0\" traits=\"\" processId=\"55838\" bundleId=\"dev.jevbridge.diagnostic\">\n    <XCUIElementTypeWindow type=\"XCUIElementTypeWindow\" enabled=\"true\" visible=\"true\" accessible=\"false\" x=\"0\" y=\"0\" width=\"402\" height=\"874\" index=\"0\" traits=\"\">\n      <XCUIElementTypeOther type=\"XCUIElementTypeOther\" enabled=\"true\" visible=\"true\" accessible=\"false\" x=\"0\" y=\"0\" width=\"402\" height=\"874\" index=\"0\" traits=\"\">\n        <XCUIElementTypeOther type=\"XCUIElementTypeOther\" enabled=\"true\" visible=\"true\" accessible=\"false\" x=\"0\" y=\"0\" width=\"402\" height=\"874\" index=\"0\" traits=\"\">\n          <XCUIElementTypeOther type=\"XCUIElementTypeOther\" enabled=\"true\" visible=\"true\" accessibl…
+info appium-mcp {"tool":"appium_get_page_source","durationMs":110,"sessionId":"493cbb44-6141-407a-a4e9-eaf3f5088e62","isError":false}
+info appium-mcp [TOOL START] appium_screenshot {
+info appium-mcp   returnRawBase64: true,
+info appium-mcp   sessionId: '493cbb44-6141-407a-a4e9-eaf3f5088e62'
+info appium-mcp }
+dbug XCUITestDriver@bd0e Taking screenshot with WDA
+dbug XCUITestDriver@bd0e Matched '/screenshot' to command name 'getScreenshot'
+dbug XCUITestDriver@bd0e Proxying [GET /screenshot] to [GET http://127.0.0.1:18100/session/6EE4BFBB-A897-4511-B06A-2D3F2C514A1D/screenshot] with no body
+dbug XCUITestDriver@bd0e Got response with status 200: {"value":"iVBORw0KGgoAAAANSUhEUgAABLYAAAo+CAIAAAAd2FoqAAAAAXNSR0IArs4c6QAAAHplWElmTU0AKgAAAAgAAwEOAAIAAAALAAAAMgESAAMAAAABAAEAAIdpAAQAAAABAAAAPgAAAABTY3JlZW5zaG90AAAAA5KGAAcAAAASAAAAaKACAAQAAAABAAAEtqADAAQAAAABAAAKPgAAAABBU0NJSQAAAFNjcmVlbnNob3T9WxJyAAACo2lUWHRYTUw6Y29tLmFkb2JlLnhtcAAAAAAAPHg6eG1wbWV0YSB4bWxuczp4PSJhZG9iZTpuczptZXRhLyIgeDp4bXB0az0iWE1QIENvcmUgNi4wLjAiPgogICA8cmRmOlJERiB4bWxuczpyZGY9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkvMDIvMjItcmRmLXN5bnRheC1ucyMiPgogICAgICA8cmRmOkRlc2NyaXB0aW9uIHJkZjphYm91dD0iIgogICAgICAgICAgICB4bWxuczpkYz0iaHR0cDovL3B1cmwub3JnL2RjL2VsZW1lbnRzLzEuMS8iCiAgICAgICAgICAgIHhtbG5zOnRpZmY9Imh0dHA6Ly9ucy5hZG9iZS5jb20vdGlmZi8xLjAvIgogICAgICAgICAgICB4bWxuczpleGlmPSJodHRwOi8vbnMuYWRvYmUuY29tL2V4aWYvMS4wLyI+CiAgICAgICAgIDxkYzpkZXNjcmlwdGlvbj4KICAgICAgICAgICAgPHJkZjpBbHQ+CiAgICAgICAgICAgICAgIDxyZGY6bGkgeG1sOmxhbmc9IngtZGVmYXVsdCI+U2NyZWVuc2hvdDwvcmRmOmxpPgogICAgICAgICAgICA8L3JkZjpBbHQ+CiAgICAgICAgIDwvZGM6ZGVzY3JpcHRpb24+CiAgICAgICAgIDx0aWZmOk9yaWVudGF0aW9uPjE8L3RpZmY6T3JpZW50YXRpb24+CiAgICAgI…
+info appium-mcp {"tool":"appium_screenshot","durationMs":88,"sessionId":"493cbb44-6141-407a-a4e9-eaf3f5088e62","isError":false}
+info appium-mcp [TOOL START] appium_session_management { action: 'delete', sessionId: '493cbb44-6141-407a-a4e9-eaf3f5088e62' }
+info appium-mcp Deleting session 493cbb44-6141-407a-a4e9-eaf3f5088e62
+info BaseDriver Unsubscribing bd0e78ac-cd98-46cc-b9a1-b033514abc5d from topic 'xcuitest:sessionUdidClaimed'
+dbug XCUITestDriver@bd0e Proxying [DELETE /session/493cbb44-6141-407a-a4e9-eaf3f5088e62] to [DELETE http://127.0.0.1:18100/session/6EE4BFBB-A897-4511-B06A-2D3F2C514A1D] with no body
+dbug XCUITestDriver@bd0e Got response with status 200: {"value":null,"sessionId":null}
+info XCUITestDriver@bd0e Stopping the XCTest session
+info XCUITestDriver@bd0e Releasing connections for 15013501-2535-42EB-A67F-45B015DF18F4 device on any port number
+info XCUITestDriver@bd0e Found cached connections to release: ["15013501-2535-42EB-A67F-45B015DF18F4:18100","15013501-2535-42EB-A67F-45B015DF18F4:18101"]
+dbug XCUITestDriver@bd0e Cached connections count: 0
+dbug XCUITestDriver@bd0e Stopping iOS log capture
+info appium-mcp Session 493cbb44-6141-407a-a4e9-eaf3f5088e62 deleted successfully.
+info appium-mcp {"tool":"appium_session_management","durationMs":1410,"sessionId":"493cbb44-6141-407a-a4e9-eaf3f5088e62","isError":false}

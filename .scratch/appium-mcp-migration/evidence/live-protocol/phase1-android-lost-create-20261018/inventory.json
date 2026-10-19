@@ -1,0 +1,200 @@
+{
+  "sessions": [
+    {
+      "sessionId": "1c2f9f4d-5aeb-4b3c-a85b-685e890b071a",
+      "currentContext": "NATIVE_APP",
+      "isActive": true,
+      "ownership": "owned",
+      "platform": "Android",
+      "automationName": "UiAutomator2",
+      "deviceName": "Android Device",
+      "capabilities": {
+        "platformName": "Android",
+        "appium:automationName": "UiAutomator2",
+        "appium:deviceName": "Android Device",
+        "appium:settings[actionAcknowledgmentTimeout]": 0,
+        "appium:settings[waitForIdleTimeout]": 0,
+        "appium:settings[waitForSelectorTimeout]": 0,
+        "appium:autoGrantPermissions": true,
+        "appium:newCommandTimeout": 300,
+        "appium:udid": "emulator-5570",
+        "appium:appPackage": "dev.jevbridge.diagnostic",
+        "appium:appActivity": ".MainActivity",
+        "appium:systemPort": 18200,
+        "appium:mjpegServerPort": 18201,
+        "appium:uiautomator2ServerInstallTimeout": 120000,
+        "appium:adbExecTimeout": 120000,
+        "appium:noReset": true,
+        "appium:shouldTerminateApp": true
+      }
+    }
+  ],
+  "serverPid": 75117,
+  "owner": {
+    "version": 1,
+    "pid": 75117,
+    "pgid": 75117,
+    "sid": 75117,
+    "birth": "Sun Oct 18 22:41:42 2026",
+    "incarnation": "darwin:1792338102:798694",
+    "executable": "/opt/homebrew/Cellar/node/26.8.1/bin/node",
+    "script": "/Users/hugues_mini/Codes/AgentTools/jev-ios-bridge/.worktrees/feat/appium-mcp-migration/.scratch/appium-mcp-migration/candidate-stack/experiments/live-protocol-server.mjs",
+    "members": [
+      {
+        "pid": 75227,
+        "incarnation": "darwin:1792338104:41132"
+      },
+      {
+        "pid": 75230,
+        "incarnation": "darwin:1792338104:102111"
+      },
+      {
+        "pid": 75234,
+        "incarnation": "darwin:1792338104:171814"
+      },
+      {
+        "pid": 75240,
+        "incarnation": "darwin:1792338104:227588"
+      },
+      {
+        "pid": 75243,
+        "incarnation": "darwin:1792338104:293945"
+      },
+      {
+        "pid": 75246,
+        "incarnation": "darwin:1792338104:362534"
+      },
+      {
+        "pid": 75249,
+        "incarnation": "darwin:1792338104:363217"
+      },
+      {
+        "pid": 75254,
+        "incarnation": "darwin:1792338104:421246"
+      },
+      {
+        "pid": 75257,
+        "incarnation": "darwin:1792338104:479336"
+      },
+      {
+        "pid": 75260,
+        "incarnation": "darwin:1792338104:549293"
+      },
+      {
+        "pid": 75418,
+        "incarnation": "darwin:1792338105:374453"
+      },
+      {
+        "pid": 75422,
+        "incarnation": "darwin:1792338105:469815"
+      },
+      {
+        "pid": 75430,
+        "incarnation": "darwin:1792338105:470526"
+      },
+      {
+        "pid": 75449,
+        "incarnation": "darwin:1792338105:796621"
+      },
+      {
+        "pid": 75452,
+        "incarnation": "darwin:1792338105:867552"
+      },
+      {
+        "pid": 75455,
+        "incarnation": "darwin:1792338106:48769"
+      },
+      {
+        "pid": 75614,
+        "incarnation": "darwin:1792338106:559151"
+      },
+      {
+        "pid": 75627,
+        "incarnation": "darwin:1792338107:200140"
+      },
+      {
+        "pid": 75630,
+        "incarnation": "darwin:1792338107:300105"
+      },
+      {
+        "pid": 75633,
+        "incarnation": "darwin:1792338107:364355"
+      },
+      {
+        "pid": 75636,
+        "incarnation": "darwin:1792338107:366271"
+      },
+      {
+        "pid": 75639,
+        "incarnation": "darwin:1792338107:421527"
+      },
+      {
+        "pid": 75642,
+        "incarnation": "darwin:1792338107:422197"
+      },
+      {
+        "pid": 75646,
+        "incarnation": "darwin:1792338107:539195"
+      },
+      {
+        "pid": 75649,
+        "incarnation": "darwin:1792338107:596200"
+      },
+      {
+        "pid": 75652,
+        "incarnation": "darwin:1792338107:652659"
+      },
+      {
+        "pid": 75655,
+        "incarnation": "darwin:1792338107:653342"
+      },
+      {
+        "pid": 75774,
+        "incarnation": "darwin:1792338108:957488"
+      },
+      {
+        "pid": 75777,
+        "incarnation": "darwin:1792338109:56965"
+      },
+      {
+        "pid": 75792,
+        "incarnation": "darwin:1792338109:249441"
+      },
+      {
+        "pid": 75795,
+        "incarnation": "darwin:1792338109:249857"
+      },
+      {
+        "pid": 75818,
+        "incarnation": "darwin:1792338109:416523"
+      },
+      {
+        "pid": 75909,
+        "incarnation": "darwin:1792338113:599516"
+      },
+      {
+        "pid": 75912,
+        "incarnation": "darwin:1792338113:599999"
+      },
+      {
+        "pid": 75927,
+        "incarnation": "darwin:1792338113:801032"
+      },
+      {
+        "pid": 75930,
+        "incarnation": "darwin:1792338113:871226"
+      },
+      {
+        "pid": 75943,
+        "incarnation": "darwin:1792338113:958200"
+      }
+    ],
+    "runMarker": "0b5fbf41e8b84be09d73bb152e066e32",
+    "launchChain": [
+      {
+        "pid": 75117,
+        "incarnation": "darwin:1792338102:798694"
+      }
+    ]
+  }
+}

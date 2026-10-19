@@ -1,0 +1,143 @@
+WARN appium-mcp Policy denied tool registration: select_device (not_in_allowlist)
+WARN appium-mcp Policy denied tool registration: appium_mobile_device_control (not_in_allowlist)
+WARN appium-mcp Policy denied tool registration: appium_geolocation (not_in_allowlist)
+WARN appium-mcp Policy denied tool registration: appium_mobile_device_info (not_in_allowlist)
+WARN appium-mcp Policy denied tool registration: appium_mobile_file (not_in_allowlist)
+WARN appium-mcp Policy denied tool registration: appium_driver_settings (not_in_allowlist)
+WARN appium-mcp Policy denied tool registration: prepare_ios_simulator (not_in_allowlist)
+WARN appium-mcp Policy denied tool registration: appium_prepare_ios_real_device (not_in_allowlist)
+WARN appium-mcp Policy denied tool registration: appium_drag_and_drop (not_in_allowlist)
+WARN appium-mcp Policy denied tool registration: appium_perform_actions (not_in_allowlist)
+WARN appium-mcp Policy denied tool registration: appium_find_element (not_in_allowlist)
+WARN appium-mcp Policy denied tool registration: appium_mobile_press_key (not_in_allowlist)
+WARN appium-mcp Policy denied tool registration: appium_set_value (not_in_allowlist)
+WARN appium-mcp Policy denied tool registration: appium_mobile_keyboard (not_in_allowlist)
+WARN appium-mcp Policy denied tool registration: appium_get_text (not_in_allowlist)
+WARN appium-mcp Policy denied tool registration: appium_get_element_attribute (not_in_allowlist)
+WARN appium-mcp Policy denied tool registration: appium_mobile_clipboard (not_in_allowlist)
+WARN appium-mcp Policy denied tool registration: appium_get_active_element (not_in_allowlist)
+WARN appium-mcp Policy denied tool registration: appium_orientation (not_in_allowlist)
+WARN appium-mcp Policy denied tool registration: appium_alert (not_in_allowlist)
+WARN appium-mcp Policy denied tool registration: appium_get_window_size (not_in_allowlist)
+WARN appium-mcp Policy denied tool registration: appium_screen_recording (not_in_allowlist)
+WARN appium-mcp Policy denied tool registration: appium_app_lifecycle (not_in_allowlist)
+WARN appium-mcp Policy denied tool registration: appium_mobile_permissions (not_in_allowlist)
+WARN appium-mcp Policy denied tool registration: appium_context (not_in_allowlist)
+WARN appium-mcp Policy denied tool registration: generate_locators (not_in_allowlist)
+WARN appium-mcp Policy denied tool registration: appium_generate_tests (not_in_allowlist)
+info appium-mcp [TOOL START] appium_session_management {
+info appium-mcp   action: 'create',
+info appium-mcp   platform: 'ios',
+info appium-mcp   capabilities: '{"platformName":"iOS","appium:automationName":"XCUITest","appium:udid":"15013501-2535-42EB-A67F-45B015DF18F4","appium:simulatorDevicesSetPath":"/Users/hugues_mini/Codes/AgentTools/jev-ios-bridge/.worktrees/feat/appium-mcp-migration/.scratch/appium-mcp-migration/runtime/devices/simulators","appium:bundleId":"dev.jevbridge.diagnostic","appium:usePreinstalledWDA":true,"appium:prebuiltWDAPath":"/Users/hugues_mini/Codes/AgentTools/jev-ios-bridge/.worktrees/feat/appium-mcp-migration/.scratch/appium-mcp-migration/runtime/wda-16.14.2/Build/Products/Debug-iphonesimulator/WebDriverAgentRunner-Runner.app","appium:wdaLocalPort":18100,"appium:wdaLaunchTimeout":120000,"appium:mjpegServerPort":18101,"appium:shutdownOtherSimulators":false,"appium:noReset":true,"appium:shouldTerminateApp":true,"appium:settings[pageSourceExcludedAttributes]":""}'
+info appium-mcp }
+dbug appium-mcp Selected device info: undefined
+dbug appium-mcp Platform version: undefined
+info appium-mcp Creating new IOS session with capabilities: {
+info appium-mcp   "platformName": "iOS",
+info appium-mcp   "appium:automationName": "XCUITest",
+info appium-mcp   "appium:deviceName": "iPhone Simulator",
+info appium-mcp   "appium:newCommandTimeout": 300,
+info appium-mcp   "appium:settings[animationCoolOffTimeout]": 0.5,
+info appium-mcp   "appium:settings[maxTypingFrequency]": 45,
+info appium-mcp   "appium:udid": "15013501-2535-42EB-A67F-45B015DF18F4",
+info appium-mcp   "appium:simulatorDevicesSetPath": "/Users/hugues_mini/Codes/AgentTools/jev-ios-bridge/.worktrees/feat/appium-mcp-migration/.scratch/appium-mcp-migration/runtime/devices/simulators",
+info appium-mcp   "appium:bundleId": "dev.jevbridge.diagnostic",
+info appium-mcp   "appium:usePreinstalledWDA": true,
+info appium-mcp   "appium:prebuiltWDAPath": "/Users/hugues_mini/Codes/AgentTools/jev-ios-bridge/.worktrees/feat/appium-mcp-migration/.scratch/appium-mcp-migration/runtime/wda-16.14.2/Build/Products/Debug-iphonesimulator/WebDriverAgentRunner-Runner.app",
+info appium-mcp   "appium:wdaLocalPort": 18100,
+info appium-mcp   "appium:wdaLaunchTimeout": 120000,
+info appium-mcp   "appium:mjpegServerPort": 18101,
+info appium-mcp   "appium:shutdownOtherSimulators": false,
+info appium-mcp   "appium:noReset": true,
+info appium-mcp   "appium:shouldTerminateApp": true
+info appium-mcp }
+info appium-mcp Sending session with XCUITestDriver
+dbug XCUITestDriver@f562 
+dbug XCUITestDriver@f562 Creating session with W3C capabilities: {
+dbug XCUITestDriver@f562   "alwaysMatch": {
+dbug XCUITestDriver@f562     "platformName": "iOS",
+dbug XCUITestDriver@f562     "appium:automationName": "XCUITest",
+dbug XCUITestDriver@f562     "appium:deviceName": "iPhone Simulator",
+dbug XCUITestDriver@f562     "appium:newCommandTimeout": 300,
+dbug XCUITestDriver@f562     "appium:settings[animationCoolOffTimeout]": 0.5,
+dbug XCUITestDriver@f562     "appium:settings[maxTypingFrequency]": 45,
+dbug XCUITestDriver@f562     "appium:udid": "15013501-2535-42EB-A67F-45B015DF18F4",
+dbug XCUITestDriver@f562     "appium:simulatorDevicesSetPath": "/Users/hugues_mini/Codes/AgentTools/jev-ios-bridge/.worktrees/feat/appium-mcp-migration/.scratch/appium-mcp-migration/runtime/devices/simulators",
+dbug XCUITestDriver@f562     "appium:bundleId": "dev.jevbridge.diagnostic",
+dbug XCUITestDriver@f562     "appium:usePreinstalledWDA": true,
+dbug XCUITestDriver@f562     "appium:prebuiltWDAPath": "/Users/hugues_mini/Codes/AgentTools/jev-ios-bridge/.worktrees/feat/appium-mcp-migration/.scratch/appium-mcp-migration/runtime/wda-16.14.2/Build/Products/Debug-iphonesimulator/WebDriverAgentRunner-Runner.app",
+dbug XCUITestDriver@f562     "appium:wdaLocalPort": 18100,
+dbug XCUITestDriver@f562     "appium:wdaLaunchTimeout": 120000,
+dbug XCUITestDriver@f562     "appium:mjpegServerPort": 18101,
+dbug XCUITestDriver@f562     "appium:shutdownOtherSimulators": false,
+dbug XCUITestDriver@f562     "appium:noReset": true,
+dbug XCUITestDriver@f562     "appium:shouldTerminateApp": true
+dbug XCUITestDriver@f562   },
+dbug XCUITestDriver@f562   "firstMatch": [
+dbug XCUITestDriver@f562     {}
+dbug XCUITestDriver@f562   ]
+dbug XCUITestDriver@f562 }
+WARN XCUITestDriver@f562 The following provided capabilities were not recognized by this driver:
+WARN XCUITestDriver@f562   settings[animationCoolOffTimeout]
+WARN XCUITestDriver@f562   settings[maxTypingFrequency]
+WARN XCUITestDriver@f562 'platformVersion' capability ('undefined') is not a valid version number. Consider fixing it or be ready to experience an inconsistent driver behavior.
+info XCUITestDriver@f562 Session created with session id: 8d73f363-8ab9-4ff6-8d4c-621bb2b24294
+dbug XCUITest Current user: 'hugues_mini'
+info appium-mcp Client connected: FastMCPSession {
+info appium-mcp   _events: [Object: null prototype] {
+info appium-mcp     error: [Function: wrapper] { listener: [Function (anonymous)] }
+info appium-mcp   },
+info appium-mcp   _eventsCount: 1,
+info appium-mcp   _maxListeners: undefined,
+info appium-mcp   Symbol(shapeMode): false,
+info appium-mcp   Symbol(kCapture): false
+info appium-mcp }
+WARN XCUITest RemoteXPC devices listing unavailable: Tunnel registry port not found. Please run the tunnel creation script first See https://appium.github.io/appium-xcuitest-driver/latest/guides/remotexpc-tunnels-real-devices/ Falling back to appium-ios-device.
+info XCUITestDriver@f562 Constructing iOS simulator for Xcode version 27.0 with udid '15013501-2535-42EB-A67F-45B015DF18F4'
+info XCUITestDriver@f562 No platformVersion specified. Using device version: '26.5'
+info XCUITestDriver@f562 Determining device to run tests on: udid: '15013501-2535-42EB-A67F-45B015DF18F4', real device: false
+info BaseDriver Subscribing f5621a97-bf4b-4a6b-a79a-09b079bc5cf0 to topic 'xcuitest:sessionUdidClaimed'
+info BaseDriver Subscribing f5621a97-bf4b-4a6b-a79a-09b079bc5cf0 to topic 'xcuitest:sessionUdidContended'
+info BaseDriver Subscribing f5621a97-bf4b-4a6b-a79a-09b079bc5cf0 to topic 'xcuitest:sessionUdidReleased'
+info BaseDriver Unsubscribing f5621a97-bf4b-4a6b-a79a-09b079bc5cf0 from topic 'xcuitest:sessionUdidContended'
+info BaseDriver Unsubscribing f5621a97-bf4b-4a6b-a79a-09b079bc5cf0 from topic 'xcuitest:sessionUdidReleased'
+info XCUITestDriver@f562 Setting simulator devices set path to '/Users/hugues_mini/Codes/AgentTools/jev-ios-bridge/.worktrees/feat/appium-mcp-migration/.scratch/appium-mcp-migration/runtime/devices/simulators'
+info XCUITestDriver@f562 Using WDA path: '/Users/hugues_mini/Codes/AgentTools/jev-ios-bridge/.worktrees/feat/appium-mcp-migration/.scratch/appium-mcp-migration/candidate-stack/node_modules/appium-xcuitest-driver/node_modules/appium-webdriveragent'
+info XCUITestDriver@f562 Using WDA agent: '/Users/hugues_mini/Codes/AgentTools/jev-ios-bridge/.worktrees/feat/appium-mcp-migration/.scratch/appium-mcp-migration/candidate-stack/node_modules/appium-xcuitest-driver/node_modules/appium-webdriveragent/WebDriverAgent.xcodeproj'
+info XCUITestDriver@f562 Setting up simulator
+info XCUITestDriver@f562 Both Simulator with UDID '15013501-2535-42EB-A67F-45B015DF18F4' and the UI client are currently running
+info XCUITestDriver@f562 Requesting connection for device 15013501-2535-42EB-A67F-45B015DF18F4 on local port 18100
+info XCUITestDriver@f562 Successfully requested the connection for 15013501-2535-42EB-A67F-45B015DF18F4:18100
+info XCUITestDriver@f562 Installing prebuilt WDA at '/Users/hugues_mini/Codes/AgentTools/jev-ios-bridge/.worktrees/feat/appium-mcp-migration/.scratch/appium-mcp-migration/runtime/wda-16.14.2/Build/Products/Debug-iphonesimulator/WebDriverAgentRunner-Runner.app'. Bundle identifier: com.facebook.WebDriverAgentRunner.xctrunner.
+info XCUITestDriver@f562 The app has been successfully installed in 4778ms
+info XCUITestDriver@f562 Selected 'simulator' WebDriverAgent startup strategy
+info XCUITestDriver@f562 Launching WebDriverAgent on the device without xcodebuild
+info WD Proxy connect ECONNREFUSED 127.0.0.1:18100
+info WD Proxy connect ECONNREFUSED 127.0.0.1:18100
+info WD Proxy connect ECONNREFUSED 127.0.0.1:18100
+info WD Proxy connect ECONNREFUSED 127.0.0.1:18100
+info WD Proxy connect ECONNREFUSED 127.0.0.1:18100
+info WD Proxy connect ECONNREFUSED 127.0.0.1:18100
+info WD Proxy connect ECONNREFUSED 127.0.0.1:18100
+info WD Proxy connect ECONNREFUSED 127.0.0.1:18100
+info WD Proxy connect ECONNREFUSED 127.0.0.1:18100
+info WD Proxy connect ECONNREFUSED 127.0.0.1:18100
+info WD Proxy connect ECONNREFUSED 127.0.0.1:18100
+info WD Proxy connect ECONNREFUSED 127.0.0.1:18100
+info WD Proxy connect ECONNREFUSED 127.0.0.1:18100
+info WD Proxy connect ECONNREFUSED 127.0.0.1:18100
+info WD Proxy connect ECONNREFUSED 127.0.0.1:18100
+info WD Proxy connect ECONNREFUSED 127.0.0.1:18100
+info WD Proxy connect ECONNREFUSED 127.0.0.1:18100
+info WD Proxy connect ECONNREFUSED 127.0.0.1:18100
+info WD Proxy connect ECONNREFUSED 127.0.0.1:18100
+info WD Proxy connect ECONNREFUSED 127.0.0.1:18100
+info XCUITestDriver@f562 Determined the downstream protocol as 'W3C'
+info XCUITestDriver@f562 WDA session startup took 2852ms
+info XCUITestDriver@f562 WebDriverAgent version: '16.14.2'
+info XCUITestDriver@f562 Requesting connection for device 15013501-2535-42EB-A67F-45B015DF18F4 on local port 18101, device port 18101
+info XCUITestDriver@f562 Successfully requested the connection for 15013501-2535-42EB-A67F-45B015DF18F4:18101
+info appium-mcp IOS session created successfully with ID: 8d73f363-8ab9-4ff6-8d4c-621bb2b24294
+info appium-mcp {"tool":"appium_session_management","durationMs":20105,"isError":false}
+info appium-mcp [TOOL START] jev_phase1_inventory {}
+info appium-mcp {"tool":"jev_phase1_inventory","durationMs":0,"isError":false}

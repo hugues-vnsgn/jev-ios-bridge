@@ -1,0 +1,144 @@
+{
+  "sessions": [
+    {
+      "sessionId": "3260de84-c8df-4c0f-8aa4-e820a041d3e9",
+      "currentContext": "NATIVE_APP",
+      "isActive": true,
+      "ownership": "owned",
+      "platform": "iOS",
+      "automationName": "XCUITest",
+      "deviceName": "iPhone Simulator",
+      "capabilities": {
+        "platformName": "iOS",
+        "appium:automationName": "XCUITest",
+        "appium:deviceName": "iPhone Simulator",
+        "appium:newCommandTimeout": 300,
+        "appium:settings[animationCoolOffTimeout]": 0.5,
+        "appium:settings[maxTypingFrequency]": 45,
+        "appium:udid": "15013501-2535-42EB-A67F-45B015DF18F4",
+        "appium:simulatorDevicesSetPath": "/Users/hugues_mini/Codes/AgentTools/jev-ios-bridge/.worktrees/feat/appium-mcp-migration/.scratch/appium-mcp-migration/runtime/devices/simulators",
+        "appium:bundleId": "dev.jevbridge.diagnostic",
+        "appium:usePreinstalledWDA": true,
+        "appium:prebuiltWDAPath": "/Users/hugues_mini/Codes/AgentTools/jev-ios-bridge/.worktrees/feat/appium-mcp-migration/.scratch/appium-mcp-migration/runtime/wda-16.14.2/Build/Products/Debug-iphonesimulator/WebDriverAgentRunner-Runner.app",
+        "appium:wdaLocalPort": 18100,
+        "appium:wdaLaunchTimeout": 120000,
+        "appium:mjpegServerPort": 18101,
+        "appium:shutdownOtherSimulators": false,
+        "appium:noReset": true,
+        "appium:shouldTerminateApp": true
+      }
+    }
+  ],
+  "serverPid": 50472,
+  "owner": {
+    "version": 1,
+    "pid": 50472,
+    "pgid": 50472,
+    "sid": 50472,
+    "birth": "Mon Oct 19 08:02:09 2026",
+    "incarnation": "darwin:1792371729:871172",
+    "executable": "/opt/homebrew/Cellar/node/26.8.1/bin/node",
+    "script": "/Users/hugues_mini/Codes/AgentTools/jev-ios-bridge/.worktrees/feat/appium-mcp-migration/.scratch/appium-mcp-migration/candidate-stack/experiments/live-protocol-server.mjs",
+    "members": [
+      {
+        "pid": 50565,
+        "incarnation": "darwin:1792371733:567589"
+      },
+      {
+        "pid": 50579,
+        "incarnation": "darwin:1792371733:845007"
+      },
+      {
+        "pid": 50582,
+        "incarnation": "darwin:1792371733:928793"
+      },
+      {
+        "pid": 50589,
+        "incarnation": "darwin:1792371734:8245"
+      },
+      {
+        "pid": 50598,
+        "incarnation": "darwin:1792371734:111999"
+      },
+      {
+        "pid": 50650,
+        "incarnation": "darwin:1792371736:166328"
+      },
+      {
+        "pid": 50653,
+        "incarnation": "darwin:1792371736:166764"
+      },
+      {
+        "pid": 50656,
+        "incarnation": "darwin:1792371736:167507"
+      },
+      {
+        "pid": 50659,
+        "incarnation": "darwin:1792371736:167966"
+      },
+      {
+        "pid": 50662,
+        "incarnation": "darwin:1792371736:171205"
+      },
+      {
+        "pid": 50665,
+        "incarnation": "darwin:1792371736:172755"
+      },
+      {
+        "pid": 50668,
+        "incarnation": "darwin:1792371736:173130"
+      },
+      {
+        "pid": 50681,
+        "incarnation": "darwin:1792371736:259934"
+      },
+      {
+        "pid": 50684,
+        "incarnation": "darwin:1792371736:260445"
+      },
+      {
+        "pid": 50687,
+        "incarnation": "darwin:1792371736:325328"
+      },
+      {
+        "pid": 50690,
+        "incarnation": "darwin:1792371736:387894"
+      },
+      {
+        "pid": 50693,
+        "incarnation": "darwin:1792371736:389104"
+      },
+      {
+        "pid": 50696,
+        "incarnation": "darwin:1792371736:391547"
+      },
+      {
+        "pid": 50699,
+        "incarnation": "darwin:1792371736:393679"
+      },
+      {
+        "pid": 50702,
+        "incarnation": "darwin:1792371736:398510"
+      },
+      {
+        "pid": 50705,
+        "incarnation": "darwin:1792371736:403798"
+      },
+      {
+        "pid": 50709,
+        "incarnation": "darwin:1792371736:475489"
+      },
+      {
+        "pid": 50747,
+        "incarnation": "darwin:1792371737:525927"
+      }
+    ],
+    "runMarker": "4ea63d72854842c28df1c8cbfa3e0acd",
+    "launchChain": [
+      {
+        "pid": 50472,
+        "incarnation": "darwin:1792371729:871172"
+      }
+    ]
+  }
+}

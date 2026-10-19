@@ -1,0 +1,87 @@
+{
+  "version": 2,
+  "mode": "snapshot",
+  "scanCount": 1,
+  "readOnly": true,
+  "inspectionComplete": true,
+  "sharedServicesStopped": false,
+  "verified": true,
+  "quarantined": false,
+  "candidates": [
+    {
+      "pid": 91900,
+      "ppid": 87401,
+      "pgid": 91900,
+      "state": "Ss",
+      "sid": 91900,
+      "markerState": "present",
+      "incarnation": "darwin:1792338272:13031",
+      "active": true,
+      "runMarker": "e3438fc1ec004306b34ee033c2cd3c5f",
+      "launchChain": [
+        {
+          "pid": 91900,
+          "incarnation": "darwin:1792338272:13031"
+        }
+      ],
+      "owned": true,
+      "excludedSharedService": false,
+      "ownerPid": 91900,
+      "ownerIncarnation": "darwin:1792338272:13031",
+      "reason": null
+    },
+    {
+      "pid": 92430,
+      "ppid": 91900,
+      "pgid": 91900,
+      "state": "S",
+      "sid": 91900,
+      "markerState": "present",
+      "incarnation": "darwin:1792338278:71817",
+      "active": true,
+      "runMarker": "e3438fc1ec004306b34ee033c2cd3c5f",
+      "launchChain": [
+        {
+          "pid": 91900,
+          "incarnation": "darwin:1792338272:13031"
+        },
+        {
+          "pid": 92430,
+          "incarnation": "darwin:1792338278:71817"
+        }
+      ],
+      "owned": true,
+      "excludedSharedService": false,
+      "ownerPid": 91900,
+      "ownerIncarnation": "darwin:1792338272:13031",
+      "reason": null
+    },
+    {
+      "pid": 92619,
+      "ppid": 91900,
+      "pgid": 91900,
+      "state": "S",
+      "sid": 91900,
+      "markerState": "present",
+      "incarnation": "darwin:1792338280:298384",
+      "active": true,
+      "runMarker": "e3438fc1ec004306b34ee033c2cd3c5f",
+      "launchChain": [
+        {
+          "pid": 91900,
+          "incarnation": "darwin:1792338272:13031"
+        },
+        {
+          "pid": 92619,
+          "incarnation": "darwin:1792338280:298384"
+        }
+      ],
+      "owned": true,
+      "excludedSharedService": false,
+      "ownerPid": 91900,
+      "ownerIncarnation": "darwin:1792338272:13031",
+      "reason": null
+    }
+  ],
+  "unverifiedComponents": []
+}

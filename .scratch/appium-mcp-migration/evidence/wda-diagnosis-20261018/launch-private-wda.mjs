@@ -1,0 +1,16 @@
+import assert from 'node:assert/strict';
+import { readFileSync } from 'node:fs';
+import { dirname, resolve } from 'node:path';
+import { createRequire } from 'node:module';
+import { pathToFileURL } from 'node:url';
+const root = resolve('.scratch/appium-mcp-migration');
+const frozen = JSON.parse(readFileSync(resolve(root, 'evidence/phase1-freeze-20261018.json'), 'utf8'));
+assert.equal(frozen.ios.udid, '15013501-2535-42EB-A67F-45B015DF18F4');
+assert.equal(frozen.ios.set, resolve(root, 'runtime/devices/simulators'));
+const require = createRequire(resolve(root, 'candidate-stack/node_modules/appium-xcuitest-driver/package.json'));
+const packagePath = require.resolve('appium-ios-simulator/package.json');
+const manifest = JSON.parse(readFileSync(packagePath, 'utf8'));
+const { getSimulator } = await import(pathToFileURL(resolve(dirname(packagePath), manifest.exports['.'].import)).href);
+const device = await getSimulator(frozen.ios.udid, { devicesSetPath: frozen.ios.set });
+await device.launchApp('com.facebook.WebDriverAgentRunner.xctrunner', { environment: { USE_PORT: '18100', MJPEG_SERVER_PORT: '18101', WDA_PRODUCT_BUNDLE_IDENTIFIER: 'com.facebook.WebDriverAgentRunner.xctrunner' }, terminateExisting: true, activateSuspended: true });
+console.log('Pinned public simulator launchApp completed for the private runner');

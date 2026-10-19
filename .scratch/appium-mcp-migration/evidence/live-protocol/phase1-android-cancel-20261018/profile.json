@@ -1,0 +1,17 @@
+{
+  "platform": "android",
+  "caps": {
+    "platformName": "Android",
+    "appium:automationName": "UiAutomator2",
+    "appium:udid": "emulator-5570",
+    "appium:appPackage": "dev.jevbridge.diagnostic",
+    "appium:appActivity": ".MainActivity",
+    "appium:systemPort": 18200,
+    "appium:mjpegServerPort": 18201,
+    "appium:uiautomator2ServerInstallTimeout": 120000,
+    "appium:adbExecTimeout": 120000,
+    "appium:noReset": true,
+    "appium:shouldTerminateApp": true
+  },
+  "faultMode": "cancel"
+}

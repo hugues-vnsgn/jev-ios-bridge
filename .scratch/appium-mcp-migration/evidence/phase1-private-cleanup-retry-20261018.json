@@ -1,0 +1,15 @@
+{
+  "command": [
+    "python3",
+    ".scratch/appium-mcp-migration/candidate-stack/experiments/stop-private-device.py",
+    ".scratch/appium-mcp-migration/evidence/phase1-freeze-20261018.json",
+    "ios",
+    "stop"
+  ],
+  "exitCode": 1,
+  "stdout": "",
+  "stderr": "Traceback (most recent call last):\n  File \"/Users/hugues_mini/Codes/AgentTools/jev-ios-bridge/.worktrees/feat/appium-mcp-migration/.scratch/appium-mcp-migration/candidate-stack/experiments/stop-private-device.py\", line 52, in <module>\n    if mode == \"stop\" and ios_state() != \"Shutdown\":\n                          ~~~~~~~~~^^\n  File \"/Users/hugues_mini/Codes/AgentTools/jev-ios-bridge/.worktrees/feat/appium-mcp-migration/.scratch/appium-mcp-migration/candidate-stack/experiments/stop-private-device.py\", line 36, in ios_state\n    result = run([\"xcrun\", \"simctl\", \"--set\", preparation[\"ios\"][\"set\"], \"list\", \"devices\", \"-j\"])\n  File \"/Users/hugues_mini/Codes/AgentTools/jev-ios-bridge/.worktrees/feat/appium-mcp-migration/.scratch/appium-mcp-migration/candidate-stack/experiments/stop-private-device.py\", line 30, in run\n    result = subprocess.run(args, capture_output=True, text=True, timeout=min(timeout, remaining))\n  File \"/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/subprocess.py\", line 557, in run\n    stdout, stderr = process.communicate(input, timeout=timeout)\n                     ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/subprocess.py\", line 1221, in communicate\n    stdout, stderr = self._communicate(input, endtime, timeout)\n                     ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/subprocess.py\", line 2154, in _communicate\n    self._check_timeout(endtime, orig_timeout, stdout, stderr)\n    ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/subprocess.py\", line 1268, in _check_timeout\n    raise TimeoutExpired(\n    ...<2 lines>...\n            stderr=b''.join(stderr_seq) if stderr_seq else None)\nsubprocess.TimeoutExpired: Command '['xcrun', 'simctl', '--set', '/Users/hugues_mini/Codes/AgentTools/jev-ios-bridge/.worktrees/feat/appium-mcp-migration/.scratch/appium-mcp-migration/runtime/devices/simulators', 'list', 'devices', '-j']' timed out after 15 seconds\n",
+  "result": "private simctl list timed out again; private shutdown remains unverified",
+  "sharedServicesStopped": false,
+  "otherDevicesControlled": false
+}

@@ -1,0 +1,35 @@
+{
+  "version": 2,
+  "mode": "snapshot",
+  "scanCount": 1,
+  "readOnly": true,
+  "inspectionComplete": true,
+  "sharedServicesStopped": false,
+  "verified": true,
+  "quarantined": false,
+  "candidates": [
+    {
+      "pid": 66583,
+      "ppid": 60278,
+      "pgid": 66583,
+      "state": "Ss",
+      "sid": 66583,
+      "markerState": "present",
+      "incarnation": "darwin:1792338015:608268",
+      "active": true,
+      "runMarker": "d3a1baf846144374be85da217dd33dc2",
+      "launchChain": [
+        {
+          "pid": 66583,
+          "incarnation": "darwin:1792338015:608268"
+        }
+      ],
+      "owned": true,
+      "excludedSharedService": false,
+      "ownerPid": 66583,
+      "ownerIncarnation": "darwin:1792338015:608268",
+      "reason": null
+    }
+  ],
+  "unverifiedComponents": []
+}

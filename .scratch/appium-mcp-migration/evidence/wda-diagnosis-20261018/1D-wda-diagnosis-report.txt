@@ -1,0 +1,9 @@
+Bounded WDA diagnosis complete. Only private simulator15013501 was booted and launched.
+Exact pinned public simulator launchApp used terminateExisting and activateSuspended, with USE_PORT18100.
+Runner log shows synthesized XCTest configuration and WDA16.14.2 server listening; /status returned HTTP200 after27.76s on iOS26.5 with SDK27.0.
+No runner crash or incompatibility was observed; preinstalled launch is supported in this reproduction.
+Selected fix(c): raise wdaLaunchTimeout to120s. Cold-start timing is an inference; the earlier60s failure was not reproduced.
+Private runner terminated and simulator shut down afterward. Initial unsupported simctl flag attempt is retained separately; it never launched WDA.
+Evidence:1D-wda-diagnosis.json,1D-wda-runner.log,1D-wda-diagnosis-invalid-cli.json.
+Diagnosis tokens:4,141,808 processed, including4,102,144 cached. Cap15M.
+Next: re-freeze the120s budget and retry iOS normal once, then Android serially if iOS remains blocked.
