@@ -1,7 +1,7 @@
 # Appium Phase 2 decision map
 
 Labels: wayfinder:map
-Status: charted
+Status: closed
 
 ## Destination
 
@@ -39,6 +39,7 @@ real-store migration needs a separate owner go-ahead.
 - [Legacy lease import](issues/07-legacy-lease-import.md): repeatable offline import after the upgrade; every leftover legacy lease becomes a historical quarantine (UUID exact, others name-matched); live PID refuses; imported files count as known markers.
 - [Spec consistency gaps](issues/08-spec-consistency-gaps.md): ten cross-section gaps closed in one batch: recovery claim, settled MobileBuildMCP evidence, upgrade recovery event, fresh-store mode, `observed` outcome, budget fields, multi-transport ambiguity, release refusal order, identity refusal reasons, reused PIDs.
 - [Activation runbook for the real store](issues/09-activation-runbook.md): requirements now, runbook text in 2B; read-only preflight; order quiesce, recover, update old installs, upgrade, import, verify plus one smoke; stop on any refusal; private records.
+- [Phase 2 package briefs](issues/10-package-briefs.md): [build plan](plan.md) of nine PRs split by file ownership, two workers in pairs, schema 3 holds every Phase 2 record, fake-store live lanes, owner lands the stack.
 
 ## Route
 
@@ -65,8 +66,7 @@ flowchart LR
     classDef claimed fill:#dbeafe,stroke:#2563eb,color:#1e3a8a
     classDef frontier fill:#dcfce7,stroke:#16a34a,color:#14532d,stroke-width:2px
     classDef blocked fill:#ffffff,stroke:#a1a1aa,color:#18181b
-    class T01,T02,T03,T04,T05,T06,T07,T08,T09 resolved
-    class T10 claimed
+    class T01,T02,T03,T04,T05,T06,T07,T08,T09,T10 resolved
 ```
 <!-- route:end -->
 
