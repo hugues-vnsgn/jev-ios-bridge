@@ -139,7 +139,7 @@ Each live lane runs on its own cloud VM at the PR head. Drive through `control-u
 
 - [ ] Create `src/profiles.ts` and `tests/profiles.test.ts`.
 - [ ] Edit `src/cli.ts`, `src/capture.ts`, `src/mcp/index.ts`, `src/service.ts`, `src/scripted/run.ts` (phase deadlines only), `src/device/index.ts` (selection only), `src/device/factory.ts`.
-- [ ] Edit `tests/service.test.ts`, `tests/mcp.test.ts`, `tests/device-factory.test.ts`, `tests/android-capture.test.ts`.
+- [ ] Edit `tests/service.test.ts`, `tests/mcp.test.ts`, `tests/device-factory.test.ts`, `tests/android-capture.test.ts`, `tests/contract.test.ts`, `tests/golden/mcp.json`, `tests/docs.test.ts`, `docs/guide/06-running.md`.
 
 **Build.**
 
