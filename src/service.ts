@@ -71,7 +71,7 @@ export class BridgeService {
     const environment = this.options.env ?? process.env;
     const parsedScenario = resolveScriptValues(parseScriptedScenarioSource(input), environment);
     const selected = typeof profile === 'object' ? profile.selected
-      : await readProfile(resolve(environment.JEV_PROJECT_DIR?.trim() || process.cwd()), profile);
+      : await readProfile(resolve(environment.JEV_PROJECT_DIR?.trim() || process.cwd()), profile, parsedScenario);
     const parsedLimits = drivenStartLimitsSchema.parse(requestedLimits);
     const budgets = profileLimits(selected, {
       ...(parsedLimits.startupMs === undefined ? {} : { startupMs: parsedLimits.startupMs }),

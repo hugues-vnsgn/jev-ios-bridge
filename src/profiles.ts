@@ -89,7 +89,8 @@ export function profileScenario(scenario: ScriptedScenario, selected: SelectedPr
     : { ...scenario, device: device as { udid: string } };
 }
 
-export async function readProfile(projectDir: string, explicit?: string): Promise<SelectedProfile | undefined> {
+export async function readProfile(projectDir: string, explicit?: string,
+  scenario?: Pick<ScriptedScenario, 'platform'>): Promise<SelectedProfile | undefined> {
   let source: string;
   try { source = await readFile(join(projectDir, '.jev', 'profiles.json'), 'utf8'); }
   catch (error) {
@@ -104,5 +105,6 @@ export async function readProfile(projectDir: string, explicit?: string): Promis
   if (name === undefined) return undefined;
   const profile = Object.hasOwn(file.profiles, name) ? file.profiles[name] : undefined;
   if (!profile) throw new ProfileError('PROFILE_NOT_FOUND');
+  if (explicit === undefined && scenario !== undefined && profile.platform !== (scenario.platform ?? 'ios')) return undefined;
   return { profile, binding: { name, digest: createHash('sha256').update(JSON.stringify(profile)).digest('hex') } };
 }

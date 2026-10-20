@@ -179,7 +179,7 @@ async function dispatchCli(args: string[], composition: CliComposition): Promise
   let selectedProfile: SelectedProfile | undefined;
   if (command === 'run') {
     script = resolveScriptValues(parseScriptedScenarioSource(await readScript(argument!)), process.env);
-    selectedProfile = await readProfile(projectDir, parsed.values.profile);
+    selectedProfile = await readProfile(projectDir, parsed.values.profile, script);
     const selectedScript = selectedProfile ? profileScenario(script, selectedProfile) : script;
     if (!process.env.TYPESAFE_API_KEY?.trim()) throw new StartError('TYPESAFE_API_KEY is not set; load your .env with node --env-file=/path/to/.env');
     if (selectedScript.platform === 'android') selectAndroidDeviceName(selectedScript.device, process.env.JEV_ANDROID_DEVICE);
