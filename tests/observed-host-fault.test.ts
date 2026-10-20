@@ -212,7 +212,7 @@ for (const transport of ['cli', 'mcp'] as const) {
     assert.equal(deviceCalls(f.calls).filter(op => op === 'create').length, 2);
     const calls = deviceCalls(f.calls);
     assert.deepEqual(f.admission.acquire({ device: unknownId, attempt: { kind: 'legacy', id: 'legacy' }, digest: 'legacy', intent: {} }), { kind: 'refused', reason: 'HOST_CREATION_UNRESOLVED', blockingAllocationId: failed.allocationId });
-    const legacy = new MobileBuildMcpDriver({ identityProbe: fakeSimulatorProbe(fixtureDevice), cwd: f.root, admission: f.admission, lockRoot: join(f.root, 'legacy-locks'), stopAppOnClose: false, fakeBackend: { runner: f.runner, window: undefined } });
+    const legacy = new MobileBuildMcpDriver({ identityProbe: fakeSimulatorProbe(fixtureDevice, unknownId), cwd: f.root, admission: f.admission, lockRoot: join(f.root, 'legacy-locks'), stopAppOnClose: false, fakeBackend: { runner: f.runner, window: undefined } });
     await assert.rejects(legacy.prepare({ app: { bundleId: 'org.example.fixture' }, device: { udid: unknownId } }, new AbortController().signal), /HOST_CREATION_UNRESOLVED/);
     f.configure({ inventory: f.inventory(unknownId) });
     const supplied = (await call('observed-allocate', 'prepare_observed_allocation', { ...f.request('supplied'), source: { kind: 'supplied', inventoryId: 'stock-one' } })).reply;

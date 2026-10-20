@@ -589,11 +589,6 @@ export class AndroidDriver implements DeviceDriver {
     }
   }
 
-  /**
-   * `capture`'s parts, in `prepare`'s order: the tools check, the device and the lease, the agent check and
-   * sweep, the device checks (with no app to look for) and wake, then the agent. A refusal before the agent
-   * start releases the lease as `prepare`'s does. Then one settled snapshot, mapped with a fresh sequence.
-   */
   private async captureIssued(signal: AbortSignal): Promise<Snapshot> {
     if (this.lease.held) throw new Error('Driver is already prepared');
     const { tools, serial, identity, deadHolder } = await this.takeDevice(signal);

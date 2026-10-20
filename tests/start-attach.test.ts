@@ -163,13 +163,14 @@ test('Android attach takes the lease, checks the app is in front, starts the str
   });
 });
 
-test('Android attach checks the app is in front before it starts any stream', async () => {
+test('Android attach checks the app is in front before waking the screen or starting any stream', async () => {
   await withAndroid(() => 'com.example.android', api31(), async ({ adb, driver }) => {
     await driver.prepare(androidAttach, signal());
     const order = adb.calls.map(call => call[0] === '(logcat)' ? 'stream' : shellLine(call));
-    assert.ok(order.indexOf("'dumpsys' 'activity' 'activities'") < order.indexOf('stream'));
-    assert.ok(order.indexOf("'dumpsys' 'window' 'policy'") < order.indexOf("'dumpsys' 'activity' 'activities'"),
-      'the screen is checked (and woken) first');
+    assert.deepEqual(order.filter(command => command === "'dumpsys' 'activity' 'activities'" ||
+      command === "'dumpsys' 'window' 'policy'" || command === 'stream'), [
+      "'dumpsys' 'activity' 'activities'", "'dumpsys' 'window' 'policy'", 'stream', 'stream',
+    ]);
   });
 });
 

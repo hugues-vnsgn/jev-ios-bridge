@@ -145,11 +145,9 @@ A `do` step that goes back to Claude records a hand-back reason, such as `NONE_F
 
 `DEVICE_IDENTITY_CONFLICT` refuses admission without quarantining the device. `DEVICE_IDENTITY_UNAVAILABLE` carries exactly one of these reasons. These reasons are refusal details, not separate verdict codes.
 
-| Reason | Meaning |
-| --- | --- |
-| `NONDEFAULT_DEVICE_SET` | The iOS simulator belongs to a nondefault device set. |
-| `EMULATOR_VERSION_UNSUPPORTED` | The Android emulator version is older than 30. |
-| `REMOTE_CONSOLE` | The emulator console is not on this host's loopback. |
-| `MALFORMED_PROVENANCE` | A required provenance reply is missing, malformed, or invalid. |
-| `PROVENANCE_INACCESSIBLE` | Required provenance cannot be read, including when console access requires another user's files. |
-| `PROBE_TIMEOUT` | A read-only identity probe exceeded its command deadline. |
+- `NONDEFAULT_DEVICE_SET` means the iOS simulator belongs to a nondefault device set.
+- `EMULATOR_VERSION_UNSUPPORTED` means the Android emulator version is older than 30.
+- `REMOTE_CONSOLE` means the emulator console is not on this host's loopback.
+- `MALFORMED_PROVENANCE` means a required provenance reply is missing, malformed, or invalid.
+- `PROVENANCE_INACCESSIBLE` means required provenance cannot be read, including when console access requires another user's files.
+- `PROBE_TIMEOUT` means a read-only identity probe exceeded its command deadline.
