@@ -78,7 +78,8 @@ def scan(root, owner, profile):
     assert owner.get('launchChain') == [ancestor], 'MISSING_LAUNCH_ANCESTRY'
     timeout = profile.get('inspectionTimeoutSeconds', 10) if profile.get('fakeOnly') else 10
     assert 0 < timeout <= 20
-    result = subprocess.run(['ps', '-Eww', '-axo', 'pid=,ppid=,pgid=,stat=,command='],
+    ps_args = ['ps', '-Eww', '-axo'] if sys.platform == 'darwin' else ['ps', 'axeww', '-o']
+    result = subprocess.run(ps_args + ['pid=,ppid=,pgid=,stat=,command='],
                             capture_output=True, text=True, timeout=timeout)
     assert result.returncode == 0 and result.stdout.strip(), 'HOST_INVENTORY_FAILED'
     if profile.get('fakeOnly'):

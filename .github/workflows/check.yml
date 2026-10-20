@@ -18,6 +18,8 @@ jobs:
           node-version: ${{ matrix.node }}
           cache: npm
       - run: npm ci
+      - name: Install Appium host regression dependencies
+        run: npm ci --prefix .scratch/appium-mcp-migration/candidate-stack
       - run: npm run check
       - name: Native observation host regressions
         run: python3 -W error::ResourceWarning -m unittest discover -s spikes/native-owner/host -p 'test_*.py' -v
