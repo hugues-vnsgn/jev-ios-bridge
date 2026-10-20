@@ -13,6 +13,7 @@ import { attachLogPane } from '../src/logpane/attach.js';
 import { Capture } from './fixtures/capture.js';
 import { readRunEvents } from '../src/log/index.js';
 import { fakeDrivenJudge } from './fixtures/driven-judge.js';
+import { selectAndroidDeviceName, selectDeviceId } from '../src/device/index.js';
 
 const screen = () => ({ deviceId: 'test', sequence: 1, capturedAt: Date.now(),
   expiresAt: Date.now() + 60_000, truncated: false,
@@ -32,6 +33,49 @@ async function until(check: () => boolean): Promise<void> {
 }
 const script = (steps = [checkpoint('verify')]) => ({ version: 1, app: { bundleId: 'com.example.app' },
   values: {}, steps });
+
+for (const platform of ['ios', 'android', undefined] as const) {
+  test(`service ignores the other-platform default for ${platform ?? 'legacy iOS'}, but refuses it explicitly before effects`, async () => {
+    const root = await mkdtemp(join(tmpdir(), 'jev-service-default-platform-'));
+    const runs = join(root, 'runs');
+    const udid = 'ABCDEF00-0000-4000-8000-000000000001';
+    await mkdir(join(root, '.jev'));
+    const source = JSON.stringify({ version: 1, defaultProfile: 'other', profiles: { other: platform === 'android'
+      ? { platform: 'ios', deviceCategory: 'ios-simulator', device: udid, app: 'com.other.app', budgets: { operationMs: 1000 } }
+      : { platform: 'android', deviceCategory: 'android-emulator', device: 'Other_AVD', app: 'com.other.app', budgets: { operationMs: 1000 } },
+    } });
+    await writeFile(join(root, '.jev/profiles.json'), source);
+    const environment = { JEV_PROJECT_DIR: root, JEV_DEVICE_UDID: udid, JEV_ANDROID_DEVICE: 'Legacy_AVD' };
+    const inputs: unknown[] = [];
+    const prepared: string[] = [];
+    const service = new BridgeService({ baseDir: runs, env: environment,
+      createDriver: (scenario, run) => {
+        inputs.push({ device: scenario.device ?? null, profile: run.profile ?? null });
+        return { async prepare() {
+          prepared.push(scenario.platform === 'android'
+            ? selectAndroidDeviceName(scenario.device, environment.JEV_ANDROID_DEVICE)
+            : await selectDeviceId(root, scenario.device?.udid, environment.JEV_DEVICE_UDID));
+        }, async observe() { return screen(); }, async act() {}, async close() {} };
+      }, createJudge: () => ({ async judge() { return { probabilities: { shown: 1 }, inputTokens: 0,
+        latencyMs: 0, model: 'jev-1.13.0' }; } }),
+    });
+    const scenario = { ...script(), ...(platform ? { platform } : {}), app: platform === 'android'
+      ? { package: 'com.example.app' } : { bundleId: 'com.example.app' } };
+    try {
+      await assert.rejects(service.start(scenario, {}, 'other'), { code: 'PROFILE_CONFLICT',
+        message: 'Scenario platform conflicts with the selected profile.' });
+      assert.deepEqual(inputs, []);
+      assert.deepEqual(await readdir(root), ['.jev']);
+      const { runId } = await service.start(scenario, { operationMs: 2000 });
+      assert.equal((await service.status(runId, 2000)).report.verdict, 'passed');
+      assert.deepEqual(inputs, [{ device: null, profile: null }]);
+      assert.deepEqual(prepared, [platform === 'android' ? 'Legacy_AVD' : udid]);
+      const started = (await readRunEvents(runs, runId)).find(event => event.type === 'started')!;
+      assert.equal(Object.hasOwn(started.data, 'profile'), false);
+      assert.equal(Object.hasOwn(started.data, 'budgets'), false);
+    } finally { await service.close(); await rm(root, { recursive: true, force: true }); }
+  });
+}
 
 test('profile refusal precedes driver creation and a selected run keeps its binding after the file changes', async () => {
   const root = await mkdtemp(join(tmpdir(), 'jev-service-profile-'));

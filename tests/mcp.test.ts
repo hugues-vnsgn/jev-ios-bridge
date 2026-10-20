@@ -7,6 +7,39 @@ import { join } from 'node:path';
 import { createInterface } from 'node:readline';
 import { openMcpSession } from './fixtures/mcp-session.js';
 
+for (const platform of ['ios', 'android'] as const) {
+  test(`MCP start_scenario ignores the other-platform default for ${platform}`, { timeout: 10000 }, async () => {
+    const root = await mkdtemp(join(tmpdir(), 'jev-mcp-default-platform-'));
+    await mkdir(join(root, '.jev'));
+    const source = JSON.stringify({ version: 1, defaultProfile: 'other', profiles: { other: platform === 'android'
+      ? { platform: 'ios', deviceCategory: 'ios-simulator', device: 'ABCDEF00-0000-4000-8000-000000000001' }
+      : { platform: 'android', deviceCategory: 'android-emulator', device: 'Other_AVD' },
+    } });
+    await writeFile(join(root, '.jev/profiles.json'), source);
+    const session = await openMcpSession('default-platform', { env: { JEV_PROJECT_DIR: root } });
+    const scenario = { version: 1, platform, app: platform === 'android'
+      ? { package: 'com.example.app' } : { bundleId: 'com.example.app' }, values: {},
+      steps: [{ id: 'check', kind: 'checkpoint', guard: { present: [{ role: 'text', label: 'SCREEN_EVIDENCE_MARKER' }] },
+        assertions: [{ id: 'shown', claim: 'Visible' }] }] };
+    try {
+      const refused = await session.callTool('start_scenario', { scenario, profile: 'other' });
+      assert.equal(refused.isError, true);
+      assert.equal(refused.content[0].text, 'PROFILE_CONFLICT');
+      const started = await session.callTool('start_scenario', { scenario });
+      assert.notEqual(started.isError, true, JSON.stringify(started));
+      const { runId } = JSON.parse(started.content[0].text);
+      const report = await session.callTool('get_report', { runId, waitMs: 2000 });
+      assert.match(report.content[0].text, /Status: finished/);
+      assert.match(report.content[0].text, /PASSED/);
+      const logPath = report.content[0].text.match(/Full local evidence: (.+\/run\.jsonl)/)?.[1];
+      assert.equal(typeof logPath, 'string');
+      const events = (await readFile(logPath, 'utf8')).trim().split('\n').map(line => JSON.parse(line));
+      assert.equal(Object.hasOwn(events.find(event => event.type === 'started').data, 'profile'), false);
+      assert.equal(await readFile(join(root, '.jev/profiles.json'), 'utf8'), source);
+    } finally { await session.close(); await rm(root, { recursive: true, force: true }); }
+  });
+}
+
 test('MCP exposes profiles and refuses wider budgets before creating a run', { timeout: 10000 }, async () => {
   const root = await mkdtemp(join(tmpdir(), 'jev-mcp-profile-'));
   await mkdir(join(root, '.jev'));
