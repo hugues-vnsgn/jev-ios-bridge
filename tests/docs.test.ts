@@ -147,7 +147,8 @@ test('the running page documents capture with every option in the CLI\'s usage l
 
 test('the running page explains cross-platform defaults and unset profile budgets', () => {
   const page = guidePage('06-running.md');
-  assert.match(page, /defaultProfile` for the other platform refuses a run/);
+  assert.match(page, /defaultProfile` for the other platform is ignored/);
+  assert.match(page, /explicit profile for the other platform still refuses with `PROFILE_CONFLICT`/);
   assert.match(page, /ignores an iOS `defaultProfile`/);
   assert.match(page, /explicit iOS `--profile` refuses with `PROFILE_CONFLICT`/);
   assert.match(page, /unset has no profile ceiling/);
