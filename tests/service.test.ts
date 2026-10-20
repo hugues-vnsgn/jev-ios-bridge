@@ -11,6 +11,9 @@ import { createDriverFactory } from '../src/device/factory.js';
 import { androidTools } from '../src/device/android/tools.js';
 import { attachLogPane } from '../src/logpane/attach.js';
 import { Capture } from './fixtures/capture.js';
+import { readRunEvents } from '../src/log/index.js';
+import { fakeDrivenJudge } from './fixtures/driven-judge.js';
+import { selectAndroidDeviceName, selectDeviceId } from '../src/device/index.js';
 
 const screen = () => ({ deviceId: 'test', sequence: 1, capturedAt: Date.now(),
   expiresAt: Date.now() + 60_000, truncated: false,
@@ -30,6 +33,155 @@ async function until(check: () => boolean): Promise<void> {
 }
 const script = (steps = [checkpoint('verify')]) => ({ version: 1, app: { bundleId: 'com.example.app' },
   values: {}, steps });
+
+for (const platform of ['ios', 'android', undefined] as const) {
+  test(`service ignores the other-platform default for ${platform ?? 'legacy iOS'}, but refuses it explicitly before effects`, async () => {
+    const root = await mkdtemp(join(tmpdir(), 'jev-service-default-platform-'));
+    const runs = join(root, 'runs');
+    const udid = 'ABCDEF00-0000-4000-8000-000000000001';
+    await mkdir(join(root, '.jev'));
+    const source = JSON.stringify({ version: 1, defaultProfile: 'other', profiles: { other: platform === 'android'
+      ? { platform: 'ios', deviceCategory: 'ios-simulator', device: udid, app: 'com.other.app', budgets: { operationMs: 1000 } }
+      : { platform: 'android', deviceCategory: 'android-emulator', device: 'Other_AVD', app: 'com.other.app', budgets: { operationMs: 1000 } },
+    } });
+    await writeFile(join(root, '.jev/profiles.json'), source);
+    const environment = { JEV_PROJECT_DIR: root, JEV_DEVICE_UDID: udid, JEV_ANDROID_DEVICE: 'Legacy_AVD' };
+    const inputs: unknown[] = [];
+    const prepared: string[] = [];
+    const service = new BridgeService({ baseDir: runs, env: environment,
+      createDriver: (scenario, run) => {
+        inputs.push({ device: scenario.device ?? null, profile: run.profile ?? null });
+        return { async prepare() {
+          prepared.push(scenario.platform === 'android'
+            ? selectAndroidDeviceName(scenario.device, environment.JEV_ANDROID_DEVICE)
+            : await selectDeviceId(root, scenario.device?.udid, environment.JEV_DEVICE_UDID));
+        }, async observe() { return screen(); }, async act() {}, async close() {} };
+      }, createJudge: () => ({ async judge() { return { probabilities: { shown: 1 }, inputTokens: 0,
+        latencyMs: 0, model: 'jev-1.13.0' }; } }),
+    });
+    const scenario = { ...script(), ...(platform ? { platform } : {}), app: platform === 'android'
+      ? { package: 'com.example.app' } : { bundleId: 'com.example.app' } };
+    try {
+      await assert.rejects(service.start(scenario, {}, 'other'), { code: 'PROFILE_CONFLICT',
+        message: 'Scenario platform conflicts with the selected profile.' });
+      assert.deepEqual(inputs, []);
+      assert.deepEqual(await readdir(root), ['.jev']);
+      const { runId } = await service.start(scenario, { operationMs: 2000 });
+      assert.equal((await service.status(runId, 2000)).report.verdict, 'passed');
+      assert.deepEqual(inputs, [{ device: null, profile: null }]);
+      assert.deepEqual(prepared, [platform === 'android' ? 'Legacy_AVD' : udid]);
+      const started = (await readRunEvents(runs, runId)).find(event => event.type === 'started')!;
+      assert.equal(Object.hasOwn(started.data, 'profile'), false);
+      assert.equal(Object.hasOwn(started.data, 'budgets'), false);
+    } finally { await service.close(); await rm(root, { recursive: true, force: true }); }
+  });
+}
+
+test('profile refusal precedes driver creation and a selected run keeps its binding after the file changes', async () => {
+  const root = await mkdtemp(join(tmpdir(), 'jev-service-profile-'));
+  const udid = 'ABCDEF00-0000-4000-8000-000000000001';
+  await mkdir(join(root, '.jev'));
+  const file = join(root, '.jev/profiles.json');
+  await writeFile(file, JSON.stringify({ version: 1, defaultProfile: 'ios', profiles: {
+    ios: { platform: 'ios', deviceCategory: 'ios-simulator', device: udid, budgets: { startupMs: 2000 } },
+  } }));
+  let created = 0;
+  let selectedDevice: unknown;
+  const service = new BridgeService({ baseDir: join(root, 'runs'), env: { JEV_PROJECT_DIR: root },
+    createDriver: scenario => {
+      created++; selectedDevice = scenario.device;
+      return { async prepare() {}, async observe() { return screen(); }, async act() {}, async close() {} };
+    }, createJudge: () => ({ async judge() { return { probabilities: { shown: 1 }, inputTokens: 0, latencyMs: 0, model: 'jev-1.13.0' }; } }),
+  });
+  try {
+    await assert.rejects(service.start(script(), {}, 'unknown'), { code: 'PROFILE_NOT_FOUND' });
+    await assert.rejects(service.start(script(), { startupMs: 3000 }, 'ios'), { code: 'PROFILE_CONFLICT' });
+    await assert.rejects(service.start({ ...script(), device: { udid: 'ABCDEF00-0000-4000-8000-000000000002' } }), { code: 'PROFILE_CONFLICT' });
+    assert.equal(created, 0);
+    assert.deepEqual(await readdir(root), ['.jev']);
+    const { runId } = await service.start(script(), { startupMs: 1000 });
+    assert.deepEqual(selectedDevice, { udid });
+    await writeFile(file, '{');
+    assert.equal((await service.status(runId, 2000)).report.verdict, 'passed');
+    const recorded = (await readRunEvents(join(root, 'runs'), runId)).find(event => event.type === 'started')?.data.profile as { name: string; digest: string };
+    assert.equal(recorded.name, 'ios');
+    assert.match(recorded.digest, /^[0-9a-f]{64}$/);
+    const reader = new BridgeService({ baseDir: join(root, 'runs'), createDriver: () => assert.fail(), createJudge: () => assert.fail() });
+    assert.equal((await reader.status(runId)).report.verdict, 'passed');
+    await reader.close();
+  } finally { await service.close(); await rm(root, { recursive: true, force: true }); }
+});
+
+for (const phase of ['startupMs', 'operationMs'] as const) {
+  test(`${phase} ends stuck device work and still closes the driver`, async () => {
+    const root = await mkdtemp(join(tmpdir(), 'jev-service-deadline-'));
+    let closed = false;
+    let issuedSignal: AbortSignal | undefined;
+    const stuck = (signal: AbortSignal): Promise<never> => { issuedSignal = signal; return new Promise(() => {}); };
+    const service = new BridgeService({ baseDir: root, env: { JEV_PROJECT_DIR: root },
+      createDriver: () => ({
+        prepare: async (_scenario, signal) => { if (phase === 'startupMs') await stuck(signal); },
+        observe: async signal => stuck(signal), async act() {}, async close() { closed = true; },
+      }), createJudge: () => ({ async judge() { return assert.fail('No Jev call before a screen'); } }),
+    });
+    try {
+      const { runId } = await service.start(script(), { [phase]: 1000, wallTimeMs: 4000 });
+      const status = await service.status(runId, 2500);
+      assert.equal(status.state, 'finished');
+      assert.equal(status.report.reason, 'EXECUTION_ERROR');
+      assert.equal(issuedSignal?.aborted, true);
+      assert.equal(closed, true);
+    } finally { await service.close(); await rm(root, { recursive: true, force: true }); }
+  });
+}
+
+test('cleanupMs uses the cleanup deadline while wallTimeMs remains the outer run limit', async () => {
+  const root = await mkdtemp(join(tmpdir(), 'jev-service-cleanup-budget-'));
+  let cleanupSignal: AbortSignal | undefined;
+  const service = new BridgeService({ baseDir: root, env: { JEV_PROJECT_DIR: root },
+    createDriver: () => ({ async prepare() { return new Promise(() => {}); }, async observe() { return screen(); }, async act() {},
+      async close(signal) { cleanupSignal = signal; return new Promise(() => {}); } }),
+    createJudge: () => ({ async judge() { return assert.fail('Preparation never completes'); } }),
+  });
+  try {
+    const { runId } = await service.start(script(), { startupMs: 3000, cleanupMs: 1000, wallTimeMs: 20 });
+    const status = await service.status(runId, 2500);
+    assert.equal(status.state, 'finished');
+    assert.equal(status.report.reason, 'CLEANUP_FAILED');
+    assert.equal(cleanupSignal?.aborted, true);
+    const errors = (await readRunEvents(root, runId)).filter(event => event.type === 'error');
+    assert.equal(errors[0]?.data.code, 'WALL_LIMIT');
+  } finally { await service.close(); await rm(root, { recursive: true, force: true }); }
+});
+
+test('hand-back keeps the started profile binding after the file becomes invalid', async () => {
+  const root = await mkdtemp(join(tmpdir(), 'jev-service-profile-handback-'));
+  await mkdir(join(root, '.jev'));
+  await writeFile(join(root, '.jev/config.json'), JSON.stringify({ drivenMode: true }));
+  const profiles = join(root, '.jev/profiles.json');
+  await writeFile(profiles, JSON.stringify({ version: 1, defaultProfile: 'ios', profiles: {
+    ios: { platform: 'ios', deviceCategory: 'ios-simulator', device: 'ABCDEF00-0000-4000-8000-000000000001' },
+  } }));
+  const runs = join(root, 'runs');
+  const service = new BridgeService({ baseDir: runs, env: { JEV_PROJECT_DIR: root, JEV_EXPERIMENTAL_DRIVEN: '1' },
+    createDriver: () => ({ async prepare() {}, async observe() { return screen(); }, async act() {}, async close() {} }),
+    createJudge: () => ({ async judge() { return assert.fail('The stopped run never reaches a checkpoint'); } }),
+    createDrivenJudge: () => fakeDrivenJudge([{ choice: 'none_fits', confidence: 0.9 }]),
+  });
+  try {
+    const { runId } = await service.start({ version: 2, app: { bundleId: 'com.example.app' }, values: {}, steps: [
+      { id: 'task', kind: 'do', intent: 'Continue', doneWhen: 'Home is shown', effect: 'none' }, checkpoint('verify'),
+    ] }, { operationMs: 1000 });
+    const pause = (await service.status(runId, 3000)).pause;
+    assert.ok(pause);
+    const binding = { name: 'ios', digest: 'ebcc4f388531872504f1ecd37097ac661fdebc013fc2307fcaf1796daed2a4a5' };
+    assert.deepEqual((await readRunEvents(runs, runId)).find(event => event.type === 'started')!.data.profile, binding);
+    await writeFile(profiles, '{');
+    await service.resolve(runId, pause.pauseId, { kind: 'stop' });
+    assert.equal((await service.status(runId, 3000)).report.reason, 'STOPPED_BY_CLAUDE');
+    assert.deepEqual((await readRunEvents(runs, runId)).find(event => event.type === 'started')!.data.profile, binding);
+  } finally { await service.close(); await rm(root, { recursive: true, force: true }); }
+});
 
 test('scripted start returns a recoverable run id and report reflects assertion verdict', async () => {
   const root = await mkdtemp(join(tmpdir(), 'jev-service-'));

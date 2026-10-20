@@ -1,11 +1,76 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { spawn } from 'node:child_process';
-import { mkdir, mkdtemp, readFile, rm } from 'node:fs/promises';
+import { mkdir, mkdtemp, readFile, rm, writeFile } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { createInterface } from 'node:readline';
 import { openMcpSession } from './fixtures/mcp-session.js';
+
+for (const platform of ['ios', 'android'] as const) {
+  test(`MCP start_scenario ignores the other-platform default for ${platform}`, { timeout: 10000 }, async () => {
+    const root = await mkdtemp(join(tmpdir(), 'jev-mcp-default-platform-'));
+    await mkdir(join(root, '.jev'));
+    const source = JSON.stringify({ version: 1, defaultProfile: 'other', profiles: { other: platform === 'android'
+      ? { platform: 'ios', deviceCategory: 'ios-simulator', device: 'ABCDEF00-0000-4000-8000-000000000001' }
+      : { platform: 'android', deviceCategory: 'android-emulator', device: 'Other_AVD' },
+    } });
+    await writeFile(join(root, '.jev/profiles.json'), source);
+    const session = await openMcpSession('default-platform', { env: { JEV_PROJECT_DIR: root } });
+    const scenario = { version: 1, platform, app: platform === 'android'
+      ? { package: 'com.example.app' } : { bundleId: 'com.example.app' }, values: {},
+      steps: [{ id: 'check', kind: 'checkpoint', guard: { present: [{ role: 'text', label: 'SCREEN_EVIDENCE_MARKER' }] },
+        assertions: [{ id: 'shown', claim: 'Visible' }] }] };
+    try {
+      const refused = await session.callTool('start_scenario', { scenario, profile: 'other' });
+      assert.equal(refused.isError, true);
+      assert.equal(refused.content[0].text, 'PROFILE_CONFLICT');
+      const started = await session.callTool('start_scenario', { scenario });
+      assert.notEqual(started.isError, true, JSON.stringify(started));
+      const { runId } = JSON.parse(started.content[0].text);
+      const report = await session.callTool('get_report', { runId, waitMs: 2000 });
+      assert.match(report.content[0].text, /Status: finished/);
+      assert.match(report.content[0].text, /PASSED/);
+      const logPath = report.content[0].text.match(/Full local evidence: (.+\/run\.jsonl)/)?.[1];
+      assert.equal(typeof logPath, 'string');
+      const events = (await readFile(logPath, 'utf8')).trim().split('\n').map(line => JSON.parse(line));
+      assert.equal(Object.hasOwn(events.find(event => event.type === 'started').data, 'profile'), false);
+      assert.equal(await readFile(join(root, '.jev/profiles.json'), 'utf8'), source);
+    } finally { await session.close(); await rm(root, { recursive: true, force: true }); }
+  });
+}
+
+test('MCP exposes profiles and refuses wider budgets before creating a run', { timeout: 10000 }, async () => {
+  const root = await mkdtemp(join(tmpdir(), 'jev-mcp-profile-'));
+  await mkdir(join(root, '.jev'));
+  await writeFile(join(root, '.jev/profiles.json'), JSON.stringify({ version: 1, profiles: {
+    pixel: { platform: 'android', deviceCategory: 'android-emulator', device: 'Pixel_API_35', budgets: { operationMs: 1000 } },
+  } }));
+  const session = await openMcpSession('profiles', { entryPoint: 'cli', env: { JEV_PROJECT_DIR: root,
+    JEV_RUNS_DIR: join(root, 'runs'), JEV_EXPERIMENTAL_OBSERVED: '0' } });
+  try {
+    const tool = (await session.listTools()).find(tool => tool.name === 'start_scenario');
+    assert.deepEqual(tool.inputSchema.properties.profile, { type: 'string', pattern: '^[a-z0-9][a-z0-9-]{0,62}$' });
+    assert.deepEqual(tool.inputSchema.required, ['scenario']);
+    assert.deepEqual(tool.inputSchema.properties.limits, { type: 'object', additionalProperties: false, properties: {
+      maxSteps: { type: 'integer', minimum: 1, maximum: 100 },
+      wallTimeMs: { type: 'integer', minimum: 1, maximum: 3600000 },
+      startupMs: { type: 'integer', minimum: 1000, maximum: 600000 },
+      operationMs: { type: 'integer', minimum: 1000, maximum: 600000 },
+      cleanupMs: { type: 'integer', minimum: 1000, maximum: 120000 },
+    } });
+    const scenario = { version: 1, platform: 'android', app: { package: 'com.example.app' },
+      values: {}, steps: [{ id: 'check', kind: 'checkpoint', guard: { present: [{ role: 'text', label: 'Marker' }] },
+        assertions: [{ id: 'shown', claim: 'Visible' }] }] };
+    for (const [profile, limits, code] of [['pixel', { operationMs: 2000 }, 'PROFILE_CONFLICT'], ['missing', {}, 'PROFILE_NOT_FOUND']] as const) {
+      const reply = await session.callTool('start_scenario', { scenario, profile, limits });
+      assert.equal(reply.isError, true);
+      assert.equal(reply.content[0].text, code);
+    }
+    const { readdir } = await import('node:fs/promises');
+    assert.deepEqual(await readdir(root), ['.jev']);
+  } finally { await session.close(); await rm(root, { recursive: true, force: true }); }
+});
 
 test('stdio server negotiates and exposes start/report/cancel without a key', { timeout: 10_000 }, async () => {
   const env = { ...process.env, JEV_EXPERIMENTAL_OBSERVED: '0' }; delete (env as NodeJS.ProcessEnv).TYPESAFE_API_KEY;
