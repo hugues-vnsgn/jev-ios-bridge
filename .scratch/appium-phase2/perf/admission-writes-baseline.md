@@ -1,5 +1,50 @@
 # Admission write-cost baseline
 
+The current baseline passes the P2.1 usability rule. Each of the three fresh-store 1,000-command runs completed below 60 seconds. Every run verified 1,000 callbacks, 1,000 reopened settled rows, and zero dispatch failures. No speedup ratio is claimed.
+
+## Current baseline, 2026-10-20
+
+ROOT authorized this single measurement campaign after pausing heavy work and shutting down emulators. The desktop remained active. Each invocation ran serially with `TYPESAFE_API_KEY` unset, on an isolated mkdtemp fake store. No other test or benchmark was launched by this lane during the series.
+
+The machine is a Mac mini Mac16,11 with Apple M4 Pro, 12 CPU cores, and 24 GiB RAM. It runs macOS 27.0.1 build 26A434 on arm64 with Node v26.8.1. The benchmark head is `52e2832239e46ba9b2f52a935cd529d1daae0bc3`; its admission implementation matches trunk `0f6c7161a3f6973ca5a9d0872390bea8734f3e06`. This commit changes only this note.
+
+The command for each invocation was:
+
+```sh
+env -u TYPESAFE_API_KEY npm exec -- tsx spikes/benchmarks/perf/admission-writes.ts --commands 1000
+```
+
+| Run | Latency | p50 ms | p95 ms | Max ms |
+| --- | --- | ---: | ---: | ---: |
+| 1 | Dispatch-to-callback | 15.559 | 18.473 | 234.396 |
+| 1 | Whole-dispatch | 30.571 | 35.851 | 493.386 |
+| 2 | Dispatch-to-callback | 15.489 | 18.452 | 251.416 |
+| 2 | Whole-dispatch | 30.504 | 35.003 | 457.457 |
+| 3 | Dispatch-to-callback | 15.869 | 18.909 | 265.807 |
+| 3 | Whole-dispatch | 31.552 | 36.488 | 501.943 |
+
+| Run | Callbacks | Settled rows | Successes | Failures | Loop seconds | Process wall seconds | Rule |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: | --- |
+| 1 | 1000 | 1000 | 1000 | 0 | 32.207 | 32.787 | PASS |
+| 2 | 1000 | 1000 | 1000 | 0 | 31.978 | 32.505 | PASS |
+| 3 | 1000 | 1000 | 1000 | 0 | 32.927 | 33.436 | PASS |
+
+The median of the three dispatch-to-callback p50 values is 15.559 ms. The median p95 is 18.473 ms. These are medians of per-run summaries, not percentiles pooled across 3,000 samples.
+
+The bench checks integrity and DELETE journal mode after reopening each store. It retains the existing `synchronous=EXTRA` and `fullfsync=ON` configuration without batching. Dispatch-to-callback measures authorization; whole-dispatch includes authorization and settlement. Initialization, acquisition, finalization, and row verification are outside the timed loop. Process wall time also includes the npm and tsx launch and all setup and verification.
+
+Raw outputs, errors, external wall times, load readings, and command receipts are `p2-1-run-1.*` through `p2-1-run-3.*` under `/Users/hugues_mini/.codex/reports/jev-ios-bridge/phase2-build/perf/phase-b/`. The combined structured receipt is `p2-1-results.json` in that directory. One-minute load averages at run starts were 3.77, 3.85, 3.15 on 12 cores.
+
+A process-counter snapshot during run 3 recorded benchmark Node PID 30007 at 1.60 seconds accumulated CPU approximately 8.8 seconds after invocation start. That is below one core of CPU saturation. Together with the durable transaction path and the earlier excluded profile below, this supports SQLite commit waiting as the limiter. No fresh syscall profile was added to this one-campaign lane, so the exact cause of storage-latency variation remains unmeasured.
+
+The real admission database was never opened. Its mtime before and after the complete perf lane is recorded in the final report, with expected value `1791688017`.
+
+Before this documentation-only push, `npm run typecheck` passed and `npm run check` passed all 2,363 tests with zero failures or skips, then built successfully. These checks ran after the P2.1 timing series and before P2.2. Their logs are `p2-1-typecheck.log` and `p2-1-check.log` in the raw-evidence directory.
+
+The current series supersedes the earlier failed performance baseline below. The older evidence and verification history remain for audit.
+
+## Earlier baseline and verification record
+
 P2.1 measures the existing trunk admission implementation. Two recorded runs are usable, and the third is unusable because it exceeds 60 seconds. The three-run series does not pass the performance gate. It makes no speedup claim.
 
 ## Machine and revision
