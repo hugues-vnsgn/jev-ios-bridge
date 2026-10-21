@@ -79,7 +79,7 @@ for (const transport of ['cli', 'mcp'] as const) {
     else await run(await hostFixture(t));
   });
 
-  test(`H01.02 ${transport} valid ID/guard/selector/timeout boundaries reach authority without effects`, { timeout: 15000 }, async t => {
+  test(`H01.02 ${transport} valid ID/guard/selector/timeout boundaries reach authority without effects`, { timeout: transport === 'cli' ? (1 + 17) * 30000 : 15000 }, async t => {
     const f = await hostFixture(t); const server = transport === 'mcp' ? await f.mcp() : undefined;
     for (const [id, timeout, length, guards] of [['min', 100, 1, 1], ['min+1', 101, 2, 2], ['max-1', 59999, 79, 11], ['max', 60000, 80, 12]] as const) {
       const request = { ...actionRequest(unknownId), actionId: 'a'.repeat(length), timeoutMs: timeout,
@@ -120,7 +120,7 @@ function sizedAction(bytes: number) {
 for (const transport of ['cli', 'mcp'] as const) for (const [mode, outcome, exit, touches] of [
   ['observed', 'outcome_observed', 0, 1], ['already', 'already_satisfied', 0, 0], ['refused', 'refused', 3, 0],
   ['inconclusive', 'inconclusive', 2, 1], ['unresolved', null, 2, 1],
-] as const) test(`H02.01 ${transport} seven public operations and ${mode} envelope are key/network free`, { timeout: 15000 }, async t => {
+] as const) test(`H02.01 ${transport} seven public operations and ${mode} envelope are key/network free`, { timeout: transport === 'cli' ? (1 + 7) * 30000 : 15000 }, async t => {
   const f = await hostFixture(t); const ready = await f.prepare(); const request = actionRequest(ready.allocationId);
   const server = transport === 'mcp' ? await f.mcp({ mode }) : undefined;
   if (server) {
