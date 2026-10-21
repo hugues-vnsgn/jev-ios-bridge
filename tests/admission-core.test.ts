@@ -6,12 +6,37 @@ import { join } from 'node:path';
 import { spawn, spawnSync, type ChildProcess } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
 import { DatabaseSync } from 'node:sqlite';
-import { Admission, canonicalDevice, type AdmissionRequest, type FenceRequest } from '../src/device/admission.js';
+import { Admission, canonicalDevice, type AdmissionRequest, type FenceRequest, type RecoveryClaim } from '../src/device/admission.js';
 
 import { messageSchema, commandSchema, faultSchema, requireAcquisition, type CoreReply, type CommandInput, type Acquisition, type Finalization, type Control } from './fixtures/admission-core-protocol.js';
 
 const device = 'abcdef00-0000-4000-8000-000000000001';
 const request = (id: string, udid = device): AdmissionRequest => ({ device: udid, attempt: { kind: 'observed', id }, digest: 'digest', intent: { tap: 'button' } });
+
+test('admission startup has no process effects and the first ownership use reads its incarnation once', t => {
+  const { root } = fixture(t);
+  const child = spawnSync(process.execPath, ['--import', import.meta.resolve('tsx'), '--input-type=module', '-e', `
+    import assert from 'node:assert/strict';
+    import childProcess from 'node:child_process';
+    import { syncBuiltinESMExports } from 'node:module';
+    const calls = [];
+    childProcess.execFileSync = (...args) => { calls.push(args); return 'recorded-process-start'; };
+    syncBuiltinESMExports();
+    const { Admission, canonicalDevice } = await import('./src/device/admission.ts');
+    const admission = Admission.forTesting({ root: process.argv[1], backend: 'fake', initialize: false });
+    canonicalDevice(process.argv[2]);
+    assert.equal(calls.length, 0, 'Startup and validation must not read a process');
+    const first = admission.acquire({ device: process.argv[2], attempt: { kind: 'legacy', id: 'first' }, digest: 'same', intent: {} });
+    const second = admission.acquire({ device: 'abcdef00-0000-4000-8000-000000000002', attempt: { kind: 'legacy', id: 'second' }, digest: 'same', intent: {} });
+    assert.equal(first.kind, 'acquired');
+    assert.equal(second.kind, 'acquired');
+    assert.deepEqual(first.claim.identity.process, second.claim.identity.process);
+    assert.equal(first.claim.identity.process.incarnation, 'recorded-process-start');
+    assert.equal(calls.length, 1, 'Ownership must reuse one process incarnation');
+    assert.equal(calls[0][0], '/bin/ps');
+  `, root, device], { cwd: process.cwd(), env: { PATH: process.env.PATH ?? '' }, encoding: 'utf8', timeout: 10_000 });
+  assert.equal(child.status, 0, child.stderr);
+});
 
 test('different host timezones cannot turn a live owner into an abandoned generation',t=>{
   const {root,admission}=fixture(t);
@@ -218,8 +243,11 @@ test('admission recovers a dead owner and one durable claimant alone sweeps befo
         :{componentId:component.id,proof:{kind:'completed-command' as const,commandId:generation.commands.find(command=>command.componentId===component.id)!.id}})};
   });
   await started;
-  const competitor=await recovery.acquireWithRecovery(request('competing-recovery'),async()=>{losingEffects++;throw new Error('Must not sweep');});
-  assert.deepEqual(competitor,{kind:'refused',reason:'DEVICE_QUARANTINED'});
+  const otherHandle=Admission.forTesting({root,backend:'fake',ownerLiveness:owner=>[999999,111111].includes(owner.pid)?'dead':'alive'});
+  for (const contender of [recovery,otherHandle]) {
+    const competitor=await contender.acquireWithRecovery(request('recovering-successor'),async()=>{losingEffects++;throw new Error('Must not sweep');});
+    assert.deepEqual(competitor,{kind:'refused',reason:'DEVICE_QUARANTINED'});
+  }
   assert.equal(losingEffects,0);
   release();
   const acquired=await next;
@@ -228,6 +256,96 @@ test('admission recovers a dead owner and one durable claimant alone sweeps befo
   assert.equal(recovery.readAttempt(old.claim.identity.attempt)?.terminal?.outcome,'inconclusive');
   assert.equal(recovery.readGeneration(old.claim.identity).commands[0]?.state,'uncertain');
   assert.equal(recovery.readGeneration(old.claim.identity).recoveries[0]?.closure,'accepted');
+});
+
+test('admission retrieves a recovery claim after its COMMIT reply is lost across same-process handles', async t => {
+  const { root } = fixture(t);
+  const dead = Admission.forTesting({ root, backend: 'fake', process: { pid: 999999, incarnation: 'dead-owner' } });
+  const old = dead.acquire(request('lost-recovery-claim'));
+  if (old.kind !== 'acquired') assert.fail('Expected owner');
+  let lost = false, sweeps = 0;
+  const first = Admission.forTesting({ root, backend: 'fake', ownerLiveness: owner => owner.pid === 999999 ? 'dead' : 'alive',
+    fault(point, operation) {
+      if (!lost && point === 'afterCommit' && operation === 'claimRecovery') { lost = true; throw new Error('Lost claim COMMIT reply'); }
+    } });
+  const sweep = async (): Promise<FenceRequest> => { sweeps++; return { requestId: 'recovered-stop', kind: 'stop', commands: [], components: [] }; };
+  await assert.rejects(first.acquireWithRecovery(request('lost-claim-successor'), sweep), { code: 'STATE_UNAVAILABLE' });
+  const committed = first.readGeneration(old.claim.identity).recoveries;
+  assert.equal(committed.length, 1);
+  assert.equal(committed[0]?.closedAt, null);
+  assert.equal(sweeps, 0);
+  const retry = Admission.forTesting({ root, backend: 'fake', ownerLiveness: owner => owner.pid === 999999 ? 'dead' : 'alive' });
+  assert.equal((await retry.acquireWithRecovery(request('lost-claim-successor'), sweep)).kind, 'acquired');
+  assert.equal(sweeps, 1);
+  const recovered = retry.readGeneration(old.claim.identity).recoveries;
+  assert.deepEqual(recovered.map(claim => claim.id), committed.map(claim => claim.id));
+  assert.deepEqual(recovered.map(claim => claim.closure), ['accepted']);
+});
+
+test('admission can retry a refused sweep of the same generation from another handle in the same process', async t => {
+  const { root } = fixture(t);
+  const dead = Admission.forTesting({ root, backend: 'fake', process: { pid: 999999, incarnation: 'dead-owner' } });
+  const old = dead.acquire(request('refused-recovery'));
+  if (old.kind !== 'acquired') assert.fail('Expected owner');
+  const first = Admission.forTesting({ root, backend: 'fake', ownerLiveness: owner => owner.pid === 999999 ? 'dead' : 'alive' });
+  let sweeps = 0;
+  const refused = await first.acquireWithRecovery(request('retry-refused-successor'), async () => {
+    sweeps++;
+    return { requestId: 'refused-stop', kind: 'maintenance-lift', commands: [], components: [] };
+  });
+  assert.deepEqual(refused, { kind: 'refused', reason: 'DEVICE_QUARANTINED' });
+  assert.deepEqual(first.readGeneration(old.claim.identity).recoveries.map(claim => claim.closure), ['refused']);
+  const retry = Admission.forTesting({ root, backend: 'fake', ownerLiveness: owner => owner.pid === 999999 ? 'dead' : 'alive' });
+  const acquired = await retry.acquireWithRecovery(request('retry-refused-successor'), async () => {
+    sweeps++;
+    return { requestId: 'accepted-stop', kind: 'stop', commands: [], components: [] };
+  });
+  assert.equal(acquired.kind, 'acquired');
+  assert.equal(sweeps, 2);
+  assert.deepEqual(retry.readGeneration(old.claim.identity).recoveries.map(claim => claim.closure), ['refused', 'accepted']);
+  assert.equal(retry.readAttempt(old.claim.identity.attempt)?.terminal?.outcome, 'inconclusive');
+});
+
+test('a lost recovery claim reply remains retrievable when the claim replaced a dead claimant', async t => {
+  const { root } = fixture(t);
+  const dead = Admission.forTesting({ root, backend: 'fake', process: { pid: 999999, incarnation: 'dead-owner' } });
+  const old = dead.acquire(request('dead-claimant-retry'));
+  if (old.kind !== 'acquired') assert.fail('Expected owner');
+  const abandoned = Admission.forTesting({ root, backend: 'fake', process: { pid: 888888, incarnation: 'dead-claimant' }, ownerLiveness: () => 'dead' });
+  abandoned.acquire(request('abandoned-recovery'));
+  assert.equal(abandoned.claimRecovery(old.claim.identity, 'abandoned-claim').kind, 'claimed');
+  const recovery = Admission.forTesting({ root, backend: 'fake', ownerLiveness: owner => [999999, 888888].includes(owner.pid) ? 'dead' : 'alive',
+    fault(point, operation) { if (point === 'afterCommit' && operation === 'claimRecovery') throw new Error('Lost replacement claim reply'); } });
+  const sweep = async (): Promise<FenceRequest> => ({ requestId: 'replacement-stop', kind: 'stop', commands: [], components: [] });
+  await assert.rejects(recovery.acquireWithRecovery(request('replacement-successor'), sweep), { code: 'STATE_UNAVAILABLE' });
+  const retry = Admission.forTesting({ root, backend: 'fake', ownerLiveness: owner => [999999, 888888].includes(owner.pid) ? 'dead' : 'alive' });
+  assert.equal((await retry.acquireWithRecovery(request('replacement-successor'), sweep)).kind, 'acquired');
+  assert.deepEqual(retry.readGeneration(old.claim.identity).recoveries.map(claim => claim.closure), ['abandoned', 'accepted']);
+});
+
+test('retrying recovery never replays a sweep command whose authorization COMMIT reply was lost', async t => {
+  const { root } = fixture(t);
+  const dead = Admission.forTesting({ root, backend: 'fake', process: { pid: 999999, incarnation: 'dead-owner' } });
+  const old = dead.acquire(request('lost-sweep-authorization'));
+  if (old.kind !== 'acquired') assert.fail('Expected owner');
+  old.claim.registerComponent({ id: 'stop-client', kind: 'one-shot', operation: 'stop' });
+  const admission = Admission.forTesting({ root, backend: 'fake', ownerLiveness: owner => owner.pid === 999999 ? 'dead' : 'alive',
+    fault(point, operation) { if (point === 'afterCommit' && operation === 'authorize') throw new Error('Lost authorization reply'); } });
+  let effects = 0;
+  const sweep = async (claim: RecoveryClaim): Promise<FenceRequest> => {
+    await claim.dispatch({ requestId: 'stop-once', componentId: 'stop-client', operation: 'stop', payload: {} }, async () => { effects++; });
+    assert.fail('An ambiguous command cannot supply completion proof');
+  };
+  assert.deepEqual(await admission.acquireWithRecovery(request('sweep-retry-successor'), sweep), { kind: 'refused', reason: 'DEVICE_QUARANTINED' });
+  const commands = admission.readGeneration(old.claim.identity).commands;
+  assert.equal(commands.length, 1);
+  assert.equal(commands[0]?.state, 'uncertain');
+  const retry = Admission.forTesting({ root, backend: 'fake', ownerLiveness: owner => owner.pid === 999999 ? 'dead' : 'alive' });
+  assert.deepEqual(await retry.acquireWithRecovery(request('sweep-retry-successor'), sweep), { kind: 'refused', reason: 'DEVICE_QUARANTINED' });
+  assert.deepEqual(retry.readGeneration(old.claim.identity).commands, commands);
+  assert.deepEqual(retry.readGeneration(old.claim.identity).recoveries.map(claim => claim.closure), ['refused', 'refused']);
+  assert.equal(effects, 0);
+  assert.equal(retry.inspect(device)?.state, 'quarantined');
 });
 
 test('a reused component PID is not exit evidence while a reused owner PID permits recovery', t => {

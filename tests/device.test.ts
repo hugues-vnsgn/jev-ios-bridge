@@ -43,6 +43,64 @@ function capture(hash = 'same', expiresAtMs = Date.now() + 60_000): unknown {
     text: ['e2|text|text|Page title: Settings||'] } };
 }
 
+test('preparation recovers a dead owner with completed one-shot commands before launching the successor', async () => {
+  const root = await mkdtemp(join(tmpdir(), 'jev-device-recovery-'));
+  const store = join(root, 'store'); mkdirSync(store, { mode: 0o700 });
+  const old = Admission.forTesting({ root: realpathSync(store), backend: 'fake', process: { pid: 999999, incarnation: 'dead-owner' } });
+  const previous = old.acquire({ device: udid, attempt: { kind: 'legacy', id: 'abandoned-run' }, digest: 'old', intent: {} });
+  if (previous.kind !== 'acquired') assert.fail('Expected abandoned owner');
+  await previous.claim.bindDriver('fake').dispatch('capture', async () => {});
+  const commands = old.readGeneration(previous.claim.identity).commands;
+  const admission = Admission.forTesting({ root: realpathSync(store), backend: 'fake', ownerLiveness: owner => owner.pid === 999999 ? 'dead' : 'alive' });
+  const effects: string[] = [];
+  const runner: CliRunner = async args => {
+    assert.equal(admission.readGeneration(previous.claim.identity).recoveries[0]?.closure, 'accepted');
+    assert.equal(admission.readAttempt(previous.claim.identity.attempt)?.terminal?.outcome, 'inconclusive');
+    effects.push(args[1]!);
+    return { stdout: commandEnvelope(args), stderr: '', exitCode: 0 };
+  };
+  const driver = new MobileBuildMcpDriver({ cwd: root, lockRoot: join(root, 'leases'), admission, runId: 'successor-run',
+    identityProbe: fakeSimulatorProbe(udid), fakeBackend: { runner, window: undefined } });
+  try {
+    await driver.prepare(scenario, new AbortController().signal);
+    assert.deepEqual(effects, ['launch-app']);
+    assert.deepEqual(admission.readGeneration(previous.claim.identity).commands, commands);
+    assert.equal(admission.inspect(udid)?.owner?.attempt.id, 'successor-run');
+  } finally { await driver.close(new AbortController().signal); await rm(root, { recursive: true, force: true }); }
+});
+
+for (const componentKind of ['uncertain-mobilebuildmcp', 'persistent-process'] as const) {
+  test(`preparation preserves quarantine and refuses DEVICE_QUARANTINED for an abandoned ${componentKind}`, async () => {
+    const root = await mkdtemp(join(tmpdir(), 'jev-device-recovery-refused-'));
+    const store = join(root, 'store'); mkdirSync(store, { mode: 0o700 });
+    const old = Admission.forTesting({ root: realpathSync(store), backend: 'fake', process: { pid: 999999, incarnation: 'dead-owner' } });
+    const previous = old.acquire({ device: udid, attempt: { kind: 'legacy', id: 'abandoned-run' }, digest: 'old', intent: {} });
+    if (previous.kind !== 'acquired') assert.fail('Expected abandoned owner');
+    previous.claim.registerComponent(componentKind === 'uncertain-mobilebuildmcp'
+      ? { id: 'unfinished', kind: 'one-shot', operation: 'mobilebuildmcp' }
+      : { id: 'unfinished', kind: 'host-process', process: { pid: 888888, incarnation: 'persistent' } });
+    previous.claim.issue({ requestId: 'unfinished-command', componentId: 'unfinished', operation: 'launch-app', payload: {} });
+    const admission = Admission.forTesting({ root: realpathSync(store), backend: 'fake', ownerLiveness: owner => owner.pid === 999999 ? 'dead' : 'alive' });
+    const effects: string[] = [];
+    const runner: CliRunner = async args => { effects.push(args[1]!); return { stdout: commandEnvelope(args), stderr: '', exitCode: 0 }; };
+    const driver = new MobileBuildMcpDriver({ cwd: root, lockRoot: join(root, 'leases'), admission, runId: 'refused-successor',
+      identityProbe: fakeSimulatorProbe(udid), fakeBackend: { runner, window: undefined } });
+    try {
+      await assert.rejects(driver.prepare(scenario, new AbortController().signal),
+        (error: unknown) => error instanceof DeviceCliError && error.code === 'DEVICE_BUSY' && error.message.includes('DEVICE_QUARANTINED'));
+      assert.deepEqual(admission.acquire({ device: udid, attempt: { kind: 'legacy', id: 'refused-successor' }, digest: 'next', intent: {} }),
+        { kind: 'refused', reason: 'DEVICE_QUARANTINED' });
+      assert.deepEqual(effects, []);
+      assert.equal(admission.inspect(udid)?.state, 'quarantined');
+      assert.equal(admission.readAttempt({ kind: 'legacy', id: 'refused-successor' }), undefined);
+      assert.equal(admission.readAttempt(previous.claim.identity.attempt)?.terminal?.outcome, 'inconclusive');
+      const generation = admission.readGeneration(previous.claim.identity);
+      assert.deepEqual(generation.commands.map(command => command.state), ['uncertain']);
+      assert.deepEqual(generation.recoveries.map(recovery => recovery.closure), ['refused']);
+    } finally { await driver.close(new AbortController().signal); await rm(root, { recursive: true, force: true }); }
+  });
+}
+
 test('post-admission simulator revalidation is recorded before each probe while pre-admission reads stay exempt', async () => {
   const root = await mkdtemp(join(tmpdir(), 'jev-revalidation-record-'));
   const inventory = fakeSimulatorProbe(udid);
