@@ -236,10 +236,28 @@ test('receipt persistence failure never converts a settled input into success', 
   assert.equal(result.reason, 'UI_ACTION_UNCONFIRMED'); assert.deepEqual(calls, ['snapshot-ui', 'touch']);
   await service.close();
 });
-function deferred<T>() { let resolve!: (value: T) => void; const promise = new Promise<T>(done => { resolve = done; }); return { promise, resolve }; }
+function deferred<T>(t: TestContext, name: string) {
+  let resolve!: (value: T) => void;
+  const promise = new Promise<T>((done, reject) => {
+    const timer = setTimeout(() => reject(new Error(`${t.name}: timed out waiting for ${name}`)), 10000);
+    t.after(() => clearTimeout(timer));
+    resolve = value => { clearTimeout(timer); done(value); };
+  });
+  void promise.catch(() => {});
+  return { promise, resolve };
+}
+
+function actionDeadline(t: TestContext) {
+  const deadline = new AbortController();
+  t.mock.method(AbortSignal, 'timeout', (milliseconds: number) => {
+    assert.equal(milliseconds, 500, 'The action deadline is separate from finalization');
+    return deadline.signal;
+  }, { times: 1 });
+  return deadline;
+}
 for (const kind of ['cancel', 'external-cancel', 'deadline'] as const) {
   test(`${kind} while input is pending keeps quarantine and the identical lease after a late receipt`, async t => {
-    const entered = deferred<void>(); const pending = deferred<ReturnType<typeof reply>>(); const calls: string[] = [];
+    const entered = deferred<void>(t, 'backend entry'); const pending = deferred<ReturnType<typeof reply>>(t, 'backend reply release'); const calls: string[] = [];
     const { root, admission, service } = fixture(t, async args => {
       calls.push(args[1]!); if (args[1] === 'touch') { entered.resolve(); return pending.promise; } return reply(false);
     });
@@ -262,7 +280,7 @@ for (const kind of ['cancel', 'external-cancel', 'deadline'] as const) {
   });
 }
 test('cancellation during an abort-ignoring observation never submits input or persists the late capture', async t => {
-  const entered = deferred<void>(); const pending = deferred<ReturnType<typeof reply>>(); const calls: string[] = [];
+  const entered = deferred<void>(t, 'backend entry'); const pending = deferred<ReturnType<typeof reply>>(t, 'backend reply release'); const calls: string[] = [];
   const { admission, service } = fixture(t, async args => { calls.push(args[1]!); entered.resolve(); return pending.promise; });
   const raw = request(await ready(admission)); raw.timeoutMs = 5000; await service.start(raw); await entered.promise;
   const terminal = await service.cancel('one'); assert.equal(terminal.outcome, 'inconclusive'); assert.equal(terminal.reason, 'CANCELLED');
@@ -291,7 +309,7 @@ test('full canonical payload comparison rejects a corrupted binding even if its 
 });
 
 test('cancellation write failure still closes local issuance before returning an honest store error', async t => {
-  const entered = deferred<void>(); const pending = deferred<ReturnType<typeof reply>>(); const calls: string[] = [];
+  const entered = deferred<void>(t, 'backend entry'); const pending = deferred<ReturnType<typeof reply>>(t, 'backend reply release'); const calls: string[] = [];
   let failing = false;
   const { admission, service } = fixture(t, async args => { calls.push(args[1]!); entered.resolve(); return pending.promise; }, {},
     { fault: (point, operation) => { if (failing && point === 'beforeCommit' && operation === 'cancel') throw new Error('Injected cancel failure'); } });
@@ -489,7 +507,7 @@ test('allocator configuration errors are typed preparation errors and shutdown n
 });
 
 test('shutdown synchronously closes owned action and allocator gates before awaiting either cleanup', async t => {
-  const entered = deferred<void>(); const pending = deferred<ReturnType<typeof reply>>(); const allocatorDone = deferred<void>();
+  const entered = deferred<void>(t, 'backend entry'); const pending = deferred<ReturnType<typeof reply>>(t, 'backend reply release'); const allocatorDone = deferred<void>(t, 'allocator close release');
   let allocatorClosed = false; let admission!: Admission;
   const allocator: ObservedAllocator = { async prepare() {}, async get() {}, async cancel() {}, async retire() {},
     consume(binding) { return admission.consumeAllocation(binding); },
@@ -524,7 +542,7 @@ test('authoritative renderer validates binding consistency and absolute evidence
 
 for (const mode of ['error', 'pending'] as const) {
   test(`local close ${mode} cannot promote an observed success and finishes within the separate five-second budget`, async t => {
-    let driver!: ReturnType<typeof createObservedDriver>; const release = deferred<void>();
+    let driver!: ReturnType<typeof createObservedDriver>; const release = deferred<void>(t, 'local finalization release');
     let finalizationBegan: number | undefined;
     const { root, admission, service } = fixture(t, async () => reply(true), { createDriver: () => ({
       attachObserved: (...args) => driver.attachObserved(...args), observe: (...args) => driver.observe(...args),
@@ -664,7 +682,7 @@ test('explicit startup recovery quarantines only the proven abandoned expected o
 });
 
 test('local cancel fences continuation even when initial authoritative read fails', async t => {
-  const entered = deferred<void>(); const pending = deferred<ReturnType<typeof reply>>();
+  const entered = deferred<void>(t, 'backend entry'); const pending = deferred<ReturnType<typeof reply>>(t, 'backend reply release');
   const calls: string[] = []; let driver!: ReturnType<typeof createObservedDriver>; let revocations = 0;
   const runner: CliRunner = async args => {
     calls.push(args[1]!);
@@ -699,34 +717,41 @@ test('local cancel fences continuation even when initial authoritative read fail
 });
 
 test('settled close within finalization budget does not consume action observation budget', async t => {
-  let driver!: ReturnType<typeof createObservedDriver>; let closedAt = 0; let observedAt = 0;
+  let driver!: ReturnType<typeof createObservedDriver>; let deadline!: AbortController;
   const calls: string[] = [];
   const runner: CliRunner = async args => { calls.push(args[1]!); return reply(true); };
   const { root, admission, service } = fixture(t, runner, { createDriver: () => ({
     attachObserved: (...args) => driver.attachObserved(...args),
-    observe: async (...args) => { const value = await driver.observe(...args); observedAt = Date.now(); return value; },
+    observe: async (...args) => {
+      const value = await driver.observe(...args);
+      assert.equal(deadline.signal.aborted, false, 'Observation settles before the action deadline');
+      return value;
+    },
     tapOnce: (...args) => driver.tapOnce(...args), revokeIssuance: () => driver.revokeIssuance(),
-    close: async signal => { await driver.close(signal); await new Promise(resolve => setTimeout(resolve, 650)); closedAt = Date.now(); },
+    close: async signal => {
+      await driver.close(signal);
+      deadline.abort(new DOMException('Action deadline expired', 'TimeoutError'));
+      assert.equal(signal.aborted, false, 'Local close settles inside the separate finalization budget after action expiry');
+    },
   }) });
   driver = createObservedDriver({ cwd: root, admission, lockRoot: join(root, 'leases'), runner,
     deviceWindow: async () => assert.fail('No window'), fakeBackend: { runner, window: undefined } });
   const raw = request(await ready(admission)); raw.timeoutMs = 500;
-  const began = Date.now(); await service.start(raw); const terminal = await service.inspect('one', { waitMs: 3000 });
+  deadline = actionDeadline(t);
+  await service.start(raw); const terminal = await service.inspect('one', { waitMs: 5000 });
   await service.close(); assert.equal(terminal.outcome, 'already_satisfied');
   assert.equal(terminal.authority, 'committed'); assert.equal(terminal.reason, null);
   assert.equal(terminal.actionAttempted, false); assert.equal(terminal.actionAcknowledged, false);
   assert.equal(terminal.observations, 1); assert.deepEqual(calls, ['snapshot-ui']);
   assert.equal(terminal.cancellationRequested, false); assert.equal(terminal.admission, 'available');
   assert.equal(terminal.evidence.exportStatus, 'complete');
-  assert.ok(observedAt - began < raw.timeoutMs, 'Observation settled within its action deadline');
-  assert.ok(closedAt - began > raw.timeoutMs, 'Local close outlasted the observation deadline');
-  assert.ok(closedAt - observedAt < 5000, 'Confirmed local close settled within its separate finalization budget');
+  assert.equal(deadline.signal.aborted, true, 'Local close outlasted the action deadline');
 });
 
 for (const phase of ['close', 'provisional'] as const) {
   test(`local cancellation with a failed durable write during prolonged ${phase} cannot commit computed success`, async t => {
     let driver!: ReturnType<typeof createObservedDriver>; let failing = false;
-    const entered = deferred<void>(); const release = deferred<void>(); const files = new FileObservedEvidence();
+    const entered = deferred<void>(t, `${phase} entry`); const release = deferred<void>(t, 'local finalization release'); const files = new FileObservedEvidence();
     const calls: string[] = [];
     const runner: CliRunner = async args => { calls.push(args[1]!); return reply(true); };
     const evidence: ObservedEvidenceStore = {
@@ -746,7 +771,9 @@ for (const phase of ['close', 'provisional'] as const) {
     driver = createObservedDriver({ cwd: root, admission, lockRoot: join(root, 'leases'), runner,
       deviceWindow: async () => assert.fail('No window'), fakeBackend: { runner, window: undefined } });
     const raw = request(await ready(admission)); raw.timeoutMs = 500;
-    await service.start(raw); await entered.promise; await new Promise(resolve => setTimeout(resolve, 650));
+    const deadline = actionDeadline(t);
+    await service.start(raw); await entered.promise;
+    deadline.abort(new DOMException('Action deadline expired', 'TimeoutError'));
     failing = true;
     await assert.rejects(service.cancel('one'), { code: 'STORE_UNAVAILABLE' });
     assert.equal((await service.inspect('one')).cancellationRequested, false);
