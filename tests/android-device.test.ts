@@ -145,6 +145,30 @@ test('an odd transport state or an unready phone never blocks resolving another 
   }
 });
 
+test('an emulator in an odd adb state is still read, so a second instance of the named AVD stays ambiguous', async () => {
+  const world = emulatorWorld({ devices: 'List of devices attached\nemulator-5554 device\nemulator-5556 connecting\n' });
+  await assert.rejects(resolveIdentity({ request: { category: 'android', name: 'Pixel' }, probe: world.probe, signal: identitySignal() }),
+    refusal('DEVICE_AMBIGUOUS'));
+});
+
+test('an unrelated emulator older than 30 is skipped by name, and refuses as unsupported when it is the one named', async () => {
+  const fake = fakeProbeSpawn((_file, args) => {
+    if (args[0] === 'devices') return 'List of devices attached\nemulator-5554 device\nemulator-5556 device\n';
+    if (args[2] === 'emu') return args[1] === 'emulator-5556' ? (args[4] === 'name' ? 'Old_AVD\r\nOK\r\n' : 'KO:  bad sub-command\r\n')
+      : `${args[4] === 'path' ? '/avds/Pixel.avd' : 'Pixel'}\r\nOK\r\n`;
+    return args[1] === 'emulator-5556' ? 'Old_AVD\n' : 'Pixel\n';
+  });
+  const host: AndroidHostProbe = { ...validHost, listener: async port => ({ pid: port, startedAt: '2026-10-19T01:00:00.000Z', uid: 501, local: true }),
+    version: async process => ({ value: process.pid === 5556 ? '29.3.0' : '36.6.1', source: 'running-sdk-binary' }) };
+  const probe = identityProbe({ adb: '/fake/adb', environment: {}, spawn: fake.spawn, host });
+  const identity = await resolveIdentity({ request: { category: 'android', name: 'Pixel' }, probe, signal: identitySignal() });
+  assert.equal(identity.category === 'ios-simulator' ? '' : identity.transport.serial, 'emulator-5554');
+  for (const name of ['Old_AVD', 'emulator-5556']) {
+    await assert.rejects(resolveIdentity({ request: { category: 'android', name }, probe, signal: identitySignal() }),
+      refusal('DEVICE_IDENTITY_UNAVAILABLE', 'EMULATOR_VERSION_UNSUPPORTED'), name);
+  }
+});
+
 test('a named phone that is not ready keeps its transport state, for the driver to refuse', async () => {
   const devices = 'List of devices attached\nPHONE1 unauthorized\nPHONE2 offline\nPHONE3 authorizing\n';
   for (const [name, state] of [['PHONE1', 'unauthorized'], ['PHONE2', 'offline'], ['PHONE3', 'offline']] as const) {

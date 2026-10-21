@@ -236,9 +236,10 @@ export function identityProbe(options: IdentityProbeOptions): IdentityProbe {
         const [serial, listed] = line.trim().split(/\s+/);
         if (!serial) identityUnavailable('MALFORMED_PROVENANCE');
         if (explicit && serial !== selectedSerial) continue;
-        // A transport in any other state (authorizing, recovery, no permissions) can't be the run's device unless named.
+        // A phone in any other state (authorizing, recovery, no permissions) can't be the run's device unless named; an
+        // emulator's console is still read, so a second instance of the named AVD stays ambiguous.
         const known = listed === 'device' || listed === 'offline' || listed === 'unauthorized';
-        if (!known && !explicit) continue;
+        if (!known && !explicit && !serial.startsWith('emulator-')) continue;
         const transport: AndroidTransport = { serial, state: known ? listed : 'offline' };
         if (!serial.startsWith('emulator-')) {
           // An unready phone can't be read; named, its transport state is the driver's refusal.
@@ -264,12 +265,15 @@ export function identityProbe(options: IdentityProbeOptions): IdentityProbe {
           throw error;
         }
         if (!Number.isSafeInteger(process.pid) || process.pid <= 0 || !Number.isFinite(Date.parse(process.startedAt))) identityUnavailable('PROVENANCE_INACCESSIBLE');
-        // Before `avd id` and `avd path`, which emulators older than 30 can't answer.
+        const name = await run({ kind: 'console', serial, field: 'name' }, signal);
+        // Before `avd id` and `avd path`, which emulators older than 30 can't answer; `avd name` they can, so an unrelated one is skipped.
         const version = await host.version(process, signal);
         const versionMatch = /^(\d+)\.\d+(?:\.\d+)*$/.exec(version.value);
         if (!versionMatch) identityUnavailable('PROVENANCE_INACCESSIBLE');
-        if (Number(versionMatch[1]) < 30) identityUnavailable('EMULATOR_VERSION_UNSUPPORTED');
-        const name = await run({ kind: 'console', serial, field: 'name' }, signal);
+        if (Number(versionMatch[1]) < 30) {
+          if (!explicit && /^([^\x00-\x1f\x7f]+)\r\nOK\r\n$/.exec(name)?.[1] !== selectedSerial) continue;
+          identityUnavailable('EMULATOR_VERSION_UNSUPPORTED');
+        }
         const id = await run({ kind: 'console', serial, field: 'id' }, signal);
         const path = await run({ kind: 'console', serial, field: 'path' }, signal);
         if ([name, id, path].some(unauthenticated)) identityUnavailable('PROVENANCE_INACCESSIBLE');
