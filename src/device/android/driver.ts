@@ -447,7 +447,7 @@ export class AndroidDriver implements DeviceDriver {
     const captured = await this.settledCapture(signal);
     const sequence = ++this.sequence;
     const capturedAt = Date.now();
-    const jpeg = await this.agentCall(agent => agent.screenshot(SCREENSHOT_MAX_SIZE, signal), signal);
+    const jpeg = await this.agentRead(agent => agent.screenshot(SCREENSHOT_MAX_SIZE, signal), signal);
     const screenshotPath = join(await this.screenshotFolderPath(), `screen-${String(sequence)}.jpg`);
     await writeFile(screenshotPath, jpeg, { mode: 0o600 });
     this.latestScreen = screenOf(captured.tree);
@@ -462,7 +462,7 @@ export class AndroidDriver implements DeviceDriver {
   /** The settle rule over `device.dump.ui`. The agent's tree has the captures' shape (the tracer confirmed it), so the mapping reads it as is. */
   private settledCapture(signal: AbortSignal): Promise<SettledCapture> {
     return settle(async captureSignal =>
-      ({ hierarchy: await this.agentCall(agent => agent.dumpUi(DUMP_IDLE_MS, captureSignal), captureSignal) }), this.clock, signal);
+      ({ hierarchy: await this.agentRead(agent => agent.dumpUi(DUMP_IDLE_MS, captureSignal), captureSignal) }), this.clock, signal);
   }
 
   private screenshotFolderPath(): Promise<string> {
@@ -553,10 +553,18 @@ export class AndroidDriver implements DeviceDriver {
     await this.agentCall(agent => agent.clipboardClear(signal), signal);
   }
 
-  /** One device agent request, in the lease's ledger. No new request once `close` began or the run was cancelled. */
+  /** One device agent request that acts, in the lease's ledger, after the transport is revalidated. No new request once `close` began or the run was cancelled. */
   private async agentCall<T>(request: (agent: DeviceAgentClient) => Promise<T>, signal: AbortSignal): Promise<T> {
     this.mayIssue(signal);
     await this.revalidate(signal);
+    return this.agentRead(request, signal);
+  }
+
+  /**
+   * One device agent request that only reads the screen, in the lease's ledger. It needs no revalidation: it reaches
+   * this run's own agent, which a replacement device on the same serial would not run, and changes nothing.
+   */
+  private async agentRead<T>(request: (agent: DeviceAgentClient) => Promise<T>, signal: AbortSignal): Promise<T> {
     this.mayIssue(signal);
     const agent = this.agent!;
     return inLedger(this.lease, 'agent', () => request(agent));

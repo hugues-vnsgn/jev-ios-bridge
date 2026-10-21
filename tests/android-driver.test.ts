@@ -131,8 +131,13 @@ test('cancellation during binding revalidation prevents adb and agent dispatch',
       enabled = true;
       const before = agents.calls.length;
       if (stage === 'adb') await assert.rejects(driver.prepare(app(), cancel.signal), /cancel during probe/);
-      else await assert.rejects(driver.observe(cancel.signal), /cancel during probe/);
-      assert.equal(agents.calls.length, before);
+      else {
+        const snapshot = await driver.observe(signal());
+        const read = agents.calls.length;
+        await assert.rejects(driver.act({ kind: 'back' }, snapshot, values({}), cancel.signal), /cancel during probe/);
+        assert.equal(agents.calls.length, read, 'no action reached the agent');
+      }
+      if (stage === 'adb') assert.equal(agents.calls.length, before);
       if (stage === 'adb') assert.equal(adb.shell().some(words => words[0] === 'am'), false);
     }, { identityProbe: probe });
   }
@@ -780,6 +785,18 @@ test('a screen still changing at the 3 s cap gives the last capture, marked sett
     assert.equal(snapshot.settled, false);
     assert.equal(snapshot.elements.find(element => element.identifier === 'field.empty')?.value, '11');
     assert.equal(agents.calls.filter(call => call.method === 'device.screenshot').length, 1);
+  });
+});
+
+test('screen reads use the agent without revalidating the transport, and each action revalidates it first', async () => {
+  const choose = await captureOf('twin-1-choose.json');
+  const added = await captureOf('twin-2-apple-added.json');
+  await withPrepared([choose, choose, added], async ({ driver, adb }) => {
+    const before = adb.probeCalls.length;
+    const snapshot = await driver.observe(signal());
+    assert.equal(adb.probeCalls.length, before, 'observe makes no identity probe');
+    await driver.act({ kind: 'tap', targetRef: refOf(snapshot, 'choose.apple') }, snapshot, values({}), signal());
+    assert.ok(adb.probeCalls.slice(before).some(args => args[0] === 'devices'), 'the tap revalidates first');
   });
 });
 
