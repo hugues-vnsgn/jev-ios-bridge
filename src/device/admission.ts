@@ -5,6 +5,14 @@ import { isAbsolute, join, resolve } from 'node:path';
 import { z } from 'zod/v4';
 import { AdmissionError, AdmissionSqlite, type StoreOptions } from './admission-sqlite.js';
 import type { ImportedObservedAction, MigrationReceipt } from './admission-migration.js';
+import { FENCE_REQUEST_KINDS } from '../scripted/vocabulary.js';
+
+export function parseFenceRequestKind(raw: unknown): 'stop' {
+  const result = z.enum(FENCE_REQUEST_KINDS).safeParse(raw);
+  if (!result.success) throw new AdmissionError('INVALID_REQUEST', 'Expected a fence request kind');
+  if (result.data === 'maintenance-lift') throw new AdmissionError('NOT_COVERABLE', 'Maintenance-lift is reserved and cannot cover quarantines');
+  return result.data;
+}
 
 export type AttemptIdentity = { kind: 'observed' | 'legacy' | 'preparation'; id: string };
 export const DEVICE_CATEGORIES = ['ios-simulator', 'android-emulator', 'android-phone', 'ios-phone'] as const;

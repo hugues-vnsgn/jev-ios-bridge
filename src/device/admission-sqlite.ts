@@ -13,7 +13,7 @@ import type { UpgradeDeclaration, UpgradeReceipt, UpgradeRecovery, UpgradeCheckp
 import { IMPORT_REFUSAL_REASONS, type ImportRefusalReason } from '../scripted/vocabulary.js';
 import type { ImportedObservedAction, MigrationImport, MigrationReceipt, MigrationTestOptions } from './admission-migration.js';
 
-type AdmissionErrorCode = 'STATE_UNAVAILABLE' | 'INVALID_REQUEST' | 'CATEGORY_NOT_ENABLED' | 'UPGRADE_BLOCKED' | 'IMPORT_REFUSED' | 'STALE_OWNER' | 'DISPATCH_CLOSED' | 'OPERATIONS_UNSETTLED';
+type AdmissionErrorCode = 'STATE_UNAVAILABLE' | 'INVALID_REQUEST' | 'CATEGORY_NOT_ENABLED' | 'UPGRADE_BLOCKED' | 'IMPORT_REFUSED' | 'NOT_COVERABLE' | 'STALE_OWNER' | 'DISPATCH_CLOSED' | 'OPERATIONS_UNSETTLED';
 export class AdmissionError extends Error {
   readonly reason?: ImportRefusalReason;
   constructor(code: Exclude<AdmissionErrorCode,'IMPORT_REFUSED'>, message: string);
@@ -92,7 +92,7 @@ CREATE TABLE fence_components(receipt_id TEXT NOT NULL, owner_generation_id TEXT
 CREATE TABLE fence_commands(receipt_id TEXT NOT NULL, owner_generation_id TEXT NOT NULL, command_id TEXT NOT NULL, component_id TEXT NOT NULL, PRIMARY KEY(receipt_id,command_id), FOREIGN KEY(receipt_id,owner_generation_id) REFERENCES fence_receipts(id,owner_generation_id) DEFERRABLE INITIALLY DEFERRED, FOREIGN KEY(command_id,owner_generation_id,component_id) REFERENCES commands(id,owner_generation_id,component_id), FOREIGN KEY(receipt_id,component_id) REFERENCES fence_components(receipt_id,component_id));
 CREATE TABLE import_receipts(id TEXT PRIMARY KEY, guard_token TEXT NOT NULL UNIQUE, request_digest TEXT NOT NULL ${hashCheck('request_digest')}, declaration_digest TEXT NOT NULL ${hashCheck('declaration_digest')}, source_set_digest TEXT NOT NULL ${hashCheck('source_set_digest')}, time INTEGER NOT NULL CHECK(time>=0), binary_version TEXT NOT NULL, declaration TEXT NOT NULL ${json('declaration')}, backup_path TEXT NOT NULL, backup_sha256 TEXT NOT NULL ${hashCheck('backup_sha256')}, installation_backup_path TEXT NOT NULL, installation_backup_sha256 TEXT NOT NULL ${hashCheck('installation_backup_sha256')}, payload TEXT NOT NULL ${json('payload')}, UNIQUE(declaration_digest,source_set_digest));
 CREATE TABLE import_sources(path TEXT NOT NULL, sha256 TEXT NOT NULL ${hashCheck('sha256')}, kind TEXT NOT NULL CHECK(kind IN ('lease','journal')), first_receipt_id TEXT NOT NULL REFERENCES import_receipts(id), evidence TEXT NOT NULL ${json('evidence')}, PRIMARY KEY(path,sha256));
-CREATE TABLE quarantines(id TEXT PRIMARY KEY, platform TEXT ${categoryCheck}, device TEXT, legacy_name TEXT, kind TEXT NOT NULL CHECK(kind IN ('native','historical','exclusion')), cause TEXT NOT NULL ${nonempty('cause')}, created_at INTEGER NOT NULL CHECK(created_at>=0), owner_generation_id TEXT REFERENCES owner_generations(id), evidence TEXT NOT NULL ${json('evidence')}, source_path TEXT, source_sha256 TEXT ${hashCheck('source_sha256')}, covering_receipt_id TEXT, ${pairCheck}, CHECK((platform IS NOT NULL AND legacy_name IS NULL) OR (platform IS NULL AND legacy_name IS NOT NULL AND length(legacy_name)>0 AND legacy_name=upper(legacy_name) AND kind='historical')), CHECK((kind='native' AND owner_generation_id IS NOT NULL) OR (kind!='native' AND owner_generation_id IS NULL)), CHECK((source_path IS NULL)=(source_sha256 IS NULL)), FOREIGN KEY(platform,device) REFERENCES devices(platform,device), FOREIGN KEY(source_path,source_sha256) REFERENCES import_sources(path,sha256), FOREIGN KEY(covering_receipt_id,owner_generation_id) REFERENCES fence_receipts(id,owner_generation_id));
+CREATE TABLE quarantines(id TEXT PRIMARY KEY, platform TEXT ${categoryCheck}, device TEXT, legacy_name TEXT, kind TEXT NOT NULL CHECK(kind IN ('native','historical','exclusion')), cause TEXT NOT NULL ${nonempty('cause')}, created_at INTEGER NOT NULL CHECK(created_at>=0), owner_generation_id TEXT REFERENCES owner_generations(id), evidence TEXT NOT NULL ${json('evidence')}, source_path TEXT, source_sha256 TEXT ${hashCheck('source_sha256')}, covering_receipt_id TEXT, ${pairCheck}, CHECK(covering_receipt_id IS NULL OR kind='native'), CHECK((platform IS NOT NULL AND legacy_name IS NULL) OR (platform IS NULL AND legacy_name IS NOT NULL AND length(legacy_name)>0 AND legacy_name=upper(legacy_name) AND kind='historical')), CHECK((kind='native' AND owner_generation_id IS NOT NULL) OR (kind!='native' AND owner_generation_id IS NULL)), CHECK((source_path IS NULL)=(source_sha256 IS NULL)), FOREIGN KEY(platform,device) REFERENCES devices(platform,device), FOREIGN KEY(source_path,source_sha256) REFERENCES import_sources(path,sha256), FOREIGN KEY(covering_receipt_id,owner_generation_id) REFERENCES fence_receipts(id,owner_generation_id));
 CREATE UNIQUE INDEX quarantine_one_native ON quarantines(owner_generation_id) WHERE kind='native';
 CREATE UNIQUE INDEX quarantine_one_cover ON quarantines(covering_receipt_id) WHERE covering_receipt_id IS NOT NULL;
 CREATE INDEX quarantine_device ON quarantines(platform,device) WHERE covering_receipt_id IS NULL;
@@ -134,6 +134,7 @@ CREATE TRIGGER attempts_terminal_once BEFORE UPDATE ON attempts WHEN OLD.termina
 CREATE TRIGGER commands_disposition_once BEFORE UPDATE ON commands WHEN OLD.state!='outstanding' BEGIN SELECT RAISE(ABORT,'Command disposition is immutable'); END;
 CREATE TRIGGER owner_generations_closure_once BEFORE UPDATE ON owner_generations WHEN OLD.dispatch_closed_at IS NOT NULL AND NEW.dispatch_closed_at IS NOT OLD.dispatch_closed_at BEGIN SELECT RAISE(ABORT,'Dispatch closure is immutable'); END;
 CREATE TRIGGER owner_generations_unknown_once BEFORE UPDATE ON owner_generations WHEN OLD.inventory_unknown_reason IS NOT NULL AND NEW.inventory_unknown_reason IS NOT OLD.inventory_unknown_reason BEGIN SELECT RAISE(ABORT,'Inventory uncertainty is immutable'); END;
+CREATE TRIGGER quarantines_start_uncovered BEFORE INSERT ON quarantines WHEN NEW.covering_receipt_id IS NOT NULL BEGIN SELECT RAISE(ABORT,'Quarantine must start uncovered'); END;
 CREATE TRIGGER quarantines_cover_once BEFORE UPDATE ON quarantines WHEN OLD.covering_receipt_id IS NOT NULL OR NEW.covering_receipt_id IS NULL OR OLD.kind!='native' BEGIN SELECT RAISE(ABORT,'Quarantine cannot be covered'); END;
 CREATE TRIGGER recovery_claims_close_once BEFORE UPDATE ON recovery_claims WHEN OLD.closed_at IS NOT NULL OR NEW.closed_at IS NULL BEGIN SELECT RAISE(ABORT,'Recovery claim closure is immutable'); END;
 CREATE TRIGGER components_before_closure BEFORE INSERT ON components WHEN (SELECT dispatch_closed_at FROM owner_generations WHERE id=NEW.owner_generation_id) IS NOT NULL BEGIN SELECT RAISE(ABORT,'Dispatch is closed'); END;
@@ -177,7 +178,10 @@ function step2to3(db: DatabaseSync, time: number): { historical: number; exclusi
   }
   for (const allocation of old.allocations!) {
     const record: AllocationRecord=JSON.parse(allocation.record); const o=record.owner; const id=generationId(o.token,o.generation);
-    if (!owners.has(id)) remember({id,owner_kind:o.process.pid===0&&o.process.incarnation==='parked'?'parked':'allocation',platform:o.process.pid===0?'ios-simulator':null,device:o.process.pid===0?record.device:null,allocation_id:allocation.id,attempt_kind:null,attempt_id:null,token:o.token,generation:o.generation,pid:o.process.pid,incarnation:o.process.incarnation,created_at:record.createdAt,inventory_unknown_reason:o.process.pid===0?null:'schema2-inventory',dispatch_closed_at:o.process.pid===0||!['preparing','executing'].includes(record.state)?time:null});
+    const previous=owners.get(id);
+    if (previous?.owner_kind==='device') {
+      if(previous.allocation_id!==allocation.id||previous.platform!=='ios-simulator'||previous.device!==record.device||previous.pid!==o.process.pid||previous.incarnation!==o.process.incarnation||o.allocationId!==allocation.id) throw new AdmissionError('STATE_UNAVAILABLE','Conflicting historical owner binding');
+    } else remember({id,owner_kind:o.process.pid===0&&o.process.incarnation==='parked'?'parked':'allocation',platform:o.process.pid===0?'ios-simulator':null,device:o.process.pid===0?record.device:null,allocation_id:allocation.id,attempt_kind:null,attempt_id:null,token:o.token,generation:o.generation,pid:o.process.pid,incarnation:o.process.incarnation,created_at:record.createdAt,inventory_unknown_reason:o.process.pid===0?null:'schema2-inventory',dispatch_closed_at:o.process.pid===0||!['preparing','executing'].includes(record.state)?time:null});
   }
   for (const row of owners.values()) put('owner_generations',row);
   for (const row of old.attempts!) put('attempts',{...row,platform:'ios-simulator',owner_generation_id:generationId(row.token,row.generation),transport:null});
@@ -190,10 +194,9 @@ function step2to3(db: DatabaseSync, time: number): { historical: number; exclusi
   for (const row of old.transitions!) put('transitions',{...row,owner_generation_id:null,command_id:null});
   for (const row of old.unknown_creation!) put('unknown_creation',row);
   for (const row of old.imported_actions!) put('imported_actions',{...row,platform:'ios-simulator'});
-  const counts={historical:0,exclusion:0};
   for (const row of old.devices!) {
     if (row.state==='quarantined') {
-      const kind=row.reason==='protected-device'?'exclusion':'historical'; counts[kind]++;
+      const kind=row.reason==='protected-device'?'exclusion':'historical';
       put('quarantines',{id:sha(JSON.stringify(['schema3',old.metadata![0]!.installation_id,'ios-simulator',row.device,kind])),platform:'ios-simulator',device:row.device,legacy_name:null,kind,cause:row.reason??'historical-uncertainty',created_at:time,owner_generation_id:null,evidence:JSON.stringify({version:1,sourceSchema:2,state:row.state,reason:row.reason,timeMeaning:'conversion'}),source_path:null,source_sha256:null,covering_receipt_id:null});
     }
     if (row.state==='active') {
@@ -201,6 +204,11 @@ function step2to3(db: DatabaseSync, time: number): { historical: number; exclusi
       if (!parked) throw new AdmissionError('STATE_UNAVAILABLE','Active device has no parked allocation');
       db.prepare('UPDATE devices SET lease_generation_id=? WHERE platform=? AND device=?').run(generationId(parked.owner.token,parked.owner.generation),'ios-simulator',row.device);
     }
+  }
+  const counts={historical:0,exclusion:0};
+  for(const row of db.prepare('SELECT kind,count(*) AS count FROM quarantines GROUP BY kind').all()) {
+    if(row.kind!=='historical'&&row.kind!=='exclusion') throw new AdmissionError('STATE_UNAVAILABLE','Unexpected quarantine conversion kind');
+    counts[row.kind]=Number(row.count);
   }
   if(counts.historical+counts.exclusion!==old.devices!.filter(row=>row.state==='quarantined').length) throw new AdmissionError('STATE_UNAVAILABLE','Quarantine conversion count mismatch');
   schema3Triggers(db);
@@ -304,19 +312,21 @@ function recoverUpgrade(options:StoreOptions,declaration:UpgradeDeclaration,chec
   try {
     const lock=join(options.root,'migration.lock');rootPath(options.root);secure(lock,false);
     const guard=upgradeGuardSchema.parse(JSON.parse(readFileSync(lock,'utf8')));
-    if(guard.from!==declaration.from||guard.to!==declaration.to||guard.declarationDigest!==sha(JSON.stringify(declaration))||guard.backup===null||guard.backupDirectory!==join(options.root,'backups',guard.token)) throw new AdmissionError('STATE_UNAVAILABLE','Upgrade recovery declaration or backup conflicts');
+    if(guard.from!==declaration.from||guard.to!==declaration.to||guard.declarationDigest!==sha(JSON.stringify(declaration))||guard.backupDirectory!==join(options.root,'backups',guard.token)) throw new AdmissionError('STATE_UNAVAILABLE','Upgrade recovery declaration or backup conflicts');
     const backup=guard.backup;
-    if(backup.path!==join(guard.backupDirectory,'admission.sqlite')||backup.installationPath!==join(guard.backupDirectory,'installation.json')) throw new AdmissionError('STATE_UNAVAILABLE','Upgrade backup path conflicts');
-    secure(join(options.root,'backups'),true);secure(guard.backupDirectory,true);secure(backup.path,false);secure(backup.installationPath,false);
-    if(sha(readFileSync(backup.path))!==backup.sha256||sha(readFileSync(backup.installationPath))!==backup.installationSha256||!readFileSync(backup.installationPath).equals(readFileSync(join(options.root,'installation.json')))) throw new AdmissionError('STATE_UNAVAILABLE','Upgrade backup hash or installation changed');
-    const backupDb=new DatabaseSync(backup.path,{readOnly:true});
-    try {if(Number(backupDb.prepare('SELECT schema_version FROM metadata').get()?.schema_version)!==2||sha(databaseSnapshot(backupDb))!==guard.sourceFingerprint)throw new AdmissionError('STATE_UNAVAILABLE','Recorded backup does not match source');}finally{backupDb.close();}
+    if(backup!==null) {
+      if(backup.path!==join(guard.backupDirectory,'admission.sqlite')||backup.installationPath!==join(guard.backupDirectory,'installation.json')) throw new AdmissionError('STATE_UNAVAILABLE','Upgrade backup path conflicts');
+      secure(join(options.root,'backups'),true);secure(guard.backupDirectory,true);secure(backup.path,false);secure(backup.installationPath,false);
+      if(sha(readFileSync(backup.path))!==backup.sha256||sha(readFileSync(backup.installationPath))!==backup.installationSha256||!readFileSync(backup.installationPath).equals(readFileSync(join(options.root,'installation.json')))) throw new AdmissionError('STATE_UNAVAILABLE','Upgrade backup hash or installation changed');
+      const backupDb=new DatabaseSync(backup.path,{readOnly:true});
+      try {if(Number(backupDb.prepare('SELECT schema_version FROM metadata').get()?.schema_version)!==2||sha(databaseSnapshot(backupDb))!==guard.sourceFingerprint)throw new AdmissionError('STATE_UNAVAILABLE','Recorded backup does not match source');}finally{backupDb.close();}
+    }
     db=maintenanceDatabase(options,guard.token);db.exec('BEGIN IMMEDIATE');
     const meta=db.prepare('SELECT * FROM metadata').get() as Row;
     if(meta.installation_id!==guard.installationId)throw new AdmissionError('STATE_UNAVAILABLE','Recovery installation mismatch');
     const version=Number(meta.schema_version);
     let receiptId:string|null=null;
-    if(version===3) {const receipt=completedUpgrade(db,declaration,guard.token);if(!isDeepStrictEqual(receipt.backup,backup))throw new AdmissionError('STATE_UNAVAILABLE','Recovery receipt backup mismatch');receiptId=receipt.id;}
+    if(version===3&&backup!==null) {const receipt=completedUpgrade(db,declaration,guard.token);if(!isDeepStrictEqual(receipt.backup,backup))throw new AdmissionError('STATE_UNAVAILABLE','Recovery receipt backup mismatch');receiptId=receipt.id;}
     else if(version!==2)throw new AdmissionError('STATE_UNAVAILABLE',`Cannot recover schema ${version}`);
     const result:UpgradeRecovery={version:1,kind:'upgrade-recovery',guardToken:guard.token,schemaVersion:version,receiptId};
     const detail={...result,declarationDigest:guard.declarationDigest,installationId:guard.installationId};
@@ -394,6 +404,14 @@ export class AdmissionSqlite {
       checkpoint?.('guarded');
       const plan = scan();
       if (initialFiles.length) {
+        const db = maintenanceDatabase(options, token);
+        let version: number;
+        try { version = Number(db.prepare('SELECT schema_version FROM metadata WHERE singleton=1').get()?.schema_version); }
+        finally { db.close(); }
+        if (version !== schemaVersion) {
+          completed = true;
+          throw new AdmissionError('STATE_UNAVAILABLE', `Store schema ${version}; this binary requires schema ${schemaVersion}. Run admission-maintenance upgrade <declaration>`);
+        }
         const previous = new AdmissionSqlite(options, token).activation();
         if (!isDeepStrictEqual(previous.declaration, plan.declaration) || !isDeepStrictEqual(previous.sources, plan.sources)) throw new AdmissionError('STATE_UNAVAILABLE', 'Initialized admission cannot be reimported from changed sources');
         completed = true;

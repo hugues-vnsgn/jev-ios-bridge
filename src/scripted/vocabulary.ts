@@ -106,6 +106,7 @@ export const REASON_CODES = {
   DEVICE_NOT_FOUND: 'The configured device name matches no live device identity.',
   DEVICE_IDENTITY_CONFLICT: 'Live identity sources disagree about the device.',
   DEVICE_IDENTITY_UNAVAILABLE: 'A required identity source cannot be read or is not admissible; exactly one identity unavailable reason identifies the cause.',
+  NOT_COVERABLE: 'The requested quarantine cover is not supported; maintenance-lift is reserved.',
 } as const satisfies Record<string, string>;
 export type ReasonCode = keyof typeof REASON_CODES;
 
@@ -117,6 +118,8 @@ export const DEVICE_IDENTITY_UNAVAILABLE_REASONS = [
   'MALFORMED_PROVENANCE', 'PROVENANCE_INACCESSIBLE', 'PROBE_TIMEOUT',
 ] as const;
 export type DeviceIdentityUnavailableReason = typeof DEVICE_IDENTITY_UNAVAILABLE_REASONS[number];
+
+export const FENCE_REQUEST_KINDS = ['stop', 'maintenance-lift'] as const;
 
 export function isReasonCode(value: unknown): value is ReasonCode {
   return typeof value === 'string' && Object.hasOwn(REASON_CODES, value);

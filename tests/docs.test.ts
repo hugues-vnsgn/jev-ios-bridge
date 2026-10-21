@@ -138,11 +138,20 @@ test('the report.json reference lists every field of an iOS and an Android repor
 test('the running page documents capture with every option in the CLI\'s usage line', () => {
   const usage = readFileSync('src/cli.ts', 'utf8').split('\n').find(line => line.includes('jev-ios-bridge capture '))!;
   const options = [...usage.matchAll(/--[a-z-]+/g)].map(match => match[0]);
-  assert.deepEqual(options, ['--serial', '--avd', '--jev']);
+  assert.deepEqual(options, ['--profile', '--serial', '--avd', '--jev']);
   const page = guidePage('06-running.md');
   for (const text of ['`capture`', ...options.map(option => `\`${option}`), '`JEV_ANDROID_DEVICE`', '"selectable": false']) {
     assert.ok(page.includes(text), `06-running.md does not document ${text}`);
   }
+});
+
+test('the running page explains cross-platform defaults and unset profile budgets', () => {
+  const page = guidePage('06-running.md');
+  assert.match(page, /defaultProfile` for the other platform is ignored/);
+  assert.match(page, /explicit profile for the other platform still refuses with `PROFILE_CONFLICT`/);
+  assert.match(page, /ignores an iOS `defaultProfile`/);
+  assert.match(page, /explicit iOS `--profile` refuses with `PROFILE_CONFLICT`/);
+  assert.match(page, /unset has no profile ceiling/);
 });
 
 test('the script-format reference says a non-ASCII typed value passes through the device clipboard', () => {

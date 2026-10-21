@@ -14,6 +14,7 @@ import { processAlive as processAliveForLease } from '../process.js';
 import { readLogTail } from './logs.js';
 import { IdentityResolutionError, resolveIdentity, revalidateIdentity, type IdentityProbe, type SimulatorIdentity } from './identity.js';
 import { identityProbe } from './android/probe.js';
+import type { ProfileBinding } from '../profiles.js';
 
 type JsonObject = Record<string, unknown>;
 export type CliResult = { stdout: string; stderr: string; exitCode: number };
@@ -24,6 +25,7 @@ export interface MobileBuildMcpDriverOptions {
   /** Internal shared authority; production opening stays lazy until an iOS attachment. */
   admission?: Admission;
   runId?: string;
+  profile?: ProfileBinding;
   /** Explicit test transport. Both dependencies are supplied; undefined window disables presentation. */
   fakeBackend?: { runner: CliRunner; window: DeviceWindowOpener | undefined };
   executable?: string;
@@ -795,6 +797,9 @@ export class MobileBuildMcpDriver implements DeviceDriver, IosPreparationDriver,
     if (scenario.start === 'attach') throw new DeviceReasonError('UNSUPPORTED_ACTION', IOS_ATTACH_REFUSAL);
     const bundleId = scenario.app.bundleId;
     const deviceId = await selectDeviceId(this.options.cwd, scenario.device?.udid, this.options.defaultUdid);
+    if (!scenario.device?.udid && !this.options.defaultUdid) {
+      this.warnings.push('Using .mobilebuildmcp/config.yaml simulatorId; consider a profile in .jev/profiles.json.');
+    }
     this.probe = this.options.identityProbe;
     if (!this.probe && (this.options.fakeBackend || this.options.runner)) throw new DeviceReasonError('DEVICE_IDENTITY_UNAVAILABLE',
       'Simulator identity requires a read-only probe', { vendorCode: 'PROVENANCE_INACCESSIBLE' });
@@ -810,7 +815,8 @@ export class MobileBuildMcpDriver implements DeviceDriver, IosPreparationDriver,
       `App ${bundleId} is not installed on simulator ${resolved.value}`, { vendorCode: 'APP_NOT_INSTALLED' });
     const admission = this.options.admission ?? Admission.open();
     admission.assertBackend(this.options.fakeBackend ? 'fake' : 'real');
-    const intent = { deviceId, app: scenario.app, start: scenario.start ?? 'restart', identity: resolved, installedApp };
+    const intent = { deviceId, app: scenario.app, start: scenario.start ?? 'restart', identity: resolved, installedApp,
+      ...(this.options.profile ? { profile: this.options.profile } : {}) };
     const acquired = admission.acquire({ category: 'ios-simulator', device: deviceId, attempt: { kind: 'legacy', id: this.options.runId ?? randomUUID() },
       digest: createHash('sha256').update(JSON.stringify(intent)).digest('hex'), intent, signal });
     if (acquired.kind !== 'acquired') throw new DeviceCliError('DEVICE_BUSY', `Device admission refused: ${acquired.kind === 'refused' ? acquired.reason : 'ATTEMPT_ALREADY_EXISTS'}`);

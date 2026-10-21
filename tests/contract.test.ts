@@ -21,6 +21,7 @@ import { REPORT_VERSION } from '../src/scripted/report-json.js';
 import { SCRIPT_VERSION, scriptedScenarioSchema } from '../src/scripted/schema.js';
 import { REASON_CODES, ROLES } from '../src/scripted/vocabulary.js';
 import * as vocabularyApi from '../src/scripted/vocabulary.js';
+import * as admissionApi from '../src/device/admission.js';
 import { BridgeService } from '../src/service.js';
 import { captureCommand } from '../src/capture.js';
 import { PINNED_AGENT_SHA256 } from '../src/device/android/agent-supply.js';
@@ -57,13 +58,14 @@ test('contract: role, reason-code, exit-code, and version vocabularies', async (
     reportVersion: REPORT_VERSION,
     roles: ROLES,
     reasonCodes: Object.keys(REASON_CODES),
+    fenceRequestKinds: vocabularyApi.FENCE_REQUEST_KINDS,
     exitCodes: { passed: 0, failed: 1, inconclusive: 2, couldNotStart: 3, sigint: 130, sigterm: 143 },
     eventTypes: ['started', 'prepared', 'step', 'judgment', 'action', 'checkpoint', 'error', 'verdict'],
   });
 });
 
 test('contract: offline admission refusals have one import code and a closed reason set', () => {
-  for (const code of ['UPGRADE_BLOCKED', 'IMPORT_REFUSED', 'CATEGORY_NOT_ENABLED', 'STATE_UNAVAILABLE', 'INVALID_REQUEST']) {
+  for (const code of ['UPGRADE_BLOCKED', 'IMPORT_REFUSED', 'CATEGORY_NOT_ENABLED', 'STATE_UNAVAILABLE', 'INVALID_REQUEST', 'NOT_COVERABLE']) {
     assert.equal(vocabularyApi.isReasonCode(code), true, code);
   }
   assert.deepEqual(vocabularyApi.IMPORT_REFUSAL_REASONS, [
@@ -85,6 +87,15 @@ test('contract: live device identity refusals have a closed unavailable reason s
   for (const reason of ['NONDEFAULT_DEVICE_SET', 'EMULATOR_VERSION_UNSUPPORTED', 'REMOTE_CONSOLE',
     'MALFORMED_PROVENANCE', 'PROVENANCE_INACCESSIBLE', 'PROBE_TIMEOUT']) {
     assert.equal(vocabularyApi.isReasonCode(reason), false, reason);
+  }
+});
+
+test('contract: maintenance-lift is reserved and refused before fence storage', () => {
+  assert.deepEqual(vocabularyApi.FENCE_REQUEST_KINDS, ['stop', 'maintenance-lift']);
+  assert.equal(admissionApi.parseFenceRequestKind('stop'), 'stop');
+  assert.throws(() => admissionApi.parseFenceRequestKind('maintenance-lift'), { code: 'NOT_COVERABLE' });
+  for (const invalid of ['lift', '', null, {}, 1]) {
+    assert.throws(() => admissionApi.parseFenceRequestKind(invalid), { code: 'INVALID_REQUEST' });
   }
 });
 
@@ -522,7 +533,7 @@ test('contract: --help names JEV_ANDROID_DEVICE', { timeout: 10_000 }, async () 
 test('contract: --help lists capture and its options', { timeout: 10_000 }, async () => {
   const { stdout } = await execute(process.execPath,
     ['--import', import.meta.resolve('tsx'), join(process.cwd(), 'src/cli.ts'), '--help'], { cwd: process.cwd() });
-  assert.match(stdout, /jev-ios-bridge capture \[--serial S \| --avd A\] \[--jev\]/);
+  assert.match(stdout, /jev-ios-bridge capture \[--profile NAME\] \[--serial S \| --avd A\] \[--jev\]/);
 });
 
 /** The CLI's capture path against a fake device whose foreign agent holds it: the exit code, once the refusal is checked. */

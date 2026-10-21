@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict';
 import { spawnSync } from 'node:child_process';
-import { mkdtemp, readdir, readFile, rm, writeFile } from 'node:fs/promises';
+import { mkdir, mkdtemp, readdir, readFile, rm, writeFile } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { test } from 'node:test';
@@ -70,6 +70,117 @@ async function withFakes(adb: FakeAdb, fn: (setup: Setup) => Promise<void>, scre
 
 /** Whether any `adb` command restarted or stopped the app. */
 const touchedApp = (adb: FakeAdb) => adb.shell().some(words => words[0] === 'am' || words[0] === 'pm' && words[1] === 'path');
+
+test('capture selects a profile over the environment and refuses a mixed-kind flag before device work', async () => {
+  await withFakes(new FakeAdb(api31()), async ({ adb, root, parts }) => {
+    await mkdir(join(root, '.jev'));
+    await writeFile(join(root, '.jev/profiles.json'), JSON.stringify({ version: 1, defaultProfile: 'pixel', profiles: {
+      pixel: { platform: 'android', deviceCategory: 'android-emulator', device: 'jev-actions-api31' },
+    } }));
+    let stderr = '';
+    const context = { projectDir: root, defaultDevice: 'Invalid_environment_AVD', driver: parts, signal: signal(),
+      write: { stdout() {}, stderr: (text: string) => { stderr += text; } } };
+    assert.equal(await captureCommand({ profile: 'pixel', serial: 'emulator-5554' }, context), 3);
+    assert.deepEqual(stderr.split(/\r?\n/).filter(line => line.startsWith('PROFILE_CONFLICT:')),
+      ['PROFILE_CONFLICT: Capture device flags conflict with the selected profile.']);
+    assert.equal(adb.calls.length, 0);
+    assert.equal(await captureCommand({}, context), 0);
+    assert.ok(adb.calls.some(args => args.join(' ') === 'devices -l'));
+    assert.equal(touchedApp(adb), false);
+  });
+});
+
+test('capture ignores an iOS default, but an explicit iOS profile refuses before device work', async () => {
+  await withFakes(new FakeAdb(api31()), async ({ adb, root, parts, agents }) => {
+    await mkdir(join(root, '.jev'));
+    await writeFile(join(root, '.jev/profiles.json'), JSON.stringify({ version: 1, defaultProfile: 'ios', profiles: {
+      ios: { platform: 'ios', deviceCategory: 'ios-simulator', device: 'ABCDEF00-0000-4000-8000-000000000001' },
+    } }));
+    let stderr = '';
+    const context = { projectDir: root, defaultDevice: 'jev-actions-api31', driver: parts, signal: signal(),
+      write: { stdout() {}, stderr: (text: string) => { stderr += text; } } };
+    assert.equal(await captureCommand({ profile: 'ios' }, context), 3);
+    assert.deepEqual(stderr.split(/\r?\n/).filter(line => line.startsWith('PROFILE_CONFLICT:')),
+      ['PROFILE_CONFLICT: Capture requires an Android profile; the selected profile is iOS.']);
+    assert.deepEqual(adb.calls, []);
+    stderr = '';
+    assert.equal(await captureCommand({}, context), 0);
+    assert.equal(stderr, '');
+    assert.deepEqual(agents.calls.map(call => call.method), ['device.dump.ui', 'device.dump.ui']);
+    assert.equal(touchedApp(adb), false);
+    assert.deepEqual(adb.forwards, []);
+    assert.equal(adb.emulators.get('emulator-5554')!.agents!.size, 0);
+  });
+});
+
+test('capture applies profile operation and cleanup budgets to a stalled screen read', { timeout: 3000 }, async () => {
+  await withFakes(new FakeAdb(api31()), async ({ adb, root, parts, agents }) => {
+    await mkdir(join(root, '.jev'));
+    await writeFile(join(root, '.jev/profiles.json'), JSON.stringify({ version: 1, defaultProfile: 'pixel', profiles: {
+      pixel: { platform: 'android', deviceCategory: 'android-emulator', device: 'jev-actions-api31',
+        budgets: { operationMs: 1000, cleanupMs: 2000 } },
+    } }));
+    let operationSignal: AbortSignal | undefined;
+    let stderr = '';
+    let stdout = '';
+    const driver = { ...parts, agentClient: (port: number) => ({ ...agents.agentClient(port),
+      async dumpUi(_wait: number, signal: AbortSignal): Promise<AndroidNode[]> {
+        operationSignal = signal;
+        return new Promise((_, reject) => {
+          if (signal.aborted) reject(signal.reason);
+          else signal.addEventListener('abort', () => reject(signal.reason), { once: true });
+        });
+      },
+    }) };
+    const keepAlive = setTimeout(() => {}, 4000);
+    try {
+      assert.equal(await captureCommand({}, { projectDir: root, driver, signal: signal(),
+        write: { stdout: text => { stdout += text; }, stderr: text => { stderr += text; } } }), 3);
+      assert.equal(operationSignal?.aborted, true);
+      assert.equal(stdout, '');
+      assert.match(stderr, /^[A-Z_]+: .+\n$/);
+      assert.doesNotMatch(stderr, /CLEANUP_FAILED/);
+      assert.equal(touchedApp(adb), false);
+      assert.equal(adb.emulators.get('emulator-5554')!.agents!.size, 0);
+      assert.deepEqual(adb.forwards, []);
+      assert.deepEqual(await readdir(root), ['.jev']);
+    } finally { clearTimeout(keepAlive); }
+  });
+});
+
+test('capture cleanup uses the profile deadline and retains the lease when fencing stalls', { timeout: 3000 }, async () => {
+  await withFakes(new FakeAdb(api31()), async ({ adb, root, parts }) => {
+    await mkdir(join(root, '.jev'));
+    await writeFile(join(root, '.jev/profiles.json'), JSON.stringify({ version: 1, profiles: {
+      pixel: { platform: 'android', deviceCategory: 'android-emulator', device: 'jev-actions-api31',
+        budgets: { operationMs: 2000, cleanupMs: 1000 } },
+    } }));
+    let cleanupSignal: AbortSignal | undefined;
+    let stderr = '';
+    let stdout = '';
+    const driver = { ...parts, runner: async (...args: Parameters<typeof adb.run>) => {
+      if (args[0][3] === "'kill' '7001'") {
+        cleanupSignal = args[1];
+        return new Promise<Awaited<ReturnType<typeof adb.run>>>((_, reject) => {
+          if (args[1].aborted) reject(args[1].reason);
+          else args[1].addEventListener('abort', () => reject(args[1].reason), { once: true });
+        });
+      }
+      return adb.run(...args);
+    } };
+    const keepAlive = setTimeout(() => {}, 4000);
+    try {
+      assert.equal(await captureCommand({ profile: 'pixel' }, { projectDir: root, driver, signal: signal(),
+        write: { stdout: text => { stdout += text; }, stderr: text => { stderr += text; } } }), 3);
+      assert.equal(cleanupSignal?.aborted, true);
+      assert.equal(stdout, '');
+      assert.match(stderr, /^CLEANUP_FAILED: .+\n$/);
+      assert.equal(touchedApp(adb), false);
+      assert.equal(adb.emulators.get('emulator-5554')!.agents!.size, 1);
+      assert.deepEqual(await readdir(root), ['.jev', 'JEV-ACTIONS-API31.lock']);
+    } finally { clearTimeout(keepAlive); }
+  });
+});
 
 /* The driver's capture-only path. */
 

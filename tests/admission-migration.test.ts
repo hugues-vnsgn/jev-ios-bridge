@@ -61,6 +61,38 @@ function crashMaintenance(f: ReturnType<typeof fixture>, operation: 'upgrade' | 
   assert.equal(child.error, undefined, 'The child must reach the requested maintenance checkpoint before its deadline');
 }
 
+test('offline migration rerun refuses schema 2 without leaving its guard and permits upgrade', async t => {
+  const f = fixture(t);
+  migrateAdmissionForTesting(declaration, { ...f.options, schemaVersion: 2 });
+  assert.throws(() => migrateAdmissionForTesting(declaration, f.options), { code: 'STATE_UNAVAILABLE' });
+  assert.equal(existsSync(join(f.root, 'migration.lock')), false);
+  const { upgradeAdmissionForTesting } = await import('../src/device/admission-upgrade.js');
+  assert.equal(upgradeAdmissionForTesting(upgradeDeclaration, { root: f.root, backend: 'fake' }).to, 3);
+});
+
+for (const milestone of ['guarded', 'backupVerified']) {
+  test(`offline schema upgrade death at ${milestone} recovers unchanged schema 2 and permits upgrade`, async t => {
+    const f = fixture(t);
+    migrateAdmissionForTesting(declaration, { ...f.options, schemaVersion: 2 });
+    crashMaintenance(f, 'upgrade', milestone);
+    const guard = JSON.parse(readFileSync(join(f.root, 'migration.lock'), 'utf8'));
+    assert.equal(guard.backup === null, milestone === 'guarded');
+    assert.throws(f.open, { code: 'STATE_UNAVAILABLE' });
+    const { recoverAdmissionUpgradeForTesting, upgradeAdmissionForTesting } = await import('../src/device/admission-upgrade.js');
+    const result = recoverAdmissionUpgradeForTesting(upgradeDeclaration, { root: f.root, backend: 'fake' });
+    assert.deepEqual(result, { version: 1, kind: 'upgrade-recovery', guardToken: guard.token, schemaVersion: 2, receiptId: null });
+    assert.equal(existsSync(join(f.root, 'migration.lock')), false);
+    const recovered = new DatabaseSync(join(f.root, 'admission.sqlite'));
+    try {
+      assert.equal(recovered.prepare('SELECT schema_version FROM metadata').get()?.schema_version, 2);
+      const events = recovered.prepare("SELECT attempt_id,event,detail FROM transitions WHERE kind='maintenance'").all();
+      assert.equal(events.length, 1);
+      assert.deepEqual({ ...events[0] }, { attempt_id: guard.token, event: 'upgrade-recovered', detail: JSON.stringify({ ...result, declarationDigest: guard.declarationDigest, installationId: guard.installationId }) });
+    } finally { recovered.close(); }
+    assert.equal(upgradeAdmissionForTesting(upgradeDeclaration, { root: f.root, backend: 'fake' }).to, 3);
+  });
+}
+
 test('offline schema upgrade death before commit retains authority until checked clean-old recovery', async t => {
   const f = fixture(t);
   migrateAdmissionForTesting(declaration, { ...f.options, schemaVersion: 2 });
@@ -222,6 +254,8 @@ test('offline schema upgrade preserves terminal strings and command dispositions
   assert.deepEqual(receipt.quarantines, { historical: 1, exclusion: 4 });
   const upgraded = new DatabaseSync(join(f.root, 'admission.sqlite'));
   try {
+    assert.deepEqual(upgraded.prepare('SELECT kind,count(*) AS count FROM quarantines GROUP BY kind ORDER BY kind').all().map(row => ({ ...row })),
+      [{ kind: 'exclusion', count: receipt.quarantines.exclusion }, { kind: 'historical', count: receipt.quarantines.historical }]);
     assert.deepEqual({ ...upgraded.prepare('SELECT intent,terminal,digest,cancelled,attached FROM attempts WHERE id=?').get('terminal-upgrade') },
       { intent, terminal, digest: 'original-digest', cancelled: 1, attached: 1 });
     assert.deepEqual(upgraded.prepare('SELECT id,state,operation,origin,component_id,request_id,request_digest FROM commands ORDER BY id').all().map(row => ({ ...row })),
@@ -238,6 +272,45 @@ test('offline schema upgrade preserves terminal strings and command dispositions
   } finally { upgraded.close(); }
   assert.deepEqual(f.open().inspect(device), { category: 'ios-simulator', device, state: 'available', generation: 2, owner: null, reason: null });
   assert.equal(f.open().inspect(otherDevice)?.state, 'quarantined');
+});
+
+test('offline schema fresh chain and upgraded store have identical schema and content for one installation', async t => {
+  const f = fixture(t);
+  mkdirSync(f.options.defaultRoots.leases, { mode: 0o700 });
+  writeFileSync(join(f.options.defaultRoots.leases, `${device}.lock`), '{partial', { mode: 0o600 });
+  const input = { ...declaration, excludedDevices: [otherDevice] };
+  const migration = migrateAdmissionForTesting(input, f.options);
+  const marker = readFileSync(join(f.root, 'installation.json'));
+  const snapshot = (db: DatabaseSync) => {
+    const schema = db.prepare("SELECT type,name,tbl_name,sql FROM sqlite_master WHERE name NOT LIKE 'sqlite_%' ORDER BY type,name").all();
+    const tables = db.prepare("SELECT name FROM sqlite_master WHERE type='table' AND name!='upgrades' ORDER BY name").all();
+    return { schema, tables: tables.map(table => ({ name: table.name, rows: db.prepare(`SELECT * FROM ${table.name}`).all().map(row => JSON.stringify(row)).sort() })) };
+  };
+  const fresh = new DatabaseSync(join(f.root, 'admission.sqlite'));
+  let expected: ReturnType<typeof snapshot>;
+  let conversionTime: number;
+  try {
+    assert.equal(fresh.prepare('SELECT count(*) AS count FROM upgrades').get()?.count, 0);
+    assert.deepEqual(fresh.prepare('SELECT kind,count(*) AS count FROM quarantines GROUP BY kind ORDER BY kind').all().map(row => ({ ...row })),
+      [{ kind: 'exclusion', count: 5 }, { kind: 'historical', count: 1 }]);
+    expected = snapshot(fresh);
+    conversionTime = Number(fresh.prepare('SELECT created_at FROM quarantines LIMIT 1').get()?.created_at);
+  } finally { fresh.close(); }
+  rmSync(f.root, { recursive: true });
+  migrateAdmissionForTesting(input, { ...f.options, schemaVersion: 2 });
+  const old = new DatabaseSync(join(f.root, 'admission.sqlite'));
+  try {
+    old.prepare('UPDATE metadata SET installation_id=?,migration_manifest=?').run(migration.installationId, JSON.stringify(migration));
+  } finally { old.close(); }
+  writeFileSync(join(f.root, 'installation.json'), marker, { mode: 0o600 });
+  const { upgradeAdmissionForTesting } = await import('../src/device/admission-upgrade.js');
+  const receipt = upgradeAdmissionForTesting(upgradeDeclaration, { root: f.root, backend: 'fake', now: () => conversionTime });
+  assert.deepEqual(receipt.quarantines, { historical: 1, exclusion: 5 });
+  const upgraded = new DatabaseSync(join(f.root, 'admission.sqlite'));
+  try {
+    assert.deepEqual(snapshot(upgraded), expected);
+    assert.equal(upgraded.prepare('SELECT count(*) AS count FROM upgrades').get()?.count, 1);
+  } finally { upgraded.close(); }
 });
 
 test('offline schema SQL constraints preserve authority bindings and permit only one command disposition', async t => {
@@ -257,41 +330,41 @@ test('offline schema SQL constraints preserve authority bindings and permit only
   const db = new DatabaseSync(join(f.root, 'admission.sqlite'));
   try {
     db.exec('PRAGMA foreign_keys=ON');
-    const refused: [string, string][] = [
-      ['metadata', "UPDATE metadata SET migration_manifest='{}'"],
-      ['metadata', 'UPDATE metadata SET schema_version=5'],
-      ['metadata', 'UPDATE metadata SET schema_version=2'],
-      ['metadata', 'DELETE FROM metadata'],
-      ['devices', `UPDATE devices SET device='different' WHERE device='${device}'`],
-      ['devices', `UPDATE devices SET generation=1 WHERE device='${device}'`],
-      ['devices', `DELETE FROM devices WHERE device='${device}'`],
-      ['attempts', "UPDATE attempts SET intent='{\"changed\":true}' WHERE id='immutable-attempt'"],
-      ['attempts', "UPDATE attempts SET terminal='{\"outcome\":\"inconclusive\"}' WHERE id='immutable-attempt'"],
-      ['attempts', "DELETE FROM attempts WHERE id='immutable-attempt'"],
-      ['commands', "UPDATE commands SET operation='tap' WHERE id='immutable-command'"],
-      ['commands', "DELETE FROM commands WHERE id='immutable-command'"],
-      ['owner_generations', "UPDATE owner_generations SET token='replacement' WHERE token='immutable-token'"],
-      ['owner_generations', "UPDATE owner_generations SET inventory_unknown_reason=NULL WHERE token='immutable-token'"],
-      ['owner_generations', "UPDATE owner_generations SET dispatch_closed_at=101 WHERE token='immutable-token'"],
-      ['owner_generations', "DELETE FROM owner_generations WHERE token='immutable-token'"],
-      ['imported_actions', 'UPDATE imported_actions SET record=record'],
-      ['imported_actions', 'DELETE FROM imported_actions'],
-      ['upgrades', 'UPDATE upgrades SET time=time'],
-      ['upgrades', 'DELETE FROM upgrades'],
-      ['transitions', 'UPDATE transitions SET detail=detail'],
-      ['transitions', 'DELETE FROM transitions'],
-      ['quarantines', 'UPDATE quarantines SET cause=\'changed\''],
-      ['quarantines', 'DELETE FROM quarantines'],
+    const refused: [string, string, RegExp][] = [
+      ['metadata', "UPDATE metadata SET migration_manifest='{}'", /Immutable metadata binding/],
+      ['metadata', 'UPDATE metadata SET schema_version=5', /Schema version must advance by one/],
+      ['metadata', 'UPDATE metadata SET schema_version=2', /Schema version must advance by one/],
+      ['metadata', 'DELETE FROM metadata', /Cannot delete metadata/],
+      ['devices', `UPDATE devices SET device='different' WHERE device='${device}'`, /Immutable devices binding/],
+      ['devices', `UPDATE devices SET generation=1 WHERE device='${device}'`, /Generation cannot decrease/],
+      ['devices', `DELETE FROM devices WHERE device='${device}'`, /Cannot delete devices/],
+      ['attempts', "UPDATE attempts SET intent='{\"changed\":true}' WHERE id='immutable-attempt'", /Immutable attempts binding/],
+      ['attempts', "UPDATE attempts SET terminal='{\"outcome\":\"inconclusive\"}' WHERE id='immutable-attempt'", /Terminal outcome is immutable/],
+      ['attempts', "DELETE FROM attempts WHERE id='immutable-attempt'", /Cannot delete attempts/],
+      ['commands', "UPDATE commands SET operation='tap' WHERE id='immutable-command'", /Immutable commands binding/],
+      ['commands', "DELETE FROM commands WHERE id='immutable-command'", /Cannot delete commands/],
+      ['owner_generations', "UPDATE owner_generations SET token='replacement' WHERE token='immutable-token'", /Immutable owner_generations binding/],
+      ['owner_generations', "UPDATE owner_generations SET inventory_unknown_reason=NULL WHERE token='immutable-token'", /Inventory uncertainty is immutable/],
+      ['owner_generations', "UPDATE owner_generations SET dispatch_closed_at=101 WHERE token='immutable-token'", /Dispatch closure is immutable/],
+      ['owner_generations', "DELETE FROM owner_generations WHERE token='immutable-token'", /Cannot delete owner_generations/],
+      ['imported_actions', 'UPDATE imported_actions SET record=record', /Immutable imported_actions/],
+      ['imported_actions', 'DELETE FROM imported_actions', /Immutable imported_actions/],
+      ['upgrades', 'UPDATE upgrades SET time=time', /Immutable upgrades/],
+      ['upgrades', 'DELETE FROM upgrades', /Immutable upgrades/],
+      ['transitions', 'UPDATE transitions SET detail=detail', /Immutable transitions/],
+      ['transitions', 'DELETE FROM transitions', /Immutable transitions/],
+      ['quarantines', 'UPDATE quarantines SET cause=\'changed\'', /Quarantine cannot be covered/],
+      ['quarantines', 'DELETE FROM quarantines', /Cannot delete quarantines/],
     ];
-    for (const [table, statement] of refused) {
+    for (const [table, statement, message] of refused) {
       const before = db.prepare(`SELECT * FROM ${table}`).all();
       assert.ok(before.length > 0, `${table} must contain the authoritative row under test`);
-      assert.throws(() => db.exec(statement), Error, statement);
+      assert.throws(() => db.exec(statement), message, statement);
       assert.deepEqual(db.prepare(`SELECT * FROM ${table}`).all(), before, statement);
     }
     db.exec("UPDATE commands SET state='settled' WHERE id='immutable-command'");
     assert.equal(db.prepare("SELECT state FROM commands WHERE id='immutable-command'").get()?.state, 'settled');
-    assert.throws(() => db.exec("UPDATE commands SET state='uncertain' WHERE id='immutable-command'"), Error);
+    assert.throws(() => db.exec("UPDATE commands SET state='uncertain' WHERE id='immutable-command'"), /Command disposition is immutable/);
     assert.equal(db.prepare("SELECT state FROM commands WHERE id='immutable-command'").get()?.state, 'settled');
     db.prepare('UPDATE devices SET generation=3 WHERE device=?').run(device);
     assert.equal(db.prepare('SELECT generation FROM devices WHERE device=?').get(device)?.generation, 3);
@@ -350,6 +423,28 @@ test('offline schema component target must match its owner generation', t => {
     [{ id: 'matching-component', device }]);
 });
 
+for (const kind of ['native', 'historical', 'exclusion']) {
+  test(`offline schema refuses an already covered ${kind} quarantine on insert`, t => {
+    const db = releaseSchemaFixture(t);
+    db.prepare("INSERT INTO fence_receipts VALUES ('receipt-a','generation-a','ios-simulator',?,'stop-a',?,'stop',1,'{}')").run(device, 'a'.repeat(64));
+    const before = db.prepare('SELECT * FROM quarantines ORDER BY id').all();
+    assert.throws(() => db.prepare('INSERT INTO quarantines(id,platform,device,kind,cause,created_at,owner_generation_id,evidence,covering_receipt_id) VALUES (?,\'ios-simulator\',?,?,\'fixture\',1,?,\'{}\',?)')
+      .run(`precovered-${kind}`, device, kind, kind === 'native' ? 'generation-a' : null, kind === 'native' ? 'receipt-a' : 'nonexistent-receipt'), /Quarantine must start uncovered/);
+    assert.deepEqual(db.prepare('SELECT * FROM quarantines ORDER BY id').all(), before);
+    assert.equal(db.prepare('SELECT state FROM device_state WHERE device=?').get(device)?.state, 'available');
+  });
+}
+
+test('offline schema CHECK forbids covered non-native quarantines even without the insert trigger', t => {
+  const db = releaseSchemaFixture(t);
+  db.exec('DROP TRIGGER quarantines_start_uncovered');
+  for (const kind of ['historical', 'exclusion']) {
+    assert.throws(() => db.prepare("INSERT INTO quarantines(id,platform,device,kind,cause,created_at,evidence,covering_receipt_id) VALUES (?,'ios-simulator',?,?,'fixture',1,'{}','nonexistent-receipt')")
+      .run(`precovered-${kind}`, device, kind), /CHECK constraint failed/);
+  }
+  assert.equal(db.prepare('SELECT count(*) AS count FROM quarantines WHERE device=?').get(device)?.count, 0);
+});
+
 test('offline schema stop receipt membership binds one generation and seals on receipt insertion', t => {
   const db = releaseSchemaFixture(t);
   const component = db.prepare("INSERT INTO components(id,owner_generation_id,platform,device,kind,declaration,registered_at) VALUES (?,?,'ios-simulator',?,'fixture','{\"version\":1}',1)");
@@ -387,13 +482,10 @@ test('offline schema stop receipt membership binds one generation and seals on r
   assert.equal(db.prepare("SELECT covering_receipt_id FROM quarantines WHERE id='native-a'").get()?.covering_receipt_id, 'receipt-a');
 });
 
-test('offline schema upgrade preserves parked allocations and the host unknown-creation guard', async t => {
-  const f = fixture(t);
-  migrateAdmissionForTesting(declaration, { ...f.options, schemaVersion: 2 });
+function parkedAllocationRecord(): AllocationRecord {
   const allocationId = 'ABCDEF00-0000-4000-8000-000000000010';
-  const unknownId = 'ABCDEF00-0000-4000-8000-000000000011';
   const hash = 'a'.repeat(64);
-  const parked: AllocationRecord = {
+  return {
     allocationId, actionId: 'parked-upgrade', preparationDigest: hash, preparation: { version: 1, actionId: 'parked-upgrade' },
     appBundleId: 'dev.fixture', source: { kind: 'create', deviceTypeId: 'fixture-device', runtimeId: 'fixture-runtime' },
     inspectedContentDigest: hash, artifactBytes: 100, configVersion: 1, configDigest: hash,
@@ -411,6 +503,52 @@ test('offline schema upgrade preserves parked allocations and the host unknown-c
     createdAt: 100, readyAt: 200, expiresAt: 300200, readinessEvidence: ['/isolated/readiness.json'],
     evidenceRefs: ['/isolated/preparation.json'], actionEvidence: null, hostCreationBlocked: false,
   };
+}
+
+for (const mismatch of [null, 'pid', 'incarnation', 'device', 'allocation'] as const) {
+  test(`offline schema upgrade compares an allocation owner with its historical attempt (${mismatch ?? 'matching'})`, async t => {
+    const f = fixture(t);
+    migrateAdmissionForTesting(declaration, { ...f.options, schemaVersion: 2 });
+    const base = parkedAllocationRecord();
+    const allocationId = mismatch === 'allocation' ? otherDevice : base.allocationId;
+    const record: AllocationRecord = { ...base, allocationId, state: 'retained', phase: 'terminal', outcome: 'action_completed',
+      device: mismatch === 'device' ? otherDevice : device,
+      owner: { allocationId, token: 'shared-token', generation: 2,
+        process: { pid: mismatch === 'pid' ? process.pid + 1 : process.pid, incarnation: mismatch === 'incarnation' ? 'different' : 'fixture' } } };
+    const text = JSON.stringify(record);
+    const old = new DatabaseSync(join(f.root, 'admission.sqlite'));
+    try {
+      old.prepare("INSERT INTO devices(device,state,generation) VALUES (?,'available',2)").run(device);
+      old.prepare("INSERT INTO attempts(kind,id,device,digest,intent,token,generation,pid,incarnation,state,terminal) VALUES ('preparation',?,?,'original','{}','shared-token',2,?,'fixture','terminal','{\"outcome\":\"completed\"}')").run(base.allocationId, device, process.pid);
+      old.prepare('INSERT INTO allocations VALUES (?,?,?,NULL,?,?)').run(allocationId, record.actionId, record.device, text, digest(text));
+    } finally { old.close(); }
+    const { upgradeAdmissionForTesting } = await import('../src/device/admission-upgrade.js');
+    if (mismatch === null) {
+      assert.equal(upgradeAdmissionForTesting(upgradeDeclaration, { root: f.root, backend: 'fake' }).to, 3);
+      const db = new DatabaseSync(join(f.root, 'admission.sqlite'));
+      try {
+        assert.deepEqual(db.prepare('SELECT owner_kind,allocation_id,pid,incarnation FROM owner_generations').all().map(row => ({ ...row })),
+          [{ owner_kind: 'device', allocation_id: allocationId, pid: process.pid, incarnation: 'fixture' }]);
+      } finally { db.close(); }
+    } else {
+      assert.throws(() => upgradeAdmissionForTesting(upgradeDeclaration, { root: f.root, backend: 'fake' }),
+        { code: 'STATE_UNAVAILABLE', message: 'Conflicting historical owner binding' });
+      const db = new DatabaseSync(join(f.root, 'admission.sqlite'));
+      try {
+        assert.equal(db.prepare('SELECT schema_version FROM metadata').get()?.schema_version, 2);
+        assert.equal(db.prepare('SELECT record FROM allocations').get()?.record, text);
+      } finally { db.close(); }
+    }
+  });
+}
+
+test('offline schema upgrade preserves parked allocations and the host unknown-creation guard', async t => {
+  const f = fixture(t);
+  migrateAdmissionForTesting(declaration, { ...f.options, schemaVersion: 2 });
+  const allocationId = 'ABCDEF00-0000-4000-8000-000000000010';
+  const unknownId = 'ABCDEF00-0000-4000-8000-000000000011';
+  const hash = 'a'.repeat(64);
+  const parked = parkedAllocationRecord();
   const unknown: AllocationRecord = { ...parked, allocationId: unknownId, actionId: 'unknown-upgrade',
     preparation: { version: 1, actionId: 'unknown-upgrade' }, intendedName: `jev-observed-${unknownId}`,
     device: null, creationReceipt: null, state: 'preparing', phase: 'creating', outcome: null,

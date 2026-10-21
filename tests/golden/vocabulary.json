@@ -91,7 +91,12 @@
     "INVALID_REQUEST",
     "DEVICE_NOT_FOUND",
     "DEVICE_IDENTITY_CONFLICT",
-    "DEVICE_IDENTITY_UNAVAILABLE"
+    "DEVICE_IDENTITY_UNAVAILABLE",
+    "NOT_COVERABLE"
+  ],
+  "fenceRequestKinds": [
+    "stop",
+    "maintenance-lift"
   ],
   "exitCodes": {
     "passed": 0,
