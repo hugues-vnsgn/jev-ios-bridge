@@ -67,7 +67,7 @@ export interface IdentityProbe {
   simulatorApp(input: { deviceSet: string; udid: string; bundleId: string; signal: AbortSignal }): Promise<SimulatorAppObservation>;
 }
 export type IdentityProbeOptions = {
-  adb: string; environment: NodeJS.ProcessEnv; deadlineMs?: number; spawn?: ProbeSpawn; host?: AndroidHostProbe;
+  adb: string; environment: NodeJS.ProcessEnv; deadlineMs?: number; versionDeadlineMs?: number; spawn?: ProbeSpawn; host?: AndroidHostProbe;
   simulator?: (signal: AbortSignal) => Promise<SimulatorIdentityInventory>;
   simulatorApp?: IdentityProbe['simulatorApp'];
   defaultSimulatorSet?: () => Promise<string>;
@@ -131,7 +131,9 @@ export function identityProbe(options: IdentityProbeOptions): IdentityProbe {
         child.kill('SIGTERM');
       };
       const abort = () => terminate(signal.reason);
-      const deadline = setTimeout(() => terminate(new IdentityResolutionError({ code: 'DEVICE_IDENTITY_UNAVAILABLE', reason: 'PROBE_TIMEOUT' })), options.deadlineMs ?? 2_000);
+      const deadline = setTimeout(() => terminate(new IdentityResolutionError({ code: 'DEVICE_IDENTITY_UNAVAILABLE', reason: 'PROBE_TIMEOUT' })),
+        // A cold first exec of the signed launcher after a reboot measured 3.4 s idle and over 5 s beside two emulators.
+        command.kind === 'version' ? options.versionDeadlineMs ?? 15_000 : options.deadlineMs ?? 2_000);
       signal.addEventListener('abort', abort, { once: true });
       child.stdout.on('data', (part: Buffer) => {
         bytes += part.length;
