@@ -283,6 +283,18 @@ for (const [name, devicesText, code, serial] of [
   });
 }
 
+test('a profile\'s device category limits the device a name may resolve to', async () => {
+  const adb = new FakeAdb(api31());
+  await withDriver(adb, async ({ driver, root }) => {
+    await assert.rejects(driver.prepare(app(), signal()), reason('DEVICE_NOT_FOUND'));
+    assert.deepEqual(await readdir(root), [], 'no lease taken');
+  }, { device: { serial: 'emulator-5554' }, category: 'android-phone' });
+  await withDriver(new FakeAdb(api31()), async ({ driver }) => {
+    await driver.prepare(app(), signal());
+    await driver.close(signal());
+  }, { device: { serial: 'emulator-5554' }, category: 'android-emulator' });
+});
+
 test('an unready phone listed beside the emulator doesn\'t stop a run on that emulator', async () => {
   const adb = new FakeAdb(api31());
   adb.devicesText = 'List of devices attached\nemulator-5554          device transport_id:1\nR58M123          unauthorized transport_id:2\n' +

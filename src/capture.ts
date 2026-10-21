@@ -122,7 +122,8 @@ export async function captureCommand(request: CaptureRequest, context: CaptureCo
     // The device checks run here, before the driver's tools check, so a missing or malformed name is
     // reported first, as `run` does.
     selectAndroidDeviceName(device, context.defaultDevice, 'Pass --serial or --avd, or set JEV_ANDROID_DEVICE');
-    const driver = new AndroidDriver({ ...context.driver, device, defaultDevice: context.defaultDevice });
+    const driver = new AndroidDriver({ ...context.driver, device, defaultDevice: context.defaultDevice,
+      ...(selected && selected.profile.deviceCategory !== 'ios-simulator' ? { category: selected.profile.deviceCategory } : {}) });
     const operationMs = selected?.profile.budgets?.operationMs;
     const captureSignal = operationMs === undefined ? signal : AbortSignal.any([signal, AbortSignal.timeout(operationMs)]);
     try {

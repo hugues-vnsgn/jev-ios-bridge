@@ -83,6 +83,8 @@ export interface AndroidDriverOptions {
   device?: { serial?: string; avd?: string } | undefined;
   /** JEV_ANDROID_DEVICE. */
   defaultDevice?: string | undefined;
+  /** The selected profile's device category: the name must resolve to a device of it. */
+  category?: 'android-emulator' | 'android-phone' | undefined;
   /** The tools check. Defaults to `androidTools()`. */
   tools?: () => Promise<AndroidTools>;
   /** Defaults to the production runner for the `adb` the tools check found. */
@@ -634,7 +636,7 @@ export class AndroidDriver implements DeviceDriver {
       throw new DeviceReasonError('DEVICE_IDENTITY_UNAVAILABLE', 'Device identity requires a read-only probe', { vendorCode: 'PROVENANCE_INACCESSIBLE' });
     }
     this.probe ??= identityProbe({ adb: tools.adb, environment: adbEnvironment() });
-    const resolved = await this.identityRead(() => resolveIdentity({ request: { category: 'android', name }, probe: this.probe!, signal }));
+    const resolved = await this.identityRead(() => resolveIdentity({ request: { category: this.options.category ?? 'android', name }, probe: this.probe!, signal }));
     if (resolved.category === 'ios-simulator') throw new Error('Android identity required');
     const { serial, state } = resolved.transport;
     if (state === 'unauthorized') throw new DeviceReasonError('DEVICE_UNAUTHORIZED', `Device ${serial} hasn't accepted this Mac's USB-debugging key`);

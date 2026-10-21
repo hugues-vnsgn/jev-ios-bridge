@@ -85,12 +85,13 @@ test('a scenario serial for the profile AVD runs after live agreement, and a dif
   } }));
   const asked: unknown[] = [];
   const created: unknown[] = [];
+  const categories: unknown[] = [];
   let same = false;
   const judge = () => ({ async judge() { return { probabilities: { shown: 1 }, inputTokens: 0, latencyMs: 0, model: 'jev-1.13.0' }; } });
   const service = new BridgeService({ baseDir: join(root, 'runs'), env: { JEV_PROJECT_DIR: root },
     agreeDevices: async (left, right) => { asked.push([left, right]); return same; },
-    createDriver: scenario => {
-      created.push(scenario.device);
+    createDriver: (scenario, run) => {
+      created.push(scenario.device); categories.push(run.deviceCategory);
       return { async prepare() {}, async observe() { return screen(); }, async act() {}, async close() {} };
     }, createJudge: judge,
   });
@@ -104,6 +105,7 @@ test('a scenario serial for the profile AVD runs after live agreement, and a dif
     const { runId } = await service.start(scenario, {}, 'pixel');
     assert.equal((await service.status(runId, 2000)).report.verdict, 'passed');
     assert.deepEqual(created, [{ avd: 'Pixel_API_35' }]);
+    assert.deepEqual(categories, ['android-emulator'], 'the profile\'s category goes to the driver');
     assert.deepEqual(asked, Array(2).fill([{ serial: 'emulator-5554' }, { avd: 'Pixel_API_35' }]));
     const unchecked = new BridgeService({ baseDir: join(root, 'runs'), env: { JEV_PROJECT_DIR: root },
       createDriver: () => assert.fail(), createJudge: judge });
