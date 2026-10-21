@@ -91,7 +91,7 @@ test('a stalled installed-app probe refuses without admission or any effect', as
   const root = await mkdtemp(join(tmpdir(), 'jev-device-app-timeout-'));
   const fake = fakeProbeSpawn(() => undefined);
   const effects: string[] = [];
-  const probe = identityProbe({ adb: '/fake/adb', environment: {}, spawn: fake.spawn, deadlineMs: 5,
+  const probe = identityProbe({ adb: '/fake/adb', environment: {}, spawn: fake.spawn, deadlineMs: 5, slowDeadlineMs: 5,
     simulator: fakeSimulatorProbe(udid).simulatorSet });
   const driver = fakeDriver({ cwd: root, lockRoot: root, identityProbe: probe,
     runner: async args => { effects.push(args.join(' ')); return { stdout: commandEnvelope(args), stderr: '', exitCode: 0 }; } });

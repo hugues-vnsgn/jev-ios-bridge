@@ -358,7 +358,7 @@ test('a cold emulator -version slower than the read deadline succeeds within its
     writeFileSync(launcher, 'fake launcher'); writeFileSync(executable, 'fake executable');
     chmodSync(launcher, 0o700); chmodSync(executable, 0o700);
     const startedAt = new Date(Date.now() + 1).toISOString();
-    const world = (versionDeadlineMs?: number) => {
+    const world = (slowDeadlineMs?: number) => {
       const fake = fakeProbeSpawn((file, args, child) => {
         if (file === '/usr/sbin/lsof' && args.includes('-d')) return `p123\nftxt\nn${executable}\n`;
         if (file === '/usr/sbin/lsof') return `p123\nu${userInfo().uid}\nn127.0.0.1:5554\n`;
@@ -369,7 +369,7 @@ test('a cold emulator -version slower than the read deadline succeeds within its
         return 'Pixel\n';
       });
       return { fake, probe: identityProbe({ adb: '/fake/adb', environment: {}, spawn: fake.spawn, deadlineMs: 50,
-        ...(versionDeadlineMs === undefined ? {} : { versionDeadlineMs }) }) };
+        ...(slowDeadlineMs === undefined ? {} : { slowDeadlineMs }) }) };
     };
     const cold = world();
     const identity = await resolveIdentity({ request: { category: 'android', name: 'emulator-5554' }, probe: cold.probe, signal: identitySignal() });
@@ -419,6 +419,21 @@ test('a probe child that ignores SIGTERM is killed with SIGKILL, and a reply ove
   const flood = emulatorWorld({ devices: `List of devices attached\n${'x'.repeat(70_000)}\n` });
   await assert.rejects(resolveIdentity({ request: { category: 'android', name: 'Pixel' }, probe: flood.probe, signal: identitySignal() }),
     refusal('DEVICE_IDENTITY_UNAVAILABLE', 'MALFORMED_PROVENANCE'));
+});
+
+test('a cold simctl list slower than the read deadline succeeds within the slow-exec deadline', async () => {
+  const reply = JSON.stringify({ devices: { runtime: [{ udid: '11111111-AAAA-BBBB-CCCC-222222222222', name: 'Cold', isAvailable: true, state: 'Booted' }] } });
+  const probe = (slowDeadlineMs?: number) => {
+    const fake = fakeProbeSpawn((_file, _args, child) => { setTimeout(() => child.exit(0, reply), 200); return undefined; });
+    return { fake, probe: identityProbe({ adb: '/fake/adb', environment: {}, spawn: fake.spawn, deadlineMs: 50,
+      defaultSimulatorSet: async () => '/account/Library/Developer/CoreSimulator/Devices', ...(slowDeadlineMs === undefined ? {} : { slowDeadlineMs }) }) };
+  };
+  const cold = probe();
+  const identity = await resolveIdentity({ request: { category: 'ios-simulator', name: 'Cold' }, probe: cold.probe, signal: identitySignal() });
+  assert.equal(identity.value, '11111111-AAAA-BBBB-CCCC-222222222222');
+  const bounded = probe(50);
+  await assert.rejects(resolveIdentity({ request: { category: 'ios-simulator', name: 'Cold' }, probe: bounded.probe, signal: identitySignal() }),
+    refusal('DEVICE_IDENTITY_UNAVAILABLE', 'PROBE_TIMEOUT'));
 });
 
 test('an explicit phone transport does not depend on unrelated emulator provenance and absent names refuse', async () => {
