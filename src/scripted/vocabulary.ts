@@ -79,8 +79,8 @@ const REASON_CODES_1_1 = {
 export const REASON_CODES = {
   ...REASON_CODES_1_1,
   // Android device and tooling codes, added in 1.2.
-  DEVICE_NOT_CONNECTED: 'The named serial isn\'t listed by adb or is offline, or no running emulator has the named AVD.',
-  DEVICE_AMBIGUOUS: 'More than one running emulator has the named AVD, so the bridge can\'t tell them apart.',
+  DEVICE_NOT_CONNECTED: 'The named device is listed by adb but is offline or not ready.',
+  DEVICE_AMBIGUOUS: 'More than one live device matches the configured name, such as two running instances of one AVD, so the bridge can\'t tell them apart.',
   DEVICE_UNAUTHORIZED: 'The device hasn\'t accepted this Mac\'s USB-debugging key.',
   DEVICE_NOT_BOOTED: 'The device hasn\'t finished booting, or the iOS simulator isn\'t booted.',
   DEVICE_LOCKED: 'The device\'s screen is locked.',
