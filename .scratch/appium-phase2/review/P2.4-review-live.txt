@@ -1,0 +1,31 @@
+# P2.4 live trial on the private AVD jev_appium_phase1_20261018 (emulator 37.2.12, -read-only, private adb server :15037)
+
+Console fixtures captured at ba76c440d (tests/fixtures/android/console/live-*.txt), exact stdout bytes:
+  offline   name  live-offline-name.txt    exit 0    32 bytes  sha256 8c76a0be27274ddf
+  offline   id    live-offline-id.txt      exit 0    15 bytes  sha256 ff0b20c934686302
+  offline   path  live-offline-path.txt    exit 0   151 bytes  sha256 d469e47fa9a8cffd
+  success   name  live-success-name.txt    exit 0    32 bytes  sha256 8c76a0be27274ddf
+  success   id    live-success-id.txt      exit 0    15 bytes  sha256 ff0b20c934686302
+  success   path  live-success-path.txt    exit 0   151 bytes  sha256 d469e47fa9a8cffd
+  missing   name  live-missing-name.txt    exit 0     0 bytes  sha256 e3b0c44298fc1c14
+  missing   id    live-missing-id.txt      exit 0   218 bytes  sha256 ffdab2d70dc4f843
+  missing   path  live-missing-path.txt    exit 0   218 bytes  sha256 ffdab2d70dc4f843
+  empty     name  live-empty-name.txt      exit 0     0 bytes  sha256 e3b0c44298fc1c14
+  empty     id    live-empty-id.txt        exit 0   218 bytes  sha256 ffdab2d70dc4f843
+  empty     path  live-empty-path.txt      exit 0   218 bytes  sha256 ffdab2d70dc4f843
+  mismatch  name  live-mismatch-name.txt   exit 0     0 bytes  sha256 e3b0c44298fc1c14
+  mismatch  id    live-mismatch-id.txt     exit 0   323 bytes  sha256 2263b2db2466434f
+  mismatch  path  live-mismatch-path.txt   exit 0   323 bytes  sha256 2263b2db2466434f
+  second    name  live-second-name.txt     exit 0    32 bytes  sha256 8c76a0be27274ddf
+  second    id    live-second-id.txt       exit 0    16 bytes  sha256 229919580a8828df
+  second    path  live-second-path.txt     exit 0   151 bytes  sha256 d469e47fa9a8cffd
+
+Step 8, identity-only resolver on two read-only instances, at 3ad32e471: passed
+  jev_appium_phase1_20261018   -> DEVICE_AMBIGUOUS
+  emulator-5570                -> android-emulator ~/Codes/AgentTools/jev-ios-bridge/.worktrees/feat/appium-mcp-migration/.scratch/appium-mcp-migration/runtime/devices/android.avd serial emulator-5570 avdId p24-first version 37.2.12.0 (running-sdk-binary)
+  emulator-5572                -> android-emulator ~/Codes/AgentTools/jev-ios-bridge/.worktrees/feat/appium-mcp-migration/.scratch/appium-mcp-migration/runtime/devices/android.avd serial emulator-5572 avdId p24-second version 37.2.12.0 (running-sdk-binary)
+
+Cleanup: emulator-5572 exit 0; emulator-5570 exit 0; server exit -15; port 15037 closed; port 5570 closed; port 5571 closed; port 5572 closed; port 5573 closed
+Final private inventory: {}
+
+Two earlier attempts at this step found the bugs fixed in 7c2940e09 (headless qemu binary) and 3ad32e471 (cold emulator -version deadline).

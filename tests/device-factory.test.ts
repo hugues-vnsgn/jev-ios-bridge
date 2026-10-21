@@ -1,3 +1,4 @@
+import { FakeAdb, fakeSimulatorProbe } from './fixtures/android-device.js';
 import { mkdirSync, realpathSync } from 'node:fs';
 import { Admission } from '../src/device/admission.js';
 import assert from 'node:assert/strict';
@@ -6,25 +7,59 @@ import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { test } from 'node:test';
 import type { ScriptedScenario } from '../src/scripted/contracts.js';
-import { createDriverFactory } from '../src/device/factory.js';
+import { createDeviceAgreement, createDriverFactory } from '../src/device/factory.js';
 import { DeviceReasonError, type CliRunner } from '../src/device/index.js';
 import type { AdbRunner } from '../src/device/android/adb.js';
 import { AndroidDriver } from '../src/device/android/driver.js';
 import { androidTools } from '../src/device/android/tools.js';
-import { profileScenario } from '../src/profiles.js';
+import { agreeProfileDevice, profileScenario } from '../src/profiles.js';
 
 const udid = 'ABCDEF00-0000-4000-8000-000000000001';
 const iosScript: ScriptedScenario = { version: 1, app: { bundleId: 'com.example.app' }, values: {}, steps: [] };
 
-test('profile conflicts compare names exactly and refuse mixed device-name kinds', () => {
+const pixelProfile = { profile: { platform: 'android', deviceCategory: 'android-emulator', device: 'Pixel_API_35' },
+  binding: { name: 'pixel', digest: 'a'.repeat(64) } } as const;
+
+test('profile conflicts compare same-kind names exactly and leave an AVD name against a serial to live agreement', () => {
   const scenario: ScriptedScenario = { version: 1, platform: 'android', app: { package: 'com.example.app' },
     device: { avd: 'Pixel_API_35' }, values: {}, steps: [] };
-  const selected = { profile: { platform: 'android', deviceCategory: 'android-emulator', device: 'Pixel_API_35' },
-    binding: { name: 'pixel', digest: 'a'.repeat(64) } } as const;
-  assert.deepEqual(profileScenario(scenario, selected).device, { avd: 'Pixel_API_35' });
-  for (const device of [{ avd: 'Different_AVD' }, { avd: 'pixel_api_35' }, { serial: 'emulator-5554' }]) {
-    assert.throws(() => profileScenario({ ...scenario, device }, selected), { code: 'PROFILE_CONFLICT' });
+  assert.deepEqual(profileScenario(scenario, pixelProfile).device, { avd: 'Pixel_API_35' });
+  for (const device of [{ avd: 'Different_AVD' }, { avd: 'pixel_api_35' }]) {
+    assert.throws(() => profileScenario({ ...scenario, device }, pixelProfile), { code: 'PROFILE_CONFLICT' });
   }
+  assert.deepEqual(profileScenario({ ...scenario, device: { serial: 'emulator-5554' } }, pixelProfile).device, { avd: 'Pixel_API_35' });
+});
+
+test('an AVD name against a serial agrees only when both resolve live to one emulator', async () => {
+  const adb = new FakeAdb({ serial: 'emulator-5554', avd: 'Pixel_API_35' }, { serial: 'emulator-5556', avd: 'Other_AVD' });
+  const agree = createDeviceAgreement({ probe: adb.identityProbe });
+  const signal = new AbortController().signal;
+  const check = (own: { serial?: string; avd?: string }) => agreeProfileDevice(own, pixelProfile, agree, signal);
+  await check({ avd: 'Pixel_API_35' });
+  assert.deepEqual(adb.probeCalls, []);
+  await check({ serial: 'emulator-5554' });
+  await assert.rejects(check({ serial: 'emulator-5556' }),
+    { code: 'PROFILE_CONFLICT', message: 'Scenario device conflicts with the selected profile.' });
+  await assert.rejects(check({ serial: 'emulator-5558' }), { code: 'PROFILE_CONFLICT',
+    message: 'Scenario device conflicts with the selected profile. The device could not be resolved: DEVICE_NOT_FOUND.' });
+  await assert.rejects(agreeProfileDevice({ serial: 'emulator-5554' }, pixelProfile, undefined, signal), { code: 'PROFILE_CONFLICT' });
+  await assert.rejects(agreeProfileDevice({ serial: 'emulator-5554' }, pixelProfile, async () => { throw new Error('tools'); }, signal),
+    { message: 'tools' });
+  assert.deepEqual(adb.calls, []);
+});
+
+test('the factory passes a run\'s profile device category to the Android driver', async () => {
+  const root = await mkdtemp(join(tmpdir(), 'jev-device-factory-category-'));
+  try {
+    const adb = new FakeAdb({ serial: 'emulator-5554', avd: 'Pixel_API_35' });
+    const createDriver = createDriverFactory({ mobileBuildMcp: { cwd: root, lockRoot: root },
+      android: { leaseRoot: root, runner: adb.run, identityProbe: adb.identityProbe,
+        tools: async () => ({ adb: '/sdk/platform-tools/adb', agent: { path: '/cache/agent.dex', sha256: 'a'.repeat(64) } }) } });
+    const script: ScriptedScenario = { version: 1, platform: 'android', app: { package: 'com.example.app' }, device: { serial: 'emulator-5554' }, values: {}, steps: [] };
+    await assert.rejects(createDriver(script, { runId: 'phone-profile', deviceCategory: 'android-phone' }).prepare({ app: { package: 'com.example.app' } }, new AbortController().signal),
+      (error: unknown) => error instanceof DeviceReasonError && error.code === 'DEVICE_NOT_FOUND');
+    assert.deepEqual(adb.calls, []);
+  } finally { await rm(root, { recursive: true, force: true }); }
 });
 
 test('the factory records a selected profile binding in the admission intent', async () => {
@@ -109,25 +144,30 @@ test('the Android driver gets the script\'s device, else JEV_ANDROID_DEVICE, fro
   const root = await mkdtemp(join(tmpdir(), 'jev-device-factory-android-device-'));
   try {
     const adbCalls: string[] = [];
+    const probeNames: (string | undefined)[] = [];
     const runner: AdbRunner = async (args) => {
       adbCalls.push(args.join(' '));
       return { stdout: 'List of devices attached\n\n', stderr: '', exitCode: 0 };
     };
     const createDriver = createDriverFactory({ mobileBuildMcp: { cwd: root, lockRoot: root },
       android: { leaseRoot: root, runner, defaultDevice: 'Default_AVD',
+        identityProbe: { android: async (_signal, name) => { probeNames.push(name); return []; },
+          simulatorApp: async () => assert.fail('Android uses no simulator app read'),
+          simulatorSet: async () => assert.fail('Android uses no simulator inventory') },
         tools: async () => ({ adb: '/sdk/platform-tools/adb', agent: { path: '/cache/agent.dex', sha256: 'a'.repeat(64) } }) } });
     const script = (device?: { avd: string }): ScriptedScenario =>
       ({ version: 1, platform: 'android', app: { package: 'com.hugues.test_cmp' }, ...(device ? { device } : {}), values: {}, steps: [] });
     for (const [device, named] of [[{ avd: 'Script_AVD' }, 'Script_AVD'], [undefined, 'Default_AVD']] as const) {
       await assert.rejects(createDriver(script(device)).prepare({ app: { package: 'com.hugues.test_cmp' } }, new AbortController().signal),
-        (error: unknown) => error instanceof DeviceReasonError && error.code === 'DEVICE_NOT_CONNECTED' && error.message.endsWith(`named ${named}`));
+        (error: unknown) => error instanceof DeviceReasonError && error.code === 'DEVICE_NOT_FOUND' && probeNames.at(-1) === named);
     }
-    assert.deepEqual(adbCalls, ['devices -l', 'devices -l']);
+    assert.deepEqual(adbCalls, []);
+    assert.deepEqual(probeNames, ['Script_AVD', 'Default_AVD']);
   } finally { await rm(root, { recursive: true, force: true }); }
 });
 
 function fakeOptions(options: import('../src/device/index.js').MobileBuildMcpDriverOptions) {
   const storeRoot = join(options.cwd, 'admission'); mkdirSync(storeRoot, { recursive: true, mode: 0o700 });
-  return { ...options, admission: Admission.forTesting({ root: realpathSync(storeRoot), backend: 'fake' }),
+  return { identityProbe: fakeSimulatorProbe(udid), ...options, admission: Admission.forTesting({ root: realpathSync(storeRoot), backend: 'fake' }),
     deviceWindow: async () => {}, fakeBackend: { runner: options.runner!, window: undefined } };
 }

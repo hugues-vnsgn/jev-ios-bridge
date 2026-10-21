@@ -31,3 +31,28 @@ export function fakeSpawn(onSpawn?: (child: FakeChild, args: readonly string[]) 
     },
   };
 }
+
+import type { ProbeChild, ProbeSpawn } from '../../src/device/android/probe.js';
+
+export class FakeProbeChild extends FakeChild implements ProbeChild {
+  readonly killedBy: NodeJS.Signals[] = [];
+  kill(signal: NodeJS.Signals): boolean {
+    this.killedBy.push(signal);
+    this.emit('close', null, signal);
+    return true;
+  }
+}
+
+export function fakeProbeSpawn(reply: (file: string, args: readonly string[], child: FakeProbeChild) => string | undefined): {
+  spawn: ProbeSpawn; calls: { file: string; args: readonly string[]; options: Parameters<ProbeSpawn>[2] }[]; children: FakeProbeChild[];
+} {
+  const calls: { file: string; args: readonly string[]; options: Parameters<ProbeSpawn>[2] }[] = [];
+  const children: FakeProbeChild[] = [];
+  return { calls, children, spawn: (file, args, options) => {
+    const child = new FakeProbeChild();
+    calls.push({ file, args, options });
+    children.push(child);
+    setImmediate(() => { const stdout = reply(file, args, child); if (stdout !== undefined) child.exit(0, stdout); });
+    return child;
+  } };
+}

@@ -16,7 +16,8 @@ import type { DrivenJudge } from './driven/decide.js';
 import { createHandbackGate, DEFAULT_HANDBACK_TIMEOUT_MS, HandbackAnswerError, MAX_HANDBACK_TIMEOUT_MS,
   MIN_HANDBACK_TIMEOUT_MS, type HandbackGate, type PausePackage } from './driven/handback.js';
 import type { HandbackAnswer } from './driven/step.js';
-import { readProfile, profileLimits, profileScenario, profileBudgetsSchema, type ProfileBinding, type SelectedProfile } from './profiles.js';
+import { agreeProfileDevice, readProfile, profileLimits, profileScenario, profileBudgetsSchema, type DeviceAgreement, type Profile,
+  type ProfileBinding, type SelectedProfile } from './profiles.js';
 
 /** How the live log pane is offered. Without this, runs have no pane. */
 export interface LogPaneOptions {
@@ -54,8 +55,10 @@ export class BridgeService {
   constructor(private readonly options: {
     baseDir: string;
     /** Builds the run's driver, given the run's ID, which names the driver's own files (the Android app log). */
-    createDriver: (scenario: ScriptedScenario, run: { runId: string; profile?: ProfileBinding }) => DeviceDriver;
+    createDriver: (scenario: ScriptedScenario, run: { runId: string; profile?: ProfileBinding; deviceCategory?: Profile['deviceCategory'] }) => DeviceDriver;
     createJudge: (scenario: ScriptedScenario) => ScriptedJudge;
+    /** Resolves a scenario's Android name against the profile's other-kind name. Without it such a pair refuses. */
+    agreeDevices?: DeviceAgreement;
     /** Jev for `do` steps. Without it, a script with a `do` step is refused when its run starts. */
     createDrivenJudge?: (scenario: ScriptedScenario) => DrivenJudge;
     policy?: ScriptedRunLimits;
@@ -79,6 +82,9 @@ export class BridgeService {
       ...(parsedLimits.cleanupMs === undefined ? {} : { cleanupMs: parsedLimits.cleanupMs }),
     });
     const scenario = selected ? profileScenario(parsedScenario, selected) : parsedScenario;
+    if (selected && parsedScenario.platform === 'android') {
+      await agreeProfileDevice(parsedScenario.device, selected, this.options.agreeDevices, new AbortController().signal);
+    }
     const limits: ScriptedRunLimits = { ...this.options.policy,
       ...(parsedLimits.maxSteps === undefined ? {} : { maxSteps: parsedLimits.maxSteps }),
       ...(parsedLimits.wallTimeMs === undefined ? {} : { wallTimeMs: parsedLimits.wallTimeMs }),
@@ -91,7 +97,8 @@ export class BridgeService {
     // it into the run's `driven` options beside the judge and the hand-back gate.
     const project = await openDrivenProject(scenario, this.options.env ?? process.env);
     const runId = randomUUID();
-    const driver = this.options.createDriver(scenario, { runId, ...(selected ? { profile: selected.binding } : {}) });
+    const driver = this.options.createDriver(scenario, { runId,
+      ...(selected ? { profile: selected.binding, deviceCategory: selected.profile.deviceCategory } : {}) });
     const judge = this.options.createJudge(scenario);
     if (this.stopping) throw new Error('Bridge is shutting down');
     const log = await createRunLog(this.baseDir, runId, { values: Object.values(scenario.values) });

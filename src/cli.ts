@@ -12,7 +12,7 @@ import { BridgeService } from './service.js';
 import { captureCommand } from './capture.js';
 import { createMcpServer } from './mcp/index.js';
 import { DeviceCliError, DeviceReasonError, deviceWindowOpener, selectAndroidDeviceName, selectDeviceId } from './device/index.js';
-import { createDriverFactory } from './device/factory.js';
+import { createDeviceAgreement, createDriverFactory } from './device/factory.js';
 import { createAssertionJudge } from './scripted/jev.js';
 import { createDrivenJudge } from './driven/decide.js';
 import { renderPause } from './driven/handback.js';
@@ -155,7 +155,7 @@ async function dispatchCli(args: string[], composition: CliComposition): Promise
   if (command === 'capture') {
     const interrupted = new AbortController();
     const captured = captureCommand({ serial, avd, jev, profile: parsed.values.profile }, { projectDir,
-      defaultDevice: process.env.JEV_ANDROID_DEVICE, signal: interrupted.signal,
+      defaultDevice: process.env.JEV_ANDROID_DEVICE, signal: interrupted.signal, agreeDevices: createDeviceAgreement(),
       write: { stdout: text => { process.stdout.write(text); }, stderr: text => { process.stderr.write(text); } } });
     // As a run's handlers do: close the driver, then exit.
     const stop = (exitCode: number) => () => { interrupted.abort(); void captured.finally(() => process.exit(exitCode)); };
@@ -190,6 +190,7 @@ async function dispatchCli(args: string[], composition: CliComposition): Promise
   const deviceWindow = deviceWindowOpener(parsed.values['no-device-window'] === true);
   const service = composition.legacy ?? new BridgeService({
     baseDir: runsDir(),
+    agreeDevices: createDeviceAgreement(),
     env: { ...process.env, JEV_PROJECT_DIR: projectDir },
     createDriver: createDriverFactory({ mobileBuildMcp: { cwd: projectDir,
       ...(process.env.JEV_DEVICE_UDID ? { defaultUdid: process.env.JEV_DEVICE_UDID } : {}),
@@ -261,7 +262,7 @@ export async function runCli(args = process.argv.slice(2), composition: CliCompo
       process.stdout.write((args.includes('--json') ? JSON.stringify(reply) : observedSummary(reply)) + '\n');
       process.exitCode = 3; return;
     }
-    if (error instanceof ProfileError) console.error(`${error.code}: ${error.message}`);
+    if (error instanceof ProfileError || error instanceof DeviceReasonError && error.code === 'CATEGORY_NOT_ENABLED') console.error(`${error.code}: ${error.message}`);
     else if (error instanceof z.ZodError) console.error(`Script is invalid:\n${z.prettifyError(error)}`);
     else if (error instanceof StartError || error instanceof ScriptValueError || error instanceof DrivenProjectError ||
       isDeviceSelectionError(error)) {

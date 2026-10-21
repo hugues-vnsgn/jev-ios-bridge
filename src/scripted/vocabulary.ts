@@ -79,8 +79,8 @@ const REASON_CODES_1_1 = {
 export const REASON_CODES = {
   ...REASON_CODES_1_1,
   // Android device and tooling codes, added in 1.2.
-  DEVICE_NOT_CONNECTED: 'The named serial isn\'t listed by adb or is offline, or no running emulator has the named AVD.',
-  DEVICE_AMBIGUOUS: 'More than one running emulator has the named AVD, so the bridge can\'t tell them apart.',
+  DEVICE_NOT_CONNECTED: 'The named device is listed by adb but is offline or not ready.',
+  DEVICE_AMBIGUOUS: 'More than one live device matches the configured name, such as two running instances of one AVD, so the bridge can\'t tell them apart.',
   DEVICE_UNAUTHORIZED: 'The device hasn\'t accepted this Mac\'s USB-debugging key.',
   DEVICE_NOT_BOOTED: 'The device hasn\'t finished booting, or the iOS simulator isn\'t booted.',
   DEVICE_LOCKED: 'The device\'s screen is locked.',
@@ -103,12 +103,21 @@ export const REASON_CODES = {
   CATEGORY_NOT_ENABLED: 'The requested device category is reserved and is not enabled.',
   STATE_UNAVAILABLE: 'Admission storage is unavailable, unsafe, incompatible, or requires offline maintenance.',
   INVALID_REQUEST: 'The admission or maintenance request is invalid.',
+  DEVICE_NOT_FOUND: 'The configured device name matches no live device identity.',
+  DEVICE_IDENTITY_CONFLICT: 'Live identity sources disagree about the device.',
+  DEVICE_IDENTITY_UNAVAILABLE: 'A required identity source cannot be read or is not admissible; exactly one identity unavailable reason identifies the cause.',
   NOT_COVERABLE: 'The requested quarantine cover is not supported; maintenance-lift is reserved.',
 } as const satisfies Record<string, string>;
 export type ReasonCode = keyof typeof REASON_CODES;
 
 export const IMPORT_REFUSAL_REASONS = ['HOLDER_ALIVE', 'SOURCE_UNREADABLE', 'SOURCE_UNSAFE', 'SOURCE_INCONSISTENT', 'SOURCE_CONFLICT'] as const;
 export type ImportRefusalReason = typeof IMPORT_REFUSAL_REASONS[number];
+
+export const DEVICE_IDENTITY_UNAVAILABLE_REASONS = [
+  'NONDEFAULT_DEVICE_SET', 'EMULATOR_VERSION_UNSUPPORTED', 'REMOTE_CONSOLE',
+  'MALFORMED_PROVENANCE', 'PROVENANCE_INACCESSIBLE', 'PROBE_TIMEOUT',
+] as const;
+export type DeviceIdentityUnavailableReason = typeof DEVICE_IDENTITY_UNAVAILABLE_REASONS[number];
 
 export const FENCE_REQUEST_KINDS = ['stop', 'maintenance-lift'] as const;
 

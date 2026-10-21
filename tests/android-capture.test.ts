@@ -5,6 +5,7 @@ import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { test } from 'node:test';
 import { captureCommand, type CaptureRequest } from '../src/capture.js';
+import { createDeviceAgreement } from '../src/device/factory.js';
 import { DeviceReasonError } from '../src/device/index.js';
 import { DeviceAgentError, type AndroidNode } from '../src/device/android/agent-client.js';
 import { PINNED_AGENT_SHA256 } from '../src/device/android/agent-supply.js';
@@ -71,22 +72,39 @@ async function withFakes(adb: FakeAdb, fn: (setup: Setup) => Promise<void>, scre
 /** Whether any `adb` command restarted or stopped the app. */
 const touchedApp = (adb: FakeAdb) => adb.shell().some(words => words[0] === 'am' || words[0] === 'pm' && words[1] === 'path');
 
-test('capture selects a profile over the environment and refuses a mixed-kind flag before device work', async () => {
-  await withFakes(new FakeAdb(api31()), async ({ adb, root, parts }) => {
+test('capture selects a profile over the environment and checks a serial flag against the profile AVD live before device work', async () => {
+  await withFakes(new FakeAdb(api31(), api31({ serial: 'emulator-5556', avd: 'other-avd' })), async ({ adb, root, parts }) => {
     await mkdir(join(root, '.jev'));
     await writeFile(join(root, '.jev/profiles.json'), JSON.stringify({ version: 1, defaultProfile: 'pixel', profiles: {
       pixel: { platform: 'android', deviceCategory: 'android-emulator', device: 'jev-actions-api31' },
     } }));
     let stderr = '';
     const context = { projectDir: root, defaultDevice: 'Invalid_environment_AVD', driver: parts, signal: signal(),
+      agreeDevices: createDeviceAgreement({ probe: adb.identityProbe }),
       write: { stdout() {}, stderr: (text: string) => { stderr += text; } } };
-    assert.equal(await captureCommand({ profile: 'pixel', serial: 'emulator-5554' }, context), 3);
+    assert.equal(await captureCommand({ profile: 'pixel', serial: 'emulator-5556' }, context), 3);
     assert.deepEqual(stderr.split(/\r?\n/).filter(line => line.startsWith('PROFILE_CONFLICT:')),
       ['PROFILE_CONFLICT: Capture device flags conflict with the selected profile.']);
     assert.equal(adb.calls.length, 0);
-    assert.equal(await captureCommand({}, context), 0);
-    assert.ok(adb.calls.some(args => args.join(' ') === 'devices -l'));
+    assert.equal(await captureCommand({ profile: 'pixel', serial: 'emulator-5554' }, context), 0);
     assert.equal(touchedApp(adb), false);
+    assert.equal(await captureCommand({}, context), 0);
+    assert.ok(adb.probeCalls.some(args => args.join(' ') === 'devices -l'));
+    assert.equal(touchedApp(adb), false);
+  });
+});
+
+test('capture with a phone profile refuses an emulator transport of that name before device work', async () => {
+  await withFakes(new FakeAdb(api31()), async ({ adb, root, parts }) => {
+    await mkdir(join(root, '.jev'));
+    await writeFile(join(root, '.jev/profiles.json'), JSON.stringify({ version: 1, profiles: {
+      phone: { platform: 'android', deviceCategory: 'android-phone', device: 'emulator-5554' },
+    } }));
+    let stderr = '';
+    const context = { projectDir: root, driver: parts, signal: signal(), write: { stdout() {}, stderr: (text: string) => { stderr += text; } } };
+    assert.equal(await captureCommand({ profile: 'phone' }, context), 3);
+    assert.match(stderr, /^DEVICE_NOT_FOUND: /m);
+    assert.equal(adb.calls.length, 0);
   });
 });
 
@@ -190,8 +208,6 @@ test('capture runs prepare\'s parts in order without the restart or the streams,
     const driver = new AndroidDriver({ ...parts, device: { serial: 'emulator-5554' } });
     const snapshot = await driver.capture(signal());
     assert.deepEqual(adb.calls, [
-      ['devices', '-l'],
-      ['-s', 'emulator-5554', 'shell', "'getprop' 'ro.boot.qemu.avd_name'"],
       ['-s', 'emulator-5554', 'shell', "'ps' '-A' '-o' 'PID,NAME,ARGS'"],
       ['forward', '--list'],
       ['-s', 'emulator-5554', 'shell', "'getprop' 'ro.build.version.sdk'"],
@@ -239,7 +255,8 @@ test('capture holds the device lease: a live holder is DEVICE_BUSY, and nothing 
     await writeFile(join(root, 'JEV-ACTIONS-API31.lock'), JSON.stringify({ pid: process.pid, token: 'live', deviceId: 'jev-actions-api31' }));
     const driver = new AndroidDriver({ ...parts, device: { avd: 'jev-actions-api31' } });
     await assert.rejects(driver.capture(signal()), reason('DEVICE_BUSY'));
-    assert.deepEqual(adb.shell().map(words => words.join(' ')), ['getprop ro.boot.qemu.avd_name']);
+    assert.deepEqual(adb.shell().map(words => words.join(' ')), []);
+    assert.ok(adb.probeCalls.some(args => args.at(-1) === 'ro.boot.qemu.avd_name'));
   });
 });
 

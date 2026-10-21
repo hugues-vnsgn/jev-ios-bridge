@@ -84,8 +84,8 @@ What to do about each: [troubleshooting](../08-troubleshooting.md).
 
 | Code | Meaning |
 | --- | --- |
-| `DEVICE_NOT_CONNECTED` | The named serial isn't listed by adb or is offline, or no running emulator has the named AVD. |
-| `DEVICE_AMBIGUOUS` | More than one running emulator has the named AVD, so the bridge can't tell them apart. |
+| `DEVICE_NOT_CONNECTED` | The named device is listed by adb but is offline or not ready. |
+| `DEVICE_AMBIGUOUS` | More than one live device matches the configured name, such as two running instances of one AVD, so the bridge can't tell them apart. |
 | `DEVICE_UNAUTHORIZED` | The device hasn't accepted this Mac's USB-debugging key. |
 | `DEVICE_NOT_BOOTED` | The device hasn't finished booting, or the iOS simulator isn't booted. |
 | `DEVICE_LOCKED` | The device's screen is locked. |
@@ -135,3 +135,20 @@ A `do` step that goes back to Claude records a hand-back reason, such as `NONE_F
 | `NOT_COVERABLE` | The requested quarantine cover is not supported; maintenance-lift is reserved. |
 
 `IMPORT_REFUSED` carries exactly one reason: `HOLDER_ALIVE`, `SOURCE_UNREADABLE`, `SOURCE_UNSAFE`, `SOURCE_INCONSISTENT`, or `SOURCE_CONFLICT`. These reasons are details of the import refusal, not separate verdict codes.
+
+## Device identity
+
+| Code | Meaning |
+| --- | --- |
+| `DEVICE_NOT_FOUND` | The configured device name matches no live device identity. |
+| `DEVICE_IDENTITY_CONFLICT` | Live identity sources disagree about the device. |
+| `DEVICE_IDENTITY_UNAVAILABLE` | A required identity source cannot be read or is not admissible; exactly one identity unavailable reason identifies the cause. |
+
+`DEVICE_IDENTITY_CONFLICT` refuses admission without quarantining the device. `DEVICE_IDENTITY_UNAVAILABLE` carries exactly one of these reasons. These reasons are refusal details, not separate verdict codes: a run's report and its log's error event carry them as `error.vendorCode`.
+
+- `NONDEFAULT_DEVICE_SET` means the iOS simulator belongs to a nondefault device set.
+- `EMULATOR_VERSION_UNSUPPORTED` means the Android emulator version is older than 30.
+- `REMOTE_CONSOLE` means the emulator console is not on this host's loopback, including when nothing on this Mac listens on its console port. Looking a device up by AVD name skips such an emulator; naming its serial refuses.
+- `MALFORMED_PROVENANCE` means a required provenance reply is missing, malformed, or invalid.
+- `PROVENANCE_INACCESSIBLE` means required provenance cannot be read, including when console access requires another user's files or the console rejects or lacks this account's access token.
+- `PROBE_TIMEOUT` means a read-only identity probe exceeded its command deadline.

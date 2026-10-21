@@ -1,0 +1,50 @@
+# P2.4 lane transcript: empty
+worktree: /tmp/swarm-P2.4/head @ 95c6ce376ecb6828babf6a53c1f83b8351afc120
+$ jev-ios-bridge run /tmp/swarm-P2.4/review/scenario-serial.json --json --no-log-pane
+cwd: /tmp/swarm-P2.4/review/empty/project  env overrides: (none)  entry: android
+world: /private/tmp/swarm-P2.4/review/world-empty.json
+{ "devices": [ { "serial": "emulator-5554", "avd": "Pixel_API_35", "path": "/Users/tester/.android/avd/Pixel_API_35.avd", "console": { "path": "" } } ] }
+exit: 2
+----- stdout -----
+{
+  "reportVersion": 1,
+  "runId": "e4d3eb61-8595-477f-abfa-cc8bbe24d525",
+  "bridgeVersion": "1.4.0",
+  "jevModel": "jev-1.13.0",
+  "projectionRule": "android-full-text-v1",
+  "bundleId": null,
+  "launchArgs": [],
+  "verdict": "inconclusive",
+  "reason": "DEVICE_IDENTITY_UNAVAILABLE",
+  "error": {
+    "code": "DEVICE_IDENTITY_UNAVAILABLE",
+    "phase": "prepare",
+    "stepId": null,
+    "vendorCode": "MALFORMED_PROVENANCE"
+  },
+  "steps": 0,
+  "plannedSteps": 1,
+  "checkpointsPassed": 0,
+  "checkpointCount": 1,
+  "inputTokens": 0,
+  "durationMs": 94.97283400000003,
+  "startedAt": "2026-10-21T04:18:20.322Z",
+  "finishedAt": "2026-10-21T04:18:20.417Z",
+  "checkpoints": [],
+  "evidence": {
+    "log": "run.jsonl",
+    "screenshots": []
+  },
+  "platform": "android",
+  "package": "com.example.android",
+  "activity": null,
+  "intentExtras": {}
+}
+----- stderr -----
+Watch: http://127.0.0.1:55664/?token=<redacted>&run=e4d3eb61-8595-477f-abfa-cc8bbe24d525
+----- adb effect commands (0) -----
+----- adb probe commands (4) -----
+devices -l
+-s emulator-5554 emu avd name
+-s emulator-5554 emu avd id
+-s emulator-5554 emu avd path

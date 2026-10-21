@@ -17,10 +17,13 @@ import { installed } from './fixtures/android-tools.js';
 const FAKE_ADB = `#!${process.execPath}
 const { appendFileSync } = require('node:fs');
 const args = process.argv.slice(2);
-appendFileSync(process.env.FAKE_ADB_LOG, JSON.stringify(args) + '\\n');
-const line = args[2] === 'shell' ? args[3].replace(/'/g, '') : '';
+const probe = args[0] === 'devices' || args[2] === 'emu' || args[2] === 'shell' && args[3] === 'getprop';
+if (!probe) appendFileSync(process.env.FAKE_ADB_LOG, JSON.stringify(args) + '\\n');
+const line = args[2] === 'shell' ? args.slice(3).join(' ').replace(/'/g, '') : '';
+const consoleValues = { name: 'fake_avd', id: 'fake_avd', path: process.env.FAKE_AVD_PATH };
 const answers = [
   [() => args.join(' ') === 'devices -l', 'List of devices attached\\nemulator-5554          device transport_id:1\\n\\n'],
+  [() => args[2] === 'emu' && args[3] === 'avd', consoleValues[args[4]] + '\\r\\nOK\\r\\n'],
   [() => line === 'getprop ro.boot.qemu.avd_name', 'fake_avd\\n'],
   [() => line === 'ps -A -o PID,NAME,ARGS', '  PID NAME                        ARGS\\n'],
   [() => line === 'getprop ro.build.version.sdk', '34\\n'],
@@ -51,10 +54,29 @@ for (const [signal, exitCode] of [['SIGINT', 130], ['SIGTERM', 143]] as const) {
       await writeFile(log, '');
       const script = join(root, 'script.json');
       await writeFile(script, JSON.stringify(androidScript({ device: { serial: 'emulator-5554' } })));
+      const entry = join(root, 'cli-fixture.mjs');
+      await writeFile(entry, `
+import { runCli } from ${JSON.stringify(new URL('../src/cli.ts', import.meta.url).href)};
+import { BridgeService } from ${JSON.stringify(new URL('../src/service.ts', import.meta.url).href)};
+import { createDriverFactory } from ${JSON.stringify(new URL('../src/device/factory.ts', import.meta.url).href)};
+import { identityProbe } from ${JSON.stringify(new URL('../src/device/android/probe.ts', import.meta.url).href)};
+import { createAssertionJudge } from ${JSON.stringify(new URL('../src/scripted/jev.ts', import.meta.url).href)};
+const probe = identityProbe({ adb: ${JSON.stringify(join(sdk, 'platform-tools', 'adb'))}, environment: process.env,
+  host: {
+    listener: async () => ({ pid: 123, startedAt: '2026-10-19T01:00:00.000Z', uid: process.getuid(), local: true }),
+    directory: async path => ({ path, device: '2', inode: '42' }),
+    version: async () => ({ value: '36.6.1', source: 'running-sdk-binary' }),
+  },
+});
+await runCli(process.argv.slice(2), { legacy: new BridgeService({ baseDir: process.env.JEV_RUNS_DIR,
+  createDriver: createDriverFactory({ mobileBuildMcp: { cwd: process.cwd() }, android: { identityProbe: probe } }),
+  createJudge: () => createAssertionJudge(),
+}) });
+`);
       const env: NodeJS.ProcessEnv = { ...process.env, TYPESAFE_API_KEY: 'contract-test-key', ANDROID_HOME: sdk, ANDROID_SDK_ROOT: sdk,
-        PATH: root, HOME: root, TMPDIR: temp, JEV_RUNS_DIR: join(root, 'runs'), FAKE_ADB_LOG: log };
+        PATH: root, HOME: root, TMPDIR: temp, JEV_RUNS_DIR: join(root, 'runs'), FAKE_ADB_LOG: log, FAKE_AVD_PATH: join(root, 'fake.avd') };
       delete env.JEV_ANDROID_DEVICE;
-      const child = spawn(process.execPath, ['--import', import.meta.resolve('tsx'), join(process.cwd(), 'src/cli.ts'), 'run', script, '--no-log-pane'],
+      const child = spawn(process.execPath, ['--import', import.meta.resolve('tsx'), entry, 'run', script, '--no-log-pane'],
         { cwd: root, env, stdio: ['ignore', 'pipe', 'pipe'] });
       const exited = new Promise<number | null>(resolveExit => child.once('exit', code => { resolveExit(code); }));
       const calls = async () => (await readFile(log, 'utf8')).trim().split('\n').filter(Boolean).map(entry => (JSON.parse(entry) as string[]).join(' '));

@@ -77,6 +77,42 @@ for (const platform of ['ios', 'android', undefined] as const) {
   });
 }
 
+test('a scenario serial for the profile AVD runs after live agreement, and a different device refuses before the driver', async () => {
+  const root = await mkdtemp(join(tmpdir(), 'jev-service-profile-alias-'));
+  await mkdir(join(root, '.jev'));
+  await writeFile(join(root, '.jev/profiles.json'), JSON.stringify({ version: 1, profiles: {
+    pixel: { platform: 'android', deviceCategory: 'android-emulator', device: 'Pixel_API_35' },
+  } }));
+  const asked: unknown[] = [];
+  const created: unknown[] = [];
+  const categories: unknown[] = [];
+  let same = false;
+  const judge = () => ({ async judge() { return { probabilities: { shown: 1 }, inputTokens: 0, latencyMs: 0, model: 'jev-1.13.0' }; } });
+  const service = new BridgeService({ baseDir: join(root, 'runs'), env: { JEV_PROJECT_DIR: root },
+    agreeDevices: async (left, right) => { asked.push([left, right]); return same; },
+    createDriver: (scenario, run) => {
+      created.push(scenario.device); categories.push(run.deviceCategory);
+      return { async prepare() {}, async observe() { return screen(); }, async act() {}, async close() {} };
+    }, createJudge: judge,
+  });
+  const scenario = { ...script(), platform: 'android', app: { package: 'com.example.app' }, device: { serial: 'emulator-5554' } };
+  try {
+    await assert.rejects(service.start(scenario, {}, 'pixel'),
+      { code: 'PROFILE_CONFLICT', message: 'Scenario device conflicts with the selected profile.' });
+    assert.deepEqual(created, []);
+    assert.deepEqual(await readdir(root), ['.jev']);
+    same = true;
+    const { runId } = await service.start(scenario, {}, 'pixel');
+    assert.equal((await service.status(runId, 2000)).report.verdict, 'passed');
+    assert.deepEqual(created, [{ avd: 'Pixel_API_35' }]);
+    assert.deepEqual(categories, ['android-emulator'], 'the profile\'s category goes to the driver');
+    assert.deepEqual(asked, Array(2).fill([{ serial: 'emulator-5554' }, { avd: 'Pixel_API_35' }]));
+    const unchecked = new BridgeService({ baseDir: join(root, 'runs'), env: { JEV_PROJECT_DIR: root },
+      createDriver: () => assert.fail(), createJudge: judge });
+    await assert.rejects(unchecked.start(scenario, {}, 'pixel'), { code: 'PROFILE_CONFLICT' });
+  } finally { await service.close(); await rm(root, { recursive: true, force: true }); }
+});
+
 test('profile refusal precedes driver creation and a selected run keeps its binding after the file changes', async () => {
   const root = await mkdtemp(join(tmpdir(), 'jev-service-profile-'));
   const udid = 'ABCDEF00-0000-4000-8000-000000000001';

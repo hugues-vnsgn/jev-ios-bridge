@@ -1,0 +1,51 @@
+# P2.4 lane transcript: conflict
+worktree: /tmp/swarm-P2.4/head @ 95c6ce376ecb6828babf6a53c1f83b8351afc120
+$ jev-ios-bridge run /tmp/swarm-P2.4/review/scenario-serial.json --json --no-log-pane
+cwd: /tmp/swarm-P2.4/review/conflict/project  env overrides: (none)  entry: android
+world: /private/tmp/swarm-P2.4/review/world-conflict.json
+{ "devices": [ { "serial": "emulator-5554", "avd": "Pixel_API_35", "path": "/Users/tester/.android/avd/Pixel_API_35.avd", "guest": "Other_AVD" } ] }
+exit: 2
+----- stdout -----
+{
+  "reportVersion": 1,
+  "runId": "14e87fd8-64c9-4aa8-9154-8400eacc9477",
+  "bridgeVersion": "1.4.0",
+  "jevModel": "jev-1.13.0",
+  "projectionRule": "android-full-text-v1",
+  "bundleId": null,
+  "launchArgs": [],
+  "verdict": "inconclusive",
+  "reason": "DEVICE_IDENTITY_CONFLICT",
+  "error": {
+    "code": "DEVICE_IDENTITY_CONFLICT",
+    "phase": "prepare",
+    "stepId": null,
+    "vendorCode": "GUEST_NAME_DISAGREEMENT"
+  },
+  "steps": 0,
+  "plannedSteps": 1,
+  "checkpointsPassed": 0,
+  "checkpointCount": 1,
+  "inputTokens": 0,
+  "durationMs": 118.52920799999998,
+  "startedAt": "2026-10-21T04:18:21.094Z",
+  "finishedAt": "2026-10-21T04:18:21.213Z",
+  "checkpoints": [],
+  "evidence": {
+    "log": "run.jsonl",
+    "screenshots": []
+  },
+  "platform": "android",
+  "package": "com.example.android",
+  "activity": null,
+  "intentExtras": {}
+}
+----- stderr -----
+Watch: http://127.0.0.1:55665/?token=<redacted>&run=14e87fd8-64c9-4aa8-9154-8400eacc9477
+----- adb effect commands (0) -----
+----- adb probe commands (5) -----
+devices -l
+-s emulator-5554 emu avd name
+-s emulator-5554 emu avd id
+-s emulator-5554 emu avd path
+-s emulator-5554 shell getprop ro.boot.qemu.avd_name

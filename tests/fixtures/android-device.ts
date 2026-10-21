@@ -6,6 +6,8 @@ import { DeviceAgentError, type AndroidNode, type DeviceAgentClient } from '../.
 import { PINNED_AGENT_SHA256 } from '../../src/device/android/agent-supply.js';
 import { AGENT_START_COMMAND } from '../../src/device/android/driver.js';
 import type { LogcatOutput, LogcatStarter, LogcatStream } from '../../src/device/android/logcat.js';
+import { identityProbe, type IdentityProbe } from '../../src/device/android/probe.js';
+import { fakeProbeSpawn } from './adb-spawn.js';
 import type { Clock } from '../../src/device/android/settle.js';
 
 /**
@@ -74,8 +76,34 @@ export class FakeAdb {
   /** Called before each command is answered, to look at the world as that command saw it. */
   onCall: ((args: string[]) => void | Promise<void>) | undefined;
 
+  readonly probeCalls: string[][] = [];
+  readonly identityProbe: IdentityProbe;
+
   constructor(...emulators: FakeEmulator[]) {
     for (const emulator of emulators) this.emulators.set(emulator.serial, emulator);
+    const fake = fakeProbeSpawn((_file, args) => {
+      if (args[0] === 'devices') return this.devicesText ?? `List of devices attached\n${[...this.emulators.keys()].map(serial => `${serial} device`).join('\n')}\n`;
+      const serial = args[1]!;
+      const emulator = this.emulators.get(serial);
+      if (args[2] === 'emu') {
+        assert.ok(emulator, `missing console fixture for ${serial}`);
+        const value = args[4] === 'path' ? `/fake/avds/${emulator.avd}.avd` : emulator.avd;
+        return `${value}\r\nOK\r\n`;
+      }
+      return `${args.at(-1) === 'ro.serialno' ? serial : emulator?.avd ?? ''}\n`;
+    });
+    const recordSpawn: typeof fake.spawn = (file, args, options) => {
+      this.probeCalls.push([...args]);
+      return fake.spawn(file, args, options);
+    };
+    this.identityProbe = identityProbe({ adb: '/fake/adb', environment: {}, spawn: recordSpawn,
+      host: {
+        listener: async port => ({ pid: port, startedAt: '2026-10-19T01:00:00.000Z', uid: 501, local: true }),
+        directory: async path => ({ path, device: '2', inode: String([...path].reduce((sum, char) => (sum * 31 + char.charCodeAt(0)) >>> 0, 0) >>> 0) }),
+        version: async () => ({ value: '36.6.1', source: 'running-sdk-binary' }),
+      },
+    });
+    Object.assign(this.run, { identityProbe: this.identityProbe });
   }
 
   /** The shell commands issued to `serial`, as words. */
@@ -83,7 +111,7 @@ export class FakeAdb {
     return this.calls.filter(call => call[0] === '-s' && call[1] === serial && call[2] === 'shell').map(call => shellWords(call[3]!));
   }
 
-  readonly run: AdbRunner = async (args, signal) => {
+  readonly run: AdbRunner & { identityProbe?: IdentityProbe } = async (args, signal) => {
     this.calls.push([...args]);
     if (signal.aborted) throw signal.reason;
     await this.onCall?.(args);
@@ -231,7 +259,7 @@ export function fakeAgents(adb: FakeAdb, options: { answersAfterPolls?: number; 
       },
     };
   };
-  return { agentClient, versionCalls, clients, calls, hooks };
+  return { agentClient: Object.assign(agentClient, { identityProbe: adb.identityProbe }), versionCalls, clients, calls, hooks };
 }
 
 /** Fake time: a sleep moves it on at once, aborting each `timeout` signal it passes, at that signal's own time. */
@@ -316,4 +344,13 @@ export class FakeStreams implements LogcatStarter {
     this.killed.push(pid);
     this.mac.delete(pid);
   }
+}
+
+export function fakeSimulatorProbe(...udids: string[]): IdentityProbe {
+  return identityProbe({ adb: '/fake/adb', environment: {},
+    simulatorApp: async ({ bundleId }) => ({ kind: 'installed', reply: `/fake/Applications/${bundleId}.app\n` }),
+    simulator: async () => ({ deviceSet: '/fake/CoreSimulator/Devices',
+      reply: JSON.stringify({ devices: { 'fake-runtime': udids.map(udid => ({ udid, name: udid, state: 'Booted', isAvailable: true })) } }) }),
+    spawn: () => { throw new Error('Unexpected Android probe in simulator fixture'); },
+  });
 }

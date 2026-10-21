@@ -1,3 +1,4 @@
+import { fakeSimulatorProbe } from './fixtures/android-device.js';
 import { z } from 'zod/v4';
 import { allocation as allocationReply, snapshot, actionSnapshot, operationError, errorCode, replyKind } from './fixtures/public-contention.js';
 import assert from 'node:assert/strict';
@@ -211,7 +212,7 @@ for (const transport of ['cli', 'mcp'] as const) {
     assert.equal(deviceCalls(f.calls).filter(op => op === 'create').length, 2);
     const calls = deviceCalls(f.calls);
     assert.deepEqual(f.admission.acquire({ device: unknownId, attempt: { kind: 'legacy', id: 'legacy' }, digest: 'legacy', intent: {} }), { kind: 'refused', reason: 'HOST_CREATION_UNRESOLVED', blockingAllocationId: failed.allocationId });
-    const legacy = new MobileBuildMcpDriver({ cwd: f.root, admission: f.admission, lockRoot: join(f.root, 'legacy-locks'), stopAppOnClose: false, fakeBackend: { runner: f.runner, window: undefined } });
+    const legacy = new MobileBuildMcpDriver({ identityProbe: fakeSimulatorProbe(fixtureDevice, unknownId), cwd: f.root, admission: f.admission, lockRoot: join(f.root, 'legacy-locks'), stopAppOnClose: false, fakeBackend: { runner: f.runner, window: undefined } });
     await assert.rejects(legacy.prepare({ app: { bundleId: 'org.example.fixture' }, device: { udid: unknownId } }, new AbortController().signal), /HOST_CREATION_UNRESOLVED/);
     f.configure({ inventory: f.inventory(unknownId) });
     const supplied = (await call('observed-allocate', 'prepare_observed_allocation', { ...f.request('supplied'), source: { kind: 'supplied', inventoryId: 'stock-one' } })).reply;
@@ -363,7 +364,7 @@ test('H08.02 declaration/quiescence omissions refuse activation; experimental ra
 for (const ordering of ['legacy-first', 'observed-first'] as const) for (const transport of ['cli', 'mcp'] as const) test(`H03.04 ${transport} ${ordering} canonical supplied admission excludes the successor`, async t => {
   const f = await allocatorPublic(t); f.configure({ inventory: f.inventory(fixtureDevice.toLowerCase()) });
   const legacy = () => f.admission.acquire({ device: fixtureDevice.toLowerCase(), attempt: { kind: 'legacy', id: 'legacy' }, digest: 'legacy', intent: {} });
-  const driver = new MobileBuildMcpDriver({ cwd: f.root, admission: f.admission, lockRoot: join(f.root, 'legacy-locks'), stopAppOnClose: false, fakeBackend: { runner: f.runner, window: undefined } });
+  const driver = new MobileBuildMcpDriver({ identityProbe: fakeSimulatorProbe(fixtureDevice), cwd: f.root, admission: f.admission, lockRoot: join(f.root, 'legacy-locks'), stopAppOnClose: false, fakeBackend: { runner: f.runner, window: undefined } });
   const context = { app: { bundleId: 'org.example.fixture' }, device: { udid: fixtureDevice.toLowerCase() }, values: {} };
   if (ordering === 'legacy-first') await driver.prepare(context, new AbortController().signal);
   const before = deviceCalls(f.calls);

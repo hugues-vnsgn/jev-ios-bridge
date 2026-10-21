@@ -1,3 +1,4 @@
+import { fakeSimulatorProbe } from './fixtures/android-device.js';
 import { mkdirSync, realpathSync } from 'node:fs';
 import { Admission } from '../src/device/admission.js';
 import assert from 'node:assert/strict';
@@ -1325,7 +1326,7 @@ function fakeDriver(options: import('../src/device/index.js').MobileBuildMcpDriv
   const storeRoot = join(options.cwd, 'admission');
   mkdirSync(storeRoot, { recursive: true, mode: 0o700 });
   const admission = Admission.forTesting({ root: realpathSync(storeRoot), backend: 'fake' });
-  return new MobileBuildMcpDriver({ ...options, admission,
+  return new MobileBuildMcpDriver({ identityProbe: fakeSimulatorProbe('ABCDEF00-0000-4000-8000-000000000001'), ...options, admission,
     deviceWindow: options.deviceWindow ?? (async () => {}),
     fakeBackend: { runner: options.runner!, window: options.deviceWindow } });
 }

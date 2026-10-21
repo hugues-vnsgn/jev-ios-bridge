@@ -1,7 +1,7 @@
 import { createHash, randomUUID } from 'node:crypto';
 import { execFile } from 'node:child_process';
 import { createRequire } from 'node:module';
-import { readFile } from 'node:fs/promises';
+import { readFile, realpath } from 'node:fs/promises';
 import { isAbsolute, join, resolve } from 'node:path';
 import { isIosApp, type Action, type ActionScenarioContext, type ActPath, type AppProblem, type ElementAction, type LogSources, type DeviceDriver, type DeviceMetrics,
   type Element, type PrepareScenarioContext, type Snapshot, type TapAliasRule } from '../contracts/index.js';
@@ -12,6 +12,8 @@ import { Admission, AdmissionError, type AdmissionClaim, type AdmittedSession } 
 import type { PreparationClaim, ObservedClaim, AllocationCommit } from './admission-allocation.js';
 import { processAlive as processAliveForLease } from '../process.js';
 import { readLogTail } from './logs.js';
+import { IdentityResolutionError, resolveIdentity, revalidateIdentity, type IdentityProbe, type SimulatorIdentity } from './identity.js';
+import { identityProbe } from './android/probe.js';
 import type { ProfileBinding } from '../profiles.js';
 
 type JsonObject = Record<string, unknown>;
@@ -33,6 +35,7 @@ export interface MobileBuildMcpDriverOptions {
   screenshots?: boolean;
   stopAppOnClose?: boolean;
   runner?: CliRunner;
+  identityProbe?: IdentityProbe;
   lockRoot?: string;
   uiCommandTimeoutMs?: number;
   /**
@@ -268,6 +271,12 @@ export function deviceEnvironment(source: NodeJS.ProcessEnv = process.env): Node
   return { ...environment, MOBILEBUILDMCP_SENTRY_DISABLED: 'true' };
 }
 
+/** The simulator device set the effects would use when the environment names one, as a real path like the probe's default. */
+async function requestedDeviceSet(): Promise<string | undefined> {
+  const path = process.env.SIMCTL_DEVICE_SET_PATH || process.env.SIMULATOR_DEVICE_SET_PATH;
+  return path ? realpath(path).catch(() => path) : undefined;
+}
+
 /** The pinned MobileBuildMCP CLI installed with the bridge, run directly by Node (no npx round trip). */
 export function pinnedMobileBuildMcpCli(): string {
   return createRequire(import.meta.url).resolve('mobilebuildmcp');
@@ -295,7 +304,8 @@ function defaultRunner(options: MobileBuildMcpDriverOptions): CliRunner {
 async function configuredUdid(cwd: string): Promise<string | undefined> {
   try {
     const yaml = await readFile(join(cwd, '.mobilebuildmcp', 'config.yaml'), 'utf8');
-    return yaml.match(/^\s*simulatorId:\s*([0-9a-fA-F-]{36})\s*$/m)?.[1];
+    // Physical iPhone shapes too, so selectDeviceId refuses them by name instead of finding no device.
+    return yaml.match(/^\s*simulatorId:\s*([0-9a-fA-F-]{36}|[0-9a-fA-F]{40}|[0-9a-fA-F]{8}-[0-9a-fA-F]{16})\s*$/m)?.[1];
   } catch (error) {
     if ((error as NodeJS.ErrnoException).code === 'ENOENT') return undefined;
     throw error;
@@ -311,6 +321,7 @@ const SIMULATOR_UUID = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f
 export async function selectDeviceId(cwd: string, scriptUdid?: string, defaultUdid?: string): Promise<string> {
   const selected = scriptUdid ?? defaultUdid ?? await configuredUdid(cwd);
   if (!selected) throw new DeviceCliError('NO_DEVICE', 'Set a dedicated simulator UDID in the scenario or MobileBuildMCP config');
+  if (/^(?:[a-f0-9]{40}|[a-f0-9]{8}-[a-f0-9]{16})$/i.test(selected)) throw new DeviceReasonError('CATEGORY_NOT_ENABLED', 'Physical iPhone identity is not enabled');
   if (!SIMULATOR_UUID.test(selected)) {
     throw new DeviceCliError('INVALID_DEVICE', 'Set a dedicated simulator UUID; device aliases are not supported');
   }
@@ -496,6 +507,9 @@ export class MobileBuildMcpDriver implements DeviceDriver, IosPreparationDriver,
   readonly tapAliasRule: TapAliasRule = 'mobilebuildmcp-2.7.1';
   private readonly runner: CliRunner;
   private readonly window: DeviceWindowOpener | undefined;
+  private resolvedIdentity: SimulatorIdentity | undefined;
+  private probe: IdentityProbe | undefined;
+  identity(): SimulatorIdentity | undefined { return this.resolvedIdentity; }
   private claim: AdmissionClaim | undefined;
   private session: AdmittedSession | undefined;
   private ownsClaim = false;
@@ -793,9 +807,24 @@ export class MobileBuildMcpDriver implements DeviceDriver, IosPreparationDriver,
     if (!scenario.device?.udid && !this.options.defaultUdid) {
       this.warnings.push('Using .mobilebuildmcp/config.yaml simulatorId; consider a profile in .jev/profiles.json.');
     }
+    this.probe = this.options.identityProbe;
+    if (!this.probe && (this.options.fakeBackend || this.options.runner)) throw new DeviceReasonError('DEVICE_IDENTITY_UNAVAILABLE',
+      'Simulator identity requires a read-only probe', { vendorCode: 'PROVENANCE_INACCESSIBLE' });
+    this.probe ??= identityProbe({ adb: 'adb', environment: deviceEnvironment() });
+    const deviceSet = await requestedDeviceSet();
+    const resolved = await this.identityRead(() => resolveIdentity({ request: { category: 'ios-simulator', name: deviceId, ...(deviceSet ? { deviceSet } : {}) },
+      probe: this.probe!, signal }));
+    if (resolved.category !== 'ios-simulator') throw new Error('Simulator identity required');
+    this.resolvedIdentity = resolved;
+    if (resolved.state !== 'Booted') throw notBootedError(deviceId, resolved.state);
+    const installedApp = await this.identityRead(() => this.probe!.simulatorApp({ deviceSet: resolved.deviceSet,
+      udid: resolved.value, bundleId, signal }));
+    if (signal.aborted) throw signal.reason;
+    if (installedApp.kind === 'missing') throw new DeviceReasonError('DEVICE_ERROR',
+      `App ${bundleId} is not installed on simulator ${resolved.value}`, { vendorCode: 'APP_NOT_INSTALLED' });
     const admission = this.options.admission ?? Admission.open();
     admission.assertBackend(this.options.fakeBackend ? 'fake' : 'real');
-    const intent = { deviceId, app: scenario.app, start: scenario.start ?? 'restart',
+    const intent = { deviceId, app: scenario.app, start: scenario.start ?? 'restart', identity: resolved, installedApp,
       ...(this.options.profile ? { profile: this.options.profile } : {}) };
     const acquired = admission.acquire({ category: 'ios-simulator', device: deviceId, attempt: { kind: 'legacy', id: this.options.runId ?? randomUUID() },
       digest: createHash('sha256').update(JSON.stringify(intent)).digest('hex'), intent, signal });
@@ -812,6 +841,7 @@ export class MobileBuildMcpDriver implements DeviceDriver, IosPreparationDriver,
     // Read before the window opens (Simulator boots the device it opens on); without a window, only once a launch fails.
     let stateRead = false;
     try {
+      await this.revalidateSimulator(resolved, signal);
       if (this.window) {
         const state = await this.simulatorState(deviceId, signal);
         stateRead = true;
@@ -825,6 +855,7 @@ export class MobileBuildMcpDriver implements DeviceDriver, IosPreparationDriver,
           }
         }
       }
+      await this.revalidateSimulator(resolved, signal);
       const launchArgs = scenario.app.launchArgs ?? [];
       // Array parameters go through --json, so arguments that start with "-" aren't read as CLI flags.
       const launched = await this.issueCommand(['simulator', 'launch-app', '--simulator-id', deviceId, '--bundle-id', bundleId,
@@ -850,6 +881,21 @@ export class MobileBuildMcpDriver implements DeviceDriver, IosPreparationDriver,
       if (!this.uncertain && this.lease.releasable) await this.lease.release();
       await this.finishAdmission(false);
       throw failure;
+    }
+  }
+
+  private async revalidateSimulator(identity: SimulatorIdentity, signal: AbortSignal): Promise<void> {
+    const current = await this.identityRead(() => revalidateIdentity({ identity, probe: this.probe!, signal }));
+    if (current.category !== 'ios-simulator') throw new Error('Simulator identity required');
+    if (current.state !== 'Booted') throw notBootedError(current.value, current.state);
+  }
+
+  private async identityRead<T>(read: () => Promise<T>): Promise<T> {
+    try { return await read(); }
+    catch (error) {
+      if (error instanceof IdentityResolutionError && error.code !== 'PROFILE_CONFLICT') throw new DeviceReasonError(error.code, error.message,
+        error.reason ? { vendorCode: error.reason } : {});
+      throw error;
     }
   }
 

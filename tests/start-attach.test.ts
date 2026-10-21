@@ -1,3 +1,4 @@
+import { fakeSimulatorProbe } from './fixtures/android-device.js';
 import { mkdirSync, realpathSync } from 'node:fs';
 import { Admission } from '../src/device/admission.js';
 /**
@@ -162,13 +163,29 @@ test('Android attach takes the lease, checks the app is in front, starts the str
   });
 });
 
-test('Android attach checks the app is in front before it starts any stream', async () => {
+test('Android attach checks the screen, then that the app is in front, before it starts any stream', async () => {
   await withAndroid(() => 'com.example.android', api31(), async ({ adb, driver }) => {
     await driver.prepare(androidAttach, signal());
     const order = adb.calls.map(call => call[0] === '(logcat)' ? 'stream' : shellLine(call));
-    assert.ok(order.indexOf("'dumpsys' 'activity' 'activities'") < order.indexOf('stream'));
-    assert.ok(order.indexOf("'dumpsys' 'window' 'policy'") < order.indexOf("'dumpsys' 'activity' 'activities'"),
-      'the screen is checked (and woken) first');
+    assert.deepEqual(order.filter(command => command === "'dumpsys' 'activity' 'activities'" ||
+      command === "'dumpsys' 'window' 'policy'" || command === 'stream'), [
+      "'dumpsys' 'window' 'policy'", "'dumpsys' 'activity' 'activities'", 'stream', 'stream',
+    ]);
+  });
+});
+
+test('Android attach wakes a sleeping screen before its foreground check, and refuses a locked one before either', async () => {
+  const asleep = api31({ awake: false });
+  await withAndroid(() => asleep.awake === false ? undefined : 'com.example.android', asleep, async ({ adb, driver }) => {
+    await driver.prepare(androidAttach, signal());
+    const order = adb.calls.map(shellLine);
+    assert.ok(order.indexOf("'input' 'keyevent' 'KEYCODE_WAKEUP'") < order.indexOf("'dumpsys' 'activity' 'activities'"));
+    await driver.close(signal());
+  });
+  await withAndroid(() => 'com.example.android', api31({ awake: false, keyguard: true }), async ({ adb, driver }) => {
+    await assert.rejects(driver.prepare(androidAttach, signal()), reason('DEVICE_LOCKED'));
+    assert.equal(adb.calls.map(shellLine).some(line => line === "'input' 'keyevent' 'KEYCODE_WAKEUP'" ||
+      line === "'dumpsys' 'activity' 'activities'"), false);
   });
 });
 
@@ -296,7 +313,7 @@ function fakeDriver(options: import('../src/device/index.js').MobileBuildMcpDriv
   const storeRoot = join(options.cwd, 'admission');
   mkdirSync(storeRoot, { recursive: true, mode: 0o700 });
   const admission = Admission.forTesting({ root: realpathSync(storeRoot), backend: 'fake' });
-  return new MobileBuildMcpDriver({ ...options, admission,
+  return new MobileBuildMcpDriver({ identityProbe: fakeSimulatorProbe(udid), ...options, admission,
     deviceWindow: options.deviceWindow ?? (async () => {}),
     fakeBackend: { runner: options.runner!, window: options.deviceWindow } });
 }

@@ -3,6 +3,7 @@ import { readFile } from 'node:fs/promises';
 import { join } from 'node:path';
 import { z } from 'zod/v4';
 import { androidAvd, androidSerial } from './scripted/schema.js';
+import { IdentityResolutionError } from './device/identity.js';
 import type { ScriptedScenario } from './scripted/contracts.js';
 
 export const profileNameSchema = z.string().regex(/^[a-z0-9][a-z0-9-]{0,62}$/);
@@ -38,6 +39,9 @@ export type Profile = z.infer<typeof profileSchema>;
 export type ProfileBudgets = z.infer<typeof profileBudgetsSchema>;
 export interface ProfileBinding { name: string; digest: string }
 export interface SelectedProfile { profile: Profile; binding: ProfileBinding }
+export type AndroidDeviceName = { serial: string } | { avd: string };
+/** Resolves two Android device names live; true when both are one device. Identity refusals throw. */
+export type DeviceAgreement = (left: AndroidDeviceName, right: AndroidDeviceName, signal: AbortSignal) => Promise<boolean>;
 export class ProfileError extends Error {
   constructor(readonly code: 'INVALID_PROFILE_FILE' | 'PROFILE_NOT_FOUND' | 'PROFILE_CONFLICT',
     message = code === 'INVALID_PROFILE_FILE' ? 'The project profiles file is invalid.' : 'The selected profile was not found.') {
@@ -80,6 +84,7 @@ export function profileScenario(scenario: ScriptedScenario, selected: SelectedPr
     for (const [kind, value] of Object.entries(own)) {
       if (value === undefined) continue;
       const expected = device[kind as keyof typeof device];
+      if (expected === undefined && android) continue;
       if (expected === undefined || (kind === 'udid' ? String(value).toUpperCase() !== expected : value !== expected)) {
         throw new ProfileError('PROFILE_CONFLICT', 'Scenario device conflicts with the selected profile.');
       }
@@ -87,6 +92,26 @@ export function profileScenario(scenario: ScriptedScenario, selected: SelectedPr
   }
   return scenario.platform === 'android' ? { ...scenario, device: device as { serial: string } | { avd: string } }
     : { ...scenario, device: device as { udid: string } };
+}
+
+/**
+ * An Android name of the other kind than the profile's device (an AVD name against a serial) can only be
+ * compared live: refuses `PROFILE_CONFLICT` unless both resolve to one identity, or without a way to resolve them.
+ */
+export async function agreeProfileDevice(own: { serial?: string; avd?: string } | undefined, selected: SelectedProfile,
+  agree: DeviceAgreement | undefined, signal: AbortSignal, message = 'Scenario device conflicts with the selected profile.'): Promise<void> {
+  if (selected.profile.platform !== 'android' || !own) return;
+  const device = profileDevice(selected.profile) as AndroidDeviceName;
+  const alias = 'serial' in device ? own.avd === undefined ? undefined : { avd: own.avd }
+    : own.serial === undefined ? undefined : { serial: own.serial };
+  if (!alias) return;
+  let unresolved = '';
+  try { if (agree && await agree(alias, device, signal)) return; }
+  catch (error) {
+    if (!(error instanceof IdentityResolutionError)) throw error;
+    unresolved = ` The device could not be resolved: ${error.message}.`;
+  }
+  throw new ProfileError('PROFILE_CONFLICT', message + unresolved);
 }
 
 export async function readProfile(projectDir: string, explicit?: string,

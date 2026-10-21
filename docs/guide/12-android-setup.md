@@ -81,7 +81,7 @@ On a Xiaomi phone, turn on **"USB debugging (Security settings)"** in Developer 
 
 ## Screen lock: set it to None
 
-The bridge wakes a screen that's only off. If the lock screen still shows after that, even a swipe-only one, the run stops with `DEVICE_LOCKED`: dismissing it would change the device. On a test device, set Screen lock to None, in Settings under Security (the path varies by Android version).
+The bridge wakes a screen that's only off. If the lock screen shows, even a swipe-only one, the run stops with `DEVICE_LOCKED` before the screen is woken: dismissing it would change the device. On a test device, set Screen lock to None, in Settings under Security (the path varies by Android version).
 
 ## One UI tool at a time
 
