@@ -422,6 +422,7 @@ test('the production listener binds the console to this account on loopback, and
     await assert.rejects(resolveIdentity({ request: { category: 'android', name: 'emulator-5554' }, probe, signal: identitySignal() }),
       refusal('DEVICE_IDENTITY_UNAVAILABLE', reason), lsof ?? 'no listener');
     assert.deepEqual(fake.calls.filter(call => call.file === '/usr/sbin/lsof').map(call => call.options.env.LC_ALL), ['C']);
+    assert.equal(fake.calls.some(call => call.file === '/bin/ps'), false, 'refused on the listener itself, before the process read');
   }
 });
 
@@ -448,13 +449,19 @@ test('a probe child that ignores SIGTERM is killed with SIGKILL, and a reply ove
 test('a cold simctl list slower than the read deadline succeeds within the slow-exec deadline', async () => {
   const reply = JSON.stringify({ devices: { runtime: [{ udid: '11111111-AAAA-BBBB-CCCC-222222222222', name: 'Cold', isAvailable: true, state: 'Booted' }] } });
   const probe = (slowDeadlineMs?: number) => {
-    const fake = fakeProbeSpawn((_file, _args, child) => { setTimeout(() => child.exit(0, reply), 200); return undefined; });
+    const fake = fakeProbeSpawn((_file, args, child) => {
+      setTimeout(() => child.exit(0, args.includes('get_app_container') ? '/apps/Example.app\n' : reply), 200);
+      return undefined;
+    });
     return { fake, probe: identityProbe({ adb: '/fake/adb', environment: {}, spawn: fake.spawn, deadlineMs: 50,
       defaultSimulatorSet: async () => '/account/Library/Developer/CoreSimulator/Devices', ...(slowDeadlineMs === undefined ? {} : { slowDeadlineMs }) }) };
   };
   const cold = probe();
   const identity = await resolveIdentity({ request: { category: 'ios-simulator', name: 'Cold' }, probe: cold.probe, signal: identitySignal() });
   assert.equal(identity.value, '11111111-AAAA-BBBB-CCCC-222222222222');
+  const app = probe();
+  assert.equal((await app.probe.simulatorApp({ deviceSet: '/account/Library/Developer/CoreSimulator/Devices', udid: identity.value,
+    bundleId: 'com.example.app', signal: identitySignal() })).kind, 'installed', 'the installed-app read gets the slow bound too');
   const bounded = probe(50);
   await assert.rejects(resolveIdentity({ request: { category: 'ios-simulator', name: 'Cold' }, probe: bounded.probe, signal: identitySignal() }),
     refusal('DEVICE_IDENTITY_UNAVAILABLE', 'PROBE_TIMEOUT'));

@@ -48,6 +48,20 @@ test('an AVD name against a serial agrees only when both resolve live to one emu
   assert.deepEqual(adb.calls, []);
 });
 
+test('the factory passes a run\'s profile device category to the Android driver', async () => {
+  const root = await mkdtemp(join(tmpdir(), 'jev-device-factory-category-'));
+  try {
+    const adb = new FakeAdb({ serial: 'emulator-5554', avd: 'Pixel_API_35' });
+    const createDriver = createDriverFactory({ mobileBuildMcp: { cwd: root, lockRoot: root },
+      android: { leaseRoot: root, runner: adb.run, identityProbe: adb.identityProbe,
+        tools: async () => ({ adb: '/sdk/platform-tools/adb', agent: { path: '/cache/agent.dex', sha256: 'a'.repeat(64) } }) } });
+    const script: ScriptedScenario = { version: 1, platform: 'android', app: { package: 'com.example.app' }, device: { serial: 'emulator-5554' }, values: {}, steps: [] };
+    await assert.rejects(createDriver(script, { runId: 'phone-profile', deviceCategory: 'android-phone' }).prepare({ app: { package: 'com.example.app' } }, new AbortController().signal),
+      (error: unknown) => error instanceof DeviceReasonError && error.code === 'DEVICE_NOT_FOUND');
+    assert.deepEqual(adb.calls, []);
+  } finally { await rm(root, { recursive: true, force: true }); }
+});
+
 test('the factory records a selected profile binding in the admission intent', async () => {
   const root = await mkdtemp(join(tmpdir(), 'jev-profile-intent-'));
   const profile = { name: 'ios', digest: 'b'.repeat(64) };

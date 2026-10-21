@@ -2,7 +2,7 @@ import { fakeSimulatorProbe } from './fixtures/android-device.js';
 import { mkdirSync, realpathSync } from 'node:fs';
 import { Admission } from '../src/device/admission.js';
 import assert from 'node:assert/strict';
-import { mkdtemp, rm, writeFile } from 'node:fs/promises';
+import { mkdtemp, rm, symlink, writeFile } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { test } from 'node:test';
@@ -104,17 +104,38 @@ test('a stalled installed-app probe refuses without admission or any effect', as
   } finally { await driver.close(new AbortController().signal); await rm(root, { recursive: true, force: true }); }
 });
 
-test('a simulator device set the effects would use, other than the default, refuses NONDEFAULT_DEVICE_SET before any effect', async () => {
-  const root = await mkdtemp(join(tmpdir(), 'jev-device-set-'));
-  const effects: string[] = [];
+for (const variable of ['SIMCTL_DEVICE_SET_PATH', 'SIMULATOR_DEVICE_SET_PATH'] as const) {
+  test(`a simulator device set the effects would use from ${variable}, other than the default, refuses NONDEFAULT_DEVICE_SET before any effect`, async () => {
+    const root = await mkdtemp(join(tmpdir(), 'jev-device-set-'));
+    const effects: string[] = [];
+    const previous = process.env[variable];
+    process.env[variable] = root;
+    const driver = fakeDriver({ cwd: root, lockRoot: root, identityProbe: fakeSimulatorProbe(udid),
+      runner: async args => { effects.push(args.join(' ')); return { stdout: commandEnvelope(args), stderr: '', exitCode: 0 }; } });
+    try {
+      await assert.rejects(driver.prepare(scenario, new AbortController().signal),
+        (error: unknown) => error instanceof DeviceReasonError && error.code === 'DEVICE_IDENTITY_UNAVAILABLE' && error.vendorCode === 'NONDEFAULT_DEVICE_SET');
+      assert.deepEqual(effects, []);
+    } finally {
+      if (previous === undefined) delete process.env[variable]; else process.env[variable] = previous;
+      await driver.close(new AbortController().signal); await rm(root, { recursive: true, force: true });
+    }
+  });
+}
+
+test('a device set variable that is a link to the default set is the default set', async () => {
+  const root = realpathSync(await mkdtemp(join(tmpdir(), 'jev-device-set-link-')));
+  const defaultSet = join(root, 'Devices');
+  mkdirSync(defaultSet);
+  await symlink(defaultSet, join(root, 'link'));
   const previous = process.env.SIMCTL_DEVICE_SET_PATH;
-  process.env.SIMCTL_DEVICE_SET_PATH = root;
-  const driver = fakeDriver({ cwd: root, lockRoot: root, identityProbe: fakeSimulatorProbe(udid),
-    runner: async args => { effects.push(args.join(' ')); return { stdout: commandEnvelope(args), stderr: '', exitCode: 0 }; } });
+  process.env.SIMCTL_DEVICE_SET_PATH = join(root, 'link');
+  const inventory = fakeSimulatorProbe(udid);
+  const probe = { ...inventory, simulatorSet: async (signal: AbortSignal) => ({ ...await inventory.simulatorSet(signal), deviceSet: defaultSet }) };
+  const driver = fakeDriver({ cwd: root, lockRoot: root, identityProbe: probe,
+    runner: async args => ({ stdout: commandEnvelope(args), stderr: '', exitCode: 0 }) });
   try {
-    await assert.rejects(driver.prepare(scenario, new AbortController().signal),
-      (error: unknown) => error instanceof DeviceReasonError && error.code === 'DEVICE_IDENTITY_UNAVAILABLE' && error.vendorCode === 'NONDEFAULT_DEVICE_SET');
-    assert.deepEqual(effects, []);
+    await driver.prepare(scenario, new AbortController().signal);
   } finally {
     if (previous === undefined) delete process.env.SIMCTL_DEVICE_SET_PATH; else process.env.SIMCTL_DEVICE_SET_PATH = previous;
     await driver.close(new AbortController().signal); await rm(root, { recursive: true, force: true });

@@ -94,6 +94,20 @@ test('capture selects a profile over the environment and checks a serial flag ag
   });
 });
 
+test('capture with a phone profile refuses an emulator transport of that name before device work', async () => {
+  await withFakes(new FakeAdb(api31()), async ({ adb, root, parts }) => {
+    await mkdir(join(root, '.jev'));
+    await writeFile(join(root, '.jev/profiles.json'), JSON.stringify({ version: 1, profiles: {
+      phone: { platform: 'android', deviceCategory: 'android-phone', device: 'emulator-5554' },
+    } }));
+    let stderr = '';
+    const context = { projectDir: root, driver: parts, signal: signal(), write: { stdout() {}, stderr: (text: string) => { stderr += text; } } };
+    assert.equal(await captureCommand({ profile: 'phone' }, context), 3);
+    assert.match(stderr, /^DEVICE_NOT_FOUND: /m);
+    assert.equal(adb.calls.length, 0);
+  });
+});
+
 test('capture ignores an iOS default, but an explicit iOS profile refuses before device work', async () => {
   await withFakes(new FakeAdb(api31()), async ({ adb, root, parts, agents }) => {
     await mkdir(join(root, '.jev'));
