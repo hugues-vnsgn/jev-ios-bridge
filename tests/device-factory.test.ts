@@ -81,6 +81,7 @@ test('the Android driver gets the script\'s device, else JEV_ANDROID_DEVICE, fro
     const createDriver = createDriverFactory({ mobileBuildMcp: { cwd: root, lockRoot: root },
       android: { leaseRoot: root, runner, defaultDevice: 'Default_AVD',
         identityProbe: { android: async (_signal, name) => { probeNames.push(name); return []; },
+          simulatorApp: async () => assert.fail('Android uses no simulator app read'),
           simulatorSet: async () => assert.fail('Android uses no simulator inventory') },
         tools: async () => ({ adb: '/sdk/platform-tools/adb', agent: { path: '/cache/agent.dex', sha256: 'a'.repeat(64) } }) } });
     const script = (device?: { avd: string }): ScriptedScenario =>

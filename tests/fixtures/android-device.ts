@@ -348,6 +348,7 @@ export class FakeStreams implements LogcatStarter {
 
 export function fakeSimulatorProbe(...udids: string[]): IdentityProbe {
   return identityProbe({ adb: '/fake/adb', environment: {},
+    simulatorApp: async ({ bundleId }) => ({ kind: 'installed', reply: `/fake/Applications/${bundleId}.app\n` }),
     simulator: async () => ({ deviceSet: '/fake/CoreSimulator/Devices',
       reply: JSON.stringify({ devices: { 'fake-runtime': udids.map(udid => ({ udid, name: udid, state: 'Booted', isAvailable: true })) } }) }),
     spawn: () => { throw new Error('Unexpected Android probe in simulator fixture'); },

@@ -60,13 +60,16 @@ export type PhoneObservation = Readonly<{
 }>;
 export type AndroidIdentityInventory = readonly (EmulatorObservation | PhoneObservation)[];
 export type SimulatorIdentityInventory = Readonly<{ reply: string; deviceSet: string }>;
+export type SimulatorAppObservation = Readonly<{ kind: 'installed'; reply: string } | { kind: 'missing'; reply: string }>;
 export interface IdentityProbe {
   android(signal: AbortSignal, serial?: string): Promise<AndroidIdentityInventory>;
   simulatorSet(signal: AbortSignal): Promise<SimulatorIdentityInventory>;
+  simulatorApp(input: { deviceSet: string; udid: string; bundleId: string; signal: AbortSignal }): Promise<SimulatorAppObservation>;
 }
 export type IdentityProbeOptions = {
   adb: string; environment: NodeJS.ProcessEnv; deadlineMs?: number; spawn?: ProbeSpawn; host?: AndroidHostProbe;
   simulator?: (signal: AbortSignal) => Promise<SimulatorIdentityInventory>;
+  simulatorApp?: IdentityProbe['simulatorApp'];
   defaultSimulatorSet?: () => Promise<string>;
 };
 
@@ -74,7 +77,8 @@ type ProbeCommand = { kind: 'transports' } |
   { kind: 'console'; serial: string; field: 'name' | 'id' | 'path' } |
   { kind: 'property'; serial: string; property: 'ro.boot.qemu.avd_name' | 'ro.serialno' } |
   { kind: 'listener'; port: number } | { kind: 'process'; pid: number } | { kind: 'executable'; pid: number } |
-  { kind: 'version'; executable: string } | { kind: 'simulators'; deviceSet: string };
+  { kind: 'version'; executable: string } | { kind: 'simulators'; deviceSet: string } |
+  { kind: 'simulator-app'; deviceSet: string; udid: string; bundleId: string };
 
 function consoleValue(reply: string): string {
   const match = /^([^\x00-\x1f\x7f]+)\r\nOK\r\n$/.exec(reply);
@@ -86,7 +90,7 @@ function consoleValue(reply: string): string {
 export function identityProbe(options: IdentityProbeOptions): IdentityProbe {
   const spawnChild: ProbeSpawn = options.spawn ?? ((file, args, config) => spawn(file, args, config));
   const { TYPESAFE_API_KEY: _secret, ...environment } = options.environment;
-  const run = (command: ProbeCommand, signal: AbortSignal): Promise<string> => {
+  const complete = (command: ProbeCommand, signal: AbortSignal): Promise<{ exitCode: number; stdout: Buffer }> => {
     let file: string;
     let args: string[];
     switch (command.kind) {
@@ -98,12 +102,13 @@ export function identityProbe(options: IdentityProbeOptions): IdentityProbe {
       case 'executable': file = '/usr/sbin/lsof'; args = ['-nP', '-a', '-p', String(command.pid), '-d', 'txt', '-Fn']; break;
       case 'version': file = command.executable; args = ['-version']; break;
       case 'simulators': file = '/usr/bin/xcrun'; args = ['simctl', '--set', command.deviceSet, 'list', 'devices', '--json']; break;
+      case 'simulator-app': file = '/usr/bin/xcrun'; args = ['simctl', '--set', command.deviceSet, 'get_app_container', command.udid, command.bundleId, 'app']; break;
     }
     return new Promise((resolve, reject) => {
       if (signal.aborted) { reject(signal.reason); return; }
       let child: ProbeChild;
       const childEnvironment = { ...environment };
-      if (command.kind === 'simulators') {
+      if (command.kind === 'simulators' || command.kind === 'simulator-app') {
         delete childEnvironment.SIMCTL_DEVICE_SET_PATH;
         delete childEnvironment.SIMULATOR_DEVICE_SET_PATH;
       }
@@ -112,14 +117,13 @@ export function identityProbe(options: IdentityProbeOptions): IdentityProbe {
       const chunks: Buffer[] = [];
       let bytes = 0, settled = false;
       let killTimer: NodeJS.Timeout | undefined;
-      const finish = (error?: unknown) => {
+      const finish = (error?: unknown, exitCode = 0) => {
         if (settled) return;
         settled = true;
         clearTimeout(deadline);
         signal.removeEventListener('abort', abort);
         if (error !== undefined) { reject(error); return; }
-        try { resolve(new TextDecoder('utf-8', { fatal: true }).decode(Buffer.concat(chunks))); }
-        catch { reject(new IdentityResolutionError({ code: 'DEVICE_IDENTITY_UNAVAILABLE', reason: 'MALFORMED_PROVENANCE' })); }
+        resolve({ exitCode, stdout: Buffer.concat(chunks) });
       };
       const terminate = (error: unknown) => {
         killTimer = setTimeout(() => { child.kill('SIGKILL'); }, 20);
@@ -138,10 +142,19 @@ export function identityProbe(options: IdentityProbeOptions): IdentityProbe {
       child.once('error', () => { clearTimeout(killTimer); finish(new IdentityResolutionError({ code: 'DEVICE_IDENTITY_UNAVAILABLE', reason: 'PROVENANCE_INACCESSIBLE' })); });
       child.once('close', code => {
         clearTimeout(killTimer);
-        if (code === 0) finish();
+        if (typeof code === 'number') finish(undefined, code);
         else finish(new IdentityResolutionError({ code: 'DEVICE_IDENTITY_UNAVAILABLE', reason: 'PROVENANCE_INACCESSIBLE' }));
       });
     });
+  };
+  const decodeReply = (stdout: Buffer): string => {
+    try { return new TextDecoder('utf-8', { fatal: true }).decode(stdout); }
+    catch { return identityUnavailable('MALFORMED_PROVENANCE'); }
+  };
+  const run = async (command: Exclude<ProbeCommand, { kind: 'simulator-app' }>, signal: AbortSignal): Promise<string> => {
+    const result = await complete(command, signal);
+    if (result.exitCode !== 0) identityUnavailable('PROVENANCE_INACCESSIBLE');
+    return decodeReply(result.stdout);
   };
   const account = userInfo();
   const host: AndroidHostProbe = options.host ?? {
@@ -257,6 +270,13 @@ export function identityProbe(options: IdentityProbeOptions): IdentityProbe {
         identityUnavailable('PROVENANCE_INACCESSIBLE');
       }
     },
+    simulatorApp: options.simulatorApp ?? (async ({ signal, ...request }) => {
+      const result = await complete({ kind: 'simulator-app', ...request }, signal);
+      const reply = decodeReply(result.stdout);
+      if (result.exitCode !== 0) return { kind: 'missing', reply };
+      if (!isAbsolute(reply.trim()) || /[\x00-\x1f\x7f]/.test(reply.trim())) identityUnavailable('MALFORMED_PROVENANCE');
+      return { kind: 'installed', reply };
+    }),
     simulatorSet: options.simulator ?? (async signal => {
       try {
         const deviceSet = await (options.defaultSimulatorSet?.() ?? realpath(join(account.homedir, 'Library/Developer/CoreSimulator/Devices')));

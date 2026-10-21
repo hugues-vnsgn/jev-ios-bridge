@@ -7,7 +7,9 @@ import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { test } from 'node:test';
 import type { ActionScenarioContext, DeviceDriver } from '../src/contracts/index.js';
-import { DeviceCliError, MobileBuildMcpDriver, StaleSnapshotError, parseSnapshot, type CliRunner } from '../src/device/index.js';
+import { DeviceCliError, DeviceReasonError, MobileBuildMcpDriver, StaleSnapshotError, parseSnapshot, type CliRunner } from '../src/device/index.js';
+import { identityProbe } from '../src/device/android/probe.js';
+import { fakeProbeSpawn } from './fixtures/adb-spawn.js';
 
 const udid = 'ABCDEF00-0000-4000-8000-000000000001';
 const scenario: ActionScenarioContext = { app: { bundleId: 'com.apple.Preferences' }, values: {}, device: { udid } };
@@ -40,6 +42,67 @@ function capture(hash = 'same', expiresAtMs = Date.now() + 60_000): unknown {
     capturedAtMs: expiresAtMs - 60_000, expiresAtMs, targets: ['e1|tap|button|Settings||Settings'], scroll: [],
     text: ['e2|text|text|Page title: Settings||'] } };
 }
+
+test('a missing simulator app refuses before admission, presentation or launch', async () => {
+  const root = await mkdtemp(join(tmpdir(), 'jev-device-app-preflight-'));
+  const effects: string[] = [];
+  const fake = fakeProbeSpawn((_file, _args, child) => { child.exit(1); return undefined; });
+  const probe = identityProbe({ adb: '/fake/adb', environment: {}, spawn: fake.spawn,
+    simulator: fakeSimulatorProbe(udid).simulatorSet });
+  const driver = fakeDriver({ cwd: root, lockRoot: root, identityProbe: probe,
+    deviceWindow: async () => { effects.push('window'); },
+    runner: async args => { effects.push(args.join(' ')); return { stdout: commandEnvelope(args), stderr: '', exitCode: 0 }; } });
+  try {
+    await assert.rejects(driver.prepare(scenario, new AbortController().signal),
+      (error: unknown) => error instanceof DeviceReasonError && error.code === 'DEVICE_ERROR' && error.vendorCode === 'APP_NOT_INSTALLED');
+    assert.deepEqual(effects, []);
+    assert.equal(Admission.forTesting({ root: realpathSync(join(root, 'admission')), backend: 'fake' }).inspect(udid), undefined);
+    assert.deepEqual(fake.calls.map(call => [call.file, call.args]), [
+      ['/usr/bin/xcrun', ['simctl', '--set', '/fake/CoreSimulator/Devices', 'get_app_container', udid, 'com.apple.Preferences', 'app']],
+    ]);
+  } finally { await driver.close(new AbortController().signal); await rm(root, { recursive: true, force: true }); }
+});
+
+test('an installed-app reply is read after identity and recorded in the admission intent before effects', async () => {
+  const root = await mkdtemp(join(tmpdir(), 'jev-device-app-intent-'));
+  const order: string[] = [];
+  const listing = fakeSimulatorProbe(udid);
+  const fake = fakeProbeSpawn(() => { order.push('app'); return '/Applications/Preferences.app\n'; });
+  const probe = identityProbe({ adb: '/fake/adb', environment: { SIMCTL_DEVICE_SET_PATH: '/other-set', TYPESAFE_API_KEY: 'sentinel-key' },
+    spawn: fake.spawn, simulator: async signal => { order.push('identity'); return listing.simulatorSet(signal); } });
+  const driver = fakeDriver({ cwd: root, lockRoot: root, runId: 'app-intent', identityProbe: probe,
+    deviceWindow: async () => { order.push('window'); },
+    runner: async args => { order.push('effect'); return { stdout: commandEnvelope(args), stderr: '', exitCode: 0 }; } });
+  try {
+    await driver.prepare(scenario, new AbortController().signal);
+    assert.deepEqual(order.slice(0, 2), ['identity', 'app']);
+    assert.ok(order.indexOf('effect') > order.indexOf('app'));
+    const intent = Admission.forTesting({ root: realpathSync(join(root, 'admission')), backend: 'fake' })
+      .readAttempt({ kind: 'legacy', id: 'app-intent' })?.intent;
+    assert.ok(intent && typeof intent === 'object' && 'installedApp' in intent);
+    assert.deepEqual(intent.installedApp, { kind: 'installed', reply: '/Applications/Preferences.app\n' });
+    assert.deepEqual(fake.calls.map(call => [call.file, call.args, call.options.env]), [
+      ['/usr/bin/xcrun', ['simctl', '--set', '/fake/CoreSimulator/Devices', 'get_app_container', udid, 'com.apple.Preferences', 'app'], {}],
+    ]);
+  } finally { await driver.close(new AbortController().signal); await rm(root, { recursive: true, force: true }); }
+});
+
+test('a stalled installed-app probe refuses without admission or any effect', async () => {
+  const root = await mkdtemp(join(tmpdir(), 'jev-device-app-timeout-'));
+  const fake = fakeProbeSpawn(() => undefined);
+  const effects: string[] = [];
+  const probe = identityProbe({ adb: '/fake/adb', environment: {}, spawn: fake.spawn, deadlineMs: 5,
+    simulator: fakeSimulatorProbe(udid).simulatorSet });
+  const driver = fakeDriver({ cwd: root, lockRoot: root, identityProbe: probe,
+    runner: async args => { effects.push(args.join(' ')); return { stdout: commandEnvelope(args), stderr: '', exitCode: 0 }; } });
+  try {
+    await assert.rejects(driver.prepare(scenario, new AbortController().signal),
+      (error: unknown) => error instanceof DeviceReasonError && error.code === 'DEVICE_IDENTITY_UNAVAILABLE' && error.vendorCode === 'PROBE_TIMEOUT');
+    assert.deepEqual(effects, []);
+    assert.deepEqual(fake.children[0]?.killedBy, ['SIGTERM']);
+    assert.equal(Admission.forTesting({ root: realpathSync(join(root, 'admission')), backend: 'fake' }).inspect(udid), undefined);
+  } finally { await driver.close(new AbortController().signal); await rm(root, { recursive: true, force: true }); }
+});
 
 test('a missing simulator identity refuses before the effect runner or admission', async () => {
   const root = await mkdtemp(join(tmpdir(), 'jev-device-identity-'));

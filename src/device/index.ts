@@ -803,9 +803,14 @@ export class MobileBuildMcpDriver implements DeviceDriver, IosPreparationDriver,
     if (resolved.category !== 'ios-simulator') throw new Error('Simulator identity required');
     this.resolvedIdentity = resolved;
     if (resolved.state !== 'Booted') throw notBootedError(deviceId, resolved.state);
+    const installedApp = await this.identityRead(() => this.probe!.simulatorApp({ deviceSet: resolved.deviceSet,
+      udid: resolved.value, bundleId, signal }));
+    if (signal.aborted) throw signal.reason;
+    if (installedApp.kind === 'missing') throw new DeviceReasonError('DEVICE_ERROR',
+      `App ${bundleId} is not installed on simulator ${resolved.value}`, { vendorCode: 'APP_NOT_INSTALLED' });
     const admission = this.options.admission ?? Admission.open();
     admission.assertBackend(this.options.fakeBackend ? 'fake' : 'real');
-    const intent = { deviceId, app: scenario.app, start: scenario.start ?? 'restart', identity: resolved };
+    const intent = { deviceId, app: scenario.app, start: scenario.start ?? 'restart', identity: resolved, installedApp };
     const acquired = admission.acquire({ category: 'ios-simulator', device: deviceId, attempt: { kind: 'legacy', id: this.options.runId ?? randomUUID() },
       digest: createHash('sha256').update(JSON.stringify(intent)).digest('hex'), intent, signal });
     if (acquired.kind !== 'acquired') throw new DeviceCliError('DEVICE_BUSY', `Device admission refused: ${acquired.kind === 'refused' ? acquired.reason : 'ATTEMPT_ALREADY_EXISTS'}`);

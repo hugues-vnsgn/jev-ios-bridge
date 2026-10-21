@@ -96,6 +96,29 @@ test('console provenance rejects malformed framing, sentinel replies and relativ
   }
 });
 
+test('captured native console replies preserve success, offline and second-instance identity', async () => {
+  for (const [name, state, avdId] of [['success', 'device', 'p24-first'], ['offline', 'offline', 'p24-first'], ['second', 'device', 'p24-second']] as const) {
+    const fake = fakeProbeSpawn((_file, args) => {
+      if (args[0] === 'devices') return `List of devices attached\nemulator-5570 ${state}\n`;
+      if (args[2] === 'emu') return readFileSync(new URL(`live-${name}-${args[4]}.txt`, consoleFixtures), 'utf8');
+      return 'jev_appium_phase1_20261018\n';
+    });
+    const probe = identityProbe({ adb: '/fake/adb', environment: {}, spawn: fake.spawn,
+      host: { ...validHost, directory: async () => ({ path: '/canonical/Private.avd', device: '2', inode: '42' }) } });
+    const resolved = await resolveIdentity({ request: { category: 'android-emulator', name: 'emulator-5570' }, probe, signal: identitySignal() });
+    assert.deepEqual([resolved.category, resolved.value, resolved.category === 'android-emulator' ? resolved.provenance.avdId : undefined],
+      ['android-emulator', '/canonical/Private.avd', avdId]);
+  }
+});
+
+test('captured missing, empty and mismatched token replies refuse provenance', async () => {
+  for (const name of ['missing', 'empty', 'mismatch']) for (const field of ['name', 'id', 'path'] as const) {
+    const world = emulatorWorld({ field, reply: readFileSync(new URL(`live-${name}-${field}.txt`, consoleFixtures), 'utf8') });
+    await assert.rejects(resolveIdentity({ request: { category: 'android', name: 'emulator-5554' }, probe: world.probe, signal: identitySignal() }),
+      refusal('DEVICE_IDENTITY_UNAVAILABLE', 'MALFORMED_PROVENANCE'));
+  }
+});
+
 test('guest name is a cross-check and missing guest data preserves console identity', async () => {
   const mismatch = emulatorWorld({ guest: 'Other\n' });
   await assert.rejects(resolveIdentity({ request: { category: 'android', name: 'Pixel' }, probe: mismatch.probe, signal: identitySignal() }),
