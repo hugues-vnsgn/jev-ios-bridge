@@ -1,0 +1,58 @@
+# P2.4 lane transcript: two-roots
+worktree: /tmp/swarm-P2.4/head @ 95c6ce376ecb6828babf6a53c1f83b8351afc120
+$ jev-ios-bridge run /tmp/swarm-P2.4/review/scenario-avd.json --json --no-log-pane
+cwd: /tmp/swarm-P2.4/review/two-roots/project  env overrides: (none)  entry: android
+world: /private/tmp/swarm-P2.4/review/world-two-roots.json
+{ "devices": [
+  { "serial": "emulator-5554", "avd": "Pixel_API_35", "id": "root-a", "path": "/Users/tester/.android/avd/Pixel_API_35.avd" },
+  { "serial": "emulator-5556", "avd": "Pixel_API_35", "id": "root-b", "path": "/Volumes/Other/avd/Pixel_API_35.avd" } ] }
+exit: 2
+----- stdout -----
+{
+  "reportVersion": 1,
+  "runId": "2e181e96-8188-4aa7-9e13-581c52afcf44",
+  "bridgeVersion": "1.4.0",
+  "jevModel": "jev-1.13.0",
+  "projectionRule": "android-full-text-v1",
+  "bundleId": null,
+  "launchArgs": [],
+  "verdict": "inconclusive",
+  "reason": "DEVICE_AMBIGUOUS",
+  "error": {
+    "code": "DEVICE_AMBIGUOUS",
+    "phase": "prepare",
+    "stepId": null
+  },
+  "steps": 0,
+  "plannedSteps": 1,
+  "checkpointsPassed": 0,
+  "checkpointCount": 1,
+  "inputTokens": 0,
+  "durationMs": 254.64025,
+  "startedAt": "2026-10-21T04:18:19.542Z",
+  "finishedAt": "2026-10-21T04:18:19.797Z",
+  "checkpoints": [],
+  "evidence": {
+    "log": "run.jsonl",
+    "screenshots": []
+  },
+  "platform": "android",
+  "package": "com.example.android",
+  "activity": null,
+  "intentExtras": {}
+}
+----- stderr -----
+Watch: http://127.0.0.1:55663/?token=<redacted>&run=2e181e96-8188-4aa7-9e13-581c52afcf44
+----- adb effect commands (0) -----
+----- adb probe commands (11) -----
+devices -l
+-s emulator-5554 emu avd name
+-s emulator-5554 emu avd id
+-s emulator-5554 emu avd path
+-s emulator-5554 shell getprop ro.boot.qemu.avd_name
+-s emulator-5554 emu avd id
+-s emulator-5556 emu avd name
+-s emulator-5556 emu avd id
+-s emulator-5556 emu avd path
+-s emulator-5556 shell getprop ro.boot.qemu.avd_name
+-s emulator-5556 emu avd id
