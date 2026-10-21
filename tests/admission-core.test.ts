@@ -3,15 +3,345 @@ import { test, type TestContext } from 'node:test';
 import { mkdtempSync, rmSync, realpathSync, mkdirSync, lstatSync, readFileSync, statSync, chmodSync, symlinkSync, writeFileSync, unlinkSync, existsSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
-import { spawn, type ChildProcess } from 'node:child_process';
+import { spawn, spawnSync, type ChildProcess } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
 import { DatabaseSync } from 'node:sqlite';
-import { Admission, canonicalDevice, type AdmissionRequest } from '../src/device/admission.js';
+import { Admission, canonicalDevice, type AdmissionRequest, type FenceRequest } from '../src/device/admission.js';
 
 import { messageSchema, commandSchema, faultSchema, requireAcquisition, type CoreReply, type CommandInput, type Acquisition, type Finalization, type Control } from './fixtures/admission-core-protocol.js';
 
 const device = 'abcdef00-0000-4000-8000-000000000001';
 const request = (id: string, udid = device): AdmissionRequest => ({ device: udid, attempt: { kind: 'observed', id }, digest: 'digest', intent: { tap: 'button' } });
+
+test('different host timezones cannot turn a live owner into an abandoned generation',t=>{
+  const {root,admission}=fixture(t);
+  const acquired=admission.acquire(request('timezone-owner'));
+  if(acquired.kind!=='acquired')assert.fail('Expected owner');
+  for(const timezone of ['UTC','Pacific/Honolulu']) {
+    const child=spawnSync(process.execPath,['--import',import.meta.resolve('tsx'),'--input-type=module','-e',`
+      import {Admission} from './src/device/admission.ts';
+      const admission=Admission.forTesting({root:process.argv[1],backend:'fake',initialize:false});
+      console.log(JSON.stringify(admission.acquire({device:process.argv[2],attempt:{kind:'legacy',id:process.argv[3]},digest:'same',intent:{}})));
+    `,root,device,timezone],{cwd:process.cwd(),env:{PATH:process.env.PATH??'',TZ:timezone,LC_ALL:'C'},encoding:'utf8',timeout:5000});
+    assert.equal(child.status,0,child.stderr);
+    assert.deepEqual(JSON.parse(child.stdout),{kind:'refused',reason:'DEVICE_BUSY'});
+  }
+  assert.equal(admission.readAttempt(request('timezone-owner').attempt)?.state,'active');
+});
+
+test('dispatch records a component and outstanding command before sending, then settles once', async t => {
+  const { admission } = fixture(t);
+  const acquired = admission.acquire(request('record-before-send'));
+  if (acquired.kind !== 'acquired') assert.fail('Expected owner');
+  const owner = acquired.claim.identity;
+  const session = acquired.claim.bindDriver('fake');
+  await session.dispatch('capture', async () => {
+    const generation = admission.readGeneration(owner);
+    assert.equal(generation.commands.length, 1);
+    assert.equal(generation.commands[0]?.state, 'outstanding');
+    assert.equal(generation.components.length, 1);
+    assert.equal(generation.commands[0]?.componentId, generation.components[0]?.id);
+    assert.equal(generation.inventoryUnknownReason, null);
+  });
+  assert.equal(admission.readGeneration(owner).commands[0]?.state, 'settled');
+});
+
+test('closure makes outstanding commands uncertain and late replies only append observations', async t => {
+  const { admission } = fixture(t);
+  const acquired = admission.acquire(request('close-outstanding'));
+  if (acquired.kind !== 'acquired') assert.fail('Expected owner');
+  const session = acquired.claim.bindDriver('fake');
+  let complete!: () => void;
+  const pending = session.dispatch('capture', () => new Promise<void>(resolve => { complete = resolve; }));
+  const terminal = { outcome: 'inconclusive' as const, disposition: 'quarantined' as const, payload: {}, evidenceRefs: [] };
+  assert.equal(acquired.claim.finalize(terminal).authority, 'committed');
+  const closed = admission.readGeneration(acquired.claim.identity);
+  assert.equal(closed.commands[0]?.state, 'uncertain');
+  assert.equal(typeof closed.dispatchClosedAt, 'number');
+  const capacity = admission.readAllocationCapacity();
+  complete(); await pending;
+  const late = admission.readGeneration(acquired.claim.identity);
+  assert.equal(late.commands[0]?.state, 'uncertain');
+  assert.deepEqual(late.observations.map(observation => observation.commandId), [closed.commands[0]?.id]);
+  assert.deepEqual(admission.readAttempt(request('close-outstanding').attempt)?.terminal, terminal);
+  assert.deepEqual(admission.readAllocationCapacity(), capacity);
+  assert.equal(admission.inspect(device)?.state, 'quarantined');
+});
+
+test('a generation-bound receipt frees an inconclusive lease without changing its outcome', async t => {
+  const { root } = fixture(t);
+  const admission = Admission.forTesting({ root, backend: 'fake', ownerLiveness: () => 'dead' });
+  const acquired = admission.acquire(request('evidenced-release'));
+  if (acquired.kind !== 'acquired') assert.fail('Expected owner');
+  const claim = acquired.claim;
+  claim.registerComponent({ id: 'stream', kind: 'host-process', process: { pid: 123456, incarnation: 'start-one' } });
+  const issued = claim.issue({ requestId: 'read-1', componentId: 'stream', operation: 'capture', payload: {} });
+  assert.equal(issued.kind, 'issued');
+  const candidate = { outcome: 'inconclusive' as const, disposition: 'quarantined' as const, payload: {}, evidenceRefs: [] };
+  assert.equal(claim.closeDispatch(candidate).authority, 'committed');
+  const before = admission.readAttempt(claim.identity.attempt);
+  const capacity = admission.readAllocationCapacity();
+  const proof: FenceRequest = { requestId: 'stop-1', kind: 'stop', commands: [issued.command.id],
+    components: [{ componentId: 'stream', proof: { kind: 'host-process-exited', process: { pid: 123456, incarnation: 'start-one' }, evidenceRefs: ['/evidence/stream-exited.json'] } }] };
+  const receipt = admission.submitFence(claim.identity, proof);
+  assert.equal(receipt.owner.token, claim.identity.token);
+  assert.equal(admission.inspect(device)?.state, 'available');
+  assert.deepEqual(admission.readAttempt(claim.identity.attempt), before);
+  assert.deepEqual(admission.readAllocationCapacity(), capacity);
+  assert.equal(admission.readGeneration(claim.identity).commands[0]?.state, 'uncertain');
+  const bytes = readFileSync(join(root, 'admission.sqlite'));
+  assert.deepEqual(admission.submitFence(claim.identity, proof), receipt);
+  assert.deepEqual(readFileSync(join(root, 'admission.sqlite')), bytes);
+});
+
+test('receipt refusals follow the specified order and change no records', async t => {
+  const { root, admission } = fixture(t);
+  const acquired = admission.acquire(request('ordered-fence'));
+  if (acquired.kind !== 'acquired') assert.fail('Expected owner');
+  const claim = acquired.claim;
+  const session = claim.bindDriver('fake');
+  await session.dispatch('capture', async () => {});
+  const generation = admission.readGeneration(claim.identity);
+  const command = generation.commands[0]!;
+  const proof: FenceRequest = { requestId: 'ordered-stop', kind: 'stop', commands: [],
+    components: [{ componentId: command.componentId!, proof: { kind: 'completed-command', commandId: command.id } }] };
+  const unchanged = (owner: typeof claim.identity, receipt: FenceRequest, code: string) => {
+    const before = readFileSync(join(root, 'admission.sqlite'));
+    assert.throws(() => admission.submitFence(owner, receipt), { code });
+    assert.deepEqual(readFileSync(join(root, 'admission.sqlite')), before);
+  };
+  unchanged({ ...claim.identity, generation: 999 }, { ...proof, components: [] }, 'STALE_OWNER');
+  unchanged(claim.identity, { ...proof, components: [] }, 'UNBOUND_PROOF');
+  unchanged(claim.identity, { ...proof, kind: 'maintenance-lift' }, 'NOT_COVERABLE');
+  unchanged(claim.identity, proof, 'DISPATCH_OPEN');
+  claim.closeDispatch({ outcome: 'inconclusive', disposition: 'quarantined', payload: {}, evidenceRefs: [] });
+  unchanged(claim.identity, { ...proof, components: [{ ...proof.components[0]!, proof: { kind: 'completed-command', commandId: 'unrelated' } }] }, 'COVERAGE_INCOMPLETE');
+  assert.equal(admission.submitFence(claim.identity, proof).requestId, 'ordered-stop');
+  const next = admission.acquire(request('after-fence'));
+  if (next.kind !== 'acquired') assert.fail('Expected successor');
+  unchanged(claim.identity, { ...proof, requestId: 'stale-stop' }, 'STALE_OWNER');
+});
+
+test('first emulator admission checks live provenance against legacy names and stores admitted attributes', t => {
+  const { root, admission } = fixture(t);
+  const provenance = { avdName: 'Pixel_Private', avdId: 'Pixel_Private', directory: { device: '1', inode: '42' },
+    version: { value: '36.2.0', source: 'running-sdk-binary' as const }, process: { pid: 123456, startedAt: 'start' } };
+  const input: AdmissionRequest = { ...request('provenance', '/private/avds/Pixel.avd'), category: 'android-emulator', provenance };
+  const db = new DatabaseSync(join(root,'admission.sqlite'));
+  try { db.prepare("INSERT INTO quarantines(id,legacy_name,kind,cause,created_at,evidence) VALUES ('old-name','PIXEL_PRIVATE','historical','legacy-lease',1,'{}')").run(); }
+  finally { db.close(); }
+  const before = readFileSync(join(root,'admission.sqlite'));
+  assert.deepEqual(admission.acquire(input), { kind: 'refused', reason: 'DEVICE_QUARANTINED' });
+  assert.deepEqual(readFileSync(join(root,'admission.sqlite')), before);
+  const accepted = admission.acquire({ ...input, attempt: { kind: 'legacy', id: 'different-name' }, provenance: { ...provenance, avdName: 'Another_Private' } });
+  if (accepted.kind !== 'acquired') assert.fail('Expected unrelated emulator');
+  assert.deepEqual(admission.readDeviceAttributes({ category: 'android-emulator', value: input.device }), { ...provenance, avdName: 'Another_Private' });
+});
+
+test('unknown inventory, missing command coverage and unknown creation retain their refusal codes', t => {
+  const { admission } = fixture(t);
+  for (const [suffix, uncertainty, expected] of [['missing', null, 'COMMANDS_UNFENCED'], ['inventory', 'probe-gap', 'COVERAGE_UNKNOWN'], ['creation', 'unknown-creation', 'NOT_COVERABLE']] as const) {
+    const input = request(`coverage-${suffix}`, `ABCDEF00-0000-4000-8000-00000000000${suffix==='missing'?3:suffix==='inventory'?4:5}`);
+    const acquired = admission.acquire(input);
+    if (acquired.kind !== 'acquired') assert.fail('Expected owner');
+    acquired.claim.registerComponent({ id: suffix, kind: 'host-process', process: { pid: 123456, incarnation: 'start' } });
+    acquired.claim.issue({ requestId: suffix, componentId: suffix, operation: 'read', payload: {} });
+    if (uncertainty) acquired.claim.markInventoryUnknown(uncertainty);
+    acquired.claim.closeDispatch({ outcome: 'inconclusive', disposition: 'quarantined', payload: {}, evidenceRefs: [] });
+    assert.throws(() => admission.submitFence(acquired.claim.identity, { requestId: suffix, kind: 'stop', commands: [],
+      components: [{ componentId: suffix, proof: { kind: 'host-process-exited', process: { pid: 123456, incarnation: 'start' }, evidenceRefs: ['/evidence/exit.json'] } }] }), { code: expected });
+  }
+});
+
+test('a stored receipt with typed proof different from staged membership cannot cover quarantine', async t => {
+  const { root, admission } = fixture(t);
+  const acquired = admission.acquire(request('staged-membership'));
+  if (acquired.kind !== 'acquired') assert.fail('Expected owner');
+  await acquired.claim.bindDriver('fake').dispatch('capture', async () => {});
+  acquired.claim.closeDispatch({ outcome: 'inconclusive', disposition: 'quarantined', payload: {}, evidenceRefs: [] });
+  const command = admission.readGeneration(acquired.claim.identity).commands[0]!;
+  const proof: FenceRequest = { requestId: 'staged-stop', kind: 'stop', components: [{ componentId: command.componentId!,
+    proof: { kind: 'completed-command', commandId: command.id } }], commands: [] };
+  const { createHash } = await import('node:crypto');
+  const payload=JSON.stringify(proof);
+  const db=new DatabaseSync(join(root,'admission.sqlite'));
+  try {
+    const generation=String(db.prepare('SELECT id FROM owner_generations WHERE token=?').get(acquired.claim.identity.token)?.id);
+    db.exec('PRAGMA foreign_keys=ON; BEGIN IMMEDIATE');
+    db.prepare('INSERT INTO fence_components VALUES (?,?,?,?)').run('forged',generation,command.componentId!,JSON.stringify({kind:'completed-command',commandId:'different'}));
+    db.prepare("INSERT INTO fence_receipts VALUES (?,?, 'ios-simulator',?,?,?,'stop',1,?)").run('forged',generation,device.toUpperCase(),proof.requestId,createHash('sha256').update(payload).digest('hex'),payload);
+    db.exec('COMMIT');
+  } finally { db.close(); }
+  const before=readFileSync(join(root,'admission.sqlite'));
+  assert.throws(()=>admission.submitFence(acquired.claim.identity,proof),{code:'UNBOUND_PROOF'});
+  assert.deepEqual(readFileSync(join(root,'admission.sqlite')),before);
+  assert.equal(admission.inspect(device)?.state,'quarantined');
+});
+
+test('identical command issue after a lost COMMIT retrieves permission without issuing again', t => {
+  const { root } = fixture(t); let lose = true;
+  const admission=Admission.forTesting({root,backend:'fake',fault(point,operation){if(lose&&point==='afterCommit'&&operation==='authorize'){lose=false;throw new Error('reply lost');}}});
+  const acquired=admission.acquire(request('lost-issue'));
+  if(acquired.kind!=='acquired') assert.fail('Expected owner');
+  acquired.claim.registerComponent({id:'command-source',kind:'one-shot',operation:'capture'});
+  const command={requestId:'stable-request',componentId:'command-source',operation:'capture',payload:{request:'same'}};
+  assert.throws(()=>acquired.claim.issue(command),{code:'STATE_UNAVAILABLE'});
+  const before=readFileSync(join(root,'admission.sqlite'));
+  const retry=acquired.claim.issue(command);
+  assert.equal(retry.kind,'retrieved');
+  assert.equal(retry.command.state,'outstanding');
+  assert.deepEqual(readFileSync(join(root,'admission.sqlite')),before);
+  assert.throws(()=>acquired.claim.issue({...command,payload:{request:'changed'}}),{code:'INVALID_REQUEST'});
+  assert.throws(()=>acquired.claim.issue({...command,requestId:'new-request'}),{code:'DISPATCH_CLOSED'});
+});
+
+test('admission recovers a dead owner and one durable claimant alone sweeps before a successor admits', async t => {
+  const { root } = fixture(t);
+  const dead=Admission.forTesting({root,backend:'fake',process:{pid:999999,incarnation:'dead-owner'}});
+  const old=dead.acquire(request('dead-at-admission'));
+  if(old.kind!=='acquired') assert.fail('Expected owner');
+  old.claim.registerComponent({id:'old-stream',kind:'host-process',process:{pid:111111,incarnation:'dead-stream'}});
+  old.claim.issue({requestId:'old-read',componentId:'old-stream',operation:'read',payload:{}});
+  const recovery=Admission.forTesting({root,backend:'fake',ownerLiveness:owner=>[999999,111111].includes(owner.pid)?'dead':'alive'});
+  let release!:()=>void, entered!:()=>void;
+  const paused=new Promise<void>(resolve=>{release=resolve;});
+  const started=new Promise<void>(resolve=>{entered=resolve;});
+  let effects=0,losingEffects=0;
+  const next=recovery.acquireWithRecovery(request('recovering-successor'),async claim=>{
+    assert.equal(recovery.readAttempt(old.claim.identity.attempt)?.terminal?.outcome,'inconclusive');
+    assert.equal(recovery.inspect(device)?.state,'quarantined');
+    await claim.dispatch('sweep',async()=>{effects++;entered();await paused;});
+    const generation=recovery.readGeneration(old.claim.identity);
+    return {requestId:'recovery-stop',kind:'stop',commands:generation.commands.filter(command=>command.state!=='settled').map(command=>command.id),
+      components:generation.components.map(component=>component.id==='old-stream'
+        ?{componentId:component.id,proof:{kind:'host-process-exited' as const,process:{pid:111111,incarnation:'dead-stream'},evidenceRefs:['/evidence/stream-exited.json']}}
+        :{componentId:component.id,proof:{kind:'completed-command' as const,commandId:generation.commands.find(command=>command.componentId===component.id)!.id}})};
+  });
+  await started;
+  const competitor=await recovery.acquireWithRecovery(request('competing-recovery'),async()=>{losingEffects++;throw new Error('Must not sweep');});
+  assert.deepEqual(competitor,{kind:'refused',reason:'DEVICE_QUARANTINED'});
+  assert.equal(losingEffects,0);
+  release();
+  const acquired=await next;
+  assert.equal(acquired.kind,'acquired');
+  assert.equal(effects,1);
+  assert.equal(recovery.readAttempt(old.claim.identity.attempt)?.terminal?.outcome,'inconclusive');
+  assert.equal(recovery.readGeneration(old.claim.identity).commands[0]?.state,'uncertain');
+  assert.equal(recovery.readGeneration(old.claim.identity).recoveries[0]?.closure,'accepted');
+});
+
+test('a reused component PID is not exit evidence while a reused owner PID permits recovery', t => {
+  const {root}=fixture(t);
+  const original=Admission.forTesting({root,backend:'fake',process:{pid:999999,incarnation:'old-start'}});
+  const acquired=original.acquire(request('reused-component'));
+  if(acquired.kind!=='acquired')assert.fail('Expected owner');
+  acquired.claim.registerComponent({id:'reused-process',kind:'host-process',process:{pid:123456,incarnation:'original-start'}});
+  acquired.claim.issue({requestId:'read',componentId:'reused-process',operation:'read',payload:{}});
+  const recovery=Admission.forTesting({root,backend:'fake',ownerLiveness:()=> 'dead',componentLiveness:()=> 'reused'});
+  assert.deepEqual(recovery.acquire(request('reused-successor')),{kind:'refused',reason:'DEVICE_QUARANTINED'});
+  const command=recovery.readGeneration(acquired.claim.identity).commands[0]!;
+  assert.throws(()=>recovery.submitFence(acquired.claim.identity,{requestId:'reused-stop',kind:'stop',commands:[command.id],
+    components:[{componentId:'reused-process',proof:{kind:'host-process-exited',process:{pid:123456,incarnation:'original-start'},evidenceRefs:['/evidence/old-pid.json']}}]}),{code:'COVERAGE_INCOMPLETE'});
+});
+
+test('a dead recovery claimant is closed once and a new claimant can retry the same generation', t => {
+  const {root}=fixture(t);
+  const owner=Admission.forTesting({root,backend:'fake',process:{pid:999999,incarnation:'gone'}});
+  const acquired=owner.acquire(request('claimant-death'));
+  if(acquired.kind!=='acquired')assert.fail('Expected owner');
+  const first=Admission.forTesting({root,backend:'fake',process:{pid:888888,incarnation:'first-claimant'},ownerLiveness:()=> 'dead'});
+  first.acquire(request('first-recovery-attempt'));
+  const claim=first.claimRecovery(acquired.claim.identity,'first-claim');
+  assert.equal(claim.kind,'claimed');
+  const second=Admission.forTesting({root,backend:'fake',ownerLiveness:()=> 'dead'});
+  const next=second.claimRecovery(acquired.claim.identity,'second-claim');
+  assert.equal(next.kind,'claimed');
+  if(next.kind!=='claimed')assert.fail('Expected successor claimant');
+  assert.deepEqual(second.readGeneration(acquired.claim.identity).recoveries.map(recovery=>recovery.closure),['abandoned',null]);
+  if(claim.kind==='claimed')assert.throws(()=>claim.claim.close(),{code:'STALE_OWNER'});
+  next.claim.close();
+  next.claim.close();
+  assert.deepEqual(second.readGeneration(acquired.claim.identity).recoveries.map(recovery=>recovery.closure),['abandoned','refused']);
+});
+
+for(const point of ['beforeCommit','afterCommit'] as const) {
+  test(`closure and receipt retries at ${point} retrieve committed history without replay`,async t=>{
+    const {root}=fixture(t);
+    let operationToLose='closure';
+    const admission=Admission.forTesting({root,backend:'fake',fault(at,operation){
+      if(operationToLose!=='none'&&at===point&&operation===(operationToLose==='closure'?'finalize':'receipt')){operationToLose='none';throw new Error('lost reply');}
+    }});
+    const acquired=admission.acquire(request(`retry-${point}`));
+    if(acquired.kind!=='acquired')assert.fail('Expected owner');
+    let effects=0;
+    await acquired.claim.bindDriver('fake').dispatch('capture',async()=>{effects++;});
+    const candidate={outcome:'inconclusive' as const,disposition:'quarantined' as const,payload:{},evidenceRefs:[]};
+    assert.equal(acquired.claim.closeDispatch(candidate).authority,'unconfirmed');
+    assert.equal(acquired.claim.closeDispatch(candidate).authority,'committed');
+    const command=admission.readGeneration(acquired.claim.identity).commands[0]!;
+    const proof:FenceRequest={requestId:'retry-stop',kind:'stop',components:[{componentId:command.componentId!,proof:{kind:'completed-command',commandId:command.id}}],commands:[]};
+    operationToLose='receipt';
+    assert.throws(()=>admission.submitFence(acquired.claim.identity,proof),{code:'STATE_UNAVAILABLE'});
+    const receipt=admission.submitFence(acquired.claim.identity,proof);
+    const before=readFileSync(join(root,'admission.sqlite'));
+    assert.deepEqual(admission.submitFence(acquired.claim.identity,proof),receipt);
+    assert.deepEqual(readFileSync(join(root,'admission.sqlite')),before);
+    assert.equal(effects,1);
+    assert.equal(admission.readAttempt(acquired.claim.identity.attempt)?.terminal?.outcome,'inconclusive');
+    assert.equal(admission.inspect(device)?.state,'available');
+  });
+}
+
+for(const kind of ['historical','exclusion'] as const) test(`a stop receipt never lifts an imported ${kind} quarantine`,async t=>{
+  const {root,admission}=fixture(t);
+  const acquired=admission.acquire(request(`forbidden-${kind}`));
+  if(acquired.kind!=='acquired')assert.fail('Expected owner');
+  await acquired.claim.bindDriver('fake').dispatch('capture',async()=>{});
+  acquired.claim.closeDispatch({outcome:'inconclusive',disposition:'quarantined',payload:{},evidenceRefs:[]});
+  const db=new DatabaseSync(join(root,'admission.sqlite'));
+  try{db.prepare('INSERT INTO quarantines(id,platform,device,kind,cause,created_at,evidence) VALUES (?,?,?,?,?,?,?)').run('imported','ios-simulator',device.toUpperCase(),kind,'imported-uncertainty',1,'{}');}finally{db.close();}
+  const command=admission.readGeneration(acquired.claim.identity).commands[0]!;
+  const before=readFileSync(join(root,'admission.sqlite'));
+  assert.throws(()=>admission.submitFence(acquired.claim.identity,{requestId:'forbidden-stop',kind:'stop',commands:[],components:[{componentId:command.componentId!,proof:{kind:'completed-command',commandId:command.id}}]}),{code:'NOT_COVERABLE'});
+  assert.deepEqual(readFileSync(join(root,'admission.sqlite')),before);
+});
+
+test('receipt membership compares mixed-case component identities consistently',t=>{
+  const {root}=fixture(t);
+  const admission=Admission.forTesting({root,backend:'fake',componentLiveness:()=> 'exited'});
+  const acquired=admission.acquire(request('mixed-membership'));
+  if(acquired.kind!=='acquired')assert.fail('Expected owner');
+  for(const id of ['A','a'])acquired.claim.registerComponent({id,kind:'host-process',process:{pid:123456,incarnation:id}});
+  acquired.claim.closeDispatch({outcome:'inconclusive',disposition:'quarantined',payload:{},evidenceRefs:[]});
+  admission.submitFence(acquired.claim.identity,{requestId:'mixed-stop',kind:'stop',commands:[],components:['a','A'].map(id=>({componentId:id,
+    proof:{kind:'host-process-exited',process:{pid:123456,incarnation:id},evidenceRefs:['/evidence/exited.json']}}))});
+  assert.equal(admission.inspect(device)?.state,'available');
+});
+
+test('a later claimant can fence a failed sweep through its recorded host component',async t=>{
+  const {root}=fixture(t);
+  const original=Admission.forTesting({root,backend:'fake',process:{pid:999999,incarnation:'gone'}});
+  const acquired=original.acquire(request('retry-sweep'));
+  if(acquired.kind!=='acquired')assert.fail('Expected owner');
+  const admission=Admission.forTesting({root,backend:'fake',ownerLiveness:owner=>owner.pid===999999?'dead':'alive',componentLiveness:()=> 'exited'});
+  admission.acquire(request('recover-sweep'));
+  const first=admission.claimRecovery(acquired.claim.identity,'first-sweep');
+  if(first.kind!=='claimed')assert.fail('Expected claimant');
+  first.claim.registerComponent({id:'sweep-process',kind:'host-process',process:{pid:123456,incarnation:'sweep-start'}});
+  await assert.rejects(first.claim.dispatch({requestId:'failed-sweep',componentId:'sweep-process',operation:'sweep',payload:{}},async()=>{throw new Error('lost sweep reply');}));
+  first.claim.close();
+  const second=admission.claimRecovery(acquired.claim.identity,'second-sweep');
+  if(second.kind!=='claimed')assert.fail('Expected retry claimant');
+  await second.claim.dispatch('sweep',async()=>{});
+  const generation=admission.readGeneration(acquired.claim.identity);
+  const uncertain=generation.commands.find(command=>command.componentId==='sweep-process')!;
+  assert.equal(uncertain.state,'uncertain');
+  second.claim.submitFence({requestId:'retry-sweep-stop',kind:'stop',commands:[uncertain.id],components:generation.components.map(component=>component.id==='sweep-process'
+    ?{componentId:component.id,proof:{kind:'host-process-exited',process:{pid:123456,incarnation:'sweep-start'},evidenceRefs:['/evidence/sweep-exit.json']}}
+    :{componentId:component.id,proof:{kind:'completed-command',commandId:generation.commands.find(command=>command.componentId===component.id)!.id}})});
+  assert.equal(admission.inspect(device)?.state,'available');
+  assert.equal(admission.readGeneration(acquired.claim.identity).commands.find(command=>command.id===uncertain.id)?.state,'uncertain');
+});
 test('device identity normalization preserves the category and its value semantics', () => {
   assert.deepEqual(canonicalDevice({ category: 'ios-simulator', value: device }), {
     category: 'ios-simulator', value: 'ABCDEF00-0000-4000-8000-000000000001',
@@ -150,6 +480,8 @@ test('foreign cancellation persists and prevents dispatch, while an already auth
   let complete!: () => void;
   const pending = session.dispatch('tap', () => new Promise<void>(resolve => { complete = resolve; }));
   Admission.forTesting({ root, backend: 'fake' }).cancel(request('cancel-race').attempt);
+  assert.equal(admission.readGeneration(result.claim.identity).commands[0]?.state,'uncertain');
+  assert.equal(typeof admission.readGeneration(result.claim.identity).dispatchClosedAt,'number');
   let followups = 0;
   assert.throws(() => session.dispatch('capture', async () => { followups++; }), { code: 'DISPATCH_CLOSED' });
   assert.throws(() => result.claim.finalize({ outcome: 'observed', disposition: 'available', payload: {}, evidenceRefs: [] }), { code: 'OPERATIONS_UNSETTLED' });
@@ -350,7 +682,7 @@ for (const firstKind of ['observed', 'legacy'] as const) {
   });
 }
 
-test('real dead child remains busy on reads; explicit owner-aware recovery quarantines it without reclaiming', async t => {
+test('real dead child stays active on reads and admission recovers it without reclaiming uncertainty', async t => {
   const { root, admission } = fixture(t);
   const child = await worker({ t, root });
   const acquired = await reply({ child, message: { operation: 'acquire', request: request('child') } });
@@ -358,7 +690,7 @@ test('real dead child remains busy on reads; explicit owner-aware recovery quara
   assert.equal(admission.quarantineAbandoned(acquired.owner, 'still live'), false);
   await closeActor(child);
   assert.equal(admission.inspect(device)?.state, 'active');
-  assert.deepEqual(admission.acquire(request('successor')), { kind: 'refused', reason: 'DEVICE_BUSY' });
+  assert.deepEqual(admission.acquire(request('successor')), { kind: 'refused', reason: 'DEVICE_QUARANTINED' });
   assert.equal(admission.quarantineAbandoned(acquired.owner, 'owner exited'), true);
   assert.equal(admission.inspect(device)?.state, 'quarantined');
   assert.equal(admission.readAttempt(request('child').attempt)?.terminal?.outcome, 'inconclusive');

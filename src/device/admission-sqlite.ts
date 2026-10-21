@@ -7,14 +7,15 @@ import { isAbsolute, join, resolve } from 'node:path';
 import { z } from 'zod/v4';
 import type { StagedArtifact } from '../observed/artifact.js';
 import type { CreationResult } from '../observed/create-source.js';
-import type { DeviceCategory, AdmissionDependencies, AdmissionRequest, AdmissionResult, AttemptIdentity, AttemptView, DeviceView, OwnerIdentity, OwnerProcess, TerminalCandidate } from './admission.js';
+import { componentSchema, commandRequestSchema, fenceRequestSchema } from './admission.js';
+import type { DeviceCategory, AdmissionDependencies, AdmissionRequest, AdmissionResult, AttemptIdentity, AttemptView, DeviceView, OwnerIdentity, OwnerProcess, TerminalCandidate, GenerationView, CommandRecord, ComponentInput, NativeComponent, CommandRequest, IssueResult, FenceRequest, FenceReceipt, RecoveryIdentity } from './admission.js';
 import { BRIDGE_VERSION } from '../version.js';
 import type { UpgradeDeclaration, UpgradeReceipt, UpgradeRecovery, UpgradeCheckpoint, PreservedRecords } from './admission-upgrade.js';
 import { IMPORT_REFUSAL_REASONS, type ImportRefusalReason } from '../scripted/vocabulary.js';
 import type { ImportedObservedAction, MigrationImport, MigrationReceipt, MigrationTestOptions } from './admission-migration.js';
 import type { ImportPlan, ImportReceipt, ImportTestOptions } from './admission-import.js';
 
-type AdmissionErrorCode = 'STATE_UNAVAILABLE' | 'INVALID_REQUEST' | 'CATEGORY_NOT_ENABLED' | 'UPGRADE_BLOCKED' | 'IMPORT_REFUSED' | 'NOT_COVERABLE' | 'STALE_OWNER' | 'DISPATCH_CLOSED' | 'OPERATIONS_UNSETTLED';
+type AdmissionErrorCode = 'STATE_UNAVAILABLE' | 'INVALID_REQUEST' | 'CATEGORY_NOT_ENABLED' | 'UPGRADE_BLOCKED' | 'IMPORT_REFUSED' | 'NOT_COVERABLE' | 'STALE_OWNER' | 'DISPATCH_CLOSED' | 'OPERATIONS_UNSETTLED' | 'DISPATCH_OPEN' | 'UNBOUND_PROOF' | 'COVERAGE_UNKNOWN' | 'COMMANDS_UNFENCED' | 'COVERAGE_INCOMPLETE';
 export class AdmissionError extends Error {
   readonly reason?: ImportRefusalReason;
   constructor(code: Exclude<AdmissionErrorCode,'IMPORT_REFUSED'>, message: string);
@@ -138,8 +139,8 @@ CREATE TRIGGER owner_generations_unknown_once BEFORE UPDATE ON owner_generations
 CREATE TRIGGER quarantines_start_uncovered BEFORE INSERT ON quarantines WHEN NEW.covering_receipt_id IS NOT NULL BEGIN SELECT RAISE(ABORT,'Quarantine must start uncovered'); END;
 CREATE TRIGGER quarantines_cover_once BEFORE UPDATE ON quarantines WHEN OLD.covering_receipt_id IS NOT NULL OR NEW.covering_receipt_id IS NULL OR OLD.kind!='native' BEGIN SELECT RAISE(ABORT,'Quarantine cannot be covered'); END;
 CREATE TRIGGER recovery_claims_close_once BEFORE UPDATE ON recovery_claims WHEN OLD.closed_at IS NOT NULL OR NEW.closed_at IS NULL BEGIN SELECT RAISE(ABORT,'Recovery claim closure is immutable'); END;
-CREATE TRIGGER components_before_closure BEFORE INSERT ON components WHEN (SELECT dispatch_closed_at FROM owner_generations WHERE id=NEW.owner_generation_id) IS NOT NULL BEGIN SELECT RAISE(ABORT,'Dispatch is closed'); END;
-CREATE TRIGGER commands_before_closure BEFORE INSERT ON commands WHEN NEW.origin='native' AND (SELECT dispatch_closed_at FROM owner_generations WHERE id=NEW.owner_generation_id) IS NOT NULL BEGIN SELECT RAISE(ABORT,'Dispatch is closed'); END;
+CREATE TRIGGER components_before_closure BEFORE INSERT ON components WHEN (SELECT dispatch_closed_at FROM owner_generations WHERE id=NEW.owner_generation_id) IS NOT NULL AND NOT EXISTS(SELECT 1 FROM recovery_claims r WHERE r.owner_generation_id=NEW.owner_generation_id AND r.closed_at IS NULL) BEGIN SELECT RAISE(ABORT,'Dispatch is closed'); END;
+CREATE TRIGGER commands_before_closure BEFORE INSERT ON commands WHEN NEW.origin='native' AND (SELECT dispatch_closed_at FROM owner_generations WHERE id=NEW.owner_generation_id) IS NOT NULL AND NOT EXISTS(SELECT 1 FROM recovery_claims r WHERE r.id=NEW.recovery_claim_id AND r.owner_generation_id=NEW.owner_generation_id AND r.closed_at IS NULL) BEGIN SELECT RAISE(ABORT,'Dispatch is closed'); END;
 `);
   for (const operation of ['INSERT','UPDATE']) db.exec(`CREATE TRIGGER devices_pointer_${operation.toLowerCase()} BEFORE ${operation} ON devices WHEN NEW.lease_generation_id IS NOT NULL AND NOT ${sameTarget('NEW.lease_generation_id')} BEGIN SELECT RAISE(ABORT,'Lease pointer names another device'); END;`);
   for (const table of ['fence_receipts','recovery_claims','quarantines']) db.exec(`CREATE TRIGGER ${table}_target BEFORE INSERT ON ${table} WHEN NEW.owner_generation_id IS NOT NULL AND NOT ${sameTarget('NEW.owner_generation_id')} BEGIN SELECT RAISE(ABORT,'Owner generation names another device'); END;`);
@@ -688,14 +689,14 @@ export class AdmissionSqlite {
   }
   private insertOwner(db: DatabaseSync, identity: OwnerIdentity, allocationId: string | null = null): string {
     const id=generationId(identity.token,identity.generation);
-    if(!db.prepare('SELECT id FROM owner_generations WHERE id=?').get(id)) db.prepare("INSERT INTO owner_generations(id,owner_kind,platform,device,allocation_id,attempt_kind,attempt_id,token,generation,pid,incarnation,created_at,inventory_unknown_reason) VALUES (?,'device',?,?,?,?,?,?,?,?,?,?, 'legacy-inventory')").run(id,identity.category,identity.device,allocationId,identity.attempt.kind,identity.attempt.id,identity.token,identity.generation,identity.process.pid,identity.process.incarnation,this.options.now?.()??Date.now());
+    if(!db.prepare('SELECT id FROM owner_generations WHERE id=?').get(id)) db.prepare("INSERT INTO owner_generations(id,owner_kind,platform,device,allocation_id,attempt_kind,attempt_id,token,generation,pid,incarnation,created_at,inventory_unknown_reason) VALUES (?,'device',?,?,?,?,?,?,?,?,?,?, NULL)").run(id,identity.category,identity.device,allocationId,identity.attempt.kind,identity.attempt.id,identity.token,identity.generation,identity.process.pid,identity.process.incarnation,this.options.now?.()??Date.now());
     return id;
   }
   private allocationOwner(db: DatabaseSync, record: AllocationRecord): void {
     const o=record.owner,id=generationId(o.token,o.generation);
     if(db.prepare('SELECT id FROM owner_generations WHERE id=?').get(id)) return;
     const parked=o.process.pid===0&&o.process.incarnation==='parked';
-    db.prepare('INSERT INTO owner_generations(id,owner_kind,platform,device,allocation_id,token,generation,pid,incarnation,created_at,inventory_unknown_reason,dispatch_closed_at) VALUES (?,?,?,?,?,?,?,?,?,?,?,?)').run(id,parked?'parked':'allocation',parked?'ios-simulator':null,parked?record.device:null,record.allocationId,o.token,o.generation,o.process.pid,o.process.incarnation,record.createdAt,parked?null:'legacy-inventory',parked?this.options.now?.()??Date.now():null);
+    db.prepare('INSERT INTO owner_generations(id,owner_kind,platform,device,allocation_id,token,generation,pid,incarnation,created_at,inventory_unknown_reason,dispatch_closed_at) VALUES (?,?,?,?,?,?,?,?,?,?,?,?)').run(id,parked?'parked':'allocation',parked?'ios-simulator':null,parked?record.device:null,record.allocationId,o.token,o.generation,o.process.pid,o.process.incarnation,record.createdAt,null,parked?this.options.now?.()??Date.now():null);
   }
   acquire(request: AdmissionRequest, process: OwnerProcess): Exclude<AdmissionResult, { kind: 'acquired' }> | { kind: 'acquired'; owner: OwnerIdentity } {
     const category=request.category??'ios-simulator';
@@ -704,20 +705,21 @@ export class AdmissionSqlite {
     return this.write('acquire', db => {
       if (request.attempt.kind !== 'legacy' && db.prepare('SELECT id FROM imported_actions WHERE id=?').get(request.attempt.id)) return { kind: 'refused', reason: 'ACTION_ID_CONFLICT' };
       const existing = db.prepare('SELECT * FROM attempts WHERE kind=? AND id=?').get(...key(request.attempt)) as Row | undefined;
-      if (existing) return existing.digest === request.digest && existing.platform===category && existing.device === request.device && isDeepStrictEqual(JSON.parse(existing.intent), JSON.parse(intent)) ? { kind: 'retrieved', attempt: view(existing) } : { kind: 'refused', reason: 'ACTION_ID_CONFLICT' };
+      if (existing) return existing.digest === request.digest && existing.platform===category && existing.device === request.device && isDeepStrictEqual(JSON.parse(existing.intent), JSON.parse(intent)) && isDeepStrictEqual(existing.transport===null?null:JSON.parse(existing.transport),request.provenance??null) ? { kind: 'retrieved', attempt: view(existing) } : { kind: 'refused', reason: 'ACTION_ID_CONFLICT' };
       const guard = this.creationGuard(db);
       if (guard) return guard;
       if ((category==='ios-simulator'&&protectedDevices.has(request.device)) || db.prepare('SELECT id FROM allocations WHERE platform=? AND device=?').get(category,request.device)) return { kind: 'refused', reason: 'DEVICE_QUARANTINED' };
       const stored=db.prepare('SELECT * FROM device_state WHERE platform=? AND device=?').get(category,request.device) as Row|undefined;
-      const legacyName=category==='android-phone'?request.device:category==='android-emulator'&&stored?JSON.parse(stored.attributes).avdName:undefined;
+      const legacyName=category==='android-phone'?request.device:category==='android-emulator'?(request.provenance?.avdName??(stored?JSON.parse(stored.attributes).avdName:undefined)):undefined;
       if(legacyName&&db.prepare('SELECT id FROM quarantines WHERE legacy_name=? COLLATE NOCASE AND covering_receipt_id IS NULL').get(legacyName)) return {kind:'refused',reason:'DEVICE_QUARANTINED'};
       if (request.attempt.kind !== 'legacy' && db.prepare('SELECT id FROM allocations WHERE action_id=?').get(request.attempt.id)) return { kind: 'refused', reason: 'ACTION_ID_CONFLICT' };
       if (stored && stored.state !== 'available') return { kind: 'refused', reason: stored.state === 'quarantined' ? 'DEVICE_QUARANTINED' : 'DEVICE_BUSY' };
       const generation = (stored?.generation ?? 0) + 1; const token = randomUUID();
       db.prepare('INSERT INTO devices(platform,device,generation) VALUES (?,?,?) ON CONFLICT(platform,device) DO UPDATE SET generation=excluded.generation').run(category,request.device,generation);
+      if (request.provenance) db.prepare('UPDATE devices SET attributes=? WHERE platform=? AND device=?').run(JSON.stringify(request.provenance),category,request.device);
       const identity:OwnerIdentity={category,device:request.device,attempt:request.attempt,token,generation,process};
       const ownerId=this.insertOwner(db,identity);
-      db.prepare("INSERT INTO attempts(kind,id,device,digest,intent,token,generation,pid,incarnation,state,platform,owner_generation_id) VALUES (?,?,?,?,?,?,?,?,?,'active',?,?)").run(...key(request.attempt),request.device,request.digest,intent,token,generation,process.pid,process.incarnation,category,ownerId);
+      db.prepare("INSERT INTO attempts(kind,id,device,digest,intent,token,generation,pid,incarnation,state,platform,owner_generation_id,transport) VALUES (?,?,?,?,?,?,?,?,?,'active',?,?,?)").run(...key(request.attempt),request.device,request.digest,intent,token,generation,process.pid,process.incarnation,category,ownerId,request.provenance?JSON.stringify(request.provenance):null);
       db.prepare('UPDATE devices SET lease_generation_id=? WHERE platform=? AND device=?').run(ownerId,category,request.device);
       this.event(db, request.attempt, 'acquired');
       return { kind: 'acquired', owner: identity };
@@ -764,6 +766,11 @@ export class AdmissionSqlite {
       const record = this.preparing(db, expected);
       if (record.source.kind !== 'create' || record.phase !== 'reserved' || !record.staged || record.device) throw new AdmissionError('DISPATCH_CLOSED', 'Creation is not authorized');
       if (this.creationGuard(db)) throw new AdmissionError('DISPATCH_CLOSED', 'Unknown creation blocks new work');
+      const ownerId=generationId(expected.token,expected.generation),id=randomUUID();
+      db.prepare("INSERT INTO components(id,owner_generation_id,allocation_id,kind,declaration,registered_at) VALUES (?,?,?,'one-shot',?,?)")
+        .run(id,ownerId,record.allocationId,JSON.stringify({id,kind:'one-shot',operation:'create'}),this.options.now?.()??Date.now());
+      db.prepare("INSERT INTO commands(id,token,generation,operation,state,owner_generation_id,allocation_id,component_id,origin,request_id,request_digest) VALUES (?,?,?,'create','outstanding',?,?,?,'native','create',?)")
+        .run(id,expected.token,expected.generation,ownerId,record.allocationId,id,sha(JSON.stringify(record.source)));
       record.phase = 'creating'; record.hostCreationBlocked = true;
       db.prepare('INSERT INTO unknown_creation VALUES (1,?)').run(record.allocationId);
       this.saveAllocation(db, record); this.event(db, { kind: 'preparation', id: record.allocationId }, 'creation-authorized');
@@ -773,16 +780,26 @@ export class AdmissionSqlite {
     return this.write('recordCreation', db => {
       const record = this.allocation(db, expected.allocationId);
       const unknown: CreationResult = { status: 'unknown', reason: 'CREATE_UNCONFIRMED' };
-      if (!record || !isDeepStrictEqual(record.owner, expected) || record.state !== 'preparing' || record.phase !== 'creating' || record.cancellationRequested) return unknown;
+      const ownerId=generationId(expected.token,expected.generation);
+      const command=db.prepare("SELECT id,state FROM commands WHERE owner_generation_id=? AND operation='create'").get(ownerId);
+      if (!record || !isDeepStrictEqual(record.owner, expected) || record.state !== 'preparing' || record.phase !== 'creating' || record.cancellationRequested) {
+        if(command) db.prepare("INSERT INTO transitions(kind,attempt_id,event,detail,time,owner_generation_id,command_id) VALUES ('preparation',?,'late-reply',?,?,?,?)")
+          .run(expected.allocationId,JSON.stringify(receipt),this.options.now?.()??Date.now(),ownerId,String(command.id));
+        return unknown;
+      }
       const valid = receipt.status === 'created' && /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(receipt.udid)
         && receipt.provenance.kind === 'simctl-create' && receipt.provenance.allocationId === record.allocationId
         && receipt.provenance.name === record.intendedName && receipt.provenance.deviceTypeId === record.source.deviceTypeId && receipt.provenance.runtimeId === record.source.runtimeId;
       const device = valid && receipt.status === 'created' ? receipt.udid.toUpperCase() : null;
       if (!device || protectedDevices.has(device) || db.prepare("SELECT id FROM allocations WHERE platform='ios-simulator' AND device=?").get(device) || db.prepare("SELECT device FROM devices WHERE platform='ios-simulator' AND device=?").get(device)) {
+        db.prepare("UPDATE owner_generations SET inventory_unknown_reason='unknown-creation' WHERE id=? AND inventory_unknown_reason IS NULL").run(ownerId);
+        db.prepare('UPDATE owner_generations SET dispatch_closed_at=? WHERE id=? AND dispatch_closed_at IS NULL').run(this.options.now?.()??Date.now(),ownerId);
+        db.prepare("UPDATE commands SET state='uncertain' WHERE owner_generation_id=? AND state='outstanding'").run(ownerId);
         record.state = 'quarantined'; record.phase = 'terminal'; record.reason = 'CREATE_UNCONFIRMED'; record.outcome = 'uncertain';
         record.creationReceipt = unknown; this.saveAllocation(db, record); return unknown;
       }
       record.device = device; record.creationReceipt = { ...receipt, udid: device } as CreationResult; record.phase = 'admitting'; record.hostCreationBlocked = false;
+      db.prepare("UPDATE commands SET state='settled' WHERE id=? AND state='outstanding'").run(command?.id??'');
       this.saveAllocation(db, record);
       const deleted = db.prepare('DELETE FROM unknown_creation WHERE allocation_id=?').run(record.allocationId);
       if (deleted.changes !== 1) throw new AdmissionError('STATE_UNAVAILABLE', 'Creation guard is missing');
@@ -817,10 +834,18 @@ export class AdmissionSqlite {
       const dispatched = db.prepare("SELECT id FROM commands WHERE kind='preparation' AND attempt_id=?").get(record.allocationId);
       const uncertain = record.phase === 'creating' || !!unfinished || (record.cancellationRequested && !!dispatched)
         || ['PREPARATION_UNCONFIRMED','CREATE_UNCONFIRMED','READINESS_FAILED'].includes(reason);
+      if (record.phase==='creating') db.prepare("UPDATE owner_generations SET inventory_unknown_reason='unknown-creation' WHERE id=? AND inventory_unknown_reason IS NULL").run(generationId(expected.token,expected.generation));
       record.state = uncertain ? 'quarantined' : 'retained'; record.outcome = uncertain ? 'uncertain' : 'refused'; record.reason = reason;
       if (record.phase === 'reserved' && !dispatched && !attempt) record.capacityHeld = false;
       record.phase = 'terminal'; record.evidenceRefs = [...evidenceRefs]; this.saveAllocation(db, record);
-      if (attempt) this.terminal(db, attempt, { outcome: uncertain ? 'inconclusive' : 'refused', disposition: uncertain ? 'quarantined' : 'available', payload: { reason }, evidenceRefs });
+      if (attempt) {
+        this.terminal(db, attempt, { outcome: uncertain ? 'inconclusive' : 'refused', disposition: uncertain ? 'quarantined' : 'available', payload: { reason }, evidenceRefs });
+        if (!uncertain) this.acceptFence(db,owner(attempt),this.completionProof(db,owner(attempt)),new Set());
+      } else {
+        const ownerId=generationId(expected.token,expected.generation);
+        db.prepare('UPDATE owner_generations SET dispatch_closed_at=? WHERE id=? AND dispatch_closed_at IS NULL').run(this.options.now?.()??Date.now(),ownerId);
+        db.prepare("UPDATE commands SET state='uncertain' WHERE owner_generation_id=? AND state='outstanding'").run(ownerId);
+      }
       return record;
     });
   }
@@ -839,6 +864,7 @@ export class AdmissionSqlite {
       } else if (operation === 'cancel' && record.state === 'preparing' && !record.cancellationRequested) {
         record.cancellationRequested = true; this.saveAllocation(db, record);
         db.prepare("UPDATE attempts SET cancelled=1 WHERE kind='preparation' AND id=? AND state='active'").run(id);
+        this.closeGeneration(db,generationId(record.owner.token,record.owner.generation),record.phase==='creating');
         this.event(db, { kind: 'preparation', id }, 'cancelled');
       }
       return { kind: 'retrieved', allocation: record };
@@ -851,7 +877,10 @@ export class AdmissionSqlite {
       const row = db.prepare('SELECT * FROM attempts WHERE kind=? AND id=?').get(...key(identity)) as Row | undefined;
       record.state = 'quarantined'; record.phase = 'terminal'; record.reason = 'PREPARATION_UNCONFIRMED'; record.outcome = 'uncertain';
       this.saveAllocation(db, record);
-      if (row) this.terminal(db, row, { outcome: 'inconclusive', disposition: 'quarantined', payload: { reason: 'OWNER_LOST' }, evidenceRefs: record.evidenceRefs });
+      if (row) {
+        this.terminal(db, row, { outcome: 'inconclusive', disposition: 'quarantined', payload: { reason: 'OWNER_LOST' }, evidenceRefs: record.evidenceRefs });
+        db.prepare('UPDATE devices SET lease_generation_id=NULL WHERE lease_generation_id=?').run(row.owner_generation_id);
+      } else this.closeGeneration(db,generationId(expected.token,expected.generation),record.hostCreationBlocked);
       this.event(db, identity, 'abandoned'); return true;
     });
   }
@@ -893,6 +922,7 @@ export class AdmissionSqlite {
       record.owner = { ...record.owner, token: randomUUID(), generation: expected.generation + 1, process: { pid: 0, incarnation: 'parked' } };
       db.prepare("UPDATE attempts SET state='parked',attached=0 WHERE kind=? AND id=?").run(...key(expected.attempt));
       db.prepare('UPDATE owner_generations SET dispatch_closed_at=? WHERE id=? AND dispatch_closed_at IS NULL').run(now,generationId(expected.token,expected.generation));
+      this.acceptFence(db,expected,this.completionProof(db,expected),new Set());
       this.saveAllocation(db,record);
       db.prepare('UPDATE devices SET generation=?,lease_generation_id=? WHERE platform=? AND device=?').run(record.owner.generation,generationId(record.owner.token,record.owner.generation),expected.category,expected.device); this.event(db, expected.attempt, 'parked'); return record;
     });
@@ -1007,6 +1037,9 @@ export class AdmissionSqlite {
     });
   }
   readAllocation(id: string): AllocationRecord | undefined { return this.read(db => this.allocation(db, id)); }
+  readAllocationCommands(id:string):CommandRecord[] {
+    return this.read(db=>db.prepare('SELECT c.* FROM commands c JOIN owner_generations o ON o.id=c.owner_generation_id WHERE o.allocation_id=? ORDER BY c.rowid').all(id).map(row=>this.command(row as Row)));
+  }
   readAllocationForAction(actionId: string): AllocationRecord | undefined {
     return this.read(db => { const row = db.prepare('SELECT id FROM allocations WHERE action_id=?').get(actionId); return row ? this.allocation(db, row.id as string) : undefined; });
   }
@@ -1062,16 +1095,74 @@ export class AdmissionSqlite {
       if (expected) this.owned(db, expected);
       const row = db.prepare('SELECT * FROM attempts WHERE kind=? AND id=?').get(...key(identity)) as Row | undefined;
       if (!row) return undefined;
-      if (row.state === 'active' && !row.cancelled) { db.prepare('UPDATE attempts SET cancelled=1 WHERE kind=? AND id=?').run(...key(identity)); this.event(db, identity, 'cancelled'); row.cancelled = 1; }
+      if (row.state === 'active' && !row.cancelled) {
+        db.prepare('UPDATE attempts SET cancelled=1 WHERE kind=? AND id=?').run(...key(identity));
+        this.closeGeneration(db,row.owner_generation_id);
+        this.event(db, identity, 'cancelled'); row.cancelled = 1;
+      }
       const allocation = this.attemptAllocation(db, identity);
       if (allocation && row.state === 'active' && row.cancelled && !allocation.cancellationRequested) { allocation.cancellationRequested = true; this.saveAllocation(db, allocation); }
       return view(row);
     });
   }
-  authorize(expected: OwnerIdentity, operation: string): string {
+  registerComponent(expected: OwnerIdentity, input: ComponentInput, recovery?:RecoveryIdentity): NativeComponent {
+    const parsed = componentSchema.safeParse(input);
+    if (!parsed.success) throw new AdmissionError('INVALID_REQUEST','Invalid native component');
+    input = parsed.data;
+    return this.write('registerComponent', db => {
+      const ownerId = generationId(expected.token,expected.generation);
+      const existing = db.prepare('SELECT * FROM components WHERE id=?').get(input.id);
+      if (existing) {
+        if (existing.owner_generation_id !== ownerId || !isDeepStrictEqual(JSON.parse(String(existing.declaration)),input)) throw new AdmissionError('INVALID_REQUEST','Component identity conflict');
+        return { id: input.id, kind: input.kind, declaration: input };
+      }
+      if(recovery) {
+        if(!isDeepStrictEqual(recovery.owner,expected))throw new AdmissionError('STALE_OWNER','Recovery names another generation');
+        this.ownedRecovery(db,recovery);
+      } else this.owned(db,expected);
+      const generation = db.prepare('SELECT dispatch_closed_at FROM owner_generations WHERE id=?').get(ownerId);
+      if (!recovery&&generation?.dispatch_closed_at !== null) throw new AdmissionError('DISPATCH_CLOSED','Inventory is closed');
+      db.prepare('INSERT INTO components(id,owner_generation_id,platform,device,kind,declaration,registered_at) VALUES (?,?,?,?,?,?,?)')
+        .run(input.id,ownerId,expected.category,expected.device,input.kind,JSON.stringify(input),this.options.now?.()??Date.now());
+      return { id: input.id, kind: input.kind, declaration: input };
+    });
+  }
+  markInventoryUnknown(expected: OwnerIdentity, reason: string): void {
+    if (!reason.trim()) throw new AdmissionError('INVALID_REQUEST','Inventory uncertainty requires a cause');
+    this.write('inventoryUnknown', db => {
+      this.owned(db,expected);
+      const id=generationId(expected.token,expected.generation);
+      const current=db.prepare('SELECT inventory_unknown_reason FROM owner_generations WHERE id=?').get(id);
+      if (current?.inventory_unknown_reason === reason) return;
+      if (current?.inventory_unknown_reason !== null) throw new AdmissionError('INVALID_REQUEST','Inventory uncertainty is immutable');
+      db.prepare('UPDATE owner_generations SET inventory_unknown_reason=? WHERE id=?').run(reason,id);
+    });
+  }
+  authorize(expected: OwnerIdentity, operation: string): string { return this.issueCommand(expected,operation).command.id; }
+  assertDispatchOpen(expected:OwnerIdentity):void {
+    this.read(db=>{
+      const row=this.owned(db,expected);
+      const generation=db.prepare('SELECT dispatch_closed_at FROM owner_generations WHERE id=?').get(row.owner_generation_id);
+      if(row.cancelled||generation?.dispatch_closed_at!==null)throw new AdmissionError('DISPATCH_CLOSED','Dispatch is closed');
+    });
+  }
+  issue(expected: OwnerIdentity, input: CommandRequest): IssueResult {
+    const parsed = commandRequestSchema.safeParse(input);
+    if (!parsed.success) throw new AdmissionError('INVALID_REQUEST','Invalid command identity');
+    return this.issueCommand(expected,parsed.data.operation,parsed.data);
+  }
+  private issueCommand(expected: OwnerIdentity, operation: string, input?: CommandRequest): IssueResult {
     return this.write('authorize', db => {
+      const ownerId=generationId(expected.token,expected.generation);
+      if (input) {
+        const prior=db.prepare('SELECT * FROM commands WHERE owner_generation_id=? AND request_id=?').get(ownerId,input.requestId) as Row | undefined;
+        if (prior) {
+          if (prior.request_digest!==sha(JSON.stringify(input))) throw new AdmissionError('INVALID_REQUEST','Command request identity conflict');
+          return { kind:'retrieved',command:this.command(prior) };
+        }
+      }
       const row = this.owned(db, expected);
-      if (!row.attached || row.cancelled || db.prepare("SELECT id FROM commands WHERE kind=? AND attempt_id=? AND state='uncertain'").get(...key(expected.attempt))) throw new AdmissionError('DISPATCH_CLOSED', 'Dispatch is cancelled or unattached');
+      if ((!input && !row.attached) || row.cancelled || db.prepare("SELECT id FROM commands WHERE owner_generation_id=? AND state!='settled'").get(ownerId)) throw new AdmissionError('DISPATCH_CLOSED', 'Dispatch is cancelled, unattached or unsettled');
       if (expected.attempt.kind === 'observed' && operation === 'tap' && db.prepare("SELECT id FROM commands WHERE kind=? AND attempt_id=? AND operation='tap'").get(...key(expected.attempt))) throw new AdmissionError('DISPATCH_CLOSED', 'Tap already authorized');
       const allocation = this.attemptAllocation(db, expected.attempt);
       if (allocation) {
@@ -1092,16 +1183,60 @@ export class AdmissionSqlite {
         }
         this.saveAllocation(db, allocation);
       }
-      const id = randomUUID(); db.prepare("INSERT INTO commands(id,kind,attempt_id,token,generation,operation,state,platform,device,owner_generation_id,origin) VALUES (?,?,?,?,?,?,'outstanding',?,?,?,'legacy')").run(id,...key(expected.attempt),expected.token,expected.generation,operation,expected.category,expected.device,generationId(expected.token,expected.generation)); this.event(db, expected.attempt, 'authorized', { id, operation }); return id;
+      const id = randomUUID(), componentId=input?.componentId??id;
+      if (input) {
+        if (!db.prepare('SELECT id FROM components WHERE id=? AND owner_generation_id=?').get(componentId,ownerId)) throw new AdmissionError('INVALID_REQUEST','Command component is not registered');
+      } else db.prepare('INSERT INTO components(id,owner_generation_id,platform,device,kind,declaration,registered_at) VALUES (?,?,?,?,?,?,?)')
+        .run(id,ownerId,expected.category,expected.device,'one-shot',JSON.stringify({ id,kind:'one-shot',operation }),this.options.now?.()??Date.now());
+      db.prepare("INSERT INTO commands(id,kind,attempt_id,token,generation,operation,state,platform,device,owner_generation_id,component_id,origin,request_id,request_digest) VALUES (?,?,?,?,?,?,'outstanding',?,?,?,?,'native',?,?)")
+        .run(id,...key(expected.attempt),expected.token,expected.generation,operation,expected.category,expected.device,ownerId,componentId,input?.requestId??id,sha(JSON.stringify(input??{ operation })));
+      this.event(db, expected.attempt, 'authorized', { id, operation });
+      return {kind:'issued',command:{id,componentId,requestId:input?.requestId??id,operation,state:'outstanding',recoveryClaimId:null}};
+    });
+  }
+  readGeneration(expected: OwnerIdentity): GenerationView {
+    return this.read(db => {
+      const attempt = db.prepare('SELECT * FROM attempts WHERE kind=? AND id=?').get(...key(expected.attempt)) as Row | undefined;
+      if (!attempt || !isDeepStrictEqual(owner(attempt), expected)) throw new AdmissionError('STALE_OWNER', 'Unknown owner generation');
+      const id = generationId(expected.token, expected.generation);
+      const generation = db.prepare('SELECT * FROM owner_generations WHERE id=?').get(id) as Row;
+      const components = db.prepare('SELECT * FROM components WHERE owner_generation_id=? ORDER BY rowid').all(id)
+        .map(row => ({ id: String(row.id), kind: String(row.kind), declaration: JSON.parse(String(row.declaration)) }));
+      const commands = db.prepare('SELECT * FROM commands WHERE owner_generation_id=? ORDER BY rowid').all(id).map(row => this.command(row as Row));
+      const observations = db.prepare("SELECT command_id,detail FROM transitions WHERE owner_generation_id=? AND event='late-reply' ORDER BY sequence").all(id)
+        .map(row => ({ commandId: String(row.command_id), payload: JSON.parse(String(row.detail)) }));
+      const recoveries=db.prepare('SELECT * FROM recovery_claims WHERE owner_generation_id=? ORDER BY rowid').all(id)
+        .map(row=>({id:String(row.id),process:JSON.parse(String(row.claimant_process)),closedAt:row.closed_at as number|null,closure:row.closure as 'accepted'|'refused'|'abandoned'|null}));
+      return { owner: owner(attempt), dispatchClosedAt: generation.dispatch_closed_at, inventoryUnknownReason: generation.inventory_unknown_reason, components, commands, observations, recoveries };
+    });
+  }
+  private command(row: Row): CommandRecord {
+    return { id: row.id, componentId: row.component_id, requestId: row.request_id, operation: row.operation, state: row.state, recoveryClaimId: row.recovery_claim_id };
+  }
+  readDeviceAttributes(identity: { category: DeviceCategory; value: string }): unknown {
+    return this.read(db=>{
+      const row=db.prepare('SELECT attributes FROM devices WHERE platform=? AND device=?').get(identity.category,identity.value);
+      return row?JSON.parse(String(row.attributes)):undefined;
     });
   }
   settle(expected: OwnerIdentity, command: string, success: boolean): void {
     this.write('settle', db => {
+      const id = generationId(expected.token,expected.generation);
+      const recorded = db.prepare('SELECT * FROM commands WHERE id=? AND owner_generation_id=?').get(command,id) as Row | undefined;
+      const generation = db.prepare('SELECT dispatch_closed_at FROM owner_generations WHERE id=?').get(id);
+      const current = db.prepare('SELECT lease_generation_id FROM devices WHERE platform=? AND device=?').get(expected.category,expected.device);
+      if (!recorded) throw new AdmissionError('STALE_OWNER','Unknown command generation');
+      const recovering=recorded.recovery_claim_id&&db.prepare('SELECT id FROM recovery_claims WHERE id=? AND closed_at IS NULL').get(recorded.recovery_claim_id);
+      if (recorded.state !== 'outstanding' || (!recovering&&(generation?.dispatch_closed_at !== null || current?.lease_generation_id !== id))) {
+        db.prepare("INSERT INTO transitions(kind,attempt_id,event,detail,time,owner_generation_id,command_id) VALUES (?,?,'late-reply',?,?,?,?)")
+          .run(...key(expected.attempt),JSON.stringify({ success }),this.options.now?.()??Date.now(),id,command);
+        return;
+      }
       db.prepare("UPDATE commands SET state=? WHERE id=? AND token=? AND generation=? AND state='outstanding'").run(success ? 'settled' : 'uncertain', command, expected.token, expected.generation);
       this.event(db, expected.attempt, 'settled', { command, success });
     });
   }
-  finalize(expected: OwnerIdentity, candidate: TerminalCandidate, cancellationRequested = false): AttemptView {
+  finalize(expected: OwnerIdentity, candidate: TerminalCandidate, cancellationRequested = false, release = true): AttemptView {
     return this.write('finalize', db => {
       const existing = db.prepare('SELECT * FROM attempts WHERE kind=? AND id=?').get(...key(expected.attempt)) as Row | undefined;
       if (existing?.state === 'terminal' && existing.platform===expected.category && existing.token === expected.token && existing.generation === expected.generation && existing.terminal === JSON.stringify(candidate)) return view(existing);
@@ -1115,7 +1250,12 @@ export class AdmissionSqlite {
       const dispatched = db.prepare('SELECT id FROM commands WHERE kind=? AND attempt_id=?').get(...key(expected.attempt));
       if (candidate.disposition === 'available' && (unfinished || candidate.outcome === 'inconclusive' || (row.cancelled && (dispatched || candidate.outcome !== 'refused')))) throw new AdmissionError('OPERATIONS_UNSETTLED', 'Cannot make uncertain or cancelled work available');
       if (candidate.disposition === 'quarantined' && candidate.outcome !== 'inconclusive') throw new AdmissionError('INVALID_REQUEST', 'Quarantine requires inconclusive outcome');
-      return this.terminal(db, row, candidate);
+      const terminal = this.terminal(db, row, candidate);
+      if (release && candidate.disposition === 'available') {
+        const proof=this.completionProof(db,expected);
+        this.acceptFence(db,expected,proof,new Set());
+      }
+      return terminal;
     });
   }
   private terminal(db: DatabaseSync, row: Row, candidate: TerminalCandidate): AttemptView {
@@ -1141,12 +1281,176 @@ export class AdmissionSqlite {
     const terminal = JSON.stringify(candidate);
     db.prepare("UPDATE attempts SET state='terminal',terminal=? WHERE kind=? AND id=?").run(terminal, row.kind, row.id);
     db.prepare('UPDATE owner_generations SET dispatch_closed_at=? WHERE id=? AND dispatch_closed_at IS NULL').run(this.options.now?.()??Date.now(),row.owner_generation_id);
-    if(candidate.disposition==='quarantined') db.prepare("INSERT INTO quarantines(id,platform,device,kind,cause,created_at,evidence) VALUES (?,?,?,'historical','uncertain',?,?)").run(randomUUID(),row.platform,row.device,this.options.now?.()??Date.now(),JSON.stringify({version:1,legacyLifecycle:true,token:row.token,generation:row.generation}));
-    db.prepare('UPDATE devices SET lease_generation_id=NULL WHERE platform=? AND device=?').run(row.platform,row.device);
+    db.prepare("UPDATE commands SET state='uncertain' WHERE owner_generation_id=? AND state='outstanding'").run(row.owner_generation_id);
+    if(candidate.disposition==='quarantined') this.nativeQuarantine(db,row,'uncertain');
     this.event(db, { kind: row.kind, id: row.id }, 'terminal', candidate);
     return view({ ...row, state: 'terminal', terminal });
   }
   quarantineAbandoned(expected: OwnerIdentity, reason: string): boolean {
-    return this.write('recover', db => { const row = this.owned(db, expected); this.terminal(db, row, { outcome: 'inconclusive', disposition: 'quarantined', payload: { reason }, evidenceRefs: [] }); return true; });
+    return this.write('recover', db => {
+      const row=db.prepare('SELECT * FROM attempts WHERE kind=? AND id=?').get(...key(expected.attempt)) as Row|undefined;
+      const device=db.prepare('SELECT generation,lease_generation_id FROM devices WHERE platform=? AND device=?').get(expected.category,expected.device);
+      if (row&&isDeepStrictEqual(owner(row),expected)&&device?.generation===expected.generation&&device.lease_generation_id===null&&db.prepare("SELECT id FROM quarantines WHERE owner_generation_id=? AND kind='native'").get(row.owner_generation_id)) return true;
+      if (!row || !isDeepStrictEqual(owner(row),expected) || device?.lease_generation_id!==row.owner_generation_id) throw new AdmissionError('STALE_OWNER','Owner is no longer current');
+      if (row.state==='active') this.terminal(db, row, { outcome: 'inconclusive', disposition: 'quarantined', payload: { reason }, evidenceRefs: [] });
+      else if (row.state==='terminal') this.nativeQuarantine(db,row,reason);
+      else throw new AdmissionError('STALE_OWNER','Parked ownership is not abandoned');
+      db.prepare('UPDATE devices SET lease_generation_id=NULL WHERE platform=? AND device=? AND lease_generation_id=?').run(expected.category,expected.device,row.owner_generation_id);
+      return true;
+    });
+  }
+  private nativeQuarantine(db: DatabaseSync, row: Row, cause: string): void {
+    if (!db.prepare("SELECT id FROM quarantines WHERE owner_generation_id=? AND kind='native'").get(row.owner_generation_id)) {
+      db.prepare("INSERT INTO quarantines(id,platform,device,kind,cause,created_at,owner_generation_id,evidence) VALUES (?,?,?,'native',?,?,?,?)")
+        .run(randomUUID(),row.platform,row.device,cause,this.options.now?.()??Date.now(),row.owner_generation_id,JSON.stringify({version:1,token:row.token,generation:row.generation}));
+    }
+  }
+  private closeGeneration(db:DatabaseSync,id:string,unknownCreation=false):void {
+    db.prepare('UPDATE owner_generations SET dispatch_closed_at=? WHERE id=? AND dispatch_closed_at IS NULL').run(this.options.now?.()??Date.now(),id);
+    db.prepare("UPDATE commands SET state='uncertain' WHERE owner_generation_id=? AND state='outstanding'").run(id);
+    if(unknownCreation)db.prepare("UPDATE owner_generations SET inventory_unknown_reason='unknown-creation' WHERE id=? AND inventory_unknown_reason IS NULL").run(id);
+  }
+  private completionProof(db: DatabaseSync, expected: OwnerIdentity): FenceRequest {
+    const id=generationId(expected.token,expected.generation);
+    const components=db.prepare('SELECT id FROM components WHERE owner_generation_id=? ORDER BY id').all(id).map(component=>{
+      const command=db.prepare("SELECT id FROM commands WHERE owner_generation_id=? AND component_id=? AND state='settled' ORDER BY id LIMIT 1").get(id,String(component.id));
+      return {componentId:String(component.id),proof:{kind:'completed-command' as const,commandId:String(command?.id??'unsettled')}};
+    });
+    return {requestId:'terminal-completion',kind:'stop',commands:[],components};
+  }
+  submitFence(expected: OwnerIdentity, request: FenceRequest, exited: ReadonlySet<string>, recovery?:RecoveryIdentity): FenceReceipt {
+    return this.write('receipt',db=>this.acceptFence(db,expected,request,exited,recovery));
+  }
+  private receipt(db: DatabaseSync, row: Row, expected: OwnerIdentity): FenceReceipt {
+    const proof=fenceRequestSchema.safeParse(JSON.parse(row.payload));
+    if (!proof.success) throw new AdmissionError('UNBOUND_PROOF','Stored receipt has no typed binding');
+    const components=db.prepare('SELECT component_id,evidence FROM fence_components WHERE receipt_id=? ORDER BY component_id').all(row.id)
+      .map(component=>({componentId:String(component.component_id),proof:JSON.parse(String(component.evidence))}));
+    const commands=db.prepare('SELECT command_id FROM fence_commands WHERE receipt_id=? ORDER BY command_id').all(row.id).map(command=>String(command.command_id));
+    const compare=(a:{componentId:string},b:{componentId:string})=>a.componentId<b.componentId?-1:a.componentId>b.componentId?1:0;
+    components.sort(compare);
+    const sorted=[...proof.data.components].sort(compare);
+    if (!isDeepStrictEqual(components,sorted)||!isDeepStrictEqual(commands,[...proof.data.commands].sort()) || proof.data.requestId!==row.request_id || sha(JSON.stringify(proof.data))!==row.request_digest) throw new AdmissionError('UNBOUND_PROOF','Receipt proof disagrees with staged membership');
+    return {id:row.id,owner:expected,requestId:row.request_id,acceptedAt:row.accepted_at,proof:proof.data};
+  }
+  private acceptFence(db: DatabaseSync, expected: OwnerIdentity, request: FenceRequest, exited: ReadonlySet<string>, recovery?:RecoveryIdentity): FenceReceipt {
+    const id=generationId(expected.token,expected.generation);
+    const attempt=db.prepare('SELECT * FROM attempts WHERE kind=? AND id=?').get(...key(expected.attempt)) as Row|undefined;
+    if (!attempt || !isDeepStrictEqual(owner(attempt),expected)) throw new AdmissionError('STALE_OWNER','Receipt names another owner generation');
+    const parsed=fenceRequestSchema.safeParse(request);
+    const prior=db.prepare('SELECT * FROM fence_receipts WHERE owner_generation_id=? AND request_id=?').get(id,request?.requestId??'') as Row|undefined;
+    if (prior && parsed.success && prior.request_digest===sha(JSON.stringify(parsed.data))) return this.receipt(db,prior,expected);
+    const device=db.prepare('SELECT * FROM devices WHERE platform=? AND device=?').get(expected.category,expected.device);
+    if (device?.generation!==expected.generation || (device.lease_generation_id!==null && device.lease_generation_id!==id)) throw new AdmissionError('STALE_OWNER','Receipt generation is no longer current');
+    const openRecovery=db.prepare('SELECT * FROM recovery_claims WHERE owner_generation_id=? AND closed_at IS NULL').get(id);
+    if (openRecovery) {
+      if (!recovery) throw new AdmissionError('STALE_OWNER','Only the recovery claimant may release');
+      this.ownedRecovery(db,recovery);
+    } else if (recovery) throw new AdmissionError('STALE_OWNER','Recovery claim is closed');
+    if (!parsed.success || new Set(request.components.map(item=>item.componentId)).size!==request.components.length || new Set(request.commands).size!==request.commands.length || prior) throw new AdmissionError('UNBOUND_PROOF','Receipt binding is missing or conflicting');
+    request=parsed.data;
+    const components=db.prepare('SELECT * FROM components WHERE owner_generation_id=? ORDER BY id').all(id) as Row[];
+    const commands=db.prepare('SELECT * FROM commands WHERE owner_generation_id=? ORDER BY id').all(id) as Row[];
+    if ((components.length && !request.components.length) || request.components.some(item=>!components.some(component=>component.id===item.componentId)) || request.commands.some(command=>!commands.some(item=>item.id===command))) throw new AdmissionError('UNBOUND_PROOF','Receipt names no recorded coverage');
+    const generation=db.prepare('SELECT * FROM owner_generations WHERE id=?').get(id) as Row;
+    const forbidden=db.prepare("SELECT id FROM quarantines WHERE covering_receipt_id IS NULL AND ((platform=? AND device=?) OR (legacy_name IS NOT NULL AND legacy_name=? COLLATE NOCASE)) AND kind!='native'").get(expected.category,expected.device,expected.category==='android-phone'?expected.device:JSON.parse(String(device.attributes)).avdName??'');
+    if (request.kind==='maintenance-lift' || forbidden || generation.inventory_unknown_reason==='unknown-creation') throw new AdmissionError('NOT_COVERABLE','This uncertainty cannot be covered in Phase 2');
+    if (generation.dispatch_closed_at===null || (attempt.terminal===null&&attempt.state!=='parked')) throw new AdmissionError('DISPATCH_OPEN','Dispatch and outcome must close before release');
+    if (generation.inventory_unknown_reason!==null) throw new AdmissionError('COVERAGE_UNKNOWN','Native inventory is incomplete');
+    if (commands.some(command=>command.state!=='settled'&&!request.commands.includes(command.id))) throw new AdmissionError('COMMANDS_UNFENCED','Non-settled commands are missing from the receipt');
+    for (const component of components) {
+      const evidence=request.components.find(item=>item.componentId===component.id)?.proof;
+      if (!evidence) throw new AdmissionError('COVERAGE_INCOMPLETE','A component has no stop proof');
+      if (evidence.kind==='completed-command') {
+        if (component.kind!=='one-shot' || !commands.some(command=>command.id===evidence.commandId&&command.component_id===component.id&&command.state==='settled') || commands.some(command=>command.component_id===component.id&&command.state!=='settled')) throw new AdmissionError('COVERAGE_INCOMPLETE','One-shot invocation has not completed');
+      } else {
+        const declaration=componentSchema.safeParse(JSON.parse(component.declaration));
+        if (!declaration.success || declaration.data.kind!=='host-process' || !isDeepStrictEqual(declaration.data.process,evidence.process) || !exited.has(component.id)) throw new AdmissionError('COVERAGE_INCOMPLETE','Host process exit is not proven');
+      }
+    }
+    if (db.prepare('SELECT id FROM fence_receipts WHERE owner_generation_id=?').get(id)) throw new AdmissionError('UNBOUND_PROOF','A different receipt already covers this generation');
+    const receiptId=randomUUID(),acceptedAt=this.options.now?.()??Date.now();
+    for (const component of request.components) db.prepare('INSERT INTO fence_components VALUES (?,?,?,?)').run(receiptId,id,component.componentId,JSON.stringify(component.proof));
+    for (const commandId of request.commands) {
+      const command=commands.find(item=>item.id===commandId)!;
+      db.prepare('INSERT INTO fence_commands VALUES (?,?,?,?)').run(receiptId,id,commandId,command.component_id);
+    }
+    db.prepare("INSERT INTO fence_receipts VALUES (?,?,?,?,?,?,'stop',?,?)").run(receiptId,id,expected.category,expected.device,request.requestId,sha(JSON.stringify(request)),acceptedAt,JSON.stringify(request));
+    const result=this.receipt(db,db.prepare('SELECT * FROM fence_receipts WHERE id=?').get(receiptId) as Row,expected);
+    db.prepare("UPDATE quarantines SET covering_receipt_id=? WHERE owner_generation_id=? AND kind='native' AND covering_receipt_id IS NULL").run(receiptId,id);
+    db.prepare('UPDATE devices SET lease_generation_id=NULL WHERE platform=? AND device=? AND lease_generation_id=?').run(expected.category,expected.device,id);
+    if (recovery) db.prepare("UPDATE recovery_claims SET closed_at=?,closure='accepted',accepted_receipt_id=? WHERE id=? AND closed_at IS NULL").run(acceptedAt,receiptId,recovery.id);
+    return result;
+  }
+  recoveryTarget(identity: {category:DeviceCategory;value:string}):OwnerIdentity|undefined {
+    return this.read(db=>{
+      const row=db.prepare("SELECT a.* FROM attempts a JOIN quarantines q ON q.owner_generation_id=a.owner_generation_id JOIN devices d ON d.platform=a.platform AND d.device=a.device WHERE a.platform=? AND a.device=? AND a.generation=d.generation AND q.kind='native' AND q.covering_receipt_id IS NULL AND d.lease_generation_id IS NULL ORDER BY q.created_at DESC LIMIT 1").get(identity.category,identity.value) as Row|undefined;
+      return row?owner(row):undefined;
+    });
+  }
+  claimRecovery(expected:OwnerIdentity,requestId:string,process:OwnerProcess,abandoned?:{id:string;process:OwnerProcess}):{kind:'claimed'|'retrieved';identity:RecoveryIdentity}|{kind:'refused'} {
+    if (!requestId.trim()) throw new AdmissionError('INVALID_REQUEST','Recovery requires a request identity');
+    return this.write('claimRecovery',db=>{
+      const id=generationId(expected.token,expected.generation);
+      const row=db.prepare('SELECT * FROM attempts WHERE kind=? AND id=?').get(...key(expected.attempt)) as Row|undefined;
+      const device=db.prepare('SELECT * FROM devices WHERE platform=? AND device=?').get(expected.category,expected.device);
+      if (!row||!isDeepStrictEqual(owner(row),expected)||device?.generation!==expected.generation) throw new AdmissionError('STALE_OWNER','Recovery target changed');
+      const prior=db.prepare('SELECT * FROM recovery_claims WHERE owner_generation_id=? AND request_id=?').get(id,requestId);
+      if (prior) {
+        if (prior.closed_at===null&&isDeepStrictEqual(JSON.parse(String(prior.claimant_process)),process)) return {kind:'retrieved',identity:{id:String(prior.id),owner:expected,token:String(prior.claimant_token),process}};
+        return {kind:'refused'};
+      }
+      if (device.lease_generation_id!==null || !db.prepare("SELECT id FROM quarantines WHERE owner_generation_id=? AND kind='native' AND covering_receipt_id IS NULL").get(id)) return {kind:'refused'};
+      const open=db.prepare('SELECT * FROM recovery_claims WHERE owner_generation_id=? AND closed_at IS NULL').get(id);
+      if (open) {
+        if (!abandoned||open.id!==abandoned.id||!isDeepStrictEqual(JSON.parse(String(open.claimant_process)),abandoned.process)) return {kind:'refused'};
+        db.prepare("UPDATE commands SET state='uncertain' WHERE recovery_claim_id=? AND state='outstanding'").run(open.id);
+        db.prepare("UPDATE recovery_claims SET closed_at=?,closure='abandoned' WHERE id=?").run(this.options.now?.()??Date.now(),open.id);
+      }
+      const identity:RecoveryIdentity={id:randomUUID(),owner:expected,token:randomUUID(),process};
+      db.prepare('INSERT INTO recovery_claims(id,owner_generation_id,platform,device,claimant_token,claimant_process,request_id,request_digest,created_at) VALUES (?,?,?,?,?,?,?,?,?)')
+        .run(identity.id,id,expected.category,expected.device,identity.token,JSON.stringify(process),requestId,sha(JSON.stringify({expected,requestId,process})),this.options.now?.()??Date.now());
+      return {kind:'claimed',identity};
+    });
+  }
+  private ownedRecovery(db:DatabaseSync,expected:RecoveryIdentity):void {
+    const row=db.prepare('SELECT * FROM recovery_claims WHERE id=?').get(expected.id);
+    if (!row||row.closed_at!==null||row.owner_generation_id!==generationId(expected.owner.token,expected.owner.generation)||row.claimant_token!==expected.token||!isDeepStrictEqual(JSON.parse(String(row.claimant_process)),expected.process)) throw new AdmissionError('STALE_OWNER','Recovery claimant changed');
+  }
+  authorizeRecovery(expected:RecoveryIdentity,operation:string,input?:CommandRequest):IssueResult {
+    if(input) {
+      const parsed=commandRequestSchema.safeParse(input);
+      if(!parsed.success)throw new AdmissionError('INVALID_REQUEST','Invalid recovery command');
+      input=parsed.data;
+    }
+    return this.write('authorize',db=>{
+      const ownerId=generationId(expected.owner.token,expected.owner.generation),owner=expected.owner;
+      if(input) {
+        const prior=db.prepare('SELECT * FROM commands WHERE owner_generation_id=? AND request_id=?').get(ownerId,input.requestId) as Row|undefined;
+        if(prior) {
+          if(prior.recovery_claim_id!==expected.id||prior.request_digest!==sha(JSON.stringify(input)))throw new AdmissionError('INVALID_REQUEST','Recovery command identity conflict');
+          return {kind:'retrieved',command:this.command(prior)};
+        }
+      }
+      this.ownedRecovery(db,expected);
+      if (db.prepare("SELECT id FROM commands WHERE recovery_claim_id=? AND state!='settled'").get(expected.id)) throw new AdmissionError('DISPATCH_CLOSED','Recovery command is unsettled');
+      const id=randomUUID(),componentId=input?.componentId??id;
+      if(input) {
+        if(!db.prepare('SELECT id FROM components WHERE id=? AND owner_generation_id=?').get(componentId,ownerId))throw new AdmissionError('INVALID_REQUEST','Recovery component is not registered');
+      } else db.prepare('INSERT INTO components(id,owner_generation_id,platform,device,kind,declaration,registered_at) VALUES (?,?,?,?,?,?,?)')
+        .run(id,ownerId,owner.category,owner.device,'one-shot',JSON.stringify({id,kind:'one-shot',operation}),this.options.now?.()??Date.now());
+      db.prepare("INSERT INTO commands(id,kind,attempt_id,token,generation,operation,state,platform,device,owner_generation_id,component_id,recovery_claim_id,origin,request_id,request_digest) VALUES (?,?,?,?,?,?,'outstanding',?,?,?,?,?,'native',?,?)")
+        .run(id,...key(owner.attempt),owner.token,owner.generation,operation,owner.category,owner.device,ownerId,componentId,expected.id,input?.requestId??id,sha(JSON.stringify(input??{operation})));
+      return {kind:'issued',command:{id,componentId,requestId:input?.requestId??id,operation,state:'outstanding',recoveryClaimId:expected.id}};
+    });
+  }
+  closeRecovery(expected:RecoveryIdentity):void {
+    this.write('closeRecovery',db=>{
+      const prior=db.prepare('SELECT * FROM recovery_claims WHERE id=?').get(expected.id);
+      if (prior?.closure==='refused'&&prior.claimant_token===expected.token&&prior.owner_generation_id===generationId(expected.owner.token,expected.owner.generation)&&isDeepStrictEqual(JSON.parse(String(prior.claimant_process)),expected.process)) return;
+      this.ownedRecovery(db,expected);
+      db.prepare("UPDATE commands SET state='uncertain' WHERE recovery_claim_id=? AND state='outstanding'").run(expected.id);
+      db.prepare("UPDATE recovery_claims SET closed_at=?,closure='refused' WHERE id=?").run(this.options.now?.()??Date.now(),expected.id);
+    });
   }
 }

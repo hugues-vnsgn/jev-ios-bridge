@@ -43,6 +43,36 @@ function capture(hash = 'same', expiresAtMs = Date.now() + 60_000): unknown {
     text: ['e2|text|text|Page title: Settings||'] } };
 }
 
+test('post-admission simulator revalidation is recorded before each probe while pre-admission reads stay exempt', async () => {
+  const root = await mkdtemp(join(tmpdir(), 'jev-revalidation-record-'));
+  const inventory = fakeSimulatorProbe(udid);
+  const store = join(root, 'store'); mkdirSync(store, { mode: 0o700 });
+  const admission = Admission.forTesting({ root: realpathSync(store), backend: 'fake' });
+  const seen: string[] = [];
+  const probe = { ...inventory, simulatorSet: async (signal: AbortSignal) => {
+    const attempt = admission.readAttempt({ kind: 'legacy', id: 'recorded-probe' });
+    if (!attempt) seen.push('pre-admission');
+    else {
+      const command = admission.readGeneration(attempt.owner).commands.at(-1);
+      assert.equal(command?.state, 'outstanding');
+      assert.equal(command?.operation, 'identity-revalidation');
+      assert.ok(command?.componentId);
+      seen.push('recorded');
+    }
+    return inventory.simulatorSet(signal);
+  } };
+  const runner: CliRunner = async args => ({ stdout: commandEnvelope(args), stderr: '', exitCode: 0 });
+  const driver = new MobileBuildMcpDriver({ cwd: root, lockRoot: join(root,'leases'), admission, runId: 'recorded-probe', identityProbe: probe,
+    fakeBackend: { runner, window: undefined } });
+  try {
+    await driver.prepare(scenario, new AbortController().signal);
+    assert.deepEqual(seen, ['pre-admission','recorded','recorded']);
+    const attempt = admission.readAttempt({ kind: 'legacy', id: 'recorded-probe' });
+    assert.ok(attempt);
+    assert.equal(admission.readGeneration(attempt.owner).commands.filter(command => command.operation === 'identity-revalidation' && command.state === 'settled').length, 2);
+  } finally { await driver.close(new AbortController().signal); await rm(root, { recursive: true, force: true }); }
+});
+
 test('a missing simulator app refuses before admission, presentation or launch', async () => {
   const root = await mkdtemp(join(tmpdir(), 'jev-device-app-preflight-'));
   const effects: string[] = [];
@@ -889,7 +919,7 @@ test('an action without a settled capture returns nothing, so the run captures a
   } finally { await driver.close(new AbortController().signal); await rm(root, { recursive: true, force: true }); }
 });
 
-test('observe starts the capture and the screenshot together, and can check they show the same screen', async () => {
+test('observe serializes capture and screenshot and checks they show the same screen', async () => {
   const root = await mkdtemp(join(tmpdir(), 'jev-device-concurrent-'));
   const shot = join(root, 'shot.png');
   await writeFile(shot, Buffer.from([0x89, 0x50]));
@@ -905,7 +935,7 @@ test('observe starts the capture and the screenshot together, and can check they
   try {
     await driver.prepare(scenario, new AbortController().signal);
     const observed = await driver.observe(new AbortController().signal);
-    assert.equal(peak, 2);
+    assert.equal(peak, 1);
     assert.equal(observed.screenshotPath, shot);
     assert.equal(observed.screenshotAgreement, true);
     assert.ok((observed.verifyMs ?? -1) >= 0);

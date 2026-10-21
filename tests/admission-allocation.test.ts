@@ -83,6 +83,56 @@ async function prepared(admission: Admission, actionId = 'one') {
   const parked = admitted.claim.park(['/isolated/evidence/readiness.json']); assert.equal(parked.authority, 'committed');
   return { reservation: result.reservation, claim: admitted.claim, session, id: result.reservation.identity.allocationId };
 }
+
+test('allocation creation is recorded before the backend and unknown creation retains a non-settled command', async t => {
+  const {admission}=fixture(t);
+  const reserved=admission.reserveAllocation(input('recorded-create'));
+  if(reserved.kind!=='reserved')assert.fail('Expected reservation');
+  reserved.reservation.stage(staged());
+  await reserved.reservation.create(async()=>{
+    const commands=admission.readAllocationCommands(reserved.reservation.identity.allocationId);
+    assert.equal(commands.length,1);
+    assert.equal(commands[0]?.operation,'create');
+    assert.equal(commands[0]?.state,'outstanding');
+    assert.ok(commands[0]?.componentId);
+    return {status:'unknown',reason:'CREATE_UNCONFIRMED'};
+  });
+  assert.equal(admission.readAllocationCommands(reserved.reservation.identity.allocationId)[0]?.state,'uncertain');
+  assert.equal(admission.readAllocation(reserved.reservation.identity.allocationId)?.hostCreationBlocked,true);
+});
+
+test('unknown creation blocks new admissions while an unrelated complete owner can still release',async t=>{
+  const {admission}=fixture(t);
+  const owner=admission.acquire({device:uuid,attempt:{kind:'legacy',id:'independent-owner'},digest,intent:{}});
+  if(owner.kind!=='acquired')assert.fail('Expected owner');
+  await owner.claim.bindDriver('fake').dispatch('capture',async()=>{});
+  const reserved=admission.reserveAllocation(input('unrelated-creation'));
+  if(reserved.kind!=='reserved')assert.fail('Expected reservation');
+  reserved.reservation.stage(staged());
+  await reserved.reservation.create(async()=>({status:'unknown',reason:'CREATE_UNCONFIRMED'}));
+  assert.equal(owner.claim.finalize({outcome:'completed',disposition:'available',payload:{},evidenceRefs:[]}).authority,'committed');
+  assert.equal(admission.inspect(uuid)?.state,'available');
+  assert.deepEqual(admission.acquire({device:uuid,attempt:{kind:'legacy',id:'new-owner'},digest,intent:{}}),{
+    kind:'refused',reason:'HOST_CREATION_UNRESOLVED',blockingAllocationId:reserved.reservation.identity.allocationId});
+});
+
+test('a complete fence frees an inconclusive allocation device while its outcome and retained capacity stay unchanged', async t => {
+  const {admission}=fixture(t,{componentLiveness:()=> 'exited'});
+  const p=await prepared(admission,'receipt-capacity');
+  const action=admission.consumeAllocation(binding(p.id,'receipt-capacity'));
+  if(action.kind!=='consumed')assert.fail('Expected action');
+  action.claim.registerComponent({id:'action-stream',kind:'host-process',process:{pid:123456,incarnation:'start'}});
+  const issued=action.claim.issue({requestId:'uncertain-read',componentId:'action-stream',operation:'capture',payload:{}});
+  action.claim.closeDispatch({outcome:'inconclusive',disposition:'quarantined',payload:{reason:'REPLY_LOST'},evidenceRefs:[]});
+  const before=admission.readAllocation(p.id),capacity=admission.readAllocationCapacity(),attempt=admission.readAttempt(action.claim.identity.attempt);
+  admission.submitFence(action.claim.identity,{requestId:'capacity-stop',kind:'stop',commands:[issued.command.id],components:[{
+    componentId:'action-stream',proof:{kind:'host-process-exited',process:{pid:123456,incarnation:'start'},evidenceRefs:['/evidence/stopped.json']}}]});
+  assert.equal(admission.inspect(uuid)?.state,'available');
+  assert.deepEqual(admission.readAllocation(p.id),before);
+  assert.deepEqual(admission.readAttempt(action.claim.identity.attempt),attempt);
+  assert.deepEqual(admission.readAllocationCapacity(),capacity);
+  assert.equal(before?.state,'quarantined');
+});
 function binding(allocationId: string, actionId = 'one') { return { allocationId, actionId, actionDigest: digest, request: { actionId, allocationId, action: 'tap' }, appBundleId: 'dev.fixture',
   evidence: { bridgeVersion: '1.3.1', directory: '/isolated/evidence/action', request: '/isolated/evidence/action/request.json' } }; }
 test('park revokes preparation, consume transfers one fresh attachment, success retains allocation and evidence authority', async t => {

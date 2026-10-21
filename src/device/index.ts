@@ -885,7 +885,8 @@ export class MobileBuildMcpDriver implements DeviceDriver, IosPreparationDriver,
   }
 
   private async revalidateSimulator(identity: SimulatorIdentity, signal: AbortSignal): Promise<void> {
-    const current = await this.identityRead(() => revalidateIdentity({ identity, probe: this.probe!, signal }));
+    const current = await this.dispatch('identity-revalidation', signal,
+      issuedSignal => this.identityRead(() => revalidateIdentity({ identity, probe: this.probe!, signal: issuedSignal })));
     if (current.category !== 'ios-simulator') throw new Error('Simulator identity required');
     if (current.state !== 'Booted') throw notBootedError(current.value, current.state);
   }
