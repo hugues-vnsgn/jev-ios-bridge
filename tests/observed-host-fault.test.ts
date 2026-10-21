@@ -181,9 +181,22 @@ for (const transport of ['cli', 'mcp'] as const) test(`H01.03 ${transport} origi
 
 for (const transport of ['cli', 'mcp'] as const) {
   test(`H04.01 ${transport} capacity7/8/9 exact bytes include retained and quarantined allocations`, { timeout: 11 * 30000 }, async t => {
+    async function step(name: string, run: () => Promise<void>) {
+      let timer: ReturnType<typeof setTimeout> | undefined;
+      const timeout = new Promise<never>((_, reject) => {
+        timer = setTimeout(() => reject(new Error('exceeded 30000 ms')), 30000);
+      });
+      try {
+        await Promise.race([run(), timeout]);
+      } catch (cause) {
+        throw new Error(`${name}: ${cause instanceof Error ? cause.message : String(cause)}`, { cause });
+      } finally {
+        clearTimeout(timer);
+      }
+    }
     const f = await allocatorPublic(t); const server = transport === 'mcp' ? await f.mcp() : undefined;
     const prepare = async (id: string) => server ? server.call('prepare_observed_allocation', f.request(id)) : f.cli('observed-allocate', f.request(id));
-    for (let i = 1; i <= 8; i++) await t.test(`allocation ${i}`, { timeout: 30000 }, async () => {
+    for (let i = 1; i <= 8; i++) await step(`allocation ${i}`, async () => {
       if (i === 8) f.setCommandResult('boot', { exitCode: 1, stdout: '', stderr: 'ignored-raw-vendor' });
       const value = (await prepare('allocation-' + i)).reply; assert.equal(value.reservation.capacityHeld, true);
       if (i <= 7) assert.equal(value.state, 'ready'); else assert.equal(value.state, 'quarantined');
@@ -194,12 +207,12 @@ for (const transport of ['cli', 'mcp'] as const) {
       assert.deepEqual(f.admission.readAllocationCapacity(), { heldAllocations: i, reservedBytes: i * 1000 });
     });
     const calls = deviceCalls(f.calls);
-    await t.test('ninth allocation exceeds count capacity', { timeout: 30000 }, async () => {
+    await step('ninth allocation exceeds count capacity', async () => {
       const ninth = (await prepare('allocation-9')).reply;
       assert.equal(ninth.code, 'BUDGET_EXHAUSTED'); assert.deepEqual(deviceCalls(f.calls), calls); assert.equal(f.admission.readAllocationForAction('allocation-9'), undefined);
       assert.deepEqual(f.admission.readAllocationCapacity(), { heldAllocations: 8, reservedBytes: 8000 });
     });
-    await t.test('lower estimate still exceeds reserved bytes', { timeout: 30000 }, async () => {
+    await step('lower estimate still exceeds reserved bytes', async () => {
       f.configure({ maxRetainedAllocations: 9, reservationBytesPerAllocation: 500, maxReservedBytes: 8000 });
       const lowerEstimate = (await prepare('allocation-lower-estimate')).reply; assert.equal(lowerEstimate.code, 'BUDGET_EXHAUSTED');
       assert.deepEqual(deviceCalls(f.calls), calls); assert.deepEqual(f.admission.readAllocationCapacity(), { heldAllocations: 8, reservedBytes: 8000 });
