@@ -83,7 +83,17 @@
     "STEP_NOT_DONE",
     "APP_NOT_IN_FOREGROUND",
     "APP_NOT_RUNNING",
-    "LOCAL_ONLY_CHECKPOINT"
+    "LOCAL_ONLY_CHECKPOINT",
+    "UPGRADE_BLOCKED",
+    "IMPORT_REFUSED",
+    "CATEGORY_NOT_ENABLED",
+    "STATE_UNAVAILABLE",
+    "INVALID_REQUEST",
+    "NOT_COVERABLE"
+  ],
+  "fenceRequestKinds": [
+    "stop",
+    "maintenance-lift"
   ],
   "exitCodes": {
     "passed": 0,

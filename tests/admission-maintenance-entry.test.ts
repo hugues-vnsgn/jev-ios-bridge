@@ -5,8 +5,36 @@ import { tmpdir } from 'node:os';
 import { dirname, join, resolve } from 'node:path';
 import { pathToFileURL } from 'node:url';
 import test from 'node:test';
+import { runAdmissionMaintenance } from '../src/device/admission-maintenance.js';
+import { migrateAdmissionForTesting } from '../src/device/admission-migration.js';
+import { AdmissionError } from '../src/device/admission.js';
 
 const entry = realpathSync(resolve('src/device/admission-maintenance.ts'));
+test('import refusals carry exactly one closed reason', () => {
+  const refusal=new AdmissionError('IMPORT_REFUSED','Legacy source is unsafe','SOURCE_UNSAFE');
+  assert.equal(refusal.code,'IMPORT_REFUSED');
+  assert.equal(refusal.reason,'SOURCE_UNSAFE');
+  for(const reason of [undefined,'UNKNOWN',['SOURCE_UNSAFE','HOLDER_ALIVE']]) {
+    assert.throws(()=>Reflect.construct(AdmissionError,['IMPORT_REFUSED','bad refusal',reason]),/exactly one import refusal reason/);
+  }
+});
+
+test('maintenance upgrade prints a preserved-record receipt and backup for a schema 2 fixture', t => {
+  const directory=realpathSync(mkdtempSync(join(tmpdir(),'jev-upgrade-entry-')));
+  t.after(()=>rmSync(directory,{recursive:true,force:true}));
+  const options={root:join(directory,'admission'),backend:'fake' as const,defaultRoots:{journal:join(directory,'journal'),leases:join(directory,'leases')}};
+  migrateAdmissionForTesting({version:1,writersStopped:true,historicalRootsDeclaredOrExcluded:true,additionalJournalRoots:[],additionalLeaseRoots:[],excludedDevices:[]},{...options,schemaVersion:2});
+  const path=join(directory,'upgrade.json');
+  writeFileSync(path,JSON.stringify({version:1,kind:'upgrade',from:2,to:3,writersStopped:true}),{mode:0o600});
+  let output='';
+  assert.equal(runAdmissionMaintenance(['upgrade',path],{write:value=>{output+=value;}},options),0,output);
+  const receipt=JSON.parse(output);
+  assert.equal(receipt.kind,'upgrade');
+  assert.deepEqual(receipt.preserved.before,receipt.preserved.after);
+  assert.equal(receipt.to,3);
+  assert.equal(typeof receipt.backup.path,'string');
+});
+
 function child(args: string[]) {
   const env = { ...process.env };
   delete env.TYPESAFE_API_KEY;

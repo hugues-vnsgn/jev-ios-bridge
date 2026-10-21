@@ -282,7 +282,7 @@ for (const fault of ['missing', 'corrupt', 'unknown-schema'] as const) for (cons
   const f = await hostFixture(t); const path = join(f.store, 'admission.sqlite');
   if (fault === 'missing') await rm(path);
   if (fault === 'corrupt') await writeFile(path, 'not a sqlite database', { mode: 0o600 });
-  if (fault === 'unknown-schema') { const db = new DatabaseSync(path); try { db.exec('UPDATE metadata SET schema_version=999'); } finally { db.close(); } }
+  if (fault === 'unknown-schema') { const db = new DatabaseSync(path); try { db.exec('UPDATE metadata SET schema_version=schema_version+1'); } finally { db.close(); } }
   const files = await readdir(f.store); const before = fault === 'missing' ? null : await readFile(path);
   const server = transport === 'mcp' ? await f.mcp({ enabled: '0' }) : undefined;
   const value = server ? (await server.call('get_observed_action', { actionId: 'one' })).reply : (await f.cli('observed-report', 'one', { enabled: '0' })).reply;

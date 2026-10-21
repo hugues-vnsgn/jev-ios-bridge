@@ -10,6 +10,7 @@ import { migrateAdmissionForTesting, type MigrationDeclaration } from '../src/de
 import { DatabaseSync } from 'node:sqlite';
 import { fileURLToPath } from 'node:url';
 import { runAdmissionMaintenance } from '../src/device/admission-maintenance.js';
+import type { AllocationRecord } from '../src/device/admission-allocation.js';
 
 /** Test-only historical disk format, compared with the pinned original writer before its retirement. */
 class HistoricalJournalFixture {
@@ -49,6 +50,614 @@ function fixture(t: TestContext) {
     defaultRoots: { journal: join(directory, 'journal'), leases: join(directory, 'leases') } };
   return { directory, root, options, open: () => Admission.forTesting({ root, backend: 'fake', initialize: false }) };
 }
+
+const upgradeDeclaration = { version: 1, kind: 'upgrade', from: 2, to: 3, writersStopped: true } as const;
+
+function crashMaintenance(f: ReturnType<typeof fixture>, operation: 'upgrade' | 'recover', milestone: string): void {
+  const child = spawnSync(process.execPath, ['--import', import.meta.resolve('tsx'),
+    fileURLToPath(new URL('./fixtures/admission-migration/crash-worker.ts', import.meta.url)),
+    f.root, f.options.defaultRoots.journal, f.options.defaultRoots.leases, milestone, operation], { encoding: 'utf8', timeout: 5000 });
+  assert.equal(child.signal, 'SIGKILL', child.stderr);
+  assert.equal(child.error, undefined, 'The child must reach the requested maintenance checkpoint before its deadline');
+}
+
+test('offline migration rerun refuses schema 2 without leaving its guard and permits upgrade', async t => {
+  const f = fixture(t);
+  migrateAdmissionForTesting(declaration, { ...f.options, schemaVersion: 2 });
+  assert.throws(() => migrateAdmissionForTesting(declaration, f.options), { code: 'STATE_UNAVAILABLE' });
+  assert.equal(existsSync(join(f.root, 'migration.lock')), false);
+  const { upgradeAdmissionForTesting } = await import('../src/device/admission-upgrade.js');
+  assert.equal(upgradeAdmissionForTesting(upgradeDeclaration, { root: f.root, backend: 'fake' }).to, 3);
+});
+
+for (const milestone of ['guarded', 'backupVerified']) {
+  test(`offline schema upgrade death at ${milestone} recovers unchanged schema 2 and permits upgrade`, async t => {
+    const f = fixture(t);
+    migrateAdmissionForTesting(declaration, { ...f.options, schemaVersion: 2 });
+    crashMaintenance(f, 'upgrade', milestone);
+    const guard = JSON.parse(readFileSync(join(f.root, 'migration.lock'), 'utf8'));
+    assert.equal(guard.backup === null, milestone === 'guarded');
+    assert.throws(f.open, { code: 'STATE_UNAVAILABLE' });
+    const { recoverAdmissionUpgradeForTesting, upgradeAdmissionForTesting } = await import('../src/device/admission-upgrade.js');
+    const result = recoverAdmissionUpgradeForTesting(upgradeDeclaration, { root: f.root, backend: 'fake' });
+    assert.deepEqual(result, { version: 1, kind: 'upgrade-recovery', guardToken: guard.token, schemaVersion: 2, receiptId: null });
+    assert.equal(existsSync(join(f.root, 'migration.lock')), false);
+    const recovered = new DatabaseSync(join(f.root, 'admission.sqlite'));
+    try {
+      assert.equal(recovered.prepare('SELECT schema_version FROM metadata').get()?.schema_version, 2);
+      const events = recovered.prepare("SELECT attempt_id,event,detail FROM transitions WHERE kind='maintenance'").all();
+      assert.equal(events.length, 1);
+      assert.deepEqual({ ...events[0] }, { attempt_id: guard.token, event: 'upgrade-recovered', detail: JSON.stringify({ ...result, declarationDigest: guard.declarationDigest, installationId: guard.installationId }) });
+    } finally { recovered.close(); }
+    assert.equal(upgradeAdmissionForTesting(upgradeDeclaration, { root: f.root, backend: 'fake' }).to, 3);
+  });
+}
+
+test('offline schema upgrade death before commit retains authority until checked clean-old recovery', async t => {
+  const f = fixture(t);
+  migrateAdmissionForTesting(declaration, { ...f.options, schemaVersion: 2 });
+  crashMaintenance(f, 'upgrade', 'beforeCommit');
+  const guard = readFileSync(join(f.root, 'migration.lock'), 'utf8');
+  assert.throws(f.open, { code: 'STATE_UNAVAILABLE' });
+  const { upgradeAdmissionForTesting, recoverAdmissionUpgradeForTesting } = await import('../src/device/admission-upgrade.js');
+  assert.throws(() => upgradeAdmissionForTesting(upgradeDeclaration, { root: f.root, backend: 'fake' }), { code: 'STATE_UNAVAILABLE' });
+  assert.equal(readFileSync(join(f.root, 'migration.lock'), 'utf8'), guard);
+  const result = recoverAdmissionUpgradeForTesting(upgradeDeclaration, { root: f.root, backend: 'fake' });
+  assert.deepEqual(result, { version: 1, kind: 'upgrade-recovery', guardToken: JSON.parse(guard).token, schemaVersion: 2, receiptId: null });
+  assert.equal(existsSync(join(f.root, 'migration.lock')), false);
+  const old = new DatabaseSync(join(f.root, 'admission.sqlite'));
+  try {
+    assert.equal(old.prepare('SELECT schema_version FROM metadata').get()?.schema_version, 2);
+    assert.equal(old.prepare("SELECT count(*) AS count FROM transitions WHERE kind='maintenance'").get()?.count, 1);
+  } finally { old.close(); }
+  assert.equal(upgradeAdmissionForTesting(upgradeDeclaration, { root: f.root, backend: 'fake' }).to, 3);
+});
+
+test('offline schema upgrade death after commit recovers the matching receipt without another upgrade', async t => {
+  const f = fixture(t);
+  migrateAdmissionForTesting(declaration, { ...f.options, schemaVersion: 2 });
+  crashMaintenance(f, 'upgrade', 'afterCommit');
+  const guard = readFileSync(join(f.root, 'migration.lock'), 'utf8');
+  assert.throws(f.open, { code: 'STATE_UNAVAILABLE' });
+  const committed = new DatabaseSync(join(f.root, 'admission.sqlite'));
+  let receiptId: string;
+  try {
+    assert.equal(committed.prepare('SELECT schema_version FROM metadata').get()?.schema_version, 3);
+    receiptId = String(committed.prepare('SELECT id FROM upgrades').get()?.id);
+    assert.equal(committed.prepare('SELECT count(*) AS count FROM upgrades').get()?.count, 1);
+  } finally { committed.close(); }
+  const { upgradeAdmissionForTesting, recoverAdmissionUpgradeForTesting } = await import('../src/device/admission-upgrade.js');
+  const result = recoverAdmissionUpgradeForTesting(upgradeDeclaration, { root: f.root, backend: 'fake' });
+  assert.deepEqual(result, { version: 1, kind: 'upgrade-recovery', guardToken: JSON.parse(guard).token, schemaVersion: 3, receiptId });
+  assert.equal(existsSync(join(f.root, 'migration.lock')), false);
+  assert.equal(upgradeAdmissionForTesting(upgradeDeclaration, { root: f.root, backend: 'fake' }).id, receiptId);
+  const recovered = new DatabaseSync(join(f.root, 'admission.sqlite'));
+  try {
+    assert.equal(recovered.prepare('SELECT count(*) AS count FROM upgrades').get()?.count, 1);
+    assert.equal(recovered.prepare("SELECT count(*) AS count FROM transitions WHERE kind='maintenance'").get()?.count, 1);
+  } finally { recovered.close(); }
+});
+
+test('offline schema clean-old recovery retries its own committed maintenance event exactly once', async t => {
+  const f = fixture(t);
+  migrateAdmissionForTesting(declaration, { ...f.options, schemaVersion: 2 });
+  crashMaintenance(f, 'upgrade', 'beforeCommit');
+  const guard = readFileSync(join(f.root, 'migration.lock'), 'utf8');
+  crashMaintenance(f, 'recover', 'recoveryCommitted');
+  assert.equal(readFileSync(join(f.root, 'migration.lock'), 'utf8'), guard);
+  const interrupted = new DatabaseSync(join(f.root, 'admission.sqlite'));
+  let event: Record<string, unknown>;
+  try {
+    event = { ...interrupted.prepare("SELECT * FROM transitions WHERE kind='maintenance'").get() };
+    assert.equal(event.attempt_id, JSON.parse(guard).token);
+    assert.equal(interrupted.prepare("SELECT count(*) AS count FROM transitions WHERE kind='maintenance'").get()?.count, 1);
+  } finally { interrupted.close(); }
+  const { recoverAdmissionUpgradeForTesting } = await import('../src/device/admission-upgrade.js');
+  assert.deepEqual(recoverAdmissionUpgradeForTesting(upgradeDeclaration, { root: f.root, backend: 'fake' }),
+    { version: 1, kind: 'upgrade-recovery', guardToken: JSON.parse(guard).token, schemaVersion: 2, receiptId: null });
+  const recovered = new DatabaseSync(join(f.root, 'admission.sqlite'));
+  try {
+    assert.deepEqual({ ...recovered.prepare("SELECT * FROM transitions WHERE kind='maintenance'").get() }, event);
+    assert.equal(recovered.prepare("SELECT count(*) AS count FROM transitions WHERE kind='maintenance'").get()?.count, 1);
+  } finally { recovered.close(); }
+  assert.equal(existsSync(join(f.root, 'migration.lock')), false);
+});
+
+test('offline schema clean-new recovery retries before guard removal without changing the receipt', async t => {
+  const f = fixture(t);
+  migrateAdmissionForTesting(declaration, { ...f.options, schemaVersion: 2 });
+  crashMaintenance(f, 'upgrade', 'afterCommit');
+  const guard = readFileSync(join(f.root, 'migration.lock'), 'utf8');
+  crashMaintenance(f, 'recover', 'beforeGuardRemoval');
+  assert.equal(readFileSync(join(f.root, 'migration.lock'), 'utf8'), guard);
+  const interrupted = new DatabaseSync(join(f.root, 'admission.sqlite'));
+  let receipt: Record<string, unknown>;
+  let event: Record<string, unknown>;
+  try {
+    receipt = { ...interrupted.prepare('SELECT * FROM upgrades').get() };
+    event = { ...interrupted.prepare("SELECT * FROM transitions WHERE kind='maintenance'").get() };
+  } finally { interrupted.close(); }
+  const { recoverAdmissionUpgradeForTesting } = await import('../src/device/admission-upgrade.js');
+  assert.deepEqual(recoverAdmissionUpgradeForTesting(upgradeDeclaration, { root: f.root, backend: 'fake' }),
+    { version: 1, kind: 'upgrade-recovery', guardToken: JSON.parse(guard).token, schemaVersion: 3, receiptId: receipt.id });
+  const recovered = new DatabaseSync(join(f.root, 'admission.sqlite'));
+  try {
+    assert.deepEqual({ ...recovered.prepare('SELECT * FROM upgrades').get() }, receipt);
+    assert.deepEqual({ ...recovered.prepare("SELECT * FROM transitions WHERE kind='maintenance'").get() }, event);
+    assert.equal(recovered.prepare("SELECT count(*) AS count FROM transitions WHERE kind='maintenance'").get()?.count, 1);
+  } finally { recovered.close(); }
+  assert.equal(existsSync(join(f.root, 'migration.lock')), false);
+});
+
+test('offline schema recovery refuses another committed event after its own recovery and retains the guard', async t => {
+  const f = fixture(t);
+  migrateAdmissionForTesting(declaration, { ...f.options, schemaVersion: 2 });
+  crashMaintenance(f, 'upgrade', 'beforeCommit');
+  crashMaintenance(f, 'recover', 'recoveryCommitted');
+  const guard = readFileSync(join(f.root, 'migration.lock'), 'utf8');
+  const changed = new DatabaseSync(join(f.root, 'admission.sqlite'));
+  try {
+    changed.prepare("INSERT INTO transitions(kind,attempt_id,event,detail,time) VALUES ('maintenance','another-token','unrelated-event','{}',1)").run();
+  } finally { changed.close(); }
+  const { recoverAdmissionUpgradeForTesting } = await import('../src/device/admission-upgrade.js');
+  assert.throws(() => recoverAdmissionUpgradeForTesting(upgradeDeclaration, { root: f.root, backend: 'fake' }), { code: 'STATE_UNAVAILABLE' });
+  assert.equal(readFileSync(join(f.root, 'migration.lock'), 'utf8'), guard);
+  const refused = new DatabaseSync(join(f.root, 'admission.sqlite'));
+  try {
+    assert.equal(refused.prepare('SELECT schema_version FROM metadata').get()?.schema_version, 2);
+    assert.equal(refused.prepare("SELECT count(*) AS count FROM transitions WHERE kind='maintenance'").get()?.count, 2);
+  } finally { refused.close(); }
+});
+
+test('offline schema openers refuse older and newer versions without changing the stored version', t => {
+  for (const actualVersion of [2, 4]) {
+    const f = fixture(t);
+    migrateAdmissionForTesting(declaration, { ...f.options, schemaVersion: actualVersion === 2 ? 2 : 3 });
+    if (actualVersion === 4) {
+      const future = new DatabaseSync(join(f.root, 'admission.sqlite'));
+      try { future.exec('UPDATE metadata SET schema_version=4'); } finally { future.close(); }
+    }
+    assert.throws(f.open, error => {
+      assert.ok(error instanceof Error);
+      assert.equal('code' in error && error.code, 'STATE_UNAVAILABLE');
+      assert.match(error.message, new RegExp(`schema.*${actualVersion}.*(?:expected|requires).*3`, 'i'));
+      assert.match(error.message, /admission-maintenance upgrade/);
+      return true;
+    });
+    const unchanged = new DatabaseSync(join(f.root, 'admission.sqlite'));
+    try { assert.equal(unchanged.prepare('SELECT schema_version FROM metadata').get()?.schema_version, actualVersion); }
+    finally { unchanged.close(); }
+  }
+});
+
+test('offline schema upgrade preserves terminal strings and command dispositions without inventing stop evidence', async t => {
+  const f = fixture(t);
+  migrateAdmissionForTesting(declaration, { ...f.options, schemaVersion: 2 });
+  const intent = '{ "tap": "original-selector", "order": [2, 1] }';
+  const terminal = '{ "outcome": "completed", "disposition": "available", "payload": { "original": true }, "evidenceRefs": [] }';
+  const detail = '{ "original": "spacing remains" }';
+  const old = new DatabaseSync(join(f.root, 'admission.sqlite'));
+  try {
+    old.prepare("INSERT INTO devices(device,state,generation) VALUES (?,'available',2)").run(device);
+    old.prepare("INSERT INTO devices(device,state,generation,reason) VALUES (?,'quarantined',3,'historical-cause')").run(otherDevice);
+    old.prepare("INSERT INTO attempts(kind,id,device,digest,intent,token,generation,pid,incarnation,state,cancelled,attached,terminal) VALUES ('legacy','terminal-upgrade',?,'original-digest',?,'terminal-token',2,?,'original-incarnation','terminal',1,1,?)").run(device, intent, process.pid, terminal);
+    for (const state of ['outstanding', 'settled', 'uncertain']) {
+      old.prepare("INSERT INTO commands VALUES (?,'legacy','terminal-upgrade','terminal-token',2,'capture',?)").run(`command-${state}`, state);
+    }
+    old.prepare("INSERT INTO transitions(sequence,kind,attempt_id,event,detail,time) VALUES (42,'legacy','terminal-upgrade','original-event',?,123)").run(detail);
+  } finally { old.close(); }
+  const { upgradeAdmissionForTesting } = await import('../src/device/admission-upgrade.js');
+  const receipt = upgradeAdmissionForTesting(upgradeDeclaration, { root: f.root, backend: 'fake', now: () => 456 });
+  assert.deepEqual(receipt.preserved.before, receipt.preserved.after);
+  assert.equal(receipt.preserved.after.attempts?.count, 1);
+  assert.equal(receipt.preserved.after.commands?.count, 3);
+  assert.deepEqual(receipt.quarantines, { historical: 1, exclusion: 4 });
+  const upgraded = new DatabaseSync(join(f.root, 'admission.sqlite'));
+  try {
+    assert.deepEqual(upgraded.prepare('SELECT kind,count(*) AS count FROM quarantines GROUP BY kind ORDER BY kind').all().map(row => ({ ...row })),
+      [{ kind: 'exclusion', count: receipt.quarantines.exclusion }, { kind: 'historical', count: receipt.quarantines.historical }]);
+    assert.deepEqual({ ...upgraded.prepare('SELECT intent,terminal,digest,cancelled,attached FROM attempts WHERE id=?').get('terminal-upgrade') },
+      { intent, terminal, digest: 'original-digest', cancelled: 1, attached: 1 });
+    assert.deepEqual(upgraded.prepare('SELECT id,state,operation,origin,component_id,request_id,request_digest FROM commands ORDER BY id').all().map(row => ({ ...row })),
+      ['outstanding', 'settled', 'uncertain'].map(state => ({ id: `command-${state}`, state, operation: 'capture', origin: 'legacy', component_id: null, request_id: null, request_digest: null })));
+    assert.deepEqual({ ...upgraded.prepare('SELECT sequence,event,detail,time FROM transitions WHERE sequence=42').get() },
+      { sequence: 42, event: 'original-event', detail, time: 123 });
+    assert.deepEqual({ ...upgraded.prepare('SELECT inventory_unknown_reason FROM owner_generations WHERE token=?').get('terminal-token') },
+      { inventory_unknown_reason: 'schema2-inventory' });
+    assert.deepEqual({ ...upgraded.prepare('SELECT kind,cause,created_at FROM quarantines WHERE device=?').get(otherDevice) },
+      { kind: 'historical', cause: 'historical-cause', created_at: 456 });
+    for (const table of ['components', 'component_observations', 'fence_receipts', 'recovery_claims']) {
+      assert.equal(upgraded.prepare(`SELECT count(*) AS count FROM ${table}`).get()?.count, 0);
+    }
+  } finally { upgraded.close(); }
+  assert.deepEqual(f.open().inspect(device), { category: 'ios-simulator', device, state: 'available', generation: 2, owner: null, reason: null });
+  assert.equal(f.open().inspect(otherDevice)?.state, 'quarantined');
+});
+
+test('offline schema fresh chain and upgraded store have identical schema and content for one installation', async t => {
+  const f = fixture(t);
+  mkdirSync(f.options.defaultRoots.leases, { mode: 0o700 });
+  writeFileSync(join(f.options.defaultRoots.leases, `${device}.lock`), '{partial', { mode: 0o600 });
+  const input = { ...declaration, excludedDevices: [otherDevice] };
+  const migration = migrateAdmissionForTesting(input, f.options);
+  const marker = readFileSync(join(f.root, 'installation.json'));
+  const snapshot = (db: DatabaseSync) => {
+    const schema = db.prepare("SELECT type,name,tbl_name,sql FROM sqlite_master WHERE name NOT LIKE 'sqlite_%' ORDER BY type,name").all();
+    const tables = db.prepare("SELECT name FROM sqlite_master WHERE type='table' AND name!='upgrades' ORDER BY name").all();
+    return { schema, tables: tables.map(table => ({ name: table.name, rows: db.prepare(`SELECT * FROM ${table.name}`).all().map(row => JSON.stringify(row)).sort() })) };
+  };
+  const fresh = new DatabaseSync(join(f.root, 'admission.sqlite'));
+  let expected: ReturnType<typeof snapshot>;
+  let conversionTime: number;
+  try {
+    assert.equal(fresh.prepare('SELECT count(*) AS count FROM upgrades').get()?.count, 0);
+    assert.deepEqual(fresh.prepare('SELECT kind,count(*) AS count FROM quarantines GROUP BY kind ORDER BY kind').all().map(row => ({ ...row })),
+      [{ kind: 'exclusion', count: 5 }, { kind: 'historical', count: 1 }]);
+    expected = snapshot(fresh);
+    conversionTime = Number(fresh.prepare('SELECT created_at FROM quarantines LIMIT 1').get()?.created_at);
+  } finally { fresh.close(); }
+  rmSync(f.root, { recursive: true });
+  migrateAdmissionForTesting(input, { ...f.options, schemaVersion: 2 });
+  const old = new DatabaseSync(join(f.root, 'admission.sqlite'));
+  try {
+    old.prepare('UPDATE metadata SET installation_id=?,migration_manifest=?').run(migration.installationId, JSON.stringify(migration));
+  } finally { old.close(); }
+  writeFileSync(join(f.root, 'installation.json'), marker, { mode: 0o600 });
+  const { upgradeAdmissionForTesting } = await import('../src/device/admission-upgrade.js');
+  const receipt = upgradeAdmissionForTesting(upgradeDeclaration, { root: f.root, backend: 'fake', now: () => conversionTime });
+  assert.deepEqual(receipt.quarantines, { historical: 1, exclusion: 5 });
+  const upgraded = new DatabaseSync(join(f.root, 'admission.sqlite'));
+  try {
+    assert.deepEqual(snapshot(upgraded), expected);
+    assert.equal(upgraded.prepare('SELECT count(*) AS count FROM upgrades').get()?.count, 1);
+  } finally { upgraded.close(); }
+});
+
+test('offline schema SQL constraints preserve authority bindings and permit only one command disposition', async t => {
+  const f = fixture(t);
+  const journal = new HistoricalJournalFixture(f.options.defaultRoots.journal);
+  await (await journal.begin({ deviceId: device, actionId: 'immutable-import', intent: {} })).complete(historicalResult);
+  migrateAdmissionForTesting(declaration, { ...f.options, schemaVersion: 2 });
+  const old = new DatabaseSync(join(f.root, 'admission.sqlite'));
+  try {
+    old.prepare('UPDATE devices SET generation=2 WHERE device=?').run(device);
+    old.prepare("INSERT INTO attempts(kind,id,device,digest,intent,token,generation,pid,incarnation,state,terminal) VALUES ('legacy','immutable-attempt',?,'original','{}','immutable-token',2,?,'fixture','terminal',?)").run(device, process.pid, '{"outcome":"completed"}');
+    old.exec("INSERT INTO commands VALUES ('immutable-command','legacy','immutable-attempt','immutable-token',2,'capture','outstanding')");
+    old.exec("INSERT INTO transitions VALUES (1,'legacy','immutable-attempt','original','{}',1)");
+  } finally { old.close(); }
+  const { upgradeAdmissionForTesting } = await import('../src/device/admission-upgrade.js');
+  upgradeAdmissionForTesting(upgradeDeclaration, { root: f.root, backend: 'fake', now: () => 100 });
+  const db = new DatabaseSync(join(f.root, 'admission.sqlite'));
+  try {
+    db.exec('PRAGMA foreign_keys=ON');
+    const refused: [string, string, RegExp][] = [
+      ['metadata', "UPDATE metadata SET migration_manifest='{}'", /Immutable metadata binding/],
+      ['metadata', 'UPDATE metadata SET schema_version=5', /Schema version must advance by one/],
+      ['metadata', 'UPDATE metadata SET schema_version=2', /Schema version must advance by one/],
+      ['metadata', 'DELETE FROM metadata', /Cannot delete metadata/],
+      ['devices', `UPDATE devices SET device='different' WHERE device='${device}'`, /Immutable devices binding/],
+      ['devices', `UPDATE devices SET generation=1 WHERE device='${device}'`, /Generation cannot decrease/],
+      ['devices', `DELETE FROM devices WHERE device='${device}'`, /Cannot delete devices/],
+      ['attempts', "UPDATE attempts SET intent='{\"changed\":true}' WHERE id='immutable-attempt'", /Immutable attempts binding/],
+      ['attempts', "UPDATE attempts SET terminal='{\"outcome\":\"inconclusive\"}' WHERE id='immutable-attempt'", /Terminal outcome is immutable/],
+      ['attempts', "DELETE FROM attempts WHERE id='immutable-attempt'", /Cannot delete attempts/],
+      ['commands', "UPDATE commands SET operation='tap' WHERE id='immutable-command'", /Immutable commands binding/],
+      ['commands', "DELETE FROM commands WHERE id='immutable-command'", /Cannot delete commands/],
+      ['owner_generations', "UPDATE owner_generations SET token='replacement' WHERE token='immutable-token'", /Immutable owner_generations binding/],
+      ['owner_generations', "UPDATE owner_generations SET inventory_unknown_reason=NULL WHERE token='immutable-token'", /Inventory uncertainty is immutable/],
+      ['owner_generations', "UPDATE owner_generations SET dispatch_closed_at=101 WHERE token='immutable-token'", /Dispatch closure is immutable/],
+      ['owner_generations', "DELETE FROM owner_generations WHERE token='immutable-token'", /Cannot delete owner_generations/],
+      ['imported_actions', 'UPDATE imported_actions SET record=record', /Immutable imported_actions/],
+      ['imported_actions', 'DELETE FROM imported_actions', /Immutable imported_actions/],
+      ['upgrades', 'UPDATE upgrades SET time=time', /Immutable upgrades/],
+      ['upgrades', 'DELETE FROM upgrades', /Immutable upgrades/],
+      ['transitions', 'UPDATE transitions SET detail=detail', /Immutable transitions/],
+      ['transitions', 'DELETE FROM transitions', /Immutable transitions/],
+      ['quarantines', 'UPDATE quarantines SET cause=\'changed\'', /Quarantine cannot be covered/],
+      ['quarantines', 'DELETE FROM quarantines', /Cannot delete quarantines/],
+    ];
+    for (const [table, statement, message] of refused) {
+      const before = db.prepare(`SELECT * FROM ${table}`).all();
+      assert.ok(before.length > 0, `${table} must contain the authoritative row under test`);
+      assert.throws(() => db.exec(statement), message, statement);
+      assert.deepEqual(db.prepare(`SELECT * FROM ${table}`).all(), before, statement);
+    }
+    db.exec("UPDATE commands SET state='settled' WHERE id='immutable-command'");
+    assert.equal(db.prepare("SELECT state FROM commands WHERE id='immutable-command'").get()?.state, 'settled');
+    assert.throws(() => db.exec("UPDATE commands SET state='uncertain' WHERE id='immutable-command'"), /Command disposition is immutable/);
+    assert.equal(db.prepare("SELECT state FROM commands WHERE id='immutable-command'").get()?.state, 'settled');
+    db.prepare('UPDATE devices SET generation=3 WHERE device=?').run(device);
+    assert.equal(db.prepare('SELECT generation FROM devices WHERE device=?').get(device)?.generation, 3);
+    db.exec('UPDATE metadata SET schema_version=4');
+    assert.equal(db.prepare('SELECT schema_version FROM metadata').get()?.schema_version, 4);
+  } finally { db.close(); }
+});
+
+function releaseSchemaFixture(t: TestContext): DatabaseSync {
+  const f = fixture(t);
+  migrateAdmissionForTesting(declaration, f.options);
+  const db = new DatabaseSync(join(f.root, 'admission.sqlite'));
+  t.after(() => db.close());
+  db.exec('PRAGMA foreign_keys=ON; BEGIN IMMEDIATE');
+  const generations: [string, string][] = [['generation-a', device], ['generation-b', otherDevice]];
+  for (const [id, target] of generations) {
+    db.prepare("INSERT INTO devices(platform,device,generation,attributes) VALUES ('ios-simulator',?,1,'{}')").run(target);
+    db.prepare("INSERT INTO owner_generations(id,owner_kind,platform,device,attempt_kind,attempt_id,token,generation,pid,incarnation) VALUES (?,'device','ios-simulator',?,'legacy',?,?,1,?,'fixture')").run(id, target, id, `${id}-token`, process.pid);
+    db.prepare("INSERT INTO attempts(kind,id,platform,device,digest,intent,owner_generation_id,token,generation,pid,incarnation,state) VALUES ('legacy',?,'ios-simulator',?,'fixture','{}',?,?,1,?,'fixture','active')").run(id, target, id, `${id}-token`, process.pid);
+  }
+  db.exec('COMMIT');
+  return db;
+}
+
+test('offline schema recovery claims close once and retry without accepting another generation receipt', t => {
+  const db = releaseSchemaFixture(t);
+  const receipt = db.prepare("INSERT INTO fence_receipts(id,owner_generation_id,platform,device,request_id,request_digest,kind,accepted_at,payload) VALUES (?,?,'ios-simulator',?,? ,?,'stop',1,'{\"version\":1}')");
+  receipt.run('receipt-a', 'generation-a', device, 'stop-a', 'a'.repeat(64));
+  receipt.run('receipt-b', 'generation-b', otherDevice, 'stop-b', 'b'.repeat(64));
+  const claim = (id: string) => db.prepare("INSERT INTO recovery_claims(id,owner_generation_id,platform,device,claimant_token,claimant_process,request_id,request_digest,created_at) VALUES (?,'generation-a','ios-simulator',?,?,'{\"pid\":1,\"incarnation\":\"fixture\"}',?,?,1)").run(id, device, `${id}-token`, id, 'c'.repeat(64));
+  claim('claim-1');
+  assert.throws(() => claim('claim-2'), /UNIQUE/);
+  db.exec("UPDATE recovery_claims SET closed_at=2,closure='refused' WHERE id='claim-1'");
+  assert.throws(() => db.exec("UPDATE recovery_claims SET closure='abandoned' WHERE id='claim-1'"), /immutable/);
+  claim('claim-2');
+  assert.throws(() => db.exec("UPDATE recovery_claims SET closed_at=3,closure='accepted',accepted_receipt_id='receipt-b' WHERE id='claim-2'"), /FOREIGN KEY/);
+  assert.deepEqual({ ...db.prepare("SELECT closed_at,closure,accepted_receipt_id FROM recovery_claims WHERE id='claim-2'").get() },
+    { closed_at: null, closure: null, accepted_receipt_id: null });
+  db.exec("UPDATE recovery_claims SET closed_at=3,closure='accepted',accepted_receipt_id='receipt-a' WHERE id='claim-2'");
+  claim('claim-3');
+  assert.throws(() => db.exec("UPDATE recovery_claims SET closed_at=4,closure='accepted',accepted_receipt_id='receipt-a' WHERE id='claim-3'"), /UNIQUE/);
+  db.exec("UPDATE recovery_claims SET closed_at=4,closure='abandoned' WHERE id='claim-3'");
+  assert.throws(() => db.exec("DELETE FROM recovery_claims WHERE id='claim-1'"), /Cannot delete/);
+  assert.deepEqual(db.prepare('SELECT id,closure,accepted_receipt_id FROM recovery_claims ORDER BY id').all().map(row => ({ ...row })),
+    [{ id: 'claim-1', closure: 'refused', accepted_receipt_id: null },
+      { id: 'claim-2', closure: 'accepted', accepted_receipt_id: 'receipt-a' },
+      { id: 'claim-3', closure: 'abandoned', accepted_receipt_id: null }]);
+});
+
+test('offline schema component target must match its owner generation', t => {
+  const db = releaseSchemaFixture(t);
+  const component = db.prepare("INSERT INTO components(id,owner_generation_id,platform,device,kind,declaration,registered_at) VALUES (?,'generation-a','ios-simulator',?,'fixture','{\"version\":1}',1)");
+  component.run('matching-component', device);
+  assert.throws(() => component.run('wrong-device-component', otherDevice), Error);
+  assert.deepEqual(db.prepare('SELECT id,device FROM components').all().map(row => ({ ...row })),
+    [{ id: 'matching-component', device }]);
+});
+
+for (const kind of ['native', 'historical', 'exclusion']) {
+  test(`offline schema refuses an already covered ${kind} quarantine on insert`, t => {
+    const db = releaseSchemaFixture(t);
+    db.prepare("INSERT INTO fence_receipts VALUES ('receipt-a','generation-a','ios-simulator',?,'stop-a',?,'stop',1,'{}')").run(device, 'a'.repeat(64));
+    const before = db.prepare('SELECT * FROM quarantines ORDER BY id').all();
+    assert.throws(() => db.prepare('INSERT INTO quarantines(id,platform,device,kind,cause,created_at,owner_generation_id,evidence,covering_receipt_id) VALUES (?,\'ios-simulator\',?,?,\'fixture\',1,?,\'{}\',?)')
+      .run(`precovered-${kind}`, device, kind, kind === 'native' ? 'generation-a' : null, kind === 'native' ? 'receipt-a' : 'nonexistent-receipt'), /Quarantine must start uncovered/);
+    assert.deepEqual(db.prepare('SELECT * FROM quarantines ORDER BY id').all(), before);
+    assert.equal(db.prepare('SELECT state FROM device_state WHERE device=?').get(device)?.state, 'available');
+  });
+}
+
+test('offline schema CHECK forbids covered non-native quarantines even without the insert trigger', t => {
+  const db = releaseSchemaFixture(t);
+  db.exec('DROP TRIGGER quarantines_start_uncovered');
+  for (const kind of ['historical', 'exclusion']) {
+    assert.throws(() => db.prepare("INSERT INTO quarantines(id,platform,device,kind,cause,created_at,evidence,covering_receipt_id) VALUES (?,'ios-simulator',?,?,'fixture',1,'{}','nonexistent-receipt')")
+      .run(`precovered-${kind}`, device, kind), /CHECK constraint failed/);
+  }
+  assert.equal(db.prepare('SELECT count(*) AS count FROM quarantines WHERE device=?').get(device)?.count, 0);
+});
+
+test('offline schema stop receipt membership binds one generation and seals on receipt insertion', t => {
+  const db = releaseSchemaFixture(t);
+  const component = db.prepare("INSERT INTO components(id,owner_generation_id,platform,device,kind,declaration,registered_at) VALUES (?,?,'ios-simulator',?,'fixture','{\"version\":1}',1)");
+  component.run('component-a', 'generation-a', device);
+  component.run('component-extra', 'generation-a', device);
+  component.run('component-b', 'generation-b', otherDevice);
+  const command = db.prepare("INSERT INTO commands(id,kind,attempt_id,token,generation,operation,state,platform,device,owner_generation_id,component_id,origin,request_id,request_digest) VALUES (?,'legacy',?,?,1,'capture','uncertain','ios-simulator',?,?,?,'native',?,?)");
+  command.run('command-a', 'generation-a', 'generation-a-token', device, 'generation-a', 'component-a', 'command-request-a', 'a'.repeat(64));
+  command.run('command-b', 'generation-b', 'generation-b-token', otherDevice, 'generation-b', 'component-b', 'command-request-b', 'b'.repeat(64));
+  const member = db.prepare("INSERT INTO fence_components VALUES (?,'generation-a',?,'{\"version\":1}')");
+  assert.throws(() => member.run('wrong-owner-receipt', 'component-b'), /FOREIGN KEY/);
+  db.exec('BEGIN IMMEDIATE');
+  member.run('uncommitted-receipt', 'component-a');
+  assert.throws(() => db.exec("INSERT INTO fence_commands VALUES ('uncommitted-receipt','generation-a','command-b','component-a')"), /FOREIGN KEY/);
+  db.exec('ROLLBACK');
+  db.exec('BEGIN IMMEDIATE');
+  member.run('receipt-a', 'component-a');
+  db.exec("INSERT INTO fence_commands VALUES ('receipt-a','generation-a','command-a','component-a')");
+  const receipt = db.prepare("INSERT INTO fence_receipts VALUES (?,'generation-a','ios-simulator',?,?,?,'stop',2,'{\"version\":1}')");
+  receipt.run('receipt-a', device, 'stop-request-a', 'a'.repeat(64));
+  db.exec('COMMIT');
+  assert.throws(() => member.run('receipt-a', 'component-extra'), /sealed/);
+  assert.throws(() => db.exec("UPDATE fence_components SET evidence='{}' WHERE receipt_id='receipt-a'"), /Immutable/);
+  assert.throws(() => db.exec("DELETE FROM fence_commands WHERE receipt_id='receipt-a'"), /Immutable/);
+  assert.throws(() => receipt.run('second-stop', device, 'another-request', 'b'.repeat(64)), /UNIQUE/);
+  assert.throws(() => receipt.run('wrong-device', otherDevice, 'different-request', 'c'.repeat(64)), /another device/);
+  assert.deepEqual(db.prepare('SELECT receipt_id,component_id FROM fence_components').all().map(row => ({ ...row })),
+    [{ receipt_id: 'receipt-a', component_id: 'component-a' }]);
+  assert.deepEqual(db.prepare('SELECT receipt_id,command_id FROM fence_commands').all().map(row => ({ ...row })),
+    [{ receipt_id: 'receipt-a', command_id: 'command-a' }]);
+  db.exec("INSERT INTO quarantines(id,platform,device,kind,cause,created_at,owner_generation_id,evidence) VALUES ('native-a','ios-simulator','" + device + "','native','fixture',1,'generation-a','{\"version\":1}')");
+  assert.throws(() => db.exec("INSERT INTO quarantines(id,platform,device,kind,cause,created_at,owner_generation_id,evidence) VALUES ('duplicate-native','ios-simulator','" + device + "','native','fixture',1,'generation-a','{\"version\":1}')"), /UNIQUE/);
+  db.exec("UPDATE quarantines SET covering_receipt_id='receipt-a' WHERE id='native-a'");
+  assert.throws(() => db.exec("UPDATE quarantines SET covering_receipt_id=NULL WHERE id='native-a'"), /cannot be covered/);
+  assert.equal(db.prepare("SELECT covering_receipt_id FROM quarantines WHERE id='native-a'").get()?.covering_receipt_id, 'receipt-a');
+});
+
+function parkedAllocationRecord(): AllocationRecord {
+  const allocationId = 'ABCDEF00-0000-4000-8000-000000000010';
+  const hash = 'a'.repeat(64);
+  return {
+    allocationId, actionId: 'parked-upgrade', preparationDigest: hash, preparation: { version: 1, actionId: 'parked-upgrade' },
+    appBundleId: 'dev.fixture', source: { kind: 'create', deviceTypeId: 'fixture-device', runtimeId: 'fixture-runtime' },
+    inspectedContentDigest: hash, artifactBytes: 100, configVersion: 1, configDigest: hash,
+    budgets: { maxRetainedAllocations: 8, maxConcurrentPreparations: 2, reservationBytesPerAllocation: 800, maxReservedBytes: 6400,
+      minFreeBytes: 2000, maxArtifactBytes: 200, createTimeoutMs: 60000, bootTimeoutMs: 120000, installTimeoutMs: 120000,
+      launchTimeoutMs: 30000, readinessTimeoutMs: 30000, readyTtlMs: 300000, timeoutMs: 360000 },
+    evidenceDirectory: '/isolated/evidence/parked', intendedName: `jev-observed-${allocationId}`,
+    staged: { stagedPath: '/isolated/staged/Fixture.app', contentDigest: hash, bytes: 100, maxBytes: 200,
+      metadata: { bundleId: 'dev.fixture', executable: 'Fixture', architecture: 'arm64', minimumOSVersion: '27.0', build: { id: 'build', origin: 'fixture' } } },
+    device, creationReceipt: { status: 'created', udid: device, provenance: { kind: 'simctl-create', allocationId,
+      name: `jev-observed-${allocationId}`, deviceTypeId: 'fixture-device', runtimeId: 'fixture-runtime' } },
+    actionDigest: null, actionRequest: null, state: 'ready', phase: 'parked', reason: null, outcome: 'prepared',
+    capacityHeld: true, reservationBytes: 800, cancellationRequested: false,
+    owner: { allocationId, token: 'parked-token', generation: 2, process: { pid: 0, incarnation: 'parked' } },
+    createdAt: 100, readyAt: 200, expiresAt: 300200, readinessEvidence: ['/isolated/readiness.json'],
+    evidenceRefs: ['/isolated/preparation.json'], actionEvidence: null, hostCreationBlocked: false,
+  };
+}
+
+for (const mismatch of [null, 'pid', 'incarnation', 'device', 'allocation'] as const) {
+  test(`offline schema upgrade compares an allocation owner with its historical attempt (${mismatch ?? 'matching'})`, async t => {
+    const f = fixture(t);
+    migrateAdmissionForTesting(declaration, { ...f.options, schemaVersion: 2 });
+    const base = parkedAllocationRecord();
+    const allocationId = mismatch === 'allocation' ? otherDevice : base.allocationId;
+    const record: AllocationRecord = { ...base, allocationId, state: 'retained', phase: 'terminal', outcome: 'action_completed',
+      device: mismatch === 'device' ? otherDevice : device,
+      owner: { allocationId, token: 'shared-token', generation: 2,
+        process: { pid: mismatch === 'pid' ? process.pid + 1 : process.pid, incarnation: mismatch === 'incarnation' ? 'different' : 'fixture' } } };
+    const text = JSON.stringify(record);
+    const old = new DatabaseSync(join(f.root, 'admission.sqlite'));
+    try {
+      old.prepare("INSERT INTO devices(device,state,generation) VALUES (?,'available',2)").run(device);
+      old.prepare("INSERT INTO attempts(kind,id,device,digest,intent,token,generation,pid,incarnation,state,terminal) VALUES ('preparation',?,?,'original','{}','shared-token',2,?,'fixture','terminal','{\"outcome\":\"completed\"}')").run(base.allocationId, device, process.pid);
+      old.prepare('INSERT INTO allocations VALUES (?,?,?,NULL,?,?)').run(allocationId, record.actionId, record.device, text, digest(text));
+    } finally { old.close(); }
+    const { upgradeAdmissionForTesting } = await import('../src/device/admission-upgrade.js');
+    if (mismatch === null) {
+      assert.equal(upgradeAdmissionForTesting(upgradeDeclaration, { root: f.root, backend: 'fake' }).to, 3);
+      const db = new DatabaseSync(join(f.root, 'admission.sqlite'));
+      try {
+        assert.deepEqual(db.prepare('SELECT owner_kind,allocation_id,pid,incarnation FROM owner_generations').all().map(row => ({ ...row })),
+          [{ owner_kind: 'device', allocation_id: allocationId, pid: process.pid, incarnation: 'fixture' }]);
+      } finally { db.close(); }
+    } else {
+      assert.throws(() => upgradeAdmissionForTesting(upgradeDeclaration, { root: f.root, backend: 'fake' }),
+        { code: 'STATE_UNAVAILABLE', message: 'Conflicting historical owner binding' });
+      const db = new DatabaseSync(join(f.root, 'admission.sqlite'));
+      try {
+        assert.equal(db.prepare('SELECT schema_version FROM metadata').get()?.schema_version, 2);
+        assert.equal(db.prepare('SELECT record FROM allocations').get()?.record, text);
+      } finally { db.close(); }
+    }
+  });
+}
+
+test('offline schema upgrade preserves parked allocations and the host unknown-creation guard', async t => {
+  const f = fixture(t);
+  migrateAdmissionForTesting(declaration, { ...f.options, schemaVersion: 2 });
+  const allocationId = 'ABCDEF00-0000-4000-8000-000000000010';
+  const unknownId = 'ABCDEF00-0000-4000-8000-000000000011';
+  const hash = 'a'.repeat(64);
+  const parked = parkedAllocationRecord();
+  const unknown: AllocationRecord = { ...parked, allocationId: unknownId, actionId: 'unknown-upgrade',
+    preparation: { version: 1, actionId: 'unknown-upgrade' }, intendedName: `jev-observed-${unknownId}`,
+    device: null, creationReceipt: null, state: 'preparing', phase: 'creating', outcome: null,
+    owner: { allocationId: unknownId, token: 'unknown-token', generation: 1, process: { pid: process.pid, incarnation: 'fixture' } },
+    readyAt: null, expiresAt: null, readinessEvidence: [], evidenceRefs: [] };
+  const recordStrings = [parked, unknown].map(record => JSON.stringify(record, null, 2));
+  const old = new DatabaseSync(join(f.root, 'admission.sqlite'));
+  try {
+    old.prepare("INSERT INTO devices(device,state,generation) VALUES (?,'active',2)").run(device);
+    old.prepare("INSERT INTO attempts(kind,id,device,digest,intent,token,generation,pid,incarnation,state) VALUES ('preparation',?,?,?,'{}','preparation-token',1,?,'fixture','parked')").run(allocationId, device, hash, process.pid);
+    for (const [index, record] of [parked, unknown].entries()) {
+      const text = recordStrings[index]!;
+      old.prepare('INSERT INTO allocations VALUES (?,?,?,NULL,?,?)').run(record.allocationId, record.actionId, record.device, text, digest(text));
+    }
+    old.prepare('INSERT INTO unknown_creation VALUES (1,?)').run(unknownId);
+  } finally { old.close(); }
+  const { upgradeAdmissionForTesting } = await import('../src/device/admission-upgrade.js');
+  const receipt = upgradeAdmissionForTesting(upgradeDeclaration, { root: f.root, backend: 'fake', now: () => 250 });
+  assert.deepEqual(receipt.preserved.before, receipt.preserved.after);
+  assert.equal(receipt.preserved.after.allocations?.count, 2);
+  assert.equal(receipt.preserved.after.unknown_creation?.count, 1);
+  assert.deepEqual(f.open().readAllocation(allocationId.toLowerCase()), { ...parked, hostCreationBlocked: true });
+  assert.deepEqual(f.open().readAllocation(unknownId), { ...unknown, hostCreationBlocked: true });
+  assert.deepEqual(f.open().acquire({ device: otherDevice, attempt: { kind: 'legacy', id: 'blocked-after-upgrade' }, digest: hash, intent: {} }),
+    { kind: 'refused', reason: 'HOST_CREATION_UNRESOLVED', blockingAllocationId: unknownId });
+  const upgraded = new DatabaseSync(join(f.root, 'admission.sqlite'));
+  try {
+    assert.deepEqual(upgraded.prepare('SELECT record,checksum FROM allocations ORDER BY id').all().map(row => ({ ...row })),
+      recordStrings.map(record => ({ record, checksum: digest(record) })));
+    assert.deepEqual(upgraded.prepare('SELECT token,owner_kind,inventory_unknown_reason,dispatch_closed_at FROM owner_generations ORDER BY token').all().map(row => ({ ...row })),
+      [{ token: 'parked-token', owner_kind: 'parked', inventory_unknown_reason: null, dispatch_closed_at: 250 },
+        { token: 'preparation-token', owner_kind: 'device', inventory_unknown_reason: 'schema2-inventory', dispatch_closed_at: 250 },
+        { token: 'unknown-token', owner_kind: 'allocation', inventory_unknown_reason: 'schema2-inventory', dispatch_closed_at: null }]);
+    assert.equal(upgraded.prepare('SELECT count(*) AS count FROM components').get()?.count, 0);
+    assert.deepEqual({ ...upgraded.prepare('SELECT singleton,allocation_id FROM unknown_creation').get() }, { singleton: 1, allocation_id: unknownId });
+  } finally { upgraded.close(); }
+});
+
+test('offline schema upgrade refuses active attempt identities without settling or changing them', async t => {
+  const f = fixture(t);
+  migrateAdmissionForTesting(declaration, { ...f.options, schemaVersion: 2 });
+  const db = new DatabaseSync(join(f.root, 'admission.sqlite'));
+  try {
+    db.prepare("INSERT INTO devices(device,state,generation,token,kind,attempt_id) VALUES (?,'active',1,'active-token','observed','active-upgrade')").run(device);
+    db.prepare("INSERT INTO attempts(kind,id,device,digest,intent,token,generation,pid,incarnation,state) VALUES ('observed','active-upgrade',?,'original-digest','{}','active-token',1,?,'fixture-incarnation','active')").run(device, process.pid);
+  } finally { db.close(); }
+  const { upgradeAdmissionForTesting } = await import('../src/device/admission-upgrade.js');
+  assert.throws(() => upgradeAdmissionForTesting(upgradeDeclaration, { root: f.root, backend: 'fake' }), error => {
+    assert.ok(error instanceof Error);
+    assert.equal('code' in error && error.code, 'UPGRADE_BLOCKED');
+    assert.match(error.message, /observed.*active-upgrade/);
+    return true;
+  });
+  const unchanged = new DatabaseSync(join(f.root, 'admission.sqlite'));
+  try {
+    assert.equal(unchanged.prepare('SELECT schema_version FROM metadata').get()?.schema_version, 2);
+    assert.deepEqual({ ...unchanged.prepare('SELECT state,terminal,token FROM attempts WHERE id=?').get('active-upgrade') },
+      { state: 'active', terminal: null, token: 'active-token' });
+    assert.equal(unchanged.prepare("SELECT count(*) AS count FROM sqlite_master WHERE type='table' AND name='upgrades'").get()?.count, 0);
+  } finally { unchanged.close(); }
+});
+
+test('offline schema 2 upgrade preserves imported records, original strings and verified private backup on retry', async t => {
+  const f = fixture(t);
+  const journal = new HistoricalJournalFixture(f.options.defaultRoots.journal);
+  await (await journal.begin({ deviceId: device.toLowerCase(), actionId: 'preserved-import', intent: { tap: 'original-selector' } })).complete(historicalResult);
+  const migration = migrateAdmissionForTesting(declaration, { ...f.options, schemaVersion: 2 });
+  const originalMarker = readFileSync(join(f.root, 'installation.json'));
+  const original = new DatabaseSync(join(f.root, 'admission.sqlite'));
+  let importedRecord: string;
+  let originalManifest: string;
+  try {
+    assert.equal(original.prepare('SELECT schema_version FROM metadata').get()?.schema_version, 2);
+    importedRecord = String(original.prepare('SELECT record FROM imported_actions WHERE id=?').get('preserved-import')?.record);
+    originalManifest = String(original.prepare('SELECT migration_manifest FROM metadata').get()?.migration_manifest);
+  } finally { original.close(); }
+  rmSync(f.options.defaultRoots.journal, { recursive: true });
+  const { upgradeAdmissionForTesting } = await import('../src/device/admission-upgrade.js');
+  const receipt = upgradeAdmissionForTesting(upgradeDeclaration, { root: f.root, backend: 'fake', now: () => 1720000000000 });
+  assert.equal(receipt.kind, 'upgrade');
+  assert.equal(receipt.from, 2);
+  assert.equal(receipt.to, 3);
+  assert.deepEqual(receipt.declaration, upgradeDeclaration);
+  assert.deepEqual(receipt.preserved.after, receipt.preserved.before);
+  assert.equal(receipt.preserved.before.imported_actions?.count, 1);
+  assert.match(receipt.preserved.before.imported_actions?.digest ?? '', /^[0-9a-f]{64}$/);
+  assert.deepEqual(f.open().readImportedAction('preserved-import'), JSON.parse(importedRecord));
+  assert.deepEqual(f.open().activation(), migration);
+  const upgraded = new DatabaseSync(join(f.root, 'admission.sqlite'));
+  try {
+    assert.equal(upgraded.prepare('SELECT schema_version FROM metadata').get()?.schema_version, 3);
+    assert.equal(upgraded.prepare('SELECT record FROM imported_actions WHERE id=?').get('preserved-import')?.record, importedRecord);
+    assert.equal(upgraded.prepare('SELECT migration_manifest FROM metadata').get()?.migration_manifest, originalManifest);
+  } finally { upgraded.close(); }
+  assert.equal(lstatSync(join(f.root, 'backups')).mode & 0o777, 0o700);
+  for (const path of [receipt.backup.path, receipt.backup.installationPath]) {
+    assert.equal(lstatSync(path).mode & 0o777, 0o600);
+  }
+  assert.equal(createHash('sha256').update(readFileSync(receipt.backup.path)).digest('hex'), receipt.backup.sha256);
+  assert.deepEqual(readFileSync(receipt.backup.installationPath), originalMarker);
+  assert.equal(createHash('sha256').update(originalMarker).digest('hex'), receipt.backup.installationSha256);
+  const backup = new DatabaseSync(receipt.backup.path, { readOnly: true });
+  try {
+    assert.equal(backup.prepare('SELECT schema_version FROM metadata').get()?.schema_version, 2);
+    assert.equal(backup.prepare('SELECT record FROM imported_actions WHERE id=?').get('preserved-import')?.record, importedRecord);
+  } finally { backup.close(); }
+  assert.equal(existsSync(join(f.root, 'migration.lock')), false);
+  assert.deepEqual(upgradeAdmissionForTesting(upgradeDeclaration, { root: f.root, backend: 'fake' }), receipt);
+});
 
 test('explicit offline initialization enables admission and persists its operator declaration', t => {
   const f = fixture(t);
@@ -244,6 +853,8 @@ test('activation revalidates persisted manifest and rejects missing initialized 
   migrateAdmissionForTesting(declaration, f.options);
   const admission = f.open();
   const db = new DatabaseSync(join(f.root, 'admission.sqlite'));
+  assert.throws(() => db.prepare('UPDATE metadata SET migration_manifest=?').run('{}'), /Immutable metadata binding/);
+  db.exec('DROP TRIGGER metadata_binding_immutable');
   db.prepare('UPDATE metadata SET migration_manifest=?').run('{}'); db.close();
   assert.throws(() => admission.acquire({ attempt: { kind: 'legacy', id: 'bad-manifest' }, device, digest: 'one', intent: {} }), { code: 'STATE_UNAVAILABLE' });
   assert.throws(() => admission.inspect(device), { code: 'STATE_UNAVAILABLE' });

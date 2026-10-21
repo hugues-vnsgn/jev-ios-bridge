@@ -1,17 +1,30 @@
 import type { AllocationCapacity, AllocationReservationInput, ReserveAllocationResult, AllocationRecord, AllocationOwner, AllocationReservation, AllocationCommit, AllocationReason, PreparationClaim, ActionBinding, ConsumeAllocationResult, ActionRecordView, ActionEvidence } from './admission-allocation.js';
 import { randomUUID } from 'node:crypto';
 import { userInfo } from 'node:os';
-import { join } from 'node:path';
+import { isAbsolute, join, resolve } from 'node:path';
+import { z } from 'zod/v4';
 import { AdmissionError, AdmissionSqlite, type StoreOptions } from './admission-sqlite.js';
 import type { ImportedObservedAction, MigrationReceipt } from './admission-migration.js';
+import { FENCE_REQUEST_KINDS } from '../scripted/vocabulary.js';
+
+export function parseFenceRequestKind(raw: unknown): 'stop' {
+  const result = z.enum(FENCE_REQUEST_KINDS).safeParse(raw);
+  if (!result.success) throw new AdmissionError('INVALID_REQUEST', 'Expected a fence request kind');
+  if (result.data === 'maintenance-lift') throw new AdmissionError('NOT_COVERABLE', 'Maintenance-lift is reserved and cannot cover quarantines');
+  return result.data;
+}
 
 export type AttemptIdentity = { kind: 'observed' | 'legacy' | 'preparation'; id: string };
+export const DEVICE_CATEGORIES = ['ios-simulator', 'android-emulator', 'android-phone', 'ios-phone'] as const;
+export type DeviceCategory = typeof DEVICE_CATEGORIES[number];
+const deviceIdentitySchema = z.strictObject({ category: z.enum(DEVICE_CATEGORIES), value: z.string().min(1).refine(value => !value.includes('\0')) });
+export type DeviceIdentity = z.infer<typeof deviceIdentitySchema>;
 export type OwnerProcess = { pid: number; incarnation: string };
-export type OwnerIdentity = { device: string; attempt: AttemptIdentity; token: string; generation: number; process: OwnerProcess };
+export type OwnerIdentity = { category: DeviceCategory; device: string; attempt: AttemptIdentity; token: string; generation: number; process: OwnerProcess };
 export type TerminalCandidate = { outcome: 'observed' | 'completed' | 'refused' | 'inconclusive'; disposition: 'available' | 'quarantined'; payload: unknown; evidenceRefs: string[] };
-export type AttemptView = { identity: AttemptIdentity; device: string; digest: string; intent: unknown; owner: OwnerIdentity; state: 'active' | 'parked' | 'terminal'; cancellationRequested: boolean; terminal: TerminalCandidate | null };
-export type DeviceView = { device: string; state: 'active' | 'available' | 'quarantined'; generation: number; owner: OwnerIdentity | null; reason: string | null };
-export type AdmissionRequest = { device: string; attempt: AttemptIdentity; digest: string; intent: unknown; signal?: AbortSignal };
+export type AttemptView = { identity: AttemptIdentity; category: DeviceCategory; device: string; digest: string; intent: unknown; owner: OwnerIdentity; state: 'active' | 'parked' | 'terminal'; cancellationRequested: boolean; terminal: TerminalCandidate | null };
+export type DeviceView = { category: DeviceCategory; device: string; state: 'active' | 'available' | 'quarantined'; generation: number; owner: OwnerIdentity | null; reason: string | null };
+export type AdmissionRequest = { category?: DeviceCategory | undefined; device: string; attempt: AttemptIdentity; digest: string; intent: unknown; signal?: AbortSignal };
 export type AdmissionResult = { kind: 'acquired'; claim: AdmissionClaim } | { kind: 'retrieved'; attempt: AttemptView } | { kind: 'refused'; reason: 'DEVICE_BUSY' | 'DEVICE_QUARANTINED' | 'ACTION_ID_CONFLICT' | 'CANCELLED' | 'HOST_CREATION_UNRESOLVED'; blockingAllocationId?: string };
 export type Finalization = { authority: 'committed'; attempt: AttemptView } | { authority: 'unconfirmed'; reason: 'FINALIZATION_UNCONFIRMED' };
 export type AdmissionFault = 'beforeCommit' | 'afterCommit';
@@ -19,8 +32,23 @@ export type AdmissionDependencies = { now?: () => number; process?: OwnerProcess
 const incarnation = randomUUID();
 export { AdmissionError } from './admission-sqlite.js';
 export function admissionRoot(): string { return join(userInfo().homedir, 'Library/Application Support/jev-ios-bridge/admission'); }
-export function canonicalDevice(input: string): string {
+export function canonicalDevice(input: string): string;
+export function canonicalDevice(input: DeviceIdentity): DeviceIdentity;
+export function canonicalDevice(input: string | DeviceIdentity): string | DeviceIdentity {
+  if (typeof input !== 'string') {
+    const parsed = deviceIdentitySchema.safeParse(input);
+    if (!parsed.success) throw new AdmissionError('INVALID_REQUEST', 'Expected a device category and value');
+    if (parsed.data.category === 'ios-phone') throw new AdmissionError('CATEGORY_NOT_ENABLED', 'Physical iPhone admission is not enabled');
+    if (parsed.data.category === 'android-emulator' && (!isAbsolute(parsed.data.value) || resolve(parsed.data.value) !== parsed.data.value)) {
+      throw new AdmissionError('INVALID_REQUEST', 'Expected a resolved absolute AVD path');
+    }
+    return parsed.data.category === 'ios-simulator' ? { ...parsed.data, value: canonicalDevice(parsed.data.value) } : parsed.data;
+  }
   if (!/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(input)) throw new AdmissionError('INVALID_REQUEST', 'Expected a simulator UUID');
+  return input.toUpperCase();
+}
+export function canonicalAllocationId(input: string): string {
+  if (!/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(input)) throw new AdmissionError('INVALID_REQUEST', 'Expected an allocation UUID');
   return input.toUpperCase();
 }
 export function validateAttempt(identity: AttemptIdentity): void {
@@ -50,13 +78,14 @@ export class Admission {
     if (!actionId.length || actionId.length > 1024) throw new AdmissionError('INVALID_REQUEST', 'Invalid historical action identity');
     return this.store.readImportedAction(actionId);
   }
-  readImportedAllocation(allocationId: string): ImportedObservedAction | undefined { return this.store.readImportedAllocation(canonicalDevice(allocationId)); }
+  readImportedAllocation(allocationId: string): ImportedObservedAction | undefined { return this.store.readImportedAllocation(canonicalAllocationId(allocationId)); }
   acquire(request: AdmissionRequest): AdmissionResult {
     validateAttempt(request.attempt);
-    const device = canonicalDevice(request.device);
+    const identity = canonicalDevice({ category: request.category ?? 'ios-simulator', value: request.device });
+    const device = identity.value;
     if (!request.digest.trim()) throw new AdmissionError('INVALID_REQUEST', 'Missing request digest');
     if (request.signal?.aborted) return { kind: 'refused', reason: 'CANCELLED' };
-    const acquired = this.store.acquire({ ...request, device }, this.dependencies.process ?? { pid: process.pid, incarnation });
+    const acquired = this.store.acquire({ ...request, category: identity.category, device }, this.dependencies.process ?? { pid: process.pid, incarnation });
     if (acquired.kind !== 'acquired') return acquired;
     const claim = new OwnedClaim(this.store, acquired.owner);
     if (request.signal) {
@@ -72,10 +101,10 @@ export class Admission {
     if (result.kind !== 'reserved') return result;
     return { kind: 'reserved', reservation: new OwnedReservation(this.store, result.allocation) };
   }
-  readAllocation(id: string): AllocationRecord | undefined { return this.store.readAllocation(canonicalDevice(id)); }
+  readAllocation(id: string): AllocationRecord | undefined { return this.store.readAllocation(canonicalAllocationId(id)); }
   readAllocationForAction(actionId: string): AllocationRecord | undefined { return this.store.readAllocationForAction(actionId); }
   consumeAllocation(binding: ActionBinding): ConsumeAllocationResult {
-    const result = this.store.consumeAllocation({ ...binding, allocationId: canonicalDevice(binding.allocationId) }, this.dependencies.process ?? { pid: process.pid, incarnation });
+    const result = this.store.consumeAllocation({ ...binding, allocationId: canonicalAllocationId(binding.allocationId) }, this.dependencies.process ?? { pid: process.pid, incarnation });
     if (result.kind !== 'consumed') return result;
     return { kind: 'consumed', claim: new OwnedClaim(this.store, result.owner), allocation: result.allocation };
   }
@@ -83,13 +112,16 @@ export class Admission {
   listActiveAllocations(): AllocationRecord[] { return this.store.listActiveAllocations(); }
   readAction(actionId: string): ActionRecordView | undefined { return this.store.readAction(actionId); }
   recordActionExport(actionId: string, result: { status: 'complete'; terminal: string } | { status: 'failed' }): AllocationRecord { return this.store.recordActionExport(actionId, result); }
-  cancelAllocation(id: string) { return this.store.changeAllocation(canonicalDevice(id), 'cancel'); }
-  retireAllocation(id: string) { return this.store.changeAllocation(canonicalDevice(id), 'retire'); }
+  cancelAllocation(id: string) { return this.store.changeAllocation(canonicalAllocationId(id), 'cancel'); }
+  retireAllocation(id: string) { return this.store.changeAllocation(canonicalAllocationId(id), 'retire'); }
   quarantineAbandonedAllocation(expected: AllocationOwner): boolean {
     const liveness = this.dependencies.ownerLiveness?.(expected.process) ?? processLiveness(expected.process);
     return liveness === 'dead' ? this.store.quarantineAbandonedAllocation(expected) : false;
   }
-  inspect(device: string): DeviceView | undefined { return this.store.inspect(canonicalDevice(device)); }
+  inspect(device: string | DeviceIdentity): DeviceView | undefined {
+    const identity=canonicalDevice(typeof device==='string'?{category:'ios-simulator',value:device}:device);
+    return this.store.inspect(identity.value,identity.category);
+  }
   readAttempt(identity: AttemptIdentity): AttemptView | undefined { validateAttempt(identity); return this.store.readAttempt(identity); }
   cancel(identity: AttemptIdentity): AttemptView | undefined { validateAttempt(identity); return this.store.cancel(identity); }
   quarantineAbandoned(expected: OwnerIdentity, reason: string): boolean {

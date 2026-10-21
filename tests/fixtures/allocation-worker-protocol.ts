@@ -1,4 +1,5 @@
 import { z } from 'zod';
+import { DEVICE_CATEGORIES } from '../../src/device/admission.js';
 import type { AllocationReason } from '../../src/device/admission-allocation.js';
 import { reservationSchema, actionBindingSchema } from '../../src/device/admission-allocation.js';
 
@@ -22,7 +23,7 @@ export const workSchema = z.discriminatedUnion('mode', [
   z.strictObject({ ...common, mode: z.literal('journey') }),
 ]);
 export type Work = z.infer<typeof workSchema>;
-const owner = z.strictObject({ device: z.string(), attempt: z.strictObject({ kind: z.enum(['legacy','preparation','observed']), id: z.string() }),
+const owner = z.strictObject({ category: z.enum(DEVICE_CATEGORIES), device: z.string(), attempt: z.strictObject({ kind: z.enum(['legacy','preparation','observed']), id: z.string() }),
   token: z.string().min(1), generation: z.number().int().positive(), process: z.strictObject({ pid: z.number().int().nonnegative(), incarnation: z.string() }) });
 const evidence = { actor: z.number().int().positive(), phase, effects: z.number().int().nonnegative(), authorizations: z.array(owner), effectOwners: z.array(owner), callbackEntries: z.array(z.strictObject({ owner, authorizationSeenAtEntry: z.boolean() })) };
 const reason = z.enum(['INVALID_REQUEST','ACTION_ID_CONFLICT','ALLOCATION_NOT_FOUND','ALLOCATION_NOT_READY','ALLOCATION_BUSY',

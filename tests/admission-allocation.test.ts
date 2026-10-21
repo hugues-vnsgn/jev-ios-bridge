@@ -8,12 +8,20 @@ import { DatabaseSync } from 'node:sqlite';
 import { createHash } from 'node:crypto';
 import { fileURLToPath } from 'node:url';
 import { Admission } from '../src/device/admission.js';
+import * as admissionApi from '../src/device/admission.js';
 import type { AllocationReservationInput, AllocationRecord } from '../src/device/admission-allocation.js';
 
 import { messageSchema, requireResult, type Work, type WorkerResult } from './fixtures/allocation-worker-protocol.js';
 
 const uuid = 'ABCDEF00-0000-4000-8000-000000000001';
 const digest = 'a'.repeat(64);
+test('allocation identities normalize UUIDs independently of device categories', () => {
+  assert.equal(admissionApi.canonicalAllocationId('abcdef00-0000-4000-8000-000000000001'), 'ABCDEF00-0000-4000-8000-000000000001');
+  for (const invalid of ['/private/avds/Pixel.avd', 'PHONE123', 'ios-simulator:ABCDEF00-0000-4000-8000-000000000001', '']) {
+    assert.throws(() => admissionApi.canonicalAllocationId(invalid), { code: 'INVALID_REQUEST', message: 'Expected an allocation UUID' });
+  }
+});
+
 function input(actionId = 'one'): AllocationReservationInput {
   return { actionId, preparationDigest: digest, preparation: { version: 1, actionId }, appBundleId: 'dev.fixture',
     source: { kind: 'create', deviceTypeId: 'com.apple.CoreSimulator.SimDeviceType.iPhone-17', runtimeId: 'com.apple.CoreSimulator.SimRuntime.iOS-27-0' },
@@ -689,7 +697,7 @@ function corruptCapacity(root: string, change: (record: Record<string, unknown>)
     const record = JSON.parse(row.record as string) as Record<string, unknown>; change(record);
     const json = JSON.stringify(record);
     db.prepare('UPDATE allocations SET record=?, checksum=? WHERE id=?').run(json,
-      validChecksum ? createHash('sha256').update(json).digest('hex') : 'corrupt', row.id!);
+      validChecksum ? createHash('sha256').update(json).digest('hex') : '0'.repeat(64), row.id!);
   } finally { db.close(); }
 }
 for (const [field, value] of [

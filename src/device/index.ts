@@ -797,7 +797,7 @@ export class MobileBuildMcpDriver implements DeviceDriver, IosPreparationDriver,
     admission.assertBackend(this.options.fakeBackend ? 'fake' : 'real');
     const intent = { deviceId, app: scenario.app, start: scenario.start ?? 'restart',
       ...(this.options.profile ? { profile: this.options.profile } : {}) };
-    const acquired = admission.acquire({ device: deviceId, attempt: { kind: 'legacy', id: this.options.runId ?? randomUUID() },
+    const acquired = admission.acquire({ category: 'ios-simulator', device: deviceId, attempt: { kind: 'legacy', id: this.options.runId ?? randomUUID() },
       digest: createHash('sha256').update(JSON.stringify(intent)).digest('hex'), intent, signal });
     if (acquired.kind !== 'acquired') throw new DeviceCliError('DEVICE_BUSY', `Device admission refused: ${acquired.kind === 'refused' ? acquired.reason : 'ATTEMPT_ALREADY_EXISTS'}`);
     this.ownsClaim = true;
