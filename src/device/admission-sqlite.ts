@@ -12,6 +12,7 @@ import { BRIDGE_VERSION } from '../version.js';
 import type { UpgradeDeclaration, UpgradeReceipt, UpgradeRecovery, UpgradeCheckpoint, PreservedRecords } from './admission-upgrade.js';
 import { IMPORT_REFUSAL_REASONS, type ImportRefusalReason } from '../scripted/vocabulary.js';
 import type { ImportedObservedAction, MigrationImport, MigrationReceipt, MigrationTestOptions } from './admission-migration.js';
+import type { ImportPlan, ImportReceipt, ImportTestOptions } from './admission-import.js';
 
 type AdmissionErrorCode = 'STATE_UNAVAILABLE' | 'INVALID_REQUEST' | 'CATEGORY_NOT_ENABLED' | 'UPGRADE_BLOCKED' | 'IMPORT_REFUSED' | 'NOT_COVERABLE' | 'STALE_OWNER' | 'DISPATCH_CLOSED' | 'OPERATIONS_UNSETTLED';
 export class AdmissionError extends Error {
@@ -339,6 +340,122 @@ function recoverUpgrade(options:StoreOptions,declaration:UpgradeDeclaration,chec
   }catch(error){try{db?.exec('ROLLBACK');}catch{}throw unavailable(error);}finally{db?.close();}
 }
 
+function importReceipt(row: Row): ImportReceipt {
+  return {version:1,kind:'import',id:row.id,guardToken:row.guard_token,time:row.time,binaryVersion:row.binary_version,
+    declaration:JSON.parse(row.declaration),declarationDigest:row.declaration_digest,sourceSetDigest:row.source_set_digest,
+    backup:{path:row.backup_path,sha256:row.backup_sha256,installationPath:row.installation_backup_path,installationSha256:row.installation_backup_sha256},...JSON.parse(row.payload)};
+}
+function importLegacy(options: StoreOptions, scan: () => ImportPlan, checkpoint?: ImportTestOptions['checkpoint']): ImportReceipt {
+  let db: DatabaseSync | undefined;
+  try {
+    const plan=scan();
+    const pairs=plan.sources.map(source=>[source.path,source.sha256]).sort((a,b)=>JSON.stringify(a).localeCompare(JSON.stringify(b)));
+    const declarationDigest=sha(JSON.stringify(plan.declaration)),sourceSetDigest=sha(JSON.stringify(pairs));
+    db=maintenanceDatabase(options);
+    if(Number(db.prepare('SELECT schema_version FROM metadata').get()?.schema_version)!==schemaVersion) throw new AdmissionError('STATE_UNAVAILABLE','Import requires schema 3');
+    const prior=db.prepare('SELECT * FROM import_receipts WHERE declaration_digest=? AND source_set_digest=?').get(declarationDigest,sourceSetDigest) as Row|undefined;
+    if(prior) return importReceipt(prior);
+    if(db.prepare("SELECT id FROM attempts WHERE state='active' LIMIT 1").get()) throw new AdmissionError('UPGRADE_BLOCKED','Active attempts block import');
+    const skipped: ImportReceipt['skipped']=[];
+    for(const source of plan.sources) {
+      const old=db.prepare('SELECT sha256 FROM import_sources WHERE path=?').all(source.path);
+      if(old.some(row=>row.sha256!==source.sha256)) throw new AdmissionError('IMPORT_REFUSED','Previously imported source changed','SOURCE_CONFLICT');
+      if(old.length) skipped.push({path:source.path,sha256:source.sha256});
+    }
+    const actions: ImportedObservedAction[]=[];
+    for(const action of plan.actions) {
+      const prior=db.prepare('SELECT record FROM imported_actions WHERE id=?').get(action.actionId);
+      if(prior) {
+        const record=JSON.parse(String(prior.record));
+        if(!isDeepStrictEqual(record.records,action.records))throw new AdmissionError('IMPORT_REFUSED','Journal action conflicts','SOURCE_CONFLICT');
+      } else actions.push({...action,allocationId:randomUUID().toUpperCase()});
+    }
+    const token=randomUUID(),time=options.now?.()??Date.now(),directory=join(options.root,'backups',token);
+    const fingerprint=sha(databaseSnapshot(db));
+    const guard={version:1,kind:'import',token,installationId:db.prepare('SELECT installation_id FROM metadata').get()?.installation_id,
+      declarationDigest,sourceSetDigest,time,sourceFingerprint:fingerprint,backup:null as ImportReceipt['backup']|null,afterFingerprint:null as string|null};
+    const guardPath=join(options.root,'migration.lock');
+    writeFileSync(guardPath,JSON.stringify(guard),{flag:'wx',mode:0o600});syncPath(guardPath);syncPath(options.root);checkpoint?.('guarded');
+    mkdirSync(join(options.root,'backups'),{recursive:true,mode:0o700});secure(join(options.root,'backups'),true);
+    mkdirSync(directory,{mode:0o700});secure(directory,true);
+    const backupPath=join(directory,'admission.sqlite'),installationPath=join(directory,'installation.json');
+    const mask=process.umask(0o077);
+    try {db.prepare('VACUUM INTO ?').run(backupPath);} finally {process.umask(mask);}
+    secure(backupPath,false);writeFileSync(installationPath,readFileSync(join(options.root,'installation.json')),{flag:'wx',mode:0o600});
+    syncPath(backupPath);syncPath(installationPath);syncPath(directory);syncPath(join(options.root,'backups'));
+    const copy=new DatabaseSync(backupPath,{readOnly:true});
+    try {if(sha(databaseSnapshot(copy))!==fingerprint) throw new AdmissionError('STATE_UNAVAILABLE','Import backup verification failed');} finally {copy.close();}
+    const backup={path:backupPath,sha256:sha(readFileSync(backupPath)),installationPath,installationSha256:sha(readFileSync(installationPath))};
+    guard.backup=backup;writeFileSync(guardPath,JSON.stringify(guard));syncPath(guardPath);checkpoint?.('backupVerified');
+    db.exec('BEGIN IMMEDIATE');
+    if(sha(databaseSnapshot(db))!==fingerprint||!isDeepStrictEqual(plan,scan())) throw new AdmissionError('IMPORT_REFUSED','Import sources or store changed','SOURCE_INCONSISTENT');
+    const exclusions=plan.exclusions.filter(device=>!db!.prepare("SELECT id FROM quarantines WHERE platform='ios-simulator' AND device=? AND kind='exclusion'").get(device)).map(device=>({id:randomUUID(),device}));
+    const id=randomUUID(), pending=plan.quarantines.filter(q=>!skipped.some(old=>old.path===q.path&&old.sha256===q.sha256)).map(q=>({...q,id:randomUUID()})), quarantines=[...pending.map(q=>q.id),...exclusions.map(q=>q.id)], importedActions=actions.map(action=>action.actionId);
+    const preserved=preservedRecords(db,3);
+    const quarantineMatches:NonNullable<ImportReceipt['quarantineMatches']>=pending.map(q=>q.target.kind==='device'
+      ?{id:q.id,matchedBy:'exact-uuid',device:q.target.device}:{id:q.id,matchedBy:'legacy-name',name:q.target.name});
+    for(const q of exclusions)quarantineMatches.push({id:q.id,matchedBy:'exact-uuid',device:q.device});
+    const payload={sources:plan.sources,skipped,quarantines,quarantineMatches,importedActions,preserved};
+    db.prepare('INSERT INTO import_receipts VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)').run(id,token,sha(JSON.stringify([declarationDigest,sourceSetDigest])),declarationDigest,sourceSetDigest,time,BRIDGE_VERSION,JSON.stringify(plan.declaration),backup.path,backup.sha256,backup.installationPath,backup.installationSha256,JSON.stringify(payload));
+    for(const source of plan.sources) {
+      if(skipped.some(old=>old.path===source.path&&old.sha256===source.sha256)) continue;
+      db.prepare('INSERT INTO import_sources VALUES (?,?,?,?,?)').run(source.path,source.sha256,source.kind,id,JSON.stringify(source.evidence));
+      for(const quarantine of pending.filter(q=>q.path===source.path&&q.sha256===source.sha256)) {
+        const target=quarantine.target, qid=quarantine.id;
+        if(target.kind==='device') db.prepare("INSERT INTO devices(platform,device,generation,attributes) VALUES ('ios-simulator',?,0,'{}') ON CONFLICT DO NOTHING").run(target.device);
+        db.prepare("INSERT INTO quarantines(id,platform,device,legacy_name,kind,cause,created_at,evidence,source_path,source_sha256) VALUES (?,?,?,?,'historical',?,?,?,?,?)")
+          .run(qid,target.kind==='device'?'ios-simulator':null,target.kind==='device'?target.device:null,target.kind==='name'?target.name:null,source.kind==='lease'?'legacy-lease':'historical-journal',time,JSON.stringify(quarantine.evidence),source.path,source.sha256);
+      }
+    }
+    const receipt:ImportReceipt={version:1,kind:'import',id,guardToken:token,time,binaryVersion:BRIDGE_VERSION,declaration:plan.declaration,declarationDigest,sourceSetDigest,backup,...payload};
+    for(const excluded of exclusions) {
+      db.prepare("INSERT INTO devices(platform,device,generation,attributes) VALUES ('ios-simulator',?,0,'{}') ON CONFLICT DO NOTHING").run(excluded.device);
+      db.prepare("INSERT INTO quarantines(id,platform,device,kind,cause,created_at,evidence) VALUES (?,'ios-simulator',?,'exclusion','protected-device',?,?)").run(excluded.id,excluded.device,time,JSON.stringify({version:1,declarationDigest}));
+    }
+    for(const action of actions) {
+      db.prepare("INSERT INTO devices(platform,device,generation,attributes) VALUES ('ios-simulator',?,0,'{}') ON CONFLICT DO NOTHING").run(action.device);
+      db.prepare("INSERT INTO imported_actions(id,allocation_id,platform,device,record) VALUES (?,?,'ios-simulator',?,?)").run(action.actionId,action.allocationId,action.device,JSON.stringify(action));
+    }
+    guard.afterFingerprint=sha(databaseSnapshot(db));writeFileSync(guardPath,JSON.stringify(guard));syncPath(guardPath);
+    checkpoint?.('beforeCommit');db.exec('COMMIT');checkpoint?.('afterCommit');removeUpgradeGuard(options.root,token);return receipt;
+  } catch(error) {try{db?.exec('ROLLBACK');}catch{}throw unavailable(error);} finally {db?.close();}
+}
+
+const importGuardSchema=z.strictObject({version:z.literal(1),kind:z.literal('import'),token:z.string().uuid(),installationId:z.string().uuid(),
+  declarationDigest:z.string().regex(/^[a-f0-9]{64}$/),sourceSetDigest:z.string().regex(/^[a-f0-9]{64}$/),time:z.number().int().nonnegative(),
+  sourceFingerprint:z.string().regex(/^[a-f0-9]{64}$/),backup:backupSchema.nullable(),afterFingerprint:z.string().regex(/^[a-f0-9]{64}$/).nullable()});
+function recoverImport(options:StoreOptions,declaration:MigrationDeclaration,checkpoint?:ImportTestOptions['checkpoint']) {
+  let db:DatabaseSync|undefined;
+  try {
+    rootPath(options.root);const guardPath=join(options.root,'migration.lock');secure(guardPath,false);
+    const guard=importGuardSchema.parse(JSON.parse(readFileSync(guardPath,'utf8')));
+    if(guard.declarationDigest!==sha(JSON.stringify(declaration)))throw new AdmissionError('STATE_UNAVAILABLE','Import recovery declaration or backup conflicts');
+    const backup=guard.backup,directory=join(options.root,'backups',guard.token);
+    if(backup!==null) {
+      if(backup.path!==join(directory,'admission.sqlite')||backup.installationPath!==join(directory,'installation.json'))throw new AdmissionError('STATE_UNAVAILABLE','Import backup path conflicts');
+      secure(join(options.root,'backups'),true);secure(directory,true);secure(backup.path,false);secure(backup.installationPath,false);
+      if(sha(readFileSync(backup.path))!==backup.sha256||sha(readFileSync(backup.installationPath))!==backup.installationSha256||!readFileSync(backup.installationPath).equals(readFileSync(join(options.root,'installation.json'))))throw new AdmissionError('STATE_UNAVAILABLE','Import recovery backup changed');
+      const copy=new DatabaseSync(backup.path,{readOnly:true});
+      try {if(sha(databaseSnapshot(copy))!==guard.sourceFingerprint)throw new AdmissionError('STATE_UNAVAILABLE','Import backup state conflicts');} finally {copy.close();}
+    }
+    db=maintenanceDatabase(options,guard.token);db.exec('BEGIN IMMEDIATE');
+    const meta=db.prepare('SELECT * FROM metadata WHERE singleton=1').get();
+    if(meta?.schema_version!==3||meta.installation_id!==guard.installationId)throw new AdmissionError('STATE_UNAVAILABLE','Import recovery identity mismatch');
+    const row=db.prepare('SELECT * FROM import_receipts WHERE guard_token=?').get(guard.token) as Row|undefined;
+    if(row) {
+      const receipt=importReceipt(row);
+      if(backup===null||receipt.declarationDigest!==guard.declarationDigest||receipt.sourceSetDigest!==guard.sourceSetDigest||!isDeepStrictEqual(receipt.backup,backup))throw new AdmissionError('STATE_UNAVAILABLE','Import recovery receipt conflicts');
+    }
+    const result={version:1 as const,kind:'import-recovery' as const,guardToken:guard.token,receiptId:row?String(row.id):null};
+    const detail={...result,declarationDigest:guard.declarationDigest,sourceSetDigest:guard.sourceSetDigest,installationId:guard.installationId};
+    const events=db.prepare("SELECT * FROM transitions WHERE kind='maintenance' AND attempt_id=? AND event='import-recovered'").all(guard.token);
+    if(events.length>1||events.some(event=>!isDeepStrictEqual(JSON.parse(String(event.detail)),detail)))throw new AdmissionError('STATE_UNAVAILABLE','Import recovery journal conflicts');
+    if(sha(databaseSnapshot(db,events[0]?.sequence as number|undefined))!==(row?guard.afterFingerprint:guard.sourceFingerprint))throw new AdmissionError('STATE_UNAVAILABLE','Store differs from checked import recovery state');
+    if(!events.length)db.prepare("INSERT INTO transitions(kind,attempt_id,event,detail,time) VALUES ('maintenance',?,'import-recovered',?,?)").run(guard.token,JSON.stringify(detail),guard.time);
+    db.exec('COMMIT');checkpoint?.('recoveryCommitted');removeUpgradeGuard(options.root,guard.token);return result;
+  } catch(error){try{db?.exec('ROLLBACK');}catch{}throw unavailable(error);} finally {db?.close();}
+}
+
 function unavailable(error: unknown): AdmissionError {
   return error instanceof AdmissionError ? error : new AdmissionError('STATE_UNAVAILABLE', `Admission storage unavailable: ${error instanceof Error ? error.message : String(error)}`);
 }
@@ -384,6 +501,41 @@ export class AdmissionSqlite {
   constructor(private readonly options: StoreOptions, private readonly migrationToken?: string) {
     try { this.root = rootPath(options.root); this.read(() => undefined); } catch (error) { throw unavailable(error); }
   }
+  static inspectMaintenance(options: StoreOptions) {
+    rootPath(options.root);
+    const markerPath=join(options.root,'installation.json'),path=join(options.root,'admission.sqlite'),guardPath=join(options.root,'migration.lock');
+    secure(markerPath,false);secure(path,false);secureSidecars(path);
+    if(!absent(path+'-journal'))throw new AdmissionError('STATE_UNAVAILABLE','Read-only inspection cannot recover an existing journal');
+    const marker=z.strictObject({version:z.literal(1),root:z.string(),installationId:z.string().uuid()}).parse(JSON.parse(readFileSync(markerPath,'utf8')));
+    let guard:unknown=null;
+    if(!absent(guardPath)){secure(guardPath,false);guard=JSON.parse(readFileSync(guardPath,'utf8'));}
+    const db=new DatabaseSync(path,{readOnly:true});
+    try {
+      db.exec('PRAGMA query_only=ON; BEGIN');
+      const meta=db.prepare('SELECT * FROM metadata WHERE singleton=1').get() as Row|undefined;
+      if(!meta||marker.root!==options.root||meta.root!==options.root||meta.installation_id!==marker.installationId||meta.mode!==options.mode)throw new AdmissionError('STATE_UNAVAILABLE','Admission installation identity mismatch');
+      const version=Number(meta.schema_version);
+      if(version!==2&&version!==3)throw new AdmissionError('STATE_UNAVAILABLE','Unsupported inspection schema');
+      const migration=migrationReceipt(meta,options.mode)??null;
+      const upgrades=version===3?db.prepare('SELECT * FROM upgrades ORDER BY time,id').all().map(row=>upgradeReceipt(row)):[];
+      const imports=version===3?db.prepare('SELECT * FROM import_receipts ORDER BY time,id').all().map(row=>importReceipt(row)):[];
+      const backups=[...upgrades,...imports].map(receipt=>{
+        const backup=receipt.backup, directory=join(options.root,'backups',receipt.guardToken);
+        if(backup.path!==join(directory,'admission.sqlite')||backup.installationPath!==join(directory,'installation.json'))throw new AdmissionError('STATE_UNAVAILABLE','Receipt backup path conflicts');
+        secure(join(options.root,'backups'),true);secure(directory,true);secure(backup.path,false);secure(backup.installationPath,false);
+        const verified=sha(readFileSync(backup.path))===backup.sha256&&sha(readFileSync(backup.installationPath))===backup.installationSha256
+          &&readFileSync(backup.installationPath).equals(readFileSync(markerPath));
+        return {receiptId:receipt.id,...backup,verified};
+      });
+      return {schemaVersion:version,installationId:String(meta.installation_id),guard,
+        activeAttempts:db.prepare("SELECT kind,id,pid,incarnation FROM attempts WHERE state='active' ORDER BY kind,id").all(),
+        migration,upgrades,imports,preserved:preservedRecords(db,version),backups,
+        importedSources:version===3?db.prepare('SELECT path,sha256 FROM import_sources ORDER BY path,sha256').all():[],
+        quarantines:version===3?db.prepare('SELECT id,platform,device,legacy_name,kind,cause,source_path,source_sha256,covering_receipt_id FROM quarantines ORDER BY id').all():db.prepare("SELECT device,reason FROM devices WHERE state='quarantined' ORDER BY device").all()};
+    } finally {db.close();}
+  }
+  static recoverImport(options: StoreOptions, declaration: MigrationDeclaration, checkpoint?: ImportTestOptions['checkpoint']) { return recoverImport(options,declaration,checkpoint); }
+  static importLegacy(options: StoreOptions, scan: () => ImportPlan, checkpoint?: ImportTestOptions['checkpoint']): ImportReceipt { return importLegacy(options,scan,checkpoint); }
   static upgrade(options: StoreOptions, declaration: UpgradeDeclaration, checkpoint?: (point: UpgradeCheckpoint) => void): UpgradeReceipt { return runUpgrade(options,declaration,checkpoint); }
   static recoverUpgrade(options: StoreOptions, declaration: UpgradeDeclaration, checkpoint?: (point: UpgradeCheckpoint) => void): UpgradeRecovery { return recoverUpgrade(options,declaration,checkpoint); }
   /** The scanner receives no database access; only this adapter installs authoritative state. */
