@@ -104,6 +104,23 @@ test('a stalled installed-app probe refuses without admission or any effect', as
   } finally { await driver.close(new AbortController().signal); await rm(root, { recursive: true, force: true }); }
 });
 
+test('a simulator device set the effects would use, other than the default, refuses NONDEFAULT_DEVICE_SET before any effect', async () => {
+  const root = await mkdtemp(join(tmpdir(), 'jev-device-set-'));
+  const effects: string[] = [];
+  const previous = process.env.SIMCTL_DEVICE_SET_PATH;
+  process.env.SIMCTL_DEVICE_SET_PATH = root;
+  const driver = fakeDriver({ cwd: root, lockRoot: root, identityProbe: fakeSimulatorProbe(udid),
+    runner: async args => { effects.push(args.join(' ')); return { stdout: commandEnvelope(args), stderr: '', exitCode: 0 }; } });
+  try {
+    await assert.rejects(driver.prepare(scenario, new AbortController().signal),
+      (error: unknown) => error instanceof DeviceReasonError && error.code === 'DEVICE_IDENTITY_UNAVAILABLE' && error.vendorCode === 'NONDEFAULT_DEVICE_SET');
+    assert.deepEqual(effects, []);
+  } finally {
+    if (previous === undefined) delete process.env.SIMCTL_DEVICE_SET_PATH; else process.env.SIMCTL_DEVICE_SET_PATH = previous;
+    await driver.close(new AbortController().signal); await rm(root, { recursive: true, force: true });
+  }
+});
+
 test('a missing simulator identity refuses before the effect runner or admission', async () => {
   const root = await mkdtemp(join(tmpdir(), 'jev-device-identity-'));
   const calls: string[][] = [];

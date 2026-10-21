@@ -1,7 +1,7 @@
 import { createHash, randomUUID } from 'node:crypto';
 import { execFile } from 'node:child_process';
 import { createRequire } from 'node:module';
-import { readFile } from 'node:fs/promises';
+import { readFile, realpath } from 'node:fs/promises';
 import { isAbsolute, join, resolve } from 'node:path';
 import { isIosApp, type Action, type ActionScenarioContext, type ActPath, type AppProblem, type ElementAction, type LogSources, type DeviceDriver, type DeviceMetrics,
   type Element, type PrepareScenarioContext, type Snapshot, type TapAliasRule } from '../contracts/index.js';
@@ -269,6 +269,12 @@ export function parseSnapshot(data: JsonObject, deviceId: string, screenshotPath
 export function deviceEnvironment(source: NodeJS.ProcessEnv = process.env): NodeJS.ProcessEnv {
   const { TYPESAFE_API_KEY: _jevKey, ...environment } = source;
   return { ...environment, MOBILEBUILDMCP_SENTRY_DISABLED: 'true' };
+}
+
+/** The simulator device set the effects would use when the environment names one, as a real path like the probe's default. */
+async function requestedDeviceSet(): Promise<string | undefined> {
+  const path = process.env.SIMCTL_DEVICE_SET_PATH || process.env.SIMULATOR_DEVICE_SET_PATH;
+  return path ? realpath(path).catch(() => path) : undefined;
 }
 
 /** The pinned MobileBuildMCP CLI installed with the bridge, run directly by Node (no npx round trip). */
@@ -805,7 +811,9 @@ export class MobileBuildMcpDriver implements DeviceDriver, IosPreparationDriver,
     if (!this.probe && (this.options.fakeBackend || this.options.runner)) throw new DeviceReasonError('DEVICE_IDENTITY_UNAVAILABLE',
       'Simulator identity requires a read-only probe', { vendorCode: 'PROVENANCE_INACCESSIBLE' });
     this.probe ??= identityProbe({ adb: 'adb', environment: deviceEnvironment() });
-    const resolved = await this.identityRead(() => resolveIdentity({ request: { category: 'ios-simulator', name: deviceId }, probe: this.probe!, signal }));
+    const deviceSet = await requestedDeviceSet();
+    const resolved = await this.identityRead(() => resolveIdentity({ request: { category: 'ios-simulator', name: deviceId, ...(deviceSet ? { deviceSet } : {}) },
+      probe: this.probe!, signal }));
     if (resolved.category !== 'ios-simulator') throw new Error('Simulator identity required');
     this.resolvedIdentity = resolved;
     if (resolved.state !== 'Booted') throw notBootedError(deviceId, resolved.state);
