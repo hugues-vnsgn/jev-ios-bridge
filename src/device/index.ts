@@ -12,6 +12,7 @@ import { Admission, AdmissionError, type AdmissionClaim, type AdmittedSession } 
 import type { PreparationClaim, ObservedClaim, AllocationCommit } from './admission-allocation.js';
 import { processAlive as processAliveForLease } from '../process.js';
 import { readLogTail } from './logs.js';
+import type { ProfileBinding } from '../profiles.js';
 
 type JsonObject = Record<string, unknown>;
 export type CliResult = { stdout: string; stderr: string; exitCode: number };
@@ -22,6 +23,7 @@ export interface MobileBuildMcpDriverOptions {
   /** Internal shared authority; production opening stays lazy until an iOS attachment. */
   admission?: Admission;
   runId?: string;
+  profile?: ProfileBinding;
   /** Explicit test transport. Both dependencies are supplied; undefined window disables presentation. */
   fakeBackend?: { runner: CliRunner; window: DeviceWindowOpener | undefined };
   executable?: string;
@@ -788,9 +790,13 @@ export class MobileBuildMcpDriver implements DeviceDriver, IosPreparationDriver,
     if (scenario.start === 'attach') throw new DeviceReasonError('UNSUPPORTED_ACTION', IOS_ATTACH_REFUSAL);
     const bundleId = scenario.app.bundleId;
     const deviceId = await selectDeviceId(this.options.cwd, scenario.device?.udid, this.options.defaultUdid);
+    if (!scenario.device?.udid && !this.options.defaultUdid) {
+      this.warnings.push('Using .mobilebuildmcp/config.yaml simulatorId; consider a profile in .jev/profiles.json.');
+    }
     const admission = this.options.admission ?? Admission.open();
     admission.assertBackend(this.options.fakeBackend ? 'fake' : 'real');
-    const intent = { deviceId, app: scenario.app, start: scenario.start ?? 'restart' };
+    const intent = { deviceId, app: scenario.app, start: scenario.start ?? 'restart',
+      ...(this.options.profile ? { profile: this.options.profile } : {}) };
     const acquired = admission.acquire({ category: 'ios-simulator', device: deviceId, attempt: { kind: 'legacy', id: this.options.runId ?? randomUUID() },
       digest: createHash('sha256').update(JSON.stringify(intent)).digest('hex'), intent, signal });
     if (acquired.kind !== 'acquired') throw new DeviceCliError('DEVICE_BUSY', `Device admission refused: ${acquired.kind === 'refused' ? acquired.reason : 'ATTEMPT_ALREADY_EXISTS'}`);

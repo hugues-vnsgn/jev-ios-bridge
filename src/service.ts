@@ -16,6 +16,7 @@ import type { DrivenJudge } from './driven/decide.js';
 import { createHandbackGate, DEFAULT_HANDBACK_TIMEOUT_MS, HandbackAnswerError, MAX_HANDBACK_TIMEOUT_MS,
   MIN_HANDBACK_TIMEOUT_MS, type HandbackGate, type PausePackage } from './driven/handback.js';
 import type { HandbackAnswer } from './driven/step.js';
+import { readProfile, profileLimits, profileScenario, profileBudgetsSchema, type ProfileBinding, type SelectedProfile } from './profiles.js';
 
 /** How the live log pane is offered. Without this, runs have no pane. */
 export interface LogPaneOptions {
@@ -36,6 +37,7 @@ export type RunState = 'running' | 'needs_claude' | 'finished' | 'interrupted';
 export const startLimitsSchema = z.strictObject({
   maxSteps: z.number().int().min(1).max(100).optional(),
   wallTimeMs: z.number().int().min(1).max(3_600_000).optional(),
+  ...profileBudgetsSchema.shape,
 });
 /** The limits with driven mode's: how long a hand-back pause waits for Claude (default 5 minutes). Published by
  *  start_scenario only while the experimental switch is on. */
@@ -52,7 +54,7 @@ export class BridgeService {
   constructor(private readonly options: {
     baseDir: string;
     /** Builds the run's driver, given the run's ID, which names the driver's own files (the Android app log). */
-    createDriver: (scenario: ScriptedScenario, run: { runId: string }) => DeviceDriver;
+    createDriver: (scenario: ScriptedScenario, run: { runId: string; profile?: ProfileBinding }) => DeviceDriver;
     createJudge: (scenario: ScriptedScenario) => ScriptedJudge;
     /** Jev for `do` steps. Without it, a script with a `do` step is refused when its run starts. */
     createDrivenJudge?: (scenario: ScriptedScenario) => DrivenJudge;
@@ -63,21 +65,33 @@ export class BridgeService {
     env?: Readonly<Record<string, string | undefined>>;
   }) { this.baseDir = resolve(options.baseDir); }
 
-  async start(input: unknown, requestedLimits: unknown = {}): Promise<{ runId: string; watchUrl: string; logsCommand?: string }> {
+  async start(input: unknown, requestedLimits: unknown = {}, profile?: string | { selected: SelectedProfile | undefined }): Promise<{ runId: string; watchUrl: string; logsCommand?: string }> {
     if (this.stopping) throw new Error('Bridge is shutting down');
     // Read once, here: from now on every part of the run (driver, redactor, log pane) sees only the text.
-    const scenario = resolveScriptValues(parseScriptedScenarioSource(input), this.options.env ?? process.env);
+    const environment = this.options.env ?? process.env;
+    const parsedScenario = resolveScriptValues(parseScriptedScenarioSource(input), environment);
+    const selected = typeof profile === 'object' ? profile.selected
+      : await readProfile(resolve(environment.JEV_PROJECT_DIR?.trim() || process.cwd()), profile, parsedScenario);
     const parsedLimits = drivenStartLimitsSchema.parse(requestedLimits);
+    const budgets = profileLimits(selected, {
+      ...(parsedLimits.startupMs === undefined ? {} : { startupMs: parsedLimits.startupMs }),
+      ...(parsedLimits.operationMs === undefined ? {} : { operationMs: parsedLimits.operationMs }),
+      ...(parsedLimits.cleanupMs === undefined ? {} : { cleanupMs: parsedLimits.cleanupMs }),
+    });
+    const scenario = selected ? profileScenario(parsedScenario, selected) : parsedScenario;
     const limits: ScriptedRunLimits = { ...this.options.policy,
       ...(parsedLimits.maxSteps === undefined ? {} : { maxSteps: parsedLimits.maxSteps }),
       ...(parsedLimits.wallTimeMs === undefined ? {} : { wallTimeMs: parsedLimits.wallTimeMs }),
+      ...(budgets.startupMs === undefined ? {} : { startupMs: budgets.startupMs }),
+      ...(budgets.operationMs === undefined ? {} : { operationMs: budgets.operationMs }),
+      ...(budgets.cleanupMs === undefined ? {} : { cleanupMs: budgets.cleanupMs }),
     };
     // E13: a do script needs driven mode on in the project and the experimental switch, checked before the device
     // is touched. `project.drivenOptions(log)` gives the run its preflight and local-only screens (E12, E14): spread
     // it into the run's `driven` options beside the judge and the hand-back gate.
     const project = await openDrivenProject(scenario, this.options.env ?? process.env);
     const runId = randomUUID();
-    const driver = this.options.createDriver(scenario, { runId });
+    const driver = this.options.createDriver(scenario, { runId, ...(selected ? { profile: selected.binding } : {}) });
     const judge = this.options.createJudge(scenario);
     if (this.stopping) throw new Error('Bridge is shutting down');
     const log = await createRunLog(this.baseDir, runId, { values: Object.values(scenario.values) });
@@ -105,7 +119,9 @@ export class BridgeService {
           return started;
         }, () => undefined);
     };
-    job.done = runScriptedScenario({ runId, scenario, driver, judge, log, signal: job.abort.signal, limits,
+    const runLog = selected ? { ...log, append: (type: Parameters<typeof log.append>[0], data: Record<string, unknown>) =>
+      log.append(type, type === 'started' ? { ...data, profile: selected.binding, budgets } : data) } : log;
+    job.done = runScriptedScenario({ runId, scenario, driver, judge, log: runLog, signal: job.abort.signal, limits,
       ...(gate && drivenJudge ? { driven: { judge: drivenJudge, handback: gate.handback, ...project?.drivenOptions(log) } } : {}),
       ...(pane ? { onPrepared: ({ logSources }) => startPane(logSources),
         onCleanup: () => { void stream?.then(started => started?.expectStop()); } } : {}),

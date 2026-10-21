@@ -3,6 +3,7 @@ import type { ScriptedScenario } from '../scripted/contracts.js';
 import { AndroidDriver, type AndroidDriverOptions } from './android/driver.js';
 import { createExitWatch } from './android/exit-watch.js';
 import { MobileBuildMcpDriver, type IosPreparationDriver, type ObservedActionDriver, createMobileBuildMcpDriver, type MobileBuildMcpDriverOptions } from './index.js';
+import type { ProfileBinding } from '../profiles.js';
 
 export interface DriverFactoryOptions {
   mobileBuildMcp: MobileBuildMcpDriverOptions;
@@ -16,12 +17,14 @@ export interface DriverFactoryOptions {
  * the script's device, the run's ID (which names the app's log file) and the app-exit watcher, and the
  * MobileBuildMCP driver for every other script.
  */
-export function createDriverFactory(options: DriverFactoryOptions): (scenario: ScriptedScenario, run?: { runId: string }) => DeviceDriver {
-  return (scenario, run) => {
+export function createDriverFactory(options: DriverFactoryOptions):
+  (scenario: ScriptedScenario, run?: { runId: string; profile?: ProfileBinding }) => DeviceDriver {
+  return (scenario: ScriptedScenario, run?: { runId: string; profile?: ProfileBinding }) => {
     if (scenario.platform === 'android') {
       return new AndroidDriver({ createExitWatch, ...options.android, device: scenario.device, runId: run?.runId });
     }
-    return createMobileBuildMcpDriver({ ...options.mobileBuildMcp, ...(run ? { runId: run.runId } : {}) });
+    return createMobileBuildMcpDriver({ ...options.mobileBuildMcp, ...(run ? { runId: run.runId } : {}),
+      ...(run?.profile ? { profile: run.profile } : {}) });
   };
 }
 

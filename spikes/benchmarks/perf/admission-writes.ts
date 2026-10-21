@@ -1,13 +1,15 @@
 import assert from 'node:assert/strict';
-import { spawnSync } from 'node:child_process';
-import { mkdtempSync, realpathSync } from 'node:fs';
+import { spawn, spawnSync } from 'node:child_process';
+import { once } from 'node:events';
+import { mkdtempSync, realpathSync, writeSync } from 'node:fs';
 import { tmpdir, userInfo } from 'node:os';
 import { join, relative, isAbsolute } from 'node:path';
 import { performance } from 'node:perf_hooks';
-import { DatabaseSync } from 'node:sqlite';
+import { createInterface } from 'node:readline';
 import { test } from 'node:test';
+import { setImmediate, setTimeout as delay } from 'node:timers/promises';
 import { fileURLToPath } from 'node:url';
-import { Admission } from '../../../src/device/admission.js';
+import type { Admission } from '../../../src/device/admission.js';
 
 type Sample = { dispatchToCallbackMs: number; wholeDispatchMs: number };
 type Distribution = { p50: number; p95: number; max: number };
@@ -28,11 +30,19 @@ function verifyCounts(callbacks: number, settledRows: number): void {
 }
 
 async function benchmark(commands: number): Promise<void> {
+  const { Admission } = await import('../../../src/device/admission.js');
+  const { DatabaseSync } = await import('node:sqlite');
   const parent = realpathSync(tmpdir());
   const applicationSupport = join(userInfo().homedir, 'Library', 'Application Support');
   const fromApplicationSupport = relative(applicationSupport, parent);
   assert(isAbsolute(fromApplicationSupport) || fromApplicationSupport === '..' || fromApplicationSupport.startsWith('../'), 'temporary store must be outside Application Support');
   const root = realpathSync(mkdtempSync(join(parent, 'admission-writes-')));
+  for (const signal of ['SIGTERM', 'SIGINT'] satisfies NodeJS.Signals[]) {
+    process.once(signal, () => {
+      writeSync(2, `Interrupted by ${signal}. Store retained at ${root}\n`);
+      process.exit(signal === 'SIGTERM' ? 143 : 130);
+    });
+  }
   console.log(`Fresh private store retained at ${root}`);
   const admission = Admission.forTesting({ root, backend: 'fake' });
   const attempt = { kind: 'legacy', id: 'admission-writes' } satisfies Parameters<Admission['readAttempt']>[0];
@@ -55,6 +65,7 @@ async function benchmark(commands: number): Promise<void> {
     }
     const settledAt = performance.now();
     samples.push({ dispatchToCallbackMs: callbackAt - dispatchAt, wholeDispatchMs: settledAt - dispatchAt });
+    await setImmediate();
   }
   const elapsedMs = performance.now() - started;
   assert.equal(acquired.claim.finalize({ outcome: 'completed', disposition: 'available', payload: { commands }, evidenceRefs: [] }).authority, 'committed');
@@ -89,7 +100,11 @@ async function benchmark(commands: number): Promise<void> {
 function main(args: string[]): Promise<void> | void {
   if (args.length === 1 && args[0] === '--self-test') return selfTest();
   const commands = args.length === 0 ? 1000 : args.length === 2 && args[0] === '--commands' ? Number(args[1]) : NaN;
-  assert(Number.isSafeInteger(commands) && commands > 0, 'Usage: admission-writes.ts [--commands <positive integer>] | --self-test');
+  if (!Number.isSafeInteger(commands) || commands <= 0) {
+    console.error('Usage: admission-writes.ts [--commands <positive integer>] | --self-test');
+    process.exitCode = 2;
+    return;
+  }
   return benchmark(commands);
 }
 
@@ -111,12 +126,44 @@ function selfTest(): void {
     assert.match(result.stdout, /10 callbacks/);
     assert.match(result.stdout, /10 settled rows/);
   });
-  test('zero commands refuse with usage before creating a store', () => {
-    const result = spawnSync(process.execPath, [...process.execArgv, fileURLToPath(import.meta.url), '--commands', '0'], { encoding: 'utf8' });
-    assert.equal(result.status, 1);
-    assert.match(result.stderr, /Usage: admission-writes.ts/);
-    assert.equal(result.stdout, '');
-  });
+  for (const args of [['--commands', '0'], ['--commands', '-5'], ['--commands', 'abc'], ['--commands']]) {
+    test(`${args.join(' ')} refuses with only usage before creating a store`, () => {
+      const result = spawnSync(process.execPath, [...process.execArgv, fileURLToPath(import.meta.url), ...args], { encoding: 'utf8' });
+      assert.equal(result.status, 2);
+      assert.equal(result.stderr, 'Usage: admission-writes.ts [--commands <positive integer>] | --self-test\n');
+      assert.equal(result.stdout, '');
+    });
+  }
+  for (const signal of ['SIGTERM', 'SIGINT'] satisfies NodeJS.Signals[]) {
+    test(`${signal} stops the bench within two seconds and names its retained store`, async () => {
+      const child = spawn(process.execPath, [...process.execArgv, fileURLToPath(import.meta.url), '--commands', '1000'], { env: { ...process.env, NODE_NO_WARNINGS: '1' }, stdio: ['ignore', 'pipe', 'pipe'] });
+      const exited = once(child, 'close');
+      const lines = createInterface({ input: child.stdout });
+      let stderr = '';
+      child.stderr.setEncoding('utf8').on('data', (chunk: string) => { stderr += chunk; });
+      let deadline: ReturnType<typeof setTimeout> | undefined;
+      let timedOut = false;
+      try {
+        const [banner] = await once(lines, 'line', { signal: AbortSignal.timeout(15_000) });
+        assert(typeof banner === 'string');
+        const store = /^Fresh private store retained at (.+)$/.exec(banner)?.[1];
+        assert(store, 'child must announce its private store');
+        await delay(1000);
+        const started = performance.now();
+        deadline = setTimeout(() => { timedOut = true; child.kill('SIGKILL'); }, 2000);
+        assert(child.kill(signal), 'signal must reach the benchmark node');
+        const [code, exitSignal] = await exited;
+        assert(!timedOut && performance.now() - started < 2000, `${signal} did not stop the bench within two seconds`);
+        assert.equal(code, signal === 'SIGTERM' ? 143 : 130);
+        assert.equal(exitSignal, null);
+        assert.equal(stderr, `Interrupted by ${signal}. Store retained at ${store}\n`);
+      } finally {
+        clearTimeout(deadline);
+        child.kill('SIGKILL');
+        lines.close();
+      }
+    });
+  }
 }
 
 try {

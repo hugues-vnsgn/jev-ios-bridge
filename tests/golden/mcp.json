@@ -913,6 +913,10 @@
             ],
             "additionalProperties": false
           },
+          "profile": {
+            "type": "string",
+            "pattern": "^[a-z0-9][a-z0-9-]{0,62}$"
+          },
           "limits": {
             "type": "object",
             "properties": {
@@ -925,6 +929,21 @@
                 "type": "integer",
                 "minimum": 1,
                 "maximum": 3600000
+              },
+              "startupMs": {
+                "type": "integer",
+                "minimum": 1000,
+                "maximum": 600000
+              },
+              "operationMs": {
+                "type": "integer",
+                "minimum": 1000,
+                "maximum": 600000
+              },
+              "cleanupMs": {
+                "type": "integer",
+                "minimum": 1000,
+                "maximum": 120000
               }
             },
             "additionalProperties": false

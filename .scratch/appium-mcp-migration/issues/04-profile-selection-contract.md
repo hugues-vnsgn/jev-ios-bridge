@@ -1,7 +1,7 @@
 # Named-profile selection contract
 
 Type: grilling
-Status: open
+Status: out-of-scope
 Labels: wayfinder:grilling
 Mode: HITL
 Parent: [Appium migration handoff map](../map.md)
@@ -30,3 +30,7 @@ Record a sourced answer or actual owner decision, unresolved limits, and the cha
 Charted on 2026-10-14. Implementation remains paused.
 
 Owner answer, 2026-10-14: "Explicit selector plus project default (Recommended)". Preserve current scripts and device options; reject conflicting device/app/platform input before effects. This input is recorded for the later decision-resolution session; charting has not closed the ticket.
+
+## Answer
+
+Moved on 2026-10-19 to the Phase 2 decision map as [Named-profile selection contract](../../appium-phase2/issues/01-profile-selection-contract.md); it continues there with its recorded owner input.
