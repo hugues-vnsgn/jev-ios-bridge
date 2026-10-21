@@ -1844,6 +1844,21 @@ test('after a crash takeover, a dead holder\'s leftover streams are killed, a re
   });
 });
 
+test('a takeover refused by the device checks or a foreign agent still kills the dead holder\'s streams first', async () => {
+  for (const [emulator, code] of [[api31({ installed: [] }), 'APP_NOT_INSTALLED'], [api31({ keyguard: true }), 'DEVICE_LOCKED'],
+    [api31({ agents: new Map([[4984, 'foreign']]) }), 'DEVICE_BUSY']] as const) {
+    await withLogs(new FakeAdb(emulator), async ({ driver, streams, root }) => {
+      streams.mac.set(5001, '/sdk/platform-tools/adb -s emulator-5554 logcat -v threadtime,year,uid --uid=10226 -T 1759075100.000');
+      await writeFile(join(root, 'JEV-ACTIONS-API31.lock'), JSON.stringify({ pid: deadPid(), token: 'crashed', deviceId: 'jev-actions-api31',
+        ownedProcesses: ['logcat emulator-5554 5001'] }));
+      await assert.rejects(driver.prepare(app(), signal()), reason(code));
+      assert.deepEqual(streams.killed, [5001], code);
+      assert.equal(streams.mac.has(5001), false, code);
+      await driver.close(signal()).catch(() => undefined);
+    });
+  }
+});
+
 test('a cancel during the takeover sweep keeps every leftover not yet swept in the holder record', async () => {
   const adb = new FakeAdb(api31());
   await withLogs(adb, async ({ driver, streams, root }) => {

@@ -647,11 +647,9 @@ export class AndroidDriver implements DeviceDriver {
   /** The takeover sweep and the agent check. True when a takeover from a dead holder swept anything. */
   private async sweepLeftovers(serial: string, identity: string, deadHolder: LeaseHolder | undefined, signal: AbortSignal,
     preflight: () => Promise<void>): Promise<boolean> {
-    let sweptStreams = false;
-    const sweptAgents = await this.checkAgents(serial, identity, deadHolder !== undefined, signal, async () => {
-      await preflight();
-      sweptStreams = deadHolder !== undefined && await this.sweepStreams(deadHolder, signal);
-    });
+    // The dead holder's streams run on this Mac, so they go first, even when a device check or a foreign agent then refuses the run.
+    const sweptStreams = deadHolder !== undefined && await this.sweepStreams(deadHolder, signal);
+    const sweptAgents = await this.checkAgents(serial, identity, deadHolder !== undefined, signal, preflight);
     return sweptStreams || sweptAgents;
   }
 
