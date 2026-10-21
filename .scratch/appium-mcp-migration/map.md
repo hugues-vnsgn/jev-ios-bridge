@@ -50,20 +50,17 @@ flowchart LR
     T01["01 Complete owned-automation coverage<br/><small>research</small>"]
     T02["02 Public Appium compatibility boundaries<br/><small>research</small>"]
     T03["03 Frozen corpus provenance and reproducibility<br/><small>research</small>"]
-    T04["04 Named-profile selection contract<br/><small>grilling</small>"]
-    T05["05 Evidenced release with immutable outcomes<br/><small>grilling</small>"]
     T06["06 Acceptance readiness agreement<br/><small>grilling</small>"]
     T07["07 Complete-coverage mechanism<br/><small>grilling</small>"]
     T08["08 Frozen-state correspondence<br/><small>grilling</small>"]
-    T01 --> T05
     T01 --> T07
     T03 --> T08
     classDef resolved fill:#e4e4e7,stroke:#a1a1aa,color:#52525b
     classDef claimed fill:#dbeafe,stroke:#2563eb,color:#1e3a8a
     classDef frontier fill:#dcfce7,stroke:#16a34a,color:#14532d,stroke-width:2px
     classDef blocked fill:#ffffff,stroke:#a1a1aa,color:#18181b
-    class T01,T02,T03 resolved
-    class T04,T05,T06,T07,T08 frontier
+    class T01,T02,T03,T07 resolved
+    class T06,T08 frontier
 ```
 <!-- route:end -->
 
@@ -77,6 +74,8 @@ flowchart LR
   after frozen-state correspondence is agreed. Reconciliation is now its own ticket.
 
 ## Out of scope
+
+- Phase 2 decisions moved on 2026-10-19 to the [Appium Phase 2 decision map](../appium-phase2/map.md): [Named-profile selection contract](issues/04-profile-selection-contract.md) and [Evidenced release with immutable outcomes](issues/05-evidenced-release-state.md) continue there.
 
 Allocation reclamation, physical-iPhone enablement, native measurements,
 remote/shared Appium servers, backend fallback, and publishing a release.

@@ -24,13 +24,14 @@ import { BRIDGE_VERSION } from './version.js';
 import { attachLogPane } from './logpane/attach.js';
 import { readRunEvents } from './log/index.js';
 import { EXIT } from './exit-codes.js';
+import { ProfileError, readProfile, profileScenario, type SelectedProfile } from './profiles.js';
 
 const USAGE = `jev-ios-bridge ${BRIDGE_VERSION}
 Usage:
-  jev-ios-bridge run <script.json> [--json] [--no-log-pane] [--no-device-window] [--max-steps N] [--timeout-ms N]
+  jev-ios-bridge run <script.json> [--profile NAME] [--json] [--no-log-pane] [--no-device-window] [--max-steps N] [--timeout-ms N]
   jev-ios-bridge report <run-id> [--json]
   jev-ios-bridge logs <run-id>
-  jev-ios-bridge capture [--serial S | --avd A] [--jev]
+  jev-ios-bridge capture [--profile NAME] [--serial S | --avd A] [--jev]
   jev-ios-bridge mcp
   jev-ios-bridge observed-allocate <allocation-request.json> [--json]
   jev-ios-bridge observed-allocation <allocation-id> [--json] [--wait-ms N]
@@ -92,6 +93,7 @@ const cliOptions = {
   'no-device-window': { type: 'boolean' },
   'wait-ms': { type: 'string' }, 'max-steps': { type: 'string' }, 'timeout-ms': { type: 'string' },
   serial: { type: 'string' }, avd: { type: 'string' }, jev: { type: 'boolean' },
+  profile: { type: 'string' },
 } as const;
 
 /** Internal composition seam shared by the installed entry and isolated subprocess fixtures. */
@@ -115,7 +117,7 @@ async function dispatchCli(args: string[], composition: CliComposition): Promise
     const interrupt = stop(130); const terminate = stop(143);
     process.once('SIGINT', interrupt); process.once('SIGTERM', terminate);
     try {
-      const disallowed = parsed.positionals.length !== 2 || ['max-steps', 'timeout-ms', 'serial', 'avd', 'jev', 'no-log-pane', 'no-device-window']
+      const disallowed = parsed.positionals.length !== 2 || ['max-steps', 'timeout-ms', 'serial', 'avd', 'jev', 'no-log-pane', 'no-device-window', 'profile']
         .some(name => parsed.values[name as keyof typeof parsed.values] !== undefined);
       process.exitCode = await runObservedCommand(module, command, disallowed ? undefined : argument, {
         json: parsed.values.json ?? false, projectDir, signal: controller.signal,
@@ -144,6 +146,7 @@ async function dispatchCli(args: string[], composition: CliComposition): Promise
     ...(parsed.values['timeout-ms'] === undefined ? {} : { wallTimeMs: limitValue('timeout-ms', parsed.values['timeout-ms']) }),
   };
   if (command !== 'run' && Object.keys(limits).length) throw new StartError('Run limits apply only to run');
+  if (!['run', 'capture'].includes(command) && parsed.values.profile !== undefined) throw new StartError('--profile applies only to run and capture');
   if (['mcp', 'logs', 'capture'].includes(command) && parsed.values.json) throw new StartError('--json applies only to run and report');
   if (command !== 'run' && parsed.values['no-log-pane']) throw new StartError('--no-log-pane applies only to run');
   if (command !== 'run' && parsed.values['no-device-window']) throw new StartError('--no-device-window applies only to run');
@@ -151,7 +154,8 @@ async function dispatchCli(args: string[], composition: CliComposition): Promise
   if (command !== 'capture' && (serial !== undefined || avd !== undefined || jev)) throw new StartError('--serial, --avd and --jev apply only to capture');
   if (command === 'capture') {
     const interrupted = new AbortController();
-    const captured = captureCommand({ serial, avd, jev }, { defaultDevice: process.env.JEV_ANDROID_DEVICE, signal: interrupted.signal,
+    const captured = captureCommand({ serial, avd, jev, profile: parsed.values.profile }, { projectDir,
+      defaultDevice: process.env.JEV_ANDROID_DEVICE, signal: interrupted.signal,
       write: { stdout: text => { process.stdout.write(text); }, stderr: text => { process.stderr.write(text); } } });
     // As a run's handlers do: close the driver, then exit.
     const stop = (exitCode: number) => () => { interrupted.abort(); void captured.finally(() => process.exit(exitCode)); };
@@ -172,17 +176,21 @@ async function dispatchCli(args: string[], composition: CliComposition): Promise
   }
 
   let script;
+  let selectedProfile: SelectedProfile | undefined;
   if (command === 'run') {
     script = resolveScriptValues(parseScriptedScenarioSource(await readScript(argument!)), process.env);
+    selectedProfile = await readProfile(projectDir, parsed.values.profile, script);
+    const selectedScript = selectedProfile ? profileScenario(script, selectedProfile) : script;
     if (!process.env.TYPESAFE_API_KEY?.trim()) throw new StartError('TYPESAFE_API_KEY is not set; load your .env with node --env-file=/path/to/.env');
-    if (script.platform === 'android') selectAndroidDeviceName(script.device, process.env.JEV_ANDROID_DEVICE);
-    else await selectDeviceId(projectDir, script.device?.udid, process.env.JEV_DEVICE_UDID);
+    if (selectedScript.platform === 'android') selectAndroidDeviceName(selectedScript.device, process.env.JEV_ANDROID_DEVICE);
+    else await selectDeviceId(projectDir, selectedScript.device?.udid, process.env.JEV_DEVICE_UDID);
   }
 
   // Under MCP there is no flag: JEV_DEVICE_WINDOW=off in the server's environment turns the window off.
   const deviceWindow = deviceWindowOpener(parsed.values['no-device-window'] === true);
   const service = composition.legacy ?? new BridgeService({
     baseDir: runsDir(),
+    env: { ...process.env, JEV_PROJECT_DIR: projectDir },
     createDriver: createDriverFactory({ mobileBuildMcp: { cwd: projectDir,
       ...(process.env.JEV_DEVICE_UDID ? { defaultUdid: process.env.JEV_DEVICE_UDID } : {}),
       capture: 'full', screenshots: true,
@@ -224,7 +232,7 @@ async function dispatchCli(args: string[], composition: CliComposition): Promise
       await print(argument!);
       return;
     }
-    const { runId, watchUrl } = await service.start(script, limits);
+    const { runId, watchUrl } = await service.start(script, limits, { selected: selectedProfile });
     console.error(`Watch: ${watchUrl}`);
     let shownPause: string | undefined;
     while (!closing) {
@@ -253,7 +261,8 @@ export async function runCli(args = process.argv.slice(2), composition: CliCompo
       process.stdout.write((args.includes('--json') ? JSON.stringify(reply) : observedSummary(reply)) + '\n');
       process.exitCode = 3; return;
     }
-    if (error instanceof z.ZodError) console.error(`Script is invalid:\n${z.prettifyError(error)}`);
+    if (error instanceof ProfileError) console.error(`${error.code}: ${error.message}`);
+    else if (error instanceof z.ZodError) console.error(`Script is invalid:\n${z.prettifyError(error)}`);
     else if (error instanceof StartError || error instanceof ScriptValueError || error instanceof DrivenProjectError ||
       isDeviceSelectionError(error)) {
       console.error(error.message);

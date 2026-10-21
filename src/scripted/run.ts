@@ -21,6 +21,9 @@ export interface ScriptedRunLimits {
   wallTimeMs?: number;
   pollIntervalMs?: number;
   cleanupTimeMs?: number;
+  startupMs?: number;
+  operationMs?: number;
+  cleanupMs?: number;
 }
 
 export interface ScriptedRunOptions {
@@ -203,7 +206,9 @@ export async function runScriptedScenario(options: ScriptedRunOptions): Promise<
   const maxSteps = bounded(limits.maxSteps, 100, 1, 100);
   const wallTimeMs = bounded(limits.wallTimeMs, 300_000, 1, 3_600_000);
   const pollIntervalMs = bounded(limits.pollIntervalMs, 250, 1, 5_000);
-  const cleanupTimeMs = bounded(limits.cleanupTimeMs, DEFAULT_CLEANUP_MS, 1, 120_000);
+  const cleanupTimeMs = bounded(limits.cleanupMs ?? limits.cleanupTimeMs, DEFAULT_CLEANUP_MS, 1, 120_000);
+  const startupMs = limits.startupMs === undefined ? undefined : bounded(limits.startupMs, 0, 1000, 600_000);
+  const operationMs = limits.operationMs === undefined ? undefined : bounded(limits.operationMs, 0, 1000, 600_000);
   const preparedContext = prepareContext(script, platform);
   // Actions don't need the start mode; only prepare reads it.
   const { start: _start, ...launchContext } = preparedContext;
@@ -214,6 +219,12 @@ export async function runScriptedScenario(options: ScriptedRunOptions): Promise<
   const started = performance.now();
   const controller = new AbortController();
   const signal = controller.signal;
+  const deviceOperation = async <T>(milliseconds: number | undefined, work: (issuedSignal: AbortSignal) => Promise<T>): Promise<T> => {
+    if (milliseconds === undefined) return abortableOperation(() => work(signal), signal);
+    const timer = setTimeout(() => controller.abort(new ScriptRunError('EXECUTION_ERROR')), milliseconds);
+    try { return await abortableOperation(() => work(signal), signal); }
+    finally { clearTimeout(timer); }
+  };
   const cancel = () => controller.abort(new ScriptRunError('CANCELLED'));
   const requireActive = () => { if (signal.aborted) throw signal.reason; };
   options.signal?.addEventListener('abort', cancel, { once: true });
@@ -250,7 +261,7 @@ export async function runScriptedScenario(options: ScriptedRunOptions): Promise<
   };
   const capture = async (): Promise<{ snapshot: Snapshot; observeDurationMs: number }> => {
     let observeDurationMs = 0;
-    const snapshot = await timed('observeMs', () => abortableOperation(() => options.driver.observe(signal), signal),
+    const snapshot = await timed('observeMs', () => deviceOperation(operationMs, issued => options.driver.observe(issued)),
       durationMs => { observeDurationMs = durationMs; });
     phaseTimingsMs.verifyMs += snapshot.verifyMs ?? 0;
     return { snapshot, observeDurationMs };
@@ -300,7 +311,7 @@ export async function runScriptedScenario(options: ScriptedRunOptions): Promise<
       projectionRule: PROJECTION_RULES[platform],
       plannedSteps: script.steps.map(step => ({ id: step.id, kind: step.kind })) });
     let prepareDurationMs = 0;
-    await timed('prepareMs', () => abortableOperation(() => options.driver.prepare(preparedContext, signal), signal),
+    await timed('prepareMs', () => deviceOperation(startupMs, issued => options.driver.prepare(preparedContext, issued)),
       durationMs => { prepareDurationMs = durationMs; });
     const logSources = options.driver.logSources?.() ?? {};
     const preparation = options.driver.preparation?.();
@@ -356,7 +367,7 @@ export async function runScriptedScenario(options: ScriptedRunOptions): Promise<
             phase = 'act';
             let actDurationMs = 0;
             keepActResult(await timed('actMs',
-              () => abortableOperation(() => options.driver.act(action, selected, actionContext, signal), signal),
+              () => deviceOperation(operationMs, issued => options.driver.act(action, selected, actionContext, issued)),
               durationMs => { actDurationMs = durationMs; }));
             drivenActions++;
             return { actDurationMs };
@@ -412,7 +423,7 @@ export async function runScriptedScenario(options: ScriptedRunOptions): Promise<
         let ref = target;
         let actDurationMs = 0;
         const act = async () => timed('actMs',
-          () => abortableOperation(() => options.driver.act(deviceAction(step, ref), selected, actionContext, signal), signal),
+          () => deviceOperation(operationMs, issued => options.driver.act(deviceAction(step, ref), selected, actionContext, issued)),
           durationMs => { actDurationMs += durationMs; });
         let shownValue: string | undefined;
         try { shownValue = keepActResult(await act()); }

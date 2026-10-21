@@ -8,6 +8,7 @@ import { handbackAnswerSchema, HandbackAnswerError, renderPause } from '../drive
 import { DrivenProjectError } from '../driven/project.js';
 import { renderScriptedReport } from '../scripted/report.js';
 import { BRIDGE_VERSION } from '../version.js';
+import { ProfileError, profileNameSchema } from '../profiles.js';
 
 const idInput = z.object({ runId: z.string().regex(/^[a-zA-Z0-9][a-zA-Z0-9_-]{0,79}$/) });
 const result = (text: string) => ({ content: [{ type: 'text' as const, text }] });
@@ -33,14 +34,15 @@ export function createMcpServer(service: BridgeService, options: { driven?: bool
   const server = new McpServer({ name: 'jev-ios-bridge', version: BRIDGE_VERSION });
   server.registerTool('start_scenario', {
     description: 'Start an explicit iOS or Android action script with assertion checkpoints. Returns a run id, a local watch URL, and logsCommand, a terminal command that follows the app\'s own output live (a log pane window usually opens by itself). Poll get_report for completion; use cancel_run to stop. TypeSafe receives observed screen text and current assertion claims. Typed values go to device actions and may later appear in screen text; screenshots stay local. A value may be {"fromEnv": "NAME"}, read from this server\'s environment, so a credential stays out of the script.',
-    inputSchema: z.object({ scenario: scriptedScenarioSchema,
+    inputSchema: z.object({ scenario: scriptedScenarioSchema, profile: profileNameSchema.optional(),
       limits: (options.driven ? drivenStartLimitsSchema : startLimitsSchema).optional() }),
-  }, async ({ scenario, limits }) => {
-    try { return result(JSON.stringify(await service.start(scenario, limits))); }
+  }, async ({ scenario, limits, profile }) => {
+    try { return result(JSON.stringify(await service.start(scenario, limits, profile))); }
     // A value error names the key and the variable, never the value, and a project error names files and settings,
     // so both are safe to return.
     catch (error) {
-      return failed(error instanceof ScriptValueError || error instanceof DrivenProjectError ? error.message : undefined);
+      return failed(error instanceof ProfileError ? error.code
+        : error instanceof ScriptValueError || error instanceof DrivenProjectError ? error.message : undefined);
     }
   });
   server.registerTool('get_report', {
