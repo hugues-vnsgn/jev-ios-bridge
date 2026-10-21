@@ -1016,3 +1016,27 @@ function fakeDriver(options: import('../src/device/index.js').MobileBuildMcpDriv
 }
 
 function firstStore(root: string) { return Admission.forTesting({ root: realpathSync(join(root, 'admission')), backend: 'fake', initialize: false }); }
+
+import { spawnSync } from 'node:child_process';
+import { mkdir } from 'node:fs/promises';
+import { resolve } from 'node:path';
+
+test('the CLI prints CATEGORY_NOT_ENABLED for a physical iPhone UDID from the environment or the vendor file', async () => {
+  const root = await mkdtemp(join(tmpdir(), 'jev-ios-phone-cli-'));
+  try {
+    await writeFile(join(root, 'scenario.json'), JSON.stringify({ version: 1, app: { bundleId: 'com.example.app' }, values: {},
+      steps: [{ id: 'check', kind: 'checkpoint', guard: { present: [{ role: 'text', label: 'Marker' }] }, assertions: [{ id: 'shown', claim: 'Visible' }] }] }));
+    const { JEV_DEVICE_UDID: _unset, ...environment } = process.env;
+    for (const [udid, vendorFile] of [['00008110-001A2C3E4F5A6B7C', undefined], [undefined, 'simulatorId: 0123456789abcdef0123456789abcdef01234567\n']]) {
+      if (vendorFile) {
+        await mkdir(join(root, '.mobilebuildmcp'));
+        await writeFile(join(root, '.mobilebuildmcp/config.yaml'), vendorFile);
+      }
+      // A dummy key gets past the credentials check; the refusal comes before any service is built.
+      const result = spawnSync(process.execPath, ['--import', import.meta.resolve('tsx'), resolve('src/cli.ts'), 'run', 'scenario.json'], { cwd: root, encoding: 'utf8',
+        env: { ...environment, TYPESAFE_API_KEY: 'fixture-only', JEV_PROJECT_DIR: root, JEV_RUNS_DIR: join(root, 'runs'), ...(udid ? { JEV_DEVICE_UDID: udid } : {}) } });
+      assert.equal(result.status, 3, result.stderr);
+      assert.match(result.stderr, /^CATEGORY_NOT_ENABLED: Physical iPhone identity is not enabled$/m, udid ?? 'vendor file');
+    }
+  } finally { await rm(root, { recursive: true, force: true }); }
+});

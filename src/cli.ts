@@ -262,7 +262,7 @@ export async function runCli(args = process.argv.slice(2), composition: CliCompo
       process.stdout.write((args.includes('--json') ? JSON.stringify(reply) : observedSummary(reply)) + '\n');
       process.exitCode = 3; return;
     }
-    if (error instanceof ProfileError) console.error(`${error.code}: ${error.message}`);
+    if (error instanceof ProfileError || error instanceof DeviceReasonError && error.code === 'CATEGORY_NOT_ENABLED') console.error(`${error.code}: ${error.message}`);
     else if (error instanceof z.ZodError) console.error(`Script is invalid:\n${z.prettifyError(error)}`);
     else if (error instanceof StartError || error instanceof ScriptValueError || error instanceof DrivenProjectError ||
       isDeviceSelectionError(error)) {

@@ -298,7 +298,8 @@ function defaultRunner(options: MobileBuildMcpDriverOptions): CliRunner {
 async function configuredUdid(cwd: string): Promise<string | undefined> {
   try {
     const yaml = await readFile(join(cwd, '.mobilebuildmcp', 'config.yaml'), 'utf8');
-    return yaml.match(/^\s*simulatorId:\s*([0-9a-fA-F-]{36})\s*$/m)?.[1];
+    // Physical iPhone shapes too, so selectDeviceId refuses them by name instead of finding no device.
+    return yaml.match(/^\s*simulatorId:\s*([0-9a-fA-F-]{36}|[0-9a-fA-F]{40}|[0-9a-fA-F]{8}-[0-9a-fA-F]{16})\s*$/m)?.[1];
   } catch (error) {
     if ((error as NodeJS.ErrnoException).code === 'ENOENT') return undefined;
     throw error;
