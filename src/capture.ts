@@ -7,7 +7,7 @@ import { REASON_CODES } from './scripted/vocabulary.js';
 import { DEFAULT_CLEANUP_MS } from './scripted/run.js';
 // capture exits with the CLI's own codes (release spec open point 12): "passed" when it printed, "could not start" when not.
 import { EXIT } from './exit-codes.js';
-import { ProfileError, readProfile, profileDevice } from './profiles.js';
+import { agreeProfileDevice, ProfileError, readProfile, profileDevice, type DeviceAgreement } from './profiles.js';
 import { resolve } from 'node:path';
 
 export interface CaptureRequest {
@@ -29,6 +29,8 @@ export interface CaptureContext {
   write: { stdout(text: string): void; stderr(text: string): void };
   /** Aborted by SIGINT or SIGTERM: the capture stops, and the driver is still closed. */
   signal: AbortSignal;
+  /** Resolves a flag's name against the profile's other-kind name. Without it such a pair refuses. */
+  agreeDevices?: DeviceAgreement;
 }
 
 /** Thrown on once the capture's own failure was printed, so it isn't printed twice. */
@@ -111,8 +113,10 @@ export async function captureCommand(request: CaptureRequest, context: CaptureCo
     let device = namedDevice(request);
     if (selected) {
       const chosen = profileDevice(selected.profile);
+      const conflict = 'Capture device flags conflict with the selected profile.';
       if ('udid' in chosen || device && Object.entries(device).some(([kind, value]) =>
-        !Object.hasOwn(chosen, kind) || chosen[kind as keyof typeof chosen] !== value)) throw new ProfileError('PROFILE_CONFLICT', 'Capture device flags conflict with the selected profile.');
+        Object.hasOwn(chosen, kind) && chosen[kind as keyof typeof chosen] !== value)) throw new ProfileError('PROFILE_CONFLICT', conflict);
+      await agreeProfileDevice(device, selected, context.agreeDevices, signal, conflict);
       device = chosen;
     }
     // The device checks run here, before the driver's tools check, so a missing or malformed name is

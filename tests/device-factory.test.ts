@@ -1,4 +1,4 @@
-import { fakeSimulatorProbe } from './fixtures/android-device.js';
+import { FakeAdb, fakeSimulatorProbe } from './fixtures/android-device.js';
 import { mkdirSync, realpathSync } from 'node:fs';
 import { Admission } from '../src/device/admission.js';
 import assert from 'node:assert/strict';
@@ -7,25 +7,45 @@ import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { test } from 'node:test';
 import type { ScriptedScenario } from '../src/scripted/contracts.js';
-import { createDriverFactory } from '../src/device/factory.js';
+import { createDeviceAgreement, createDriverFactory } from '../src/device/factory.js';
 import { DeviceReasonError, type CliRunner } from '../src/device/index.js';
 import type { AdbRunner } from '../src/device/android/adb.js';
 import { AndroidDriver } from '../src/device/android/driver.js';
 import { androidTools } from '../src/device/android/tools.js';
-import { profileScenario } from '../src/profiles.js';
+import { agreeProfileDevice, profileScenario } from '../src/profiles.js';
 
 const udid = 'ABCDEF00-0000-4000-8000-000000000001';
 const iosScript: ScriptedScenario = { version: 1, app: { bundleId: 'com.example.app' }, values: {}, steps: [] };
 
-test('profile conflicts compare names exactly and refuse mixed device-name kinds', () => {
+const pixelProfile = { profile: { platform: 'android', deviceCategory: 'android-emulator', device: 'Pixel_API_35' },
+  binding: { name: 'pixel', digest: 'a'.repeat(64) } } as const;
+
+test('profile conflicts compare same-kind names exactly and leave an AVD name against a serial to live agreement', () => {
   const scenario: ScriptedScenario = { version: 1, platform: 'android', app: { package: 'com.example.app' },
     device: { avd: 'Pixel_API_35' }, values: {}, steps: [] };
-  const selected = { profile: { platform: 'android', deviceCategory: 'android-emulator', device: 'Pixel_API_35' },
-    binding: { name: 'pixel', digest: 'a'.repeat(64) } } as const;
-  assert.deepEqual(profileScenario(scenario, selected).device, { avd: 'Pixel_API_35' });
-  for (const device of [{ avd: 'Different_AVD' }, { avd: 'pixel_api_35' }, { serial: 'emulator-5554' }]) {
-    assert.throws(() => profileScenario({ ...scenario, device }, selected), { code: 'PROFILE_CONFLICT' });
+  assert.deepEqual(profileScenario(scenario, pixelProfile).device, { avd: 'Pixel_API_35' });
+  for (const device of [{ avd: 'Different_AVD' }, { avd: 'pixel_api_35' }]) {
+    assert.throws(() => profileScenario({ ...scenario, device }, pixelProfile), { code: 'PROFILE_CONFLICT' });
   }
+  assert.deepEqual(profileScenario({ ...scenario, device: { serial: 'emulator-5554' } }, pixelProfile).device, { avd: 'Pixel_API_35' });
+});
+
+test('an AVD name against a serial agrees only when both resolve live to one emulator', async () => {
+  const adb = new FakeAdb({ serial: 'emulator-5554', avd: 'Pixel_API_35' }, { serial: 'emulator-5556', avd: 'Other_AVD' });
+  const agree = createDeviceAgreement({ probe: adb.identityProbe });
+  const signal = new AbortController().signal;
+  const check = (own: { serial?: string; avd?: string }) => agreeProfileDevice(own, pixelProfile, agree, signal);
+  await check({ avd: 'Pixel_API_35' });
+  assert.deepEqual(adb.probeCalls, []);
+  await check({ serial: 'emulator-5554' });
+  await assert.rejects(check({ serial: 'emulator-5556' }),
+    { code: 'PROFILE_CONFLICT', message: 'Scenario device conflicts with the selected profile.' });
+  await assert.rejects(check({ serial: 'emulator-5558' }), { code: 'PROFILE_CONFLICT',
+    message: 'Scenario device conflicts with the selected profile. The device could not be resolved: DEVICE_NOT_FOUND.' });
+  await assert.rejects(agreeProfileDevice({ serial: 'emulator-5554' }, pixelProfile, undefined, signal), { code: 'PROFILE_CONFLICT' });
+  await assert.rejects(agreeProfileDevice({ serial: 'emulator-5554' }, pixelProfile, async () => { throw new Error('tools'); }, signal),
+    { message: 'tools' });
+  assert.deepEqual(adb.calls, []);
 });
 
 test('the factory records a selected profile binding in the admission intent', async () => {

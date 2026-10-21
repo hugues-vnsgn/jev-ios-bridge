@@ -3,7 +3,10 @@ import type { ScriptedScenario } from '../scripted/contracts.js';
 import { AndroidDriver, type AndroidDriverOptions } from './android/driver.js';
 import { createExitWatch } from './android/exit-watch.js';
 import { MobileBuildMcpDriver, type IosPreparationDriver, type ObservedActionDriver, createMobileBuildMcpDriver, type MobileBuildMcpDriverOptions } from './index.js';
-import type { ProfileBinding } from '../profiles.js';
+import type { AndroidDeviceName, DeviceAgreement, ProfileBinding } from '../profiles.js';
+import { identityProbe } from './android/probe.js';
+import { adbEnvironment, androidTools } from './android/tools.js';
+import { resolveIdentity, sameIdentity, type IdentityProbe } from './identity.js';
 
 export interface DriverFactoryOptions {
   mobileBuildMcp: MobileBuildMcpDriverOptions;
@@ -25,6 +28,17 @@ export function createDriverFactory(options: DriverFactoryOptions):
     }
     return createMobileBuildMcpDriver({ ...options.mobileBuildMcp, ...(run ? { runId: run.runId } : {}),
       ...(run?.profile ? { profile: run.profile } : {}) });
+  };
+}
+
+/** Profile device agreement through the read-only identity probe: both names resolve live, then compare identities. */
+export function createDeviceAgreement(options: { probe?: IdentityProbe } = {}): DeviceAgreement {
+  const name = (device: AndroidDeviceName) => 'serial' in device ? device.serial : device.avd;
+  return async (left, right, signal) => {
+    const probe = options.probe ?? identityProbe({ adb: (await androidTools()).adb, environment: adbEnvironment() });
+    const first = await resolveIdentity({ request: { category: 'android', name: name(left) }, probe, signal });
+    const second = await resolveIdentity({ request: { category: 'android', name: name(right) }, probe, signal });
+    return sameIdentity(first, second);
   };
 }
 
