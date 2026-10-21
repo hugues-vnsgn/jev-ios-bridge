@@ -1139,23 +1139,28 @@ class Processes(unittest.TestCase):
                 test_plan=plistlib.loads(Path(argv[argv.index("-xctestrun")+1]).read_bytes())
                 request=test_plan["NativeOwnerStudy"]["EnvironmentVariables"]["JEV_NATIVE_OWNER_REQUEST_ID"]
                 row=records(request)[0]
-                script="import time; print("+repr(PREFIX+json.dumps(row))+",flush=True); time.sleep(0.6)"
+                script=("import time; from pathlib import Path; print("+repr(PREFIX+json.dumps(row))+",flush=True); "
+                        "release=Path("+repr(str(config.source_root/"release-child"))+"); "
+                        "exec('while not release.exists(): time.sleep(0.01)')")
                 self.child=real.start([sys.executable,"-c",script],env,cwd)
                 return self.child
         with tempfile.TemporaryDirectory() as root:
-            config=configuration(root,0.25); tools=RealChildTools(Clock(),config)
-            started=time.monotonic()
-            result=run_study("metadata",config,Dependencies(tools))
-            self.assertEqual(result.reason,"ADMISSION_EXPIRED")
-            self.assertEqual(result.status,"retained")
-            self.assertLess(time.monotonic()-started,0.55)
-            self.assertIsNone(tools.child.poll())
-            self.assertTrue((config.evidence_directory/"stop-admission").exists())
-            self.assertEqual(sum(argv[0]=="xcodebuild" for argv in tools.commands),1)
-            owned=[entry for entry in result.retained_resources if entry.get("pid")==tools.child.pid]
-            self.assertTrue(owned)
-            self.assertEqual(tools.child.process.wait(timeout=2),0)  # Natural exit; no signal.
-            for handle in tools.child.files.values(): handle.close()
+            config=configuration(root,0.25); clock=Clock(); tools=RealChildTools(clock,config)
+            try:
+                result=run_study("metadata",config,Dependencies(tools,clock.now,clock.sleep))
+                self.assertEqual(result.reason,"ADMISSION_EXPIRED")
+                self.assertEqual(result.status,"retained")
+                self.assertAlmostEqual(clock.now(),0.25)
+                self.assertIsNone(tools.child.poll())
+                self.assertTrue((config.evidence_directory/"stop-admission").exists())
+                self.assertEqual(sum(argv[0]=="xcodebuild" for argv in tools.commands),1)
+                owned=[entry for entry in result.retained_resources if entry.get("pid")==tools.child.pid]
+                self.assertTrue(owned)
+            finally:
+                (config.source_root/"release-child").touch()
+                if hasattr(tools,"child"):
+                    self.assertEqual(tools.child.process.wait(timeout=10),0)
+                    for handle in tools.child.files.values(): handle.close()
 
     def test_real_parent_exit_leaves_live_owned_grandchild_and_pipe(self):
         real=ProcessTools()
@@ -1166,19 +1171,31 @@ class Processes(unittest.TestCase):
                 test_plan=plistlib.loads(Path(argv[argv.index("-xctestrun")+1]).read_bytes())
                 request=test_plan["NativeOwnerStudy"]["EnvironmentVariables"]["JEV_NATIVE_OWNER_REQUEST_ID"]
                 lines=[PREFIX+json.dumps(row) for row in records(request)]
-                script=("import subprocess,sys; subprocess.Popen([sys.executable,'-c','import time; time.sleep(0.6)']); "
+                descendant=("import time; from pathlib import Path; release=Path("+
+                            repr(str(config.source_root/"release-child"))+"); "
+                            "exec('while not release.exists(): time.sleep(0.01)')")
+                script=("import subprocess,sys; subprocess.Popen([sys.executable,'-c',"+repr(descendant)+"]); "
                         "print("+repr("\n".join(lines)+"\nJEV_NATIVE_OWNER_CLASS_COMPLETED")+",flush=True)")
                 self.child=real.start([sys.executable,"-c",script],env,cwd)
+                self.child.process.wait(timeout=10)
                 return self.child
         with tempfile.TemporaryDirectory() as root:
-            config=configuration(root,0.25); tools=GrandchildTools(Clock(),config)
-            result=run_study("metadata",config,Dependencies(tools))
-            self.assertEqual(result.reason,"ADMISSION_EXPIRED")
-            self.assertEqual(tools.child.poll(),0)
-            self.assertTrue(tools.child.has_live_owned_group())
-            self.assertFalse(any("uninstall" in argv for argv in tools.commands))
-            time.sleep(0.65)  # Harmless descendant exits naturally.
-            for handle in tools.child.files.values(): handle.close()
+            config=configuration(root,0.25); clock=Clock(); tools=GrandchildTools(clock,config)
+            try:
+                result=run_study("metadata",config,Dependencies(tools,clock.now,clock.sleep))
+                self.assertEqual(result.reason,"ADMISSION_EXPIRED")
+                self.assertAlmostEqual(clock.now(),0.25)
+                self.assertEqual(tools.child.poll(),0)
+                self.assertTrue(tools.child.has_live_owned_group())
+                self.assertFalse(any("uninstall" in argv for argv in tools.commands))
+            finally:
+                (config.source_root/"release-child").touch()
+                if hasattr(tools,"child"):
+                    deadline=time.monotonic()+10
+                    while tools.child.has_live_owned_group() and time.monotonic()<deadline:
+                        time.sleep(0.01)
+                    self.assertFalse(tools.child.has_live_owned_group(),"Released fixture grandchild must exit")
+                    for handle in tools.child.files.values(): handle.close()
 
 if __name__ == "__main__":
     unittest.main()
