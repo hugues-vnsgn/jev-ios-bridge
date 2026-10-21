@@ -34,8 +34,8 @@ test('a malformed JEV_ANDROID_DEVICE fails with INVALID_DEVICE, naming the Andro
 });
 
 import { resolveIdentity } from '../src/device/identity.js';
-import { identityProbe } from '../src/device/android/probe.js';
-import { fakeProbeSpawn } from './fixtures/adb-spawn.js';
+import { identityProbe, identityUnavailable } from '../src/device/android/probe.js';
+import { FakeProbeChild, fakeProbeSpawn } from './fixtures/adb-spawn.js';
 
 const identitySignal = () => new AbortController().signal;
 
@@ -64,7 +64,7 @@ test('console provenance resolves an emulator to its canonical directory', async
 
 import { readFileSync } from 'node:fs';
 import { IdentityResolutionError } from '../src/device/identity.js';
-import type { AndroidHostProbe } from '../src/device/android/probe.js';
+import type { AndroidHostProbe, ProbeSpawn } from '../src/device/android/probe.js';
 
 const consoleFixtures = new URL('./fixtures/android/console/', import.meta.url);
 const validHost: AndroidHostProbe = {
@@ -89,11 +89,17 @@ function refusal(code: string, reason?: string) {
 }
 
 test('console provenance rejects malformed framing, sentinel replies and relative paths', async () => {
-  for (const fixture of ['empty.txt', 'ko.txt', 'no-avd-info.txt', 'empty-value.txt', 'extra-line.txt', 'lf-only.txt', 'relative-path.txt']) {
+  for (const fixture of ['empty.txt', 'no-avd-info.txt', 'empty-value.txt', 'extra-line.txt', 'lf-only.txt', 'relative-path.txt']) {
     const world = emulatorWorld({ field: 'path', reply: readFileSync(new URL(fixture, consoleFixtures), 'utf8') });
     await assert.rejects(resolveIdentity({ request: { category: 'android', name: 'emulator-5554' }, probe: world.probe, signal: identitySignal() }),
       refusal('DEVICE_IDENTITY_UNAVAILABLE', 'MALFORMED_PROVENANCE'), fixture);
   }
+  const unknown = emulatorWorld({ field: 'path', reply: "KO: unknown command, try 'help'\r\n" });
+  await assert.rejects(resolveIdentity({ request: { category: 'android', name: 'emulator-5554' }, probe: unknown.probe, signal: identitySignal() }),
+    refusal('DEVICE_IDENTITY_UNAVAILABLE', 'MALFORMED_PROVENANCE'));
+  const authentication = emulatorWorld({ field: 'path', reply: readFileSync(new URL('ko.txt', consoleFixtures), 'utf8') });
+  await assert.rejects(resolveIdentity({ request: { category: 'android', name: 'emulator-5554' }, probe: authentication.probe, signal: identitySignal() }),
+    refusal('DEVICE_IDENTITY_UNAVAILABLE', 'PROVENANCE_INACCESSIBLE'));
 });
 
 test('captured native console replies preserve success, offline and second-instance identity', async () => {
@@ -111,12 +117,61 @@ test('captured native console replies preserve success, offline and second-insta
   }
 });
 
-test('captured missing, empty and mismatched token replies refuse provenance', async () => {
-  for (const name of ['missing', 'empty', 'mismatch']) for (const field of ['name', 'id', 'path'] as const) {
-    const world = emulatorWorld({ field, reply: readFileSync(new URL(`live-${name}-${field}.txt`, consoleFixtures), 'utf8') });
-    await assert.rejects(resolveIdentity({ request: { category: 'android', name: 'emulator-5554' }, probe: world.probe, signal: identitySignal() }),
-      refusal('DEVICE_IDENTITY_UNAVAILABLE', 'MALFORMED_PROVENANCE'));
+test('captured missing, empty and mismatched token replies refuse as inaccessible provenance', async () => {
+  for (const name of ['missing', 'empty', 'mismatch']) {
+    for (const field of ['name', 'id', 'path'] as const) {
+      const world = emulatorWorld({ field, reply: readFileSync(new URL(`live-${name}-${field}.txt`, consoleFixtures), 'utf8') });
+      await assert.rejects(resolveIdentity({ request: { category: 'android', name: 'emulator-5554' }, probe: world.probe, signal: identitySignal() }),
+        refusal('DEVICE_IDENTITY_UNAVAILABLE', field === 'name' ? 'MALFORMED_PROVENANCE' : 'PROVENANCE_INACCESSIBLE'), `${name} ${field}`);
+    }
+    const fake = fakeProbeSpawn((_file, args) => {
+      if (args[0] === 'devices') return 'List of devices attached\nemulator-5570 device\n';
+      if (args[2] === 'emu') return readFileSync(new URL(`live-${name}-${args[4]}.txt`, consoleFixtures), 'utf8');
+      return 'jev_appium_phase1_20261018\n';
+    });
+    const probe = identityProbe({ adb: '/fake/adb', environment: {}, spawn: fake.spawn, host: validHost });
+    await assert.rejects(resolveIdentity({ request: { category: 'android', name: 'emulator-5570' }, probe, signal: identitySignal() }),
+      refusal('DEVICE_IDENTITY_UNAVAILABLE', 'PROVENANCE_INACCESSIBLE'), name);
   }
+});
+
+test('an odd transport state or an unready phone never blocks resolving another device', async () => {
+  const devices = 'List of devices attached\nemulator-5554 device\nPHONE1 unauthorized\nPHONE2 offline\nPHONE3 authorizing\n' +
+    'PHONE4 no permissions (user in plugdev group); see [http://developer.android.com/tools/device.html]\n';
+  for (const name of ['Pixel', 'emulator-5554']) {
+    const world = emulatorWorld({ devices });
+    const identity = await resolveIdentity({ request: { category: 'android', name }, probe: world.probe, signal: identitySignal() });
+    assert.deepEqual([identity.category, identity.value], ['android-emulator', '/avds/Pixel.avd'], name);
+  }
+});
+
+test('a named phone that is not ready keeps its transport state, for the driver to refuse', async () => {
+  const devices = 'List of devices attached\nPHONE1 unauthorized\nPHONE2 offline\nPHONE3 authorizing\n';
+  for (const [name, state] of [['PHONE1', 'unauthorized'], ['PHONE2', 'offline'], ['PHONE3', 'offline']] as const) {
+    const world = emulatorWorld({ devices });
+    const identity = await resolveIdentity({ request: { category: 'android', name }, probe: world.probe, signal: identitySignal() });
+    assert.deepEqual([identity.category, identity.value, identity.category === 'ios-simulator' ? '' : identity.transport.state], ['android-phone', name, state]);
+    assert.deepEqual(world.calls.map(call => call.args.join(' ')), ['devices -l'], 'an unready phone is never queried');
+  }
+});
+
+test('an emulator with no console on this host\'s loopback is skipped by name and refused by serial', async () => {
+  const devices = 'List of devices attached\nemulator-5554 device\nemulator-5556 offline\n';
+  const host: AndroidHostProbe = { ...validHost, listener: async (port, signal) => {
+    if (port === 5556) identityUnavailable('REMOTE_CONSOLE');
+    return validHost.listener(port, signal);
+  } };
+  const byName = await resolveIdentity({ request: { category: 'android', name: 'Pixel' }, probe: emulatorWorld({ devices, host }).probe, signal: identitySignal() });
+  assert.equal(byName.category === 'ios-simulator' ? '' : byName.transport.serial, 'emulator-5554');
+  await assert.rejects(resolveIdentity({ request: { category: 'android', name: 'emulator-5556' }, probe: emulatorWorld({ devices, host }).probe, signal: identitySignal() }),
+    refusal('DEVICE_IDENTITY_UNAVAILABLE', 'REMOTE_CONSOLE'));
+});
+
+test('an emulator older than 30 refuses as unsupported even though it cannot answer avd id or path', async () => {
+  const world = emulatorWorld({ field: 'id', reply: readFileSync(new URL('live-missing-id.txt', consoleFixtures), 'utf8'),
+    host: { ...validHost, version: async () => ({ value: '29.3.0', source: 'running-sdk-binary' }) } });
+  await assert.rejects(resolveIdentity({ request: { category: 'android', name: 'emulator-5554' }, probe: world.probe, signal: identitySignal() }),
+    refusal('DEVICE_IDENTITY_UNAVAILABLE', 'EMULATOR_VERSION_UNSUPPORTED'));
 });
 
 test('guest name is a cross-check and missing guest data preserves console identity', async () => {
@@ -153,8 +208,12 @@ test('emulator provenance requires a local listener, readable sources and suppor
     [{ ...validHost, directory: async () => { throw new Error('sensitive source path'); } }, 'PROVENANCE_INACCESSIBLE'],
   ] as const) {
     const world = emulatorWorld({ host });
-    await assert.rejects(resolveIdentity({ request: { category: 'android', name: 'Pixel' }, probe: world.probe, signal: identitySignal() }),
+    await assert.rejects(resolveIdentity({ request: { category: 'android', name: 'emulator-5554' }, probe: world.probe, signal: identitySignal() }),
       refusal('DEVICE_IDENTITY_UNAVAILABLE', reason));
+    if (reason === 'REMOTE_CONSOLE') {
+      await assert.rejects(resolveIdentity({ request: { category: 'android', name: 'Pixel' }, probe: emulatorWorld({ host }).probe, signal: identitySignal() }),
+        refusal('DEVICE_NOT_FOUND'), 'by name, an emulator without a console here is skipped');
+    }
   }
   const remote = emulatorWorld({ environment: { ADB_SERVER_SOCKET: 'tcp:other-host:5037' } });
   await assert.rejects(resolveIdentity({ request: { category: 'android', name: 'Pixel' }, probe: remote.probe, signal: identitySignal() }),
@@ -250,12 +309,13 @@ test('production host parsing binds loopback PID, process start and fresh SDK bi
       if (args[2] === 'emu') return `${args[4] === 'path' ? avd : 'Pixel'}\r\nOK\r\n`;
       return 'Pixel\n';
     });
-    const probe = identityProbe({ adb: '/fake/adb', environment: { ANDROID_AVD_HOME: '/must/not/be/read' }, spawn: fake.spawn });
+    const probe = identityProbe({ adb: '/fake/adb', environment: { ANDROID_AVD_HOME: '/must/not/be/read', LANG: 'de_DE.UTF-8' }, spawn: fake.spawn });
     const identity = await resolveIdentity({ request: { category: 'android', name: 'emulator-5554' }, probe, signal: identitySignal() });
     assert.equal(identity.value, avd);
     assert.deepEqual(identity.category === 'android-emulator' ? identity.provenance.version : null,
       { value: '36.6.1.0', source: 'running-sdk-binary' });
     assert.deepEqual(fake.calls.filter(call => call.file === launcher).map(call => call.args), [['-version']]);
+    assert.equal(fake.calls.find(call => call.file === '/bin/ps')?.options.env.LC_ALL, 'C', 'ps -o lstart= is parsed in English');
     writeFileSync(launcher, 'replaced installation');
     await assert.rejects(resolveIdentity({ request: { category: 'android', name: 'emulator-5554' }, probe, signal: identitySignal() }),
       refusal('DEVICE_IDENTITY_UNAVAILABLE', 'PROVENANCE_INACCESSIBLE'));
@@ -320,6 +380,45 @@ test('a cold emulator -version slower than the read deadline succeeds within its
       refusal('DEVICE_IDENTITY_UNAVAILABLE', 'PROBE_TIMEOUT'));
     assert.deepEqual(bounded.fake.children.find((_, index) => bounded.fake.calls[index]?.file === launcher)?.killedBy, ['SIGTERM']);
   } finally { rmSync(root, { recursive: true, force: true }); }
+});
+
+test('the production listener binds the console to this account on loopback, and reads processes in the C locale', async () => {
+  for (const [lsof, reason] of [[undefined, 'REMOTE_CONSOLE'], [`p123\nu${userInfo().uid}\nn10.0.0.5:5554\n`, 'REMOTE_CONSOLE'],
+    [`p123\nu${userInfo().uid + 1}\nn127.0.0.1:5554\n`, 'PROVENANCE_INACCESSIBLE']] as const) {
+    const fake = fakeProbeSpawn((file, args, child) => {
+      if (file === '/usr/sbin/lsof') {
+        if (lsof !== undefined) return lsof;
+        child.exit(1);
+        return undefined;
+      }
+      if (args[0] === 'devices') return 'List of devices attached\nemulator-5554 device\n';
+      return 'Pixel\n';
+    });
+    const probe = identityProbe({ adb: '/fake/adb', environment: { LANG: 'de_DE.UTF-8' }, spawn: fake.spawn });
+    await assert.rejects(resolveIdentity({ request: { category: 'android', name: 'emulator-5554' }, probe, signal: identitySignal() }),
+      refusal('DEVICE_IDENTITY_UNAVAILABLE', reason), lsof ?? 'no listener');
+    assert.deepEqual(fake.calls.filter(call => call.file === '/usr/sbin/lsof').map(call => call.options.env.LC_ALL), ['C']);
+  }
+});
+
+test('a probe child that ignores SIGTERM is killed with SIGKILL, and a reply over 64 KiB is malformed', async () => {
+  const children: FakeProbeChild[] = [];
+  class Stubborn extends FakeProbeChild {
+    override kill(signal: NodeJS.Signals): boolean {
+      this.killedBy.push(signal);
+      if (signal === 'SIGKILL') this.emit('close', null, signal);
+      return true;
+    }
+  }
+  const spawn: ProbeSpawn = () => { const child = new Stubborn(); children.push(child); return child; };
+  const stalled = identityProbe({ adb: '/fake/adb', environment: {}, deadlineMs: 5, spawn, host: validHost });
+  await assert.rejects(resolveIdentity({ request: { category: 'android', name: 'Pixel' }, probe: stalled, signal: identitySignal() }),
+    refusal('DEVICE_IDENTITY_UNAVAILABLE', 'PROBE_TIMEOUT'));
+  await new Promise(resolve => setTimeout(resolve, 60));
+  assert.deepEqual(children[0]?.killedBy, ['SIGTERM', 'SIGKILL']);
+  const flood = emulatorWorld({ devices: `List of devices attached\n${'x'.repeat(70_000)}\n` });
+  await assert.rejects(resolveIdentity({ request: { category: 'android', name: 'Pixel' }, probe: flood.probe, signal: identitySignal() }),
+    refusal('DEVICE_IDENTITY_UNAVAILABLE', 'MALFORMED_PROVENANCE'));
 });
 
 test('an explicit phone transport does not depend on unrelated emulator provenance and absent names refuse', async () => {

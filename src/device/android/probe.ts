@@ -80,6 +80,11 @@ type ProbeCommand = { kind: 'transports' } |
   { kind: 'version'; executable: string } | { kind: 'simulators'; deviceSet: string } |
   { kind: 'simulator-app'; deviceSet: string; udid: string; bundleId: string };
 
+/** A console that holds back `avd id`/`avd path` or rejects the token: its access token is not this account's. */
+function unauthenticated(reply: string): boolean {
+  return reply.startsWith('KO: authentication') || /^KO: +bad sub-command\r?$/m.test(reply);
+}
+
 function consoleValue(reply: string): string {
   const match = /^([^\x00-\x1f\x7f]+)\r\nOK\r\n$/.exec(reply);
   const value = match?.[1];
@@ -112,6 +117,8 @@ export function identityProbe(options: IdentityProbeOptions): IdentityProbe {
         delete childEnvironment.SIMCTL_DEVICE_SET_PATH;
         delete childEnvironment.SIMULATOR_DEVICE_SET_PATH;
       }
+      // `ps -o lstart=` prints localized day and month names, which Date.parse can't read.
+      if (command.kind === 'listener' || command.kind === 'process' || command.kind === 'executable') childEnvironment.LC_ALL = 'C';
       try { child = spawnChild(file, args, { env: childEnvironment, shell: false, stdio: ['ignore', 'pipe', 'pipe'] }); }
       catch { reject(new IdentityResolutionError({ code: 'DEVICE_IDENTITY_UNAVAILABLE', reason: 'PROVENANCE_INACCESSIBLE' })); return; }
       const chunks: Buffer[] = [];
@@ -162,8 +169,11 @@ export function identityProbe(options: IdentityProbeOptions): IdentityProbe {
   const host: AndroidHostProbe = options.host ?? {
     async listener(port, signal) {
       if (!Number.isInteger(port) || port <= 0 || port > 65535) identityUnavailable('MALFORMED_PROVENANCE');
-      const reply = await run({ kind: 'listener', port }, signal);
-      const fields = reply.split('\n');
+      const listing = await complete({ kind: 'listener', port }, signal);
+      // lsof exits 1 with nothing listed when no process listens there: the console isn't on this host.
+      if (listing.exitCode === 1 && listing.stdout.length === 0) identityUnavailable('REMOTE_CONSOLE');
+      if (listing.exitCode !== 0) identityUnavailable('PROVENANCE_INACCESSIBLE');
+      const fields = decodeReply(listing.stdout).split('\n');
       const pids = fields.filter(field => field.startsWith('p'));
       const uid = fields.find(field => field.startsWith('u'))?.slice(1);
       const addresses = fields.filter(field => field.startsWith('n')).map(field => field.slice(1));
@@ -221,12 +231,19 @@ export function identityProbe(options: IdentityProbeOptions): IdentityProbe {
       const explicit = selectedSerial && lines.slice(1).some(line => line.trim().split(/\s+/)[0] === selectedSerial);
       for (const line of lines.slice(1)) {
         if (!line.trim()) continue;
-        const [serial, state] = line.trim().split(/\s+/);
-        if (!serial || (state !== 'device' && state !== 'offline' && state !== 'unauthorized')) identityUnavailable('MALFORMED_PROVENANCE');
+        const [serial, listed] = line.trim().split(/\s+/);
+        if (!serial) identityUnavailable('MALFORMED_PROVENANCE');
         if (explicit && serial !== selectedSerial) continue;
-        const transport: AndroidTransport = { serial, state };
+        // A transport in any other state (authorizing, recovery, no permissions) can't be the run's device unless named.
+        const known = listed === 'device' || listed === 'offline' || listed === 'unauthorized';
+        if (!known && !explicit) continue;
+        const transport: AndroidTransport = { serial, state: known ? listed : 'offline' };
         if (!serial.startsWith('emulator-')) {
-          if (state !== 'device') identityUnavailable('PROVENANCE_INACCESSIBLE');
+          // An unready phone can't be read; named, its transport state is the driver's refusal.
+          if (transport.state !== 'device') {
+            if (explicit) observations.push({ category: 'android-phone', value: serial, transport, probeReplies: { hardwareSerial: '' } });
+            continue;
+          }
           const hardwareSerial = await run({ kind: 'property', serial, property: 'ro.serialno' }, signal);
           const value = hardwareSerial.trim();
           if (!/^[A-Za-z0-9_.-]+$/.test(value)) identityUnavailable('MALFORMED_PROVENANCE');
@@ -235,21 +252,31 @@ export function identityProbe(options: IdentityProbeOptions): IdentityProbe {
           observations.push({ category: 'android-phone', value, transport, probeReplies: { hardwareSerial } });
           continue;
         }
-        const process = await host.listener(Number(serial.slice(9)), signal);
-        if (!process.local) identityUnavailable('REMOTE_CONSOLE');
+        let process: ConsoleProcess;
+        try {
+          process = await host.listener(Number(serial.slice(9)), signal);
+          if (!process.local) identityUnavailable('REMOTE_CONSOLE');
+        } catch (error) {
+          // No console on this host's loopback: it can't be running the named AVD here, so only a named serial refuses.
+          if (!explicit && error instanceof IdentityResolutionError && error.reason === 'REMOTE_CONSOLE') continue;
+          throw error;
+        }
         if (!Number.isSafeInteger(process.pid) || process.pid <= 0 || !Number.isFinite(Date.parse(process.startedAt))) identityUnavailable('PROVENANCE_INACCESSIBLE');
-        const name = await run({ kind: 'console', serial, field: 'name' }, signal);
-        const id = await run({ kind: 'console', serial, field: 'id' }, signal);
-        const path = await run({ kind: 'console', serial, field: 'path' }, signal);
-        const avdName = consoleValue(name), avdId = consoleValue(id);
-        const consolePath = consoleValue(path);
-        if (!isAbsolute(consolePath) || !/^[A-Za-z0-9_.-]+$/.test(avdName)) identityUnavailable('MALFORMED_PROVENANCE');
-        const directory = await host.directory(consolePath, signal);
+        // Before `avd id` and `avd path`, which emulators older than 30 can't answer.
         const version = await host.version(process, signal);
         const versionMatch = /^(\d+)\.\d+(?:\.\d+)*$/.exec(version.value);
         if (!versionMatch) identityUnavailable('PROVENANCE_INACCESSIBLE');
         if (Number(versionMatch[1]) < 30) identityUnavailable('EMULATOR_VERSION_UNSUPPORTED');
+        const name = await run({ kind: 'console', serial, field: 'name' }, signal);
+        const id = await run({ kind: 'console', serial, field: 'id' }, signal);
+        const path = await run({ kind: 'console', serial, field: 'path' }, signal);
+        if ([name, id, path].some(unauthenticated)) identityUnavailable('PROVENANCE_INACCESSIBLE');
+        const avdName = consoleValue(name), avdId = consoleValue(id);
+        const consolePath = consoleValue(path);
+        if (!isAbsolute(consolePath) || !/^[A-Za-z0-9_.-]+$/.test(avdName)) identityUnavailable('MALFORMED_PROVENANCE');
+        const directory = await host.directory(consolePath, signal);
         if (!isAbsolute(directory.path) || !/^\d+$/.test(directory.device) || !/^\d+$/.test(directory.inode)) identityUnavailable('PROVENANCE_INACCESSIBLE');
+        const { state } = transport;
         const guestName: EmulatorObservation['probeReplies']['guestName'] = state === 'device'
           ? { kind: 'read' as const, reply: await run({ kind: 'property', serial, property: 'ro.boot.qemu.avd_name' }, signal) }
           : { kind: 'not-readable' as const, state };

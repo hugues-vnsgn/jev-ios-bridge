@@ -266,10 +266,12 @@ test('no device name at all is NO_DEVICE, before any adb command', async () => {
   }, { device: undefined });
 });
 
-for (const [name, devicesText, code] of [
+for (const [name, devicesText, code, serial] of [
   ['an unauthorized serial is DEVICE_UNAUTHORIZED', 'List of devices attached\nemulator-5554          unauthorized transport_id:1\n\n', 'DEVICE_UNAUTHORIZED'],
   ['an offline serial is DEVICE_NOT_CONNECTED', 'List of devices attached\nemulator-5554          offline transport_id:1\n\n', 'DEVICE_NOT_CONNECTED'],
   ['a serial adb doesn\'t list is DEVICE_NOT_FOUND', 'List of devices attached\n\n', 'DEVICE_NOT_FOUND'],
+  ['an unauthorized phone is DEVICE_UNAUTHORIZED', 'List of devices attached\nR58M123          unauthorized transport_id:2\n\n', 'DEVICE_UNAUTHORIZED', 'R58M123'],
+  ['a phone in another state is DEVICE_NOT_CONNECTED', 'List of devices attached\nR58M123          authorizing transport_id:2\n\n', 'DEVICE_NOT_CONNECTED', 'R58M123'],
 ] as const) {
   test(name, async () => {
     const adb = new FakeAdb(api31());
@@ -277,9 +279,19 @@ for (const [name, devicesText, code] of [
     await withDriver(adb, async ({ driver, root }) => {
       await assert.rejects(driver.prepare(app(), signal()), reason(code));
       assert.deepEqual(await readdir(root), [], 'no lease taken');
-    }, { device: { serial: 'emulator-5554' } });
+    }, { device: { serial: serial ?? 'emulator-5554' } });
   });
 }
+
+test('an unready phone listed beside the emulator doesn\'t stop a run on that emulator', async () => {
+  const adb = new FakeAdb(api31());
+  adb.devicesText = 'List of devices attached\nemulator-5554          device transport_id:1\nR58M123          unauthorized transport_id:2\n' +
+    'ZY22 no permissions (user in plugdev group); see [http://developer.android.com/tools/device.html]\n\n';
+  await withDriver(adb, async ({ driver }) => {
+    await driver.prepare(app(), signal());
+    await driver.close(signal());
+  }, { device: { avd: 'jev-actions-api31' } });
+});
 
 test('an AVD name no running emulator reports is DEVICE_NOT_FOUND', async () => {
   const adb = new FakeAdb(api31({ avd: 'Medium_Phone_API_36.1' }));
