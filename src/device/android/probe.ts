@@ -182,7 +182,7 @@ export function identityProbe(options: IdentityProbeOptions): IdentityProbe {
     async version(process, signal) {
       const reply = await run({ kind: 'executable', pid: process.pid }, signal);
       const candidates = reply.split('\n').filter(line => line.startsWith('n')).map(line => line.slice(1)).filter(path =>
-        /\/qemu\/darwin-(?:aarch64|x86_64)\/qemu-system-(?:aarch64|x86_64)$/.test(path) || /\/emulator$/.test(path));
+        /\/qemu\/darwin-(?:aarch64|x86_64)\/qemu-system-(?:aarch64|x86_64)(?:-headless)?$/.test(path) || /\/emulator$/.test(path));
       if (candidates.length !== 1) identityUnavailable('PROVENANCE_INACCESSIBLE');
       const executable = await realpath(candidates[0]!);
       const launcher = executable.endsWith('/emulator') ? executable : join(dirname(dirname(dirname(executable))), 'emulator');

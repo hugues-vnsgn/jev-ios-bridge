@@ -262,6 +262,32 @@ test('production host parsing binds loopback PID, process start and fresh SDK bi
   } finally { rmSync(root, { recursive: true, force: true }); }
 });
 
+test('a headless emulator (-no-window) establishes running provenance from its headless qemu binary', async () => {
+  const root = realpathSync(mkdtempSync(join(tmpdir(), 'identity-headless-')));
+  try {
+    const launcher = join(root, 'emulator');
+    const executable = join(root, 'qemu/darwin-aarch64/qemu-system-aarch64-headless');
+    const avd = join(root, 'Pixel.avd');
+    mkdirSync(join(root, 'qemu/darwin-aarch64'), { recursive: true }); mkdirSync(avd);
+    writeFileSync(launcher, 'fake launcher'); writeFileSync(executable, 'fake executable');
+    chmodSync(launcher, 0o700); chmodSync(executable, 0o700);
+    const startedAt = new Date(Date.now() + 1).toISOString();
+    const fake = fakeProbeSpawn((file, args) => {
+      if (file === '/usr/sbin/lsof' && args.includes('-d')) return `p123\nftxt\nn${executable}\nftxt\nn${join(root, 'lib64/libc++.dylib')}\nftxt\nn/usr/lib/dyld\n`;
+      if (file === '/usr/sbin/lsof') return `p123\nu${userInfo().uid}\nn127.0.0.1:5554\n`;
+      if (file === '/bin/ps') return startedAt + '\n';
+      if (file === launcher) return 'Android emulator version 37.2.12.0 (build_id 123)\n';
+      if (args[0] === 'devices') return 'List of devices attached\nemulator-5554 device\n';
+      if (args[2] === 'emu') return `${args[4] === 'path' ? avd : 'Pixel'}\r\nOK\r\n`;
+      return 'Pixel\n';
+    });
+    const probe = identityProbe({ adb: '/fake/adb', environment: {}, spawn: fake.spawn });
+    const identity = await resolveIdentity({ request: { category: 'android', name: 'emulator-5554' }, probe, signal: identitySignal() });
+    assert.deepEqual(identity.category === 'android-emulator' ? identity.provenance.version : null,
+      { value: '37.2.12.0', source: 'running-sdk-binary' });
+  } finally { rmSync(root, { recursive: true, force: true }); }
+});
+
 test('an explicit phone transport does not depend on unrelated emulator provenance and absent names refuse', async () => {
   const fake = fakeProbeSpawn((_file, args) => args[0] === 'devices'
     ? 'List of devices attached\nPHONE123 device\nemulator-5554 device\n' : 'PHONE123\n');
