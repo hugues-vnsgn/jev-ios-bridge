@@ -143,6 +143,22 @@ test('cancellation during binding revalidation prevents adb and agent dispatch',
   }
 });
 
+test('an action on a device that went offline or unauthorized mid-run refuses with the state code before reaching the agent', async () => {
+  for (const [state, code] of [['offline', 'DEVICE_NOT_CONNECTED'], ['unauthorized', 'DEVICE_UNAUTHORIZED']] as const) {
+    const adb = new FakeAdb(api31());
+    await withDriver(adb, async ({ driver, agents }) => {
+      await driver.prepare(app(), signal());
+      const snapshot = await driver.observe(signal());
+      adb.devicesText = `List of devices attached\nemulator-5554          ${state} transport_id:1\n\n`;
+      const before = agents.calls.length;
+      await assert.rejects(driver.act({ kind: 'back' }, snapshot, values({}), signal()), reason(code), state);
+      assert.equal(agents.calls.length, before, state);
+      adb.devicesText = undefined;
+      await driver.close(signal()).catch(() => undefined);
+    });
+  }
+});
+
 test('cleanup refuses a reused transport without mutating the replacement and keeps the marker', async () => {
   const adb = new FakeAdb(api31());
   await withDriver(adb, async ({ driver, root }) => {

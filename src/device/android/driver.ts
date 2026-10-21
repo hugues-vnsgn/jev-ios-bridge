@@ -12,7 +12,7 @@ import { DeviceReasonError, largestScrollable, screenMiddleSwipe, screenPointOf,
 import { DeviceLease, DeviceLeaseBusyError, type LeaseHolder } from '../lease.js';
 import { readLogTail } from '../logs.js';
 import { IdentityResolutionError, resolveIdentity, revalidateIdentity, type IdentityProbe, type ResolvedIdentity } from '../identity.js';
-import { identityProbe } from './probe.js';
+import { identityProbe, type AndroidTransport } from './probe.js';
 import { resumedPackage } from '../attach.js';
 import { jpegSize } from '../image.js';
 
@@ -76,6 +76,12 @@ export class AndroidDeviceError extends DeviceReasonError {
     super('DEVICE_ERROR', message, { vendorCode });
     this.name = 'AndroidDeviceError';
   }
+}
+
+/** A transport the run can use now: an unauthorized one is `DEVICE_UNAUTHORIZED`, any other unready one `DEVICE_NOT_CONNECTED`. */
+function requireReady({ serial, state }: AndroidTransport): void {
+  if (state === 'unauthorized') throw new DeviceReasonError('DEVICE_UNAUTHORIZED', `Device ${serial} hasn't accepted this Mac's USB-debugging key`);
+  if (state !== 'device') throw new DeviceReasonError('DEVICE_NOT_CONNECTED', `Device ${serial} is ${state}`);
 }
 
 export interface AndroidDriverOptions {
@@ -646,9 +652,8 @@ export class AndroidDriver implements DeviceDriver {
     this.probe ??= identityProbe({ adb: tools.adb, environment: adbEnvironment() });
     const resolved = await this.identityRead(() => resolveIdentity({ request: { category: this.options.category ?? 'android', name }, probe: this.probe!, signal }));
     if (resolved.category === 'ios-simulator') throw new Error('Android identity required');
-    const { serial, state } = resolved.transport;
-    if (state === 'unauthorized') throw new DeviceReasonError('DEVICE_UNAUTHORIZED', `Device ${serial} hasn't accepted this Mac's USB-debugging key`);
-    if (state !== 'device') throw new DeviceReasonError('DEVICE_NOT_CONNECTED', `Device ${serial} is ${state}`);
+    const { serial } = resolved.transport;
+    requireReady(resolved.transport);
     const identity = resolved.category === 'android-emulator' ? resolved.provenance.avdName : serial;
     this.resolvedIdentity = resolved;
     let deadHolder: LeaseHolder | undefined;
@@ -711,8 +716,9 @@ export class AndroidDriver implements DeviceDriver {
   }
 
   private async revalidate(signal: AbortSignal): Promise<void> {
-    if (this.resolvedIdentity && this.probe) await this.identityRead(() =>
-      revalidateIdentity({ identity: this.resolvedIdentity!, probe: this.probe!, signal }));
+    if (!this.resolvedIdentity || !this.probe) return;
+    const current = await this.identityRead(() => revalidateIdentity({ identity: this.resolvedIdentity!, probe: this.probe!, signal }));
+    if (current.category !== 'ios-simulator') requireReady(current.transport);
   }
 
   /**
