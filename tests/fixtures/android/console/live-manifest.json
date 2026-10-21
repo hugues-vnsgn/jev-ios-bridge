@@ -1,0 +1,151 @@
+{
+  "sourceSha": "ba76c440d8801fe1aec84dc2ea7ff7e80e182336",
+  "offlineCaptured": true,
+  "resolverHarness": "not run",
+  "captures": [
+    {
+      "case": "offline",
+      "field": "name",
+      "file": "live-offline-name.txt",
+      "exitCode": 0,
+      "bytes": 32,
+      "sha256": "8c76a0be27274ddf4acf318dc2ada632821ec9ac5cef207068388d896119ddb6"
+    },
+    {
+      "case": "offline",
+      "field": "id",
+      "file": "live-offline-id.txt",
+      "exitCode": 0,
+      "bytes": 15,
+      "sha256": "ff0b20c9346863028c6ba32ddf23bde72f02128747be8ab2fb311beb94178207"
+    },
+    {
+      "case": "offline",
+      "field": "path",
+      "file": "live-offline-path.txt",
+      "exitCode": 0,
+      "bytes": 151,
+      "sha256": "d469e47fa9a8cffd29ebf6ee0dfa4663d08292c26946295ab72010af0b7a21c1"
+    },
+    {
+      "case": "success",
+      "field": "name",
+      "file": "live-success-name.txt",
+      "exitCode": 0,
+      "bytes": 32,
+      "sha256": "8c76a0be27274ddf4acf318dc2ada632821ec9ac5cef207068388d896119ddb6"
+    },
+    {
+      "case": "success",
+      "field": "id",
+      "file": "live-success-id.txt",
+      "exitCode": 0,
+      "bytes": 15,
+      "sha256": "ff0b20c9346863028c6ba32ddf23bde72f02128747be8ab2fb311beb94178207"
+    },
+    {
+      "case": "success",
+      "field": "path",
+      "file": "live-success-path.txt",
+      "exitCode": 0,
+      "bytes": 151,
+      "sha256": "d469e47fa9a8cffd29ebf6ee0dfa4663d08292c26946295ab72010af0b7a21c1"
+    },
+    {
+      "case": "missing",
+      "field": "name",
+      "file": "live-missing-name.txt",
+      "exitCode": 0,
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "case": "missing",
+      "field": "id",
+      "file": "live-missing-id.txt",
+      "exitCode": 0,
+      "bytes": 218,
+      "sha256": "ffdab2d70dc4f84365ca449e582cd2f1ce5cb23dbc80439aba6d01f063b5df82"
+    },
+    {
+      "case": "missing",
+      "field": "path",
+      "file": "live-missing-path.txt",
+      "exitCode": 0,
+      "bytes": 218,
+      "sha256": "ffdab2d70dc4f84365ca449e582cd2f1ce5cb23dbc80439aba6d01f063b5df82"
+    },
+    {
+      "case": "empty",
+      "field": "name",
+      "file": "live-empty-name.txt",
+      "exitCode": 0,
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "case": "empty",
+      "field": "id",
+      "file": "live-empty-id.txt",
+      "exitCode": 0,
+      "bytes": 218,
+      "sha256": "ffdab2d70dc4f84365ca449e582cd2f1ce5cb23dbc80439aba6d01f063b5df82"
+    },
+    {
+      "case": "empty",
+      "field": "path",
+      "file": "live-empty-path.txt",
+      "exitCode": 0,
+      "bytes": 218,
+      "sha256": "ffdab2d70dc4f84365ca449e582cd2f1ce5cb23dbc80439aba6d01f063b5df82"
+    },
+    {
+      "case": "mismatch",
+      "field": "name",
+      "file": "live-mismatch-name.txt",
+      "exitCode": 0,
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "case": "mismatch",
+      "field": "id",
+      "file": "live-mismatch-id.txt",
+      "exitCode": 0,
+      "bytes": 323,
+      "sha256": "2263b2db2466434f432723e7f5f1a752002267d51a2193d529bfc7e43086f528"
+    },
+    {
+      "case": "mismatch",
+      "field": "path",
+      "file": "live-mismatch-path.txt",
+      "exitCode": 0,
+      "bytes": 323,
+      "sha256": "2263b2db2466434f432723e7f5f1a752002267d51a2193d529bfc7e43086f528"
+    },
+    {
+      "case": "second",
+      "field": "name",
+      "file": "live-second-name.txt",
+      "exitCode": 0,
+      "bytes": 32,
+      "sha256": "8c76a0be27274ddf4acf318dc2ada632821ec9ac5cef207068388d896119ddb6"
+    },
+    {
+      "case": "second",
+      "field": "id",
+      "file": "live-second-id.txt",
+      "exitCode": 0,
+      "bytes": 16,
+      "sha256": "229919580a8828df8ea4db191a7c7e41c668b64f3ee554c7f8bcb1f9e819db3b"
+    },
+    {
+      "case": "second",
+      "field": "path",
+      "file": "live-second-path.txt",
+      "exitCode": 0,
+      "bytes": 151,
+      "sha256": "d469e47fa9a8cffd29ebf6ee0dfa4663d08292c26946295ab72010af0b7a21c1"
+    }
+  ]
+}
