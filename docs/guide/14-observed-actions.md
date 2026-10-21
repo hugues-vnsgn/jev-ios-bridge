@@ -10,6 +10,8 @@ Use test data in an app you control. Arrange exclusive operation of dedicated de
 
 ## Migrate offline before enabling effects
 
+For an existing schema 2 admission store, follow [Activate the shared admission store](admission-activation.md). The order is owner quiescence, preflight, install updates, clean preflight, upgrade, import, and read-only verification. If preflight lists any active attempt, stop and report it to the owner. The runbook never forces or edits an attempt. Stop at every refusal. Applying that runbook needs a separate owner authorization. The migration instructions below initialize a store only; they do not upgrade or reimport an existing store.
+
 Stop all old bridge and experimental writers first. Inventory every historical journal and lease location, including other home and TMPDIR locations. Declare every nondefault root below, or exclude every affected simulator UUID. Set `writersStopped` and `historicalRootsDeclaredOrExcluded` to true only after doing that work. These booleans are operator assertions; they prove neither process liveness nor native release.
 
 Create a private declaration file (`umask 077`) with exactly these fields, replacing the empty arrays with your actual historical roots/exclusions:
