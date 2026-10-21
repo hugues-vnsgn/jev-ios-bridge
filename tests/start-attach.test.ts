@@ -163,14 +163,29 @@ test('Android attach takes the lease, checks the app is in front, starts the str
   });
 });
 
-test('Android attach checks the app is in front before waking the screen or starting any stream', async () => {
+test('Android attach checks the screen, then that the app is in front, before it starts any stream', async () => {
   await withAndroid(() => 'com.example.android', api31(), async ({ adb, driver }) => {
     await driver.prepare(androidAttach, signal());
     const order = adb.calls.map(call => call[0] === '(logcat)' ? 'stream' : shellLine(call));
     assert.deepEqual(order.filter(command => command === "'dumpsys' 'activity' 'activities'" ||
       command === "'dumpsys' 'window' 'policy'" || command === 'stream'), [
-      "'dumpsys' 'activity' 'activities'", "'dumpsys' 'window' 'policy'", 'stream', 'stream',
+      "'dumpsys' 'window' 'policy'", "'dumpsys' 'activity' 'activities'", 'stream', 'stream',
     ]);
+  });
+});
+
+test('Android attach wakes a sleeping screen before its foreground check, and refuses a locked one before either', async () => {
+  const asleep = api31({ awake: false });
+  await withAndroid(() => asleep.awake === false ? undefined : 'com.example.android', asleep, async ({ adb, driver }) => {
+    await driver.prepare(androidAttach, signal());
+    const order = adb.calls.map(shellLine);
+    assert.ok(order.indexOf("'input' 'keyevent' 'KEYCODE_WAKEUP'") < order.indexOf("'dumpsys' 'activity' 'activities'"));
+    await driver.close(signal());
+  });
+  await withAndroid(() => 'com.example.android', api31({ awake: false, keyguard: true }), async ({ adb, driver }) => {
+    await assert.rejects(driver.prepare(androidAttach, signal()), reason('DEVICE_LOCKED'));
+    assert.equal(adb.calls.map(shellLine).some(line => line === "'input' 'keyevent' 'KEYCODE_WAKEUP'" ||
+      line === "'dumpsys' 'activity' 'activities'"), false);
   });
 });
 

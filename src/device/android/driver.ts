@@ -567,10 +567,17 @@ export class AndroidDriver implements DeviceDriver {
     const { tools, serial, identity, deadHolder } = await this.takeDevice(signal);
     try {
       let component: string | undefined;
-      const sweptLeftovers = await this.sweepLeftovers(serial, identity, deadHolder, signal, () => this.checkDevice(serial, app.package, signal, async () => {
-        if (scenario.start === 'attach') await this.checkForeground(serial, app.package, signal);
-        else component = app.activity ? `${app.package}/${app.activity}` : await this.launcherActivity(serial, app.package, signal);
-      }));
+      const sweptLeftovers = await this.sweepLeftovers(serial, identity, deadHolder, signal, async () => {
+        if (scenario.start !== 'attach') {
+          await this.checkDevice(serial, app.package, signal, async () => {
+            component = app.activity ? `${app.package}/${app.activity}` : await this.launcherActivity(serial, app.package, signal);
+          });
+          return;
+        }
+        await this.checkDevice(serial, app.package, signal);
+        // After the wake: an app behind a sleeping screen is paused, so it would not read as in front.
+        await this.checkForeground(serial, app.package, signal);
+      });
       if (scenario.start === 'attach') {
         // Attach (Issue 11): no restart. The app must already be in front; the streams then start from now.
         if (await this.startStreams(serial, app.package, signal)) await this.readPid(serial, app.package, signal);
