@@ -1,5 +1,5 @@
 import type { AllocationCapacity, AllocationReservationInput, ReserveAllocationResult, AllocationRecord, AllocationOwner, AllocationReservation, AllocationCommit, AllocationReason, PreparationClaim, ActionBinding, ConsumeAllocationResult, ActionRecordView, ActionEvidence } from './admission-allocation.js';
-import { randomUUID } from 'node:crypto';
+import { createHash, randomUUID } from 'node:crypto';
 import { execFileSync } from 'node:child_process';
 import { userInfo } from 'node:os';
 import { isAbsolute, join, resolve } from 'node:path';
@@ -70,7 +70,12 @@ function processStart(pid: number): string | undefined {
   }).trim() || undefined; }
   catch { return undefined; }
 }
-const incarnation = processStart(process.pid) ?? `unknown-${randomUUID()}`;
+let incarnation: string | undefined;
+const activeRecoveries = new Set<string>();
+function currentProcess(): OwnerProcess {
+  incarnation ??= processStart(process.pid) ?? `unknown-${randomUUID()}`;
+  return { pid: process.pid, incarnation };
+}
 export { AdmissionError } from './admission-sqlite.js';
 export function admissionRoot(): string { return join(userInfo().homedir, 'Library/Application Support/jev-ios-bridge/admission'); }
 export function canonicalDevice(input: string): string;
@@ -127,12 +132,12 @@ export class Admission {
     if (request.provenance !== undefined && (identity.category !== 'android-emulator' || !emulatorProvenanceSchema.safeParse(request.provenance).success)) throw new AdmissionError('INVALID_REQUEST','Expected resolved emulator provenance');
     if (!request.digest.trim()) throw new AdmissionError('INVALID_REQUEST', 'Missing request digest');
     if (request.signal?.aborted) return { kind: 'refused', reason: 'CANCELLED' };
-    let acquired = this.store.acquire({ ...request, category: identity.category, device }, this.dependencies.process ?? { pid: process.pid, incarnation });
+    let acquired = this.store.acquire({ ...request, category: identity.category, device }, this.dependencies.process ?? currentProcess());
     if (acquired.kind==='refused' && (acquired.reason==='DEVICE_BUSY'||acquired.reason==='DEVICE_QUARANTINED')) {
       const previous=this.store.inspect(device,identity.category)?.owner;
       if (previous && (this.dependencies.ownerLiveness?.(previous.process)??processLiveness(previous.process))==='dead') {
         this.store.quarantineAbandoned(previous,'OWNER_LOST');
-        acquired=this.store.acquire({...request,category:identity.category,device},this.dependencies.process??{pid:process.pid,incarnation});
+        acquired=this.store.acquire({...request,category:identity.category,device},this.dependencies.process??currentProcess());
       }
     }
     if (acquired.kind !== 'acquired') return acquired;
@@ -146,7 +151,7 @@ export class Admission {
     return { kind: 'acquired', claim };
   }
   reserveAllocation(input: AllocationReservationInput): ReserveAllocationResult {
-    const result = this.store.reserveAllocation(input, this.dependencies.process ?? { pid: process.pid, incarnation });
+    const result = this.store.reserveAllocation(input, this.dependencies.process ?? currentProcess());
     if (result.kind !== 'reserved') return result;
     return { kind: 'reserved', reservation: new OwnedReservation(this.store, result.allocation) };
   }
@@ -154,7 +159,7 @@ export class Admission {
   readAllocationCommands(id: string): CommandRecord[] { return this.store.readAllocationCommands(canonicalAllocationId(id)); }
   readAllocationForAction(actionId: string): AllocationRecord | undefined { return this.store.readAllocationForAction(actionId); }
   consumeAllocation(binding: ActionBinding): ConsumeAllocationResult {
-    const result = this.store.consumeAllocation({ ...binding, allocationId: canonicalAllocationId(binding.allocationId) }, this.dependencies.process ?? { pid: process.pid, incarnation });
+    const result = this.store.consumeAllocation({ ...binding, allocationId: canonicalAllocationId(binding.allocationId) }, this.dependencies.process ?? currentProcess());
     if (result.kind !== 'consumed') return result;
     return { kind: 'consumed', claim: new OwnedClaim(this.store, result.owner), allocation: result.allocation };
   }
@@ -190,7 +195,7 @@ export class Admission {
   claimRecovery(expected: OwnerIdentity, requestId: string): { kind:'claimed'|'retrieved'; claim: RecoveryClaim } | { kind:'refused' } {
     const open=this.store.readGeneration(expected).recoveries.find(recovery=>recovery.closedAt===null);
     const abandoned=open&&(this.dependencies.ownerLiveness?.(open.process)??processLiveness(open.process))==='dead'?open:undefined;
-    const result=this.store.claimRecovery(expected,requestId,this.dependencies.process??{pid:process.pid,incarnation},abandoned);
+    const result=this.store.claimRecovery(expected,requestId,this.dependencies.process??currentProcess(),abandoned);
     if (result.kind==='refused') return result;
     return {kind:result.kind,claim:new RecoveryClaim(this.store,result.identity,(request)=>this.submitFence(expected,request,result.identity))};
   }
@@ -200,17 +205,26 @@ export class Admission {
     const identity=canonicalDevice({category:request.category??'ios-simulator',value:request.device});
     const target=this.store.recoveryTarget(identity);
     if (!target||request.signal?.aborted) return acquired;
-    const recovery=this.claimRecovery(target,randomUUID());
-    if (recovery.kind!=='claimed') return acquired;
+    const recoveryKey=JSON.stringify([target.category,target.device,target.token,target.generation]);
+    if (activeRecoveries.has(recoveryKey)) return acquired;
+    const claimant=this.dependencies.process??currentProcess();
+    const completedClaims=this.store.readGeneration(target).recoveries.filter(recovery=>recovery.closedAt!==null
+      && recovery.process.pid===claimant.pid && recovery.process.incarnation===claimant.incarnation).length;
+    const requestId=createHash('sha256').update(JSON.stringify([recoveryKey,claimant.pid,claimant.incarnation,completedClaims])).digest('hex');
+    activeRecoveries.add(recoveryKey);
     try {
-      const proof=await sweep(recovery.claim);
-      if(request.signal?.aborted) {recovery.claim.close();return {kind:'refused',reason:'CANCELLED'};}
-      recovery.claim.submitFence(proof);
-    } catch {
-      try {recovery.claim.close();} catch {}
-      return acquired;
-    }
-    return this.acquire(request);
+      const recovery=this.claimRecovery(target,requestId);
+      if (recovery.kind==='refused') return acquired;
+      try {
+        const proof=await sweep(recovery.claim);
+        if(request.signal?.aborted) {recovery.claim.close();return {kind:'refused',reason:'CANCELLED'};}
+        recovery.claim.submitFence(proof);
+      } catch {
+        try {recovery.claim.close();} catch {}
+        return acquired;
+      }
+      return this.acquire(request);
+    } finally { activeRecoveries.delete(recoveryKey); }
   }
   cancel(identity: AttemptIdentity): AttemptView | undefined { validateAttempt(identity); return this.store.cancel(identity); }
   quarantineAbandoned(expected: OwnerIdentity, reason: string): boolean {
