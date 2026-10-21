@@ -133,6 +133,14 @@ A `do` step that goes back to Claude records a hand-back reason, such as `NONE_F
 | `STATE_UNAVAILABLE` | Admission storage is unavailable, unsafe, incompatible, or requires offline maintenance. |
 | `INVALID_REQUEST` | The admission or maintenance request is invalid. |
 | `NOT_COVERABLE` | The requested quarantine cover is not supported; maintenance-lift is reserved. |
+| `STALE_OWNER` | The request names an owner or generation that no longer holds this device. |
+| `UNBOUND_PROOF` | The fence proof has missing, conflicting, or unrecorded generation membership. |
+| `DISPATCH_OPEN` | Dispatch and its immutable outcome must close before release. |
+| `COVERAGE_UNKNOWN` | The owner generation has an incomplete native component inventory. |
+| `COMMANDS_UNFENCED` | The fence proof omits a non-settled command. |
+| `COVERAGE_INCOMPLETE` | A recorded component lacks valid stop evidence. |
+
+Fence receipts are checked in this order: `STALE_OWNER`, `UNBOUND_PROOF`, `NOT_COVERABLE`, `DISPATCH_OPEN`, `COVERAGE_UNKNOWN`, `COMMANDS_UNFENCED`, `COVERAGE_INCOMPLETE`. A refusal changes no release records. An accepted receipt can free the device while the attempt stays inconclusive and allocation capacity stays retained.
 
 `IMPORT_REFUSED` carries exactly one reason: `HOLDER_ALIVE`, `SOURCE_UNREADABLE`, `SOURCE_UNSAFE`, `SOURCE_INCONSISTENT`, or `SOURCE_CONFLICT`. These reasons are details of the import refusal, not separate verdict codes.
 

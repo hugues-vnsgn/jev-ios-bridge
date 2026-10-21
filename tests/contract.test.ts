@@ -76,6 +76,12 @@ test('contract: offline admission refusals have one import code and a closed rea
   }
 });
 
+test('contract: release refusal codes are stable public vocabulary', () => {
+  for (const code of ['STALE_OWNER','UNBOUND_PROOF','NOT_COVERABLE','DISPATCH_OPEN','COVERAGE_UNKNOWN','COMMANDS_UNFENCED','COVERAGE_INCOMPLETE']) {
+    assert.equal(vocabularyApi.isReasonCode(code),true,code);
+  }
+});
+
 test('contract: live device identity refusals have a closed unavailable reason set', () => {
   for (const code of ['DEVICE_NOT_FOUND', 'DEVICE_IDENTITY_CONFLICT', 'DEVICE_IDENTITY_UNAVAILABLE']) {
     assert.equal(vocabularyApi.isReasonCode(code), true, code);

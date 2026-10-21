@@ -107,6 +107,12 @@ export const REASON_CODES = {
   DEVICE_IDENTITY_CONFLICT: 'Live identity sources disagree about the device.',
   DEVICE_IDENTITY_UNAVAILABLE: 'A required identity source cannot be read or is not admissible; exactly one identity unavailable reason identifies the cause.',
   NOT_COVERABLE: 'The requested quarantine cover is not supported; maintenance-lift is reserved.',
+  STALE_OWNER: 'The request names an owner or generation that no longer holds this device.',
+  UNBOUND_PROOF: 'The fence proof has missing, conflicting, or unrecorded generation membership.',
+  DISPATCH_OPEN: 'Dispatch and its immutable outcome must close before release.',
+  COVERAGE_UNKNOWN: 'The owner generation has an incomplete native component inventory.',
+  COMMANDS_UNFENCED: 'The fence proof omits a non-settled command.',
+  COVERAGE_INCOMPLETE: 'A recorded component lacks valid stop evidence.',
 } as const satisfies Record<string, string>;
 export type ReasonCode = keyof typeof REASON_CODES;
 

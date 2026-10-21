@@ -826,8 +826,17 @@ export class MobileBuildMcpDriver implements DeviceDriver, IosPreparationDriver,
     admission.assertBackend(this.options.fakeBackend ? 'fake' : 'real');
     const intent = { deviceId, app: scenario.app, start: scenario.start ?? 'restart', identity: resolved, installedApp,
       ...(this.options.profile ? { profile: this.options.profile } : {}) };
-    const acquired = admission.acquire({ category: 'ios-simulator', device: deviceId, attempt: { kind: 'legacy', id: this.options.runId ?? randomUUID() },
-      digest: createHash('sha256').update(JSON.stringify(intent)).digest('hex'), intent, signal });
+    const acquired = await admission.acquireWithRecovery({ category: 'ios-simulator', device: deviceId, attempt: { kind: 'legacy', id: this.options.runId ?? randomUUID() },
+      digest: createHash('sha256').update(JSON.stringify(intent)).digest('hex'), intent, signal }, async recovery => {
+      const generation = admission.readGeneration(recovery.identity.owner);
+      return { requestId: `recovery-stop-${recovery.identity.id}`, kind: 'stop',
+        commands: generation.commands.filter(command => command.state !== 'settled').map(command => command.id),
+        components: generation.components.flatMap(component => {
+          const completed = generation.commands.find(command => command.componentId === component.id && command.state === 'settled');
+          return component.kind === 'one-shot' && completed
+            ? [{ componentId: component.id, proof: { kind: 'completed-command' as const, commandId: completed.id } }] : [];
+        }) };
+    });
     if (acquired.kind !== 'acquired') throw new DeviceCliError('DEVICE_BUSY', `Device admission refused: ${acquired.kind === 'refused' ? acquired.reason : 'ATTEMPT_ALREADY_EXISTS'}`);
     this.ownsClaim = true;
     try { await this.attach(acquired.claim, bundleId, signal); }
@@ -885,7 +894,8 @@ export class MobileBuildMcpDriver implements DeviceDriver, IosPreparationDriver,
   }
 
   private async revalidateSimulator(identity: SimulatorIdentity, signal: AbortSignal): Promise<void> {
-    const current = await this.identityRead(() => revalidateIdentity({ identity, probe: this.probe!, signal }));
+    const current = await this.dispatch('identity-revalidation', signal,
+      issuedSignal => this.identityRead(() => revalidateIdentity({ identity, probe: this.probe!, signal: issuedSignal })));
     if (current.category !== 'ios-simulator') throw new Error('Simulator identity required');
     if (current.state !== 'Booted') throw notBootedError(current.value, current.state);
   }
