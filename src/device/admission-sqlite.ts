@@ -1221,21 +1221,24 @@ export class AdmissionSqlite {
     this.event(db, expected.attempt, 'authorized', { id, operation });
     return {kind:'issued',command:{id,componentId,requestId:input?.requestId??id,operation,state:'outstanding',recoveryClaimId:null}};
   }
-  authorizeReads(expected: OwnerIdentity, operations: readonly string[], recovery?: RecoveryIdentity): string[] {
+  authorizeReads(expected: OwnerIdentity, operations: readonly (string | CommandRequest)[], recovery?: RecoveryIdentity): string[] {
     if (!operations.length) throw new AdmissionError('INVALID_REQUEST', 'A read group cannot be empty');
     return this.write('authorizeReads', db => {
       const commands: string[] = [];
-      for (const operation of operations) {
-        const issued = recovery ? this.issueRecoveryInTransaction(db, recovery, operation, undefined, commands)
-          : this.issueInTransaction(db, expected, operation, undefined, commands);
+      for (const request of operations) {
+        const input = typeof request === 'string' ? undefined : commandRequestSchema.parse(request);
+        const operation = typeof request === 'string' ? request : input!.operation;
+        const issued = recovery ? this.issueRecoveryInTransaction(db, recovery, operation, input, commands)
+          : this.issueInTransaction(db, expected, operation, input, commands);
+        if (issued.kind !== 'issued') throw new AdmissionError('DISPATCH_CLOSED', 'A retrieved read cannot be sent again');
         commands.push(issued.command.id);
       }
       return commands;
     });
   }
-  settleReads(expected: OwnerIdentity, commands: readonly string[], completed: number): void {
+  settleReads(expected: OwnerIdentity, commands: readonly string[], completed: number, results: readonly unknown[] = []): void {
     this.write('settleReads', db => {
-      for (const [index, command] of commands.entries()) this.settleInTransaction(db, expected, command, index < completed);
+      for (const [index, command] of commands.entries()) this.settleInTransaction(db, expected, command, index < completed, results[index]);
     });
   }
   advance(expected: OwnerIdentity, command: string, result: unknown, next: string | CommandRequest, recovery?: RecoveryIdentity): string {

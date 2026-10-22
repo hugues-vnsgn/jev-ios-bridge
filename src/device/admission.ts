@@ -387,7 +387,7 @@ class OwnedClaim implements AdmissionClaim {
     }
   }
 }
-export type RecordedRead<T> = { operation: string; read: () => Promise<T> };
+export type RecordedRead<T> = { operation: string | CommandRequest; read: (commandId: string) => Promise<T> };
 export type CommandStep<T> = { request: string | CommandRequest; effect: (commandId: string) => Promise<T> };
 async function runSequence<T>(store: AdmissionSqlite, owner: OwnerIdentity, first: string, steps: readonly CommandStep<T>[], closed: () => boolean, recovery?: RecoveryIdentity): Promise<T[]> {
   let command = first;
@@ -409,12 +409,15 @@ async function runSequence<T>(store: AdmissionSqlite, owner: OwnerIdentity, firs
 async function runReads<T>(store: AdmissionSqlite, owner: OwnerIdentity, commands: string[], reads: readonly RecordedRead<T>[], closed: () => boolean): Promise<T[]> {
   const results: T[] = [];
   try {
-    for (const read of reads) {
+    for (const [index, read] of reads.entries()) {
       if (closed()) throw new AdmissionError('DISPATCH_CLOSED', 'Read group is closed');
-      results.push(await read.read());
+      results.push(await read.read(commands[index]!));
     }
     return results;
-  } finally { store.settleReads(owner, commands, results.length); }
+  } finally {
+    store.settleReads(owner, commands, results.length, reads.map((read, index) =>
+      typeof read.operation !== 'string' && read.operation.recordResult ? results[index] : undefined));
+  }
 }
 export interface AdmittedSession {
   dispatch<T>(kind: string | CommandRequest, effect: (commandId: string) => Promise<T>): Promise<T>;

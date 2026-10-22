@@ -42,15 +42,15 @@ export class AndroidOwnership {
     }, true, [{ id, kind: 'adb-command', serial: this.serial, args }, ...components]);
     return { result, commandId };
   }
-  async adbSequence(commands: string[][], runner: AdbRunner, signal: AbortSignal): Promise<AdbResult[]> {
+  async adbReads(commands: string[][], runner: AdbRunner, signal: AbortSignal): Promise<AdbResult[]> {
     const dispatcher = this.recovery ?? this.session;
     if (!dispatcher) throw new AdmissionError('DISPATCH_CLOSED', 'Android dispatch is closed');
     try {
-      return await dispatcher.dispatchSequence(commands.map(args => {
+      return await dispatcher.dispatchReads(commands.map(args => {
         const id = randomUUID();
-        return { request: { requestId: id, componentId: id, operation: 'adb', payload: {}, recordResult: true,
+        return { operation: { requestId: id, componentId: id, operation: 'adb', payload: {}, recordResult: true,
           components: [{ id, kind: 'adb-command' as const, serial: this.serial, args }] },
-        effect: async () => {
+        read: async () => {
           signal.throwIfAborted();
           return runner(args, signal, process => this.observe(id, { kind: 'host-start', process }));
         } };

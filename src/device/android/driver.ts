@@ -17,7 +17,7 @@ import { DeviceReasonError, largestScrollable, screenMiddleSwipe, screenPointOf,
 import { CompatibilityMarker, DeviceLeaseBusyError } from '../lease.js';
 import { readLogTail } from '../logs.js';
 import { IdentityResolutionError, resolveIdentity, revalidateIdentity, type IdentityProbe, type ResolvedIdentity } from '../identity.js';
-import { identityProbe, type AndroidTransport } from './probe.js';
+import { identityProbe, type AndroidTransport, type ProbeInvocation } from './probe.js';
 import { resumedPackage } from '../attach.js';
 import { jpegSize } from '../image.js';
 
@@ -681,8 +681,13 @@ export class AndroidDriver implements DeviceDriver {
       intent: { identity: resolved, profile: this.options.profile ?? null }, transport: resolved.transport, signal,
       ...(resolved.category === 'android-emulator' ? { provenance: resolved.provenance } : {}) },
       async recovery => {
-        this.probe = unrecordedProbe.withRecorder?.((file, args, effect) =>
-          recovery.dispatch(JSON.stringify({ kind: 'identity-probe', file, args }), effect)) ?? unrecordedProbe;
+        const recorder = Object.assign((file: string, args: string[], effect: ProbeInvocation['execute']) =>
+          recovery.dispatch(JSON.stringify({ kind: 'identity-probe', file, args }), effect), {
+          group: (reads: ProbeInvocation[]) => recovery.dispatchReads(reads.map(({ file, args, execute }) => ({
+            operation: JSON.stringify({ kind: 'identity-probe', file, args }), read: execute,
+          }))),
+        });
+        this.probe = unrecordedProbe.withRecorder?.(recorder) ?? unrecordedProbe;
         return recoverAndroid({ admission, claim: recovery, serial, runner: this.runner!, logcat: this.logcat!,
           revalidate: () => this.revalidate(signal), signal });
       });
@@ -820,7 +825,7 @@ export class AndroidDriver implements DeviceDriver {
   private async checkDevice(serial: string, appPackage: string | undefined, signal: AbortSignal, validateApp?: () => Promise<void>): Promise<void> {
     this.mayIssue(signal);
     const properties = ['ro.build.version.sdk', 'sys.boot_completed'];
-    const replies = await this.ownership!.adbSequence(properties.map(name => ['-s', serial, 'shell', ['getprop', name].map(quoted).join(' ')]), this.runner!, signal);
+    const replies = await this.ownership!.adbReads(properties.map(name => ['-s', serial, 'shell', ['getprop', name].map(quoted).join(' ')]), this.runner!, signal);
     const api = Number(await this.succeeded('read API level', Promise.resolve(replies[0]!)));
     if (!Number.isInteger(api) || api < MIN_API_LEVEL) {
       throw new DeviceReasonError('DEVICE_UNSUPPORTED', `Device ${serial} runs API ${String(api)}; the bridge needs Android 12 (API 31) or later`);

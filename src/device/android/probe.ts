@@ -179,25 +179,69 @@ export function identityProbe(options: IdentityProbeOptions): IdentityProbe {
     if (result.exitCode !== 0) identityUnavailable('PROVENANCE_INACCESSIBLE');
     return decodeReply(result.stdout);
   };
+  const completeGroup = async (commands: ProbeCommand[], signal: AbortSignal): Promise<ProbeResult[]> => {
+    if (options.record?.group) return options.record.group(commands.map(command => invocation(command, signal)));
+    const results: ProbeResult[] = [];
+    for (const command of commands) results.push(await complete(command, signal));
+    return results;
+  };
+  const readReply = (result: ProbeResult): string => {
+    if (result.exitCode !== 0) identityUnavailable('PROVENANCE_INACCESSIBLE');
+    return decodeReply(result.stdout);
+  };
+  const runGroup = async (commands: ProbeCommand[], signal: AbortSignal): Promise<string[]> =>
+    (await completeGroup(commands, signal)).map(readReply);
   const account = userInfo();
+  const listenerCommand = (port: number): ProbeCommand => {
+    if (!Number.isInteger(port) || port <= 0 || port > 65535) identityUnavailable('MALFORMED_PROVENANCE');
+    return { kind: 'listener', port };
+  };
+  const listenerBinding = (listing: ProbeResult, port: number): Omit<ConsoleProcess, 'startedAt'> => {
+    if (listing.exitCode === 1 && listing.stdout.length === 0) identityUnavailable('REMOTE_CONSOLE');
+    const fields = readReply(listing).split('\n');
+    const pids = fields.filter(field => field.startsWith('p'));
+    const uid = fields.find(field => field.startsWith('u'))?.slice(1);
+    const addresses = fields.filter(field => field.startsWith('n')).map(field => field.slice(1));
+    if (pids.length !== 1 || uid !== String(account.uid)) identityUnavailable('PROVENANCE_INACCESSIBLE');
+    if (!addresses.some(address => address === `127.0.0.1:${port}` || address === `[::1]:${port}`)) identityUnavailable('REMOTE_CONSOLE');
+    const pid = Number(pids[0]?.slice(1));
+    if (!Number.isSafeInteger(pid) || pid <= 0) identityUnavailable('PROVENANCE_INACCESSIBLE');
+    return { pid, uid: account.uid, local: true };
+  };
+  const withStart = (binding: Omit<ConsoleProcess, 'startedAt'>, reply: string): ConsoleProcess => {
+    const start = Date.parse(reply.trim());
+    if (!Number.isFinite(start)) identityUnavailable('PROVENANCE_INACCESSIBLE');
+    return { ...binding, startedAt: new Date(start).toISOString() };
+  };
+  const versionOf = async (process: ConsoleProcess, signal: AbortSignal, executableReply?: string): Promise<EmulatorVersion> => {
+    const reply = executableReply ?? await run({ kind: 'executable', pid: process.pid }, signal);
+    const candidates = reply.split('\n').filter(line => line.startsWith('n')).map(line => line.slice(1)).filter(path =>
+      /\/qemu\/darwin-(?:aarch64|x86_64)\/qemu-system-(?:aarch64|x86_64)(?:-headless)?$/.test(path) || /\/emulator$/.test(path));
+    if (candidates.length !== 1) identityUnavailable('PROVENANCE_INACCESSIBLE');
+    const executable = await realpath(candidates[0]!);
+    const launcher = executable.endsWith('/emulator') ? executable : join(dirname(dirname(dirname(executable))), 'emulator');
+    const canonicalLauncher = await realpath(launcher);
+    if (canonicalLauncher !== launcher) identityUnavailable('PROVENANCE_INACCESSIBLE');
+    const started = Date.parse(process.startedAt);
+    const files = await Promise.all([...new Set([executable, launcher])].map(async path => ({ path, metadata: await stat(path, { bigint: true }) })));
+    for (const { metadata } of files) {
+      if (!metadata.isFile() || metadata.uid !== BigInt(account.uid) || !(metadata.mode & 0o111n) ||
+          metadata.mtimeMs > BigInt(started) || metadata.ctimeMs > BigInt(started)) identityUnavailable('PROVENANCE_INACCESSIBLE');
+    }
+    const version = /(?:^|\n)Android emulator version (\d+\.\d+(?:\.\d+)*)[ \r\n(]/.exec(await run({ kind: 'version', executable: launcher }, signal))?.[1];
+    if (!version) identityUnavailable('PROVENANCE_INACCESSIBLE');
+    for (const { path, metadata } of files) {
+      const current = await stat(path, { bigint: true });
+      if (await realpath(path) !== path || current.dev !== metadata.dev || current.ino !== metadata.ino ||
+          current.uid !== metadata.uid || current.mode !== metadata.mode || current.size !== metadata.size ||
+          current.mtimeNs !== metadata.mtimeNs || current.ctimeNs !== metadata.ctimeNs) identityUnavailable('PROVENANCE_INACCESSIBLE');
+    }
+    return { value: version, source: 'running-sdk-binary' };
+  };
   const host: AndroidHostProbe = options.host ?? {
     async listener(port, signal) {
-      if (!Number.isInteger(port) || port <= 0 || port > 65535) identityUnavailable('MALFORMED_PROVENANCE');
-      const listing = await complete({ kind: 'listener', port }, signal);
-      // lsof exits 1 with nothing listed when no process listens there: the console isn't on this host.
-      if (listing.exitCode === 1 && listing.stdout.length === 0) identityUnavailable('REMOTE_CONSOLE');
-      if (listing.exitCode !== 0) identityUnavailable('PROVENANCE_INACCESSIBLE');
-      const fields = decodeReply(listing.stdout).split('\n');
-      const pids = fields.filter(field => field.startsWith('p'));
-      const uid = fields.find(field => field.startsWith('u'))?.slice(1);
-      const addresses = fields.filter(field => field.startsWith('n')).map(field => field.slice(1));
-      if (pids.length !== 1 || uid !== String(account.uid)) identityUnavailable('PROVENANCE_INACCESSIBLE');
-      if (!addresses.some(address => address === `127.0.0.1:${port}` || address === `[::1]:${port}`)) identityUnavailable('REMOTE_CONSOLE');
-      const pid = Number(pids[0]?.slice(1));
-      if (!Number.isSafeInteger(pid) || pid <= 0) identityUnavailable('PROVENANCE_INACCESSIBLE');
-      const start = Date.parse((await run({ kind: 'process', pid }, signal)).trim());
-      if (!Number.isFinite(start)) identityUnavailable('PROVENANCE_INACCESSIBLE');
-      return { pid, uid: account.uid, startedAt: new Date(start).toISOString(), local: true };
+      const binding = listenerBinding(await complete(listenerCommand(port), signal), port);
+      return withStart(binding, await run({ kind: 'process', pid: binding.pid }, signal));
     },
     async directory(path) {
       const canonical = await realpath(path);
@@ -205,31 +249,7 @@ export function identityProbe(options: IdentityProbeOptions): IdentityProbe {
       if (!metadata.isDirectory() || metadata.uid !== BigInt(account.uid)) identityUnavailable('PROVENANCE_INACCESSIBLE');
       return { path: canonical, device: metadata.dev.toString(), inode: metadata.ino.toString() };
     },
-    async version(process, signal) {
-      const reply = await run({ kind: 'executable', pid: process.pid }, signal);
-      const candidates = reply.split('\n').filter(line => line.startsWith('n')).map(line => line.slice(1)).filter(path =>
-        /\/qemu\/darwin-(?:aarch64|x86_64)\/qemu-system-(?:aarch64|x86_64)(?:-headless)?$/.test(path) || /\/emulator$/.test(path));
-      if (candidates.length !== 1) identityUnavailable('PROVENANCE_INACCESSIBLE');
-      const executable = await realpath(candidates[0]!);
-      const launcher = executable.endsWith('/emulator') ? executable : join(dirname(dirname(dirname(executable))), 'emulator');
-      const canonicalLauncher = await realpath(launcher);
-      if (canonicalLauncher !== launcher) identityUnavailable('PROVENANCE_INACCESSIBLE');
-      const started = Date.parse(process.startedAt);
-      const files = await Promise.all([...new Set([executable, launcher])].map(async path => ({ path, metadata: await stat(path, { bigint: true }) })));
-      for (const { metadata } of files) {
-        if (!metadata.isFile() || metadata.uid !== BigInt(account.uid) || !(metadata.mode & 0o111n) ||
-            metadata.mtimeMs > BigInt(started) || metadata.ctimeMs > BigInt(started)) identityUnavailable('PROVENANCE_INACCESSIBLE');
-      }
-      const version = /(?:^|\n)Android emulator version (\d+\.\d+(?:\.\d+)*)[ \r\n(]/.exec(await run({ kind: 'version', executable: launcher }, signal))?.[1];
-      if (!version) identityUnavailable('PROVENANCE_INACCESSIBLE');
-      for (const { path, metadata } of files) {
-        const current = await stat(path, { bigint: true });
-        if (await realpath(path) !== path || current.dev !== metadata.dev || current.ino !== metadata.ino ||
-            current.uid !== metadata.uid || current.mode !== metadata.mode || current.size !== metadata.size ||
-            current.mtimeNs !== metadata.mtimeNs || current.ctimeNs !== metadata.ctimeNs) identityUnavailable('PROVENANCE_INACCESSIBLE');
-      }
-      return { value: version, source: 'running-sdk-binary' };
-    },
+    version: versionOf,
   };
   return {
     withRecorder: record => identityProbe({ ...options, record }),
@@ -269,8 +289,16 @@ export function identityProbe(options: IdentityProbeOptions): IdentityProbe {
           continue;
         }
         let process: ConsoleProcess;
+        let name: string | undefined, executableReply: string | undefined;
+        const port = Number(serial.slice(9));
         try {
-          process = await host.listener(Number(serial.slice(9)), signal);
+          if (!options.host && options.record?.group) {
+            const binding = listenerBinding(await complete(listenerCommand(port), signal), port);
+            const replies = await runGroup([{ kind: 'process', pid: binding.pid },
+              { kind: 'console', serial, field: 'name' }, { kind: 'executable', pid: binding.pid }], signal);
+            process = withStart(binding, replies[0]!);
+            name = replies[1]!; executableReply = replies[2]!;
+          } else process = await host.listener(port, signal);
           if (!process.local) identityUnavailable('REMOTE_CONSOLE');
         } catch (error) {
           // No console on this host's loopback: it can't be running the named AVD here, so only a named serial refuses.
@@ -278,26 +306,25 @@ export function identityProbe(options: IdentityProbeOptions): IdentityProbe {
           throw error;
         }
         if (!Number.isSafeInteger(process.pid) || process.pid <= 0 || !Number.isFinite(Date.parse(process.startedAt))) identityUnavailable('PROVENANCE_INACCESSIBLE');
-        const name = await run({ kind: 'console', serial, field: 'name' }, signal);
+        if (!options.host) name ??= await run({ kind: 'console', serial, field: 'name' }, signal);
         // Before `avd id` and `avd path`, which emulators older than 30 can't answer; `avd name` they can, so an unrelated one is skipped.
-        const version = await host.version(process, signal);
+        const version = options.host ? await host.version(process, signal) : await versionOf(process, signal, executableReply);
         const versionMatch = /^(\d+)\.\d+(?:\.\d+)*$/.exec(version.value);
+        const commands: ProbeCommand[] = [{ kind: 'console', serial, field: 'id' }, { kind: 'console', serial, field: 'path' }];
+        if (transport.state === 'device') commands.push({ kind: 'property', serial, property: 'ro.boot.qemu.avd_name' });
+        const injectedCommands: ProbeCommand[] = [{ kind: 'console', serial, field: 'name' }];
+        if (versionMatch && Number(versionMatch[1]) >= 30) injectedCommands.push(...commands);
+        const injectedReplies = options.host ? await runGroup(injectedCommands, signal) : undefined;
+        if (injectedReplies) name = injectedReplies[0]!;
         if (!versionMatch) identityUnavailable('PROVENANCE_INACCESSIBLE');
         if (Number(versionMatch[1]) < 30) {
-          if (!explicit && /^([^\x00-\x1f\x7f]+)\r\nOK\r\n$/.exec(name)?.[1] !== selectedSerial) continue;
+          if (!explicit && /^([^\x00-\x1f\x7f]+)\r\nOK\r\n$/.exec(name!)?.[1] !== selectedSerial) continue;
           identityUnavailable('EMULATOR_VERSION_UNSUPPORTED');
         }
-        const commands: Exclude<ProbeCommand, { kind: 'simulator-app' }>[] = [{ kind: 'console', serial, field: 'id' }, { kind: 'console', serial, field: 'path' }];
-        if (transport.state === 'device') commands.push({ kind: 'property', serial, property: 'ro.boot.qemu.avd_name' });
-        const replies = options.record?.group
-          ? (await options.record.group(commands.map(command => invocation(command, signal)))).map(result => {
-            if (result.exitCode !== 0) identityUnavailable('PROVENANCE_INACCESSIBLE');
-            return decodeReply(result.stdout);
-          })
-          : await (async () => { const values: string[] = []; for (const command of commands) values.push(await run(command, signal)); return values; })();
+        const replies = injectedReplies ? injectedReplies.slice(1) : await runGroup(commands, signal);
         const id = replies[0]!, path = replies[1]!;
-        if ([name, id, path].some(unauthenticated)) identityUnavailable('PROVENANCE_INACCESSIBLE');
-        const avdName = consoleValue(name), avdId = consoleValue(id);
+        if ([name!, id, path].some(unauthenticated)) identityUnavailable('PROVENANCE_INACCESSIBLE');
+        const avdName = consoleValue(name!), avdId = consoleValue(id);
         const consolePath = consoleValue(path);
         if (!isAbsolute(consolePath) || !/^[A-Za-z0-9_.-]+$/.test(avdName)) identityUnavailable('MALFORMED_PROVENANCE');
         const directory = await host.directory(consolePath, signal);
@@ -309,15 +336,26 @@ export function identityProbe(options: IdentityProbeOptions): IdentityProbe {
         if (guestName.kind === 'read' && guestName.reply.trim() && guestName.reply.trim() !== avdName) {
           throw new IdentityResolutionError({ code: 'DEVICE_IDENTITY_CONFLICT', reason: 'GUEST_NAME_DISAGREEMENT' });
         }
-        const finalId = await run({ kind: 'console', serial, field: 'id' }, signal);
-        const finalProcess = await host.listener(Number(serial.slice(9)), signal);
+        let finalId: string, finalProcess: ConsoleProcess;
+        if (!options.host && options.record?.group) {
+          // The recheck targets the already-bound PID; a changed listener cannot authorize reading a replacement.
+          const replies = await completeGroup([{ kind: 'console', serial, field: 'id' },
+            listenerCommand(port), { kind: 'process', pid: process.pid }], signal);
+          finalId = readReply(replies[0]!);
+          const binding = listenerBinding(replies[1]!, port);
+          if (binding.pid !== process.pid) throw new IdentityResolutionError({ code: 'DEVICE_IDENTITY_CONFLICT', reason: 'TRANSPORT_CHANGED' });
+          finalProcess = withStart(binding, readReply(replies[2]!));
+        } else {
+          finalId = await run({ kind: 'console', serial, field: 'id' }, signal);
+          finalProcess = await host.listener(port, signal);
+        }
         if (consoleValue(finalId) !== avdId || finalProcess.pid !== process.pid || finalProcess.startedAt !== process.startedAt) {
           throw new IdentityResolutionError({ code: 'DEVICE_IDENTITY_CONFLICT', reason: 'TRANSPORT_CHANGED' });
         }
         observations.push({ category: 'android-emulator', value: directory.path, transport,
           provenance: { avdName, avdId, directory: { device: directory.device, inode: directory.inode },
             version, process: { pid: process.pid, startedAt: process.startedAt } },
-          probeReplies: { name, id, path, guestName, finalId } });
+          probeReplies: { name: name!, id, path, guestName, finalId } });
       }
       return observations;
       } catch (error) {
