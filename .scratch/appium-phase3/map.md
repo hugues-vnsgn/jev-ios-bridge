@@ -65,6 +65,8 @@ sorted by the owner on 2026-10-22; the build plan schedules them:
 
 <!-- one line per resolved ticket: [title](issues/NN-slug.md): gist -->
 
+- [What the old vendors give us today](issues/03-what-the-old-vendors-give-us.md): MobileBuildMCP supplies all iOS observation, refs, input, settle, screenshot, launch and the app-exit signal; mobilecli only Android's agent; AXe is never called; 17 public surfaces carry vendor meaning.
+
 ## Route
 
 <!-- route:start -->
@@ -84,6 +86,8 @@ flowchart LR
     T12["12 iOS app output and crash detection without MobileBuildMCP<br/><small>grilling</small>"]
     T13["13 Vendor report fields and stack provenance<br/><small>grilling</small>"]
     T14["14 Phase 3 build plan<br/><small>grilling</small>"]
+    T15["15 Native steps outside the helper list<br/><small>grilling</small>"]
+    T16["16 Settling and screen change under Appium<br/><small>grilling</small>"]
     T03 --> T05
     T04 --> T05
     T04 --> T06
@@ -106,12 +110,18 @@ flowchart LR
     T11 --> T14
     T12 --> T14
     T13 --> T14
+    T15 --> T14
+    T16 --> T14
+    T02 --> T15
+    T05 --> T16
+    T06 --> T16
     classDef resolved fill:#e4e4e7,stroke:#a1a1aa,color:#52525b
     classDef claimed fill:#dbeafe,stroke:#2563eb,color:#1e3a8a
     classDef frontier fill:#dcfce7,stroke:#16a34a,color:#14532d,stroke-width:2px
     classDef blocked fill:#ffffff,stroke:#a1a1aa,color:#18181b
-    class T01,T02,T03,T04 frontier
-    class T05,T06,T07,T08,T09,T10,T11,T12,T13,T14 blocked
+    class T03 resolved
+    class T01,T02,T04,T12 frontier
+    class T05,T06,T07,T08,T09,T10,T11,T13,T14,T15,T16 blocked
 ```
 <!-- route:end -->
 
@@ -120,13 +130,6 @@ flowchart LR
 - **Fake MCP provider fidelity.** How recorded wire exchanges are captured,
   stored and re-recorded when the frozen stack changes, so host tests stay
   honest. Clears once the extension contract and stack shipping are settled.
-- **Settling under Appium.** Whether today's settle loop and still-changing
-  mark port unchanged onto Appium captures, or need a new change signal.
-  Clears once the vendor inventory and observation mapping land.
-- **Observed preparation without MobileBuildMCP.** Which boot, install and
-  readiness steps of observed allocation move to Appium, stay native helpers
-  under ADR-0009, or change their evidence. Clears with the vendor inventory
-  and session lifetime decisions.
 - **Driven gesture details.** Largest-scrollable versus screen-middle action
   paths and iOS back may need their own decision if the gesture prototype
   shows a behavior change.

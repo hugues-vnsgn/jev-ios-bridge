@@ -29,6 +29,14 @@ On the private pair:
   second screen size only if a second private AVD costs nothing extra;
   otherwise two-size proof stays in Phase 4.
 
+Added from What the old vendors give us today:
+
+- Screenshot size and format. Both vendors return a ≤800 px JPEG today;
+  Appium returns a native PNG. The choice decides the `tapAt` pixel space,
+  the evidence file names and the observed 10 MiB cap.
+- No AXe tap exists in code. iOS `tapAt` is a refusal today, so there is
+  nothing to port for it.
+
 ## Completion criterion
 
 The owner locks the dispatch form for each operation, which operations need

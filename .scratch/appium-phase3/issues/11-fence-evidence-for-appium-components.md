@@ -30,6 +30,11 @@ adapter work"). Settle these:
 - What counts as a native stop receipt versus a vendor cleanup reply.
 - Refusal when evidence is incomplete.
 - How Phase 2's recovery sweep handles Appium components left by a dead owner.
+- How the bridge recognizes another tool's automation under Appium. Added from
+  What the old vendors give us today: today's Android check refuses
+  `DEVICE_BUSY` on process names that include `io.appium.uiautomator2`, so it
+  would refuse the bridge's own session. The `captureWithForeignAgent` exit
+  golden and the glossary's "Foreign agent" depend on this.
 
 ## Completion criterion
 

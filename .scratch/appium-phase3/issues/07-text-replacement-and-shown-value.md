@@ -27,6 +27,11 @@ formatted (masked), Unicode, empty and pre-filled fields. For each attempt:
 Also simulate a lost acknowledgment between steps, to find where dispatch
 must close.
 
+Added from What the old vendors give us today: decide whether to keep or relax
+the iOS typing limits at cutover. Today MobileBuildMCP types with a US keyboard
+only, refuses a leading hyphen (`UNSUPPORTED_LEADING_DASH_TEXT`), and the iOS
+value validation messages carry these limits.
+
 ## Completion criterion
 
 The owner locks four things: the replacement sequence per platform, which

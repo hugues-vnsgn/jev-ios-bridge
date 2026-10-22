@@ -27,6 +27,18 @@ observation mapping's tap-alias decision. Constraints:
 
 Check every affected golden.
 
+Added from What the old vendors give us today: its section 2 lists seventeen
+public surfaces with vendor meaning. Settle at least:
+
+- `error.vendorCode`, where `APP_NOT_INSTALLED` is now bridge-sourced (doc drift)
+- `prepared.agentSha256` and `logSources`
+- verdict `deviceMetrics`
+- the element reference format in hand-backs and `resolve_step`
+- observed `actionAcknowledged`
+
+The 15-role list belongs to Observation mapping, and `SCREEN_CHANGED` to
+Settling and screen change under Appium.
+
 ## Completion criterion
 
 The owner locks each field's Appium meaning and the provenance shape. Write

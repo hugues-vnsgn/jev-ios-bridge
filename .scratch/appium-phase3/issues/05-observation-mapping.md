@@ -30,6 +30,16 @@ Run the captures through a rough, throwaway normalizer and diff them against
 today's snapshot and rendered observation for the same screens, captured
 through today's drivers. Show the owner the diffs.
 
+Added from What the old vendors give us today:
+
+- Record page-source latency for each platform; Settling and screen change
+  under Appium needs these numbers.
+- Read the UiAutomator2 and XCUITest idle and quiescence settings. Today's
+  Android agent waits up to 2 s for idle.
+- Decide what produces `truncated`, which has no live producer today.
+- Map the iOS 15-role vocabulary (MobileBuildMCP's) and the Android roles
+  against Appium element types.
+
 ## Completion criterion
 
 The owner reacts to the diffs and locks four things: the pinned source
