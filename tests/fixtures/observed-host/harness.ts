@@ -56,7 +56,7 @@ export async function hostFixture(t: TestContext) {
     }
     await fixture.cleanup(); await rm(root, { recursive: true, force: true });
     assert.deepEqual(traceErrors, [], 'Final traces must be complete before effect counts are certified');
-  });
+  }, { timeout: 30000 });
   const observations: PublicObservation[] = [];
   const admission = () => Admission.forTesting({ root: fixture.store, backend: 'fake', initialize: false });
   async function requestFile(value: unknown, name = 'request.json') { const path = join(root, name); await writeFile(path, JSON.stringify(value)); return path; }

@@ -32,10 +32,10 @@ export const replySchema = z.discriminatedUnion('operation', [
 ]);
 export const messageSchema = z.union([z.strictObject({ type: z.literal('ready'), actor: z.number().int().positive() }),replySchema]);
 export const controlSchema = z.discriminatedUnion('kind', [
- z.strictObject({ kind: z.literal('hold'), operation: z.literal('acquire'), point: z.literal('beforeCommit'), entered: z.string(), release: z.string() }),
+ z.strictObject({ kind: z.literal('hold'), operation: z.enum(['acquire','attach','authorize','settle','finalize']), point: z.enum(['beforeCommit','afterCommit']), entered: z.string(), release: z.string() }),
  z.strictObject({ kind: z.literal('unavailable'), operation: z.literal('acquire'), point: z.literal('afterCommit') }),
 ]);
-export const faultSchema = z.strictObject({ type: z.literal('fault'), requestId: common.requestId, actor: z.number().int().positive(), operation: z.enum(['acquire','finalize']), point: z.enum(['beforeCommit','afterCommit']) });
+export const faultSchema = z.strictObject({ type: z.literal('fault'), requestId: common.requestId, actor: z.number().int().positive(), operation: z.enum(['acquire','attach','authorize','settle','finalize']), point: z.enum(['beforeCommit','afterCommit']) });
 export type CoreReply = z.infer<typeof replySchema>;
 export type Acquisition = z.infer<typeof acquisitionSchema>;
 export type Finalization = z.infer<typeof finalization>;

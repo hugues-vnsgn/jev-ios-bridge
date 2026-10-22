@@ -26,7 +26,7 @@ export async function setupPublicFixture(root: string, ownership?: { backendRoot
   const fixture = await allocationFixture(ownership ? { ownedRoot: ownership.backendRoot } : {});
   const context = { root: fixture.root, home: fixture.home, store: fixture.store, runsDir: fixture.runsDir, app: fixture.app };
   await fs.writeFile(join(root, 'fixture.json'), JSON.stringify(context), { mode: 0o600 });
-  return { ...context, request: fixture.request, cleanup: fixture.cleanup, configPath: fixture.configPath };
+  return { ...context, request: fixture.request, cleanup: fixture.cleanup, configPath: fixture.configPath, configure: fixture.configure, inventory: fixture.inventory };
 }
 export function fixtureObserved(root: string, enabled = true, mode = 'observed', hooks: { fault?: AdmissionDependencies['fault']; before?: (operation: string) => Promise<void>; evidence?: ObservedEvidenceStore } = {}) {
   let admission: Admission;
@@ -64,7 +64,10 @@ export function fixtureObserved(root: string, enabled = true, mode = 'observed',
         return { stdout: args[5]!.endsWith('.app/Info.plist') ? JSON.stringify({ CFBundleIdentifier: 'org.example.fixture', CFBundleExecutable: 'Fixture', CFBundlePackageType: 'APPL', CFBundleSupportedPlatforms: ['iPhoneSimulator'], MinimumOSVersion: '17.0' }) : await fs.readFile(map(args[5]!), 'utf8'), stderr: '', exitCode: 0 };
       }
       assert.equal(executable, '/usr/bin/xcrun'); assert.deepEqual(args.slice(0, 2), ['simctl', 'create']);
-      trace('create'); return { stdout: fixtureDevice + '\n', stderr: '', exitCode: 0 };
+      trace('create');
+      if (mode === 'lost-create') throw new Error('Lost creation receipt');
+      if (mode === 'torn-create') return { stdout: 'ABCDEF00-', stderr: '', exitCode: 0 };
+      return { stdout: fixtureDevice + '\n', stderr: '', exitCode: 0 };
     } });
     let touched = false;
     const runner: CliRunner = args => observer.effect({ operation: args[1]!, effect: async () => {
