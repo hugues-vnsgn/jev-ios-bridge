@@ -27,7 +27,7 @@ export function createDriverFactory(options: DriverFactoryOptions):
   (scenario: ScriptedScenario, run?: DriverRun) => DeviceDriver {
   return (scenario: ScriptedScenario, run?: DriverRun) => {
     if (scenario.platform === 'android') {
-      return new AndroidDriver({ createExitWatch, ...options.android, device: scenario.device, runId: run?.runId,
+      return new AndroidDriver({ createExitWatch, ...options.android, device: scenario.device, runId: run?.runId, profile: run?.profile,
         ...(run?.deviceCategory === 'android-emulator' || run?.deviceCategory === 'android-phone' ? { category: run.deviceCategory } : {}) });
     }
     return createMobileBuildMcpDriver({ ...options.mobileBuildMcp, ...(run ? { runId: run.runId } : {}),

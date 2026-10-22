@@ -23,7 +23,7 @@ import { AGENT_START_COMMAND, AndroidDriver, type AndroidDriverOptions } from '.
 import { parseScriptedScenario } from '../src/scripted/schema.js';
 import { runScriptedScenario } from '../src/scripted/run.js';
 import { SCRIPTED_JEV_MODEL } from '../src/scripted/jev.js';
-import { AGENT_CACHE, FakeAdb, fakeAgents, fakeClock, FakeStreams, type FakeEmulator } from './fixtures/android-device.js';
+import { AGENT_CACHE, fakeAndroidAdmission, FakeAdb, fakeAgents, fakeClock, FakeStreams, type FakeEmulator } from './fixtures/android-device.js';
 
 const signal = () => new AbortController().signal;
 const reason = (code: string, vendorCode?: string) => (error: unknown) => {
@@ -135,7 +135,7 @@ async function withAndroid(front: () => string | undefined, emulator: FakeEmulat
   const adb = new FakeAdb(emulator);
   const streams = new FakeStreams(adb);
   const ports = [49526, 49527];
-  const driver = new AndroidDriver({ device: { avd: 'jev-actions-api31' }, runner: withActivities(adb, front),
+  const driver = new AndroidDriver({ admission: fakeAndroidAdmission(root), fakeBackend: true, device: { avd: 'jev-actions-api31' }, runner: withActivities(adb, front), identityProbe: adb.identityProbe,
     agentClient: fakeAgents(adb).agentClient, clock: fakeClock(), leaseRoot: join(root, 'lease'), screenshotFolder: root,
     freePort: async () => ports.shift()!, logcat: streams, logFolder: join(root, 'logs'), runId: 'attach-1',
     tools: async () => ({ adb: '/sdk/platform-tools/adb', agent: { path: AGENT_CACHE, sha256: PINNED_AGENT_SHA256 } }), ...options });
@@ -312,7 +312,7 @@ test('iOS restart, explicit or by default, still launches the app', async () => 
 function fakeDriver(options: import('../src/device/index.js').MobileBuildMcpDriverOptions): MobileBuildMcpDriver {
   const storeRoot = join(options.cwd, 'admission');
   mkdirSync(storeRoot, { recursive: true, mode: 0o700 });
-  const admission = Admission.forTesting({ root: realpathSync(storeRoot), backend: 'fake' });
+  const admission = Admission.forTesting({ root: realpathSync(storeRoot), backend: 'fake', durability: 'fast' });
   return new MobileBuildMcpDriver({ identityProbe: fakeSimulatorProbe(udid), ...options, admission,
     deviceWindow: options.deviceWindow ?? (async () => {}),
     fakeBackend: { runner: options.runner!, window: options.deviceWindow } });

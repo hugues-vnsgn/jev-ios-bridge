@@ -8,7 +8,7 @@ import { DeviceReasonError, StaleSnapshotError } from '../src/device/index.js';
 import type { AndroidNode, DeviceAgentClient } from '../src/device/android/agent-client.js';
 import { PINNED_AGENT_SHA256 } from '../src/device/android/agent-supply.js';
 import { AndroidDriver, jpegSize } from '../src/device/android/driver.js';
-import { AGENT_CACHE, FakeAdb, fakeAgents, fakeClock, FakeStreams } from './fixtures/android-device.js';
+import { AGENT_CACHE, fakeAndroidAdmission, FakeAdb, fakeAgents, fakeClock, FakeStreams } from './fixtures/android-device.js';
 
 /**
  * The driven-mode actions on the Android driver (jev-drives build Issue 01): back, scroll and tapAt, against
@@ -59,7 +59,7 @@ async function withPrepared(screens: Hierarchy[], fn: (setup: Prepared) => Promi
     if (!shot) return client;
     return { ...client, async screenshot(maxSize, abort) { await client.screenshot(maxSize, abort); return jpegOf(shot.width, shot.height); } };
   };
-  const driver = new AndroidDriver({ device: { avd: 'jev-actions-api31' }, runner: adb.run, agentClient, clock: fakeClock(),
+  const driver = new AndroidDriver({ admission: fakeAndroidAdmission(root), fakeBackend: true, device: { avd: 'jev-actions-api31' }, runner: adb.run, agentClient, clock: fakeClock(),
     leaseRoot: root, screenshotFolder: root, freePort: async () => 49526, logcat: new FakeStreams(adb), logFolder: false,
     tools: async () => ({ adb: '/sdk/platform-tools/adb', agent: { path: AGENT_CACHE, sha256: PINNED_AGENT_SHA256 } }) });
   try {

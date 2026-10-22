@@ -14,7 +14,7 @@ import { AndroidDriver } from '../src/device/android/driver.js';
 import type { HandbackAnswer, HandbackPacket } from '../src/driven/step.js';
 import { runScriptedScenario } from '../src/scripted/run.js';
 import { parseScriptedScenario } from '../src/scripted/schema.js';
-import { AGENT_CACHE, FakeAdb, fakeAgents, fakeClock, FakeStreams } from './fixtures/android-device.js';
+import { AGENT_CACHE, fakeAndroidAdmission, FakeAdb, fakeAgents, fakeClock, FakeStreams } from './fixtures/android-device.js';
 import { fakeDrivenJudge } from './fixtures/driven-judge.js';
 import { withRunLog } from './fixtures/run-log.js';
 
@@ -45,7 +45,7 @@ async function pausedThenMoved(answer: (packet: HandbackPacket) => HandbackAnswe
     const client = agents.agentClient(port);
     return { ...client, async screenshot(maxSize, abort) { await client.screenshot(maxSize, abort); return jpegOf(360, 800); } };
   };
-  const driver = new AndroidDriver({ device: { avd: 'jev-actions-api31' }, runner: adb.run, agentClient, clock: fakeClock(),
+  const driver = new AndroidDriver({ admission: fakeAndroidAdmission(root), fakeBackend: true, device: { avd: 'jev-actions-api31' }, runner: adb.run, agentClient, clock: fakeClock(),
     leaseRoot: root, screenshotFolder: root, freePort: async () => 49526, logcat: new FakeStreams(adb), logFolder: false,
     tools: async () => ({ adb: '/sdk/platform-tools/adb', agent: { path: AGENT_CACHE, sha256: PINNED_AGENT_SHA256 } }) });
   const scenario = parseScriptedScenario({ version: 2, platform: 'android', app: { package: 'com.example.android' },

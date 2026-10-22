@@ -61,12 +61,19 @@ export type PhoneObservation = Readonly<{
 export type AndroidIdentityInventory = readonly (EmulatorObservation | PhoneObservation)[];
 export type SimulatorIdentityInventory = Readonly<{ reply: string; deviceSet: string }>;
 export type SimulatorAppObservation = Readonly<{ kind: 'installed'; reply: string } | { kind: 'missing'; reply: string }>;
+export type ProbeResult = { exitCode: number; stdout: Buffer };
+export type ProbeInvocation = { file: string; args: string[]; execute: () => Promise<ProbeResult> };
+export type ProbeRecorder = ((file: string, args: string[], effect: () => Promise<ProbeResult>) => Promise<ProbeResult>) & {
+  group?: (reads: ProbeInvocation[]) => Promise<ProbeResult[]>;
+};
 export interface IdentityProbe {
+  withRecorder?(record: ProbeRecorder): IdentityProbe;
   android(signal: AbortSignal, serial?: string): Promise<AndroidIdentityInventory>;
   simulatorSet(signal: AbortSignal): Promise<SimulatorIdentityInventory>;
   simulatorApp(input: { deviceSet: string; udid: string; bundleId: string; signal: AbortSignal }): Promise<SimulatorAppObservation>;
 }
 export type IdentityProbeOptions = {
+  record?: ProbeRecorder;
   adb: string; environment: NodeJS.ProcessEnv; deadlineMs?: number; slowDeadlineMs?: number; spawn?: ProbeSpawn; host?: AndroidHostProbe;
   simulator?: (signal: AbortSignal) => Promise<SimulatorIdentityInventory>;
   simulatorApp?: IdentityProbe['simulatorApp'];
@@ -95,7 +102,7 @@ function consoleValue(reply: string): string {
 export function identityProbe(options: IdentityProbeOptions): IdentityProbe {
   const spawnChild: ProbeSpawn = options.spawn ?? ((file, args, config) => spawn(file, args, config));
   const { TYPESAFE_API_KEY: _secret, ...environment } = options.environment;
-  const complete = (command: ProbeCommand, signal: AbortSignal): Promise<{ exitCode: number; stdout: Buffer }> => {
+  const invocation = (command: ProbeCommand, signal: AbortSignal): ProbeInvocation => {
     let file: string;
     let args: string[];
     switch (command.kind) {
@@ -109,7 +116,7 @@ export function identityProbe(options: IdentityProbeOptions): IdentityProbe {
       case 'simulators': file = '/usr/bin/xcrun'; args = ['simctl', '--set', command.deviceSet, 'list', 'devices', '--json']; break;
       case 'simulator-app': file = '/usr/bin/xcrun'; args = ['simctl', '--set', command.deviceSet, 'get_app_container', command.udid, command.bundleId, 'app']; break;
     }
-    return new Promise((resolve, reject) => {
+    const execute = () => new Promise<ProbeResult>((resolve, reject) => {
       if (signal.aborted) { reject(signal.reason); return; }
       let child: ProbeChild;
       const childEnvironment = { ...environment };
@@ -157,6 +164,11 @@ export function identityProbe(options: IdentityProbeOptions): IdentityProbe {
         else finish(new IdentityResolutionError({ code: 'DEVICE_IDENTITY_UNAVAILABLE', reason: 'PROVENANCE_INACCESSIBLE' }));
       });
     });
+    return { file, args, execute };
+  };
+  const complete = (command: ProbeCommand, signal: AbortSignal): Promise<ProbeResult> => {
+    const { file, args, execute } = invocation(command, signal);
+    return options.record ? options.record(file, args, execute) : execute();
   };
   const decodeReply = (stdout: Buffer): string => {
     try { return new TextDecoder('utf-8', { fatal: true }).decode(stdout); }
@@ -220,6 +232,7 @@ export function identityProbe(options: IdentityProbeOptions): IdentityProbe {
     },
   };
   return {
+    withRecorder: record => identityProbe({ ...options, record }),
     async android(signal, selectedSerial) {
       try {
       const socket = environment.ADB_SERVER_SOCKET;
@@ -274,8 +287,15 @@ export function identityProbe(options: IdentityProbeOptions): IdentityProbe {
           if (!explicit && /^([^\x00-\x1f\x7f]+)\r\nOK\r\n$/.exec(name)?.[1] !== selectedSerial) continue;
           identityUnavailable('EMULATOR_VERSION_UNSUPPORTED');
         }
-        const id = await run({ kind: 'console', serial, field: 'id' }, signal);
-        const path = await run({ kind: 'console', serial, field: 'path' }, signal);
+        const commands: Exclude<ProbeCommand, { kind: 'simulator-app' }>[] = [{ kind: 'console', serial, field: 'id' }, { kind: 'console', serial, field: 'path' }];
+        if (transport.state === 'device') commands.push({ kind: 'property', serial, property: 'ro.boot.qemu.avd_name' });
+        const replies = options.record?.group
+          ? (await options.record.group(commands.map(command => invocation(command, signal)))).map(result => {
+            if (result.exitCode !== 0) identityUnavailable('PROVENANCE_INACCESSIBLE');
+            return decodeReply(result.stdout);
+          })
+          : await (async () => { const values: string[] = []; for (const command of commands) values.push(await run(command, signal)); return values; })();
+        const id = replies[0]!, path = replies[1]!;
         if ([name, id, path].some(unauthenticated)) identityUnavailable('PROVENANCE_INACCESSIBLE');
         const avdName = consoleValue(name), avdId = consoleValue(id);
         const consolePath = consoleValue(path);
@@ -284,7 +304,7 @@ export function identityProbe(options: IdentityProbeOptions): IdentityProbe {
         if (!isAbsolute(directory.path) || !/^\d+$/.test(directory.device) || !/^\d+$/.test(directory.inode)) identityUnavailable('PROVENANCE_INACCESSIBLE');
         const { state } = transport;
         const guestName: EmulatorObservation['probeReplies']['guestName'] = state === 'device'
-          ? { kind: 'read' as const, reply: await run({ kind: 'property', serial, property: 'ro.boot.qemu.avd_name' }, signal) }
+          ? { kind: 'read' as const, reply: replies[2]! }
           : { kind: 'not-readable' as const, state };
         if (guestName.kind === 'read' && guestName.reply.trim() && guestName.reply.trim() !== avdName) {
           throw new IdentityResolutionError({ code: 'DEVICE_IDENTITY_CONFLICT', reason: 'GUEST_NAME_DISAGREEMENT' });

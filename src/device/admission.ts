@@ -31,13 +31,25 @@ const ownerProcessSchema = z.strictObject({ pid: z.number().int().positive(), in
 export const componentSchema = z.discriminatedUnion('kind', [
   z.strictObject({ id: bindingText, kind: z.literal('one-shot'), operation: bindingText }),
   z.strictObject({ id: bindingText, kind: z.literal('host-process'), process: ownerProcessSchema }),
+  z.strictObject({ id: bindingText, kind: z.literal('adb-command'), serial: bindingText, args: z.array(z.string()).min(1) }),
+  z.strictObject({ id: bindingText, kind: z.literal('android-stream'), serial: bindingText, args: z.array(z.string()).min(1) }),
+  z.strictObject({ id: bindingText, kind: z.literal('android-agent'), serial: bindingText, classpath: bindingText, className: bindingText }),
+  z.strictObject({ id: bindingText, kind: z.literal('android-forward'), serial: bindingText, local: bindingText, remote: bindingText }),
 ]);
+export const componentObservationSchema = z.discriminatedUnion('kind', [
+  z.strictObject({ kind: z.literal('host-start'), process: ownerProcessSchema }),
+  z.strictObject({ kind: z.literal('agent-start'), pid: z.number().int().positive(), startTime: bindingText }),
+]);
+export type ComponentObservation = z.infer<typeof componentObservationSchema>;
 export type ComponentInput = z.infer<typeof componentSchema>;
-export const commandRequestSchema = z.strictObject({ requestId: bindingText, componentId: bindingText, operation: bindingText, payload: z.json() });
+export const commandRequestSchema = z.strictObject({ requestId: bindingText, componentId: bindingText, operation: bindingText, payload: z.json(), recordResult: z.boolean().optional(), components: z.array(componentSchema).optional() });
 export type CommandRequest = z.infer<typeof commandRequestSchema>;
 export type IssueResult = { kind: 'issued' | 'retrieved'; command: CommandRecord };
 const stopProofSchema = z.discriminatedUnion('kind', [
   z.strictObject({ kind: z.literal('completed-command'), commandId: bindingText }),
+  z.strictObject({ kind: z.literal('adb-stopped'), process: ownerProcessSchema, commandId: bindingText }),
+  z.strictObject({ kind: z.literal('android-component-stopped'), commandId: bindingText }),
+  z.strictObject({ kind: z.literal('android-stream-exited'), process: ownerProcessSchema }),
   z.strictObject({ kind: z.literal('host-process-exited'), process: ownerProcessSchema,
     evidenceRefs: z.array(z.string().min(1).max(4096).refine(value => isAbsolute(value) && !value.includes('\0'))).min(1) }),
 ]);
@@ -46,7 +58,7 @@ export const fenceRequestSchema = z.strictObject({ requestId: bindingText, kind:
 export type FenceRequest = z.infer<typeof fenceRequestSchema>;
 export type FenceReceipt = { id: string; owner: OwnerIdentity; requestId: string; acceptedAt: number; proof: FenceRequest };
 export type GenerationView = { owner: OwnerIdentity; dispatchClosedAt: number | null; inventoryUnknownReason: string | null;
-  components: NativeComponent[]; commands: CommandRecord[]; observations: { commandId: string; payload: unknown }[];
+  components: NativeComponent[]; commands: CommandRecord[]; componentObservations: { componentId: string; payload: unknown }[]; observations: { commandId: string; payload: unknown }[];
   recoveries: { id: string; process: OwnerProcess; closedAt: number | null; closure: 'accepted' | 'refused' | 'abandoned' | null }[] };
 export type RecoveryIdentity = { id: string; owner: OwnerIdentity; token: string; process: OwnerProcess };
 export type TerminalCandidate = { outcome: 'observed' | 'completed' | 'refused' | 'inconclusive'; disposition: 'available' | 'quarantined'; payload: unknown; evidenceRefs: string[] };
@@ -57,7 +69,7 @@ export const emulatorProvenanceSchema = z.strictObject({ avdName: bindingText, a
   version: z.strictObject({ value: bindingText, source: z.enum(['running-sdk-binary','process-discovery']) }),
   process: z.strictObject({ pid: z.number().int().positive(), startedAt: bindingText }) });
 export type AdmissionRequest = { category?: DeviceCategory | undefined; device: string; attempt: AttemptIdentity; digest: string; intent: unknown; signal?: AbortSignal;
-  provenance?: EmulatorObservation['provenance'] };
+  provenance?: EmulatorObservation['provenance']; transport?: { serial: string; state: 'device' | 'offline' | 'unauthorized' } };
 export type AdmissionResult = { kind: 'acquired'; claim: AdmissionClaim } | { kind: 'retrieved'; attempt: AttemptView } | { kind: 'refused'; reason: 'DEVICE_BUSY' | 'DEVICE_QUARANTINED' | 'ACTION_ID_CONFLICT' | 'CANCELLED' | 'HOST_CREATION_UNRESOLVED'; blockingAllocationId?: string };
 export type Finalization = { authority: 'committed'; attempt: AttemptView } | { authority: 'unconfirmed'; reason: 'FINALIZATION_UNCONFIRMED' };
 export type AdmissionFault = 'beforeCommit' | 'afterCommit';
@@ -111,9 +123,9 @@ export class Admission {
   static open(): Admission {
     return new Admission({ root: admissionRoot(), mode: 'production' }, {});
   }
-  static forTesting(options: { root: string; backend: 'fake'; initialize?: boolean } & AdmissionDependencies): Admission {
+  static forTesting(options: { root: string; backend: 'fake'; initialize?: boolean; durability?: 'full' | 'fast' } & AdmissionDependencies): Admission {
     if (options.backend !== 'fake') throw new AdmissionError('INVALID_REQUEST', 'Test admission requires a fake backend');
-    if (options.initialize !== false) AdmissionSqlite.initializeTestStore(options.root);
+    if (options.initialize !== false) AdmissionSqlite.initializeTestStore(options.root, options.durability);
     return new Admission({ ...options, mode: 'test' }, options);
   }
   assertBackend(backend: 'real' | 'fake'): void {
@@ -129,6 +141,7 @@ export class Admission {
     validateAttempt(request.attempt);
     const identity = canonicalDevice({ category: request.category ?? 'ios-simulator', value: request.device });
     const device = identity.value;
+    if (request.transport !== undefined && (!identity.category.startsWith('android-') || !z.strictObject({ serial: bindingText, state: z.enum(['device','offline','unauthorized']) }).safeParse(request.transport).success)) throw new AdmissionError('INVALID_REQUEST', 'Expected Android transport');
     if (request.provenance !== undefined && (identity.category !== 'android-emulator' || !emulatorProvenanceSchema.safeParse(request.provenance).success)) throw new AdmissionError('INVALID_REQUEST','Expected resolved emulator provenance');
     if (!request.digest.trim()) throw new AdmissionError('INVALID_REQUEST', 'Missing request digest');
     if (request.signal?.aborted) return { kind: 'refused', reason: 'CANCELLED' };
@@ -183,11 +196,12 @@ export class Admission {
     const canonical=canonicalDevice(identity);
     return this.store.readDeviceAttributes(canonical);
   }
+  componentState(process: OwnerProcess): 'exited' | 'alive' | 'reused' | 'unknown' { return this.dependencies.componentLiveness?.(process) ?? componentLiveness(process); }
   submitFence(expected: OwnerIdentity, request: FenceRequest, recovery?: RecoveryIdentity): FenceReceipt {
     const parsed = fenceRequestSchema.safeParse(request);
     const exited = new Set<string>();
     if (parsed.success) for (const component of parsed.data.components) {
-      if (component.proof.kind === 'host-process-exited' &&
+      if ((component.proof.kind === 'host-process-exited' || component.proof.kind === 'adb-stopped' || component.proof.kind === 'android-stream-exited') &&
         (this.dependencies.componentLiveness?.(component.proof.process) ?? componentLiveness(component.proof.process)) === 'exited') exited.add(component.componentId);
     }
     return this.store.submitFence(expected, request, exited, recovery);
@@ -237,9 +251,27 @@ export class RecoveryClaim {
   private closed=false;
   constructor(private readonly store: AdmissionSqlite, readonly identity: RecoveryIdentity,
     private readonly fence: (request:FenceRequest)=>FenceReceipt) {}
+  observeComponent(componentId:string, observation:ComponentObservation):void { this.store.observeComponent(this.identity.owner,componentId,observation,this.identity); }
   registerComponent(component:ComponentInput):NativeComponent {return this.store.registerComponent(this.identity.owner,component,this.identity);}
   issue(request:CommandRequest):IssueResult {return this.store.authorizeRecovery(this.identity,request.operation,request);}
-  async dispatch<T>(operation: string|CommandRequest, effect: ()=>Promise<T>): Promise<T> {
+  async dispatchReads<T>(reads: readonly RecordedRead<T>[]): Promise<T[]> {
+    if (this.closed) throw new AdmissionError('DISPATCH_CLOSED', 'Recovery dispatch is closed');
+    try {
+      const commands = this.store.authorizeReads(this.identity.owner, reads.map(read => read.operation), this.identity);
+      return await runReads(this.store, this.identity.owner, commands, reads, () => this.closed);
+    } catch (error) { this.closed = true; throw error; }
+  }
+  async dispatchSequence<T>(steps: readonly CommandStep<T>[]): Promise<T[]> {
+    if (this.closed) throw new AdmissionError('DISPATCH_CLOSED', 'Recovery dispatch is closed');
+    try {
+      if (!steps.length) return [];
+      const request = steps[0]!.request;
+      const issued = typeof request === 'string' ? this.store.authorizeRecovery(this.identity, request) : this.issue(request);
+      if (issued.kind !== 'issued') throw new AdmissionError('DISPATCH_CLOSED', 'A retrieved command cannot be sent again');
+      return await runSequence(this.store, this.identity.owner, issued.command.id, steps, () => this.closed, this.identity);
+    } catch (error) { this.closed = true; throw error; }
+  }
+  async dispatch<T>(operation: string|CommandRequest, effect: (commandId: string)=>Promise<T>): Promise<T> {
     if (this.closed) throw new AdmissionError('DISPATCH_CLOSED','Recovery dispatch is closed');
     let command:string;
     try {
@@ -249,9 +281,9 @@ export class RecoveryClaim {
     }
     catch(error){this.closed=true;throw error;}
     let result:T;
-    try {result=await effect();}
+    try {result=await effect(command);}
     catch(error) {this.closed=true;this.store.settle(this.identity.owner,command,false);throw error;}
-    try {this.store.settle(this.identity.owner,command,true);}
+    try {this.store.settle(this.identity.owner,command,true,typeof operation!=='string'&&operation.recordResult?result:undefined);}
     catch(error){this.closed=true;throw error;}
     return result;
   }
@@ -281,11 +313,15 @@ function componentLiveness(component:OwnerProcess):'exited'|'alive'|'reused'|'un
 /** Constructed only after durable acquisition. Tokens supplied by requests cannot attach a driver. */
 export interface AdmissionClaim {
   readonly identity: OwnerIdentity;
+  markerKnown(token: string): boolean;
+  markerReleased(): boolean;
+  onRelease(callback: () => void): void;
   bindDriver(backend?: 'real' | 'fake'): AdmittedSession;
   cancel(): AttemptView | undefined;
   finalize(candidate: TerminalCandidate): Finalization;
   closeDispatch(candidate: TerminalCandidate): Finalization;
   registerComponent(component: ComponentInput): NativeComponent;
+  observeComponent(componentId: string, observation: ComponentObservation): void;
   issue(request: CommandRequest): IssueResult;
   markInventoryUnknown(reason: string): void;
 }
@@ -294,11 +330,17 @@ class OwnedClaim implements AdmissionClaim {
   private cancellationRequested = false;
   private attached = false;
   private closers: (() => void)[] = [];
+  private releases: (() => void)[] = [];
+  markerKnown(token: string): boolean { return this.store.markerKnown(this.identity, token); }
+  markerReleased(): boolean { return this.store.markerReleased(this.identity); }
+  onRelease(callback: () => void): void { this.releases.push(callback); }
+  private notifyRelease(): void { if (this.markerReleased()) for (const callback of this.releases.splice(0)) callback(); }
   readonly identity: OwnerIdentity;
   constructor(private readonly store: AdmissionSqlite, identity: OwnerIdentity, private readonly parentClosed: () => boolean = () => false) {
     this.identity = Object.freeze({ ...identity, attempt: Object.freeze({ ...identity.attempt }), process: Object.freeze({ ...identity.process }) });
   }
   onClose(callback: () => void): void { this.closers.push(callback); }
+  observeComponent(componentId: string, observation: ComponentObservation): void { this.store.observeComponent(this.identity,componentId,observation); }
   registerComponent(component: ComponentInput): NativeComponent { return this.store.registerComponent(this.identity, component); }
   issue(request: CommandRequest): IssueResult { return this.store.issue(this.identity, request); }
   markInventoryUnknown(reason: string): void { this.store.markInventoryUnknown(this.identity, reason); }
@@ -312,7 +354,7 @@ class OwnedClaim implements AdmissionClaim {
   park(readinessEvidence: string[], evidenceRefs: string[] = []): AllocationCommit {
     if (this.closed || this.cancellationRequested || this.parentClosed()) throw new AdmissionError('DISPATCH_CLOSED', 'Claim is closed');
     this.close();
-    try { return { authority: 'committed', allocation: this.store.parkAllocation(this.identity, readinessEvidence, evidenceRefs) }; }
+    try { const allocation = this.store.parkAllocation(this.identity, readinessEvidence, evidenceRefs); this.notifyRelease(); return { authority: 'committed', allocation }; }
     catch (error) { if (!(error instanceof AdmissionError) || error.code === 'STATE_UNAVAILABLE') return { authority: 'unconfirmed', reason: 'STATE_UNAVAILABLE' }; throw error; }
   }
   recordObservation(refs: string[]): AllocationRecord {
@@ -336,7 +378,7 @@ class OwnedClaim implements AdmissionClaim {
   finalize(candidate: TerminalCandidate): Finalization { return this.finish(candidate, true); }
   private finish(candidate: TerminalCandidate, release: boolean): Finalization {
     this.close();
-    try { return { authority: 'committed', attempt: this.store.finalize(this.identity, candidate, this.cancellationRequested, release) }; }
+    try { const attempt = this.store.finalize(this.identity, candidate, this.cancellationRequested, release); if (release) this.notifyRelease(); return { authority: 'committed', attempt }; }
     catch (error) {
       if (error instanceof AdmissionError && error.code !== 'STATE_UNAVAILABLE') throw error;
       // Even a verified lost COMMIT reply is retrieval, never candidate publication.
@@ -345,29 +387,105 @@ class OwnedClaim implements AdmissionClaim {
     }
   }
 }
+export type RecordedRead<T> = { operation: string; read: () => Promise<T> };
+export type CommandStep<T> = { request: string | CommandRequest; effect: (commandId: string) => Promise<T> };
+async function runSequence<T>(store: AdmissionSqlite, owner: OwnerIdentity, first: string, steps: readonly CommandStep<T>[], closed: () => boolean, recovery?: RecoveryIdentity): Promise<T[]> {
+  let command = first;
+  const results: T[] = [];
+  for (const [index, step] of steps.entries()) {
+    let result: T;
+    try {
+      if (closed()) throw new AdmissionError('DISPATCH_CLOSED', 'Command sequence is closed');
+      result = await step.effect(command);
+    } catch (error) { store.settle(owner, command, false); throw error; }
+    results.push(result);
+    const recorded = typeof step.request !== 'string' && step.request.recordResult ? result : undefined;
+    const next = steps[index + 1];
+    if (next) command = store.advance(owner, command, recorded, next.request, recovery);
+    else store.settle(owner, command, true, recorded);
+  }
+  return results;
+}
+async function runReads<T>(store: AdmissionSqlite, owner: OwnerIdentity, commands: string[], reads: readonly RecordedRead<T>[], closed: () => boolean): Promise<T[]> {
+  const results: T[] = [];
+  try {
+    for (const read of reads) {
+      if (closed()) throw new AdmissionError('DISPATCH_CLOSED', 'Read group is closed');
+      results.push(await read.read());
+    }
+    return results;
+  } finally { store.settleReads(owner, commands, results.length); }
+}
 export interface AdmittedSession {
-  dispatch<T>(kind: string, effect: () => Promise<T>): Promise<T>;
+  dispatch<T>(kind: string | CommandRequest, effect: (commandId: string) => Promise<T>): Promise<T>;
+  dispatchReads<T>(reads: readonly RecordedRead<T>[]): Promise<T[]>;
+  dispatchSequence<T>(steps: readonly CommandStep<T>[]): Promise<T[]>;
 }
 class OwnedSession implements AdmittedSession {
   private revoked = false;
   private pending: Promise<unknown> | undefined;
   constructor(private readonly store: AdmissionSqlite, private readonly owner: OwnerIdentity, private readonly closed: () => boolean) {}
-  dispatch<T>(kind: string, effect: () => Promise<T>): Promise<T> {
+  dispatchSequence<T>(steps: readonly CommandStep<T>[]): Promise<T[]> {
+    if (this.revoked || this.closed()) throw new AdmissionError('DISPATCH_CLOSED', 'Claim is closed');
+    if (this.pending) {
+      this.store.assertDispatchOpen(this.owner);
+      return this.pending.then(() => this.dispatchSequence(steps));
+    }
+    if (!steps.length) return Promise.resolve([]);
+    let command: string;
+    try {
+      const request = steps[0]!.request;
+      if (typeof request === 'string') command = this.store.authorize(this.owner, request);
+      else {
+        const issued = this.store.issue(this.owner, request);
+        if (issued.kind !== 'issued') throw new AdmissionError('DISPATCH_CLOSED', 'A retrieved command cannot be sent again');
+        command = issued.command.id;
+      }
+    } catch (error) { this.revoked = true; throw error; }
+    const completion = runSequence(this.store, this.owner, command, steps, this.closed).catch(error => { this.revoked = true; throw error; });
+    this.pending = completion;
+    const clear = () => { if (this.pending === completion) this.pending = undefined; };
+    void completion.then(clear, clear);
+    return completion;
+  }
+  dispatchReads<T>(reads: readonly RecordedRead<T>[]): Promise<T[]> {
+    if (this.revoked || this.closed()) throw new AdmissionError('DISPATCH_CLOSED', 'Claim is closed');
+    if (this.pending) {
+      this.store.assertDispatchOpen(this.owner);
+      return this.pending.then(() => this.dispatchReads(reads));
+    }
+    let commands: string[];
+    try { commands = this.store.authorizeReads(this.owner, reads.map(read => read.operation)); }
+    catch (error) { this.revoked = true; throw error; }
+    const completion = runReads(this.store, this.owner, commands, reads, this.closed).catch(error => { this.revoked = true; throw error; });
+    this.pending = completion;
+    const clear = () => { if (this.pending === completion) this.pending = undefined; };
+    void completion.then(clear, clear);
+    return completion;
+  }
+  dispatch<T>(kind: string | CommandRequest, effect: (commandId: string) => Promise<T>): Promise<T> {
     if (this.revoked || this.closed()) throw new AdmissionError('DISPATCH_CLOSED', 'Claim is closed');
     if (this.pending) {
       this.store.assertDispatchOpen(this.owner);
       return this.pending.then(()=>this.dispatch(kind,effect));
     }
     let command: string;
-    try { command = this.store.authorize(this.owner, kind); }
+    try {
+      if (typeof kind === 'string') command = this.store.authorize(this.owner, kind);
+      else {
+        const issued = this.store.issue(this.owner, kind);
+        if (issued.kind !== 'issued') throw new AdmissionError('DISPATCH_CLOSED', 'Retrieved commands are never sent again');
+        command = issued.command.id;
+      }
+    }
     catch (error) { this.revoked = true; throw error; }
     // No await between durable authorization and calling the backend. Cancellation
     // in another process can follow this authorization; it cannot retract it.
     let underlying: Promise<T>;
-    try { underlying = effect(); }
+    try { underlying = effect(command); }
     catch (error) { this.revoked = true; this.store.settle(this.owner, command, false); throw error; }
     const completion = Promise.resolve(underlying).then(value => {
-      try { this.store.settle(this.owner, command, true); return value; }
+      try { this.store.settle(this.owner, command, true, typeof kind !== 'string' && kind.recordResult ? value : undefined); return value; }
       catch (error) { this.revoked = true; throw error; }
     }, error => { this.revoked = true; this.store.settle(this.owner, command, false); throw error; });
     this.pending=completion;

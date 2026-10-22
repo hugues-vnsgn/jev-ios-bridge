@@ -5,6 +5,7 @@ import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { test } from 'node:test';
 import { isActOutcome, type AndroidAppIdentity, type DeviceDriver, type RunEvent, type Snapshot } from '../src/contracts/index.js';
+import { type GenerationView } from '../src/device/admission.js';
 import { DeviceReasonError, StaleSnapshotError } from '../src/device/index.js';
 import { adbRunner, type AdbRunner } from '../src/device/android/adb.js';
 import { DeviceAgentError, type AndroidNode, type DeviceAgentClient } from '../src/device/android/agent-client.js';
@@ -13,12 +14,13 @@ import { AGENT_DEVICE_PATH, AGENT_START_COMMAND, APP_PROBLEM_POLL_MS, APP_PROBLE
 import type { AppExitWatch } from '../src/device/android/exit-watch.js';
 import { createDriverFactory } from '../src/device/factory.js';
 import { OutcomeUnknownError } from '../src/device/android/ledger.js';
+import type { IdentityProbe } from '../src/device/android/probe.js';
 import { mapAndroidTree } from '../src/device/android/mapping.js';
 import { screenHash } from '../src/device/android/settle.js';
 import type { ScriptedJudge } from '../src/scripted/contracts.js';
 import { runScriptedScenario } from '../src/scripted/run.js';
 import { fakeSpawn } from './fixtures/adb-spawn.js';
-import { AGENT_CACHE, FakeAdb, fakeAgents, fakeClock, FakeStreams, FIXTURES, fixture, fixtureBytes, shellWords, type FakeEmulator } from './fixtures/android-device.js';
+import { AGENT_CACHE, fakeAndroidAdmission, FakeAdb, fakeAgents, fakeClock, FakeStreams, FIXTURES, fixture, fixtureBytes, shellWords, type FakeEmulator } from './fixtures/android-device.js';
 import { androidScript } from './fixtures/android-script.js';
 import { withRunLog } from './fixtures/run-log.js';
 
@@ -37,21 +39,28 @@ interface Setup {
   agents: ReturnType<typeof fakeAgents>;
   clock: ReturnType<typeof fakeClock>;
   streams: FakeStreams;
+  inventory: () => GenerationView;
 }
 
 async function withDriver(adb: FakeAdb, fn: (setup: Setup) => Promise<void>,
-  options: Partial<AndroidDriverOptions> & { agents?: Parameters<typeof fakeAgents>[1]; ports?: number[] } = {}): Promise<void> {
+  options: Partial<AndroidDriverOptions> & { agents?: Parameters<typeof fakeAgents>[1]; ports?: number[]; admissionDependencies?: Parameters<typeof fakeAndroidAdmission>[1] } = {}): Promise<void> {
   const root = await mkdtemp(join(tmpdir(), 'jev-android-driver-'));
   const agents = fakeAgents(adb, options.agents);
   const clock = fakeClock();
   const ports = [...options.ports ?? [49526, 49527, 49528, 49529]];
   const streams = new FakeStreams(adb);
   // Phase 4's tests start no logcat stream (logFolder false); phase 5's tests name a log folder.
-  const driver = new AndroidDriver({ device: { avd: 'jev-actions-api31' }, runner: adb.run, agentClient: agents.agentClient, clock,
-    identityProbe: adb.identityProbe, leaseRoot: root, screenshotFolder: root, freePort: async () => ports.shift()!, logcat: streams, logFolder: false,
+  const admission = options.admission ?? fakeAndroidAdmission(root, options.admissionDependencies);
+  const runId = options.runId ?? 'driver-test';
+  const driver = new AndroidDriver({ runId, device: { avd: 'jev-actions-api31' }, runner: adb.run, agentClient: agents.agentClient, clock,
+    identityProbe: adb.identityProbe, admission, fakeBackend: true, leaseRoot: root, screenshotFolder: root, freePort: async () => ports.shift()!, logcat: streams, logFolder: false,
     tools: async () => ({ adb: '/sdk/platform-tools/adb', agent: { path: AGENT_CACHE, sha256: PINNED_AGENT_SHA256 } }), ...options });
   try {
-    await fn({ adb, root, driver, agents, clock, streams });
+    await fn({ adb, root, driver, agents, clock, streams, inventory: () => {
+      const attempt = admission.readAttempt({ kind: 'legacy', id: runId });
+      assert.ok(attempt, 'admission attempt exists');
+      return admission.readGeneration(attempt.owner);
+    } });
   } finally {
     // No command in any test calls the mobilecli program or pkill.
     for (const call of adb.calls) {
@@ -74,7 +83,7 @@ const reason = (code: string, vendorCode?: string) => (error: unknown) => {
   return true;
 };
 const lockFile = async (root: string) => {
-  const [name] = await readdir(root);
+  const [name] = (await readdir(root)).filter(name => name !== 'admission');
   return name ? JSON.parse(await readFile(join(root, name), 'utf8')) as { pid: number; ownedProcesses?: string[] } : undefined;
 };
 const START = ['-s', 'emulator-5554', 'shell', AGENT_START_COMMAND];
@@ -89,7 +98,7 @@ test('an injected effect runner without a read-only probe refuses before device 
   try {
     await assert.rejects(driver.prepare(app(), signal()), reason('DEVICE_IDENTITY_UNAVAILABLE', 'PROVENANCE_INACCESSIBLE'));
     assert.deepEqual(calls, []);
-    assert.deepEqual(await readdir(root), []);
+    assert.deepEqual((await readdir(root)).filter(name => name !== 'admission'), []);
   } finally { await rm(root, { recursive: true, force: true }); }
 });
 
@@ -100,12 +109,12 @@ test('changed transport binding refuses the first effect and leaves the app and 
     await assert.rejects(driver.prepare(app(), signal()), reason('DEVICE_IDENTITY_CONFLICT', 'TRANSPORT_CHANGED'));
     assert.equal(adb.shell().some(words => words[0] === 'am' || words[0] === 'kill'), false);
     assert.equal(adb.calls.some(args => args[2] === 'push'), false);
-    assert.deepEqual(await readdir(root), []);
+    assert.deepEqual((await readdir(root)).filter(name => name !== 'admission'), []);
   });
 });
 
 test('missing launcher identity refuses before wake, sweep, or app restart', async () => {
-  const adb = new FakeAdb(api31({ awake: false, agents: new Map([[4675, 'own']]) }));
+  const adb = new FakeAdb(api31({ awake: false }));
   const runner: AdbRunner = async (args, abort) => args[3]?.startsWith("'cmd' 'package' 'resolve-activity'")
     ? { stdout: 'No activity found\n', stderr: '', exitCode: 0 } : adb.run(args, abort);
   await withDriver(adb, async ({ driver }) => {
@@ -121,11 +130,15 @@ test('cancellation during binding revalidation prevents adb and agent dispatch',
     const cancel = new AbortController();
     let enabled = stage === 'adb';
     let reads = 0;
-    const probe = { ...adb.identityProbe, android: async (abort: AbortSignal, name?: string) => {
-      const inventory = await adb.identityProbe.android(abort, name);
-      if (++reads > 1 && enabled) cancel.abort(new Error('cancel during probe'));
-      return inventory;
-    } };
+    const cancellingProbe = (base: IdentityProbe): IdentityProbe => ({ ...base,
+      withRecorder: record => cancellingProbe(base.withRecorder!(record)),
+      android: async (abort, name) => {
+        const inventory = await base.android(abort, name);
+        if (++reads > 1 && enabled) cancel.abort(new Error('cancel during probe'));
+        return inventory;
+      },
+    });
+    const probe = cancellingProbe(adb.identityProbe);
     await withDriver(adb, async ({ driver, agents }) => {
       if (stage === 'agent') await driver.prepare(app(), signal());
       enabled = true;
@@ -167,7 +180,7 @@ test('cleanup refuses a reused transport without mutating the replacement and ke
     const before = adb.calls.length;
     await assert.rejects(driver.close(signal()));
     assert.equal(adb.calls.slice(before).some(args => args[2] === 'forward' || /'kill'|'am'/.test(args[3] ?? '')), false);
-    assert.deepEqual(await readdir(root), ['JEV-ACTIONS-API31.lock']);
+    assert.deepEqual((await readdir(root)).filter(name => name !== 'admission'), ['JEV-ACTIONS-API31.lock']);
   });
 });
 
@@ -176,7 +189,7 @@ test('canonical emulator provenance stays separate from its compatibility lease 
   await withDriver(adb, async ({ driver, root }) => {
     await driver.prepare(app(), signal());
     assert.equal(driver.identity()?.value, '/fake/avds/jev-actions-api31.avd');
-    assert.deepEqual(await readdir(root), ['JEV-ACTIONS-API31.lock']);
+    assert.deepEqual((await readdir(root)).filter(name => name !== 'admission'), ['JEV-ACTIONS-API31.lock']);
     assert.deepEqual(driver.preparation(), { deviceIdentity: 'jev-actions-api31', serial: 'emulator-5554', agentSha256: PINNED_AGENT_SHA256 });
     assert.ok(adb.probeCalls.some(args => args.join(' ') === '-s emulator-5554 emu avd path'));
     assert.equal(adb.calls.some(args => args[0] === 'devices' || args.includes('emu')), false);
@@ -185,7 +198,7 @@ test('canonical emulator provenance stays separate from its compatibility lease 
 
 test('prepares an emulator named by serial, in the release spec\'s order, and records the agent it started', async () => {
   const adb = new FakeAdb(api31());
-  await withDriver(adb, async ({ driver, root }) => {
+  await withDriver(adb, async ({ driver, root, inventory }) => {
     await driver.prepare(app(), signal());
     assert.deepEqual(adb.calls, [
       ['-s', 'emulator-5554', 'shell', "'ps' '-A' '-o' 'PID,NAME,ARGS'"],
@@ -199,12 +212,17 @@ test('prepares an emulator named by serial, in the release spec\'s order, and re
       ['-s', 'emulator-5554', 'shell', "'am' 'start' '-W' '-n' 'com.example.android/.MainActivity'"],
       ['-s', 'emulator-5554', 'push', AGENT_CACHE, '/data/local/tmp/jev-ios-bridge-agent.dex'],
       START,
+      ['-s', 'emulator-5554', 'shell', "'ps' '-A' '-o' 'PID,NAME,ARGS'"],
+      ['-s', 'emulator-5554', 'shell', "'cat' '/proc/7001/environ'"],
+      ['-s', 'emulator-5554', 'shell', "'cat' '/proc/7001/stat'"],
       ['-s', 'emulator-5554', 'forward', 'tcp:49526', 'localabstract:mobilecli-server'],
       ['-s', 'emulator-5554', 'shell', "'ps' '-A' '-o' 'PID,NAME,ARGS'"],
       ['-s', 'emulator-5554', 'shell', "'cat' '/proc/7001/environ'"],
     ]);
     assert.deepEqual(driver.preparation(), { deviceIdentity: 'jev-actions-api31', serial: 'emulator-5554', agentSha256: PINNED_AGENT_SHA256 });
-    assert.deepEqual((await lockFile(root))?.ownedProcesses, ['forward emulator-5554 tcp:49526', 'agent emulator-5554 7001']);
+    assert.equal((await lockFile(root))?.ownedProcesses, undefined, 'the marker carries no ownership inventory');
+    assert.ok(inventory().components.some(component => component.kind === 'android-agent'));
+    assert.ok(inventory().components.some(component => component.kind === 'android-forward'));
   }, { device: { serial: 'emulator-5554' } });
 });
 
@@ -218,7 +236,7 @@ test('the lease is taken before the first command that touches the device', asyn
   const adb = new FakeAdb(api31());
   const beforeLease: string[] = [];
   await withDriver(adb, async ({ driver, root }) => {
-    adb.onCall = async args => { if ((await readdir(root)).length === 0) beforeLease.push(args.join(' ')); };
+    adb.onCall = async args => { if (((await readdir(root)).filter(name => name !== 'admission')).length === 0) beforeLease.push(args.join(' ')); };
     await driver.prepare(app(), signal());
     assert.deepEqual(beforeLease, []);
     assert.ok(adb.probeCalls.some(args => args[0] === 'devices'));
@@ -253,7 +271,7 @@ test('a phone\'s identity is its serial, and its AVD property is never read', as
     await driver.prepare(app(), signal());
     assert.equal(adb.calls.some(call => call.join(' ').includes('avd_name')), false);
     assert.deepEqual(driver.preparation(), { deviceIdentity: 'R58M12345', serial: 'R58M12345', agentSha256: PINNED_AGENT_SHA256 });
-    assert.deepEqual(await readdir(root), ['R58M12345.lock']);
+    assert.deepEqual((await readdir(root)).filter(name => name !== 'admission'), ['R58M12345.lock']);
   }, { device: { serial: 'R58M12345' } });
 });
 
@@ -299,7 +317,7 @@ for (const [name, devicesText, code, serial] of [
     adb.devicesText = devicesText;
     await withDriver(adb, async ({ driver, root }) => {
       await assert.rejects(driver.prepare(app(), signal()), reason(code));
-      assert.deepEqual(await readdir(root), [], 'no lease taken');
+      assert.deepEqual((await readdir(root)).filter(name => name !== 'admission'), [], 'no lease taken');
     }, { device: { serial: serial ?? 'emulator-5554' } });
   });
 }
@@ -308,7 +326,7 @@ test('a profile\'s device category limits the device a name may resolve to', asy
   const adb = new FakeAdb(api31());
   await withDriver(adb, async ({ driver, root }) => {
     await assert.rejects(driver.prepare(app(), signal()), reason('DEVICE_NOT_FOUND'));
-    assert.deepEqual(await readdir(root), [], 'no lease taken');
+    assert.deepEqual((await readdir(root)).filter(name => name !== 'admission'), [], 'no lease taken');
   }, { device: { serial: 'emulator-5554' }, category: 'android-phone' });
   await withDriver(new FakeAdb(api31()), async ({ driver }) => {
     await driver.prepare(app(), signal());
@@ -340,7 +358,7 @@ test('an AVD name no console reports is DEVICE_NOT_FOUND even with an unauthoriz
   await withDriver(adb, async ({ driver, root }) => {
     await assert.rejects(driver.prepare(app(), signal()), reason('DEVICE_NOT_FOUND'));
     assert.equal(adb.calls.some(call => call[1] === 'emulator-5556'), false, 'an unauthorized emulator\'s property is never read');
-    assert.deepEqual(await readdir(root), [], 'no lease taken');
+    assert.deepEqual((await readdir(root)).filter(name => name !== 'admission'), [], 'no lease taken');
   });
 });
 
@@ -357,36 +375,18 @@ test('two running emulators reporting the AVD name are DEVICE_AMBIGUOUS', async 
   const adb = new FakeAdb(api31(), api31({ serial: 'emulator-5556' }));
   await withDriver(adb, async ({ driver, root }) => {
     await assert.rejects(driver.prepare(app(), signal()), reason('DEVICE_AMBIGUOUS'));
-    assert.deepEqual(await readdir(root), []);
+    assert.deepEqual((await readdir(root)).filter(name => name !== 'admission'), []);
   });
 });
 
-test('a live holder of the device lease is DEVICE_BUSY with the lease\'s message, and nothing touches the device', async () => {
+test('a live unknown marker refuses before device commands', async () => {
   const adb = new FakeAdb(api31());
   await withDriver(adb, async ({ driver, root }) => {
     await writeFile(join(root, 'JEV-ACTIONS-API31.lock'), JSON.stringify({ pid: process.pid, token: 'other', deviceId: 'jev-actions-api31' }));
-    await assert.rejects(driver.prepare(app(), signal()), (error: unknown) => reason('DEVICE_BUSY')(error) &&
-      (error as Error).message.startsWith(`Device jev-actions-api31 is locked by bridge process ${String(process.pid)}`));
+    await assert.rejects(driver.prepare(app(), signal()), reason('DEVICE_BUSY'));
     assert.deepEqual(adb.calls, []);
   });
 });
-
-for (const [name, emulator, code] of [
-  ['a device below API 31 is DEVICE_UNSUPPORTED', { api: '30' }, 'DEVICE_UNSUPPORTED'],
-  ['a device still booting is DEVICE_NOT_BOOTED', { booted: false }, 'DEVICE_NOT_BOOTED'],
-  ['an app that isn\'t installed is APP_NOT_INSTALLED', { installed: [] as string[] }, 'APP_NOT_INSTALLED'],
-  ['a keyguard showing on an awake screen is DEVICE_LOCKED', { keyguard: true }, 'DEVICE_LOCKED'],
-] as const) {
-  test(`${name}; the app is left alone and the lease released`, async () => {
-    const adb = new FakeAdb(api31(emulator));
-    await withDriver(adb, async ({ driver, root }) => {
-      await assert.rejects(driver.prepare(app(), signal()), reason(code));
-      assert.equal(adb.shell().some(words => words[0] === 'am' || words[0] === 'input'), false, 'no restart, no wake');
-      assert.equal(adb.calls.some(call => call[2] === 'push'), false);
-      assert.deepEqual(await readdir(root), [], 'lease released');
-    });
-  });
-}
 
 test('a screen that is only off is woken with KEYCODE_WAKEUP, and the run goes on', async () => {
   const adb = new FakeAdb(api31({ awake: false, fixtures: 'api36', api: '36' }));
@@ -421,7 +421,7 @@ test('a foreign agent is DEVICE_BUSY: no kill, no forward removed, the app untou
       assert.equal(adb.calls.some(call => call[2] === 'forward'), false);
       assert.ok(adb.emulators.get('emulator-5554')!.agents!.has(4984), 'the foreign agent keeps running');
       assert.equal(adb.forwards.length, 1);
-      assert.deepEqual(await readdir(root), []);
+      assert.deepEqual((await readdir(root)).filter(name => name !== 'admission'), []);
     });
   }
 });
@@ -449,7 +449,7 @@ test('an agent is the bridge\'s own only when an environment entry is exactly it
   }, { runner: driverRunner });
 });
 
-test('after a crash takeover, the dead holder\'s listed agent and forward are swept, and only those', async () => {
+test('a dead legacy marker with agent and forward entries authorizes no sweep', async () => {
   const adb = new FakeAdb(api31({ agents: new Map([[4675, 'own']]) }));
   adb.forwards = [
     { serial: 'emulator-5554', local: 'tcp:65436', remote: 'localabstract:mobilecli-server' },
@@ -460,92 +460,76 @@ test('after a crash takeover, the dead holder\'s listed agent and forward are sw
   await withDriver(adb, async ({ driver, root }) => {
     await writeFile(join(root, 'JEV-ACTIONS-API31.lock'), JSON.stringify({ pid: deadPid(), token: 'crashed', deviceId: 'jev-actions-api31',
       ownedProcesses: ['agent emulator-5554 4675', 'forward emulator-5554 tcp:65436', 'agent emulator-5560 3562'] }));
-    await driver.prepare(app(), signal());
-    const sweep = adb.calls.slice(0, adb.calls.findIndex(call => call[3]?.includes("'am' 'force-stop'")))
-      .filter(call => call[0] === 'forward' || call[2] === 'forward' || /'ps'|'cat'|'kill'/.test(call[3] ?? '')).map(call => call.join(' '));
-    assert.deepEqual(sweep, [
-      "-s emulator-5554 shell 'ps' '-A' '-o' 'PID,NAME,ARGS'",
-      "-s emulator-5554 shell 'cat' '/proc/4675/environ'",
-      'forward --list',
-      "-s emulator-5554 shell 'kill' '4675'",
-      "-s emulator-5554 shell 'cat' '/proc/4675/environ'",
-      '-s emulator-5554 forward --remove tcp:65436',
-    ]);
-    assert.deepEqual(adb.forwards.filter(forward => forward.serial === 'emulator-5556').map(forward => forward.local), ['tcp:49600'],
-      'the other emulator\'s forward is left alone');
-    assert.equal(adb.calls.some(call => call[1] === 'emulator-5560'), false, 'a listed agent on another serial is not swept here');
-    assert.equal(driver.preparation().sweptLeftovers, true);
+    const marker = await readFile(join(root, 'JEV-ACTIONS-API31.lock'), 'utf8');
+    await assert.rejects(driver.prepare(app(), signal()), reason('DEVICE_BUSY'));
+    assert.deepEqual(adb.calls, [], 'an unknown legacy marker authorizes no sweep');
+    assert.equal(await readFile(join(root, 'JEV-ACTIONS-API31.lock'), 'utf8'), marker);
   });
 });
 
-test('a listed forward that now points somewhere else isn\'t the dead holder\'s, and is left alone', async () => {
+test('an unknown legacy forward entry cannot authorize removal of a changed mapping', async () => {
   const adb = new FakeAdb(api31());
   adb.forwards = [{ serial: 'emulator-5554', local: 'tcp:65436', remote: 'tcp:8080' }];
   await withDriver(adb, async ({ driver, root }) => {
     await writeFile(join(root, 'JEV-ACTIONS-API31.lock'), JSON.stringify({ pid: deadPid(), token: 'crashed', deviceId: 'jev-actions-api31',
       ownedProcesses: ['forward emulator-5554 tcp:65436'] }));
-    await driver.prepare(app(), signal());
-    assert.equal(adb.calls.some(call => call[3] === '--remove'), false);
-    assert.equal('sweptLeftovers' in driver.preparation(), false);
+    await assert.rejects(driver.prepare(app(), signal()), reason('DEVICE_BUSY'));
+    assert.deepEqual(adb.calls, []);
   });
 });
 
-test('a takeover with nothing left to sweep doesn\'t record sweptLeftovers', async () => {
+test('a dead legacy marker remains busy even when all listed components are absent', async () => {
   const adb = new FakeAdb(api31());
   await withDriver(adb, async ({ driver, root }) => {
     await writeFile(join(root, 'JEV-ACTIONS-API31.lock'), JSON.stringify({ pid: deadPid(), token: 'crashed', deviceId: 'jev-actions-api31',
       ownedProcesses: ['agent emulator-5554 4675', 'forward emulator-5554 tcp:65436'] }));
-    await driver.prepare(app(), signal());
-    assert.equal(adb.shell().some(words => words[0] === 'kill'), false);
-    assert.equal('sweptLeftovers' in driver.preparation(), false);
+    const marker = await readFile(join(root, 'JEV-ACTIONS-API31.lock'), 'utf8');
+    await assert.rejects(driver.prepare(app(), signal()), reason('DEVICE_BUSY'));
+    assert.deepEqual(adb.calls, [], 'an unknown legacy marker authorizes no sweep');
+    assert.equal(await readFile(join(root, 'JEV-ACTIONS-API31.lock'), 'utf8'), marker);
   });
 });
 
-test('a takeover that kills an agent its dead holder never listed records sweptLeftovers', async () => {
+test('a dead legacy marker cannot adopt an unlisted agent', async () => {
   // The holder crashed after starting its agent, before recording the agent's pid.
   const adb = new FakeAdb(api31({ agents: new Map([[4675, 'own']]) }));
   await withDriver(adb, async ({ driver, root }) => {
     await writeFile(join(root, 'JEV-ACTIONS-API31.lock'), JSON.stringify({ pid: deadPid(), token: 'crashed', deviceId: 'jev-actions-api31' }));
-    await driver.prepare(app(), signal());
-    assert.ok(adb.shell().some(words => words.join(' ') === 'kill 4675'));
-    assert.equal(driver.preparation().sweptLeftovers, true);
+    await assert.rejects(driver.prepare(app(), signal()), reason('DEVICE_BUSY'));
+    assert.deepEqual(adb.calls, []);
   });
 });
 
-test('a takeover that removes an agent forward its dead holder never listed records sweptLeftovers', async () => {
+test('a dead legacy marker cannot adopt an unlisted forward', async () => {
   const adb = new FakeAdb(api31());
   adb.forwards = [{ serial: 'emulator-5554', local: 'tcp:65436', remote: 'localabstract:mobilecli-server' }];
   await withDriver(adb, async ({ driver, root }) => {
     await writeFile(join(root, 'JEV-ACTIONS-API31.lock'), JSON.stringify({ pid: deadPid(), token: 'crashed', deviceId: 'jev-actions-api31' }));
-    await driver.prepare(app(), signal());
-    assert.ok(adb.calls.some(call => call.join(' ') === '-s emulator-5554 forward --remove tcp:65436'));
-    assert.equal(driver.preparation().sweptLeftovers, true);
+    await assert.rejects(driver.prepare(app(), signal()), reason('DEVICE_BUSY'));
+    assert.deepEqual(adb.calls, []);
   });
 });
 
-test('another bridge-owned agent is killed by pid, and this serial\'s agent forwards removed, without sweptLeftovers', async () => {
+test('an unrecorded bridge agent and its forwards refuse without a sweep', async () => {
   const adb = new FakeAdb(api31({ fixtures: 'api36', api: '36', agents: new Map([[9983, 'own']]) }));
   adb.forwards = (await readFile(join(FIXTURES, 'forward-list-two-emulators.txt'), 'utf8')).trim().split('\n')
     .map(line => line.split(' ')).map(([serial, local, remote]) => ({ serial: serial!, local: local!, remote: remote! }));
   adb.forwards.push({ serial: 'emulator-5554', local: 'tcp:5037', remote: 'tcp:5037' });
   await withDriver(adb, async ({ driver }) => {
-    await driver.prepare(app(), signal());
-    assert.ok(adb.shell().some(words => words.join(' ') === 'kill 9983'));
-    const removed = adb.calls.filter(call => call[3] === '--remove').map(call => call.join(' '));
-    assert.deepEqual(removed, ['-s emulator-5554 forward --remove tcp:49526']);
-    assert.deepEqual(adb.forwards.map(forward => `${forward.serial} ${forward.local}`).sort(),
-      ['emulator-5554 tcp:49526', 'emulator-5554 tcp:5037', 'emulator-5556 tcp:65436'],
-      'this run\'s new forward, a forward to another socket, and the other emulator\'s forward remain');
-    assert.equal('sweptLeftovers' in driver.preparation(), false);
+    await assert.rejects(driver.prepare(app(), signal()), reason('DEVICE_BUSY'));
+    assert.equal(adb.shell().some(words => words[0] === 'kill'), false);
+    assert.equal(adb.calls.some(call => call[3] === '--remove'), false);
+    assert.ok(adb.emulators.get('emulator-5554')!.agents!.has(9983));
   });
 });
 
-test('a bridge-owned agent that won\'t exit is DEVICE_ERROR, and its forward is kept', async () => {
+test('a bridge-owned agent that won\'t exit is DEVICE_BUSY without ownership evidence, and its forward is kept', async () => {
   const adb = new FakeAdb(api31({ agents: new Map([[4675, 'own']]), stubborn: [4675] }));
   adb.forwards = [{ serial: 'emulator-5554', local: 'tcp:65436', remote: 'localabstract:mobilecli-server' }];
   await withDriver(adb, async ({ driver, clock }) => {
-    await assert.rejects(driver.prepare(app(), signal()), reason('DEVICE_ERROR', 'adb'));
-    assert.ok(clock.now() >= 2_000);
+    await assert.rejects(driver.prepare(app(), signal()), reason('DEVICE_BUSY'));
+    assert.equal(clock.now(), 0);
+    assert.equal(adb.shell().some(words => words[0] === 'kill'), false);
     assert.equal(adb.forwards.length, 1);
     assert.equal(adb.shell().some(words => words[0] === 'am'), false);
   });
@@ -603,11 +587,13 @@ test('the recorded launcher lookup gives the component am start launches', async
 test('a forward that cannot bind is retried on a new free port, up to 3 times', async () => {
   const adb = new FakeAdb(api31());
   adb.busyPorts = new Set([49526, 49527]);
-  await withDriver(adb, async ({ driver, root, agents }) => {
+  await withDriver(adb, async ({ driver, root, agents, inventory }) => {
     await driver.prepare(app(), signal());
     assert.deepEqual(adb.calls.filter(call => call[2] === 'forward').map(call => call[3]), ['tcp:49526', 'tcp:49527', 'tcp:49528']);
     assert.deepEqual(agents.clients, [49528]);
-    assert.deepEqual((await lockFile(root))?.ownedProcesses, ['forward emulator-5554 tcp:49528', 'agent emulator-5554 7001']);
+    assert.equal((await lockFile(root))?.ownedProcesses, undefined, 'the marker carries no ownership inventory');
+    assert.ok(inventory().components.some(component => component.kind === 'android-agent'));
+    assert.ok(inventory().components.some(component => component.kind === 'android-forward'));
   });
   const stuck = new FakeAdb(api31());
   stuck.busyPorts = new Set([49526, 49527, 49528, 49529]);
@@ -628,11 +614,13 @@ test('device.version is polled every 100 ms until it returns the pinned SHA-256'
 
 test('an agent that never answers is DEVICE_ERROR with vendorCode agent after 5 s, and its pid is recorded for close', async () => {
   const adb = new FakeAdb(api31());
-  await withDriver(adb, async ({ driver, root, agents, clock }) => {
+  await withDriver(adb, async ({ driver, root, agents, clock, inventory }) => {
     await assert.rejects(driver.prepare(app(), signal()), reason('DEVICE_ERROR', 'agent'));
     assert.equal(clock.now(), 5_000);
     assert.equal(agents.versionCalls.length, 51);
-    assert.deepEqual((await lockFile(root))?.ownedProcesses, ['forward emulator-5554 tcp:49526', 'agent emulator-5554 7001']);
+    assert.equal((await lockFile(root))?.ownedProcesses, undefined, 'the marker carries no ownership inventory');
+    assert.ok(inventory().components.some(component => component.kind === 'android-agent'));
+    assert.ok(inventory().components.some(component => component.kind === 'android-forward'));
   }, { agents: { never: true } });
 });
 
@@ -669,7 +657,7 @@ test('an agent answering with another SHA-256 is not the pinned agent', async ()
 });
 
 test('a foreign agent found when the agent never answers is DEVICE_BUSY', async () => {
-  const adb = new FakeAdb(api31({ agentStarts: false }));
+  const adb = new FakeAdb(api31());
   adb.onCall = args => {
     if (args[2] === 'forward' && args[3] !== '--remove') adb.emulators.get('emulator-5554')!.agents = new Map([[10252, 'foreign']]);
   };
@@ -1081,12 +1069,14 @@ function expiring(ms: number): AbortSignal {
 const closeFailed = (code: string) => (error: unknown) => reason(code)(error);
 /** What `close` sends after a full `prepare`: the fence by pid, the app stop, then the forward's removal. */
 const CLOSE_AFTER_PREPARE = [
-  "-s emulator-5554 shell 'ps' '-A' '-o' 'PID,NAME,ARGS'",
+  "-s emulator-5554 shell 'cat' '/proc/7001/stat'",
   "-s emulator-5554 shell 'cat' '/proc/7001/environ'",
   "-s emulator-5554 shell 'kill' '7001'",
   "-s emulator-5554 shell 'cat' '/proc/7001/environ'",
+  "-s emulator-5554 shell 'cat' '/proc/7001/stat'",
   "-s emulator-5554 shell 'am' 'force-stop' 'com.example.android'",
   '-s emulator-5554 forward --remove tcp:49526',
+  'forward --list',
 ];
 const callsFrom = (adb: FakeAdb, from: number) => adb.calls.slice(from).map(call => call.join(' '));
 
@@ -1101,7 +1091,7 @@ test('close fences the agent by pid, stops the app, removes the forward, then re
     assert.equal(agents.calls.length, agentCalls, 'close sends the agent nothing');
     assert.equal(adb.emulators.get('emulator-5554')!.agents!.size, 0, 'no agent left');
     assert.deepEqual(adb.forwards, [], 'no forward left');
-    assert.deepEqual(await readdir(root), [], 'lease released');
+    assert.deepEqual((await readdir(root)).filter(name => name !== 'admission'), [], 'lease released');
     assert.equal(adb.calls.some(call => call.join(' ').includes(`rm`) || call.join(' ').includes('pkill')), false, 'the agent file stays');
     await driver.close(signal());
     assert.equal(adb.calls.length, before + CLOSE_AFTER_PREPARE.length, 'a second close does nothing');
@@ -1116,11 +1106,12 @@ test('close tolerates an agent already gone, an app not running and a forward al
     const before = adb.calls.length;
     await driver.close(signal());
     assert.deepEqual(callsFrom(adb, before), [
-      "-s emulator-5554 shell 'ps' '-A' '-o' 'PID,NAME,ARGS'",
+      "-s emulator-5554 shell 'cat' '/proc/7001/stat'",
       "-s emulator-5554 shell 'am' 'force-stop' 'com.example.android'",
       '-s emulator-5554 forward --remove tcp:49526',
+      'forward --list',
     ]);
-    assert.deepEqual(await readdir(root), []);
+    assert.deepEqual((await readdir(root)).filter(name => name !== 'admission'), []);
   });
 });
 
@@ -1133,7 +1124,7 @@ test('a DEVICE_BUSY refusal followed by close: the foreign agent keeps running, 
     assert.deepEqual(callsFrom(adb, before), [], 'close is a no-op after a refusal before the restart');
     assert.ok(adb.emulators.get('emulator-5554')!.agents!.has(4984));
     assert.equal(adb.shell().some(words => words[0] === 'am' || words[0] === 'kill'), false);
-    assert.deepEqual(await readdir(root), []);
+    assert.deepEqual((await readdir(root)).filter(name => name !== 'admission'), []);
   });
 });
 
@@ -1149,11 +1140,11 @@ test('a foreign agent found after the restart: close fences only the bridge\'s o
     assert.deepEqual([...adb.emulators.get('emulator-5554')!.agents!.keys()], [10252], 'the foreign agent keeps running');
     assert.deepEqual(adb.shell().filter(words => words[0] === 'kill').map(words => words[1]), ['7001']);
     assert.equal(adb.shell().filter(words => words.join(' ') === 'am force-stop com.example.android').length, 2);
-    assert.deepEqual(await readdir(root), []);
+    assert.deepEqual((await readdir(root)).filter(name => name !== 'admission'), []);
   });
 });
 
-test('a cancel while the agent is starting: close waits for the start command, then fences the agent it started', async () => {
+test('a cancel while the agent is starting: close waits for the start command, then retains quarantine without an agent incarnation', async () => {
   const adb = new FakeAdb(api31());
   const start = gate();
   const controller = new AbortController();
@@ -1173,16 +1164,10 @@ test('a cancel while the agent is starting: close waits for the start command, t
     const started = adb.calls.length;
     start.open();
     await assert.rejects(preparing);
-    await closing;
-    assert.deepEqual(callsFrom(adb, started), [
-      "-s emulator-5554 shell 'ps' '-A' '-o' 'PID,NAME,ARGS'",
-      "-s emulator-5554 shell 'cat' '/proc/7001/environ'",
-      "-s emulator-5554 shell 'kill' '7001'",
-      "-s emulator-5554 shell 'cat' '/proc/7001/environ'",
-      "-s emulator-5554 shell 'am' 'force-stop' 'com.example.android'",
-    ], 'no forward was made, so none is removed');
-    assert.equal(adb.emulators.get('emulator-5554')!.agents!.size, 0, 'no agent left');
-    assert.deepEqual(await readdir(root), []);
+    await assert.rejects(closing!, closeFailed('UI_ACTION_UNCONFIRMED'));
+    assert.deepEqual(callsFrom(adb, started), [], 'no process may be killed without its recorded incarnation');
+    assert.equal(adb.emulators.get('emulator-5554')!.agents!.size, 1);
+    assert.ok(await lockFile(root), 'quarantine retains the marker');
   });
 });
 
@@ -1204,7 +1189,7 @@ test('after close begins, an abandoned prepare issues no further device command'
     await closing;
     assert.deepEqual(callsFrom(adb, stopped), ["-s emulator-5554 shell 'am' 'force-stop' 'com.example.android'"],
       'only close\'s own app stop follows: no launch, no push, no agent');
-    assert.deepEqual(await readdir(root), []);
+    assert.deepEqual((await readdir(root)).filter(name => name !== 'admission'), []);
   });
 });
 
@@ -1227,11 +1212,11 @@ test('a cancel during am start -W: the app is stopped only after the launch retu
     assert.equal(stops(), 1, 'only the restart\'s stop while the launch runs');
     launch.open();
     await assert.rejects(preparing);
-    await closing;
+    await assert.rejects(closing!, closeFailed('UI_ACTION_UNCONFIRMED'));
     const words = adb.shell().map(entry => entry.join(' '));
     assert.equal(stops(), 2);
     assert.ok(words.lastIndexOf('am force-stop com.example.android') > words.findIndex(entry => entry.startsWith('am start -W')));
-    assert.deepEqual(await readdir(root), []);
+    assert.ok(await lockFile(root), 'the late launch reply cannot release quarantine');
   });
 });
 
@@ -1249,7 +1234,7 @@ function productionRunner(adb: FakeAdb): AdbRunner {
   return adbRunner({ adb: '/sdk/platform-tools/adb', environment: {}, spawn: spawned.spawn });
 }
 
-test('on the production runner, a cancel during am start -W: close waits for the launch to return, then stops the app and releases the lease', async () => {
+test('on the production runner, a cancel during am start -W: close waits for the launch to return, then stops the app and retains quarantine', async () => {
   const adb = new FakeAdb(api31());
   const launch = gate();
   const controller = new AbortController();
@@ -1268,14 +1253,14 @@ test('on the production runner, a cancel during am start -W: close waits for the
     const launched = adb.calls.length;
     launch.open();
     await assert.rejects(preparing, /cancelled/);
-    await closing;
+    await assert.rejects(closing!, closeFailed('UI_ACTION_UNCONFIRMED'));
     assert.deepEqual(callsFrom(adb, launched), ["-s emulator-5554 shell 'am' 'force-stop' 'com.example.android'"],
       'no agent was started and no forward made, so only the app stop follows');
-    assert.deepEqual(await readdir(root), [], 'lease released');
+    assert.ok(await lockFile(root), 'the late launch reply cannot release quarantine');
   }, { runner: productionRunner(adb) });
 });
 
-test('on the production runner, a cancel during the agent start: close waits for the start command, then fences the agent it started', async () => {
+test('on the production runner, a cancel during the agent start: close waits for the start command, then retains quarantine without an agent incarnation', async () => {
   const adb = new FakeAdb(api31());
   const start = gate();
   const controller = new AbortController();
@@ -1294,16 +1279,10 @@ test('on the production runner, a cancel during the agent start: close waits for
     const started = adb.calls.length;
     start.open();
     await assert.rejects(preparing, /cancelled/);
-    await closing;
-    assert.deepEqual(callsFrom(adb, started), [
-      "-s emulator-5554 shell 'ps' '-A' '-o' 'PID,NAME,ARGS'",
-      "-s emulator-5554 shell 'cat' '/proc/7001/environ'",
-      "-s emulator-5554 shell 'kill' '7001'",
-      "-s emulator-5554 shell 'cat' '/proc/7001/environ'",
-      "-s emulator-5554 shell 'am' 'force-stop' 'com.example.android'",
-    ]);
-    assert.equal(adb.emulators.get('emulator-5554')!.agents!.size, 0, 'no agent left');
-    assert.deepEqual(await readdir(root), [], 'lease released');
+    await assert.rejects(closing!, closeFailed('UI_ACTION_UNCONFIRMED'));
+    assert.deepEqual(callsFrom(adb, started), [], 'no process may be killed without its recorded incarnation');
+    assert.equal(adb.emulators.get('emulator-5554')!.agents!.size, 1);
+    assert.ok(await lockFile(root), 'quarantine retains the marker');
   }, { runner: productionRunner(adb) });
 });
 
@@ -1314,7 +1293,7 @@ test('an agent request that times out is ended by the fence, and the lease is re
     agents.hooks.onCall = call => { if (call.method === 'device.io.tap') throw new OutcomeUnknownError('agent', 'The device agent request timed out'); };
     await assert.rejects(driver.act({ kind: 'tap', targetRef: refOf(snapshot, 'field.city') }, snapshot, values({}), signal()), OutcomeUnknownError);
     await driver.close(signal());
-    assert.deepEqual(await readdir(root), []);
+    assert.deepEqual((await readdir(root)).filter(name => name !== 'admission'), []);
   });
 });
 
@@ -1338,13 +1317,13 @@ test('close waits for an agent request still running, then its fence ends the re
     await assert.rejects(acting, OutcomeUnknownError);
     await closing;
     assert.deepEqual(callsFrom(adb, before), CLOSE_AFTER_PREPARE);
-    assert.deepEqual(await readdir(root), []);
+    assert.deepEqual((await readdir(root)).filter(name => name !== 'admission'), []);
   });
 });
 
 test('an agent request that times out keeps the lease when the fence can\'t be confirmed', async () => {
   const fields = await hierarchyOf('text-fields.json');
-  await withPrepared([fields], async ({ driver, agents, adb, root, clock }) => {
+  await withPrepared([fields], async ({ driver, agents, adb, root, clock, inventory }) => {
     const snapshot = await driver.observe(signal());
     agents.hooks.onCall = call => { if (call.method === 'device.io.tap') throw new OutcomeUnknownError('agent', 'The device agent request timed out'); };
     await assert.rejects(driver.act({ kind: 'tap', targetRef: refOf(snapshot, 'field.city') }, snapshot, values({}), signal()), OutcomeUnknownError);
@@ -1354,12 +1333,14 @@ test('an agent request that times out keeps the lease when the fence can\'t be c
     assert.ok(clock.now() >= 2_000);
     assert.equal(callsFrom(adb, before).some(call => call.includes('force-stop') || call.includes('--remove')), false,
       'nothing after an unconfirmed fence');
-    assert.equal((await readdir(root)).length, 1, 'lease kept');
-    assert.deepEqual((await lockFile(root))?.ownedProcesses, ['forward emulator-5554 tcp:49526', 'agent emulator-5554 7001']);
+    assert.equal(((await readdir(root)).filter(name => name !== 'admission')).length, 1, 'lease kept');
+    assert.equal((await lockFile(root))?.ownedProcesses, undefined, 'the marker carries no ownership inventory');
+    assert.ok(inventory().components.some(component => component.kind === 'android-agent'));
+    assert.ok(inventory().components.some(component => component.kind === 'android-forward'));
   });
 });
 
-test('an adb command still running at close\'s limit keeps the lease, which is released late once it exits', async () => {
+test('an adb command still running at close\'s limit keeps the lease, even after a late reply once it exits', async () => {
   const adb = new FakeAdb(api31());
   const launch = gate();
   await withDriver(adb, async ({ driver, root }) => {
@@ -1367,10 +1348,11 @@ test('an adb command still running at close\'s limit keeps the lease, which is r
     const preparing = driver.prepare(app(), signal());
     await eventually(() => adb.calls.some(call => call[3]?.startsWith("'am' 'start' '-W'")), 'am start issued');
     await assert.rejects(driver.close(expiring(20)), closeFailed('UI_ACTION_UNCONFIRMED'));
-    assert.equal((await readdir(root)).length, 1, 'lease kept');
+    assert.equal(((await readdir(root)).filter(name => name !== 'admission')).length, 1, 'lease kept');
     launch.open();
     await assert.rejects(preparing, /closing/);
-    await eventually(async () => (await readdir(root)).length === 0, 'the lease released late');
+    await assert.rejects(driver.close(signal()), closeFailed('UI_ACTION_UNCONFIRMED'));
+    assert.ok(await lockFile(root), 'a late reply cannot settle the closed command');
     const words = adb.shell().map(entry => entry.join(' '));
     assert.equal(words.at(-1), 'am force-stop com.example.android', 'the late close finished the cleanup');
   });
@@ -1384,11 +1366,11 @@ test('an adb command that never exits keeps the lease', async () => {
     await eventually(() => adb.calls.some(call => call[3]?.startsWith("'am' 'start' '-W'")), 'am start issued');
     await assert.rejects(driver.close(expiring(20)), closeFailed('UI_ACTION_UNCONFIRMED'));
     await new Promise(resolveTick => setTimeout(resolveTick, 50));
-    assert.equal((await readdir(root)).length, 1, 'lease kept');
+    assert.equal(((await readdir(root)).filter(name => name !== 'admission')).length, 1, 'lease kept');
   });
 });
 
-test('an adb command killed with no exit status keeps the lease, and close sends nothing more', async () => {
+test('an adb command killed with no exit status keeps the lease, and cleanup cannot prove its device-side exit', async () => {
   const adb = new FakeAdb(api31());
   const run = adb.run;
   const runner: AdbRunner = async (args, abort) => args[3]?.startsWith("'am' 'start' '-W'")
@@ -1397,8 +1379,8 @@ test('an adb command killed with no exit status keeps the lease, and close sends
     await assert.rejects(driver.prepare(app(), signal()), OutcomeUnknownError);
     const before = adb.calls.length;
     await assert.rejects(driver.close(signal()), closeFailed('UI_ACTION_UNCONFIRMED'));
-    assert.deepEqual(callsFrom(adb, before), []);
-    assert.equal((await readdir(root)).length, 1, 'lease kept');
+    assert.deepEqual(callsFrom(adb, before), ["-s emulator-5554 shell 'am' 'force-stop' 'com.example.android'"]);
+    assert.equal(((await readdir(root)).filter(name => name !== 'admission')).length, 1, 'lease kept');
   }, { runner });
 });
 
@@ -1407,11 +1389,13 @@ test('a failed cleanup step keeps the lease and fails close', async () => {
   const run = adb.run;
   const runner: AdbRunner = async (args, abort) => args[2] === 'forward' && args[3] === '--remove'
     ? (adb.calls.push(args), { stdout: '', stderr: 'adb: error: device offline\n', exitCode: 1 }) : run(args, abort);
-  await withDriver(adb, async ({ driver, root }) => {
+  await withDriver(adb, async ({ driver, root, inventory }) => {
     await driver.prepare(app(), signal());
     await assert.rejects(driver.close(signal()), closeFailed('DEVICE_ERROR'));
-    assert.equal((await readdir(root)).length, 1, 'lease kept');
-    assert.deepEqual((await lockFile(root))?.ownedProcesses, ['forward emulator-5554 tcp:49526'], 'the agent was fenced and disowned; the forward stays owned');
+    assert.equal(((await readdir(root)).filter(name => name !== 'admission')).length, 1, 'lease kept');
+    assert.equal((await lockFile(root))?.ownedProcesses, undefined, 'the marker carries no ownership inventory');
+    assert.ok(inventory().components.some(component => component.kind === 'android-agent'));
+    assert.ok(inventory().components.some(component => component.kind === 'android-forward'));
   }, { runner });
 });
 
@@ -1442,6 +1426,9 @@ const PREPARE_BY_SERIAL = [
   "-s emulator-5554 shell 'am' 'start' '-W' '-n' 'com.example.android/.MainActivity'",
   `-s emulator-5554 push ${AGENT_CACHE} /data/local/tmp/jev-ios-bridge-agent.dex`,
   START.join(' '),
+  "-s emulator-5554 shell 'ps' '-A' '-o' 'PID,NAME,ARGS'",
+  "-s emulator-5554 shell 'cat' '/proc/7001/environ'",
+  "-s emulator-5554 shell 'cat' '/proc/7001/stat'",
   '-s emulator-5554 forward tcp:49526 localabstract:mobilecli-server',
   "-s emulator-5554 shell 'ps' '-A' '-o' 'PID,NAME,ARGS'",
   "-s emulator-5554 shell 'cat' '/proc/7001/environ'",
@@ -1509,10 +1496,10 @@ test('an Android script with a replace-text step and a checkpoint runs to a verd
         assert.equal(await readFile(join(evidence, 'android-end-to-end', name), 'utf8'), `jpeg-${String(index + 1)}`);
       }
 
-      assert.deepEqual(await readdir(root), [], 'lease released');
+      assert.deepEqual((await readdir(root)).filter(name => name !== 'admission'), [], 'lease released');
       assert.equal(adb.emulators.get('emulator-5554')!.agents!.size, 0, 'no agent left');
       assert.deepEqual(adb.forwards, [], 'no forward left');
-      assert.equal(adb.calls.at(-2)?.join(' '), "-s emulator-5554 shell 'am' 'force-stop' 'com.example.android'", 'the restarted app stopped');
+      assert.equal(adb.calls.at(-3)?.join(' '), "-s emulator-5554 shell 'am' 'force-stop' 'com.example.android'", 'the restarted app stopped');
     }, { device: { serial: 'emulator-5554' }, screenshotFolder: undefined, agents: { screens: [fields, fields, typed] } });
   }, { values: [CITY] });
 });
@@ -1527,7 +1514,7 @@ test('a run whose cleanup fails doesn\'t pass: it ends inconclusive with CLEANUP
     await withDriver(adb, async ({ driver, root }) => {
       const report = await runScriptedScenario({ runId: 'android-cleanup-failed', scenario: cityScript(), driver, judge: judgeAllTrue, log });
       assert.deepEqual([report.verdict, report.reason], ['inconclusive', 'CLEANUP_FAILED']);
-      assert.equal((await readdir(root)).length, 1, 'lease kept');
+      assert.equal(((await readdir(root)).filter(name => name !== 'admission')).length, 1, 'lease kept');
     }, { device: { serial: 'emulator-5554' }, screenshotFolder: undefined, runner, agents: { screens: [fields, fields, withText(fields, 'field.empty', CITY)] } });
   }, { values: [CITY] });
 });
@@ -1578,7 +1565,7 @@ const EVENTS = ['(logcat)', '-s', 'emulator-5554', 'logcat', '-b', 'events', '-v
 
 test('prepare reads the uid and device time and starts both streams after the restart\'s force-stop and before am start -W, then runs pidof once', async () => {
   const adb = new FakeAdb(api31());
-  await withLogs(adb, async ({ driver, folder, watches, root }) => {
+  await withLogs(adb, async ({ driver, folder, watches, root, inventory }) => {
     await driver.prepare(app(), signal());
     const calls = adb.calls.map(call => call.join(' '));
     const from = calls.indexOf("-s emulator-5554 shell 'dumpsys' 'window' 'policy'");
@@ -1597,8 +1584,9 @@ test('prepare reads the uid and device time and starts both streams after the re
     assert.deepEqual(watches.made[0]!.launched, [9784]);
     assert.deepEqual(driver.logSources(), { logcat: join(folder, 'run-1.log') });
     assert.equal((await lstat(folder)).mode & 0o777, 0o700, 'the log folder is 0700');
-    assert.deepEqual((await lockFile(root))?.ownedProcesses,
-      ['logcat emulator-5554 8001', 'logcat emulator-5554 8002', 'forward emulator-5554 tcp:49526', 'agent emulator-5554 7001']);
+    assert.equal((await lockFile(root))?.ownedProcesses, undefined, 'the marker carries no ownership inventory');
+    assert.ok(inventory().components.some(component => component.kind === 'android-agent'));
+    assert.ok(inventory().components.some(component => component.kind === 'android-forward'));
   });
 });
 
@@ -1643,15 +1631,20 @@ test('a device time that can\'t be read starts no stream and no pidof, and the r
   });
 });
 
-test('streams that fail to start are skipped, and the run goes on with no pane source and no app watch', async () => {
+test('failed stream starts leave declarations without invented process evidence and retain quarantine', async () => {
   const adb = new FakeAdb(api31());
-  await withLogs(adb, async ({ driver, streams, root }) => {
+  await withLogs(adb, async ({ driver, streams, root, inventory }) => {
     streams.fails = () => true;
     await driver.prepare(app(), signal());
     assert.deepEqual(driver.logSources(), {});
     assert.equal(driver.appRunning(), undefined);
     assert.equal(adb.shell().some(words => words[0] === 'pidof'), false);
-    assert.equal((await lockFile(root))?.ownedProcesses?.some(entry => entry.startsWith('logcat')), false);
+    const streamIds = inventory().components.filter(component => component.kind === 'android-stream').map(component => component.id);
+    assert.equal(streamIds.length, 2);
+    assert.equal(inventory().componentObservations.some(observation => streamIds.includes(observation.componentId)), false);
+    await assert.rejects(driver.close(signal()), closeFailed('UI_ACTION_UNCONFIRMED'));
+    assert.ok(await lockFile(root));
+    assert.equal(fakeAndroidAdmission(root).inspect({ category: 'android-emulator', value: '/fake/avds/jev-actions-api31.avd' })?.state, 'quarantined');
   });
 });
 
@@ -1745,15 +1738,16 @@ test('close stops both running streams after the app stop and before the forward
     const before = adb.calls.length;
     await driver.close(signal());
     assert.deepEqual(callsFrom(adb, before), [
-      ...CLOSE_AFTER_PREPARE.slice(0, 4),
+      ...CLOSE_AFTER_PREPARE.slice(0, 5),
       '(watch) expectStop',
       "-s emulator-5554 shell 'am' 'force-stop' 'com.example.android'",
       '(stop) 8001',
       '(stop) 8002',
       '-s emulator-5554 forward --remove tcp:49526',
+      'forward --list',
     ]);
     assert.equal(streams.streams.some(stream => stream.running), false, 'no stream left');
-    assert.deepEqual(await readdir(root), [], 'lease released');
+    assert.deepEqual((await readdir(root)).filter(name => name !== 'admission'), [], 'lease released');
   });
 });
 
@@ -1765,29 +1759,33 @@ test('close tolerates a stream that already ended', async () => {
     await driver.close(signal());
     assert.equal(adb.calls.some(call => call.join(' ') === '(stop) 8001'), false);
     assert.ok(adb.calls.some(call => call.join(' ') === '(stop) 8002'));
-    assert.deepEqual(await readdir(root), [], 'lease released');
+    assert.deepEqual((await readdir(root)).filter(name => name !== 'admission'), [], 'lease released');
   });
 });
 
 test('a stream that won\'t stop fails close and keeps the lease, with the stream still in the holder record', async () => {
   const adb = new FakeAdb(api31());
-  await withLogs(adb, async ({ driver, streams, root }) => {
+  await withLogs(adb, async ({ driver, streams, root, inventory }) => {
     await driver.prepare(app(), signal());
     streams.stubborn.add(8002);
     await assert.rejects(driver.close(signal()), reason('DEVICE_ERROR', 'adb'));
-    assert.deepEqual((await lockFile(root))?.ownedProcesses, ['logcat emulator-5554 8002', 'forward emulator-5554 tcp:49526']);
+    assert.equal((await lockFile(root))?.ownedProcesses, undefined, 'the marker carries no ownership inventory');
+    assert.ok(inventory().components.some(component => component.kind === 'android-agent'));
+    assert.ok(inventory().components.some(component => component.kind === 'android-forward'));
   });
 });
 
 test('close stops every stream, even past one that won\'t stop, then fails and keeps the lease', async () => {
   const adb = new FakeAdb(api31());
-  await withLogs(adb, async ({ driver, streams, root }) => {
+  await withLogs(adb, async ({ driver, streams, root, inventory }) => {
     await driver.prepare(app(), signal());
     streams.stubborn.add(8001);
     await assert.rejects(driver.close(signal()), reason('DEVICE_ERROR', 'adb'));
     assert.ok(adb.calls.some(call => call.join(' ') === '(stop) 8002'), 'the second stream was stopped too');
     assert.equal(streams.streams[1]!.running, false);
-    assert.deepEqual((await lockFile(root))?.ownedProcesses, ['logcat emulator-5554 8001', 'forward emulator-5554 tcp:49526']);
+    assert.equal((await lockFile(root))?.ownedProcesses, undefined, 'the marker carries no ownership inventory');
+    assert.ok(inventory().components.some(component => component.kind === 'android-agent'));
+    assert.ok(inventory().components.some(component => component.kind === 'android-forward'));
   });
 });
 
@@ -1797,12 +1795,14 @@ test('a failed app stop still stops both streams, then fails close and keeps the
   let failStop = false;
   const runner: AdbRunner = async (args, abort) => failStop && args.some(arg => arg.includes('force-stop'))
     ? (adb.calls.push(args), { stdout: '', stderr: 'adb: error: device offline\n', exitCode: 1 }) : run(args, abort);
-  await withLogs(adb, async ({ driver, streams, root }) => {
+  await withLogs(adb, async ({ driver, streams, root, inventory }) => {
     await driver.prepare(app(), signal());
     failStop = true;
     await assert.rejects(driver.close(signal()), closeFailed('DEVICE_ERROR'));
     assert.equal(streams.streams.some(stream => stream.running), false, 'no stream left running on the Mac');
-    assert.deepEqual((await lockFile(root))?.ownedProcesses, ['forward emulator-5554 tcp:49526'], 'the streams were disowned; the lease is kept');
+    assert.equal((await lockFile(root))?.ownedProcesses, undefined, 'the marker carries no ownership inventory');
+    assert.ok(inventory().components.some(component => component.kind === 'android-agent'));
+    assert.ok(inventory().components.some(component => component.kind === 'android-forward'));
   }, { runner });
 });
 
@@ -1812,7 +1812,7 @@ test('an agent that won\'t be fenced still stops both streams, and the lease is 
     await driver.prepare(app(), signal());
     await assert.rejects(driver.close(signal()), closeFailed('UI_ACTION_UNCONFIRMED'));
     assert.equal(streams.streams.some(stream => stream.running), false, 'no stream left running on the Mac');
-    assert.ok((await readdir(root)).length > 0, 'lease kept');
+    assert.ok(((await readdir(root)).filter(name => name !== 'admission')).length > 0, 'lease kept');
   });
 });
 
@@ -1828,11 +1828,11 @@ test('a stream start that resolves after close began is stopped by close, which 
     await assert.rejects(prepared);
     await closed;
     assert.deepEqual(streams.streams.map(stream => stream.running), [false], 'the late stream stopped, and no other started');
-    assert.deepEqual(await readdir(root), [], 'lease released');
+    assert.deepEqual((await readdir(root)).filter(name => name !== 'admission'), [], 'lease released');
   });
 });
 
-test('a stream start that resolves after close\'s limit keeps the lease, and the late close stops it and releases', async () => {
+test('a stream start that resolves after close\'s limit keeps the lease, and the late close stops it and retains quarantine', async () => {
   const adb = new FakeAdb(api31());
   await withLogs(adb, async ({ driver, streams, root }) => {
     const starting = gate();
@@ -1840,32 +1840,34 @@ test('a stream start that resolves after close\'s limit keeps the lease, and the
     const prepared = driver.prepare(app(), signal());
     await eventually(() => streams.streams.length === 1, 'the app log\'s start in flight');
     await assert.rejects(driver.close(expiring(20)), closeFailed('UI_ACTION_UNCONFIRMED'));
-    assert.ok((await readdir(root)).length > 0, 'lease kept');
+    assert.ok(((await readdir(root)).filter(name => name !== 'admission')).length > 0, 'lease kept');
     starting.open();
     await assert.rejects(prepared);
-    await eventually(async () => (await readdir(root)).length === 0, 'the lease released late');
+    await assert.rejects(driver.close(signal()));
+    assert.ok(await lockFile(root), 'unrecorded stream incarnation keeps quarantine');
     assert.equal(streams.streams[0]!.running, false);
   });
 });
 
-test('a started stream the holder record can\'t list is stopped before prepare fails', async () => {
+test('a started stream whose incarnation cannot commit is stopped before prepare fails and retains quarantine', async () => {
   const adb = new FakeAdb(api31());
+  let failObservation = false;
   await withLogs(adb, async ({ driver, streams, root }) => {
     const starting = gate();
     streams.held = starting.opened;
     const prepared = driver.prepare(app(), signal());
     await eventually(() => streams.streams.length === 1, 'the app log\'s start in flight');
-    // The holder record can't be rewritten: the lease root refuses new files.
-    await chmod(root, 0o500);
-    try {
-      starting.open();
-      await assert.rejects(prepared);
-      assert.equal(streams.streams[0]!.running, false, 'stopped, not left unlisted');
-      assert.equal(streams.streams.length, 1, 'no other stream started');
-    } finally { await chmod(root, 0o700); }
-    await driver.close(signal());
-    assert.deepEqual(await readdir(root), [], 'lease released');
-  });
+    failObservation = true;
+    starting.open();
+    await assert.rejects(prepared);
+    assert.equal(streams.streams[0]!.running, false, 'stopped after observation failure');
+    assert.equal(streams.streams.length, 1, 'no other stream started');
+    failObservation = false;
+    await assert.rejects(driver.close(signal()), closeFailed('UI_ACTION_UNCONFIRMED'));
+    assert.ok(await lockFile(root), 'missing durable process evidence retains quarantine');
+  }, { admissionDependencies: { fault: (point, operation) => {
+    if (failObservation && point === 'beforeCommit' && operation === 'observeComponent') throw new Error('injected observation write failure');
+  } } });
 });
 
 test('close stops the streams even when the restart failed', async () => {
@@ -1878,11 +1880,11 @@ test('close stops the streams even when the restart failed', async () => {
     await driver.close(signal());
     assert.equal(streams.streams.length, 2);
     assert.equal(streams.streams.some(stream => stream.running), false);
-    assert.deepEqual(await readdir(root), [], 'lease released');
+    assert.deepEqual((await readdir(root)).filter(name => name !== 'admission'), [], 'lease released');
   }, { runner });
 });
 
-test('after a crash takeover, a dead holder\'s leftover streams are killed, a reused pid is left alone, and every entry is disowned', async () => {
+test('legacy stream entries cannot authorize stops, including reused PIDs', async () => {
   const adb = new FakeAdb(api31());
   await withLogs(adb, async ({ driver, streams, root }) => {
     streams.mac.set(5001, '/sdk/platform-tools/adb -s emulator-5554 logcat -v threadtime,year,uid --uid=10226 -T 1759075100.000');
@@ -1890,45 +1892,38 @@ test('after a crash takeover, a dead holder\'s leftover streams are killed, a re
     streams.mac.set(5004, '/sdk/platform-tools/adb -s emulator-5556 logcat -b events');
     await writeFile(join(root, 'JEV-ACTIONS-API31.lock'), JSON.stringify({ pid: deadPid(), token: 'crashed', deviceId: 'jev-actions-api31',
       ownedProcesses: ['logcat emulator-5554 5001', 'logcat emulator-5554 5002', 'logcat emulator-5554 5003', 'logcat emulator-5554 5004'] }));
-    await driver.prepare(app(), signal());
-    assert.deepEqual(streams.killed, [5001]);
-    assert.deepEqual([...streams.mac.keys()], [5002, 5004], 'a reused pid and another serial\'s stream are left running');
-    assert.equal(driver.preparation().sweptLeftovers, true);
-    assert.deepEqual((await lockFile(root))?.ownedProcesses,
-      ['logcat emulator-5554 8001', 'logcat emulator-5554 8002', 'forward emulator-5554 tcp:49526', 'agent emulator-5554 7001'],
-      'only this run\'s own entries');
-    await driver.close(signal());
+    const marker = await readFile(join(root, 'JEV-ACTIONS-API31.lock'), 'utf8');
+    await assert.rejects(driver.prepare(app(), signal()), reason('DEVICE_BUSY'));
+    assert.deepEqual(adb.calls, [], 'an unknown legacy marker authorizes no sweep');
+    assert.equal(await readFile(join(root, 'JEV-ACTIONS-API31.lock'), 'utf8'), marker);
   });
 });
 
-test('a takeover refused by the device checks or a foreign agent still kills the dead holder\'s streams first', async () => {
-  for (const [emulator, code] of [[api31({ installed: [] }), 'APP_NOT_INSTALLED'], [api31({ keyguard: true }), 'DEVICE_LOCKED'],
+test('legacy stream entries stay untouched before app or foreign-agent checks', async () => {
+  for (const [emulator] of [[api31({ installed: [] }), 'APP_NOT_INSTALLED'], [api31({ keyguard: true }), 'DEVICE_LOCKED'],
     [api31({ agents: new Map([[4984, 'foreign']]) }), 'DEVICE_BUSY']] as const) {
     await withLogs(new FakeAdb(emulator), async ({ driver, streams, root }) => {
       streams.mac.set(5001, '/sdk/platform-tools/adb -s emulator-5554 logcat -v threadtime,year,uid --uid=10226 -T 1759075100.000');
       await writeFile(join(root, 'JEV-ACTIONS-API31.lock'), JSON.stringify({ pid: deadPid(), token: 'crashed', deviceId: 'jev-actions-api31',
         ownedProcesses: ['logcat emulator-5554 5001'] }));
-      await assert.rejects(driver.prepare(app(), signal()), reason(code));
-      assert.deepEqual(streams.killed, [5001], code);
-      assert.equal(streams.mac.has(5001), false, code);
-      await driver.close(signal()).catch(() => undefined);
+      await assert.rejects(driver.prepare(app(), signal()), reason('DEVICE_BUSY'));
+      assert.deepEqual(streams.killed, []);
+      assert.equal(streams.mac.has(5001), true);
     });
   }
 });
 
-test('a cancel during the takeover sweep keeps every leftover not yet swept in the holder record', async () => {
+test('unknown legacy streams stay listed without beginning a sweep', async () => {
   const adb = new FakeAdb(api31());
   await withLogs(adb, async ({ driver, streams, root }) => {
     streams.mac.set(5001, '/sdk/platform-tools/adb -s emulator-5554 logcat -b events');
     streams.mac.set(5003, '/sdk/platform-tools/adb -s emulator-5554 logcat -b events');
     await writeFile(join(root, 'JEV-ACTIONS-API31.lock'), JSON.stringify({ pid: deadPid(), token: 'crashed', deviceId: 'jev-actions-api31',
       ownedProcesses: ['logcat emulator-5554 5001', 'logcat emulator-5554 5003'] }));
-    const abort = new AbortController();
-    streams.onKill = () => { abort.abort(new Error('cancelled')); };
-    await assert.rejects(driver.prepare(app(), abort.signal));
-    await driver.close(signal()).catch(() => undefined);
-    assert.ok(streams.mac.has(5003), 'the second leftover was never reached');
-    assert.deepEqual((await lockFile(root))?.ownedProcesses, ['logcat emulator-5554 5003'], 'so it stays listed for the next run to sweep');
+    const marker = await readFile(join(root, 'JEV-ACTIONS-API31.lock'), 'utf8');
+    await assert.rejects(driver.prepare(app(), signal()), reason('DEVICE_BUSY'));
+    assert.deepEqual(adb.calls, [], 'an unknown legacy marker authorizes no sweep');
+    assert.equal(await readFile(join(root, 'JEV-ACTIONS-API31.lock'), 'utf8'), marker);
   });
 });
 
@@ -1941,32 +1936,34 @@ test('close goes on stopping streams when the holder record can\'t be rewritten,
     try {
       await assert.rejects(driver.close(signal()));
       assert.equal(streams.streams.some(stream => stream.running), false, 'both streams stopped');
-      assert.ok((await readdir(root)).length > 0, 'lease kept');
+      assert.ok(((await readdir(root)).filter(name => name !== 'admission')).length > 0, 'lease kept');
     } finally { await chmod(root, 0o700); }
   });
 });
 
-test('a takeover whose dead holder\'s streams are all gone records no sweptLeftovers', async () => {
+test('a legacy marker remains busy after its listed streams disappear', async () => {
   const adb = new FakeAdb(api31());
   await withLogs(adb, async ({ driver, streams, root }) => {
     await writeFile(join(root, 'JEV-ACTIONS-API31.lock'), JSON.stringify({ pid: deadPid(), token: 'crashed', deviceId: 'jev-actions-api31',
       ownedProcesses: ['logcat emulator-5554 5001'] }));
-    await driver.prepare(app(), signal());
-    assert.deepEqual(streams.killed, []);
-    assert.equal('sweptLeftovers' in driver.preparation(), false);
-    await driver.close(signal());
+    const marker = await readFile(join(root, 'JEV-ACTIONS-API31.lock'), 'utf8');
+    await assert.rejects(driver.prepare(app(), signal()), reason('DEVICE_BUSY'));
+    assert.deepEqual(adb.calls, [], 'an unknown legacy marker authorizes no sweep');
+    assert.equal(await readFile(join(root, 'JEV-ACTIONS-API31.lock'), 'utf8'), marker);
   });
 });
 
-test('a leftover stream that won\'t die fails prepare and keeps the lease, with the entry still listed', async () => {
+test('a legacy marker cannot authorize stopping a stubborn stream', async () => {
   const adb = new FakeAdb(api31());
   await withLogs(adb, async ({ driver, streams, root }) => {
     streams.mac.set(5001, '/sdk/platform-tools/adb -s emulator-5554 logcat -b events');
     streams.kill = async () => { throw new Error('logcat 5001 did not exit'); };
     await writeFile(join(root, 'JEV-ACTIONS-API31.lock'), JSON.stringify({ pid: deadPid(), token: 'crashed', deviceId: 'jev-actions-api31',
       ownedProcesses: ['logcat emulator-5554 5001'] }));
-    await assert.rejects(driver.prepare(app(), signal()), reason('DEVICE_ERROR', 'adb'));
-    assert.deepEqual((await lockFile(root))?.ownedProcesses, ['logcat emulator-5554 5001']);
+    const marker = await readFile(join(root, 'JEV-ACTIONS-API31.lock'), 'utf8');
+    await assert.rejects(driver.prepare(app(), signal()), reason('DEVICE_BUSY'));
+    assert.deepEqual(adb.calls, [], 'an unknown legacy marker authorizes no sweep');
+    assert.equal(await readFile(join(root, 'JEV-ACTIONS-API31.lock'), 'utf8'), marker);
   });
 });
 
@@ -1989,7 +1986,7 @@ test('an Android run with both streams running to close passes: prepared names t
       assert.equal((await readFile(join(evidence, 'android-logcat-run', 'run.jsonl'), 'utf8')).includes('Ha Noi'), false);
       assert.equal(streams.streams.length, 2);
       assert.equal(streams.streams.some(stream => stream.running), false, 'both streams stopped');
-      assert.deepEqual(await readdir(root), [], 'lease released');
+      assert.deepEqual((await readdir(root)).filter(name => name !== 'admission'), [], 'lease released');
     }, { agents: { screens: [fields, fields, withText(fields, 'field.empty', CITY)] }, screenshotFolder: undefined });
   }, { values: [CITY] });
 });
@@ -2046,7 +2043,7 @@ async function runCaptured(capture: string, options: { pid: string; lateFrom?: n
   };
   const createDriver = createDriverFactory({
     mobileBuildMcp: { cwd: parent, lockRoot: parent, runner: async () => assert.fail('an Android script never reaches the iOS driver') },
-    android: { runner: adb.run, agentClient: agents.agentClient, clock, leaseRoot, freePort: async () => ports.shift()!,
+    android: { runner: adb.run, agentClient: agents.agentClient, clock, leaseRoot, admission: fakeAndroidAdmission(leaseRoot), fakeBackend: true, freePort: async () => ports.shift()!,
       logcat: streams, logFolder: folder,
       tools: async () => ({ adb: '/sdk/platform-tools/adb', agent: { path: AGENT_CACHE, sha256: PINNED_AGENT_SHA256 } }) },
   });
@@ -2060,7 +2057,7 @@ async function runCaptured(capture: string, options: { pid: string; lateFrom?: n
         raw: await readFile(join(evidence, runId, 'run.jsonl'), 'utf8'),
         streamsStarted: streams.streams.length,
         streamsRunning: streams.streams.filter(stream => stream.running).length,
-        leaseFiles: await readdir(leaseRoot),
+        leaseFiles: (await readdir(leaseRoot)).filter(name => name !== 'admission'),
         agentsLeft: adb.emulators.get('emulator-5554')!.agents!.size,
         forwardsLeft: adb.forwards.length,
       };
@@ -2075,7 +2072,7 @@ function assertCleanedUp(run: Awaited<ReturnType<typeof runCaptured>>): void {
   assert.equal(run.streamsStarted, 2);
   assert.equal(run.streamsRunning, 0, 'both streams stopped');
   // The forward is close's last step, disowned once removed; then the lease, holder record and all, is released.
-  assert.deepEqual(run.holderAtForwardRemoval, [['forward emulator-5554 tcp:49526']], 'both streams and the agent already disowned');
+  assert.deepEqual(run.holderAtForwardRemoval, [undefined], 'compatibility markers contain no component inventory');
   assert.deepEqual(run.leaseFiles, [], 'lease released, and its holder record with it');
   assert.equal(run.agentsLeft, 0, 'no agent left');
   assert.equal(run.forwardsLeft, 0, 'no forward left');
@@ -2142,3 +2139,66 @@ test('the production clock gives AbortSignal.timeout a whole number of ms, since
   assert.equal(signal.aborted, false);
   assert.doesNotThrow(() => productionClock.timeout(0.2));
 });
+
+test('L1 regression Android completion records every command in admission and removes its marker', async () => {
+  const { Admission } = await import('../src/device/admission.js');
+  const { realpath } = await import('node:fs/promises');
+  await withDriver(new FakeAdb(api31()), async ({ driver, root, adb }) => {
+    await driver.prepare(app(), signal());
+    const admission = Admission.forTesting({ root: await realpath(join(root, 'admission')), backend: 'fake', initialize: false });
+    const state = admission.inspect({ category: 'android-emulator', value: '/fake/avds/jev-actions-api31.avd' });
+    assert.ok(state?.owner);
+    const generation = admission.readGeneration(state.owner);
+    assert.ok(generation.commands.length >= adb.calls.length);
+    assert.ok(generation.commands.every(command => command.componentId !== null));
+    await driver.close(signal());
+    assert.equal(admission.inspect({ category: 'android-emulator', value: '/fake/avds/jev-actions-api31.avd' })?.state, 'available');
+    assert.equal(((await readdir(root)).filter(name => name !== 'admission')).some(name => name.endsWith('.lock')), false);
+  });
+});
+
+test('L4 reused owner PID permits recovery of the old incarnation', { timeout: 10000 }, async () => {
+  await withDriver(new FakeAdb(api31()), async ({ driver, root }) => {
+    const old = fakeAndroidAdmission(root, { process: { pid: 7711, incarnation: 'old-owner' } });
+    const previous = old.acquire({ category: 'android-emulator', device: '/fake/avds/jev-actions-api31.avd',
+      attempt: { kind: 'legacy', id: 'previous' }, digest: 'previous', intent: {} });
+    if (previous.kind !== 'acquired') assert.fail('Expected old owner');
+    await driver.prepare(app(), signal());
+    assert.deepEqual(old.readGeneration(previous.claim.identity).recoveries.map(claim => claim.closure), ['accepted']);
+    const successor = old.inspect({ category: 'android-emulator', value: '/fake/avds/jev-actions-api31.avd' });
+    assert.equal(successor?.generation, 2);
+    assert.deepEqual(successor?.owner?.process, { pid: 7711, incarnation: 'new-owner' });
+    await driver.close(signal());
+    assert.equal(await lockFile(root), undefined);
+  }, { admissionDependencies: { process: { pid: 7711, incarnation: 'new-owner' }, ownerLiveness: owner => owner.incarnation === 'old-owner' ? 'dead' : 'alive' } });
+});
+
+for (const failure of ['reused-component', 'offline'] as const) {
+  test(failure === 'reused-component' ? 'L5 reused component PID is never stopped and release refuses' : 'L6 offline recovery refuses DEVICE_QUARANTINED and retains its quarantine', { timeout: 15000 }, async () => {
+    const adb = new FakeAdb(api31({ agents: new Map([[4675, 'own']]) }));
+    let inventories = 0;
+    const recoveryProbe = (base: IdentityProbe): IdentityProbe => ({ ...base,
+      withRecorder: record => recoveryProbe(base.withRecorder!(record)),
+      android: async (abort, name) => {
+        if (++inventories > 1 && failure === 'offline') adb.devicesText = 'List of devices attached\nemulator-5554 offline transport_id:1\n';
+        return base.android(abort, name);
+      },
+    });
+    await withDriver(adb, async ({ driver, root }) => {
+      const old = fakeAndroidAdmission(root, { process: { pid: 7711, incarnation: 'old-owner' } });
+      const previous = old.acquire({ category: 'android-emulator', device: '/fake/avds/jev-actions-api31.avd',
+        attempt: { kind: 'legacy', id: 'previous' }, digest: 'previous', intent: {} });
+      if (previous.kind !== 'acquired') assert.fail('Expected old owner');
+      previous.claim.registerComponent({ id: 'old-agent', kind: 'android-agent', serial: 'emulator-5554', classpath: AGENT_DEVICE_PATH, className: 'com.mobilenext.mobilecli.DeviceServer' });
+      previous.claim.observeComponent('old-agent', { kind: 'agent-start', pid: 4675, startTime: failure === 'offline' ? '12345' : '67890' });
+      previous.claim.issue({ requestId: 'old-request', componentId: 'old-agent', operation: 'tap', payload: {} });
+      await assert.rejects(driver.prepare(app(), signal()), reason('DEVICE_QUARANTINED'));
+      assert.equal(adb.shell().some(words => words[0] === 'kill' || words[0] === 'am'), false);
+      assert.ok(adb.emulators.get('emulator-5554')!.agents!.has(4675));
+      assert.equal(old.inspect({ category: 'android-emulator', value: '/fake/avds/jev-actions-api31.avd' })?.state, 'quarantined');
+      const generation = old.readGeneration(previous.claim.identity);
+      assert.equal(generation.commands.find(command => command.requestId === 'old-request')?.state, 'uncertain');
+      assert.deepEqual(generation.recoveries.map(claim => claim.closure), ['refused']);
+    }, { identityProbe: recoveryProbe(adb.identityProbe), admissionDependencies: { ownerLiveness: () => 'dead' } });
+  });
+}

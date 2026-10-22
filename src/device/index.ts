@@ -1,3 +1,4 @@
+import { OperationTracker } from './operation-tracker.js';
 import { createHash, randomUUID } from 'node:crypto';
 import { execFile } from 'node:child_process';
 import { createRequire } from 'node:module';
@@ -7,7 +8,7 @@ import { isIosApp, type Action, type ActionScenarioContext, type ActPath, type A
   type Element, type PrepareScenarioContext, type Snapshot, type TapAliasRule } from '../contracts/index.js';
 import { androidAvd, androidSerial } from '../scripted/schema.js';
 import { ROLES, type ReasonCode, type Role } from '../scripted/vocabulary.js';
-import { DeviceLease, DeviceLeaseBusyError } from './lease.js';
+import { CompatibilityMarker, DeviceLeaseBusyError } from './lease.js';
 import { Admission, AdmissionError, type AdmissionClaim, type AdmittedSession } from './admission.js';
 import type { PreparationClaim, ObservedClaim, AllocationCommit } from './admission-allocation.js';
 import { processAlive as processAliveForLease } from '../process.js';
@@ -524,7 +525,8 @@ export class MobileBuildMcpDriver implements DeviceDriver, IosPreparationDriver,
   private deviceId?: string;
   /** The app's identity: its bundle ID on iOS. */
   private appId?: string;
-  private readonly lease: DeviceLease;
+  private readonly lease: CompatibilityMarker;
+  private readonly operations = new OperationTracker();
   private launched = false;
   private logPaths: Record<string, string> = {};
   private logNotes: Record<string, string> = {};
@@ -551,7 +553,7 @@ export class MobileBuildMcpDriver implements DeviceDriver, IosPreparationDriver,
     if (options.admission?.mode === 'test' && !options.fakeBackend) {
       throw new AdmissionError('STATE_UNAVAILABLE', 'Test admission requires explicit fake runner and window opener');
     }
-    this.lease = new DeviceLease({ ...(options.lockRoot ? { root: options.lockRoot } : {}), reclaimDeadHolder: false });
+    this.lease = new CompatibilityMarker({ ...(options.lockRoot ? { root: options.lockRoot } : {}) });
     const timeout = options.uiCommandTimeoutMs ?? 35_000;
     if (!Number.isSafeInteger(timeout) || timeout < 1 || timeout > 300_000) throw new RangeError('uiCommandTimeoutMs must be between 1 and 300000');
     this.uiCommandTimeoutMs = timeout;
@@ -642,22 +644,20 @@ export class MobileBuildMcpDriver implements DeviceDriver, IosPreparationDriver,
     try {
       // dispatch invokes this callback synchronously after its authorization COMMIT.
       const authorized = this.session!.dispatch<Response>(kind, () => {
-        const issued = this.lease.command('mobilebuildmcp');
         // track the backend promise itself; an abortable waiting wrapper is not settlement.
-        return this.lease.track(async () => {
+        return this.operations.track(async () => {
           try {
             const value = await effect(controller.signal);
-            issued.exited();
             return { kind: 'value' as const, value };
           } catch (error) {
             if (error instanceof DeviceCliError && error.terminalAcknowledged) {
-              issued.exited(); return { kind: 'acknowledged-error' as const, error };
+              return { kind: 'acknowledged-error' as const, error };
             }
-            issued.unknown(); throw error;
+            throw error;
           }
         });
       });
-      const result = await awaitResultOrAbort(this.lease.track(() => authorized), controller.signal);
+      const result = await awaitResultOrAbort(this.operations.track(() => authorized), controller.signal);
       this.checkIssuance(signal);
       if (result.kind === 'acknowledged-error') throw result.error;
       return result.value;
@@ -684,7 +684,7 @@ export class MobileBuildMcpDriver implements DeviceDriver, IosPreparationDriver,
     this.deviceId = claim.identity.device;
     this.appId = appId;
     this.watchSignal(signal);
-    try { await this.lease.take(this.deviceId); this.checkIssuance(signal); }
+    try { await this.lease.take(this.deviceId, claim); this.checkIssuance(signal); }
     catch (error) {
       if (error instanceof DeviceLeaseBusyError) {
         if (error.holder?.processId === undefined || !processAliveForLease(error.holder.processId)) this.revoke(true);
@@ -772,10 +772,9 @@ export class MobileBuildMcpDriver implements DeviceDriver, IosPreparationDriver,
     this.preparedDevice();
     this.detached = true;
     try {
-      await this.lease.settle(signal);
+      await this.operations.settle(signal);
       this.checkIssuance(signal);
-      if (!this.lease.releasable) throw new Error('Preparation operations are unknown');
-      await this.lease.release();
+      if (this.uncertain) throw new Error('Preparation operations are unknown');
       const result = this.preparationClaim!.park(readinessEvidence, evidenceRefs);
       this.issuanceClosed = true;
       return result;
@@ -790,7 +789,7 @@ export class MobileBuildMcpDriver implements DeviceDriver, IosPreparationDriver,
   }
 
   prepare(scenario: PrepareScenarioContext, signal: AbortSignal): Promise<void> {
-    return this.lease.track(() => this.prepareIssued(scenario, signal));
+    return this.operations.track(() => this.prepareIssued(scenario, signal));
   }
 
   private async prepareIssued(scenario: PrepareScenarioContext, signal: AbortSignal): Promise<void> {
@@ -887,7 +886,6 @@ export class MobileBuildMcpDriver implements DeviceDriver, IosPreparationDriver,
         try { state = await this.simulatorState(deviceId, signal); } catch { /* Preserve launch semantics; issuance remains closed. */ }
         if (notBooted(state)) failure = notBootedError(deviceId, state);
       }
-      if (!this.uncertain && this.lease.releasable) await this.lease.release();
       await this.finishAdmission(false);
       throw failure;
     }
@@ -922,7 +920,7 @@ export class MobileBuildMcpDriver implements DeviceDriver, IosPreparationDriver,
 
   observe(signal: AbortSignal): Promise<Snapshot> {
     if (this.detached) return Promise.reject(new AdmissionError('DISPATCH_CLOSED', 'Driver is closed'));
-    return this.lease.track(() => this.observeIssued(signal));
+    return this.operations.track(() => this.observeIssued(signal));
   }
 
   private captureArgs(deviceId: string): string[] {
@@ -991,7 +989,7 @@ export class MobileBuildMcpDriver implements DeviceDriver, IosPreparationDriver,
 
   act(action: Action, snapshot: Snapshot, scenario: ActionScenarioContext, signal: AbortSignal): Promise<Snapshot | undefined> {
     if (this.detached) return Promise.reject(new AdmissionError('DISPATCH_CLOSED', 'Driver is closed'));
-    return this.lease.track(() => this.actIssued(action, snapshot, scenario, signal));
+    return this.operations.track(() => this.actIssued(action, snapshot, scenario, signal));
   }
 
   private get reusesActionCapture(): boolean {
@@ -1067,7 +1065,7 @@ export class MobileBuildMcpDriver implements DeviceDriver, IosPreparationDriver,
    * live comparison. This is an execution acknowledgement, never a native release certificate. */
   tapOnce(ref: string, snapshot: Snapshot, _scenario: ActionScenarioContext, signal: AbortSignal): Promise<Snapshot | undefined> {
     if (this.detached) return Promise.reject(new AdmissionError('DISPATCH_CLOSED', 'Driver is closed'));
-    return this.lease.track(async () => {
+    return this.operations.track(async () => {
       if (!this.deviceId || snapshot.deviceId !== this.deviceId) throw new Error('Snapshot belongs to a different device');
       if (!Number.isFinite(snapshot.expiresAt) || Date.now() >= snapshot.expiresAt) throw new StaleSnapshotError();
       const target = snapshot.elements.find(element => element.ref === ref);
@@ -1156,9 +1154,9 @@ export class MobileBuildMcpDriver implements DeviceDriver, IosPreparationDriver,
       throw new DeviceCliError('UI_ACTION_UNCONFIRMED', 'Device operation outcome is unknown; device lock retained');
     }
     try {
-      await this.lease.settle(signal);
+      await this.operations.settle(signal);
       if (!this.lease.held) { await this.finishAdmission(false); return; }
-      if (!this.lease.releasable) throw new Error('Device operation outcome is unknown');
+      if (this.uncertain) throw new Error('Device operation outcome is unknown');
       if (this.ownsClaim && this.launched && this.options.stopAppOnClose !== false && this.deviceId && this.appId) {
         try {
           await this.issueCommand(['simulator', 'stop', '--simulator-id', this.deviceId, '--bundle-id', this.appId], signal,
@@ -1166,7 +1164,6 @@ export class MobileBuildMcpDriver implements DeviceDriver, IosPreparationDriver,
         } catch (error) { if (!(error instanceof DeviceCliError && error.terminalAcknowledged)) throw error; }
       }
       this.issuanceClosed = true;
-      await this.lease.release();
       const legacy = this.ownsClaim;
       await this.finishAdmission(true);
       if (legacy) { this.claim = undefined; this.session = undefined; }

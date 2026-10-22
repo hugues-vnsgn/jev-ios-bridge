@@ -43,7 +43,7 @@ function capture(hash = 'same', expiresAtMs = Date.now() + 60_000): unknown {
     text: ['e2|text|text|Page title: Settings||'] } };
 }
 
-test('preparation recovers a dead owner with completed one-shot commands before launching the successor', async () => {
+test('L9 settled one-shot MobileBuildMCP commands permit recovery before launching the successor', async () => {
   const root = await mkdtemp(join(tmpdir(), 'jev-device-recovery-'));
   const store = join(root, 'store'); mkdirSync(store, { mode: 0o700 });
   const old = Admission.forTesting({ root: realpathSync(store), backend: 'fake', process: { pid: 999999, incarnation: 'dead-owner' } });
@@ -70,7 +70,7 @@ test('preparation recovers a dead owner with completed one-shot commands before 
 });
 
 for (const componentKind of ['uncertain-mobilebuildmcp', 'persistent-process'] as const) {
-  test(`preparation preserves quarantine and refuses DEVICE_QUARANTINED for an abandoned ${componentKind}`, async () => {
+  test(`${componentKind === 'uncertain-mobilebuildmcp' ? 'L8 uncertain MobileBuildMCP: ' : ''}preparation preserves quarantine and refuses DEVICE_QUARANTINED for an abandoned ${componentKind}`, async () => {
     const root = await mkdtemp(join(tmpdir(), 'jev-device-recovery-refused-'));
     const store = join(root, 'store'); mkdirSync(store, { mode: 0o700 });
     const old = Admission.forTesting({ root: realpathSync(store), backend: 'fake', process: { pid: 999999, incarnation: 'dead-owner' } });
@@ -1135,7 +1135,7 @@ test('appRunning and appProblem answer from the console helper in the runtime lo
 function fakeDriver(options: import('../src/device/index.js').MobileBuildMcpDriverOptions): MobileBuildMcpDriver {
   const storeRoot = join(options.cwd, 'admission');
   mkdirSync(storeRoot, { recursive: true, mode: 0o700 });
-  const admission = Admission.forTesting({ root: realpathSync(storeRoot), backend: 'fake' });
+  const admission = Admission.forTesting({ root: realpathSync(storeRoot), backend: 'fake', durability: 'fast' });
   return new MobileBuildMcpDriver({ identityProbe: fakeSimulatorProbe(udid), ...options, admission,
     deviceWindow: options.deviceWindow ?? (async () => {}),
     fakeBackend: { runner: options.runner!, window: options.deviceWindow } });

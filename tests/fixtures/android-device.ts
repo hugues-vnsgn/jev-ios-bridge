@@ -1,3 +1,5 @@
+import { mkdirSync, realpathSync } from 'node:fs';
+import { Admission, type AdmissionDependencies } from '../../src/device/admission.js';
 import assert from 'node:assert/strict';
 import { readFile, writeFile } from 'node:fs/promises';
 import { join } from 'node:path';
@@ -167,6 +169,11 @@ export class FakeAdb {
       }
       case 'input keyevent KEYCODE_WAKEUP': emulator.awake = true; return {};
     }
+    if (words[0] === 'cat' && /^\/proc\/\d+\/stat$/.test(words[1]!)) {
+      const pid = Number(words[1]!.split('/')[2]);
+      return agents.has(pid) ? { stdout: `${pid} (app_process) S ${Array(18).fill('0').join(' ')} 12345 0\n` }
+        : { exitCode: 1, stderr: 'cat: No such file or directory\n' };
+    }
     if (words[0] === 'cat' && /^\/proc\/\d+\/environ$/.test(words[1]!)) {
       const kind = agents.get(Number(words[1]!.split('/')[2]));
       if (kind === undefined) return { exitCode: 1, stderr: await fixture('api36', 'environ-gone.stderr.txt') };
@@ -320,7 +327,7 @@ export class FakeStreams implements LogcatStarter {
     this.streams.push(stream);
     await this.held;
     return {
-      pid: stream.pid,
+      pid: stream.pid, process: { pid: stream.pid, incarnation: 'fake-stream-start' },
       exited,
       stop: async () => {
         if (!stream.running) return;
@@ -353,4 +360,10 @@ export function fakeSimulatorProbe(...udids: string[]): IdentityProbe {
       reply: JSON.stringify({ devices: { 'fake-runtime': udids.map(udid => ({ udid, name: udid, state: 'Booted', isAvailable: true })) } }) }),
     spawn: () => { throw new Error('Unexpected Android probe in simulator fixture'); },
   });
+}
+
+export function fakeAndroidAdmission(root: string, dependencies: AdmissionDependencies & { durability?: 'full' | 'fast' } = {}): Admission {
+  const directory = join(root, 'admission');
+  mkdirSync(directory, { recursive: true, mode: 0o700 });
+  return Admission.forTesting({ root: realpathSync(directory), backend: 'fake', durability: 'fast', componentLiveness: () => 'exited', ...dependencies });
 }

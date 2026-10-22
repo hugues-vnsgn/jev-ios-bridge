@@ -25,7 +25,7 @@ import * as admissionApi from '../src/device/admission.js';
 import { BridgeService } from '../src/service.js';
 import { captureCommand } from '../src/capture.js';
 import { PINNED_AGENT_SHA256 } from '../src/device/android/agent-supply.js';
-import { AGENT_CACHE, FakeAdb, fakeAgents, fakeClock } from './fixtures/android-device.js';
+import { AGENT_CACHE, fakeAndroidAdmission, FakeStreams, FakeAdb, fakeAgents, fakeClock } from './fixtures/android-device.js';
 import { androidScript } from './fixtures/android-script.js';
 import { openMcpSession } from './fixtures/mcp-session.js';
 
@@ -550,7 +550,7 @@ async function captureWithForeignAgent(): Promise<number> {
     let stdout = '';
     let stderr = '';
     const code = await captureCommand({ avd: 'jev-actions-api31' }, { signal: new AbortController().signal,
-      driver: { runner: adb.run, agentClient: fakeAgents(adb).agentClient, clock: fakeClock(), leaseRoot: root,
+      driver: { admission: fakeAndroidAdmission(root), fakeBackend: true, logcat: new FakeStreams(adb), runner: adb.run, agentClient: fakeAgents(adb).agentClient, clock: fakeClock(), leaseRoot: root,
         tools: async () => ({ adb: '/sdk/platform-tools/adb', agent: { path: AGENT_CACHE, sha256: PINNED_AGENT_SHA256 } }) },
       write: { stdout: text => { stdout += text; }, stderr: text => { stderr += text; } } });
     assert.match(stderr, /^DEVICE_BUSY: /);

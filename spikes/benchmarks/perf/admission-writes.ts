@@ -44,7 +44,7 @@ async function benchmark(commands: number): Promise<void> {
     });
   }
   console.log(`Fresh private store retained at ${root}`);
-  const admission = Admission.forTesting({ root, backend: 'fake' });
+  const admission = Admission.forTesting({ root, backend: 'fake', durability: 'full' });
   const attempt = { kind: 'legacy', id: 'admission-writes' } satisfies Parameters<Admission['readAttempt']>[0];
   const acquired = admission.acquire({ device: 'abcdef00-0000-4000-8000-000000000001', attempt, digest: 'admission-writes-v1', intent: { commands } });
   assert(acquired.kind === 'acquired', 'benchmark must acquire its sole owner');
@@ -69,7 +69,7 @@ async function benchmark(commands: number): Promise<void> {
   }
   const elapsedMs = performance.now() - started;
   assert.equal(acquired.claim.finalize({ outcome: 'completed', disposition: 'available', payload: { commands }, evidenceRefs: [] }).authority, 'committed');
-  const reopened = Admission.forTesting({ root, backend: 'fake', initialize: false });
+  const reopened = Admission.forTesting({ root, backend: 'fake', durability: 'full', initialize: false });
   assert.equal(reopened.readAttempt(attempt)?.terminal?.outcome, 'completed');
   const db = new DatabaseSync(join(root, 'admission.sqlite'), { readOnly: true });
   let settledRows: number;
