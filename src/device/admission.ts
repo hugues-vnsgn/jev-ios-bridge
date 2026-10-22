@@ -21,6 +21,7 @@ export const DEVICE_CATEGORIES = ['ios-simulator', 'android-emulator', 'android-
 export type DeviceCategory = typeof DEVICE_CATEGORIES[number];
 const deviceIdentitySchema = z.strictObject({ category: z.enum(DEVICE_CATEGORIES), value: z.string().min(1).refine(value => !value.includes('\0')) });
 export type DeviceIdentity = z.infer<typeof deviceIdentitySchema>;
+export type MarkerSource = Readonly<{ path: string; sha256: string }>;
 export type OwnerProcess = { pid: number; incarnation: string };
 export type OwnerIdentity = { category: DeviceCategory; device: string; attempt: AttemptIdentity; token: string; generation: number; process: OwnerProcess };
 export type NativeComponent = { id: string; kind: string; declaration: unknown };
@@ -192,8 +193,8 @@ export class Admission {
   }
   readAttempt(identity: AttemptIdentity): AttemptView | undefined { validateAttempt(identity); return this.store.readAttempt(identity); }
   readGeneration(expected: OwnerIdentity): GenerationView { return this.store.readGeneration(expected); }
-  markerRecorded(identity: DeviceIdentity, token: string): boolean {
-    return this.store.markerRecorded(canonicalDevice(identity), token);
+  markerRecorded(identity: DeviceIdentity, token: string, source?: MarkerSource): boolean {
+    return this.store.markerRecorded(canonicalDevice(identity), token, source);
   }
   readDeviceAttributes(identity: DeviceIdentity): unknown {
     const canonical=canonicalDevice(identity);

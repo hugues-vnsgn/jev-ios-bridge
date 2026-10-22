@@ -171,7 +171,7 @@ test('an unrelated emulator older than 30 is skipped by name, and refuses as uns
 
 test('a named phone that is not ready keeps its transport state, for the driver to refuse', async () => {
   const devices = 'List of devices attached\nPHONE1 unauthorized\nPHONE2 offline\nPHONE3 authorizing\n';
-  for (const [name, state] of [['PHONE1', 'unauthorized'], ['PHONE2', 'offline'], ['PHONE3', 'offline']] as const) {
+  for (const [name, state] of [['PHONE1', 'unauthorized'], ['PHONE2', 'offline'], ['PHONE3', 'authorizing']] as const) {
     const world = emulatorWorld({ devices });
     const identity = await resolveIdentity({ request: { category: 'android', name }, probe: world.probe, signal: identitySignal() });
     assert.deepEqual([identity.category, identity.value, identity.category === 'ios-simulator' ? '' : identity.transport.state], ['android-phone', name, state]);

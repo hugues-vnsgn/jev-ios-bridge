@@ -11,7 +11,7 @@ export type IdentityConflictReason = 'GUEST_NAME_DISAGREEMENT' | 'USB_SERIAL_DIS
 export type IdentityFailure =
   | { code: 'DEVICE_IDENTITY_UNAVAILABLE'; reason: IdentityUnavailableReason }
   | { code: 'DEVICE_IDENTITY_CONFLICT'; reason: IdentityConflictReason }
-  | { code: 'DEVICE_NOT_FOUND' | 'DEVICE_AMBIGUOUS' | 'CATEGORY_NOT_ENABLED' | 'PROFILE_CONFLICT' };
+  | { code: 'DEVICE_NOT_FOUND' | 'DEVICE_AMBIGUOUS' | 'CATEGORY_NOT_ENABLED' | 'PROFILE_CONFLICT' | 'DEVICE_NOT_CONNECTED' | 'DEVICE_UNAUTHORIZED' };
 
 export class IdentityResolutionError extends Error {
   readonly code: IdentityFailure['code'];
@@ -46,13 +46,13 @@ export interface AndroidHostProbe {
   directory(path: string, signal: AbortSignal): Promise<DirectoryIdentity>;
   version(process: ConsoleProcess, signal: AbortSignal): Promise<EmulatorVersion>;
 }
-export type AndroidTransport = Readonly<{ serial: string; state: 'device' | 'offline' | 'unauthorized' }>;
+export type AndroidTransport = Readonly<{ serial: string; state: string }>;
 export type EmulatorObservation = Readonly<{
   category: 'android-emulator'; value: string; transport: AndroidTransport;
   provenance: { avdName: string; avdId: string; directory: { device: string; inode: string };
     version: EmulatorVersion; process: { pid: number; startedAt: string } };
   probeReplies: { name: string; id: string; path: string;
-    guestName: { kind: 'read'; reply: string } | { kind: 'not-readable'; state: 'offline' | 'unauthorized' }; finalId: string };
+    guestName: { kind: 'read'; reply: string } | { kind: 'not-readable'; state: string }; finalId: string };
 }>;
 export type PhoneObservation = Readonly<{
   category: 'android-phone'; value: string; transport: AndroidTransport;
@@ -266,14 +266,14 @@ export function identityProbe(options: IdentityProbeOptions): IdentityProbe {
       const explicit = selectedSerial && lines.slice(1).some(line => line.trim().split(/\s+/)[0] === selectedSerial);
       for (const line of lines.slice(1)) {
         if (!line.trim()) continue;
-        const [serial, listed] = line.trim().split(/\s+/);
+        const [serial, listed, detail] = line.trim().split(/\s+/);
         if (!serial) identityUnavailable('MALFORMED_PROVENANCE');
         if (explicit && serial !== selectedSerial) continue;
         // A phone in any other state (authorizing, recovery, no permissions) can't be the run's device unless named; an
         // emulator's console is still read, so a second instance of the named AVD stays ambiguous.
         const known = listed === 'device' || listed === 'offline' || listed === 'unauthorized';
         if (!known && !explicit && !serial.startsWith('emulator-')) continue;
-        const transport: AndroidTransport = { serial, state: known ? listed : 'offline' };
+        const transport: AndroidTransport = { serial, state: listed === 'no' && detail === 'permissions' ? 'no permissions' : listed ?? 'unknown' };
         if (!serial.startsWith('emulator-')) {
           // An unready phone can't be read; named, its transport state is the driver's refusal.
           if (transport.state !== 'device') {

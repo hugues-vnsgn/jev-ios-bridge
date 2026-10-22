@@ -904,6 +904,25 @@ test('a DeviceReasonError carrying a vendorCode records it in the error event an
   });
 });
 
+test('identity sub-reasons appear beside the reason code in the human summary without changing recorded errors', async () => {
+  for (const [code, vendorCode] of [['DEVICE_IDENTITY_CONFLICT', 'TRANSPORT_CHANGED'], ['DEVICE_IDENTITY_UNAVAILABLE', 'PROVENANCE_INACCESSIBLE']] as const) {
+    await withRunLog('identity-summary', async (log, root) => {
+      const report = await runScriptedScenario({ runId: 'identity-summary', judge: markerJudge, log,
+        scenario: androidScript({ steps: [markerCheckpoint] }),
+        driver: { async prepare() { throw new DeviceReasonError(code, 'Identity refused', { vendorCode }); },
+          async observe() { assert.fail('No observation after identity refusal'); }, async act() {}, async close() {} } });
+      const events = (await readFile(join(root, 'identity-summary', 'run.jsonl'), 'utf8')).trim().split('\n')
+        .map(line => JSON.parse(line) as RunEvent);
+      const json = JSON.parse(await readFile(join(root, 'identity-summary', 'report.json'), 'utf8'));
+      assert.equal(events.find(event => event.type === 'error')?.data.vendorCode, vendorCode);
+      assert.deepEqual(json.error, { code, phase: 'prepare', stepId: null, vendorCode });
+      const summary = renderScriptedReport(report);
+      assert.equal(summary.split('\n').find(line => line.startsWith('Execution problem:')),
+        `Execution problem: ${code} (${vendorCode}) during prepare`);
+    });
+  }
+});
+
 test('a DeviceReasonError whose vendorCode fails the pattern check records none', async () => {
   const log = memoryLog();
   await runScriptedScenario({ runId: 'scripted-1', judge: markerJudge, log,
