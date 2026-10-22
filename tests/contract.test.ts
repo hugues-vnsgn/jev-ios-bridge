@@ -530,6 +530,31 @@ test('contract: the CLI names the missing or malformed Android device, and the A
   } finally { await rm(root, { recursive: true, force: true }); }
 });
 
+for (const command of ['run', 'capture']) {
+  for (const [source, expected] of [['{', 'INVALID_PROFILE_FILE'], ['{"version":1,"profiles":{}}', 'PROFILE_NOT_FOUND']] satisfies [string, string][]) {
+    test(`contract: ${command} exposes ${expected} before credentials or run creation`, { timeout: 10000 }, async () => {
+      const root = await mkdtemp(join(tmpdir(), 'jev-contract-profile-'));
+      try {
+        await mkdir(join(root, '.jev'));
+        await writeFile(join(root, '.jev/profiles.json'), source);
+        const script = join(root, 'scenario.json');
+        await writeFile(script, JSON.stringify(validScript));
+        const args = command === 'run' ? ['run', script] : ['capture'];
+        const refusal = await execute(process.execPath,
+          ['--import', import.meta.resolve('tsx'), join(process.cwd(), 'src/cli.ts'), ...args, '--profile', 'missing'],
+          { cwd: root, env: { ...process.env, TYPESAFE_API_KEY: '', JEV_PROJECT_DIR: root, JEV_RUNS_DIR: join(root, 'runs') } })
+          .then(() => assert.fail('profile refusal must not start a run'),
+            (error: { code: number; stdout: string; stderr: string }) => error);
+        assert.equal(refusal.code, 3);
+        assert.equal(refusal.stdout, '');
+        assert.equal(refusal.stderr.split(/\r?\n/).filter(line => line.startsWith(`${expected}:`)).length, 1, refusal.stderr);
+        assert.deepEqual((await readdir(root)).sort(), ['.jev', 'scenario.json']);
+        assert.equal(await readFile(join(root, '.jev/profiles.json'), 'utf8'), source);
+      } finally { await rm(root, { recursive: true, force: true }); }
+    });
+  }
+}
+
 test('contract: --help names JEV_ANDROID_DEVICE', { timeout: 10_000 }, async () => {
   const { stdout } = await execute(process.execPath,
     ['--import', import.meta.resolve('tsx'), join(process.cwd(), 'src/cli.ts'), '--help'], { cwd: process.cwd() });

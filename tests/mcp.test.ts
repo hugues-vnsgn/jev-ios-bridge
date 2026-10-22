@@ -72,6 +72,26 @@ test('MCP exposes profiles and refuses wider budgets before creating a run', { t
   } finally { await session.close(); await rm(root, { recursive: true, force: true }); }
 });
 
+test('MCP refuses an invalid profile file with INVALID_PROFILE_FILE before creating a run', { timeout: 10000 }, async () => {
+  const root = await mkdtemp(join(tmpdir(), 'jev-mcp-invalid-profile-'));
+  await mkdir(join(root, '.jev'));
+  await writeFile(join(root, '.jev/profiles.json'), '{');
+  const session = await openMcpSession('invalid-profile', { entryPoint: 'cli', env: {
+    JEV_PROJECT_DIR: root, JEV_RUNS_DIR: join(root, 'runs'), TYPESAFE_API_KEY: '', JEV_EXPERIMENTAL_OBSERVED: '0',
+  } });
+  try {
+    const scenario = { version: 1, app: { bundleId: 'com.example.app' }, values: {},
+      steps: [{ id: 'check', kind: 'checkpoint', guard: { present: [{ label: 'Marker' }] },
+        assertions: [{ id: 'shown', claim: 'Visible' }] }] };
+    const reply = await session.callTool('start_scenario', { scenario, profile: 'missing' });
+    assert.equal(reply.isError, true);
+    assert.deepEqual(reply.content, [{ type: 'text', text: 'INVALID_PROFILE_FILE' }]);
+    const { readdir } = await import('node:fs/promises');
+    assert.deepEqual(await readdir(root), ['.jev']);
+    assert.equal(await readFile(join(root, '.jev/profiles.json'), 'utf8'), '{');
+  } finally { await session.close(); await rm(root, { recursive: true, force: true }); }
+});
+
 test('stdio server negotiates and exposes start/report/cancel without a key', { timeout: 10_000 }, async () => {
   const env = { ...process.env, JEV_EXPERIMENTAL_OBSERVED: '0' }; delete (env as NodeJS.ProcessEnv).TYPESAFE_API_KEY;
   const child = spawn(process.execPath, ['--import', 'tsx', 'src/cli.ts', 'mcp'], { env, stdio: ['pipe', 'pipe', 'pipe'] });

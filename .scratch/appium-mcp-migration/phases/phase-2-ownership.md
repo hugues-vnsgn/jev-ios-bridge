@@ -1,6 +1,6 @@
 # Phase 2 specification: profiles and one admission authority
 
-Status: behavior specified; package briefs pending; execution paused
+Status: incomplete; exit evidence E3, E4 and E10 remains partial (see ../../appium-phase2/phase-2-exit.md)
 Authority: [published spec](../spec.md), Decisions 9, 18 through 26;
 Testing Decisions 6, 15 through 19
 Context: [master handoff](../handoff.md), ADR-0008/0009/0011
