@@ -342,3 +342,41 @@ test('H03.01 preparing authority rejects late phases, premature readiness and ba
   const { events } = await f.closeOwners();
   publicAuthority({ admission: f.admission(), requests: [request], events, observations: f.observations, requireOutcome: 'prepared' });
 });
+
+for (const winner of ['scripted', 'observed'] as const) {
+  test(`H01 cross-process ${winner} winner excludes the other iOS entry point without losing effects`, { timeout: 30000 }, async t => {
+    const { bounded } = await import('./fixtures/admission-race-harness.js');
+    const { spawnSync } = await import('node:child_process');
+    const f = await hostFixture(t);
+    const device = 'ABCDEF00-0000-4000-8000-000000000001';
+    f.configure({ inventory: f.inventory(device.toLowerCase()) });
+    const input = { ...f.request('one'), source: { kind: 'supplied', inventoryId: 'stock-one' } };
+    const args = ['--import', import.meta.resolve('tsx'), fileURLToPath(new URL('./fixtures/scripted-race-owner.ts', import.meta.url)), f.store, device.toLowerCase()];
+    if (winner === 'scripted') {
+      const owner = spawn(process.execPath, args, { stdio: ['ignore', 'ignore', 'pipe', 'ipc'], env: { PATH: process.env.PATH } });
+      let stderr = ''; owner.stderr!.on('data', data => { stderr += data; });
+      const exited = new Promise<number | null>(resolve => owner.once('close', resolve));
+      t.after(async () => { if (owner.exitCode === null && owner.signalCode === null) owner.kill('SIGKILL'); await bounded('cross-entry cleanup', exited); });
+      const message = await bounded('scripted preparation', new Promise<unknown>((resolve, reject) => {
+        owner.once('message', resolve); owner.once('error', reject); owner.once('exit', () => reject(new Error(stderr)));
+      }));
+      assert.ok(message && typeof message === 'object' && 'kind' in message && message.kind === 'prepared');
+      const bytes = await f.database(), before = f.calls();
+      const loser = await bounded('observed loser', f.cli('observed-allocate', await f.requestFile(input)));
+      assert.equal(errorCode(loser.reply), 'INVENTORY_INELIGIBLE');
+      assert.equal(f.admission().readAllocationForAction('one'), undefined);
+      assert.deepEqual(await f.database(), bytes); assert.deepEqual(f.calls().filter(c => c !== 'plist'), before.filter(c => c !== 'plist'));
+      assert.equal(f.admission().inspect(device)?.owner?.attempt.id, 'scripted-racer');
+      owner.send('close'); assert.equal(await bounded('scripted close', exited), 0, stderr);
+      assert.equal(f.admission().inspect(device)?.state, 'available');
+    } else {
+      const prepared = await bounded('observed preparation', f.cli('observed-allocate', await f.requestFile(input)));
+      assert.equal(allocation(prepared.reply).state, 'ready');
+      const bytes = await f.database(), before = f.calls();
+      const loser = spawnSync(process.execPath, [...args, 'refuse'], { encoding: 'utf8', timeout: 10000, env: { PATH: process.env.PATH } });
+      assert.equal(loser.status, 0, loser.stderr); assert.equal(loser.stdout, 'DEVICE_BUSY; zero backend requests');
+      assert.deepEqual(await f.database(), bytes); assert.deepEqual(f.calls(), before);
+      assert.equal(f.admission().readAttempt({ kind: 'legacy', id: 'scripted-racer' }), undefined);
+    }
+  });
+}
