@@ -45,10 +45,15 @@ for (const changed of [false, true]) {
     const driver = new MobileBuildMcpDriver({ admission: options.admission, runId: 'imported-marker',
       cwd: options.defaultRoots.leases, lockRoot: options.defaultRoots.leases, identityProbe: fakeSimulatorProbe(uuid),
       fakeBackend: { window: undefined, runner: async () => { assert.fail('No native effect after import refusal'); } } });
-    await assert.rejects(driver.prepare({ app: { bundleId: 'com.example.app' }, device: { udid: uuid }, values: {} }, new AbortController().signal),
+    await assert.rejects(driver.prepare({ app: { bundleId: 'com.example.app' }, device: { udid: uuid } }, new AbortController().signal),
       (error: unknown) => {
         assert.ok(error instanceof DeviceCliError);
-        assert.equal(error.code, changed ? 'DEVICE_BUSY' : 'DEVICE_QUARANTINED');
+        assert.equal(error.code, 'DEVICE_BUSY');
+        if (changed) assert.match(error.message, /requires legacy lease import/);
+        else {
+          assert.equal(error.message, 'Device admission refused: DEVICE_QUARANTINED');
+          assert.doesNotMatch(error.message, /requires legacy lease import/);
+        }
         return true;
       });
     assert.equal(readFileSync(path, 'utf8'), marker);

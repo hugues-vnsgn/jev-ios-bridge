@@ -10,6 +10,7 @@ import type { StagedArtifact } from '../observed/artifact.js';
 import type { CreationResult } from '../observed/create-source.js';
 import { componentSchema, componentObservationSchema, type ComponentObservation, commandRequestSchema, fenceRequestSchema } from './admission.js';
 import type { DeviceCategory, AdmissionDependencies, AdmissionRequest, AdmissionResult, AttemptIdentity, AttemptView, DeviceView, OwnerIdentity, OwnerProcess, TerminalCandidate, GenerationView, CommandRecord, ComponentInput, NativeComponent, CommandRequest, IssueResult, FenceRequest, FenceReceipt, RecoveryIdentity } from './admission.js';
+import type { MarkerSource } from './admission.js';
 import { BRIDGE_VERSION } from '../version.js';
 import type { UpgradeDeclaration, UpgradeReceipt, UpgradeRecovery, UpgradeCheckpoint, PreservedRecords } from './admission-upgrade.js';
 import { IMPORT_REFUSAL_REASONS, type ImportRefusalReason } from '../scripted/vocabulary.js';
@@ -1273,14 +1274,18 @@ export class AdmissionSqlite {
   private command(row: Row): CommandRecord {
     return { id: row.id, componentId: row.component_id, requestId: row.request_id, operation: row.operation, state: row.state, recoveryClaimId: row.recovery_claim_id };
   }
-  markerRecorded(identity: { category: DeviceCategory; value: string }, token: string): boolean {
-    return this.read(db => !!db.prepare('SELECT id FROM owner_generations WHERE platform=? AND device=? AND token=?')
+  private importedMarker(db: DatabaseSync, source: MarkerSource | undefined): boolean {
+    return !!source && !!db.prepare("SELECT path FROM import_sources WHERE path=? AND sha256=? AND kind='lease'")
+      .get(source.path, source.sha256);
+  }
+  markerRecorded(identity: { category: DeviceCategory; value: string }, token: string, source?: MarkerSource): boolean {
+    return this.read(db => this.importedMarker(db, source) || !!db.prepare('SELECT id FROM owner_generations WHERE platform=? AND device=? AND token=?')
       .get(identity.category, identity.value, token));
   }
-  markerKnown(expected: OwnerIdentity, token: string): boolean {
+  markerKnown(expected: OwnerIdentity, token: string, source?: MarkerSource): boolean {
     return this.read(db=>{
       this.owned(db,expected);
-      return !!db.prepare('SELECT g.id FROM owner_generations g JOIN fence_receipts f ON f.owner_generation_id=g.id WHERE g.platform=? AND g.device=? AND g.token=? AND g.generation<?')
+      return this.importedMarker(db, source) || !!db.prepare('SELECT g.id FROM owner_generations g JOIN fence_receipts f ON f.owner_generation_id=g.id WHERE g.platform=? AND g.device=? AND g.token=? AND g.generation<?')
         .get(expected.category,expected.device,token,expected.generation);
     });
   }
