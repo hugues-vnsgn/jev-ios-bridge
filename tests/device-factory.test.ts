@@ -168,6 +168,6 @@ test('the Android driver gets the script\'s device, else JEV_ANDROID_DEVICE, fro
 
 function fakeOptions(options: import('../src/device/index.js').MobileBuildMcpDriverOptions) {
   const storeRoot = join(options.cwd, 'admission'); mkdirSync(storeRoot, { recursive: true, mode: 0o700 });
-  return { identityProbe: fakeSimulatorProbe(udid), ...options, admission: Admission.forTesting({ root: realpathSync(storeRoot), backend: 'fake' }),
+  return { identityProbe: fakeSimulatorProbe(udid), ...options, admission: Admission.forTesting({ root: realpathSync(storeRoot), backend: 'fake', durability: 'fast' }),
     deviceWindow: async () => {}, fakeBackend: { runner: options.runner!, window: undefined } };
 }

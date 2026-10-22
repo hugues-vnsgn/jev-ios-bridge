@@ -7,7 +7,6 @@ import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { test } from 'node:test';
 import { MobileBuildMcpDriver, type CliRunner } from '../src/device/index.js';
-import { DeviceLease, DeviceLeaseKeptError } from '../src/device/lease.js';
 
 const udid = 'ABCDEF00-0000-4000-8000-000000000001';
 const scenario = { app: { bundleId: 'com.example.app' }, device: { udid } };
@@ -41,82 +40,16 @@ test('a lease file that can no longer be read at release makes close fail and st
     await driver.prepare(scenario, new AbortController().signal);
     const path = join(root, `${udid}.lock`);
     await writeFile(path, '{not json');
-    await assert.rejects(driver.close(new AbortController().signal), SyntaxError);
+    await assert.rejects(driver.close(new AbortController().signal), { code: 'UI_ACTION_UNCONFIRMED' });
     assert.deepEqual((await readdir(root)).sort(), [`${udid}.lock`, 'admission'].sort());
     assert.equal(await readFile(path, 'utf8'), '{not json');
   } finally { await rm(root, { recursive: true, force: true }); }
 });
 
-async function withLease(name: string, body: (lease: DeviceLease, root: string) => Promise<void>): Promise<void> {
-  const root = await mkdtemp(join(tmpdir(), `jev-device-lease-${name}-`));
-  try {
-    const lease = new DeviceLease({ root });
-    await lease.take('jev-actions-api31');
-    await body(lease, root);
-  } finally { await rm(root, { recursive: true, force: true }); }
-}
-
-test('an agent request with an unknown outcome keeps the lease until fence(\'agent\')', async () => {
-  await withLease('agent-fence', async (lease, root) => {
-    lease.command('agent').unknown();
-    assert.equal(lease.releasable, false);
-    await assert.rejects(lease.release(), DeviceLeaseKeptError);
-    assert.deepEqual(await readdir(root), ['JEV-ACTIONS-API31.lock']);
-    lease.fence('agent');
-    assert.equal(lease.releasable, true);
-    await lease.release();
-    assert.deepEqual(await readdir(root), []);
-  });
-});
-
-test('fence(\'agent\') leaves an adb command with an unknown outcome holding the lease', async () => {
-  await withLease('adb-unfenced', async (lease) => {
-    lease.command('adb').unknown();
-    lease.command('agent').unknown();
-    lease.fence('agent');
-    assert.equal(lease.releasable, false);
-    await assert.rejects(lease.release(), DeviceLeaseKeptError);
-    lease.fence('adb');
-    await lease.release();
-    assert.equal(lease.held, false);
-  });
-});
-
-test('adb and agent commands in flight keep the lease until they exit, and a fence doesn\'t end one still in flight', async () => {
-  await withLease('in-flight', async (lease) => {
-    const adb = lease.command('adb');
-    const agent = lease.command('agent');
-    lease.fence('adb');
-    lease.fence('agent');
-    assert.equal(lease.releasable, false);
-    adb.exited();
-    assert.equal(lease.releasable, false);
-    agent.exited();
-    await lease.release();
-    assert.equal(lease.held, false);
-  });
-});
-
-test('settled(kind) is true only when every command of that kind exited or was fenced', async () => {
-  await withLease('settled-kind', async (lease) => {
-    assert.equal(lease.settled('adb'), true);
-    const adb = lease.command('adb');
-    lease.command('agent').unknown();
-    assert.equal(lease.settled('adb'), false, 'in flight');
-    assert.equal(lease.settled('agent'), false, 'unknown');
-    adb.unknown();
-    assert.equal(lease.settled('adb'), false, 'unknown');
-    adb.exited();
-    assert.equal(lease.settled('adb'), true, 'a late exit');
-    lease.fence('agent');
-    assert.equal(lease.settled('agent'), true, 'fenced');
-  });
-});
-
 function fakeDriver(options: import('../src/device/index.js').MobileBuildMcpDriverOptions): MobileBuildMcpDriver {
   const storeRoot = join(options.cwd, 'admission');
   mkdirSync(storeRoot, { recursive: true, mode: 0o700 });
-  const admission = Admission.forTesting({ root: realpathSync(storeRoot), backend: 'fake' });
+  const admission = Admission.forTesting({ root: realpathSync(storeRoot), backend: 'fake', durability: 'fast' });
   return new MobileBuildMcpDriver({ identityProbe: fakeSimulatorProbe(udid), ...options, admission,
     deviceWindow: options.deviceWindow ?? (async () => {}),
     fakeBackend: { runner: options.runner!, window: options.deviceWindow } });

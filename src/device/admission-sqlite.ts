@@ -1,3 +1,4 @@
+import { adbDeviceStop } from './android/stop-evidence.js';
 import { isDeepStrictEqual } from 'node:util';
 import { DatabaseSync } from 'node:sqlite';
 import { randomUUID, createHash } from 'node:crypto';
@@ -7,7 +8,7 @@ import { isAbsolute, join, resolve } from 'node:path';
 import { z } from 'zod/v4';
 import type { StagedArtifact } from '../observed/artifact.js';
 import type { CreationResult } from '../observed/create-source.js';
-import { componentSchema, commandRequestSchema, fenceRequestSchema } from './admission.js';
+import { componentSchema, componentObservationSchema, type ComponentObservation, commandRequestSchema, fenceRequestSchema } from './admission.js';
 import type { DeviceCategory, AdmissionDependencies, AdmissionRequest, AdmissionResult, AttemptIdentity, AttemptView, DeviceView, OwnerIdentity, OwnerProcess, TerminalCandidate, GenerationView, CommandRecord, ComponentInput, NativeComponent, CommandRequest, IssueResult, FenceRequest, FenceReceipt, RecoveryIdentity } from './admission.js';
 import { BRIDGE_VERSION } from '../version.js';
 import type { UpgradeDeclaration, UpgradeReceipt, UpgradeRecovery, UpgradeCheckpoint, PreservedRecords } from './admission-upgrade.js';
@@ -31,7 +32,9 @@ export class AdmissionError extends Error {
   }
 }
 
-export type StoreOptions = AdmissionDependencies & { root: string; mode: 'production' | 'test'; fixtureSchemaVersion?: 2 | 3 };
+export type StoreOptions = AdmissionDependencies & { root: string; fixtureSchemaVersion?: 2 | 3 } & (
+  { mode: 'production'; durability?: 'full' } | { mode: 'test'; durability?: 'full' | 'fast' }
+);
 const declarationSchema = z.strictObject({
   version: z.literal(1), writersStopped: z.literal(true), historicalRootsDeclaredOrExcluded: z.literal(true),
   additionalJournalRoots: z.array(z.string().min(1)).max(100), additionalLeaseRoots: z.array(z.string().min(1)).max(100),
@@ -486,8 +489,10 @@ function absent(path: string): boolean {
   try { lstatSync(path); return false; }
   catch (error) { if ((error as NodeJS.ErrnoException).code === 'ENOENT') return true; throw error; }
 }
-function configure(db: DatabaseSync): void {
-  db.exec('PRAGMA busy_timeout=250; PRAGMA foreign_keys=ON; PRAGMA synchronous=EXTRA; PRAGMA fullfsync=ON;');
+function configure(db: DatabaseSync, durability: 'full' | 'fast' = 'full'): void {
+  db.exec(durability === 'fast'
+    ? 'PRAGMA busy_timeout=250; PRAGMA foreign_keys=ON; PRAGMA synchronous=OFF; PRAGMA fullfsync=OFF;'
+    : 'PRAGMA busy_timeout=250; PRAGMA foreign_keys=ON; PRAGMA synchronous=EXTRA; PRAGMA fullfsync=ON;');
   if (db.prepare('PRAGMA journal_mode').get()?.journal_mode !== 'delete') {
     throw new AdmissionError('STATE_UNAVAILABLE', 'Admission requires DELETE journal mode');
   }
@@ -500,6 +505,8 @@ function view(row: Row): AttemptView { return { identity: { kind: row.kind, id: 
 export class AdmissionSqlite {
   private readonly root: string;
   constructor(private readonly options: StoreOptions, private readonly migrationToken?: string) {
+    const fast = options.durability === 'fast';
+    if (fast && options.mode !== 'test') throw new AdmissionError('INVALID_REQUEST', 'Fast durability is test-only');
     try { this.root = rootPath(options.root); this.read(() => undefined); } catch (error) { throw unavailable(error); }
   }
   static inspectMaintenance(options: StoreOptions) {
@@ -603,7 +610,7 @@ export class AdmissionSqlite {
     }
   }
   /** Fixture activation is explicitly test-only; production activation belongs to offline migration. */
-  static initializeTestStore(root: string): void {
+  static initializeTestStore(root: string, durability: 'full' | 'fast' = 'full'): void {
     try {
       rootPath(root);
       if (!absent(join(root, 'migration.lock'))) throw new AdmissionError('STATE_UNAVAILABLE', 'Offline migration guard prevents fixture initialization');
@@ -615,7 +622,7 @@ export class AdmissionSqlite {
       const fd = openSync(path, constants.O_CREAT | constants.O_EXCL | constants.O_WRONLY, 0o600); closeSync(fd);
       const db = new DatabaseSync(path);
       try {
-        configure(db); db.exec('BEGIN IMMEDIATE'); db.exec(schema2);
+        configure(db, durability); db.exec('BEGIN IMMEDIATE'); db.exec(schema2);
         db.prepare('INSERT INTO metadata VALUES (1,?,?,?,?,?)').run(2, root, installationId, 'test', JSON.stringify({ testFixture: true })); step2to3(db, 0); db.exec('COMMIT');
       } finally { db.close(); }
       writeFileSync(marker, JSON.stringify({ version: 1, root, installationId }), { flag: 'wx', mode: 0o600 });
@@ -635,7 +642,7 @@ export class AdmissionSqlite {
     secureSidecars(path);
     const db = new DatabaseSync(path);
     try {
-      configure(db);
+      configure(db, this.options.mode === 'test' ? this.options.durability : 'full');
       return db;
     } catch (error) { db.close(); throw error; }
   }
@@ -705,7 +712,7 @@ export class AdmissionSqlite {
     return this.write('acquire', db => {
       if (request.attempt.kind !== 'legacy' && db.prepare('SELECT id FROM imported_actions WHERE id=?').get(request.attempt.id)) return { kind: 'refused', reason: 'ACTION_ID_CONFLICT' };
       const existing = db.prepare('SELECT * FROM attempts WHERE kind=? AND id=?').get(...key(request.attempt)) as Row | undefined;
-      if (existing) return existing.digest === request.digest && existing.platform===category && existing.device === request.device && isDeepStrictEqual(JSON.parse(existing.intent), JSON.parse(intent)) && isDeepStrictEqual(existing.transport===null?null:JSON.parse(existing.transport),request.provenance??null) ? { kind: 'retrieved', attempt: view(existing) } : { kind: 'refused', reason: 'ACTION_ID_CONFLICT' };
+      if (existing) return existing.digest === request.digest && existing.platform===category && existing.device === request.device && isDeepStrictEqual(JSON.parse(existing.intent), JSON.parse(intent)) && isDeepStrictEqual(existing.transport===null?null:JSON.parse(existing.transport),request.transport??request.provenance??null) ? { kind: 'retrieved', attempt: view(existing) } : { kind: 'refused', reason: 'ACTION_ID_CONFLICT' };
       const guard = this.creationGuard(db);
       if (guard) return guard;
       if ((category==='ios-simulator'&&protectedDevices.has(request.device)) || db.prepare('SELECT id FROM allocations WHERE platform=? AND device=?').get(category,request.device)) return { kind: 'refused', reason: 'DEVICE_QUARANTINED' };
@@ -716,10 +723,10 @@ export class AdmissionSqlite {
       if (stored && stored.state !== 'available') return { kind: 'refused', reason: stored.state === 'quarantined' ? 'DEVICE_QUARANTINED' : 'DEVICE_BUSY' };
       const generation = (stored?.generation ?? 0) + 1; const token = randomUUID();
       db.prepare('INSERT INTO devices(platform,device,generation) VALUES (?,?,?) ON CONFLICT(platform,device) DO UPDATE SET generation=excluded.generation').run(category,request.device,generation);
-      if (request.provenance) db.prepare('UPDATE devices SET attributes=? WHERE platform=? AND device=?').run(JSON.stringify(request.provenance),category,request.device);
+      if (request.provenance || request.transport) db.prepare('UPDATE devices SET attributes=? WHERE platform=? AND device=?').run(JSON.stringify({ ...request.provenance, ...(request.transport ? { transport: request.transport } : {}) }),category,request.device);
       const identity:OwnerIdentity={category,device:request.device,attempt:request.attempt,token,generation,process};
       const ownerId=this.insertOwner(db,identity);
-      db.prepare("INSERT INTO attempts(kind,id,device,digest,intent,token,generation,pid,incarnation,state,platform,owner_generation_id,transport) VALUES (?,?,?,?,?,?,?,?,?,'active',?,?,?)").run(...key(request.attempt),request.device,request.digest,intent,token,generation,process.pid,process.incarnation,category,ownerId,request.provenance?JSON.stringify(request.provenance):null);
+      db.prepare("INSERT INTO attempts(kind,id,device,digest,intent,token,generation,pid,incarnation,state,platform,owner_generation_id,transport) VALUES (?,?,?,?,?,?,?,?,?,'active',?,?,?)").run(...key(request.attempt),request.device,request.digest,intent,token,generation,process.pid,process.incarnation,category,ownerId,request.transport||request.provenance?JSON.stringify(request.transport??request.provenance):null);
       db.prepare('UPDATE devices SET lease_generation_id=? WHERE platform=? AND device=?').run(ownerId,category,request.device);
       this.event(db, request.attempt, 'acquired');
       return { kind: 'acquired', owner: identity };
@@ -1109,22 +1116,40 @@ export class AdmissionSqlite {
     const parsed = componentSchema.safeParse(input);
     if (!parsed.success) throw new AdmissionError('INVALID_REQUEST','Invalid native component');
     input = parsed.data;
-    return this.write('registerComponent', db => {
-      const ownerId = generationId(expected.token,expected.generation);
-      const existing = db.prepare('SELECT * FROM components WHERE id=?').get(input.id);
-      if (existing) {
-        if (existing.owner_generation_id !== ownerId || !isDeepStrictEqual(JSON.parse(String(existing.declaration)),input)) throw new AdmissionError('INVALID_REQUEST','Component identity conflict');
-        return { id: input.id, kind: input.kind, declaration: input };
-      }
-      if(recovery) {
-        if(!isDeepStrictEqual(recovery.owner,expected))throw new AdmissionError('STALE_OWNER','Recovery names another generation');
-        this.ownedRecovery(db,recovery);
-      } else this.owned(db,expected);
-      const generation = db.prepare('SELECT dispatch_closed_at FROM owner_generations WHERE id=?').get(ownerId);
-      if (!recovery&&generation?.dispatch_closed_at !== null) throw new AdmissionError('DISPATCH_CLOSED','Inventory is closed');
-      db.prepare('INSERT INTO components(id,owner_generation_id,platform,device,kind,declaration,registered_at) VALUES (?,?,?,?,?,?,?)')
-        .run(input.id,ownerId,expected.category,expected.device,input.kind,JSON.stringify(input),this.options.now?.()??Date.now());
+    return this.write('registerComponent', db => this.declareComponent(db, expected, input, recovery));
+  }
+  private declareComponent(db: DatabaseSync, expected: OwnerIdentity, input: ComponentInput, recovery?: RecoveryIdentity): NativeComponent {
+    const ownerId = generationId(expected.token,expected.generation);
+    const existing = db.prepare('SELECT * FROM components WHERE id=?').get(input.id);
+    if (existing) {
+      if (existing.owner_generation_id !== ownerId || !isDeepStrictEqual(JSON.parse(String(existing.declaration)),input)) throw new AdmissionError('INVALID_REQUEST','Component identity conflict');
       return { id: input.id, kind: input.kind, declaration: input };
+    }
+    if(recovery) {
+      if(!isDeepStrictEqual(recovery.owner,expected))throw new AdmissionError('STALE_OWNER','Recovery names another generation');
+      this.ownedRecovery(db,recovery);
+    } else this.owned(db,expected);
+    const generation = db.prepare('SELECT dispatch_closed_at FROM owner_generations WHERE id=?').get(ownerId);
+    if (!recovery&&generation?.dispatch_closed_at !== null) throw new AdmissionError('DISPATCH_CLOSED','Inventory is closed');
+    db.prepare('INSERT INTO components(id,owner_generation_id,platform,device,kind,declaration,registered_at) VALUES (?,?,?,?,?,?,?)')
+      .run(input.id,ownerId,expected.category,expected.device,input.kind,JSON.stringify(input),this.options.now?.()??Date.now());
+    return { id: input.id, kind: input.kind, declaration: input };
+  }
+
+  observeComponent(expected: OwnerIdentity, componentId: string, input: ComponentObservation, recovery?: RecoveryIdentity): void {
+    const observation = componentObservationSchema.safeParse(input);
+    if (!observation.success) throw new AdmissionError('INVALID_REQUEST','Invalid component observation');
+    this.write('observeComponent',db=>{
+      if (recovery) this.ownedRecovery(db,recovery); else this.owned(db,expected);
+      const id=generationId(expected.token,expected.generation);
+      if (!db.prepare('SELECT id FROM components WHERE owner_generation_id=? AND id=?').get(id,componentId)) throw new AdmissionError('STALE_OWNER','Unknown component');
+      const prior=db.prepare('SELECT payload FROM component_observations WHERE owner_generation_id=? AND component_id=?').all(id,componentId)
+        .map(row=>JSON.parse(String(row.payload))).find(payload=>payload.kind===observation.data.kind);
+      if (prior) {
+        if (!isDeepStrictEqual(prior,observation.data)) throw new AdmissionError('INVALID_REQUEST','Component observation cannot be rebound');
+        return;
+      }
+      db.prepare('INSERT INTO component_observations VALUES (?,?,?,?,?)').run(randomUUID(),id,componentId,this.options.now?.()??Date.now(),JSON.stringify(observation.data));
     });
   }
   markInventoryUnknown(expected: OwnerIdentity, reason: string): void {
@@ -1152,46 +1177,79 @@ export class AdmissionSqlite {
     return this.issueCommand(expected,parsed.data.operation,parsed.data);
   }
   private issueCommand(expected: OwnerIdentity, operation: string, input?: CommandRequest): IssueResult {
-    return this.write('authorize', db => {
-      const ownerId=generationId(expected.token,expected.generation);
-      if (input) {
-        const prior=db.prepare('SELECT * FROM commands WHERE owner_generation_id=? AND request_id=?').get(ownerId,input.requestId) as Row | undefined;
-        if (prior) {
-          if (prior.request_digest!==sha(JSON.stringify(input))) throw new AdmissionError('INVALID_REQUEST','Command request identity conflict');
-          return { kind:'retrieved',command:this.command(prior) };
-        }
+    return this.write('authorize', db => this.issueInTransaction(db, expected, operation, input));
+  }
+  private issueInTransaction(db: DatabaseSync, expected: OwnerIdentity, operation: string, input?: CommandRequest, siblings: string[] = []): IssueResult {
+    const ownerId=generationId(expected.token,expected.generation);
+    if (input) {
+      const prior=db.prepare('SELECT * FROM commands WHERE owner_generation_id=? AND request_id=?').get(ownerId,input.requestId) as Row | undefined;
+      if (prior) {
+        if (prior.request_digest!==sha(JSON.stringify(input))) throw new AdmissionError('INVALID_REQUEST','Command request identity conflict');
+        return { kind:'retrieved',command:this.command(prior) };
       }
-      const row = this.owned(db, expected);
-      if ((!input && !row.attached) || row.cancelled || db.prepare("SELECT id FROM commands WHERE owner_generation_id=? AND state!='settled'").get(ownerId)) throw new AdmissionError('DISPATCH_CLOSED', 'Dispatch is cancelled, unattached or unsettled');
-      if (expected.attempt.kind === 'observed' && operation === 'tap' && db.prepare("SELECT id FROM commands WHERE kind=? AND attempt_id=? AND operation='tap'").get(...key(expected.attempt))) throw new AdmissionError('DISPATCH_CLOSED', 'Tap already authorized');
-      const allocation = this.attemptAllocation(db, expected.attempt);
-      if (allocation) {
-        if (allocation.cancellationRequested || (expected.attempt.kind === 'preparation' && (this.options.now?.() ?? Date.now()) >= allocation.createdAt + allocation.budgets.timeoutMs) || (expected.attempt.kind === 'observed' && allocation.actionEvidence?.state !== 'running')) throw new AdmissionError('DISPATCH_CLOSED', 'Allocation dispatch closed');
-        if (expected.attempt.kind === 'preparation') {
-          const stages = ['boot','install','launch']; const index = stages.indexOf(operation);
-          if (index >= 0) {
-            if (db.prepare('SELECT id FROM commands WHERE kind=? AND attempt_id=? AND operation=?').get(...key(expected.attempt), operation)) throw new AdmissionError('DISPATCH_CLOSED', 'Preparation stage already authorized');
-            if (index > 0 && !db.prepare("SELECT id FROM commands WHERE kind=? AND attempt_id=? AND operation=? AND state='settled'").get(...key(expected.attempt), stages[index - 1]!)) throw new AdmissionError('DISPATCH_CLOSED', 'Preparation stage out of order');
-            allocation.phase = (['booting','installing','launching'] as const)[index]!;
-          } else if (operation === 'readiness') {
-            if (!db.prepare("SELECT id FROM commands WHERE kind=? AND attempt_id=? AND operation='launch' AND state='settled'").get(...key(expected.attempt))) throw new AdmissionError('DISPATCH_CLOSED', 'Launch is not settled');
-            allocation.phase = 'readiness';
-          }
-        } else if (operation === 'tap' && allocation.actionEvidence) {
-          // COMMIT grants permission, not proof that the backend was entered.
-          allocation.actionEvidence.actionAttempted = null; allocation.actionEvidence.actionAcknowledged = null;
+    }
+    const row = this.owned(db, expected);
+    if ((!input && !row.attached) || row.cancelled || db.prepare("SELECT id FROM commands WHERE owner_generation_id=? AND state!='settled'").all(ownerId).some(command => !siblings.includes(String(command.id)))) throw new AdmissionError('DISPATCH_CLOSED', 'Dispatch is cancelled, unattached or unsettled');
+    if (expected.attempt.kind === 'observed' && operation === 'tap' && db.prepare("SELECT id FROM commands WHERE kind=? AND attempt_id=? AND operation='tap'").get(...key(expected.attempt))) throw new AdmissionError('DISPATCH_CLOSED', 'Tap already authorized');
+    const allocation = this.attemptAllocation(db, expected.attempt);
+    if (allocation) {
+      if (allocation.cancellationRequested || (expected.attempt.kind === 'preparation' && (this.options.now?.() ?? Date.now()) >= allocation.createdAt + allocation.budgets.timeoutMs) || (expected.attempt.kind === 'observed' && allocation.actionEvidence?.state !== 'running')) throw new AdmissionError('DISPATCH_CLOSED', 'Allocation dispatch closed');
+      if (expected.attempt.kind === 'preparation') {
+        const stages = ['boot','install','launch']; const index = stages.indexOf(operation);
+        if (index >= 0) {
+          if (db.prepare('SELECT id FROM commands WHERE kind=? AND attempt_id=? AND operation=?').get(...key(expected.attempt), operation)) throw new AdmissionError('DISPATCH_CLOSED', 'Preparation stage already authorized');
+          if (index > 0 && !db.prepare("SELECT id FROM commands WHERE kind=? AND attempt_id=? AND operation=? AND state='settled'").get(...key(expected.attempt), stages[index - 1]!)) throw new AdmissionError('DISPATCH_CLOSED', 'Preparation stage out of order');
+          allocation.phase = (['booting','installing','launching'] as const)[index]!;
+        } else if (operation === 'readiness') {
+          if (!db.prepare("SELECT id FROM commands WHERE kind=? AND attempt_id=? AND operation='launch' AND state='settled'").get(...key(expected.attempt))) throw new AdmissionError('DISPATCH_CLOSED', 'Launch is not settled');
+          allocation.phase = 'readiness';
         }
-        this.saveAllocation(db, allocation);
+      } else if (operation === 'tap' && allocation.actionEvidence) {
+        // COMMIT grants permission, not proof that the backend was entered.
+        allocation.actionEvidence.actionAttempted = null; allocation.actionEvidence.actionAcknowledged = null;
       }
-      const id = randomUUID(), componentId=input?.componentId??id;
-      if (input) {
-        if (!db.prepare('SELECT id FROM components WHERE id=? AND owner_generation_id=?').get(componentId,ownerId)) throw new AdmissionError('INVALID_REQUEST','Command component is not registered');
-      } else db.prepare('INSERT INTO components(id,owner_generation_id,platform,device,kind,declaration,registered_at) VALUES (?,?,?,?,?,?,?)')
-        .run(id,ownerId,expected.category,expected.device,'one-shot',JSON.stringify({ id,kind:'one-shot',operation }),this.options.now?.()??Date.now());
-      db.prepare("INSERT INTO commands(id,kind,attempt_id,token,generation,operation,state,platform,device,owner_generation_id,component_id,origin,request_id,request_digest) VALUES (?,?,?,?,?,?,'outstanding',?,?,?,?,'native',?,?)")
-        .run(id,...key(expected.attempt),expected.token,expected.generation,operation,expected.category,expected.device,ownerId,componentId,input?.requestId??id,sha(JSON.stringify(input??{ operation })));
-      this.event(db, expected.attempt, 'authorized', { id, operation });
-      return {kind:'issued',command:{id,componentId,requestId:input?.requestId??id,operation,state:'outstanding',recoveryClaimId:null}};
+      this.saveAllocation(db, allocation);
+    }
+    for (const component of input?.components ?? []) this.declareComponent(db, expected, component);
+    const id = randomUUID(), componentId=input?.componentId??id;
+    if (input) {
+      if (!db.prepare('SELECT id FROM components WHERE id=? AND owner_generation_id=?').get(componentId,ownerId)) throw new AdmissionError('INVALID_REQUEST','Command component is not registered');
+    } else db.prepare('INSERT INTO components(id,owner_generation_id,platform,device,kind,declaration,registered_at) VALUES (?,?,?,?,?,?,?)')
+      .run(id,ownerId,expected.category,expected.device,'one-shot',JSON.stringify({ id,kind:'one-shot',operation }),this.options.now?.()??Date.now());
+    db.prepare("INSERT INTO commands(id,kind,attempt_id,token,generation,operation,state,platform,device,owner_generation_id,component_id,origin,request_id,request_digest) VALUES (?,?,?,?,?,?,'outstanding',?,?,?,?,'native',?,?)")
+      .run(id,...key(expected.attempt),expected.token,expected.generation,operation,expected.category,expected.device,ownerId,componentId,input?.requestId??id,sha(JSON.stringify(input??{ operation })));
+    this.event(db, expected.attempt, 'authorized', { id, operation });
+    return {kind:'issued',command:{id,componentId,requestId:input?.requestId??id,operation,state:'outstanding',recoveryClaimId:null}};
+  }
+  authorizeReads(expected: OwnerIdentity, operations: readonly (string | CommandRequest)[], recovery?: RecoveryIdentity): string[] {
+    if (!operations.length) throw new AdmissionError('INVALID_REQUEST', 'A read group cannot be empty');
+    return this.write('authorizeReads', db => {
+      const commands: string[] = [];
+      for (const request of operations) {
+        const input = typeof request === 'string' ? undefined : commandRequestSchema.parse(request);
+        const operation = typeof request === 'string' ? request : input!.operation;
+        const issued = recovery ? this.issueRecoveryInTransaction(db, recovery, operation, input, commands)
+          : this.issueInTransaction(db, expected, operation, input, commands);
+        if (issued.kind !== 'issued') throw new AdmissionError('DISPATCH_CLOSED', 'A retrieved read cannot be sent again');
+        commands.push(issued.command.id);
+      }
+      return commands;
+    });
+  }
+  settleReads(expected: OwnerIdentity, commands: readonly string[], completed: number, results: readonly unknown[] = []): void {
+    this.write('settleReads', db => {
+      for (const [index, command] of commands.entries()) this.settleInTransaction(db, expected, command, index < completed, results[index]);
+    });
+  }
+  advance(expected: OwnerIdentity, command: string, result: unknown, next: string | CommandRequest, recovery?: RecoveryIdentity): string {
+    const input = typeof next === 'string' ? undefined : commandRequestSchema.parse(next);
+    const operation = typeof next === 'string' ? next : next.operation;
+    return this.write('advance', db => {
+      this.settleInTransaction(db, expected, command, true, result);
+      const issued = recovery ? this.issueRecoveryInTransaction(db, recovery, operation, input)
+        : this.issueInTransaction(db, expected, operation, input);
+      if (issued.kind !== 'issued') throw new AdmissionError('DISPATCH_CLOSED', 'A retrieved command cannot be sent again');
+      return issued.command.id;
     });
   }
   readGeneration(expected: OwnerIdentity): GenerationView {
@@ -1203,15 +1261,31 @@ export class AdmissionSqlite {
       const components = db.prepare('SELECT * FROM components WHERE owner_generation_id=? ORDER BY rowid').all(id)
         .map(row => ({ id: String(row.id), kind: String(row.kind), declaration: JSON.parse(String(row.declaration)) }));
       const commands = db.prepare('SELECT * FROM commands WHERE owner_generation_id=? ORDER BY rowid').all(id).map(row => this.command(row as Row));
+      const componentObservations = db.prepare('SELECT component_id,payload FROM component_observations WHERE owner_generation_id=? ORDER BY rowid').all(id)
+        .map(row => ({ componentId: String(row.component_id), payload: JSON.parse(String(row.payload)) as unknown }));
       const observations = db.prepare("SELECT command_id,detail FROM transitions WHERE owner_generation_id=? AND event='late-reply' ORDER BY sequence").all(id)
         .map(row => ({ commandId: String(row.command_id), payload: JSON.parse(String(row.detail)) }));
       const recoveries=db.prepare('SELECT * FROM recovery_claims WHERE owner_generation_id=? ORDER BY rowid').all(id)
         .map(row=>({id:String(row.id),process:JSON.parse(String(row.claimant_process)),closedAt:row.closed_at as number|null,closure:row.closure as 'accepted'|'refused'|'abandoned'|null}));
-      return { owner: owner(attempt), dispatchClosedAt: generation.dispatch_closed_at, inventoryUnknownReason: generation.inventory_unknown_reason, components, commands, observations, recoveries };
+      return { owner: owner(attempt), dispatchClosedAt: generation.dispatch_closed_at, inventoryUnknownReason: generation.inventory_unknown_reason, components, commands, componentObservations, observations, recoveries };
     });
   }
   private command(row: Row): CommandRecord {
     return { id: row.id, componentId: row.component_id, requestId: row.request_id, operation: row.operation, state: row.state, recoveryClaimId: row.recovery_claim_id };
+  }
+  markerRecorded(identity: { category: DeviceCategory; value: string }, token: string): boolean {
+    return this.read(db => !!db.prepare('SELECT id FROM owner_generations WHERE platform=? AND device=? AND token=?')
+      .get(identity.category, identity.value, token));
+  }
+  markerKnown(expected: OwnerIdentity, token: string): boolean {
+    return this.read(db=>{
+      this.owned(db,expected);
+      return !!db.prepare('SELECT g.id FROM owner_generations g JOIN fence_receipts f ON f.owner_generation_id=g.id WHERE g.platform=? AND g.device=? AND g.token=? AND g.generation<?')
+        .get(expected.category,expected.device,token,expected.generation);
+    });
+  }
+  markerReleased(expected: OwnerIdentity): boolean {
+    return this.read(db=>!!db.prepare('SELECT id FROM fence_receipts WHERE owner_generation_id=?').get(generationId(expected.token,expected.generation)));
   }
   readDeviceAttributes(identity: { category: DeviceCategory; value: string }): unknown {
     return this.read(db=>{
@@ -1219,8 +1293,10 @@ export class AdmissionSqlite {
       return row?JSON.parse(String(row.attributes)):undefined;
     });
   }
-  settle(expected: OwnerIdentity, command: string, success: boolean): void {
-    this.write('settle', db => {
+  settle(expected: OwnerIdentity, command: string, success: boolean, result?: unknown): void {
+    this.write('settle', db => this.settleInTransaction(db, expected, command, success, result));
+  }
+  private settleInTransaction(db: DatabaseSync, expected: OwnerIdentity, command: string, success: boolean, result?: unknown): void {
       const id = generationId(expected.token,expected.generation);
       const recorded = db.prepare('SELECT * FROM commands WHERE id=? AND owner_generation_id=?').get(command,id) as Row | undefined;
       const generation = db.prepare('SELECT dispatch_closed_at FROM owner_generations WHERE id=?').get(id);
@@ -1233,8 +1309,12 @@ export class AdmissionSqlite {
         return;
       }
       db.prepare("UPDATE commands SET state=? WHERE id=? AND token=? AND generation=? AND state='outstanding'").run(success ? 'settled' : 'uncertain', command, expected.token, expected.generation);
+      if (success && result !== undefined) {
+        const payload = z.json().parse(result);
+        db.prepare('INSERT INTO component_observations VALUES (?,?,?,?,?)').run(randomUUID(),id,recorded.component_id,
+          this.options.now?.()??Date.now(),JSON.stringify({commandId:command,result:payload}));
+      }
       this.event(db, expected.attempt, 'settled', { command, success });
-    });
   }
   finalize(expected: OwnerIdentity, candidate: TerminalCandidate, cancellationRequested = false, release = true): AttemptView {
     return this.write('finalize', db => {
@@ -1362,7 +1442,52 @@ export class AdmissionSqlite {
       const evidence=request.components.find(item=>item.componentId===component.id)?.proof;
       if (!evidence) throw new AdmissionError('COVERAGE_INCOMPLETE','A component has no stop proof');
       if (evidence.kind==='completed-command') {
-        if (component.kind!=='one-shot' || !commands.some(command=>command.id===evidence.commandId&&command.component_id===component.id&&command.state==='settled') || commands.some(command=>command.component_id===component.id&&command.state!=='settled')) throw new AdmissionError('COVERAGE_INCOMPLETE','One-shot invocation has not completed');
+        if (!['one-shot','adb-command'].includes(component.kind) || !commands.some(command=>command.id===evidence.commandId&&command.component_id===component.id&&command.state==='settled') || commands.some(command=>command.component_id===component.id&&command.state!=='settled')) throw new AdmissionError('COVERAGE_INCOMPLETE','One-shot invocation has not completed');
+      } else if (evidence.kind === 'adb-stopped' || evidence.kind === 'android-stream-exited') {
+        const declaration=componentSchema.safeParse(JSON.parse(component.declaration));
+        const observations=db.prepare('SELECT payload FROM component_observations WHERE owner_generation_id=? AND component_id=?').all(id,component.id)
+          .map(row=>JSON.parse(String(row.payload)));
+        const started=observations.find(item=>item.kind==='host-start');
+        if (!declaration.success || !started || !isDeepStrictEqual(started.process,evidence.process) || !exited.has(component.id)) throw new AdmissionError('COVERAGE_INCOMPLETE','Recorded host incarnation has not exited');
+        if (evidence.kind==='android-stream-exited') {
+          if (declaration.data.kind!=='android-stream') throw new AdmissionError('COVERAGE_INCOMPLETE','Not a stream component');
+        } else {
+          if (declaration.data.kind!=='adb-command') throw new AdmissionError('COVERAGE_INCOMPLETE','Not an adb component');
+          const query=commands.find(command=>command.id===evidence.commandId&&command.state==='settled');
+          const queryComponent=query&&components.find(item=>item.id===query.component_id);
+          const queryDeclaration=queryComponent&&componentSchema.safeParse(JSON.parse(queryComponent.declaration));
+          const serial=declaration.data.serial;
+          const expected=['-s',serial,'shell','ps','-A','-o','PID,NAME,ARGS'];
+          const queryArgs=queryDeclaration?.success&&queryDeclaration.data.kind==='adb-command'?queryDeclaration.data.args:undefined;
+          if (!isDeepStrictEqual(queryArgs,expected)) throw new AdmissionError('COVERAGE_INCOMPLETE','Process listing command does not bind the transport');
+          const observation=db.prepare('SELECT payload FROM component_observations WHERE owner_generation_id=? AND component_id=?').all(id,query!.component_id)
+            .map(row=>JSON.parse(String(row.payload))).find(item=>item.commandId===query!.id);
+          const result=z.strictObject({stdout:z.string(),stderr:z.string(),exitCode:z.number().int()}).safeParse(observation?.result);
+          const args=declaration.data.args;
+          if (!result.success || args[0]!=='-s'||args[1]!==serial||args[2]!=='shell'||adbDeviceStop({host:evidence.process,serial,shellWords:args.slice(3)},result.data).kind!=='stopped') throw new AdmissionError('COVERAGE_INCOMPLETE','Device-side adb stop is not proven');
+        }
+      } else if (evidence.kind === 'android-component-stopped') {
+        const declaration=componentSchema.safeParse(JSON.parse(component.declaration));
+        const query=commands.find(command=>command.id===evidence.commandId&&command.state==='settled');
+        const queryComponent=query&&components.find(item=>item.id===query.component_id);
+        const queryDeclaration=queryComponent&&componentSchema.safeParse(JSON.parse(queryComponent.declaration));
+        const observation=query&&db.prepare('SELECT payload FROM component_observations WHERE owner_generation_id=? AND component_id=?').all(id,query.component_id)
+          .map(row=>JSON.parse(String(row.payload))).find(item=>item.commandId===query.id);
+        const result=z.strictObject({stdout:z.string(),stderr:z.string(),exitCode:z.number().int()}).safeParse(observation?.result);
+        if (!declaration.success || !queryDeclaration?.success || queryDeclaration.data.kind!=='adb-command' || !result.success) throw new AdmissionError('COVERAGE_INCOMPLETE','Stop query is not recorded');
+        const args=queryDeclaration.data.args;
+        const target=declaration.data;
+        if (target.kind==='android-agent') {
+          const started=db.prepare('SELECT payload FROM component_observations WHERE owner_generation_id=? AND component_id=?').all(id,component.id)
+            .map(row=>componentObservationSchema.safeParse(JSON.parse(String(row.payload))))
+            .find(parsed=>parsed.success&&parsed.data.kind==='agent-start');
+          if (!started?.success || started.data.kind!=='agent-start') throw new AdmissionError('COVERAGE_UNKNOWN','Agent identity is incomplete');
+          const expected=['-s',target.serial,'shell',`'cat' '/proc/${started.data.pid}/stat'`];
+          if (!isDeepStrictEqual(args,expected) || result.data.exitCode===0 || result.data.stdout!=='' || !/No such file or directory/.test(result.data.stderr)) throw new AdmissionError('COVERAGE_INCOMPLETE','Recorded agent exit is not proven');
+        } else if (target.kind==='android-forward') {
+          const rows=result.data.stdout.trim()?result.data.stdout.trim().split('\n').map(line=>line.trim().split(/\s+/)):[];
+          if (!isDeepStrictEqual(args,['forward','--list']) || result.data.exitCode!==0 || result.data.stderr!=='' || rows.some(row=>row.length!==3) || rows.some(row=>row[0]===target.serial&&row[1]===target.local)) throw new AdmissionError('COVERAGE_INCOMPLETE','Recorded forward removal is not proven');
+        } else throw new AdmissionError('COVERAGE_INCOMPLETE','Unsupported Android component');
       } else {
         const declaration=componentSchema.safeParse(JSON.parse(component.declaration));
         if (!declaration.success || declaration.data.kind!=='host-process' || !isDeepStrictEqual(declaration.data.process,evidence.process) || !exited.has(component.id)) throw new AdmissionError('COVERAGE_INCOMPLETE','Host process exit is not proven');
@@ -1400,7 +1525,7 @@ export class AdmissionSqlite {
         if (prior.closed_at===null&&isDeepStrictEqual(JSON.parse(String(prior.claimant_process)),process)) return {kind:'retrieved',identity:{id:String(prior.id),owner:expected,token:String(prior.claimant_token),process}};
         return {kind:'refused'};
       }
-      if (device.lease_generation_id!==null || !db.prepare("SELECT id FROM quarantines WHERE owner_generation_id=? AND kind='native' AND covering_receipt_id IS NULL").get(id)) return {kind:'refused'};
+      if ((device.lease_generation_id!==null && !(device.lease_generation_id===id && row.state==='terminal' && isDeepStrictEqual(process,expected.process))) || !db.prepare("SELECT id FROM quarantines WHERE owner_generation_id=? AND kind='native' AND covering_receipt_id IS NULL").get(id)) return {kind:'refused'};
       const open=db.prepare('SELECT * FROM recovery_claims WHERE owner_generation_id=? AND closed_at IS NULL').get(id);
       if (open) {
         if (!abandoned||open.id!==abandoned.id||!isDeepStrictEqual(JSON.parse(String(open.claimant_process)),abandoned.process)) return {kind:'refused'};
@@ -1423,26 +1548,28 @@ export class AdmissionSqlite {
       if(!parsed.success)throw new AdmissionError('INVALID_REQUEST','Invalid recovery command');
       input=parsed.data;
     }
-    return this.write('authorize',db=>{
-      const ownerId=generationId(expected.owner.token,expected.owner.generation),owner=expected.owner;
-      if(input) {
-        const prior=db.prepare('SELECT * FROM commands WHERE owner_generation_id=? AND request_id=?').get(ownerId,input.requestId) as Row|undefined;
-        if(prior) {
-          if(prior.recovery_claim_id!==expected.id||prior.request_digest!==sha(JSON.stringify(input)))throw new AdmissionError('INVALID_REQUEST','Recovery command identity conflict');
-          return {kind:'retrieved',command:this.command(prior)};
-        }
+    return this.write('authorize', db => this.issueRecoveryInTransaction(db, expected, operation, input));
+  }
+  private issueRecoveryInTransaction(db: DatabaseSync, expected: RecoveryIdentity, operation: string, input?: CommandRequest, siblings: string[] = []): IssueResult {
+    const ownerId=generationId(expected.owner.token,expected.owner.generation),owner=expected.owner;
+    if(input) {
+      const prior=db.prepare('SELECT * FROM commands WHERE owner_generation_id=? AND request_id=?').get(ownerId,input.requestId) as Row|undefined;
+      if(prior) {
+        if(prior.recovery_claim_id!==expected.id||prior.request_digest!==sha(JSON.stringify(input)))throw new AdmissionError('INVALID_REQUEST','Recovery command identity conflict');
+        return {kind:'retrieved',command:this.command(prior)};
       }
-      this.ownedRecovery(db,expected);
-      if (db.prepare("SELECT id FROM commands WHERE recovery_claim_id=? AND state!='settled'").get(expected.id)) throw new AdmissionError('DISPATCH_CLOSED','Recovery command is unsettled');
-      const id=randomUUID(),componentId=input?.componentId??id;
-      if(input) {
-        if(!db.prepare('SELECT id FROM components WHERE id=? AND owner_generation_id=?').get(componentId,ownerId))throw new AdmissionError('INVALID_REQUEST','Recovery component is not registered');
-      } else db.prepare('INSERT INTO components(id,owner_generation_id,platform,device,kind,declaration,registered_at) VALUES (?,?,?,?,?,?,?)')
-        .run(id,ownerId,owner.category,owner.device,'one-shot',JSON.stringify({id,kind:'one-shot',operation}),this.options.now?.()??Date.now());
-      db.prepare("INSERT INTO commands(id,kind,attempt_id,token,generation,operation,state,platform,device,owner_generation_id,component_id,recovery_claim_id,origin,request_id,request_digest) VALUES (?,?,?,?,?,?,'outstanding',?,?,?,?,?,'native',?,?)")
-        .run(id,...key(owner.attempt),owner.token,owner.generation,operation,owner.category,owner.device,ownerId,componentId,expected.id,input?.requestId??id,sha(JSON.stringify(input??{operation})));
-      return {kind:'issued',command:{id,componentId,requestId:input?.requestId??id,operation,state:'outstanding',recoveryClaimId:expected.id}};
-    });
+    }
+    this.ownedRecovery(db,expected);
+    if (db.prepare("SELECT id FROM commands WHERE recovery_claim_id=? AND state!='settled'").all(expected.id).some(command => !siblings.includes(String(command.id)))) throw new AdmissionError('DISPATCH_CLOSED','Recovery command is unsettled');
+    for (const component of input?.components ?? []) this.declareComponent(db, owner, component, expected);
+    const id=randomUUID(),componentId=input?.componentId??id;
+    if(input) {
+      if(!db.prepare('SELECT id FROM components WHERE id=? AND owner_generation_id=?').get(componentId,ownerId))throw new AdmissionError('INVALID_REQUEST','Recovery component is not registered');
+    } else db.prepare('INSERT INTO components(id,owner_generation_id,platform,device,kind,declaration,registered_at) VALUES (?,?,?,?,?,?,?)')
+      .run(id,ownerId,owner.category,owner.device,'one-shot',JSON.stringify({id,kind:'one-shot',operation}),this.options.now?.()??Date.now());
+    db.prepare("INSERT INTO commands(id,kind,attempt_id,token,generation,operation,state,platform,device,owner_generation_id,component_id,recovery_claim_id,origin,request_id,request_digest) VALUES (?,?,?,?,?,?,'outstanding',?,?,?,?,?,'native',?,?)")
+      .run(id,...key(owner.attempt),owner.token,owner.generation,operation,owner.category,owner.device,ownerId,componentId,expected.id,input?.requestId??id,sha(JSON.stringify(input??{operation})));
+    return {kind:'issued',command:{id,componentId,requestId:input?.requestId??id,operation,state:'outstanding',recoveryClaimId:expected.id}};
   }
   closeRecovery(expected:RecoveryIdentity):void {
     this.write('closeRecovery',db=>{

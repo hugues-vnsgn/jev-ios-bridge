@@ -15,7 +15,7 @@ import { AndroidDriver } from '../src/device/android/driver.js';
 import type { HandbackPacket } from '../src/driven/step.js';
 import { runScriptedScenario } from '../src/scripted/run.js';
 import { parseScriptedScenario } from '../src/scripted/schema.js';
-import { AGENT_CACHE, FakeAdb, fakeAgents, fakeClock, FakeStreams } from './fixtures/android-device.js';
+import { AGENT_CACHE, fakeAndroidAdmission, FakeAdb, fakeAgents, fakeClock, FakeStreams } from './fixtures/android-device.js';
 import { fakeDrivenJudge } from './fixtures/driven-judge.js';
 import { withRunLog } from './fixtures/run-log.js';
 
@@ -29,7 +29,7 @@ test('Android: a screen unchanged after the look is searched from the new captur
   const root = await mkdtemp(join(tmpdir(), 'jev-late-screen-'));
   const adb = new FakeAdb({ serial: 'emulator-5554', avd: 'jev-actions-api31' });
   const agents = fakeAgents(adb, { screens: [LIST] });
-  const driver = new AndroidDriver({ device: { avd: 'jev-actions-api31' }, runner: adb.run, agentClient: agents.agentClient,
+  const driver = new AndroidDriver({ admission: fakeAndroidAdmission(root), fakeBackend: true, device: { avd: 'jev-actions-api31' }, runner: adb.run, agentClient: agents.agentClient,
     clock: fakeClock(), leaseRoot: root, screenshotFolder: root, freePort: async () => 49527, logcat: new FakeStreams(adb),
     logFolder: false, tools: async () => ({ adb: '/sdk/platform-tools/adb', agent: { path: AGENT_CACHE, sha256: PINNED_AGENT_SHA256 } }) });
   const scenario = parseScriptedScenario({ version: 2, platform: 'android', app: { package: 'com.example.android' },

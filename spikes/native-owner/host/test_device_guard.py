@@ -23,22 +23,33 @@ def bridge_take(root):
     if not loader.is_file():
         raise AssertionError("Install package dependencies or set JEV_NATIVE_OWNER_TSX_LOADER")
     script = """
-      const { DeviceLease, DeviceLeaseBusyError, DEFAULT_LEASE_ROOT } = await import(process.env.LEASE_SOURCE);
-      const lease = new DeviceLease({root: process.env.GUARD_ROOT});
+      const { mkdtempSync, realpathSync, rmSync } = await import('node:fs');
+      const { tmpdir } = await import('node:os');
+      const { join } = await import('node:path');
+      const { CompatibilityMarker, DeviceLeaseBusyError, DEFAULT_LEASE_ROOT } = await import(process.env.LEASE_SOURCE);
+      const { Admission } = await import(process.env.ADMISSION_SOURCE);
+      const store = realpathSync(mkdtempSync(join(tmpdir(), 'guard-admission-')));
+      const admission = Admission.forTesting({root: store, backend: 'fake'});
+      const acquired = admission.acquire({device: process.env.GUARD_DEVICE,
+        attempt: {kind: 'legacy', id: 'research-guard'}, digest: 'guard', intent: {}});
+      if (acquired.kind !== 'acquired') throw new Error('Expected isolated admission');
+      const lease = new CompatibilityMarker({root: process.env.GUARD_ROOT});
       try {
-        await lease.take(process.env.GUARD_DEVICE);
+        await lease.take(process.env.GUARD_DEVICE, acquired.claim);
         console.log(JSON.stringify({busy: false, held: lease.held, defaultRoot: DEFAULT_LEASE_ROOT}));
+        acquired.claim.finalize({outcome: 'completed', disposition: 'available', payload: {}, evidenceRefs: []});
         await lease.release();
       } catch (error) {
         if (!(error instanceof DeviceLeaseBusyError)) throw error;
         console.log(JSON.stringify({busy: true, held: lease.held, holder: error.holder,
                                    defaultRoot: DEFAULT_LEASE_ROOT}));
-      }
+      } finally { rmSync(store, {recursive: true, force: true}); }
     """
     result = subprocess.run(["node", "--import", str(loader), "--input-type=module",
                              "--eval", script], cwd=REPOSITORY, capture_output=True,
                             text=True, check=True, env={"PATH": os.environ["PATH"],
                             "LEASE_SOURCE": (REPOSITORY / "src/device/lease.ts").as_uri(),
+                            "ADMISSION_SOURCE": (REPOSITORY / "src/device/admission.ts").as_uri(),
                             "GUARD_ROOT": str(root), "GUARD_DEVICE": DEVICE,
                             **{name: os.environ[name] for name in ("TMPDIR", "TMP", "TEMP")
                                if name in os.environ}})

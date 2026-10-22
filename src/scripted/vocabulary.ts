@@ -56,6 +56,7 @@ const REASON_CODES_1_1 = {
   // Device
   NO_DEVICE: 'No device was configured for the script\'s platform.',
   INVALID_DEVICE: 'The configured device does not have the shape the script\'s platform requires.',
+  DEVICE_QUARANTINED: 'The device has native work whose stop evidence is incomplete.',
   DEVICE_BUSY: 'The device is in use, by another run or by another tool\'s UI-automation agent (a foreign agent).',
   DEVICE_ERROR: 'The device layer reported an error; its own code is kept as vendorCode.',
   INVALID_JSON: 'The device layer returned output that was not JSON.',

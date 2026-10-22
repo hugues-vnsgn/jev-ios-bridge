@@ -1,4 +1,4 @@
-import { execFile, spawn } from 'node:child_process';
+import { execFile, execFileSync, spawn } from 'node:child_process';
 import { constants } from 'node:fs';
 import { chmod, lstat, mkdir, open, readdir, unlink } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
@@ -23,6 +23,7 @@ export type LogcatOutput = string | ((line: string) => void);
 /** One running `adb … logcat`. `stop` resolves once it has exited, and rejects when that can't be confirmed. */
 export interface LogcatStream {
   readonly pid: number;
+  readonly process?: import('../admission.js').OwnerProcess;
   stop(): Promise<void>;
   /** Resolves once the process has exited, and, for a line stream, its last line was delivered. */
   readonly exited: Promise<void>;
@@ -37,7 +38,7 @@ export interface LogcatStarter {
   /** True only when the Mac process with this pid is still an `adb` command line holding `-s <serial>` and `logcat`. */
   isLeftover(pid: number, serial: string): Promise<boolean>;
   /** SIGTERM, then SIGKILL after 1 s unless the pid now names another process; resolves once the pid is gone. */
-  kill(pid: number): Promise<void>;
+  kill(pid: number, expected?: import('../admission.js').OwnerProcess): Promise<void>;
 }
 
 /** The part of a child process the starter uses, so a test can hand it a fake. */
@@ -149,8 +150,10 @@ export function logcatStarter(options: LogcatStarterOptions): LogcatStarter {
         throw await failed;
       }
       const exitedWithin = (ms: number) => Promise.race([exited.then(() => true), sleep(ms).then(() => ended)]);
+      const incarnation = processStart(pid);
       return {
         pid,
+        ...(incarnation ? { process: { pid, incarnation } } : {}),
         exited,
         async stop() {
           if (ended) return;
@@ -170,11 +173,15 @@ export function logcatStarter(options: LogcatStarterOptions): LogcatStarter {
       return rest !== undefined && rest[0] === '-s' && rest[1] === serial && rest[2] === 'logcat';
     },
 
-    async kill(pid) {
+    async kill(pid, expected) {
+      if (expected && processStart(pid) !== expected.incarnation) throw new Error('Stream incarnation changed');
       const line = await commandLine(pid);
       if (line === undefined) return;
       // Before SIGKILL, the pid must still name the same process: one that exited may have been reused.
-      await escalate(pid, sent => sendSignal(pid, sent), ms => goneWithin(pid, ms), async () => await commandLine(pid) === line);
+      await escalate(pid, sent => {
+        if (expected && processStart(pid) !== expected.incarnation) throw new Error('Stream incarnation changed');
+        return sendSignal(pid, sent);
+      }, ms => goneWithin(pid, ms), async () => (!expected || processStart(pid) === expected.incarnation) && await commandLine(pid) === line);
     },
   };
 }
@@ -210,4 +217,10 @@ export async function deleteOldLogs(folder: string, now = Date.now()): Promise<v
       if (found.isFile() && now - found.mtimeMs > LOG_MAX_AGE_MS) await unlink(path);
     } catch { /* a failed clean-up never fails the run */ }
   }
+}
+
+function processStart(pid: number): string | undefined {
+  try { return execFileSync('/bin/ps', ['-p', String(pid), '-o', 'lstart='], { encoding: 'utf8', timeout: 1000,
+    env: { PATH: '/usr/bin:/bin', LC_ALL: 'C', LANG: 'C', TZ: 'UTC' }, stdio: ['ignore','pipe','ignore'] }).trim() || undefined; }
+  catch { return undefined; }
 }

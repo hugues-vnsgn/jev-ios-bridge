@@ -1325,7 +1325,7 @@ test('a script is typed per platform: an iOS app and simulator, or an Android pa
 function fakeDriver(options: import('../src/device/index.js').MobileBuildMcpDriverOptions): MobileBuildMcpDriver {
   const storeRoot = join(options.cwd, 'admission');
   mkdirSync(storeRoot, { recursive: true, mode: 0o700 });
-  const admission = Admission.forTesting({ root: realpathSync(storeRoot), backend: 'fake' });
+  const admission = Admission.forTesting({ root: realpathSync(storeRoot), backend: 'fake', durability: 'fast' });
   return new MobileBuildMcpDriver({ identityProbe: fakeSimulatorProbe('ABCDEF00-0000-4000-8000-000000000001'), ...options, admission,
     deviceWindow: options.deviceWindow ?? (async () => {}),
     fakeBackend: { runner: options.runner!, window: options.deviceWindow } });

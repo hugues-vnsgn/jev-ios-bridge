@@ -1,8 +1,8 @@
 import { fakeSimulatorProbe } from './fixtures/android-device.js';
-import { mkdirSync, realpathSync } from 'node:fs';
+import { mkdirSync, realpathSync, writeFileSync } from 'node:fs';
 import { Admission } from '../src/device/admission.js';
 import assert from 'node:assert/strict';
-import { mkdtemp, rm, symlink, writeFile } from 'node:fs/promises';
+import { mkdtemp, readFile, rm, symlink, writeFile } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { test } from 'node:test';
@@ -43,7 +43,58 @@ function capture(hash = 'same', expiresAtMs = Date.now() + 60_000): unknown {
     text: ['e2|text|text|Page title: Settings||'] } };
 }
 
-test('preparation recovers a dead owner with completed one-shot commands before launching the successor', async () => {
+for (const recoverable of [true, false]) {
+  test(`unknown dead-PID marker blocks ${recoverable ? 'supported' : 'unsupported'} iOS dead-owner recovery`, { timeout: 10000 }, async () => {
+    const root = await mkdtemp(join(tmpdir(), 'jev-ios-unknown-marker-'));
+    try {
+      const store = join(root, 'store'); mkdirSync(store, { mode: 0o700 });
+      const old = Admission.forTesting({ root: realpathSync(store), backend: 'fake', durability: 'fast',
+        process: { pid: 999999, incarnation: 'dead-owner' } });
+      const previous = old.acquire({ device: udid, attempt: { kind: 'legacy', id: 'previous' }, digest: 'old', intent: {} });
+      if (previous.kind !== 'acquired') assert.fail('Expected old owner');
+      if (recoverable) await previous.claim.bindDriver('fake').dispatch('capture', async () => {});
+      else previous.claim.registerComponent({ id: 'unfinished', kind: 'host-process', process: { pid: 888888, incarnation: 'persistent' } });
+      const marker = join(root, `${udid}.lock`);
+      const markerText = JSON.stringify({ pid: 2147483647, token: 'unknown-legacy-token', deviceId: udid });
+      await writeFile(marker, markerText);
+      const admission = Admission.forTesting({ root: realpathSync(store), backend: 'fake', ownerLiveness: () => 'dead' });
+      const before = admission.readGeneration(previous.claim.identity);
+      const deviceBefore = admission.inspect(udid);
+      const effects: string[][] = [];
+      const runner: CliRunner = async args => { effects.push(args); return { stdout: commandEnvelope(args), stderr: '', exitCode: 0 }; };
+      const driver = new MobileBuildMcpDriver({ cwd: root, lockRoot: root, admission, runId: 'successor',
+        identityProbe: fakeSimulatorProbe(udid), fakeBackend: { runner, window: undefined } });
+      await assert.rejects(driver.prepare(scenario, AbortSignal.timeout(5000)),
+        (error: unknown) => error instanceof DeviceCliError && error.code === 'DEVICE_BUSY' && error.message.includes('unknown marker'));
+      assert.deepEqual(effects, []);
+      assert.equal(await readFile(marker, 'utf8'), markerText);
+      assert.deepEqual(admission.readGeneration(previous.claim.identity), before, 'no recovery claim, command or owner mutation');
+      assert.deepEqual(admission.inspect(udid), deviceBefore);
+      assert.equal(admission.readAttempt({ kind: 'legacy', id: 'successor' }), undefined);
+    } finally { await rm(root, { recursive: true, force: true }); }
+  });
+}
+
+test('an unknown iOS marker appearing after admission still refuses at take', { timeout: 10000 }, async () => {
+  const root = await mkdtemp(join(tmpdir(), 'jev-ios-late-marker-'));
+  try {
+    const store = join(root, 'store'); mkdirSync(store, { mode: 0o700 });
+    const path = join(root, `${udid}.lock`);
+    const content = JSON.stringify({ pid: 2147483647, token: 'late-unknown-token', deviceId: udid });
+    const admission = Admission.forTesting({ root: realpathSync(store), backend: 'fake', durability: 'fast',
+      fault: (point, operation) => { if (point === 'afterCommit' && operation === 'acquire') writeFileSync(path, content); } });
+    const effects: string[][] = [];
+    const runner: CliRunner = async args => { effects.push(args); return { stdout: commandEnvelope(args), stderr: '', exitCode: 0 }; };
+    const driver = new MobileBuildMcpDriver({ cwd: root, lockRoot: root, admission, runId: 'late-marker',
+      identityProbe: fakeSimulatorProbe(udid), fakeBackend: { runner, window: undefined } });
+    await assert.rejects(driver.prepare(scenario, AbortSignal.timeout(5000)),
+      (error: unknown) => error instanceof DeviceCliError && error.code === 'DEVICE_BUSY');
+    assert.deepEqual(effects, []);
+    assert.equal(await readFile(path, 'utf8'), content);
+  } finally { await rm(root, { recursive: true, force: true }); }
+});
+
+test('L9 settled one-shot MobileBuildMCP commands permit recovery before launching the successor', async () => {
   const root = await mkdtemp(join(tmpdir(), 'jev-device-recovery-'));
   const store = join(root, 'store'); mkdirSync(store, { mode: 0o700 });
   const old = Admission.forTesting({ root: realpathSync(store), backend: 'fake', process: { pid: 999999, incarnation: 'dead-owner' } });
@@ -51,6 +102,8 @@ test('preparation recovers a dead owner with completed one-shot commands before 
   if (previous.kind !== 'acquired') assert.fail('Expected abandoned owner');
   await previous.claim.bindDriver('fake').dispatch('capture', async () => {});
   const commands = old.readGeneration(previous.claim.identity).commands;
+  const { CompatibilityMarker } = await import('../src/device/lease.js');
+  await new CompatibilityMarker({ root: join(root, 'leases') }).take(udid, previous.claim);
   const admission = Admission.forTesting({ root: realpathSync(store), backend: 'fake', ownerLiveness: owner => owner.pid === 999999 ? 'dead' : 'alive' });
   const effects: string[] = [];
   const runner: CliRunner = async args => {
@@ -66,11 +119,13 @@ test('preparation recovers a dead owner with completed one-shot commands before 
     assert.deepEqual(effects, ['launch-app']);
     assert.deepEqual(admission.readGeneration(previous.claim.identity).commands, commands);
     assert.equal(admission.inspect(udid)?.owner?.attempt.id, 'successor-run');
+    assert.equal(JSON.parse(await readFile(join(root, 'leases', `${udid}.lock`), 'utf8')).token,
+      admission.inspect(udid)?.owner?.token);
   } finally { await driver.close(new AbortController().signal); await rm(root, { recursive: true, force: true }); }
 });
 
 for (const componentKind of ['uncertain-mobilebuildmcp', 'persistent-process'] as const) {
-  test(`preparation preserves quarantine and refuses DEVICE_QUARANTINED for an abandoned ${componentKind}`, async () => {
+  test(`${componentKind === 'uncertain-mobilebuildmcp' ? 'L8 uncertain MobileBuildMCP: ' : ''}preparation preserves quarantine and refuses DEVICE_QUARANTINED for an abandoned ${componentKind}`, async () => {
     const root = await mkdtemp(join(tmpdir(), 'jev-device-recovery-refused-'));
     const store = join(root, 'store'); mkdirSync(store, { mode: 0o700 });
     const old = Admission.forTesting({ root: realpathSync(store), backend: 'fake', process: { pid: 999999, incarnation: 'dead-owner' } });
@@ -705,14 +760,16 @@ test('an iOS lease left by an exited bridge process is retained without dispatch
   const root = await mkdtemp(join(tmpdir(), 'jev-device-stale-lock-'));
   const { spawnSync } = await import('node:child_process');
   const exited = spawnSync(process.execPath, ['-e', '0']).pid;
-  await writeFile(join(root, `${udid}.lock`), JSON.stringify({ pid: exited, token: 'old' }));
+  const marker = JSON.stringify({ pid: exited, token: 'old' });
+  await writeFile(join(root, `${udid}.lock`), marker);
   const driver = fakeDriver({ cwd: root, lockRoot: root,
     runner: async () => assert.fail('Dead holder cannot authorize device effects') });
   try {
     await assert.rejects(driver.prepare(scenario, new AbortController().signal), /locked/);
-    assert.equal(firstStore(root).inspect(udid)?.state, 'quarantined');
+    assert.equal(firstStore(root).inspect(udid), undefined);
+    assert.equal(await readFile(join(root, `${udid}.lock`), 'utf8'), marker);
   } finally {
-    await assert.rejects(driver.close(new AbortController().signal), /unknown/);
+    await driver.close(new AbortController().signal);
     await rm(root, { recursive: true, force: true });
   }
 });
@@ -1135,7 +1192,7 @@ test('appRunning and appProblem answer from the console helper in the runtime lo
 function fakeDriver(options: import('../src/device/index.js').MobileBuildMcpDriverOptions): MobileBuildMcpDriver {
   const storeRoot = join(options.cwd, 'admission');
   mkdirSync(storeRoot, { recursive: true, mode: 0o700 });
-  const admission = Admission.forTesting({ root: realpathSync(storeRoot), backend: 'fake' });
+  const admission = Admission.forTesting({ root: realpathSync(storeRoot), backend: 'fake', durability: 'fast' });
   return new MobileBuildMcpDriver({ identityProbe: fakeSimulatorProbe(udid), ...options, admission,
     deviceWindow: options.deviceWindow ?? (async () => {}),
     fakeBackend: { runner: options.runner!, window: options.deviceWindow } });

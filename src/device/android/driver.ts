@@ -1,3 +1,8 @@
+import { Admission, AdmissionError, type ComponentInput } from '../admission.js';
+import type { ProfileBinding } from '../../profiles.js';
+import { OperationTracker } from '../operation-tracker.js';
+import { AndroidOwnership } from './ownership.js';
+import { androidStartTime, processGone, recoverAndroid } from './recovery.js';
 import { randomUUID } from 'node:crypto';
 import { mkdtemp, rm, writeFile } from 'node:fs/promises';
 import { createServer } from 'node:net';
@@ -9,10 +14,10 @@ import type { Action, ActionScenarioContext, ActOutcome, ActPath, AndroidAppIden
 import { isIosApp } from '../../contracts/index.js';
 import { DeviceReasonError, largestScrollable, screenMiddleSwipe, screenPointOf, scrollFinger, selectAndroidDeviceName, StaleSnapshotError,
   type Size } from '../index.js';
-import { DeviceLease, DeviceLeaseBusyError, type LeaseHolder } from '../lease.js';
+import { CompatibilityMarker, DeviceLeaseBusyError } from '../lease.js';
 import { readLogTail } from '../logs.js';
 import { IdentityResolutionError, resolveIdentity, revalidateIdentity, type IdentityProbe, type ResolvedIdentity } from '../identity.js';
-import { identityProbe, type AndroidTransport } from './probe.js';
+import { identityProbe, type AndroidTransport, type ProbeInvocation } from './probe.js';
 import { resumedPackage } from '../attach.js';
 import { jpegSize } from '../image.js';
 
@@ -20,7 +25,6 @@ export { jpegSize };
 import { adbRunner, type AdbResult, type AdbRunner } from './adb.js';
 import { deviceAgentClient, type AgentKey, type DeviceAgentClient } from './agent-client.js';
 import { EVENT_FILTER, type AppExitWatch, type createExitWatch } from './exit-watch.js';
-import { inLedger } from './ledger.js';
 import { deleteOldLogs, LOG_FOLDER, logcatStarter, privateLogFolder, type LogcatOutput, type LogcatStarter, type LogcatStream } from './logcat.js';
 import { mapAndroidTree } from './mapping.js';
 import { settle, type Clock, type SettledCapture } from './settle.js';
@@ -85,6 +89,9 @@ function requireReady({ serial, state }: AndroidTransport): void {
 }
 
 export interface AndroidDriverOptions {
+  admission?: Admission;
+  fakeBackend?: boolean;
+  profile?: ProfileBinding | undefined;
   /** The script's `device`. The driver factory builds one driver per script, so the driver is given it here. */
   device?: { serial?: string; avd?: string } | undefined;
   /** JEV_ANDROID_DEVICE. */
@@ -141,8 +148,7 @@ function quoted(word: string): string {
 }
 
 type AgentProcess = { pid: number; own: boolean };
-/** One of this run's logcat streams, its holder record entry, and whether `close` is stopping it. */
-type StreamEntry = { stream: LogcatStream; owned: string; stopping: boolean };
+type StreamEntry = { stream: LogcatStream; componentId: string; stopping: boolean };
 
 /** A foreign agent holds the device: `DEVICE_BUSY`, and the bridge leaves it running. */
 const foreignAgentFound = (identity: string) => new DeviceReasonError('DEVICE_BUSY',
@@ -212,12 +218,6 @@ function snapshotOf(serial: string, captured: SettledCapture, sequence: number, 
   };
 }
 
-/** What a lease holder record lists for the next run to sweep: the agent, the forward and the logcat streams, each on its serial. */
-const ownedAgent = (serial: string, pid: number) => `agent ${serial} ${String(pid)}`;
-const ownedForward = (serial: string, port: number) => `forward ${serial} tcp:${String(port)}`;
-const ownedStream = (serial: string, pid: number) => `logcat ${serial} ${String(pid)}`;
-const OWNED_STREAM = /^logcat (\S+) (\d+)$/;
-
 /**
  * The Android device driver (release spec phase 4): drives mobilecli's device agent directly, over `adb`
  * and JSON-RPC, and never runs mobilecli (ADR-0006). `prepare` takes the device lease on the device
@@ -227,7 +227,12 @@ const OWNED_STREAM = /^logcat (\S+) (\d+)$/;
  * can show nothing the run started can still act on the device.
  */
 export class AndroidDriver implements DeviceDriver {
-  private readonly lease: DeviceLease;
+  private readonly lease: CompatibilityMarker;
+  private readonly operations = new OperationTracker();
+  private ownership: AndroidOwnership | undefined;
+  private admissionSignal: AbortSignal | undefined;
+  private agentComponent: string | undefined;
+  private readonly forwardComponents = new Map<number,string>();
   private readonly clock: Clock;
   private runner: AdbRunner | undefined;
   private prepared: DevicePreparation | undefined;
@@ -267,7 +272,7 @@ export class AndroidDriver implements DeviceDriver {
   private watch: AppExitWatch | undefined;
 
   constructor(private readonly options: AndroidDriverOptions = {}) {
-    this.lease = new DeviceLease(options.leaseRoot ? { root: options.leaseRoot } : {});
+    this.lease = new CompatibilityMarker(options.leaseRoot ? { root: options.leaseRoot } : {});
     this.clock = options.clock ?? productionClock;
     this.runId = options.runId ?? randomUUID();
   }
@@ -278,11 +283,11 @@ export class AndroidDriver implements DeviceDriver {
   }
 
   prepare(scenario: PrepareScenarioContext, signal: AbortSignal): Promise<void> {
-    return this.lease.track(() => this.prepareIssued(scenario, signal));
+    return this.operations.track(() => this.prepareIssued(scenario, signal));
   }
 
   observe(signal: AbortSignal): Promise<Snapshot> {
-    return this.lease.track(() => this.settledSnapshot(signal));
+    return this.operations.track(() => this.settledSnapshot(signal));
   }
 
   /**
@@ -291,11 +296,11 @@ export class AndroidDriver implements DeviceDriver {
    * `close` is still the only cleanup.
    */
   capture(signal: AbortSignal): Promise<Snapshot> {
-    return this.lease.track(() => this.captureIssued(signal));
+    return this.operations.track(() => this.captureIssued(signal));
   }
 
   act(action: Action, snapshot: Snapshot, scenario: ActionScenarioContext, signal: AbortSignal): Promise<Snapshot | ActOutcome> {
-    return this.lease.track(() => this.actIssued(action, snapshot, scenario, signal));
+    return this.operations.track(() => this.actIssued(action, snapshot, scenario, signal));
   }
 
   actPath(): ActPath | undefined {
@@ -336,8 +341,9 @@ export class AndroidDriver implements DeviceDriver {
     this.closing = this.finishClose(signal).catch((error: unknown) => {
       // Keep the lease; once the abandoned work settles, finish cleanup and release it late.
       if (error instanceof DeviceReasonError && error.code === 'UI_ACTION_UNCONFIRMED') {
-        this.lease.releaseLate(() => this.close(AbortSignal.timeout(LATE_CLOSE_MS)));
+        this.operations.releaseLate(() => this.close(AbortSignal.timeout(LATE_CLOSE_MS)));
       }
+      this.ownership?.retain();
       throw error;
     }).finally(() => { this.closing = undefined; });
     return this.closing;
@@ -351,11 +357,11 @@ export class AndroidDriver implements DeviceDriver {
    * The agent file stays: it's inert.
    */
   private async finishClose(signal: AbortSignal): Promise<void> {
-    try { await this.lease.settle(signal); }
+    try { await this.operations.settle(signal); }
     catch { throw new DeviceReasonError('UI_ACTION_UNCONFIRMED', 'Cleanup ended before an issued adb command exited; device lease kept'); }
     // Not held: the run never took the lease, or a refusal before the restart already released it.
     if (!this.lease.held) return;
-    if (!this.lease.settled('adb')) throw new DeviceReasonError('UI_ACTION_UNCONFIRMED', 'An adb command\'s outcome is unknown; device lease kept');
+    this.ownership!.beginCleanup(this.admissionSignal?.aborted === true);
     const serial = this.serial!;
     this.cleanupSignal = signal;
     try {
@@ -378,8 +384,14 @@ export class AndroidDriver implements DeviceDriver {
       const port = this.forwardPort;
       if (port !== undefined) {
         await this.removeForward(serial, `tcp:${String(port)}`, signal);
-        await this.lease.disown(ownedForward(serial, port));
+        const listed = await this.ownership!.adb(['forward', '--list'], this.runner!, signal);
+        this.ownership!.prove(this.forwardComponents.get(port)!, { kind: 'android-component-stopped', commandId: listed.commandId });
         this.forwardPort = undefined;
+      }
+      try { this.ownership!.finish(); }
+      catch (error) {
+        if (!(error instanceof AdmissionError)) throw error;
+        throw new DeviceReasonError('UI_ACTION_UNCONFIRMED', `Device release is unconfirmed: ${error.code}`);
       }
       await this.lease.release();
     } finally {
@@ -393,24 +405,21 @@ export class AndroidDriver implements DeviceDriver {
     }
   }
 
-  /**
-   * The fence (open point 22): kill this run's agent by its pid, after checking it's still the bridge's own,
-   * then confirm it's gone. Never `pkill` by class name. Once the start command was issued, every agent of
-   * the bridge's on the device is this run's, even one whose pid was never recorded: `prepare` swept all the
-   * others while holding the lease. A confirmed fence ends every agent request, including an unknown one.
-   */
   private async fenceAgent(serial: string, signal: AbortSignal): Promise<void> {
-    if (this.agentStartIssued) {
-      const agents = await this.agentsOn(serial, signal);
-      for (const pid of this.agentPids) {
-        if (agents.some(agent => agent.pid === pid && !agent.own)) {
-          throw new AndroidDeviceError('adb', `The bridge's agent ${String(pid)} can no longer be shown to be its own`);
-        }
-      }
-      for (const agent of agents.filter(found => found.own)) await this.killAgent(serial, agent.pid, signal);
+    if (!this.agentComponent) return;
+    const start = this.ownership!.start(this.agentComponent);
+    if (!start || start.kind !== 'agent-start') throw new Error('Agent identity was not recorded');
+    const args = ['-s', serial, 'shell', ['cat', `/proc/${start.pid}/stat`].map(quoted).join(' ')];
+    let observed = await this.ownership!.adb(args, this.runner!, signal);
+    if (!processGone(observed.result)) {
+      if (observed.result.exitCode !== 0 || androidStartTime(observed.result.stdout) !== start.startTime) throw new Error('Agent process incarnation changed');
+      const environ = await this.environOf(serial, start.pid, signal);
+      if (!Array.isArray(environ) || !environ.includes(OWN_AGENT_CLASSPATH)) throw new Error('Agent environment changed');
+      await this.killAgent(serial, start.pid, signal);
+      observed = await this.ownership!.adb(args, this.runner!, signal);
     }
-    this.lease.fence('agent');
-    for (const pid of this.agentPids) await this.lease.disown(ownedAgent(serial, pid));
+    if (!processGone(observed.result)) throw new Error('Agent exit is not proven');
+    this.ownership!.prove(this.agentComponent, { kind: 'android-component-stopped', commandId: observed.commandId });
     this.agentPids = [];
   }
 
@@ -424,8 +433,8 @@ export class AndroidDriver implements DeviceDriver {
     let recordError: unknown;
     for (const entry of [...this.streams]) {
       if (!await this.stopStream(entry)) { unconfirmed.push(entry.stream.pid); continue; }
-      // A holder record that can't be rewritten still lets the next stream be stopped; the lease is kept.
-      try { await this.lease.disown(entry.owned); }
+      try { if (!entry.stream.process) throw new Error('Stream incarnation was not recorded');
+        this.ownership!.prove(entry.componentId, { kind: 'android-stream-exited', process: entry.stream.process }); }
       catch (error) { recordError ??= error; }
     }
     if (recordError !== undefined) throw recordError;
@@ -573,17 +582,17 @@ export class AndroidDriver implements DeviceDriver {
   private async agentRead<T>(request: (agent: DeviceAgentClient) => Promise<T>, signal: AbortSignal): Promise<T> {
     this.mayIssue(signal);
     const agent = this.agent!;
-    return inLedger(this.lease, 'agent', () => request(agent));
+    return this.ownership!.dispatch(this.agentComponent!, 'agent', () => request(agent));
   }
 
   private async prepareIssued(scenario: PrepareScenarioContext, signal: AbortSignal): Promise<void> {
     if (this.lease.held) throw new Error('Driver is already prepared');
     if (isIosApp(scenario.app)) throw new Error('The Android driver only runs Android scripts; this scenario has no app.package');
     const app = scenario.app;
-    const { tools, serial, identity, deadHolder } = await this.takeDevice(signal);
+    const { tools, serial, identity } = await this.takeDevice(signal);
     try {
       let component: string | undefined;
-      const sweptLeftovers = await this.sweepLeftovers(serial, identity, deadHolder, signal, async () => {
+      const sweptLeftovers = await this.sweepLeftovers(serial, identity, signal, async () => {
         if (scenario.start !== 'attach') {
           await this.checkDevice(serial, app.package, signal, async () => {
             component = app.activity ? `${app.package}/${app.activity}` : await this.launcherActivity(serial, app.package, signal);
@@ -614,9 +623,9 @@ export class AndroidDriver implements DeviceDriver {
 
   private async captureIssued(signal: AbortSignal): Promise<Snapshot> {
     if (this.lease.held) throw new Error('Driver is already prepared');
-    const { tools, serial, identity, deadHolder } = await this.takeDevice(signal);
+    const { tools, serial, identity } = await this.takeDevice(signal);
     try {
-      await this.sweepLeftovers(serial, identity, deadHolder, signal, () => this.checkDevice(serial, undefined, signal));
+      await this.sweepLeftovers(serial, identity, signal, () => this.checkDevice(serial, undefined, signal));
       await this.startAgent(serial, identity, tools, signal);
     } catch (error) {
       await this.releaseIfNothingToUndo();
@@ -633,14 +642,18 @@ export class AndroidDriver implements DeviceDriver {
    * `capture`, which never restarts. From then on `close` releases the lease, once it has fenced and stopped.
    */
   private async releaseIfNothingToUndo(): Promise<void> {
-    if (this.restartedPackage === undefined && !this.agentStartIssued && this.lease.releasable) await this.lease.release();
+    if (this.restartedPackage === undefined && !this.agentStartIssued) {
+      this.ownership!.beginCleanup(this.admissionSignal?.aborted === true);
+      this.ownership!.finish('refused');
+      await this.lease.release();
+    }
   }
 
   /**
    * The tools check, then the device name to its serial and identity, then the device lease on the identity.
    * Returns the dead holder's record when the lease was taken over from a crashed run.
    */
-  private async takeDevice(signal: AbortSignal): Promise<{ tools: AndroidTools; serial: string; identity: string; deadHolder: LeaseHolder | undefined }> {
+  private async takeDevice(signal: AbortSignal): Promise<{ tools: AndroidTools; serial: string; identity: string }> {
     const tools = await (this.options.tools ?? androidTools)();
     this.runner = this.options.runner ?? adbRunner({ adb: tools.adb, environment: adbEnvironment() });
     this.logcat = this.options.logcat ?? logcatStarter({ adb: tools.adb, environment: adbEnvironment() });
@@ -656,23 +669,48 @@ export class AndroidDriver implements DeviceDriver {
     requireReady(resolved.transport);
     const identity = resolved.category === 'android-emulator' ? resolved.provenance.avdName : serial;
     this.resolvedIdentity = resolved;
-    let deadHolder: LeaseHolder | undefined;
-    try { deadHolder = await this.lease.take(identity); }
+    this.serial = serial;
+    this.admissionSignal = signal;
+    if ((this.options.runner || this.options.agentClient) && !this.options.admission) throw new DeviceReasonError('STATE_UNAVAILABLE', 'Injected Android backends require an explicit admission store');
+    if (this.options.fakeBackend && (!this.options.runner || !this.options.agentClient || !this.options.logcat || !this.options.admission)) throw new DeviceReasonError('STATE_UNAVAILABLE', 'Fake Android admission requires injected adb, agent and streams');
+    const admission = this.options.admission ?? Admission.open();
+    admission.assertBackend(this.options.fakeBackend ? 'fake' : 'real');
+    try { this.lease.assertKnown(identity, token => admission.markerRecorded({ category: resolved.category, value: resolved.value }, token)); }
     catch (error) {
       if (error instanceof DeviceLeaseBusyError) throw new DeviceReasonError('DEVICE_BUSY', error.message);
       throw error;
     }
-    this.serial = serial;
-    return { tools, serial, identity, deadHolder };
+    const unrecordedProbe = this.probe;
+    const acquired = await admission.acquireWithRecovery({ category: resolved.category, device: resolved.value,
+      attempt: { kind: 'legacy', id: this.runId }, digest: this.runId,
+      intent: { identity: resolved, profile: this.options.profile ?? null }, transport: resolved.transport, signal,
+      ...(resolved.category === 'android-emulator' ? { provenance: resolved.provenance } : {}) },
+      async recovery => {
+        const recorder = Object.assign((file: string, args: string[], effect: ProbeInvocation['execute']) =>
+          recovery.dispatch(JSON.stringify({ kind: 'identity-probe', file, args }), effect), {
+          group: (reads: ProbeInvocation[]) => recovery.dispatchReads(reads.map(({ file, args, execute }) => ({
+            operation: JSON.stringify({ kind: 'identity-probe', file, args }), read: execute,
+          }))),
+        });
+        this.probe = unrecordedProbe.withRecorder?.(recorder) ?? unrecordedProbe;
+        return recoverAndroid({ admission, claim: recovery, serial, runner: this.runner!, logcat: this.logcat!,
+          revalidate: () => this.revalidate(signal), signal });
+      });
+    if (acquired.kind !== 'acquired') throw new DeviceReasonError(acquired.kind === 'refused' && acquired.reason === 'DEVICE_QUARANTINED' ? 'DEVICE_QUARANTINED' : 'DEVICE_BUSY', 'Android admission refused');
+    this.ownership = new AndroidOwnership(admission, acquired.claim, serial, this.options.fakeBackend ? 'fake' : 'real');
+    this.probe = unrecordedProbe.withRecorder?.(this.ownership.probe) ?? unrecordedProbe;
+    try { await this.lease.take(identity, acquired.claim); }
+    catch (error) {
+      this.ownership.finish('refused');
+      if (error instanceof DeviceLeaseBusyError) throw new DeviceReasonError('DEVICE_BUSY', error.message);
+      throw error;
+    }
+    return { tools, serial, identity };
   }
 
-  /** The takeover sweep and the agent check. True when a takeover from a dead holder swept anything. */
-  private async sweepLeftovers(serial: string, identity: string, deadHolder: LeaseHolder | undefined, signal: AbortSignal,
-    preflight: () => Promise<void>): Promise<boolean> {
-    // The dead holder's streams run on this Mac, so they go first, even when a device check or a foreign agent then refuses the run.
-    const sweptStreams = deadHolder !== undefined && await this.sweepStreams(deadHolder, signal);
-    const sweptAgents = await this.checkAgents(serial, identity, deadHolder !== undefined, signal, preflight);
-    return sweptStreams || sweptAgents;
+  private async sweepLeftovers(serial: string, identity: string, signal: AbortSignal, preflight: () => Promise<void>): Promise<boolean> {
+    await this.checkAgents(serial, identity, signal, preflight);
+    return false;
   }
 
   /** Before any new device work: none once `close` began, except `close`'s own, or once the run was cancelled. */
@@ -681,14 +719,13 @@ export class AndroidDriver implements DeviceDriver {
     if (signal.aborted) throw signal.reason;
   }
 
-  /** One finite `adb` command, in the lease's ledger. No new command once `close` began or the run was cancelled. */
-  private async adb(args: string[], signal: AbortSignal, beforeDispatch?: () => void): Promise<AdbResult> {
+  private async adb(args: string[], signal: AbortSignal, beforeDispatch?: () => void, components?: ComponentInput[]): Promise<AdbResult> {
     this.mayIssue(signal);
     if (args[0] === '-s' && (args[2] === 'push' || args[2] === 'forward' ||
       args[2] === 'shell' && /^(?:'input'|'am'|'kill'|CLASSPATH=)/.test(args[3] ?? ''))) await this.revalidate(signal);
     this.mayIssue(signal);
     const runner = this.runner!;
-    return inLedger(this.lease, 'adb', () => { beforeDispatch?.(); return runner(args, signal); });
+    return (await this.ownership!.adb(args, runner, signal, beforeDispatch, components)).result;
   }
 
   private shell(serial: string, words: string[], signal: AbortSignal, beforeDispatch?: () => void): Promise<AdbResult> {
@@ -700,10 +737,6 @@ export class AndroidDriver implements DeviceDriver {
     const result = await pending;
     if (result.exitCode !== 0) throw new AndroidDeviceError('adb', `adb could not ${what} (exit ${String(result.exitCode)})`);
     return result.stdout;
-  }
-
-  private async getprop(serial: string, name: string, signal: AbortSignal): Promise<string> {
-    return (await this.succeeded(`read ${name}`, this.shell(serial, ['getprop', name], signal))).trim();
   }
 
   private async identityRead<T>(read: () => Promise<T>): Promise<T> {
@@ -782,50 +815,11 @@ export class AndroidDriver implements DeviceDriver {
    * isn't an agent's, whatever a dead holder listed. True when a takeover from a dead holder swept anything, listed
    * or not: a holder that crashed between starting its agent and recording its pid left an unlisted one.
    */
-  private async checkAgents(serial: string, identity: string, takenOver: boolean, signal: AbortSignal, preflight: () => Promise<void>): Promise<boolean> {
-    const agents = await this.agentsOn(serial, signal);
-    if (agents.some(agent => !agent.own)) {
-      throw foreignAgentFound(identity);
-    }
+  private async checkAgents(serial: string, identity: string, signal: AbortSignal, preflight: () => Promise<void>): Promise<void> {
+    if ((await this.agentsOn(serial, signal)).length) throw foreignAgentFound(identity);
     const forwards = await this.forwardsOn(serial, signal);
+    if ([...forwards.values()].includes(AGENT_SOCKET)) throw foreignAgentFound(identity);
     await preflight();
-    let swept = false;
-    for (const agent of agents) {
-      await this.killAgent(serial, agent.pid, signal);
-      swept = true;
-    }
-    for (const [local, remote] of forwards) {
-      if (remote !== AGENT_SOCKET) continue;
-      await this.removeForward(serial, local, signal);
-      swept = true;
-    }
-    return swept && takenOver;
-  }
-
-  /**
-   * The takeover sweep of a dead holder's logcat streams (phase 5). `take` returns the dead holder's record
-   * but starts this run's own empty, so every `logcat <serial> <pid>` entry is owned again before the first
-   * kill: a crash or cancel mid-sweep leaves the rest for the next run. Its pid is killed only while the Mac process is still that
-   * serial's `adb … logcat`, so a reused pid is left alone; then the entry is disowned. True when any
-   * stream was stopped.
-   */
-  private async sweepStreams(holder: LeaseHolder, signal: AbortSignal): Promise<boolean> {
-    const logcat = this.logcat!;
-    const entries = holder.ownedProcesses.filter(entry => OWNED_STREAM.test(entry));
-    // Every entry is owned before any kill, so a cancel mid-sweep leaves the rest listed.
-    for (const entry of entries) await this.lease.own(entry);
-    let swept = false;
-    for (const entry of entries) {
-      if (signal.aborted) throw signal.reason;
-      const [, serial, pid] = OWNED_STREAM.exec(entry)!;
-      if (await logcat.isLeftover(Number(pid), serial!)) {
-        try { await logcat.kill(Number(pid)); }
-        catch { throw new AndroidDeviceError('adb', `A crashed run's logcat stream ${pid} did not exit`); }
-        swept = true;
-      }
-      await this.lease.disown(entry);
-    }
-    return swept;
   }
 
   /**
@@ -834,11 +828,14 @@ export class AndroidDriver implements DeviceDriver {
    * `capture` names no app, so it skips the installed check.
    */
   private async checkDevice(serial: string, appPackage: string | undefined, signal: AbortSignal, validateApp?: () => Promise<void>): Promise<void> {
-    const api = Number(await this.getprop(serial, 'ro.build.version.sdk', signal));
+    this.mayIssue(signal);
+    const properties = ['ro.build.version.sdk', 'sys.boot_completed'];
+    const replies = await this.ownership!.adbReads(properties.map(name => ['-s', serial, 'shell', ['getprop', name].map(quoted).join(' ')]), this.runner!, signal);
+    const api = Number(await this.succeeded('read API level', Promise.resolve(replies[0]!)));
     if (!Number.isInteger(api) || api < MIN_API_LEVEL) {
       throw new DeviceReasonError('DEVICE_UNSUPPORTED', `Device ${serial} runs API ${String(api)}; the bridge needs Android 12 (API 31) or later`);
     }
-    if (await this.getprop(serial, 'sys.boot_completed', signal) !== '1') {
+    if ((await this.succeeded('read boot state', Promise.resolve(replies[1]!))).trim() !== '1') {
       throw new DeviceReasonError('DEVICE_NOT_BOOTED', `Device ${serial} hasn't finished booting`);
     }
     if (appPackage !== undefined) {
@@ -910,18 +907,20 @@ export class AndroidDriver implements DeviceDriver {
   /** One logcat stream on the serial, in the holder record as soon as it has a pid. False when it won't start. */
   private async startStream(serial: string, args: string[], output: LogcatOutput, signal: AbortSignal, endedByItself?: () => void): Promise<boolean> {
     this.mayIssue(signal);
+    const componentId = randomUUID();
     let stream: LogcatStream;
-    try { stream = await this.logcat!.start(['-s', serial, ...args], output, signal); }
+    try { stream = await this.ownership!.dispatch(componentId, 'logcat-start', () => this.logcat!.start(['-s', serial, ...args], output, signal), false,
+      [{ id: componentId, kind: 'android-stream', serial, args: ['-s', serial, ...args] }]); }
     catch (error) {
       if (signal.aborted) throw error;
       return false;
     }
-    const entry: StreamEntry = { stream, owned: ownedStream(serial, stream.pid), stopping: false };
+    const entry: StreamEntry = { stream, componentId, stopping: false };
     this.streams.push(entry);
-    try { await this.lease.own(entry.owned); }
+    try { if (!stream.process) throw new Error('Stream incarnation unavailable'); this.ownership!.observe(componentId, { kind: 'host-start', process: stream.process }); }
     catch (error) {
       // Not in the holder record, so a crash takeover couldn't sweep it: stop it now. One that won't stop stays for close.
-      if (await this.stopStream(entry)) await this.lease.disown(entry.owned).catch(() => undefined);
+      await this.stopStream(entry);
       throw error;
     }
     void stream.exited.then(() => { if (!entry.stopping) endedByItself?.(); });
@@ -994,8 +993,17 @@ export class AndroidDriver implements DeviceDriver {
    */
   private async startAgent(serial: string, identity: string, tools: AndroidTools, signal: AbortSignal): Promise<void> {
     await this.succeeded('push the device agent', this.adb(['-s', serial, 'push', tools.agent.path, AGENT_DEVICE_PATH], signal));
-    this.agentStartIssued = true;
-    await this.succeeded('start the device agent', this.adb(['-s', serial, 'shell', AGENT_START_COMMAND], signal));
+    this.agentComponent = randomUUID();
+    await this.succeeded('start the device agent', this.adb(['-s', serial, 'shell', AGENT_START_COMMAND], signal,
+      () => { this.agentStartIssued = true; },
+      [{ id: this.agentComponent, kind: 'android-agent', serial, classpath: AGENT_DEVICE_PATH, className: AGENT_CLASS }]));
+    const initial = (await this.agentsOn(serial, signal)).filter(found => found.own);
+    if (initial.length !== 1) throw new Error('Agent creation identity is incomplete');
+    const started = initial[0]!;
+    const stat = await this.shell(serial, ['cat', `/proc/${started.pid}/stat`], signal);
+    const startTime = stat.exitCode === 0 ? androidStartTime(stat.stdout) : undefined;
+    if (!startTime) throw new Error('Agent incarnation unavailable');
+    this.ownership!.observe(this.agentComponent, { kind: 'agent-start', pid: started.pid, startTime });
     const port = await this.forward(serial, signal);
     const agent = (this.options.agentClient ?? (forwarded => deviceAgentClient({ port: forwarded })))(port);
     const answered = await this.awaitAgent(agent, tools.agent.sha256, signal);
@@ -1003,7 +1011,7 @@ export class AndroidDriver implements DeviceDriver {
     // Record every agent of the bridge's before refusing, so close can fence it whatever happens next.
     for (const own of agents.filter(found => found.own)) {
       this.agentPids.push(own.pid);
-      await this.lease.own(ownedAgent(serial, own.pid));
+
     }
     if (agents.some(found => !found.own)) {
       throw foreignAgentFound(identity);
@@ -1018,12 +1026,14 @@ export class AndroidDriver implements DeviceDriver {
     for (let attempt = 1; ; attempt++) {
       if (signal.aborted) throw signal.reason;
       const port = await (this.options.freePort ?? freeLocalPort)();
-      this.forwardPort = port;
-      await this.lease.own(ownedForward(serial, port));
-      const result = await this.adb(['-s', serial, 'forward', `tcp:${String(port)}`, AGENT_SOCKET], signal);
+      const componentId = randomUUID();
+      const result = await this.adb(['-s', serial, 'forward', `tcp:${String(port)}`, AGENT_SOCKET], signal,
+        () => { this.forwardPort = port; this.forwardComponents.set(port, componentId); },
+        [{ id: componentId, kind: 'android-forward', serial, local: `tcp:${port}`, remote: AGENT_SOCKET }]);
       if (result.exitCode === 0) return port;
       this.forwardPort = undefined;
-      await this.lease.disown(ownedForward(serial, port));
+      const listed = await this.ownership!.adb(['forward', '--list'], this.runner!, signal);
+      this.ownership!.prove(componentId, { kind: 'android-component-stopped', commandId: listed.commandId });
       if (!/cannot bind/.test(`${result.stdout}${result.stderr}`) || attempt === FORWARD_ATTEMPTS) {
         throw new AndroidDeviceError('adb', `adb could not forward a port to the device agent (exit ${String(result.exitCode)})`);
       }
@@ -1038,7 +1048,7 @@ export class AndroidDriver implements DeviceDriver {
       // Each request ends with the 5 s, not its own 10 s limit; one ended unanswered stays unknown until the fence.
       const deadline = this.clock.timeout(Math.max(1, AGENT_READY_MS - (this.clock.now() - startedAt)));
       try {
-        if ((await inLedger(this.lease, 'agent', () => agent.version(AbortSignal.any([signal, deadline])))).dexSha256 === sha256) return true;
+        if ((await this.ownership!.dispatch(this.agentComponent!, 'agent', () => agent.version(AbortSignal.any([signal, deadline])))).dexSha256 === sha256) return true;
       } catch (error) {
         // Not answering yet is expected while it starts; a cancel is not.
         if (signal.aborted) throw error;

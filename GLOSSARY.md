@@ -97,7 +97,7 @@ _Avoid_: DeviceServer, server, mobilecli
 Another tool's UI-automation program holding a device. Android allows only one at a time, so a foreign agent makes the device busy.
 
 **Fence**:
-Stopping a native component and confirming it can no longer act, so that no command sent through it whose outcome was unknown can still take effect. The device agent, an adb command and an Appium session are native components.
+Stopping a native component and confirming it can no longer act, so that no command sent through it whose outcome was unknown can still take effect. This applies to device agents, adb commands, host streams, port forwards, MobileBuildMCP invocations and Appium sessions. Each component needs its own stop evidence.
 
 **Fence receipt**:
 The admission authority's record that one owner generation's fence is proven: dispatch closed, every command it issued settled or fenced, and every native component it recorded unable to act. It releases that owner's device lease or covers its quarantine. A receipt for another generation, or one naming no generation, covers nothing.

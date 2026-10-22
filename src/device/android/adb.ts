@@ -1,4 +1,4 @@
-import { spawn } from 'node:child_process';
+import { execFileSync, spawn } from 'node:child_process';
 import type { Readable } from 'node:stream';
 import { OutcomeUnknownError } from './ledger.js';
 
@@ -7,10 +7,11 @@ export type AdbResult = { stdout: string; stderr: string; exitCode: number };
  * Runs one `adb` command, as `CliRunner` does for MobileBuildMCP. It resolves with the exit code whenever
  * the child exited with a status (non-zero included), and throws `OutcomeUnknownError` when it didn't.
  */
-export type AdbRunner = (args: string[], signal: AbortSignal) => Promise<AdbResult>;
+export type AdbRunner = (args: string[], signal: AbortSignal, started?: (host: import('../admission.js').OwnerProcess) => void) => Promise<AdbResult>;
 
 /** The part of a child process the runner uses, so a test can hand it a fake. */
 export interface AdbChild {
+  readonly pid?: number | undefined;
   readonly stdout: Readable;
   readonly stderr: Readable;
   once(event: 'close', listener: (code: number | null, signal: NodeJS.Signals | null) => void): this;
@@ -32,7 +33,7 @@ const spawnAdb: AdbSpawn = (file, args, options) => spawn(file, args, options);
 export function adbRunner(options: { adb: string; environment: NodeJS.ProcessEnv; spawn?: AdbSpawn }): AdbRunner {
   const { TYPESAFE_API_KEY: _jevKey, ...environment } = options.environment;
   const spawnChild = options.spawn ?? spawnAdb;
-  return (args, signal) => new Promise((resolveResult, reject) => {
+  return (args, signal, started) => new Promise((resolveResult, reject) => {
     if (signal.aborted) { reject(signal.reason); return; }
     const child = spawnChild(options.adb, [...args], { env: environment, shell: false, stdio: ['ignore', 'pipe', 'pipe'] });
     let stdout = '';
@@ -56,5 +57,18 @@ export function adbRunner(options: { adb: string; environment: NodeJS.ProcessEnv
         else resolveResult({ stdout, stderr, exitCode: code });
       });
     });
+    if (started && child.pid !== undefined) {
+      try {
+        const incarnation = execFileSync('/bin/ps', ['-p', String(child.pid), '-o', 'lstart='], {
+          encoding: 'utf8', timeout: 1000, env: { PATH:'/usr/bin:/bin',LC_ALL:'C',LANG:'C',TZ:'UTC' }, stdio:['ignore','pipe','ignore'],
+        }).trim();
+        if (incarnation) started({ pid: child.pid, incarnation });
+      } catch (error) {
+        if (error instanceof Error && !('status' in error)) settle(() => reject(new OutcomeUnknownError('adb', 'Host process binding failed', { cause: error })));
+      }
+    }
+
   });
 }
+
+export { inspectAdbStop, type RecordedAdbCommand, type AdbStopObservation, type AdbStopProbe } from './stop-evidence.js';
