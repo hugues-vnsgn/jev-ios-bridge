@@ -1,0 +1,145 @@
+# Appium Phase 3 decision map
+
+Labels: wayfinder:map
+Status: charted
+
+## Destination
+
+Phase 3 is ready to build: every open decision for the Appium driver and the
+preserved modes is locked in
+[the Phase 3 specification](../appium-mcp-migration/phases/phase-3-adapter.md),
+and a build plan (PR split, worker briefs, verification bar) lets the build
+start without another decision.
+
+## Notes
+
+Planning only. Building starts after this map closes, under its build plan.
+Entry evidence: Phase 1 GO ([result](../appium-mcp-migration/phase-1-result-20261018.md),
+[freeze manifest](../appium-mcp-migration/evidence/phase1-freeze-20261018.json))
+and Phase 2 complete on main `4465e93e9` ([exit note](../appium-phase2/phase-2-exit.md), PRs #56–#67).
+
+Use `grilling` + `domain-modeling` for HITL tickets, `research` for reading-only
+tickets, `prototype` where a run on the private pair can decide. Use
+`GLOSSARY.md` terms (admission, device lease, fence, fence receipt, quarantine,
+snapshot, element reference, shown value, run, observed outcome); change
+meanings only through discussion. Read code from `origin/main` or this branch
+(`feat/appium-phase3`), never the stale main checkout. Research reports go on
+throwaway `research/<name>` branches under `.scratch/appium-phase3/research/`.
+Each resolution writes its locked decision into the Phase 3 specification.
+
+Owner decisions from the charting session (2026-10-22):
+
+- The destination includes the build plan, written in the last ticket.
+- Prototypes may run the Phase 1 private pair (private simulator set and private
+  AVD home under the `feat/appium-mcp-migration` worktree) with the candidate
+  stack's research scripts: one case at a time, no Jev calls, no writes to the
+  real admission store, no other simulator, AVD or phone.
+- The Phase 3 build is proven on the host against a controllable fake Appium
+  MCP that replays real wire exchanges recorded on the private pair. Every live
+  claim (coordinates on two sizes, logs and crashes, the 20 cycles, the phone)
+  is Phase 4. Real-store activation stays a separate owner action and Phase 3
+  does not need it.
+- Phase 3 PRs merge to main. The last Phase 3 PR switches CLI, MCP, capture and
+  observed composition to Appium; old backend code stays unused until Phase 4
+  removes it. No release before Phase 4 passes; an urgent 1.4.x fix branches
+  from the `v1.4.0` tag.
+- The PLAN-B bar governs the build (CI incl. packaging proof, no open P0/P1
+  after two fix rounds, owner's yes). The Codex worker builds on GPT-6.1-Sol
+  only. The owner merges each PR. This planning lands as one planning PR.
+
+Carried from Phase 2 (`~/.codex/reports/jev-ios-bridge/phase2-build/FOLLOW-UPS.md`),
+sorted by the owner on 2026-10-22; the build plan schedules them:
+
+- One small "Phase 2 leftovers" PR at the start: the imported legacy marker
+  refusing `DEVICE_BUSY` instead of its historical quarantine; a wireless phone
+  turning unready mid-run reporting `NOT_CONNECTED`/`UNAUTHORIZED` instead of
+  `DEVICE_IDENTITY_CONFLICT`; the odd-state phone wording "is offline";
+  identity sub-reasons (`vendorCode`) in the human summary.
+- Inside the Phase 3 PR that touches that code: branded identity types and the
+  independently nullable recovery closure fields.
+- Early, because Phase 3 leans on these suites: the load-sensitive 2 s `ps`
+  bound in the descendant test, the public-core creation flake (tests 678/679),
+  the integration-edge completion poll, the `test_study` child-fixture hang risk.
+
+## Decisions so far
+
+<!-- one line per resolved ticket: [title](issues/NN-slug.md): gist -->
+
+## Route
+
+<!-- route:start -->
+```mermaid
+flowchart LR
+    T01["01 Shipping the frozen Appium stack<br/><small>research</small>"]
+    T02["02 Device side effects of an Appium session<br/><small>research</small>"]
+    T03["03 What the old vendors give us today<br/><small>research</small>"]
+    T04["04 Private pair ready for prototypes<br/><small>task</small>"]
+    T05["05 Observation mapping<br/><small>prototype</small>"]
+    T06["06 Session startup cost and lifetime<br/><small>prototype</small>"]
+    T07["07 Text replacement and shown value<br/><small>prototype</small>"]
+    T08["08 Tap, gestures and coordinates<br/><small>prototype</small>"]
+    T09["09 Extension contract<br/><small>grilling</small>"]
+    T10["10 Session lifetime and allowed device effects<br/><small>grilling</small>"]
+    T11["11 Fence evidence for Appium components<br/><small>grilling</small>"]
+    T12["12 iOS app output and crash detection without MobileBuildMCP<br/><small>grilling</small>"]
+    T13["13 Vendor report fields and stack provenance<br/><small>grilling</small>"]
+    T14["14 Phase 3 build plan<br/><small>grilling</small>"]
+    T03 --> T05
+    T04 --> T05
+    T04 --> T06
+    T04 --> T07
+    T05 --> T07
+    T04 --> T08
+    T05 --> T08
+    T01 --> T09
+    T05 --> T09
+    T07 --> T09
+    T08 --> T09
+    T02 --> T10
+    T06 --> T10
+    T10 --> T11
+    T03 --> T12
+    T03 --> T13
+    T05 --> T13
+    T09 --> T14
+    T10 --> T14
+    T11 --> T14
+    T12 --> T14
+    T13 --> T14
+    classDef resolved fill:#e4e4e7,stroke:#a1a1aa,color:#52525b
+    classDef claimed fill:#dbeafe,stroke:#2563eb,color:#1e3a8a
+    classDef frontier fill:#dcfce7,stroke:#16a34a,color:#14532d,stroke-width:2px
+    classDef blocked fill:#ffffff,stroke:#a1a1aa,color:#18181b
+    class T01,T02,T03,T04 frontier
+    class T05,T06,T07,T08,T09,T10,T11,T12,T13,T14 blocked
+```
+<!-- route:end -->
+
+## Not yet specified
+
+- **Fake MCP provider fidelity.** How recorded wire exchanges are captured,
+  stored and re-recorded when the frozen stack changes, so host tests stay
+  honest. Clears once the extension contract and stack shipping are settled.
+- **Settling under Appium.** Whether today's settle loop and still-changing
+  mark port unchanged onto Appium captures, or need a new change signal.
+  Clears once the vendor inventory and observation mapping land.
+- **Observed preparation without MobileBuildMCP.** Which boot, install and
+  readiness steps of observed allocation move to Appium, stay native helpers
+  under ADR-0009, or change their evidence. Clears with the vendor inventory
+  and session lifetime decisions.
+- **Driven gesture details.** Largest-scrollable versus screen-middle action
+  paths and iOS back may need their own decision if the gesture prototype
+  shows a behavior change.
+- **Glossary for the Appium era.** Device layer, element reference issuance and
+  any new terms (private MCP child, extension) once the contracts settle.
+
+## Out of scope
+
+Live acceptance, both Jev corpora, physical-Android acceptance and removal of
+the old backends (Phase 4); real-store activation (separate owner action);
+physical iPhone (Phase 6); allocation reclamation (Phase 5); native
+measurements (Phase 7); building Phase 3 itself (after this map closes).
+From Phase 2's follow-ups, left alone by the owner: emulators older than 30
+whose console rejects the token, more adb stop-match shapes (they quarantine
+safely), H04.01 subtest slowness (by design), and the lane kit (P2.8 replaced
+it with committed tests).
