@@ -823,6 +823,11 @@ export class MobileBuildMcpDriver implements DeviceDriver, IosPreparationDriver,
       `App ${bundleId} is not installed on simulator ${resolved.value}`, { vendorCode: 'APP_NOT_INSTALLED' });
     const admission = this.options.admission ?? Admission.open();
     admission.assertBackend(this.options.fakeBackend ? 'fake' : 'real');
+    try { this.lease.assertKnown(deviceId, token => admission.markerRecorded({ category: 'ios-simulator', value: deviceId }, token)); }
+    catch (error) {
+      if (error instanceof DeviceLeaseBusyError) throw new DeviceCliError('DEVICE_BUSY', error.message);
+      throw error;
+    }
     const intent = { deviceId, app: scenario.app, start: scenario.start ?? 'restart', identity: resolved, installedApp,
       ...(this.options.profile ? { profile: this.options.profile } : {}) };
     const acquired = await admission.acquireWithRecovery({ category: 'ios-simulator', device: deviceId, attempt: { kind: 'legacy', id: this.options.runId ?? randomUUID() },

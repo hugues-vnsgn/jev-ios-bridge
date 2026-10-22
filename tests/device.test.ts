@@ -760,14 +760,16 @@ test('an iOS lease left by an exited bridge process is retained without dispatch
   const root = await mkdtemp(join(tmpdir(), 'jev-device-stale-lock-'));
   const { spawnSync } = await import('node:child_process');
   const exited = spawnSync(process.execPath, ['-e', '0']).pid;
-  await writeFile(join(root, `${udid}.lock`), JSON.stringify({ pid: exited, token: 'old' }));
+  const marker = JSON.stringify({ pid: exited, token: 'old' });
+  await writeFile(join(root, `${udid}.lock`), marker);
   const driver = fakeDriver({ cwd: root, lockRoot: root,
     runner: async () => assert.fail('Dead holder cannot authorize device effects') });
   try {
     await assert.rejects(driver.prepare(scenario, new AbortController().signal), /locked/);
-    assert.equal(firstStore(root).inspect(udid)?.state, 'quarantined');
+    assert.equal(firstStore(root).inspect(udid), undefined);
+    assert.equal(await readFile(join(root, `${udid}.lock`), 'utf8'), marker);
   } finally {
-    await assert.rejects(driver.close(new AbortController().signal), /unknown/);
+    await driver.close(new AbortController().signal);
     await rm(root, { recursive: true, force: true });
   }
 });

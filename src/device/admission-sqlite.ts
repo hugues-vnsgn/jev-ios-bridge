@@ -1273,6 +1273,10 @@ export class AdmissionSqlite {
   private command(row: Row): CommandRecord {
     return { id: row.id, componentId: row.component_id, requestId: row.request_id, operation: row.operation, state: row.state, recoveryClaimId: row.recovery_claim_id };
   }
+  markerRecorded(identity: { category: DeviceCategory; value: string }, token: string): boolean {
+    return this.read(db => !!db.prepare('SELECT id FROM owner_generations WHERE platform=? AND device=? AND token=?')
+      .get(identity.category, identity.value, token));
+  }
   markerKnown(expected: OwnerIdentity, token: string): boolean {
     return this.read(db=>{
       this.owned(db,expected);

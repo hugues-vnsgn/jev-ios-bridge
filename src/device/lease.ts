@@ -17,21 +17,36 @@ export class CompatibilityMarker {
   constructor(private readonly options: { root?: string } = {}) {}
   get held(): boolean { return this.file !== undefined; }
 
+  assertKnown(deviceIdentity: string, recorded: (token: string) => boolean): void {
+    const path = this.path(deviceIdentity);
+    let text: string;
+    try { text = readFileSync(path, 'utf8'); }
+    catch (error) {
+      if (error instanceof Error && 'code' in error && error.code === 'ENOENT') return;
+      throw error;
+    }
+    let existing: unknown;
+    try { existing = JSON.parse(text); } catch {}
+    if (!existing || typeof existing !== 'object' || !('token' in existing) || typeof existing.token !== 'string' || !recorded(existing.token)) {
+      throw new DeviceLeaseBusyError(deviceIdentity, existing && typeof existing === 'object' && 'pid' in existing && typeof existing.pid === 'number'
+        ? { processId: existing.pid, ownedProcesses: [] } : undefined, path, false);
+    }
+  }
+
+  private path(deviceIdentity: string): string {
+    return join(this.options.root ?? DEFAULT_LEASE_ROOT, `${deviceIdentity.toUpperCase()}.lock`);
+  }
+
   async take(deviceIdentity: string, claim: AdmissionClaim): Promise<void> {
     if (this.file) throw new Error('Compatibility marker already held');
     const root = this.options.root ?? DEFAULT_LEASE_ROOT;
     mkdirSync(root, { recursive: true, mode: 0o700 });
-    const path = join(root, `${deviceIdentity.toUpperCase()}.lock`);
+    const path = this.path(deviceIdentity);
     let fd: number;
     try { fd = openSync(path, 'wx', 0o600); }
     catch (error) {
       if (!(error instanceof Error) || !('code' in error) || error.code !== 'EEXIST') throw error;
-      let existing: unknown;
-      try { existing = JSON.parse(readFileSync(path, 'utf8')); } catch {}
-      if (!existing || typeof existing !== 'object' || !('token' in existing) || typeof existing.token !== 'string' || !claim.markerKnown(existing.token)) {
-        throw new DeviceLeaseBusyError(deviceIdentity, existing && typeof existing === 'object' && 'pid' in existing && typeof existing.pid === 'number'
-          ? { processId: existing.pid, ownedProcesses: [] } : undefined, path, false);
-      }
+      this.assertKnown(deviceIdentity, token => claim.markerKnown(token));
       unlinkSync(path);
       fd = openSync(path, 'wx', 0o600);
     }

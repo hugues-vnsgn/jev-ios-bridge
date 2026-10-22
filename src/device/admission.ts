@@ -192,6 +192,9 @@ export class Admission {
   }
   readAttempt(identity: AttemptIdentity): AttemptView | undefined { validateAttempt(identity); return this.store.readAttempt(identity); }
   readGeneration(expected: OwnerIdentity): GenerationView { return this.store.readGeneration(expected); }
+  markerRecorded(identity: DeviceIdentity, token: string): boolean {
+    return this.store.markerRecorded(canonicalDevice(identity), token);
+  }
   readDeviceAttributes(identity: DeviceIdentity): unknown {
     const canonical=canonicalDevice(identity);
     return this.store.readDeviceAttributes(canonical);
