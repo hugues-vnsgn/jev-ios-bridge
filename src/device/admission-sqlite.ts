@@ -1282,10 +1282,10 @@ export class AdmissionSqlite {
     return this.read(db => this.importedMarker(db, source) || !!db.prepare('SELECT id FROM owner_generations WHERE platform=? AND device=? AND token=?')
       .get(identity.category, identity.value, token));
   }
-  markerKnown(expected: OwnerIdentity, token: string, source?: MarkerSource): boolean {
+  markerKnown(expected: OwnerIdentity, token: string): boolean {
     return this.read(db=>{
       this.owned(db,expected);
-      return this.importedMarker(db, source) || !!db.prepare('SELECT g.id FROM owner_generations g JOIN fence_receipts f ON f.owner_generation_id=g.id WHERE g.platform=? AND g.device=? AND g.token=? AND g.generation<?')
+      return !!db.prepare('SELECT g.id FROM owner_generations g JOIN fence_receipts f ON f.owner_generation_id=g.id WHERE g.platform=? AND g.device=? AND g.token=? AND g.generation<?')
         .get(expected.category,expected.device,token,expected.generation);
     });
   }

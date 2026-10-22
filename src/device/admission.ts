@@ -317,7 +317,7 @@ function componentLiveness(component:OwnerProcess):'exited'|'alive'|'reused'|'un
 /** Constructed only after durable acquisition. Tokens supplied by requests cannot attach a driver. */
 export interface AdmissionClaim {
   readonly identity: OwnerIdentity;
-  markerKnown(token: string, source?: MarkerSource): boolean;
+  markerKnown(token: string): boolean;
   markerReleased(): boolean;
   onRelease(callback: () => void): void;
   bindDriver(backend?: 'real' | 'fake'): AdmittedSession;
@@ -335,7 +335,7 @@ class OwnedClaim implements AdmissionClaim {
   private attached = false;
   private closers: (() => void)[] = [];
   private releases: (() => void)[] = [];
-  markerKnown(token: string, source?: MarkerSource): boolean { return this.store.markerKnown(this.identity, token, source); }
+  markerKnown(token: string): boolean { return this.store.markerKnown(this.identity, token); }
   markerReleased(): boolean { return this.store.markerReleased(this.identity); }
   onRelease(callback: () => void): void { this.releases.push(callback); }
   private notifyRelease(): void { if (this.markerReleased()) for (const callback of this.releases.splice(0)) callback(); }

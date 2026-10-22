@@ -48,7 +48,7 @@ export class CompatibilityMarker {
     try { fd = openSync(path, 'wx', 0o600); }
     catch (error) {
       if (!(error instanceof Error) || !('code' in error) || error.code !== 'EEXIST') throw error;
-      this.assertKnown(deviceIdentity, (token, source) => claim.markerKnown(token, source));
+      this.assertKnown(deviceIdentity, token => claim.markerKnown(token));
       unlinkSync(path);
       fd = openSync(path, 'wx', 0o600);
     }
