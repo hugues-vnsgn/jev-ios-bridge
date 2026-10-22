@@ -154,6 +154,15 @@ test('the running page explains cross-platform defaults and unset profile budget
   assert.match(page, /unset has no profile ceiling/);
 });
 
+test('the running page documents the optional MCP profile field and pre-run profile refusal codes', () => {
+  const page = guidePage('06-running.md');
+  const start = page.split('\n').find(line => line.startsWith('| `start_scenario` |'));
+  assert.ok(start);
+  assert.match(start, /optional `profile` name/);
+  assert.match(page, /A present but invalid file refuses with `INVALID_PROFILE_FILE`/);
+  assert.match(page, /an unknown selection refuses with `PROFILE_NOT_FOUND`/);
+});
+
 test('the script-format reference says a non-ASCII typed value passes through the device clipboard', () => {
   const page = guidePage('reference/script-format.md');
   assert.match(page, /clipboard/);
