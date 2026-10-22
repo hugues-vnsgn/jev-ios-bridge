@@ -1,5 +1,6 @@
 import assert from 'node:assert/strict';
 import { spawnSync } from 'node:child_process';
+import { writeFileSync } from 'node:fs';
 import { chmod, lstat, mkdir, mkdtemp, readdir, readFile, rm, symlink, utimes, writeFile } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
@@ -2202,3 +2203,80 @@ for (const failure of ['reused-component', 'offline'] as const) {
     }, { identityProbe: recoveryProbe(adb.identityProbe), admissionDependencies: { ownerLiveness: () => 'dead' } });
   });
 }
+
+for (const recoverable of [true, false]) {
+  test(`unknown dead-PID marker blocks ${recoverable ? 'supported' : 'unsupported'} dead-owner recovery`, { timeout: 10000 }, async () => {
+    const root = await mkdtemp(join(tmpdir(), 'jev-android-unknown-marker-'));
+    try {
+      const adb = new FakeAdb({ serial: 'emulator-5554', avd: 'jev-actions-api31' });
+      const old = fakeAndroidAdmission(root, { process: { pid: 7711, incarnation: 'old-owner' } });
+      const previous = old.acquire({ category: 'android-emulator', device: '/fake/avds/jev-actions-api31.avd',
+        attempt: { kind: 'legacy', id: 'previous' }, digest: 'previous', intent: {} });
+      assert.equal(previous.kind, 'acquired');
+      if (previous.kind !== 'acquired') return;
+      if (recoverable) {
+        previous.claim.registerComponent({ id: 'old-forward', kind: 'android-forward', serial: 'emulator-5554',
+          local: 'tcp:49526', remote: 'localabstract:mobilecli-server' });
+        adb.forwards.push({ serial: 'emulator-5554', local: 'tcp:49526', remote: 'localabstract:mobilecli-server' });
+      } else {
+        previous.claim.registerComponent({ id: 'old-agent', kind: 'android-agent', serial: 'emulator-5554',
+          classpath: '/data/local/tmp/jev-ios-bridge-agent.dex', className: 'com.mobilenext.mobilecli.DeviceServer' });
+      }
+      const marker = join(root, 'JEV-ACTIONS-API31.lock');
+      const markerText = JSON.stringify({ pid: 2147483647, token: 'unknown-legacy-token', deviceId: 'jev-actions-api31' });
+      await writeFile(marker, markerText);
+      const admission = fakeAndroidAdmission(root, { ownerLiveness: () => 'dead' });
+      const before = admission.readGeneration(previous.claim.identity);
+      const deviceBefore = admission.inspect({ category: 'android-emulator', value: '/fake/avds/jev-actions-api31.avd' });
+      const agents = fakeAgents(adb);
+      const driver = new AndroidDriver({ runId: 'successor', device: { avd: 'jev-actions-api31' }, runner: adb.run,
+        agentClient: agents.agentClient, identityProbe: adb.identityProbe, clock: fakeClock(), admission,
+        fakeBackend: true, leaseRoot: root, screenshotFolder: root, logcat: new FakeStreams(adb), logFolder: false,
+        tools: async () => ({ adb: '/fake/adb', agent: { path: AGENT_CACHE, sha256: PINNED_AGENT_SHA256 } }) });
+      let refusal: unknown;
+      try { await driver.prepare({ app: { package: 'com.example.android' } }, AbortSignal.timeout(5000)); }
+      catch (error) { refusal = error; }
+      assert.deepEqual({ refusalCode: refusal && typeof refusal === 'object' && 'code' in refusal ? refusal.code : undefined,
+        recoveryEffects: adb.calls, markerUnchanged: await readFile(marker, 'utf8') === markerText },
+      { refusalCode: 'DEVICE_BUSY', recoveryEffects: [], markerUnchanged: true });
+      assert.deepEqual(admission.readGeneration(previous.claim.identity), before, 'no recovery claim, command or owner mutation');
+      assert.deepEqual(admission.inspect({ category: 'android-emulator', value: '/fake/avds/jev-actions-api31.avd' }), deviceBefore);
+      assert.equal(admission.readAttempt({ kind: 'legacy', id: 'successor' }), undefined);
+    } finally { await rm(root, { recursive: true, force: true }); }
+  });
+}
+
+test('a recorded Android marker permits recovery and is replaced only after release', { timeout: 10000 }, async () => {
+  const { CompatibilityMarker } = await import('../src/device/lease.js');
+  await withDriver(new FakeAdb(api31()), async ({ driver, root, adb }) => {
+    const old = fakeAndroidAdmission(root, { process: { pid: 7711, incarnation: 'old-owner' } });
+    const previous = old.acquire({ category: 'android-emulator', device: '/fake/avds/jev-actions-api31.avd',
+      attempt: { kind: 'legacy', id: 'previous' }, digest: 'previous', intent: {} });
+    if (previous.kind !== 'acquired') assert.fail('Expected old owner');
+    previous.claim.registerComponent({ id: 'old-forward', kind: 'android-forward', serial: 'emulator-5554',
+      local: 'tcp:49526', remote: 'localabstract:mobilecli-server' });
+    adb.forwards.push({ serial: 'emulator-5554', local: 'tcp:49526', remote: 'localabstract:mobilecli-server' });
+    await new CompatibilityMarker({ root }).take('jev-actions-api31', previous.claim);
+    await driver.prepare(app(), signal());
+    assert.deepEqual(old.readGeneration(previous.claim.identity).recoveries.map(recovery => recovery.closure), ['accepted']);
+    const current = old.inspect({ category: 'android-emulator', value: '/fake/avds/jev-actions-api31.avd' });
+    assert.equal(current?.generation, 2);
+    assert.equal(JSON.parse(await readFile(join(root, 'JEV-ACTIONS-API31.lock'), 'utf8')).token, current?.owner?.token);
+    await driver.close(signal());
+    assert.equal(await lockFile(root), undefined);
+  }, { admissionDependencies: { ownerLiveness: owner => owner.pid === 7711 ? 'dead' : 'alive' } });
+});
+
+test('an unknown Android marker appearing after admission still refuses at take', { timeout: 10000 }, async () => {
+  let placeMarker = () => {};
+  await withDriver(new FakeAdb(api31()), async ({ driver, root, adb }) => {
+    const path = join(root, 'JEV-ACTIONS-API31.lock');
+    const content = JSON.stringify({ pid: 2147483647, token: 'late-unknown-token', deviceId: 'jev-actions-api31' });
+    placeMarker = () => writeFileSync(path, content);
+    await assert.rejects(driver.prepare(app(), signal()), reason('DEVICE_BUSY'));
+    assert.deepEqual(adb.calls, []);
+    assert.equal(await readFile(path, 'utf8'), content);
+  }, { admissionDependencies: { fault: (point, operation) => {
+    if (point === 'afterCommit' && operation === 'acquire') placeMarker();
+  } } });
+});
