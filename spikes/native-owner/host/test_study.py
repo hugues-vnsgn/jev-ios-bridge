@@ -7,6 +7,8 @@ import sys
 import time
 import hashlib
 import shutil
+import threading
+from contextlib import contextmanager
 from unittest.mock import patch
 from pathlib import Path
 from study import Configuration, Dependencies, ProcessTools, run_study, UDID, NAME, RUNTIME, MAX_JSON
@@ -18,6 +20,19 @@ REFERENCE_RUNNER = "dev.jev.research.native-owner-20261007-reference.xctrunner"
 REFERENCE_FIXTURE = "dev.jev.research.native-owner-20261007-reference-fixture"
 REFERENCE_PLUGIN = "dev.jev.research.native-owner-20261007-reference"
 PREFIX = "JEV_NATIVE_OWNER_V1 "
+
+
+@contextmanager
+def child_release_guard(release):
+    guard = threading.Timer(10, release.touch)
+    guard.start()
+    try:
+        yield
+    finally:
+        guard.cancel()
+        guard.join()
+    if release.exists():
+        raise AssertionError("run_study waited for the fixture child beyond the 10 s release guard")
 
 
 def identity(plan):
@@ -1147,7 +1162,8 @@ class Processes(unittest.TestCase):
         with tempfile.TemporaryDirectory() as root:
             config=configuration(root,0.25); clock=Clock(); tools=RealChildTools(clock,config)
             try:
-                result=run_study("metadata",config,Dependencies(tools,clock.now,clock.sleep))
+                with child_release_guard(config.source_root/"release-child"):
+                    result=run_study("metadata",config,Dependencies(tools,clock.now,clock.sleep))
                 self.assertEqual(result.reason,"ADMISSION_EXPIRED")
                 self.assertEqual(result.status,"retained")
                 self.assertAlmostEqual(clock.now(),0.25)
@@ -1182,7 +1198,8 @@ class Processes(unittest.TestCase):
         with tempfile.TemporaryDirectory() as root:
             config=configuration(root,0.25); clock=Clock(); tools=GrandchildTools(clock,config)
             try:
-                result=run_study("metadata",config,Dependencies(tools,clock.now,clock.sleep))
+                with child_release_guard(config.source_root/"release-child"):
+                    result=run_study("metadata",config,Dependencies(tools,clock.now,clock.sleep))
                 self.assertEqual(result.reason,"ADMISSION_EXPIRED")
                 self.assertAlmostEqual(clock.now(),0.25)
                 self.assertEqual(tools.child.poll(),0)
