@@ -5,7 +5,7 @@ Status: open
 Labels: wayfinder:grilling
 Mode: HITL
 Parent: [Appium Phase 3 decision map](../map.md)
-Blocked by: 06, 17
+Blocked by: 06, 17, 18
 
 ## Question
 
@@ -45,6 +45,10 @@ the [report](https://github.com/hugues-vnsgn/jev-ios-bridge/blob/research/sessio
   - a driver-managed preinstalled runner, reinstalled every session
   - a bridge-managed WDA behind `webDriverAgentUrl`
   - `xcodebuild`, which leaves WDA running after delete
+
+  Shipping the frozen Appium stack recommends always using the preinstalled
+  runner and refusing `webDriverAgentUrl`. Delivering the stack to users
+  decides whether that runner ships.
 - **Idle timer.** `newCommandTimeout` looks inert under appium-mcp, because it
   never calls `executeCommand`. The idle measurement must confirm this.
 

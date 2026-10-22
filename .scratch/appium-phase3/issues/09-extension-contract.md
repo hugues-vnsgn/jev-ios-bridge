@@ -41,6 +41,13 @@ Added from Device side effects of an Appium session:
 - The child environment: no `CAPABILITIES_CONFIG`, `ALLOW_REMOTE_APP_URLS=false`,
   and a deliberate disconnect policy.
 
+Added from Shipping the frozen Appium stack:
+
+- The extension script cannot resolve `appium-mcp/core` by bare specifier from
+  `dist/`, and `exports` has no `require` condition. It must import the
+  extracted stack by absolute file URL, and take `zod` from the same tree.
+- Refuse the WDA-selecting capabilities that the report's section 9 lists.
+
 ## Completion criterion
 
 The owner locks the extension contract and the public-tool allowlist. Write

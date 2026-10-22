@@ -1,7 +1,7 @@
 # Shipping the frozen Appium stack
 
 Type: research
-Status: open
+Status: resolved
 Labels: wayfinder:research
 Mode: AFK
 Parent: [Appium Phase 3 decision map](../map.md)
@@ -56,3 +56,66 @@ becomes a grilling ticket.
 ## Comments
 
 Charted on 2026-10-22.
+
+## Answer
+
+Research resolution, 2026-10-22: the frozen stack cannot reach users through a
+lockfile.
+
+- **The plugin installer refuses it.** Claude Code 2.1.307's automatic plugin
+  install refuses the Phase 1 lock for three reasons:
+  - appium-mcp's optional `applesign` pulls two git-hosted dependencies
+  - both drivers bundle copies of their dependencies (514 `inBundle` entries)
+  - a fresh lock without the bundle flags fails in npm with `EUSAGE`
+
+  This was tested in an isolated `/tmp` config; the real `~/.claude` was not
+  touched.
+- **The npm tarball doesn't freeze it either.** A tarball installed from a
+  local file ignores its own shrinkwrap, so even today's tarball channel does
+  not pin transitive versions.
+
+Recommended delivery: two archives built at release time. Each is a plain file
+outside `node_modules`, in both the npm tarball and the plugin zip.
+
+1. **A stack archive.** It holds the tree from `npm ci --ignore-scripts` on the
+   byte-identical Phase 1 lock, with a per-file manifest: about 88–91 MB
+   gzipped, 368 MB extracted. It carries the UiAutomator2 APKs. A fresh install
+   reproduced the Phase 1 tree byte for byte, apart from two optional wasm
+   packages.
+2. **A WDA archive.** It holds the exact Phase 1 runner: tree hash `5d1fc1c9…`,
+   universal binary, 7.5 MB gzipped.
+
+On first use the bridge verifies the hashes and extracts into a
+content-addressed private directory, with no network, npm or `xcodebuild`.
+Sessions then always pass `appium:usePreinstalledWDA=true` and the absolute
+`appium:prebuiltWDAPath`, and refuse every other capability that selects a
+WDA. The bridge never calls appium-mcp's prepare tools.
+
+The private MCP client is `@modelcontextprotocol/sdk` pinned at exactly 1.32.1,
+the version frozen inside the stack, negotiating `2025-11-25`. A 2.x client
+would need legacy negotiation pinned, because `auto` starts an unowned second
+child.
+
+Other findings:
+
+- **The qualified WDA runner exists only once.** It is untracked, inside the
+  `feat/appium-mcp-migration` worktree's `runtime/`.
+- **Upstream's prebuilt is not the qualified artifact.** Upstream's v16.14.2
+  prebuilt zip was built with Xcode 16.4 and reports 16.14.1.
+- **Both SDK generations load in the private child**, and Phase 1's
+  loaded-file record left them out.
+- **Apple silicon only for now.** The `@appium/coresim` native addon ships
+  only a darwin-arm64 prebuild.
+
+[Sourced report](https://github.com/hugues-vnsgn/jev-ios-bridge/blob/research/shipping-frozen-stack/.scratch/appium-phase3/research/shipping-frozen-stack.md),
+branch `research/shipping-frozen-stack` at `ee6e24414`. Section 9 holds the
+proposed text for "Entry and composition". It goes into the spec only when the
+owner settles the delivery choices. No device run.
+
+Map changes from this answer:
+
+- The report's ten owner choices became the grilling ticket Delivering the
+  stack to users.
+- Session lifetime now waits on it, for WDA ownership.
+- Extension contract gained the child-entry finding.
+- Vendor report fields and stack provenance gained the unrecorded SDK loads.

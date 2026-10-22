@@ -67,6 +67,7 @@ sorted by the owner on 2026-10-22; the build plan schedules them:
 
 - [What the old vendors give us today](issues/03-what-the-old-vendors-give-us.md): MobileBuildMCP supplies all iOS observation, refs, input, settle, screenshot, launch and the app-exit signal; mobilecli only Android's agent; AXe is never called; 17 public surfaces carry vendor meaning.
 - [Device side effects of an Appium session](issues/02-session-device-side-effects.md): sessions install packages and change global settings and Simulator preferences that today's drivers never touch; app-touching effects can be switched off for capture and attach; four Android effects cannot; appium-mcp ignores `settings[...]` capabilities.
+- [Shipping the frozen Appium stack](issues/01-shipping-the-frozen-stack.md): the plugin installer refuses the stack's lock, so ship two release-built archives (stack and exact Phase 1 WDA runner) extracted on first use; private client `@modelcontextprotocol/sdk` 1.32.1; ten delivery choices go to the owner.
 
 ## Route
 
@@ -90,6 +91,7 @@ flowchart LR
     T15["15 Native steps outside the helper list<br/><small>grilling</small>"]
     T16["16 Settling and screen change under Appium<br/><small>grilling</small>"]
     T17["17 Allowed device effects of a session<br/><small>prototype</small>"]
+    T18["18 Delivering the stack to users<br/><small>grilling</small>"]
     T03 --> T05
     T04 --> T05
     T04 --> T06
@@ -103,6 +105,7 @@ flowchart LR
     T08 --> T09
     T06 --> T10
     T17 --> T10
+    T18 --> T10
     T10 --> T11
     T03 --> T12
     T03 --> T13
@@ -123,8 +126,8 @@ flowchart LR
     classDef claimed fill:#dbeafe,stroke:#2563eb,color:#1e3a8a
     classDef frontier fill:#dcfce7,stroke:#16a34a,color:#14532d,stroke-width:2px
     classDef blocked fill:#ffffff,stroke:#a1a1aa,color:#18181b
-    class T02,T03 resolved
-    class T01,T04,T12,T15 frontier
+    class T01,T02,T03 resolved
+    class T04,T12,T15,T18 frontier
     class T05,T06,T07,T08,T09,T10,T11,T13,T14,T16,T17 blocked
 ```
 <!-- route:end -->

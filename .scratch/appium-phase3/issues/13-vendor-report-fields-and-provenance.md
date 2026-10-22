@@ -39,6 +39,11 @@ public surfaces with vendor meaning. Settle at least:
 The 15-role list belongs to Observation mapping, and `SCREEN_CHANGED` to
 Settling and screen change under Appium.
 
+Added from Shipping the frozen Appium stack: the private child loads both MCP
+SDK generations (1.32.1 through fastmcp, 2.3.1 through mcp-proxy). It also
+loads fastmcp, mcp-proxy and zod. Phase 1's loaded-file record filtered all of
+these out. Provenance should either record them or say why it doesn't.
+
 ## Completion criterion
 
 The owner locks each field's Appium meaning and the provenance shape. Write
