@@ -1,7 +1,7 @@
 # Device side effects of an Appium session
 
 Type: research
-Status: open
+Status: resolved
 Labels: wayfinder:research
 Mode: AFK
 Parent: [Appium Phase 3 decision map](../map.md)
@@ -41,7 +41,7 @@ only: no device run.
 A table of effect, when it happens, the controlling capability, whether
 Phase 1 observed it, and whether it can be turned off. Flag every effect that
 cannot be turned off, especially for Android capture and attach, which must
-leave the app as it is. This feeds Session lifetime and allowed device effects.
+leave the app as it is. This feeds Session lifetime.
 
 ## Context
 
@@ -52,3 +52,63 @@ leave the app as it is. This feeds Session lifetime and allowed device effects.
 ## Comments
 
 Charted on 2026-10-22.
+
+## Answer
+
+Research resolution, 2026-10-22: a session on the pinned stack changes the
+device far more than today's drivers, which install nothing and change no
+setting.
+
+- **Android.** Creating a session:
+  - relaxes the device-global hidden-API policy
+  - installs the Settings helper with all its permissions, notification-listener
+    access and a `PROJECT_MEDIA` appop
+  - installs two server packages
+  - adds them to the Doze whitelist
+  - forwards one or two ports
+  - starts an instrumentation and logcat
+
+  Unless `skipDeviceInitialization` is set, it also launches the helper in
+  front of the current app and never brings the app back. Deleting the session
+  removes the forwards, force-stops the server packages and deletes the
+  hidden-API keys. The installed packages and grants stay.
+- **iOS.** Creating a session:
+  - always writes Simulator and DeviceHub preferences under the child's `HOME`
+  - can restart the simulator or quit the UI client, depending on `isHeadless`
+  - wipes app data unless `noReset: true`
+  - reinstalls and launches WDA, and sets keyboard defaults
+- **Leftovers.** In Phase 1, unclean exits left Android forwards and the WDA
+  runner behind.
+
+Four effects cannot be turned off:
+
+- the Android hidden-API change
+- the Android instrumentation
+- the Android system-port forward
+- package installs, unless the packages are provisioned beforehand
+
+None of them touches the app or the foreground. Capture and attach stay safe
+with `skipDeviceInitialization`, no `appPackage`, `noReset: true` and
+`skipUnlock`. None of this has been run yet.
+
+Side findings:
+
+- appium-mcp passes capabilities straight to the driver, so no
+  `appium:settings[...]` capability is ever applied.
+- appium-mcp drops any capability whose value is `''`. Page-source settings
+  must therefore be applied after the session is created.
+- appium-mcp turns on relaxed security, which enables `adb_shell`,
+  `shutdown_other_sims` and similar features. The bridge must refuse them.
+
+[Sourced report](https://github.com/hugues-vnsgn/jev-ios-bridge/blob/research/session-device-side-effects/.scratch/appium-phase3/research/session-device-side-effects.md),
+branch `research/session-device-side-effects` at `3c69d2931`. No device run.
+
+Map changes from this answer:
+
+- Owner choices 1, 2, 3, 4, 6 and 8 became the new prototype Allowed device
+  effects of a session.
+- Choices 5 (WDA ownership) and 7 (disconnect policy) moved into Session
+  lifetime. That ticket was narrowed from "Session lifetime and allowed device
+  effects".
+- The settings and relaxed-security findings widen Observation mapping and
+  Extension contract.

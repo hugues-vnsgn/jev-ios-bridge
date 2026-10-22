@@ -40,6 +40,12 @@ Added from What the old vendors give us today:
 - Map the iOS 15-role vocabulary (MobileBuildMCP's) and the Android roles
   against Appium element types.
 
+Added from Device side effects of an Appium session: appium-mcp never applies
+`appium:settings[...]` capabilities (iOS `pageSourceExcludedAttributes`
+included) and drops `''` values. Apply the page-source settings through the
+driver's settings call after the session is created, and verify they took
+effect. The candidate settings above must be applied that way.
+
 ## Completion criterion
 
 The owner reacts to the diffs and locks four things: the pinned source

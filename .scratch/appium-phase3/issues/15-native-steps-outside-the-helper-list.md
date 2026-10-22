@@ -23,7 +23,10 @@ health, owned fencing, presentation and bounded simulator creation.
 ## Required investigation or discussion
 
 Start from the [vendor inventory](https://github.com/hugues-vnsgn/jev-ios-bridge/blob/research/old-vendor-inventory/.scratch/appium-phase3/research/old-vendor-inventory.md)
-(table G and finding 4) and the side-effect table. For each step, choose
+(table G and finding 4) and the
+[side-effect report](https://github.com/hugues-vnsgn/jev-ios-bridge/blob/research/session-device-side-effects/.scratch/appium-phase3/research/session-device-side-effects.md).
+That report shows the driver attempts its own unlock where today's bridge
+refuses a locked screen. For each step, choose
 between three homes:
 
 - an Appium capability or extension operation

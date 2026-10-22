@@ -66,6 +66,7 @@ sorted by the owner on 2026-10-22; the build plan schedules them:
 <!-- one line per resolved ticket: [title](issues/NN-slug.md): gist -->
 
 - [What the old vendors give us today](issues/03-what-the-old-vendors-give-us.md): MobileBuildMCP supplies all iOS observation, refs, input, settle, screenshot, launch and the app-exit signal; mobilecli only Android's agent; AXe is never called; 17 public surfaces carry vendor meaning.
+- [Device side effects of an Appium session](issues/02-session-device-side-effects.md): sessions install packages and change global settings and Simulator preferences that today's drivers never touch; app-touching effects can be switched off for capture and attach; four Android effects cannot; appium-mcp ignores `settings[...]` capabilities.
 
 ## Route
 
@@ -81,13 +82,14 @@ flowchart LR
     T07["07 Text replacement and shown value<br/><small>prototype</small>"]
     T08["08 Tap, gestures and coordinates<br/><small>prototype</small>"]
     T09["09 Extension contract<br/><small>grilling</small>"]
-    T10["10 Session lifetime and allowed device effects<br/><small>grilling</small>"]
+    T10["10 Session lifetime<br/><small>grilling</small>"]
     T11["11 Fence evidence for Appium components<br/><small>grilling</small>"]
     T12["12 iOS app output and crash detection without MobileBuildMCP<br/><small>grilling</small>"]
     T13["13 Vendor report fields and stack provenance<br/><small>grilling</small>"]
     T14["14 Phase 3 build plan<br/><small>grilling</small>"]
     T15["15 Native steps outside the helper list<br/><small>grilling</small>"]
     T16["16 Settling and screen change under Appium<br/><small>grilling</small>"]
+    T17["17 Allowed device effects of a session<br/><small>prototype</small>"]
     T03 --> T05
     T04 --> T05
     T04 --> T06
@@ -99,8 +101,8 @@ flowchart LR
     T05 --> T09
     T07 --> T09
     T08 --> T09
-    T02 --> T10
     T06 --> T10
+    T17 --> T10
     T10 --> T11
     T03 --> T12
     T03 --> T13
@@ -112,16 +114,18 @@ flowchart LR
     T13 --> T14
     T15 --> T14
     T16 --> T14
+    T17 --> T14
     T02 --> T15
     T05 --> T16
     T06 --> T16
+    T04 --> T17
     classDef resolved fill:#e4e4e7,stroke:#a1a1aa,color:#52525b
     classDef claimed fill:#dbeafe,stroke:#2563eb,color:#1e3a8a
     classDef frontier fill:#dcfce7,stroke:#16a34a,color:#14532d,stroke-width:2px
     classDef blocked fill:#ffffff,stroke:#a1a1aa,color:#18181b
-    class T03 resolved
-    class T01,T02,T04,T12 frontier
-    class T05,T06,T07,T08,T09,T10,T11,T13,T14,T15,T16 blocked
+    class T02,T03 resolved
+    class T01,T04,T12,T15 frontier
+    class T05,T06,T07,T08,T09,T10,T11,T13,T14,T16,T17 blocked
 ```
 <!-- route:end -->
 

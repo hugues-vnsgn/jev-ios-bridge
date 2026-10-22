@@ -26,12 +26,20 @@ On the private pair, one run per check:
   prepare, park, then action handover).
 - Today's per-run startup on the same devices, for comparison.
 
+Added from Device side effects of an Appium session:
+
+- Idle for longer than 300 s: `newCommandTimeout` looks inert under
+  appium-mcp, which never calls `executeCommand`.
+- Whether the MCP child exits once stdin ends.
+- What `APPIUM_MCP_ON_CLIENT_DISCONNECT=delete_all` does when stdin is closed
+  and when the bridge is killed.
+
 Automation timing is not app performance. Label these numbers as session cost.
 
 ## Completion criterion
 
 The owner reacts to the numbers. The result is the evidence that Session
-lifetime and allowed device effects decides from. Link the measurements as an
+lifetime decides from. Link the measurements as an
 asset.
 
 ## Context

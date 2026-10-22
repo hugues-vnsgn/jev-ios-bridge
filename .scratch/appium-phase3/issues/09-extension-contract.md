@@ -29,6 +29,18 @@ Settle these:
 No arbitrary driver methods or scripts, no remote attachment, and no private
 upstream imports.
 
+Added from Device side effects of an Appium session:
+
+- Driver settings after the session is created. appium-mcp drops
+  `settings[...]` capabilities.
+- The capability allowlist the bridge validates. Tool allowlists work per tool
+  name, but `appium_session_management` also exposes `attach`, `select` and
+  `remoteServerUrl`.
+- Refusing the insecure features that relaxed security turns on (`adb_shell`,
+  `shutdown_other_sims`, `adb_listen_all_network`, remote app URLs).
+- The child environment: no `CAPABILITIES_CONFIG`, `ALLOW_REMOTE_APP_URLS=false`,
+  and a deliberate disconnect policy.
+
 ## Completion criterion
 
 The owner locks the extension contract and the public-tool allowlist. Write
