@@ -1,7 +1,8 @@
 # Private pair ready for prototypes
 
 Type: task
-Status: open
+Status: claimed
+Claimed by: root (Claude) via the Codex worker, brief ~/.codex/reports/jev-ios-bridge/phase3-build/T04-private-pair-brief.md
 Labels: wayfinder:task
 Mode: AFK
 Parent: [Appium Phase 3 decision map](../map.md)
