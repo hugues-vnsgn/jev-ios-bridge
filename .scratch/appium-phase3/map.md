@@ -81,6 +81,8 @@ sorted by the owner on 2026-10-22; the build plan schedules them:
 - [iOS app output and crash detection without MobileBuildMCP](issues/12-ios-app-output-and-crash-detection.md): the bridge launches the iOS app natively with a console it owns (prints, `APP_EXITED` by PID) plus `log stream`; Appium never relaunches; attaching to that app is unproven and goes to prototype 06 (ADR-0014).
 - [Native steps outside the helper list](issues/15-native-steps-outside-the-helper-list.md): iOS boot and install for observed preparation are native simctl helpers; Android restart moves to Appium `startActivity`; Android wake and read-only probes stay native, with `skipUnlock` and `DEVICE_LOCKED` kept (ADR-0014).
 - [Phase 3 build plan](issues/14-phase-3-build-plan.md): approved to build 2026-10-23 under the owner's grant; ten stacked PRs on two Codex workers; 08, 09 and 19 gate only P3.5, P3.3 and P3.4's alias rows.
+- [Tap, gestures and coordinates](issues/08-tap-gestures-and-coordinates.md): one explicit W3C sequence per input, with no convenience handlers (they hide retries); today's geometry is kept, including the actual 28% iOS stroke; the iOS edge-back stroke is kept and its parity goes to Phase 4; Android `tapAt` is proved at identity scale.
+- [Extension contract](issues/09-extension-contract.md): three public tools (guarded session create and delete, `perform_actions`, page source) plus the `jev-bridge` v1 extension with seven session-bound operations; closed error set; the fake shares the schemas.
 
 ## Route
 
@@ -140,10 +142,8 @@ flowchart LR
     classDef claimed fill:#dbeafe,stroke:#2563eb,color:#1e3a8a
     classDef frontier fill:#dcfce7,stroke:#16a34a,color:#14532d,stroke-width:2px
     classDef blocked fill:#ffffff,stroke:#a1a1aa,color:#18181b
-    class T01,T02,T03,T04,T05,T06,T07,T10,T11,T12,T13,T14,T15,T16,T17,T18 resolved
-    class T08 claimed
+    class T01,T02,T03,T04,T05,T06,T07,T08,T09,T10,T11,T12,T13,T14,T15,T16,T17,T18 resolved
     class T19 frontier
-    class T09 blocked
 ```
 <!-- route:end -->
 

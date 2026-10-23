@@ -1,7 +1,7 @@
 # Tap, gestures and coordinates
 
 Type: prototype
-Status: claimed
+Status: resolved
 Claimed by: root (Claude); evidence built by the Codex worker (brief ~/.codex/reports/jev-ios-bridge/phase3-build/P08-tap-gestures-brief.md); owner decides
 Labels: wayfinder:prototype
 Mode: HITL
@@ -53,3 +53,21 @@ into the "Operation contract" section of the Phase 3 specification.
 ## Comments
 
 Charted on 2026-10-22.
+Resolved on 2026-10-23 by the root under the owner's grant to decide.
+
+## Answer
+
+Prototype `prototype/tap-gestures` at `50810ecac`. Evidence is in
+`~/.codex/reports/jev-ios-bridge/phase3-build/P08-evidence/`.
+
+- One app callback for every element click, W3C centre tap, vertical stroke
+  and back action, on both platforms.
+- The frozen convenience handlers hide retries (up to three mutations for an
+  iOS swipe, two for a long press), so every input becomes one explicit W3C
+  sequence.
+- The iOS scroll keeps the actual 28% stroke. The Android identity conversion
+  is proved at 320×640.
+- The iOS edge stroke did not navigate. It is kept, and its parity goes to
+  Phase 4.
+
+The locked text is "Locked tap and gestures" in the Phase 3 specification.

@@ -98,6 +98,53 @@ generation follows the frozen server's: a future stack on SDK 2.x changes the
 client in the same re-freeze, with legacy negotiation pinned explicitly, never
 `auto`, which would start an unowned second child.
 
+**Locked extension contract** (root, 2026-10-23, under the owner's grant to decide; [ticket 09](../../appium-phase3/issues/09-extension-contract.md)):
+
+- **Public tools stay where they are safe.** The private server registers
+  exactly three public tools, and everything else is unregistered:
+  - `appium_session_management`. A bridge guard allows only create and delete.
+    `attach`, `select` and `remoteServerUrl` are refused before the call, and
+    the capabilities are checked against the pinned profile.
+  - `appium_perform_actions`. It is one command with no fallback (P08 source
+    audit), so it carries every tap, swipe, scroll, hold and iOS edge stroke.
+  - `appium_get_page_source`. Under the 10 s deadline and the bounded parser.
+  
+  Screenshots come from the extension, together with the frame they belong
+  to. The convenience handlers stay unregistered because they hide retries:
+  click, swipe, scroll, scroll-to-element, long press and execute-script.
+- **The extension** is named `jev-bridge`, version 1. It is loaded through
+  public `appium-mcp/core` by absolute file URL into the extracted stack, and
+  takes `zod` from the same tree. It has seven operations, and each one sends
+  at most the native commands listed:
+  - `jev_session_inventory`: the session id, platform and device id, plus
+    the driver component processes and ports, for the fence. Read only.
+  - `jev_settings`: applies the locked settings and returns the readback.
+  - `jev_screen`: the PNG plus the window rect and orientation, read the way
+    each platform needs (Android `getOrientation`, iOS `GET /orientation`).
+    Read only.
+  - `jev_replace_text`: the locked text sequence on exactly one element
+    matched by the bridge's locator. Zero or several matches refuse before
+    any input.
+  - `jev_android_back`: one `pressKeyCode(4)`.
+  - `jev_start_activity`: Android `startActivity` with the locked extras.
+  - `jev_terminate_app`: one terminate by bundle id or package.
+- **Binding.** Every request carries the session id and the extension
+  version. A different session gives `SESSION_MISMATCH`, a different version
+  gives `VERSION_MISMATCH`, and an unlisted operation gives `NOT_ALLOWED`.
+  Nothing is dispatched in those cases.
+- **Results.** Every result, public or extension, is parsed by a bridge-side
+  schema before use. An unparsable result counts as a lost acknowledgement.
+  Errors are one closed set (`SESSION_MISMATCH`, `VERSION_MISMATCH`,
+  `NOT_ALLOWED`, `NOT_UNIQUE`, `DRIVER_ERROR`, `TIMEOUT`), with redacted
+  messages.
+- **Never.** No arbitrary driver methods or scripts, no remote attachment, no
+  private upstream imports.
+- **Fake provider.** The fake provider replays the same tool names and
+  schemas from recorded wire. A recording's header carries the extension
+  version, so a version bump forces a re-record. The schemas live in one
+  module that the extension, the bridge and the fake all import.
+- No ADR. The contract is internal and versioned, so it is reversible.
+
 ## Observation contract
 
 Parse bounded XML with platform/root validation and entity/DTD refusal. Extract
@@ -274,6 +321,51 @@ prototype `prototype/text-replacement` at `a6e3cbbc5`):
 Keep existing iOS attach and coordinate requests explicitly refused before
 input. Prove Android conversion on at least two device sizes. Do not relabel
 Appium timings as app performance or copy unmeasured expiry/tap-alias metrics.
+
+**Locked tap and gestures** (root, 2026-10-23, under the owner's grant to decide; [ticket 08](../../appium-phase3/issues/08-tap-gestures-and-coordinates.md); prototype `prototype/tap-gestures` at `50810ecac`):
+
+- **One command per input.** Every tap, swipe, scroll, hold and iOS edge
+  stroke is exactly one explicit W3C sequence in one `appium_perform_actions`
+  call. A lost reply closes dispatch, and nothing is resent. P08 counted one
+  app callback per trial on both platforms.
+- **No convenience handlers.** In the frozen 1.97.0 source, iOS swipe can send
+  up to three mutations, long press two, and scroll-to-element loops. Element
+  click can scroll an offscreen element implicitly. None of them is used.
+- **Tap.** The pointer moves to the centre of the bound target's frame in the
+  fresh snapshot, presses, pauses 50 ms and releases.
+- **Swipe and scroll** keep today's geometry and `actPath`:
+  - Android strokes take 1000 ms. They run from 90% to 10% inside the largest
+    eligible scrollable, or from 70% to 30% of the screen when there is none.
+  - The iOS scroll keeps the stroke MobileBuildMCP actually made. Distance 0.4
+    is applied after 15% insets of at least 24 points, which gives 28% of a
+    tall frame (P08 measured 180 of 640 points). It keeps AXe's default
+    durations too: 1.0 s for a swipe, and a centred 200-point stroke in 0.5 s
+    for screen-middle.
+- **Back.**
+  - **Android:** the Back key through `jev_android_back`.
+  - **iOS:** the same order as today. If the screen has a navigation back
+    button, the bridge taps it (P08 counted one tap and saw the return).
+    Otherwise it makes AXe's left-edge stroke, from x=20 to width-20 in
+    0.3 s.
+
+  In P08 that edge stroke registered nothing and did not go back. It is kept
+  rather than refused, and its parity is a listed Phase 4 item, so no working
+  script is downgraded to `UNSUPPORTED_ACTION`.
+- **Observed tap with a hold.** Press, pause for the authored hold, release.
+  The authored hold is recorded. P08 measured iOS callbacks about 20–25 ms
+  above the authored value (median 74 ms for 50 ms). That is a fixture timing
+  span, not a defect.
+- **Screenshots and Android `tapAt`.**
+  - The `jev_screen` PNG becomes a JPEG at most 800 px on the long side, never
+    enlarged.
+  - `tapAt` converts screenshot pixels to device pixels using the frame
+    returned with that screenshot, rounded to whole pixels. It refuses if the
+    point is out of bounds, the evidence is stale, or the orientation or size
+    changed.
+  - P08 proved the path at identity scale on the 320×640 AVD. Unit tests
+    cover the scaling math. Non-unit scaling, a second size and rotation are
+    Phase 4 items.
+  - iOS `tapAt` stays `UNSUPPORTED_ACTION`.
 
 **Locked device effects** (owner, 2026-10-23, [ticket 17](../../appium-phase3/issues/17-allowed-device-effects.md); diffs on `prototype/device-effects` at `14588abc2`):
 
