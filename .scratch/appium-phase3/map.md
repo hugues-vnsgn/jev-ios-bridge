@@ -80,6 +80,7 @@ sorted by the owner on 2026-10-22; the build plan schedules them:
 - [Delivering the stack to users](issues/18-delivering-the-stack-to-users.md): ship two release archives (unpruned stack, exact Phase 1 WDA) extracted offline into one shared per-account copy; Apple silicon only; claim iOS 26.5/Xcode 27.0 and warn outside it; Node 24+ with a Phase 4 live case; npm and plugin both supported; full notices file; owner-triggered re-freeze; client sdk 1.32.1 (ADR-0013).
 - [iOS app output and crash detection without MobileBuildMCP](issues/12-ios-app-output-and-crash-detection.md): the bridge launches the iOS app natively with a console it owns (prints, `APP_EXITED` by PID) plus `log stream`; Appium never relaunches; attaching to that app is unproven and goes to prototype 06 (ADR-0014).
 - [Native steps outside the helper list](issues/15-native-steps-outside-the-helper-list.md): iOS boot and install for observed preparation are native simctl helpers; Android restart moves to Appium `startActivity`; Android wake and read-only probes stay native, with `skipUnlock` and `DEVICE_LOCKED` kept (ADR-0014).
+- [Phase 3 build plan](issues/14-phase-3-build-plan.md): approved to build 2026-10-23 under the owner's grant; ten stacked PRs on two Codex workers; 08, 09 and 19 gate only P3.5, P3.3 and P3.4's alias rows.
 
 ## Route
 
@@ -123,7 +124,6 @@ flowchart LR
     T03 --> T12
     T03 --> T13
     T05 --> T13
-    T09 --> T14
     T10 --> T14
     T11 --> T14
     T12 --> T14
@@ -131,7 +131,6 @@ flowchart LR
     T15 --> T14
     T16 --> T14
     T17 --> T14
-    T19 --> T14
     T02 --> T15
     T05 --> T16
     T06 --> T16
@@ -141,10 +140,10 @@ flowchart LR
     classDef claimed fill:#dbeafe,stroke:#2563eb,color:#1e3a8a
     classDef frontier fill:#dcfce7,stroke:#16a34a,color:#14532d,stroke-width:2px
     classDef blocked fill:#ffffff,stroke:#a1a1aa,color:#18181b
-    class T01,T02,T03,T04,T05,T06,T07,T10,T11,T12,T13,T15,T16,T17,T18 resolved
+    class T01,T02,T03,T04,T05,T06,T07,T10,T11,T12,T13,T14,T15,T16,T17,T18 resolved
     class T08 claimed
     class T19 frontier
-    class T09,T14 blocked
+    class T09 blocked
 ```
 <!-- route:end -->
 

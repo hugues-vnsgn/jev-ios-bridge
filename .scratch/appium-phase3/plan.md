@@ -1,8 +1,9 @@
 # Appium Phase 3 build plan
 
-Status: DRAFT. Ticket 14 is still open. The extension contract (09), the text
-and gesture prototypes (07, 08) and the fixture-app coverage (19) are still
-open, and the owner has not approved this plan.
+Status: APPROVED TO BUILD on 2026-10-23. The owner asked to move faster and
+told the root to decide and start. The remaining planning tickets no longer
+hold the whole plan. Each one gates only the PR that needs it (see "Open
+gates").
 
 Phase 3 builds the Appium device driver behind the bridge's existing contracts
 and switches every entry point to it. Users notice nothing until the last PR,
@@ -21,12 +22,19 @@ and the root asks the owner.
 - **Roles.**
   - **Root:** Claude. Writes each brief, verifies, owns branch topology,
     asks the owner.
-  - **Worker:** the Codex pane at Orca leaf `04af4618`. Model GPT-6.1-Sol only.
-    No subagent or reviewer on any other model.
+  - **Worker A:** the Codex pane at Orca leaf `04af4618`. It owns the device
+    lane: it finishes P08, runs P19, then builds P3.7 and P3.6.
+  - **Worker B:** a second Codex pane at Orca leaf `fdc9c39c`. It owns the main
+    chain: P3.1, P3.2, P3.3, P3.4, P3.5, P3.8, P3.9, P3.10.
+  - Both workers use GPT-6.1-Sol only, with no subagent or reviewer on any
+    other model. Only one of them touches a device at a time.
   - **Owner:** merges every PR.
-- **Order.** One PR at a time, in the order below. Each PR branches from `main`
-  after its parent merges. There is no stacking, because one worker builds
-  serially.
+- **Order.** PRs are stacked. The planning PR (`feat/appium-phase3`) is the
+  root, and each build PR branches from its parent's branch and targets it, so
+  no worker waits for a merge. The owner merges bottom-up with merge commits,
+  and GitHub retargets each child to `main` as its parent lands. The root is
+  the only stacker. When a parent changes, the child merges it in and never
+  rebases.
 - **Briefs.** Each PR's brief is this plan's PR section plus
   `~/.codex/reports/jev-ios-bridge/phase3-build/owner-rules.md`. Before writing
   the brief, the root re-reads both against trunk.
@@ -105,9 +113,9 @@ when approving this plan.
   - An Intel host and Node 22 refuse before effects.
   - The packaging proof finds both archives and the notices file in the
     tarball and the plugin zip, and extracts them offline.
-- **Spikes recorded.** Claude Code installing a roughly 100 MB plugin from a
-  draft release on a throwaway repo, and the Application Support path with its
-  space. Two processes doing first use at once is covered by a test that uses
+- **Spikes recorded.** The Application Support path with its space. Installing
+  a roughly 100 MB plugin from a real release stays a Phase 4 live claim. Two
+  processes doing first use at once is covered by a test that uses
   the admission store as the lock.
 
 ### P3.2 Private MCP client, sessions and the fake provider
@@ -197,7 +205,7 @@ when approving this plan.
 
 ### P3.6 Native helpers and diagnostics
 
-- **Depends on.** P3.5. Cap 15M.
+- **Depends on.** P3.2 (it shares no files with P3.3 to P3.5). Cap 15M.
 - **Owns.**
   - `src/appium/native/`: the iOS `simctl launch --console-pty` launch and its
     console owner, the `log stream` observer, observed-preparation
@@ -297,11 +305,13 @@ This matches the specification's "Verification and exit".
       crashes, the 20 cycles, the phone, Node 24, real-HOME and fresh-keyboard
       effects, and plugin install from a real release.
 
-## Open before approval
+## Open gates
 
-- Ticket 09 fills in P3.3.
-- 07 and 08 fill in P3.5.
-- 19 confirms the mapping and alias rows used by P3.4.
-- The owner confirms the fake-provider design above, and decides whether a
-  second worker is wanted. With one worker the build runs serially (about 230M
-  processed tokens of caps). P3.7 is the natural parallel lane.
+Each gate holds only the PR named. Everything else builds now.
+
+- Ticket 09 (extension contract) gates P3.3. The root locks it from the P05,
+  P07 and P08 findings and reports the choice to the owner.
+- Ticket 08 (tap and gestures) gates P3.5.
+- Ticket 19 (fixture coverage) gates only the duplicate and alias rows of P3.4.
+  A failed unique-target proof reopens the alias choice.
+- The fake-provider design above is adopted as written.
