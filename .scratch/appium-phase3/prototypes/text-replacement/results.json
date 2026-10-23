@@ -1,0 +1,306 @@
+{
+  "evidence": "/Users/hugues_mini/.codex/reports/jev-ios-bridge/phase3-build/P07-evidence",
+  "base": "5a1ba9b80",
+  "countBasis": "FIXTURE_EVENT callbacks only. Fixture does not instrument OS key events.",
+  "rows": [
+    {
+      "platform": "ios",
+      "kind": "plain",
+      "input": "-leading-hyphen",
+      "steps": [
+        {
+          "operation": "clear",
+          "callbacks": {},
+          "keyboardAfter": false
+        },
+        {
+          "operation": "set",
+          "callbacks": {
+            "focus": 1,
+            "change": 16
+          },
+          "keyboardAfter": true
+        }
+      ],
+      "freshValue": "-leading-hyphen",
+      "freshFocus": "unknown",
+      "mutatorResponseEcho": false,
+      "errorEcho": false,
+      "capture": "ios/plain-after-set.xml"
+    },
+    {
+      "platform": "ios",
+      "kind": "unicode",
+      "input": "Tiếng Việt 日本語 café 👩🏽‍💻",
+      "steps": [
+        {
+          "operation": "clear",
+          "callbacks": {},
+          "keyboardAfter": false
+        },
+        {
+          "operation": "set",
+          "callbacks": {
+            "focus": 1,
+            "change": 22
+          },
+          "keyboardAfter": true
+        }
+      ],
+      "freshValue": "Tiếng Việt 日本語 café 👩🏽‍💻",
+      "freshFocus": "unknown",
+      "mutatorResponseEcho": false,
+      "errorEcho": false,
+      "capture": "ios/unicode-after-set.xml"
+    },
+    {
+      "platform": "ios",
+      "kind": "formatted",
+      "input": "123456789",
+      "steps": [
+        {
+          "operation": "clear",
+          "callbacks": {},
+          "keyboardAfter": false
+        },
+        {
+          "operation": "set",
+          "callbacks": {
+            "focus": 1,
+            "change": 10
+          },
+          "keyboardAfter": true
+        }
+      ],
+      "freshValue": "123456789",
+      "freshFocus": "unknown",
+      "mutatorResponseEcho": false,
+      "errorEcho": false,
+      "capture": "ios/formatted-after-set.xml"
+    },
+    {
+      "platform": "ios",
+      "kind": "empty",
+      "input": "",
+      "steps": [
+        {
+          "operation": "clear",
+          "callbacks": {},
+          "keyboardAfter": false
+        },
+        {
+          "operation": "set",
+          "callbacks": {
+            "focus": 1,
+            "change": 1
+          },
+          "keyboardAfter": true
+        }
+      ],
+      "freshValue": "Empty hint",
+      "freshFocus": "unknown",
+      "mutatorResponseEcho": false,
+      "errorEcho": false,
+      "capture": "ios/empty-after-set.xml"
+    },
+    {
+      "platform": "ios",
+      "kind": "prefilled",
+      "input": "Replacement",
+      "steps": [
+        {
+          "operation": "clear",
+          "callbacks": {
+            "focus": 1,
+            "change": 2
+          },
+          "keyboardAfter": true
+        },
+        {
+          "operation": "set",
+          "callbacks": {
+            "change": 11
+          },
+          "keyboardAfter": true
+        }
+      ],
+      "freshValue": "Replacement",
+      "freshFocus": "unknown",
+      "mutatorResponseEcho": false,
+      "errorEcho": false,
+      "capture": "ios/prefilled-after-set.xml"
+    },
+    {
+      "platform": "ios",
+      "kind": "secure",
+      "input": "[SECURE-REDACTED]",
+      "steps": [
+        {
+          "operation": "clear",
+          "callbacks": {},
+          "keyboardAfter": false
+        },
+        {
+          "operation": "set",
+          "callbacks": {
+            "focus": 1,
+            "change": 25
+          },
+          "keyboardAfter": true
+        }
+      ],
+      "freshValue": "[SECURE-REDACTED]",
+      "freshFocus": "unknown",
+      "mutatorResponseEcho": false,
+      "errorEcho": false,
+      "capture": "ios/secure-after-set.xml"
+    },
+    {
+      "platform": "android",
+      "kind": "plain",
+      "input": "-leading-hyphen",
+      "steps": [
+        {
+          "operation": "replace",
+          "callbacks": {
+            "change": 1
+          },
+          "keyboardAfter": false
+        }
+      ],
+      "freshValue": "-leading-hyphen",
+      "freshFocus": "false",
+      "mutatorResponseEcho": false,
+      "errorEcho": false,
+      "capture": "android/plain-after-replace.xml"
+    },
+    {
+      "platform": "android",
+      "kind": "unicode",
+      "input": "Tiếng Việt 日本語 café 👩🏽‍💻",
+      "steps": [
+        {
+          "operation": "replace",
+          "callbacks": {
+            "change": 1
+          },
+          "keyboardAfter": false
+        }
+      ],
+      "freshValue": "Tiếng Việt 日本語 café 👩🏽‍💻",
+      "freshFocus": "false",
+      "mutatorResponseEcho": false,
+      "errorEcho": false,
+      "capture": "android/unicode-after-replace.xml"
+    },
+    {
+      "platform": "android",
+      "kind": "formatted",
+      "input": "123456789",
+      "steps": [
+        {
+          "operation": "replace",
+          "callbacks": {
+            "change": 1
+          },
+          "keyboardAfter": false
+        }
+      ],
+      "freshValue": "123-456-789",
+      "freshFocus": "false",
+      "mutatorResponseEcho": false,
+      "errorEcho": false,
+      "capture": "android/formatted-after-replace.xml"
+    },
+    {
+      "platform": "android",
+      "kind": "empty",
+      "input": "",
+      "steps": [
+        {
+          "operation": "replace",
+          "callbacks": {},
+          "keyboardAfter": false
+        }
+      ],
+      "freshValue": null,
+      "freshFocus": "false",
+      "mutatorResponseEcho": false,
+      "errorEcho": false,
+      "capture": "android/empty-after-replace.xml"
+    }
+  ],
+  "limits": [
+    "Android prefilled and secure unreached after corrected retry refused a missing field. No more live investigation under owner retry rule.",
+    "iOS main XML has no focus attribute. Focus callbacks were recorded; a supplementary native active-element query confirms secure focus.",
+    "No non-US keyboard layout was selected or independently identified. Leading hyphen and multilingual Unicode passed.",
+    "The first lost-ack setup failed before clear; the corrected attempt passed.",
+    "Android first attempt had an MCP scroll-result shape error; an accidental preflight was interrupted before text; corrected retry still could not find prefilled.",
+    "No Phase 3 implementation or contract choice."
+  ],
+  "lostAcknowledgement": {
+    "replyReceived": false,
+    "childExit": {
+      "code": null,
+      "signal": "SIGKILL"
+    },
+    "callbacks": {
+      "focus": 1,
+      "change": 2
+    },
+    "fieldValue": "Prefilled",
+    "committedValue": "Committed prefilled: ",
+    "meaning": "empty; field value is placeholder",
+    "sameAppPid": true,
+    "secureMask": {
+      "present": true,
+      "maskOnly": true,
+      "maskLength": 24
+    },
+    "secureRequestEchoRecords": 1
+  },
+  "echoes": {
+    "ios": [
+      "appium-mcp tool arguments on child stderr",
+      "fresh source field values and committed labels, including secure committed label",
+      "local request timeline retains nonsecure inputs"
+    ],
+    "android": [
+      "fresh source field values and committed labels",
+      "local request timeline retains nonsecure inputs"
+    ],
+    "notObserved": [
+      "typed values in successful mutator results",
+      "typed values in deliberately invalid-element errors",
+      "typed values in Android child stderr at the observed log level"
+    ],
+    "limits": [
+      "Android secure vendor echo not exercised",
+      "No separate device-side driver-log capture under skipLogCapture; observations cover emitted child stderr only"
+    ]
+  },
+  "evidenceHashes": {
+    "ios/attempts.json": "b74e707b27110a66da150b65c69e053673cc5a45490dbd12e270122766a1a6fe",
+    "ios/console.log": "f9e89f4b355fa821ac0e2b58b83d00e032125727ee7692b42690f98eacdf9294",
+    "android/attempts.json": "f5b59de7e298e58f918b22017d797ccb62bd2f1d50412a32b8109277d2311e73",
+    "android/logcat.log": "e07622da0b912b15382584b84f551c816005f6157fe0b297d434eb925b3a4867",
+    "lost-retry/ios/lost-ack.json": "4a37fd6cf656998733647b512e66087c1bc7aaf44beb2503f13ff400289ff03a",
+    "ios/secure-at-rest-audit.json": "a7d907bd5850de7b55709eade4a46346352bc303a45eb92d4ef6072291c6e1e1",
+    "lost-retry/ios/secure-at-rest-audit.json": "c1f5734df4253d678b23ef757c3704d1edbc81a181f574dff5db9fc871896d9a",
+    "ios-final-shutdown-verified.json": "6e5f1fb6dd584a885ff09e9091f6bf32d5c9728337f6babcfe94f39fbcafec04",
+    "android-final-shutdown-verified.json": "8182d1b61573d1489e494128b281f62fac889e800bf9d0d3bd2a955ac41769b3",
+    "root-notes.md": "4f6504c794cb19dc93e1ae68a1116ade90184b0edc4fe2b0ab3258b4c24b2fcf",
+    "lost-diagnosis.md": "d3d344d3862aba614ae3f2bf021f024cc2f517bcc872f316fd45ac74879e8db8",
+    "android-diagnosis.md": "c7c2651f97633a67dbe2c98fdc843f5144007785d06d680054457046bf0f327b",
+    "ios/plain-after-set.xml": "74da7ceda9dc84408815d0e7f02748d9cec84a1df497d4c20451df1ad6e22afc",
+    "ios/unicode-after-set.xml": "16441426e391f9d63a974573ad8a8bfb064f7c87295f3065a061b7c1e8fda7d4",
+    "ios/formatted-after-set.xml": "cec9cff946916758e85b4d255020322934e9ff9f4515efa2d5ff8597cce4e464",
+    "ios/empty-after-set.xml": "98eafc5d4a30f1a4c00162904190935acfc230cf2f5411ca16d64a2b2acfee3b",
+    "ios/prefilled-after-set.xml": "f2691991935b5db8dd174b53e700a928ef656accfe8bd1ac518c0b2766d46acb",
+    "ios/secure-after-set.xml": "fbdb2052602a2850a0b9e760ad188523e9df708f9f3a47c3eb17aaba3ee24696",
+    "android/plain-after-replace.xml": "9cb31b7d3369dfc533f791b6ecf42da00937ad86f10b3ee0a682809c5fc40e60",
+    "android/unicode-after-replace.xml": "3372259e642bd1fe4b0aadaab3ffb70b337da2765b60bc557cfa5134802a308e",
+    "android/formatted-after-replace.xml": "86c6bed2db4700e55a2ea30b18f1d3dab37649d04b2523c10495d353a5f241dd",
+    "android/empty-after-replace.xml": "e3535d3594854f6f1e952a8f57968599c34c28405795247c97efd4e373dca1ee"
+  }
+}
