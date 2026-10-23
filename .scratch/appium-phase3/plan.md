@@ -307,11 +307,7 @@ This matches the specification's "Verification and exit".
 
 ## Open gates
 
-Each gate holds only the PR named. Everything else builds now.
-
-- Ticket 09 (extension contract) gates P3.3. The root locks it from the P05,
-  P07 and P08 findings and reports the choice to the owner.
-- Ticket 08 (tap and gestures) gates P3.5.
-- Ticket 19 (fixture coverage) gates only the duplicate and alias rows of P3.4.
-  A failed unique-target proof reopens the alias choice.
-- The fake-provider design above is adopted as written.
+None. On 2026-10-23 all 19 map tickets were resolved. Ticket 08 locked P3.5's
+gestures, 09 locked P3.3's extension, and 19 confirmed P3.4's alias rows. It
+also added two P3.4 rules: a page-source timeout ends the session, and the
+settle cap is a return deadline.
