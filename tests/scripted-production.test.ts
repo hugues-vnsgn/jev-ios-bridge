@@ -32,9 +32,9 @@ test('production selector keeps unidentified button aliases opt-in and rejects d
   assert.throws(() => resolveActionTarget(snapshot([first, alias]), { role: 'button', label: 'Nolan' }, 'tap'),
     (error: unknown) => error instanceof ScriptSelectionError && error.code === 'TARGET_AMBIGUOUS');
   assert.equal(resolveActionTarget(snapshot([first, alias]), { role: 'button', label: 'Nolan' }, 'tap',
-    { tapAliasRule: 'mobilebuildmcp-2.7.1' }).ref, 'e1');
+    { tapAliasRule: 'same-frame-buttons-v1' }).ref, 'e1');
   assert.throws(() => resolveActionTarget(snapshot([first, { ...alias, frame: { ...frame, y: 90 } }]),
-    { role: 'button', label: 'Nolan' }, 'tap', { tapAliasRule: 'mobilebuildmcp-2.7.1' }),
+    { role: 'button', label: 'Nolan' }, 'tap', { tapAliasRule: 'same-frame-buttons-v1' }),
   (error: unknown) => error instanceof ScriptSelectionError && error.code === 'TARGET_AMBIGUOUS');
 });
 

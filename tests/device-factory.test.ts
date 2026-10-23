@@ -102,7 +102,7 @@ test('for an iOS script the factory builds the MobileBuildMCP driver from its op
   try {
     const createDriver = createDriverFactory({ mobileBuildMcp: fakeOptions({ cwd: root, lockRoot: root, defaultUdid: udid, runner }) });
     const driver = createDriver(iosScript);
-    assert.equal(driver.tapAliasRule, 'mobilebuildmcp-2.7.1');
+    assert.equal(driver.tapAliasRule, 'same-frame-buttons-v1');
     await driver.prepare({ app: iosScript.app }, new AbortController().signal);
     await driver.close(new AbortController().signal);
     const launch = calls.find(args => args.slice(0, 2).join(' ') === 'simulator launch-app');

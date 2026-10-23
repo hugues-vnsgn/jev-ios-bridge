@@ -1,0 +1,36 @@
+import assert from 'node:assert/strict';
+import { test } from 'node:test';
+import { ObservationReferences } from '../src/appium/observe/references.js';
+import { normalizeSource } from '../src/appium/observe/normalize.js';
+import { resolveActionTarget } from '../src/scripted/select.js';
+import { sessionIdSchema } from '../src/appium/wire-schemas.js';
+const id = sessionIdSchema.parse('session-one');
+const source = (buttons: string) => `<AppiumAUT><XCUIElementTypeApplication type="XCUIElementTypeApplication" enabled="true" visible="true" x="0" y="0" width="200" height="300">${buttons}</XCUIElementTypeApplication></AppiumAUT>`;
+const button = (x = 0, identifier = '') => `<XCUIElementTypeButton type="XCUIElementTypeButton" enabled="true" visible="true" x="${x}" y="0" width="100" height="50" label="Go" ${identifier ? `name="${identifier}"` : ''}/>`;
+const normalized = () => normalizeSource('ios', source(button()));
+test('references name one bridge snapshot and session, and expire when either changes', () => {
+  const refs = new ObservationReferences(id, 'ios-test');
+  const one = refs.issue(normalized(), 10, true);
+  assert.equal(one.sequence, 1);
+  assert.equal(refs.resolve({ sessionId: id, snapshot: one, ref: 'e2' }).label, 'Go');
+  const two = refs.issue(normalized(), 20, false);
+  assert.equal(two.sequence, 2);
+  assert.equal(two.capturedAt, 20);
+  assert.equal(two.settled, false);
+  assert.throws(() => refs.resolve({ sessionId: id, snapshot: one, ref: 'e2' }), { name: 'StaleSnapshotError' });
+  assert.throws(() => refs.resolve({ sessionId: sessionIdSchema.parse('other'), snapshot: two, ref: 'e2' }), { name: 'StaleSnapshotError' });
+  assert.throws(() => refs.resolve({ sessionId: id, snapshot: { ...two }, ref: 'e2' }), { name: 'StaleSnapshotError' });
+  assert.throws(() => refs.resolve({ sessionId: id, snapshot: two, ref: 'appium-element-id' }), { name: 'StaleSnapshotError' });
+  assert.equal(refs.resolve({ sessionId: id, snapshot: two, ref: 'e2' }).ref, 'e2');
+  refs.invalidate();
+  assert.throws(() => refs.resolve({ sessionId: id, snapshot: two, ref: 'e2' }), { name: 'StaleSnapshotError' });
+});
+test('vendor-free same-frame wrapper and control resolve once, while independent same-label controls refuse', () => {
+  const refs = new ObservationReferences(id, 'ios-test');
+  const aliases = refs.issue(normalizeSource('ios', source(button() + button())), 0, true);
+  assert.equal(resolveActionTarget(aliases, { label: 'Go' }, 'tap', { tapAliasRule: 'same-frame-buttons-v1' }).ref, 'e2');
+  const independent = refs.issue(normalizeSource('ios', source(button() + button(100))), 1, true);
+  assert.throws(() => resolveActionTarget(independent, { label: 'Go' }, 'tap', { tapAliasRule: 'same-frame-buttons-v1' }), { code: 'TARGET_AMBIGUOUS' });
+  const identified = refs.issue(normalizeSource('ios', source(button(0, 'go') + button(0, 'go'))), 2, true);
+  assert.equal(resolveActionTarget(identified, { identifier: 'go' }, 'tap').ref, 'e2');
+});

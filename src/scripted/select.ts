@@ -73,7 +73,7 @@ function onePhysicalTargetPerAliasCluster(elements: Element[]): Element[] {
   return distinct;
 }
 
-/** Pinned AXe taps the same public frame for these duplicate no-ID button refs. */
+/** Fixture coverage proves these no-ID button references name the same physical target. */
 function equivalentUnidentifiedTapButtons(left: Element, right: Element): boolean {
   if (left.identifier || right.identifier || left.role !== 'button' || right.role !== 'button' ||
       !left.label?.trim() || left.label !== right.label || left.value !== right.value ||
@@ -102,7 +102,7 @@ function visibleMatches(snapshot: Snapshot, selector: Selector, options: Selecti
   if (snapshot.truncated) throw new ScriptSelectionError('SNAPSHOT_TRUNCATED');
   const matched = onePhysicalTargetPerAliasCluster(
     snapshot.elements.filter(element => matches(element, selector) && visible(element) && selectable(element)));
-  return options.tapAliasRule === 'mobilebuildmcp-2.7.1'
+  return options.tapAliasRule === 'same-frame-buttons-v1'
     ? collapseUnidentifiedTapButtonAliases(matched) : matched;
 }
 
@@ -126,7 +126,7 @@ export function resolveActionTarget(snapshot: Snapshot, selector: Selector,
   if (!allMatches.length) throw new ScriptSelectionError('TARGET_MISSING');
   const available = onePhysicalTargetPerAliasCluster(allMatches.filter(element =>
     visible(element) && element.state?.enabled === true && element.actions.includes(action)));
-  const candidates = action === 'tap' && options.tapAliasRule === 'mobilebuildmcp-2.7.1'
+  const candidates = action === 'tap' && options.tapAliasRule === 'same-frame-buttons-v1'
     ? collapseUnidentifiedTapButtonAliases(available) : available;
   if (!candidates.length) throw new ScriptSelectionError('TARGET_UNAVAILABLE');
   if (candidates.length !== 1) throw new ScriptSelectionError('TARGET_AMBIGUOUS');
