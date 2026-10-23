@@ -66,3 +66,9 @@ The second option was rejected because Appium's launch gives no stdout, so
   observes and acts on an app the bridge launched natively, without
   relaunching it.
 - **Phase 4 live claims.** Prints, OS logs and crash attribution on a real run.
+
+Proved on 2026-10-23 by the fixture-app build (PFX, `prototype/fixture-apps` at
+`556731ebd`). Three `FIXTURE_EVENT` lines from Appium taps arrived on the
+`simctl launch --console-pty` console while the session was attached. The
+console PID (19936) was unchanged. Native launch with an attached Appium
+session is proved; crash attribution remains a Phase 4 live claim.

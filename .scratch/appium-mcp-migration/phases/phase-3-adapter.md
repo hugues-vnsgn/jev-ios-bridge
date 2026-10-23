@@ -155,6 +155,16 @@ branch `prototype/observation-mapping` at `6e42862c9`):
   node at the configured depth limit (70). Otherwise `truncated` is `false`.
   `STATE_BUDGET` (24,000 bytes) stays. A small well-formed tree is not, by
   itself, proof of completeness.
+- **iOS bounds** (owner, 2026-10-23, after the fixture-app build: a 73-deep
+  iOS tree hung page source past 240 s).
+  - Every iOS page source is bounded at 10 s. A timeout is a hard completeness
+    signal, and the capture is refused as incomplete.
+  - XCUITest `snapshotMaxDepth` is pinned at 50, and a node at depth 50 is
+    refused like Android's 70.
+  - WDA `waitForIdleTimeout` is pinned at 1 s, and `animationCoolOffTimeout`
+    stays at 2 s, so the bridge's settle loop decides settling. The frozen
+    WDA 16.14.2 exposes no readable `waitForQuiescence`; this is a recorded
+    limitation, governed by the pinned values and the settle loop.
 - **Tap aliases.** Today's identified parent/child clustering stays. The
   same-label, same-frame, no-identifier rule (`mobilebuildmcp-2.7.1`) becomes a
   vendor-free bridge rule, so no script that is valid today breaks. As this

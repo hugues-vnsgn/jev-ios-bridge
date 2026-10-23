@@ -73,3 +73,8 @@ Resolved on 2026-10-23 by the owner in a grilling session with the root.
 
 The full text is under "Locked settling and screen change" in the Phase 3
 specification.
+
+WDA readback on 2026-10-23 (PFX): `waitForIdleTimeout=10` s,
+`animationCoolOffTimeout=2` s, and `waitForQuiescence` is not exposed. The
+owner pinned `waitForIdleTimeout` to 1 s and bounded iOS page source at 10 s;
+see "iOS bounds" in the specification. The settle choices stand.
