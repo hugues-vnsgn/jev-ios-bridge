@@ -1,7 +1,7 @@
 # Vendor report fields and stack provenance
 
 Type: grilling
-Status: open
+Status: resolved
 Labels: wayfinder:grilling
 Mode: HITL
 Parent: [Appium Phase 3 decision map](../map.md)
@@ -59,3 +59,21 @@ specification, and list the goldens that change additively.
 ## Comments
 
 Charted on 2026-10-22.
+Resolved on 2026-10-23 by the owner in a grilling session with the root.
+
+## Answer
+
+- **`error.vendorCode`** carries the underlying code, with a new additive
+  `error.vendorSource` (`appium` | `adb` | `bridge`). The docs are fixed.
+- **Provenance** is an additive `prepared.stack` block. `agentSha256` stays on
+  Android as the UiAutomator2 server APK hash.
+- **Loaded libraries.** Both SDK generations, fastmcp, mcp-proxy and zod are
+  recorded in the manifest and the loaded-file check.
+- **iOS reference metrics** are omitted on Appium runs. No fake counts.
+- **Kept meanings** for `logSources`, the `eN` refs, `actionAcknowledged` and
+  `tapAliasRule`. The guide is reworded in the composition-switch PR.
+- **Additive goldens:** `report-json.json`, `evidence-layout.json`,
+  `observed-replies-v1.json`, and `vocabulary.json` (descriptions only).
+
+The full text is under "Locked report fields and provenance" in the Phase 3
+specification's "Mode compatibility" section.

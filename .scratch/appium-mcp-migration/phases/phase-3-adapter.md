@@ -221,6 +221,52 @@ Appium timings as app performance or copy unmeasured expiry/tap-alias metrics.
 | Android capture | Same flags/element fields/exit semantics; settle current screen under shared admission; zero launch/reset/stop, screenshot or Jev request; `--jev` uses production renderer |
 | Reports/watch/logs | Preserve frozen JSON/envelopes/file names and current access/masking behavior; keep provenance additive and truthful |
 
+**Locked report fields and provenance** (owner, 2026-10-23, [ticket 13](../../appium-phase3/issues/13-vendor-report-fields-and-provenance.md)).
+Every change is additive under ADR-0005. No field is removed, and none changes
+meaning silently.
+
+- **`error.vendorCode`** carries the underlying component's code: an Appium or
+  W3C error name, an adb failure, or a bridge probe code such as
+  `APP_NOT_INSTALLED`. A new additive `error.vendorSource`
+  (`appium` | `adb` | `bridge`) names its source, in `report.json` and in the
+  `error` event. The guide and `report-json.md` stop calling it MobileBuildMCP's
+  code. The pass-through rule (only 1.1-set codes pass; the rest become
+  `DEVICE_ERROR` with `vendorCode`) is unchanged.
+- **Provenance.** `prepared.stack` is added:
+  - `backend: "appium"`
+  - the stack lock hash
+  - the extension version
+  - the MCP client version
+  - iOS: the WDA tree hash
+  - Android: the UiAutomator2 server APK hash
+
+  Android's `prepared.agentSha256` stays, now holding the UiAutomator2 server
+  APK hash. The stack manifest and the startup loaded-file check also record
+  both MCP SDK generations (1.32.1, 2.3.1), fastmcp, mcp-proxy and zod, with
+  versions and hashes.
+- **iOS reference metrics.** `deviceMetrics.referenceRefreshes`,
+  `referenceExpiries` and `nearTtlRefreshes` are not emitted for Appium runs.
+  They are log-only, and no count is manufactured. `backend` explains their
+  absence.
+- **Kept meanings.**
+  - `prepared.logSources.{runtime,os}` name the bridge's own console capture
+    and `log stream` (ADR-0014).
+  - Element references keep the `eN` format, scoped to one capture (see "Locked
+    observation choices").
+  - Observed `actionAcknowledged` means that Appium returned a successful
+    response for the one dispatched action.
+  - `tapAliasRule` names the vendor-free bridge rule instead of
+    `mobilebuildmcp-2.7.1`. It is internal, not a public field.
+  - The vendor-flavoured guide wording ("MobileBuildMCP stays pinned",
+    "mobilecli stays pinned", the clipboard paragraph) is rewritten in the PR
+    that switches composition.
+- **Goldens that change additively.** `report-json.json` (`vendorSource`,
+  `prepared.stack`), `evidence-layout.json` (the `prepared` event),
+  `observed-replies-v1.json` (`vendorSource` where an error is carried), and
+  `vocabulary.json` (reworded descriptions only, with codes unchanged). Every
+  other golden stays byte-identical, except as the observation corpus gate
+  (ADR-0004/0006) allows.
+
 A late driven answer must refresh the paused screen; changed guards/geometry
 produce refusal or a fresh hand-back without input. Abort of an observed/status
 wait cancels only the wait. Observed preparation/action remain key-free and

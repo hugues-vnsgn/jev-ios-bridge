@@ -70,6 +70,7 @@ sorted by the owner on 2026-10-22; the build plan schedules them:
 - [Device side effects of an Appium session](issues/02-session-device-side-effects.md): sessions install packages and change global settings and Simulator preferences that today's drivers never touch; app-touching effects can be switched off for capture and attach; four Android effects cannot; appium-mcp ignores `settings[...]` capabilities.
 - [Shipping the frozen Appium stack](issues/01-shipping-the-frozen-stack.md): the plugin installer refuses the stack's lock, so ship two release-built archives (stack and exact Phase 1 WDA runner) extracted on first use; private client `@modelcontextprotocol/sdk` 1.32.1; ten delivery choices go to the owner.
 - [Private pair ready for prototypes](issues/04-private-pair-ready.md): frozen inputs unchanged; one Phase 1 normal case per platform passed 14/14 (iOS session ready 43 s, Android 54 s); keep the load-below-8 guard.
+- [Vendor report fields and stack provenance](issues/13-vendor-report-fields-and-provenance.md): `vendorCode` holds the underlying code plus an additive `vendorSource`; an additive `prepared.stack` provenance block (Android `agentSha256` kept as the UiAutomator2 APK hash); all loaded MCP libraries recorded; iOS reference metrics omitted on Appium; four goldens change additively.
 - [Delivering the stack to users](issues/18-delivering-the-stack-to-users.md): ship two release archives (unpruned stack, exact Phase 1 WDA) extracted offline into one shared per-account copy; Apple silicon only; claim iOS 26.5/Xcode 27.0 and warn outside it; Node 24+ with a Phase 4 live case; npm and plugin both supported; full notices file; owner-triggered re-freeze; client sdk 1.32.1 (ADR-0013).
 - [iOS app output and crash detection without MobileBuildMCP](issues/12-ios-app-output-and-crash-detection.md): the bridge launches the iOS app natively with a console it owns (prints, `APP_EXITED` by PID) plus `log stream`; Appium never relaunches; attaching to that app is unproven and goes to prototype 06 (ADR-0014).
 - [Native steps outside the helper list](issues/15-native-steps-outside-the-helper-list.md): iOS boot and install for observed preparation are native simctl helpers; Android restart moves to Appium `startActivity`; Android wake and read-only probes stay native, with `skipUnlock` and `DEVICE_LOCKED` kept (ADR-0014).
@@ -134,9 +135,9 @@ flowchart LR
     classDef claimed fill:#dbeafe,stroke:#2563eb,color:#1e3a8a
     classDef frontier fill:#dcfce7,stroke:#16a34a,color:#14532d,stroke-width:2px
     classDef blocked fill:#ffffff,stroke:#a1a1aa,color:#18181b
-    class T01,T02,T03,T04,T05,T12,T15,T18 resolved
+    class T01,T02,T03,T04,T05,T12,T13,T15,T18 resolved
     class T06 claimed
-    class T07,T08,T13,T17,T19 frontier
+    class T07,T08,T17,T19 frontier
     class T09,T10,T11,T14,T16 blocked
 ```
 <!-- route:end -->
