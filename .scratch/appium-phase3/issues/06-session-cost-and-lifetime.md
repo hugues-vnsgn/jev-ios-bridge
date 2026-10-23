@@ -34,6 +34,13 @@ Added from Device side effects of an Appium session:
 - What `APPIUM_MCP_ON_CLIENT_DISCONNECT=delete_all` does when stdin is closed
   and when the bridge is killed.
 
+Added from iOS app output and crash detection (ticket 12): on iOS, launch the
+diagnostic app natively with `simctl launch --console-pty` and launch
+arguments, then create the Appium session with `autoLaunch: false` and no
+relaunch. Show that the session observes and acts on that same app instance (the
+console PID is unchanged, and the console still streams). Show what deleting the
+session does to it. If this fails, the owner revisits ticket 12.
+
 Automation timing is not app performance. Label these numbers as session cost.
 
 ## Completion criterion

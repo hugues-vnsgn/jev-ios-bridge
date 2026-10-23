@@ -1,7 +1,7 @@
 # Native steps outside the helper list
 
 Type: grilling
-Status: open
+Status: resolved
 Labels: wayfinder:grilling
 Mode: HITL
 Parent: [Appium Phase 3 decision map](../map.md)
@@ -55,3 +55,24 @@ boundary itself widens, record the ADR-0010 amendment.
 ## Comments
 
 Graduated on 2026-10-22 from What the old vendors give us today (finding 4 and the observed-preparation fog).
+Resolved on 2026-10-23 by the owner in a grilling session with the root.
+
+## Answer
+
+The owner locked a home for each step:
+
+| Step | Home |
+| --- | --- |
+| iOS boot (observed preparation) | native, bounded, owned `simctl boot` |
+| iOS install (observed preparation) | native `simctl install` |
+| iOS launch | native `simctl launch --console-pty` (ticket 12) |
+| iOS availability and `Booted` polling | existing simctl probe |
+| Android force-stop and `am start` | Appium `mobile: startActivity` with stop and wait, through the extension |
+| Android wake | native adb `KEYCODE_WAKEUP` |
+| Android launcher, foreground and keyguard probes | native, read-only |
+| Locked screen | `skipUnlock` on every session; still `DEVICE_LOCKED` |
+
+Ordinary runs keep their preconditions. Recorded in
+[ADR-0014](../../../docs/adr/0014-native-launch-and-preparation-steps-beside-appium.md),
+which amends ADR-0010's helper list, and under "Locked native steps" in the
+Phase 3 specification.

@@ -200,6 +200,36 @@ existing explicit simulator-creation exception as native helpers. Keep their
 ownership, deadlines and shutdown in the driver lifecycle; no helper reads the
 UI or injects input as a fallback.
 
+**Locked native steps** (owner, 2026-10-23; [ADR-0014](../../../docs/adr/0014-native-launch-and-preparation-steps-beside-appium.md)):
+
+- **iOS app output and exit.** The bridge launches the app with
+  `simctl launch --console-pty --terminate-running-process` and the script's
+  launch arguments, and owns the resulting console process. The process's
+  output is the runtime log source (`print()`, stdout and stderr). A bounded
+  `log stream` on the app's subsystem is the OS log source. The console
+  process's exit, with its PID recorded at launch, is the iOS `APP_EXITED`
+  signal; a stop the bridge makes itself (restart, close) is marked as expected
+  first, as Android's exit watch does. If the console or stream is lost, the
+  source reads unavailable, never empty, and health reads unknown. The Appium
+  session never launches or relaunches the app (`autoLaunch: false`) and
+  observes the running app. Whether it can is unproven, and the session
+  prototype must show it before the build plan relies on it.
+- **iOS observed preparation.** Availability and `Booted` polling use the
+  existing simctl probe. Boot and install use bounded, owned `simctl boot` and
+  `simctl install`, for observed preparation only, beside ADR-0009's creation.
+  Launch follows the iOS rule above. The readiness capture goes through the Appium
+  session and this specification's normalizer. Ordinary runs keep their
+  preconditions, a booted device with the app installed, and never boot or
+  install.
+- **Android restart.** Force-stop and start move to Appium as
+  `mobile: startActivity` with stop and wait, through the extension. The exit
+  watch marks that stop as expected and reads the PID after start. Logcat and
+  the exit watch stay unchanged.
+- **Android wake and probes.** The adb wake keyevent and the read-only launcher
+  lookup, foreground and keyguard probes stay native helpers. Every Appium
+  session sets `skipUnlock`. A locked screen refuses with `DEVICE_LOCKED`, as
+  today.
+
 ## Verification and exit
 
 Use the actual adapter/services and substitute only a controllable private MCP

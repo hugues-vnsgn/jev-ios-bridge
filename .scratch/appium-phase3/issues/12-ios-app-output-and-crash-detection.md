@@ -1,7 +1,7 @@
 # iOS app output and crash detection without MobileBuildMCP
 
 Type: grilling
-Status: open
+Status: resolved
 Labels: wayfinder:grilling
 Mode: HITL
 Parent: [Appium Phase 3 decision map](../map.md)
@@ -44,3 +44,25 @@ what remains a Phase 4 live claim.
 ## Comments
 
 Charted on 2026-10-22.
+Resolved on 2026-10-23 by the owner in a grilling session with the root.
+
+## Answer
+
+Native launch with a console: the first option. The bridge runs
+`simctl launch --console-pty` with the launch arguments and owns the console
+process. That keeps `print()` output in the log pane, `logs` and step tails, and
+keeps `APP_EXITED` as the console process's exit, with the PID recorded at launch
+instead of parsed from a file name. A `log stream` filtered to the app supplies OS
+logs. Appium handles observation and input only and never relaunches the app
+(`autoLaunch: false`). Expected stops are marked first, and a lost source reads
+unavailable and unknown, never empty or healthy. Recorded in
+[ADR-0014](../../../docs/adr/0014-native-launch-and-preparation-steps-beside-appium.md)
+and under "Locked native steps" in the Phase 3 specification.
+
+The second option was rejected because Appium's launch gives no stdout, so
+`print()` output would be lost and `queryAppState` is not causal.
+
+- **Unproven, for the session prototype (06).** An Appium iOS session that
+  observes and acts on an app the bridge launched natively, without
+  relaunching it.
+- **Phase 4 live claims.** Prints, OS logs and crash attribution on a real run.
