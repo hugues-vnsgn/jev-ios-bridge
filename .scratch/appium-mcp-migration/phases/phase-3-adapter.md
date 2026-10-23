@@ -296,6 +296,11 @@ an unreviewed product limitation.
   10 s, the timeout rule applies. If no capture completed before the cap,
   the observation refuses as incomplete. (Root, 2026-10-23, answering
   P3.4.)
+- **A capture is a pair.** Each settle capture is a page source plus a
+  `jev_screen` taken straight after it, under the same deadline. The
+  comparison uses the source hash. A pair counts only when both halves have
+  returned. So an observation always has a screenshot that matches its
+  tree, as reports, evidence and Android `tapAt` need.
 
 ## Operation contract
 
