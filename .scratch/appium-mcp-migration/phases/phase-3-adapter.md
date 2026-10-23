@@ -302,6 +302,47 @@ Appium timings as app performance or copy unmeasured expiry/tap-alias metrics.
 - **Idle timer.** `newCommandTimeout` is inert under appium-mcp (P06). The
   bridge's own deadlines bound every wait.
 
+## Fencing Appium components
+
+Locked by the owner on 2026-10-23 ([ticket 11](../../appium-phase3/issues/11-fence-evidence-for-appium-components.md)).
+This applies ADR-0011: a session delete, a cleanup reply or an exited MCP
+child is a hint, never a receipt.
+
+| Component | Identity recorded before effects | Stop receipt |
+|---|---|---|
+| Private MCP child and its descendants (Appium server, drivers) | PID, start time, process group | The group is stopped, and every recorded PID and descendant is verified gone by PID plus start time |
+| iOS WDA runner on the simulator | simulator UDID, runner bundle id, running PID | The runner is not running on that simulator |
+| Android UiAutomator2 instrumentation and server | serial, PIDs and `/proc` start times | Each PID is gone by `/proc` identity |
+| Android owned forward (`tcp:18200`) | serial and the forward pair | Absent from `adb forward --list` |
+| Android settings (three hidden-API keys, `accessibility_enabled`) | values read before the session | Read back equal to the recorded values |
+| Bridge native helpers (iOS console, `log stream`, logcat, exit watch) | PID and start time | Gone by identity |
+
+- **Deadlines.** TERM to the owned process group, a 5 s wait, then KILL.
+  Device-side steps share the existing 45 s cleanup budget. Running out of
+  budget, or any missing receipt, keeps the device quarantined; it never
+  releases.
+- **Foreign automation.** It is recognized by owned inventory, not process
+  names. Any UiAutomator2 server or instrumentation, WDA runner, or automation
+  forward on the device that the admission store does not own makes the run
+  `DEVICE_BUSY`. The code is unchanged, and the `captureWithForeignAgent` exit 3
+  golden is kept. The bridge's own recorded components are never foreign. The
+  glossary's "Foreign agent" is reworded to match.
+- **Recovery of a dead owner.** The sweep:
+  1. stops only the components recorded for that owner, matched by identity
+  2. restores the recorded Android settings
+  3. removes the owned forwards
+  4. records receipts, and releases the device only when every receipt is
+     present
+
+  Anything unmatched or unprovable keeps the device quarantined. Unknown
+  creation without a session id stays quarantined, as ADR-0011 requires.
+- **Production code.** Phase 1's reviewed research mechanisms (`stop-group.py`,
+  `fence-owned.py`, `verify-native-descendants.py` and the device-root coverage)
+  become TypeScript under Phase 2's command and component records. Each
+  component above becomes a recorded component kind with its own receipt kind,
+  added additively to the store under ADR-0012's offline-upgrade rule if the
+  schema must change.
+
 ## Mode compatibility
 
 | Mode/path | Required public behavior |

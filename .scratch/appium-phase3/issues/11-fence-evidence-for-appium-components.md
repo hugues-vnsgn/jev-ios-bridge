@@ -1,7 +1,7 @@
 # Fence evidence for Appium components
 
 Type: grilling
-Status: open
+Status: resolved
 Labels: wayfinder:grilling
 Mode: HITL
 Parent: [Appium Phase 3 decision map](../map.md)
@@ -51,3 +51,19 @@ Write them into the Phase 3 specification (a new fencing section, or the
 ## Comments
 
 Charted on 2026-10-22.
+Resolved on 2026-10-23 by the owner in a grilling session with the root.
+
+## Answer
+
+- **Stop proof.** Native proof per component, as tabled in the new "Fencing
+  Appium components" section of the Phase 3 specification. A vendor reply is
+  only a hint, and missing proof means quarantine.
+- **Foreign automation** is recognized by owned inventory. `DEVICE_BUSY` and
+  exit 3 are kept.
+- **Recovery** stops the recorded components, restores, removes owned forwards,
+  then releases. Anything unprovable stays quarantined.
+- **Deadlines.** TERM, 5 s, then KILL, inside the 45 s cleanup budget.
+
+Checked against ADR-0011: the rule only tightens it. A schema change, if one is
+needed, follows ADR-0012. The build plan ports Phase 1's Python mechanisms to
+TypeScript.
