@@ -1,7 +1,8 @@
 # Allowed device effects of a session
 
 Type: prototype
-Status: open
+Status: claimed
+Claimed by: root (Claude); evidence built by the Codex worker (brief ~/.codex/reports/jev-ios-bridge/phase3-build/P17-device-effects-brief.md); owner decides
 Labels: wayfinder:prototype
 Mode: HITL
 Parent: [Appium Phase 3 decision map](../map.md)

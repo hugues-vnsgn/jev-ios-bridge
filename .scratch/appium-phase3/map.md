@@ -65,6 +65,7 @@ sorted by the owner on 2026-10-22; the build plan schedules them:
 
 <!-- one line per resolved ticket: [title](issues/NN-slug.md): gist -->
 
+- [Session startup cost and lifetime](issues/06-session-cost-and-lifetime.md): iOS session cold about 78 s and warm about 5.8 s; Android cold about 12.4 s and warm about 6.8 s (today about 2 s); idle up to 900 s survives and `newCommandTimeout` is inert; `delete_all` cleans up on EOF and on parent kill; a leftover Android forward blocks the next create; iOS native-launch attach works and print streaming goes to the fixture app.
 - [Observation mapping](issues/05-observation-mapping.md): pinned settings (iOS exclude nothing; Android compression off, topmost app window, depth 70) applied after create and read back; today's meanings kept and three iOS gaps fixed; refuse incomplete on invalid XML, a driver error or the depth limit; the same-frame alias becomes a bridge rule pending its proof (19); bridge-issued snapshot-bound refs.
 - [What the old vendors give us today](issues/03-what-the-old-vendors-give-us.md): MobileBuildMCP supplies all iOS observation, refs, input, settle, screenshot, launch and the app-exit signal; mobilecli only Android's agent; AXe is never called; 17 public surfaces carry vendor meaning.
 - [Device side effects of an Appium session](issues/02-session-device-side-effects.md): sessions install packages and change global settings and Simulator preferences that today's drivers never touch; app-touching effects can be switched off for capture and attach; four Android effects cannot; appium-mcp ignores `settings[...]` capabilities.
@@ -135,10 +136,10 @@ flowchart LR
     classDef claimed fill:#dbeafe,stroke:#2563eb,color:#1e3a8a
     classDef frontier fill:#dcfce7,stroke:#16a34a,color:#14532d,stroke-width:2px
     classDef blocked fill:#ffffff,stroke:#a1a1aa,color:#18181b
-    class T01,T02,T03,T04,T05,T12,T13,T15,T18 resolved
-    class T06 claimed
-    class T07,T08,T17,T19 frontier
-    class T09,T10,T11,T14,T16 blocked
+    class T01,T02,T03,T04,T05,T06,T12,T13,T15,T18 resolved
+    class T17 claimed
+    class T07,T08,T16,T19 frontier
+    class T09,T10,T11,T14 blocked
 ```
 <!-- route:end -->
 
