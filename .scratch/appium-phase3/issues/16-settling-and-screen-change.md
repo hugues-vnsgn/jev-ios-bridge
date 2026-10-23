@@ -1,7 +1,7 @@
 # Settling and screen change under Appium
 
 Type: grilling
-Status: open
+Status: resolved
 Labels: wayfinder:grilling
 Mode: HITL
 Parent: [Appium Phase 3 decision map](../map.md)
@@ -54,3 +54,22 @@ sections of the Phase 3 specification.
 ## Comments
 
 Graduated on 2026-10-22 from the map's "Settling under Appium" fog, after What the old vendors give us today.
+Resolved on 2026-10-23 by the owner in a grilling session with the root.
+
+## Answer
+
+- **Loop.** One bridge settle loop on both platforms, with the constants kept
+  (250 ms gap, 3 s cap, two matching hashes). Page-source latency from P05 fits
+  8 or more captures in the cap. Capture reuse and screenshot agreement are
+  dropped.
+- **Hash.** One bridge hash over the normalized snapshot, excluding the status
+  bar.
+- **iOS mark.** iOS gains `settled: false` and the prose mark, as an additive
+  change.
+- **Screenshot.** One screenshot after settling, downscaled to a JPEG of at
+  most 800 px, so today's `tapAt` pixel space holds.
+- **Open.** The WDA native idle and quiescence readback moves to the
+  fixture-app session (PFX brief). A conflict there reopens this ticket.
+
+The full text is under "Locked settling and screen change" in the Phase 3
+specification.

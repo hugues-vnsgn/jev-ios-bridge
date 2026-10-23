@@ -170,6 +170,34 @@ branch `prototype/observation-mapping` at `6e42862c9`):
   small trees. These are session-cost numbers, not app performance, and set no
   speed gate.
 
+**Locked settling and screen change** (owner, 2026-10-23, [ticket 16](../../appium-phase3/issues/16-settling-and-screen-change.md)):
+
+- **Loop.** Both platforms run today's bridge loop. It captures, waits until
+  250 ms after the previous capture returned, and captures again. It stops when
+  two hashes match. It starts no capture at or after 3,000 ms, and then returns
+  the last capture with `settled: false`. Every action ends with this loop, and
+  so does `capture`. The constants stay: warm page source measured about 65 ms
+  on iOS and 24–103 ms on Android, so the cap fits 8 or more captures.
+  MobileBuildMCP's post-action poll is gone. Capture reuse and the
+  screenshot-agreement measurement are dropped. `phaseTimingsMs.verifyMs` stays
+  as zero only if a golden requires it.
+- **Hash.** One bridge-computed hash over the normalized snapshot, on both
+  platforms, excluding status-bar nodes (the iOS status bar and Android
+  `com.android.systemui:`). It drives `SCREEN_CHANGED`, `driven.actions[].changed`
+  and driven search keys. `snapshotSequence` becomes a bridge counter on both
+  platforms.
+- **iOS mark.** iOS steps carry `settled: false` when the cap is reached, and
+  the "Screen still changing" prose loses its Android-only gate. This is an
+  additive change under ADR-0005.
+- **Screenshot.** One screenshot after the settled capture, never alongside it,
+  and not retaken. It is converted to a JPEG of at most 800 px, so `tapAt` pixel
+  space, hand-back `screenshotSize`, the evidence names (`screen-N.jpg`,
+  `observation-N.jpg`, `readiness-1.jpg`) and the 10 MiB cap keep their meaning.
+  The tap-gesture prototype (08) proves the pixel-to-device conversion.
+- **Still to read.** WDA's native idle and quiescence values, in the
+  fixture-app session. If they add waits that break the cap, this choice returns
+  to the owner.
+
 Version/schema/envelope errors stop dependent actions. Treat viewer resources
 as unconsumed content only under the measured public contract. Validate image
 content rather than trust a prose path. Preserve normal screenshots/watch
