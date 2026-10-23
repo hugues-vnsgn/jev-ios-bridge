@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<AppiumAUT>
+  <XCUIElementTypeApplication type="XCUIElementTypeApplication" name="DiagnosticApp" label="DiagnosticApp" enabled="true" visible="true" accessible="false" x="0" y="0" width="402" height="874" index="0" traits="" processId="9064" bundleId="dev.jevbridge.diagnostic">
+    <XCUIElementTypeWindow type="XCUIElementTypeWindow" enabled="true" visible="true" accessible="false" x="0" y="0" width="402" height="874" index="0" traits="">
+      <XCUIElementTypeOther type="XCUIElementTypeOther" enabled="true" visible="true" accessible="false" x="0" y="0" width="402" height="874" index="0" traits="">
+        <XCUIElementTypeOther type="XCUIElementTypeOther" enabled="true" visible="true" accessible="false" x="0" y="0" width="402" height="874" index="0" traits="">
+          <XCUIElementTypeOther type="XCUIElementTypeOther" enabled="true" visible="true" accessible="false" x="0" y="0" width="402" height="874" index="0" traits="">
+            <XCUIElementTypeOther type="XCUIElementTypeOther" enabled="true" visible="true" accessible="false" x="0" y="0" width="402" height="874" index="0" traits="">
+              <XCUIElementTypeOther type="XCUIElementTypeOther" enabled="true" visible="true" accessible="false" x="0" y="0" width="402" height="874" index="0" traits="">
+                <XCUIElementTypeNavigationBar type="XCUIElementTypeNavigationBar" name="Confirmation" enabled="true" visible="true" accessible="false" x="0" y="62" width="402" height="106" index="0" traits="">
+                  <XCUIElementTypeButton type="XCUIElementTypeButton" name="BackButton" label="Sample Shop" enabled="true" visible="true" accessible="true" x="16" y="62" width="44" height="44" index="0" traits="Button"/>
+                  <XCUIElementTypeStaticText type="XCUIElementTypeStaticText" value="Confirmation" name="Confirmation" label="Confirmation" enabled="true" visible="true" accessible="true" x="16" y="120" width="208" height="43" index="1" traits="Header, StaticText"/>
+                </XCUIElementTypeNavigationBar>
+                <XCUIElementTypeOther type="XCUIElementTypeOther" enabled="true" visible="true" accessible="false" x="0" y="0" width="402" height="874" index="1" traits="">
+                  <XCUIElementTypeOther type="XCUIElementTypeOther" enabled="true" visible="true" accessible="false" x="0" y="0" width="402" height="874" index="0" traits="">
+                    <XCUIElementTypeOther type="XCUIElementTypeOther" enabled="true" visible="true" accessible="false" x="0" y="0" width="402" height="874" index="0" traits="">
+                      <XCUIElementTypeOther type="XCUIElementTypeOther" enabled="true" visible="true" accessible="false" x="0" y="0" width="402" height="874" index="0" traits="">
+                        <XCUIElementTypeStaticText type="XCUIElementTypeStaticText" value="Order complete" name="confirmation.title" label="Order complete" enabled="true" visible="true" accessible="true" x="99" y="183" width="204" height="39" index="0" traits="StaticText"/>
+                        <XCUIElementTypeStaticText type="XCUIElementTypeStaticText" value="Apple: $2" name="Apple: $2" label="Apple: $2" enabled="true" visible="true" accessible="true" x="99" y="237" width="74" height="23" index="1" traits="StaticText"/>
+                        <XCUIElementTypeStaticText type="XCUIElementTypeStaticText" value="Bread: $3" name="Bread: $3" label="Bread: $3" enabled="true" visible="true" accessible="true" x="99" y="275" width="75" height="24" index="2" traits="StaticText"/>
+                        <XCUIElementTypeStaticText type="XCUIElementTypeStaticText" value="Total: $3" name="confirmation.total" label="Total: $3" enabled="true" visible="true" accessible="true" x="99" y="314" width="90" height="29" index="3" traits="StaticText"/>
+                      </XCUIElementTypeOther>
+                    </XCUIElementTypeOther>
+                  </XCUIElementTypeOther>
+                </XCUIElementTypeOther>
+                <XCUIElementTypeOther type="XCUIElementTypeOther" enabled="true" visible="false" accessible="false" x="0" y="0" width="402" height="874" index="2" traits="">
+                  <XCUIElementTypeOther type="XCUIElementTypeOther" enabled="true" visible="false" accessible="false" x="0" y="0" width="402" height="874" index="0" traits=""/>
+                </XCUIElementTypeOther>
+              </XCUIElementTypeOther>
+            </XCUIElementTypeOther>
+          </XCUIElementTypeOther>
+        </XCUIElementTypeOther>
+      </XCUIElementTypeOther>
+    </XCUIElementTypeWindow>
+  </XCUIElementTypeApplication>
+</AppiumAUT>

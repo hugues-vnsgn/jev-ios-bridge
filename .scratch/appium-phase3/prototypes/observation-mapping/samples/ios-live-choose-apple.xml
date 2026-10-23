@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<AppiumAUT>
+  <XCUIElementTypeApplication type="XCUIElementTypeApplication" name="DiagnosticApp" label="DiagnosticApp" enabled="true" visible="true" accessible="false" x="0" y="0" width="402" height="874" index="0" traits="" processId="9064" bundleId="dev.jevbridge.diagnostic">
+    <XCUIElementTypeWindow type="XCUIElementTypeWindow" enabled="true" visible="true" accessible="false" x="0" y="0" width="402" height="874" index="0" traits="">
+      <XCUIElementTypeOther type="XCUIElementTypeOther" enabled="true" visible="true" accessible="false" x="0" y="0" width="402" height="874" index="0" traits="">
+        <XCUIElementTypeOther type="XCUIElementTypeOther" enabled="true" visible="true" accessible="false" x="0" y="0" width="402" height="874" index="0" traits="">
+          <XCUIElementTypeOther type="XCUIElementTypeOther" enabled="true" visible="true" accessible="false" x="0" y="0" width="402" height="874" index="0" traits="">
+            <XCUIElementTypeOther type="XCUIElementTypeOther" enabled="true" visible="true" accessible="false" x="0" y="0" width="402" height="874" index="0" traits="">
+              <XCUIElementTypeOther type="XCUIElementTypeOther" enabled="true" visible="true" accessible="false" x="0" y="0" width="402" height="874" index="0" traits="">
+                <XCUIElementTypeNavigationBar type="XCUIElementTypeNavigationBar" name="Sample Shop" enabled="true" visible="true" accessible="false" x="0" y="62" width="402" height="106" index="0" traits="">
+                  <XCUIElementTypeStaticText type="XCUIElementTypeStaticText" value="Sample Shop" name="Sample Shop" label="Sample Shop" enabled="true" visible="true" accessible="true" x="16" y="120" width="209" height="43" index="0" traits="Header"/>
+                </XCUIElementTypeNavigationBar>
+                <XCUIElementTypeOther type="XCUIElementTypeOther" enabled="true" visible="true" accessible="false" x="0" y="0" width="402" height="874" index="1" traits="">
+                  <XCUIElementTypeOther type="XCUIElementTypeOther" enabled="true" visible="true" accessible="false" x="0" y="0" width="402" height="874" index="0" traits="">
+                    <XCUIElementTypeOther type="XCUIElementTypeOther" enabled="true" visible="true" accessible="false" x="0" y="0" width="402" height="874" index="0" traits="">
+                      <XCUIElementTypeOther type="XCUIElementTypeOther" enabled="true" visible="true" accessible="false" x="0" y="0" width="402" height="874" index="0" traits="">
+                        <XCUIElementTypeStaticText type="XCUIElementTypeStaticText" value="Choose two items" name="Choose two items" label="Choose two items" enabled="true" visible="true" accessible="true" x="16" y="184" width="235" height="38" index="0" traits="StaticText"/>
+                        <XCUIElementTypeStaticText type="XCUIElementTypeStaticText" value="Selected: Apple" name="selection.summary" label="Selected: Apple" enabled="true" visible="true" accessible="true" x="16" y="241" width="121" height="23" index="1" traits="StaticText"/>
+                        <XCUIElementTypeButton type="XCUIElementTypeButton" value="1" name="choose.apple" label="Add Apple ($2)" enabled="false" visible="true" accessible="true" x="16" y="284" width="370" height="37" index="2" traits="Selected, NotEnabled, Button">
+                          <XCUIElementTypeStaticText type="XCUIElementTypeStaticText" value="Add Apple ($2)" name="Add Apple ($2)" label="Add Apple ($2)" enabled="false" visible="true" accessible="false" x="16" y="284" width="370" height="37" index="0" traits="NotEnabled, StaticText"/>
+                          <XCUIElementTypeImage type="XCUIElementTypeImage" name="checkmark.circle.fill" label="Selected" enabled="false" visible="true" accessible="false" x="355" y="293" width="18" height="18" index="1" traits="Selected, NotEnabled, Image"/>
+                        </XCUIElementTypeButton>
+                        <XCUIElementTypeButton type="XCUIElementTypeButton" name="choose.bread" label="Add Bread ($3)" enabled="true" visible="true" accessible="true" x="16" y="340" width="370" height="37" index="3" traits="Button"/>
+                        <XCUIElementTypeButton type="XCUIElementTypeButton" name="order.complete" label="Complete order" enabled="false" visible="true" accessible="true" x="16" y="396" width="370" height="37" index="4" traits="NotEnabled, Button"/>
+                      </XCUIElementTypeOther>
+                    </XCUIElementTypeOther>
+                  </XCUIElementTypeOther>
+                </XCUIElementTypeOther>
+                <XCUIElementTypeOther type="XCUIElementTypeOther" enabled="true" visible="false" accessible="false" x="0" y="0" width="402" height="874" index="2" traits="">
+                  <XCUIElementTypeOther type="XCUIElementTypeOther" enabled="true" visible="false" accessible="false" x="0" y="0" width="402" height="874" index="0" traits=""/>
+                </XCUIElementTypeOther>
+              </XCUIElementTypeOther>
+            </XCUIElementTypeOther>
+          </XCUIElementTypeOther>
+        </XCUIElementTypeOther>
+      </XCUIElementTypeOther>
+    </XCUIElementTypeWindow>
+  </XCUIElementTypeApplication>
+</AppiumAUT>
