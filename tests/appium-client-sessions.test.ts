@@ -193,7 +193,8 @@ for (const fault of ['late', 'lost', 'malformed', 'dead-child', 'disconnect']) t
   assert.equal(client.components[0]?.kind, 'appium-child');
   assert.equal(client.components.find(x => x.kind === 'appium-session')?.sessionId, 'ios-session');
   assert.equal(client.dispatchOpen, false);
-  await assert.rejects(client.manageSession({ action: 'delete', sessionId: 'ios-session' }, f.profile));
+  if (fault === 'late' || fault === 'lost') assert.deepEqual(await client.manageSession({ action: 'delete', sessionId: 'ios-session' }, f.profile), { kind: 'deleted' });
+  else await assert.rejects(client.manageSession({ action: 'delete', sessionId: 'ios-session' }, f.profile));
   assert.equal(f.calls().filter(x => x.params?.name === 'jev_settings').length, 1);
 });
 
@@ -207,8 +208,9 @@ test('a reply delivered after the deadline cannot reopen dispatch', async t => {
   const wire = readFileSync(replies, 'utf8').trim().split('\n').map(line => JSON.parse(line));
   assert.equal(wire.at(-1).id, 2);
   assert.equal(client.dispatchOpen, false);
-  await assert.rejects(client.manageSession({ action: 'delete', sessionId: 'ios-session' }, f.profile), { code: 'CONNECTION_LOST' });
-  assert.equal(f.calls().filter(x => x.params?.arguments?.action === 'delete').length, 0);
+  await assert.rejects(client.callExtension({ name: 'jev_terminate_app', arguments: { appId: 'example.app' } }), { code: 'CONNECTION_LOST' });
+  assert.deepEqual(await client.manageSession({ action: 'delete', sessionId: 'ios-session' }, f.profile), { kind: 'deleted' });
+  assert.equal(f.calls().filter(x => x.params?.arguments?.action === 'delete').length, 1);
 });
 
 test('driven pause retains the session and refreshes before resuming', async t => {

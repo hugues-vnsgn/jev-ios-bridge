@@ -73,7 +73,6 @@ function onePhysicalTargetPerAliasCluster(elements: Element[]): Element[] {
   return distinct;
 }
 
-/** Fixture coverage proves these no-ID button references name the same physical target. */
 function equivalentUnidentifiedTapButtons(left: Element, right: Element): boolean {
   if (left.identifier || right.identifier || left.role !== 'button' || right.role !== 'button' ||
       !left.label?.trim() || left.label !== right.label || left.value !== right.value ||

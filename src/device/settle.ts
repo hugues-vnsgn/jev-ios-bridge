@@ -3,7 +3,6 @@ import { STATUS_BAR_ID_PREFIX, type AndroidNode, type AndroidTree } from './andr
 
 /** One `device.dump.ui` call. */
 export type Capture = (signal: AbortSignal) => Promise<AndroidTree>;
-/** Injected so tests run the rule, and the driver's deadlines, on fake time. */
 export interface Clock {
   now(): number;
   sleep(ms: number): Promise<void>;

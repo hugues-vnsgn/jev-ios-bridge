@@ -6,14 +6,14 @@ import { fileURLToPath } from 'node:url';
 import { once } from 'node:events';
 import { z } from 'zod/v4';
 import { Client } from '@modelcontextprotocol/sdk/client/index.js';
-import { JSONRPCMessageSchema, type JSONRPCMessage } from '@modelcontextprotocol/sdk/types.js';
+import { JSONRPCMessageSchema, McpError, ErrorCode, type JSONRPCMessage } from '@modelcontextprotocol/sdk/types.js';
 import type { Transport } from '@modelcontextprotocol/sdk/shared/transport.js';
 import type { OwnerIdentity } from '../device/admission.js';
 import type { VerifiedStack } from './stack.js';
 import { validateSessionCapabilities, type SessionProfile } from './session.js';
 import { AppiumError, CLIENT_SDK, EXTENSION_VERSION, FROZEN_PROTOCOL_VERSIONS, SOURCE_SETTINGS,
   creationResultSchema, deletionResultSchema, extensionErrorSchema, sessionManagementSchema,
-  settingsResultSchema, checkedToolReply, extensionRequestSchema, extensionResults, type ExtensionCall, type ExtensionResult,
+  sourceResultSchema, settingsResultSchema, checkedToolReply, extensionRequestSchema, extensionResults, type ExtensionCall, type ExtensionResult,
   type AppiumErrorCode, type AppiumPlatform, type AppiumSessionId } from './wire-schemas.js';
 
 export type AppiumComponentRecord =
@@ -134,8 +134,11 @@ export class PrivateAppiumClient {
   private dispatch = true;
   private inFlight = false;
   private created = false;
+  private settingsApplied = false;
   private session: { id: AppiumSessionId; profile: SessionProfile } | undefined;
   private closing: Promise<void> | undefined;
+  private pendingObservation: Promise<unknown> | undefined;
+  private deleting: Promise<ManagementResult> | undefined;
   private constructor(private readonly options: ChildOptions, home: string) {
     this.transport = new PrivateStdioTransport(options, home, async pid => {
       const record = { kind: 'appium-child', owner: structuredClone(options.owner), pid, home } satisfies AppiumComponentRecord;
@@ -171,8 +174,8 @@ export class PrivateAppiumClient {
   get dispatchOpen(): boolean { return this.dispatch; }
   stopDispatch(): void { this.dispatch = false; }
   private fault(code: AppiumErrorCode): never { this.dispatch = false; throw new AppiumError(code); }
-  private async call(name: string, args: Record<string, unknown>, timeoutMs?: number) {
-    if (!this.dispatch) throw new AppiumError('CONNECTION_LOST');
+  private async call(name: string, args: Record<string, unknown>, timeoutMs?: number, cleanup = false) {
+    if (!this.dispatch && !cleanup) throw new AppiumError('CONNECTION_LOST');
     if (this.inFlight) throw new AppiumError('NOT_ALLOWED');
     this.inFlight = true;
     try {
@@ -186,8 +189,44 @@ export class PrivateAppiumClient {
     } catch (error) {
       this.dispatch = false;
       if (error instanceof AppiumError) throw error;
+      if (name === 'appium_get_page_source' && error instanceof McpError && error.code === ErrorCode.RequestTimeout) throw new AppiumError('TIMEOUT');
       throw new AppiumError('ACKNOWLEDGEMENT_LOST');
     } finally { this.inFlight = false; }
+  }
+  get observationPending(): boolean { return this.pendingObservation !== undefined; }
+  async awaitPendingObservation(): Promise<void> { await this.pendingObservation; }
+  private async observation<T>(work: () => Promise<T>): Promise<T> {
+    await this.awaitPendingObservation();
+    const pending = work();
+    this.pendingObservation = pending;
+    try { return await pending; }
+    catch (error) {
+      this.stopDispatch();
+      const session = this.session;
+      if (session) void this.manageSession({ action: 'delete', sessionId: session.id }, session.profile).catch(() => {});
+      throw error;
+    }
+    finally { if (this.pendingObservation === pending) this.pendingObservation = undefined; }
+  }
+  pageSource(timeoutMs = 10_000): Promise<string> {
+    return this.observation(() => this.sourceOnce(timeoutMs));
+  }
+  capturePair<T>(complete: (pair: { xml: string; screen: ExtensionResult<'jev_screen'> }) => Promise<T>, timeoutMs = 10_000): Promise<T> {
+    return this.observation(async () => {
+      const xml = await this.sourceOnce(timeoutMs);
+      const session = this.session;
+      if (!session) throw new AppiumError('SESSION_MISMATCH');
+      const args = { extensionVersion: EXTENSION_VERSION, sessionId: session.id };
+      const reply = await this.call('jev_screen', args, timeoutMs);
+      return complete({ xml, screen: extensionResults.jev_screen.parse(reply.structuredContent) });
+    });
+  }
+  private async sourceOnce(timeoutMs: number): Promise<string> {
+    const session = this.session;
+    if (!session) throw new AppiumError('SESSION_MISMATCH');
+    if (!this.settingsApplied || !Number.isFinite(timeoutMs) || timeoutMs <= 0) throw new AppiumError('NOT_ALLOWED');
+    const reply = await this.call('appium_get_page_source', { sessionId: session.id, saveToFile: false }, Math.min(10_000, timeoutMs));
+    return sourceResultSchema.parse(reply.structuredContent).xml;
   }
   async callExtension(request: Extract<ExtensionCall, { name: 'jev_session_inventory' }>, timeoutMs?: number): Promise<ExtensionResult<'jev_session_inventory'>>;
   async callExtension(request: Extract<ExtensionCall, { name: 'jev_settings' }>, timeoutMs?: number): Promise<ExtensionResult<'jev_settings'>>;
@@ -197,6 +236,7 @@ export class PrivateAppiumClient {
   async callExtension(request: Extract<ExtensionCall, { name: 'jev_start_activity' }>, timeoutMs?: number): Promise<ExtensionResult<'jev_start_activity'>>;
   async callExtension(request: Extract<ExtensionCall, { name: 'jev_terminate_app' }>, timeoutMs?: number): Promise<ExtensionResult<'jev_terminate_app'>>;
   async callExtension(request: ExtensionCall, timeoutMs?: number) {
+    await this.awaitPendingObservation();
     const session = this.session;
     if (!session) throw new AppiumError('SESSION_MISMATCH');
     const parsed = extensionRequestSchema.safeParse({ name: request.name,
@@ -231,10 +271,15 @@ export class PrivateAppiumClient {
       return { kind: 'created', sessionId: owned.sessionId };
     }
     if (!this.session || args.sessionId !== this.session.id) throw new AppiumError('SESSION_MISMATCH');
-    const reply = await this.call('appium_session_management', args, timeoutMs);
-    const result = deletionResultSchema.safeParse(reply.structuredContent);
-    if (!result.success || result.data.sessionId !== this.session.id) return this.fault('ACKNOWLEDGEMENT_LOST');
-    return { kind: 'deleted' };
+    if (this.dispatch) { try { await this.awaitPendingObservation(); } catch {} }
+    this.deleting ??= (async () => {
+      const reply = await this.call('appium_session_management', args, timeoutMs, true);
+      const result = deletionResultSchema.safeParse(reply.structuredContent);
+      if (!result.success || result.data.sessionId !== args.sessionId) return this.fault('ACKNOWLEDGEMENT_LOST');
+      this.stopDispatch();
+      return { kind: 'deleted' };
+    })();
+    return this.deleting;
   }
   async applySettings(profile: SessionProfile, timeoutMs?: number): Promise<void> {
     const session = this.session;
@@ -250,6 +295,7 @@ export class PrivateAppiumClient {
     if (reply.structuredContent?.extensionVersion !== EXTENSION_VERSION) return this.fault('VERSION_MISMATCH');
     const result = settingsResultSchema.safeParse(reply.structuredContent);
     if (!result.success || !Object.entries(settings).every(([key, value]) => result.data.settings[key] === value)) return this.fault('SETTINGS_READBACK_MISMATCH');
+    this.settingsApplied = true;
   }
   close(): Promise<void> {
     this.dispatch = false; this.closing ??= this.transport.close(); return this.closing;

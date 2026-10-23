@@ -33,3 +33,11 @@ The recorder creates a private child HOME, strips the environment, and discards 
 - Stdin EOF and parent loss, with child and session identities available to the fence.
 
 These cases require the final extension and the fixture app. Fault injection and the recorder round trip in this PR run on the host.
+
+## Observation replays
+
+`observe/` retains P05 XML captured on the observation-mapping prototype at `ed4a17729`. The `observe-1.jsonl` and `observe-2.jsonl` envelopes are hand-authored host fixtures around those sources and a generated one-pixel PNG. They make no new live-device claim. The original captured XML files remain separate for inspection.
+
+Observation faults add `source-late-first`, `source-late-second`, `source-lost` and `screen-late-second`. A late reply normally waits 250 ms. Appending `-held` waits for the test to create `<trace>.release`, so a manual clock can reach the settle deadline without depending on host speed. Cleanup may skip the remaining recorded steps to the owned delete request. No skipped input is dispatched.
+
+The corpus oracle converts the existing Android agent captures to equivalent XML in the test, then compares normalized elements, printed capture output and assertion text with the committed bytes. These are derived host fixtures, not newly recorded Appium wire. The three Android goldens stay unchanged.

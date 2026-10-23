@@ -1,4 +1,4 @@
-import { appendFileSync, writeFileSync } from 'node:fs';
+import { appendFileSync, writeFileSync, existsSync } from 'node:fs';
 import { createInterface } from 'node:readline';
 import { isDeepStrictEqual } from 'node:util';
 import { z } from 'zod/v4';
@@ -11,6 +11,8 @@ if (!file) throw new Error('RECORDING_REQUIRED');
 const { lines } = readRecording(file);
 if (environment) writeFileSync(environment, JSON.stringify(process.env), { mode: 0o600 });
 let index = 0;
+let sources = 0;
+let screens = 0;
 const ids = new Map<string | number, string | number>();
 function normalized(message: JSONRPCMessage) {
   const output = structuredClone(message);
@@ -27,6 +29,12 @@ function send(message: unknown) {
   if (trace) appendFileSync(trace + '.replies', line, { mode: 0o600 });
   process.stdout.write(line);
 }
+function lateReply(reply: unknown): void {
+  if (!fault.endsWith('-held')) { setTimeout(() => send(reply), 250); return; }
+  const timer = setInterval(() => {
+    if (trace && existsSync(trace + '.release')) { clearInterval(timer); send(reply); }
+  }, 5);
+}
 const input = createInterface({ input: process.stdin });
 input.on('close', () => process.exit(0));
 input.on('line', line => {
@@ -36,6 +44,13 @@ input.on('line', line => {
     if ('method' in request && request.method === 'notifications/cancelled') return;
     if ('method' in request && request.method === 'tools/list' && 'id' in request) {
       send({ jsonrpc: '2.0', id: request.id, result: { tools: toolDefinitions() } }); return;
+    }
+    if ('params' in request && request.method === 'tools/call' && request.params?.name === 'appium_session_management'
+      && typeof request.params.arguments === 'object' && request.params.arguments !== null && 'action' in request.params.arguments
+      && request.params.arguments.action === 'delete') {
+      const deletion = lines.findIndex((line, at) => at >= index && line.direction === 'client' && 'method' in line.message
+        && line.message.method === 'tools/call' && line.message.params?.name === 'appium_session_management');
+      if (deletion !== -1) index = deletion;
     }
     const expected = lines[index++];
     if (!expected || expected.direction !== 'client' || !isDeepStrictEqual(normalized(request), normalized(expected.message))) throw new Error('WIRE_REQUEST_MISMATCH');
@@ -59,6 +74,16 @@ input.on('line', line => {
             const data = z.object({ sessions: z.array(z.unknown()) }).parse(result.structuredContent);
             result.structuredContent.sessions = [...data.sessions, ...data.sessions];
           }
+        }
+        if (params.name === 'appium_get_page_source') {
+          sources++;
+          if ((fault.startsWith('source-late-first') && sources === 1) || (fault.startsWith('source-late-second') && sources === 2)) {
+            lateReply(reply); return;
+          }
+          if (fault === 'source-lost') return;
+        }
+        if (params.name === 'jev_screen' && ++screens === 2 && fault.startsWith('screen-late-second')) {
+          lateReply(reply); return;
         }
         if (params.name === 'jev_settings') {
           if (fault === 'lost') return;
