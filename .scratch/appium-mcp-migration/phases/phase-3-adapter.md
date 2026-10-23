@@ -261,6 +261,33 @@ content rather than trust a prose path. Preserve normal screenshots/watch
 behavior, without imposing the tracer's intentionally narrow image subset as
 an unreviewed product limitation.
 
+**Locked from fixture coverage** (root, 2026-10-23, under the owner's grant to decide; [ticket 19](../../appium-phase3/issues/19-observation-coverage-on-a-fixture-app.md); prototype `prototype/observation-mapping` at `ed4a17729`):
+
+- **Mapping rows confirmed.** On Android, the password, empty-hint, scroll,
+  duplicate and alias screens match today's driver on all 51 rows. iOS parity
+  against today's driver stays unknown, because MobileBuildMCP cannot target
+  the private set. It is listed for Phase 4.
+- **Tap alias confirmed.** On iOS, the two same-frame references dispatched to
+  the same control once each. Android merges that wrapper and control into one
+  reference, so it has no alias case. The vendor-free bridge rule stands.
+- **Duplicates.** Two independent same-label controls are refused as
+  ambiguous.
+- **Android text.** `mobile: replaceElementValue` made one native change on
+  both the pre-filled field and the secure field. Each shown value comes from
+  the field itself, and the secure value stays masked.
+- **Completeness.** An iOS tree at depth 45 renders, and depth 50 or more
+  refuses as incomplete. An Android node at depth 70 refuses.
+- **A page-source timeout ends the session.** A deep tree of nested UIViews
+  timed out at the 10 s deadline. WDA kept building that source and held back
+  the next input. So after any page-source timeout, the observation refuses as
+  incomplete, the bridge dispatches no further input on that session, and the
+  session is deleted and fenced. The next command opens a fresh session. Deep
+  real-app trees are a Phase 4 live check.
+- **The settle cap is a return deadline.** A capture that started before the
+  3 s cap finished at 3.09 s. Each capture gets the remaining budget as its
+  deadline. At the cap, the loop returns the last completed capture with
+  `settled: false` and keeps nothing that arrives later.
+
 ## Operation contract
 
 Resolve guards and exactly one eligible target from fresh evidence before input.

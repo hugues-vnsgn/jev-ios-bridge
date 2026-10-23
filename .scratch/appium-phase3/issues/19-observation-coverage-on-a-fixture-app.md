@@ -1,7 +1,7 @@
 # Observation coverage on a fixture app
 
 Type: prototype
-Status: claimed
+Status: resolved
 Claimed by: root (Claude); evidence by Codex worker A (brief ~/.codex/reports/jev-ios-bridge/phase3-build/P19-fixture-coverage-brief.md)
 Labels: wayfinder:prototype
 Mode: HITL
@@ -52,3 +52,19 @@ unique-target proof reopens the alias choice.
 ## Comments
 
 Graduated on 2026-10-23 from Observation mapping: owner choice "P05b with a fixture app".
+Resolved on 2026-10-23 by the root under the owner's grant to decide.
+
+## Answer
+
+Prototype `prototype/observation-mapping` at `ed4a17729`. Evidence is in
+`~/.codex/reports/jev-ios-bridge/phase3-build/P19-evidence/`.
+
+- Android mapping matches on 51 of 51 rows.
+- The iOS alias passed its unique-target proof.
+- Android `replaceElementValue` passed on both the pre-filled and the secure
+  field.
+- The depth refusals passed.
+
+Two new rules came from the run. A page-source timeout ends the session, and
+the settle cap is a return deadline. The text is in "Locked from fixture
+coverage" in the Phase 3 specification.
