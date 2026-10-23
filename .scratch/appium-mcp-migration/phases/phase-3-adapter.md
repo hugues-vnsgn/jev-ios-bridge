@@ -287,6 +287,15 @@ an unreviewed product limitation.
   3 s cap finished at 3.09 s. Each capture gets the remaining budget as its
   deadline. At the cap, the loop returns the last completed capture with
   `settled: false` and keeps nothing that arrives later.
+- **The settle cap never cancels a page-source call.** Only the 10 s
+  page-source deadline cancels one, and only that deadline retires the
+  session. At the 3 s cap, observe returns the last completed capture with
+  `settled: false`, on time. A capture still in flight keeps its own 10 s
+  deadline, its result is discarded, and the session marks it pending. The
+  next command on that session waits for it to finish first. If it reaches
+  10 s, the timeout rule applies. If no capture completed before the cap,
+  the observation refuses as incomplete. (Root, 2026-10-23, answering
+  P3.4.)
 
 ## Operation contract
 
