@@ -65,6 +65,7 @@ sorted by the owner on 2026-10-22; the build plan schedules them:
 
 <!-- one line per resolved ticket: [title](issues/NN-slug.md): gist -->
 
+- [Observation mapping](issues/05-observation-mapping.md): pinned settings (iOS exclude nothing; Android compression off, topmost app window, depth 70) applied after create and read back; today's meanings kept and three iOS gaps fixed; refuse incomplete on invalid XML, a driver error or the depth limit; the same-frame alias becomes a bridge rule pending its proof (19); bridge-issued snapshot-bound refs.
 - [What the old vendors give us today](issues/03-what-the-old-vendors-give-us.md): MobileBuildMCP supplies all iOS observation, refs, input, settle, screenshot, launch and the app-exit signal; mobilecli only Android's agent; AXe is never called; 17 public surfaces carry vendor meaning.
 - [Device side effects of an Appium session](issues/02-session-device-side-effects.md): sessions install packages and change global settings and Simulator preferences that today's drivers never touch; app-touching effects can be switched off for capture and attach; four Android effects cannot; appium-mcp ignores `settings[...]` capabilities.
 - [Shipping the frozen Appium stack](issues/01-shipping-the-frozen-stack.md): the plugin installer refuses the stack's lock, so ship two release-built archives (stack and exact Phase 1 WDA runner) extracted on first use; private client `@modelcontextprotocol/sdk` 1.32.1; ten delivery choices go to the owner.
@@ -96,6 +97,7 @@ flowchart LR
     T16["16 Settling and screen change under Appium<br/><small>grilling</small>"]
     T17["17 Allowed device effects of a session<br/><small>prototype</small>"]
     T18["18 Delivering the stack to users<br/><small>grilling</small>"]
+    T19["19 Observation coverage on a fixture app<br/><small>prototype</small>"]
     T03 --> T05
     T04 --> T05
     T04 --> T06
@@ -122,18 +124,19 @@ flowchart LR
     T15 --> T14
     T16 --> T14
     T17 --> T14
+    T19 --> T14
     T02 --> T15
     T05 --> T16
     T06 --> T16
     T04 --> T17
+    T05 --> T19
     classDef resolved fill:#e4e4e7,stroke:#a1a1aa,color:#52525b
     classDef claimed fill:#dbeafe,stroke:#2563eb,color:#1e3a8a
     classDef frontier fill:#dcfce7,stroke:#16a34a,color:#14532d,stroke-width:2px
     classDef blocked fill:#ffffff,stroke:#a1a1aa,color:#18181b
-    class T01,T02,T03,T04,T12,T15,T18 resolved
-    class T05 claimed
-    class T06,T17 frontier
-    class T07,T08,T09,T10,T11,T13,T14,T16 blocked
+    class T01,T02,T03,T04,T05,T12,T15,T18 resolved
+    class T06,T07,T08,T13,T17,T19 frontier
+    class T09,T10,T11,T14,T16 blocked
 ```
 <!-- route:end -->
 

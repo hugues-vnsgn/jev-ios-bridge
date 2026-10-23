@@ -1,7 +1,7 @@
 # Observation mapping
 
 Type: prototype
-Status: claimed
+Status: resolved
 Claimed by: root (Claude); artifact built by the Codex worker (brief ~/.codex/reports/jev-ios-bridge/phase3-build/P05-observation-prototype-brief.md); owner decides
 Labels: wayfinder:prototype
 Mode: HITL
@@ -69,3 +69,33 @@ prototype as an asset.
 Charted on 2026-10-22.
 Claimed and released on 2026-10-22: the owner paused work before the prototype started. A ready worker brief is at `~/.codex/reports/jev-ios-bridge/phase3-build/P05-observation-prototype-brief.md`.
 Re-claimed on 2026-10-23: the owner resumed planning; the worker builds the prototype, the owner locks the mapping.
+Resolved on 2026-10-23 by the owner after reviewing the prototype with the root.
+
+## Answer
+
+Prototype `prototype/observation-mapping` at `6e42862c9` (HTML, normalizer,
+XML samples). The evidence is in `~/.codex/reports/jev-ios-bridge/phase3-build/P05-evidence/`.
+
+- **Captures.** Both platforms were captured live on the private pair, four
+  states each, with five timed captures per state. Android matched today's
+  agent on every row (35 of 35). The iOS baseline is the committed MobileBuildMCP
+  fixtures from 2026-09-24, because MobileBuildMCP cannot target the private
+  set. Its three gaps are listed in the spec.
+- **First iOS failure.** macOS remounted the iOS 26.5 runtime volume during
+  boot, and CoreSimulator shut the simulator down ("a path is on an unmounting
+  volume"). The retry waited for a stable mount. This is not a stack defect,
+  but builds and Phase 4 should expect it.
+- **Locked.**
+  - the pinned source settings
+  - the mapping rules
+  - completeness refusal on hard signals
+  - the tap alias kept as a vendor-free bridge rule, pending its unique-target
+    proof
+  - bridge-issued, snapshot-bound references
+
+  The text is in "Locked observation choices" in the Phase 3 specification.
+- **Not settled here.**
+  - WDA's native idle and quiescence values were not read back (the prototype
+    read driver-local settings). They move to Settling and screen change (16).
+  - The unreachable features and the alias proof go to the new ticket
+    [19](19-observation-coverage-on-a-fixture-app.md).

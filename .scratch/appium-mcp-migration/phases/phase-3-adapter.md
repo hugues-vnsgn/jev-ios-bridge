@@ -127,6 +127,49 @@ fields, empty hints, scrollable content, malformed/large XML and changing screen
 Legacy MobileBuildMCP tap-alias authorization cannot be copied onto Appium; any
 compatible alias equivalence needs its own bounded proof and unique-target test.
 
+**Locked observation choices** (owner, 2026-10-23, from the
+[observation-mapping prototype](https://github.com/hugues-vnsgn/jev-ios-bridge/tree/prototype/observation-mapping/.scratch/appium-phase3/prototypes/observation-mapping),
+branch `prototype/observation-mapping` at `6e42862c9`):
+
+- **Pinned source settings.** These are applied through the driver's settings
+  call after session creation, never as `settings[...]` capabilities, and read
+  back before the first capture. A failed readback refuses before any action.
+  - iOS: `pageSourceExcludedAttributes` is `""`, so nothing is excluded.
+  - Android: `ignoreUnimportantViews=false`, `enableMultiWindows=false`,
+    `enableTopmostWindowFromActivePackage=true`, `snapshotMaxDepth=70`.
+- **Role and field mapping.** The normalizer keeps today's meanings. The
+  prototype matched today's Android output on every captured row (35 of 35).
+  Against the historical MobileBuildMCP fixtures, three iOS gaps must be closed:
+  - never derive `identifier` from XML `name` when it only repeats the label
+  - do not add text or selected values that today's snapshot lacks
+  - derive actions as today does, keeping `longPress` and `touch` where
+    MobileBuildMCP offered them and never offering `tap` on a disabled control
+
+  The 15-role vocabulary is unchanged. Features the frozen diagnostic app cannot
+  show (password fields, empty hints, scrollable lists, large trees, duplicate
+  independent controls, continuous change) are proven by the fixture-app
+  capture ([ticket 19](../../appium-phase3/issues/19-observation-coverage-on-a-fixture-app.md))
+  before the build plan relies on them.
+- **Completeness.** `truncated` gets a producer. A capture is refused as
+  incomplete, never passed silently, on invalid XML, a driver error, or any
+  node at the configured depth limit (70). Otherwise `truncated` is `false`.
+  `STATE_BUDGET` (24,000 bytes) stays. A small well-formed tree is not, by
+  itself, proof of completeness.
+- **Tap aliases.** Today's identified parent/child clustering stays. The
+  same-label, same-frame, no-identifier rule (`mobilebuildmcp-2.7.1`) becomes a
+  vendor-free bridge rule, so no script that is valid today breaks. As this
+  section requires, the rule needs its own bounded proof: the fixture-app
+  capture must show both duplicates dispatch to the same physical target
+  (unique-target test). If it cannot, the owner decides again.
+- **Element references.** The bridge issues `eN` references from its own
+  normalized snapshot, each bound to the explicit session and that snapshot.
+  Appium element IDs are never exposed. A reference from an older snapshot or
+  another session is refused as stale.
+- **Measured.** Warm page source on the private pair took about 65 ms on iOS
+  and 24–103 ms on Android (medians per state; Android spread 22–307 ms), on
+  small trees. These are session-cost numbers, not app performance, and set no
+  speed gate.
+
 Version/schema/envelope errors stop dependent actions. Treat viewer resources
 as unconsumed content only under the measured public contract. Validate image
 content rather than trust a prose path. Preserve normal screenshots/watch

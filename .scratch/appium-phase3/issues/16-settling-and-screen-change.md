@@ -33,6 +33,12 @@ Settle these:
 - Whether `settled:false` on iOS counts as an additive contract change under
   ADR-0005.
 
+Added from Observation mapping (05): read back WDA's native idle and
+quiescence values (`waitForIdleTimeout`, `animationCoolOffTimeout`,
+`waitForQuiescence`) on the live iOS session. P05 read only driver-local
+settings. Warm page source measured about 65 ms on iOS and 24–103 ms on
+Android.
+
 ## Completion criterion
 
 The owner locks the loop, the constants, the hash and the iOS mark. Write them
