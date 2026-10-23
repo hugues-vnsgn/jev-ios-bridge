@@ -27,8 +27,8 @@ export const appiumComponentSchema = z.discriminatedUnion('kind', [
   z.strictObject({ id: text, kind: z.literal('appium-native-helper'), role: z.enum(['console', 'log-stream', 'logcat', 'exit-watch']), process: hostIdentitySchema }),
 ]);
 export type AppiumComponent = z.infer<typeof appiumComponentSchema>;
-export const hostRowSchema = hostIdentitySchema.extend({ ppid: z.number().int().nonnegative(), pgid: z.number().int().positive(),
-  state: z.enum(['running', 'zombie']), executable: text, runMarker: runMarker.optional(), launchChain: z.array(hostIdentitySchema).max(4096).optional() });
+export const hostRowSchema = hostIdentitySchema.extend({ ppid: z.number().int().nonnegative(), pgid: z.number().int().nonnegative(),
+  state: z.enum(['running', 'zombie']), executable: text, sharedService: z.literal(true).optional(), runMarker: runMarker.optional(), launchChain: z.array(hostIdentitySchema).max(4096).optional() });
 export const hostInventorySchema = z.array(hostRowSchema).max(65536).refine(rows => new Set(rows.map(row => row.pid)).size === rows.length);
 export const wdaInventorySchema = z.array(z.strictObject({ udid, bundleId: text, pid: hostPid })).max(4096);
 export const forwardInventorySchema = z.array(z.strictObject({ serial, local: port, remote: port })).max(4096);

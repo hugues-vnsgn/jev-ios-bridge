@@ -3,6 +3,11 @@ import { androidProcessSchema, forwardInventorySchema, hostInventorySchema, sett
   type AppiumComponent, type AppiumProof, type HostIdentity, type HostRow, type Transcript } from './schema.js';
 
 const sameIdentity = (row: HostIdentity, expected: HostIdentity) => row.pid === expected.pid && row.startTime === expected.startTime;
+export function sharedService(row: HostRow): boolean {
+  const executable = row.executable.split(/\s+/)[0]?.split('/').at(-1);
+  return row.sharedService === true || executable === 'CoreSimulatorService' || executable === 'com.apple.CoreSimulator.CoreSimulatorService'
+    || (executable === 'adb' && /\bfork-server\b.*\bserver\b/.test(row.executable));
+}
 export const active = (row: HostRow) => row.state === 'running';
 export function ownedGroup(target: Extract<AppiumComponent, { kind: 'appium-process-group' }>, rows: HostRow[]): HostRow[] {
   const recorded = [target.leader, ...target.members];
@@ -11,7 +16,11 @@ export function ownedGroup(target: Extract<AppiumComponent, { kind: 'appium-proc
     if (current && !sameIdentity(current, identity)) throw new Error('Recorded PID identity differs');
   }
   const linked = new Set(recorded.map(row => Number(row.pid)));
-  for (const row of rows.filter(row => row.runMarker === target.runMarker && active(row))) {
+  for (const row of rows.filter(active)) {
+    const ancestor = row.launchChain?.[0];
+    if (ancestor && sameIdentity(ancestor, target.leader) && row.runMarker !== target.runMarker && !sharedService(row)) throw new Error('Launch attestation is inconsistent');
+  }
+  for (const row of rows.filter(row => row.runMarker === target.runMarker && active(row) && !sharedService(row))) {
     const ancestor = row.launchChain?.[0];
     if (!ancestor || !sameIdentity(ancestor, target.leader)) throw new Error('Launch ancestry is unprovable');
     linked.add(row.pid);
@@ -24,9 +33,7 @@ export function ownedGroup(target: Extract<AppiumComponent, { kind: 'appium-proc
   const group = rows.filter(row => linked.has(row.pid));
   if (rows.some(row => active(row) && row.pgid === target.pgid && !linked.has(row.pid))) throw new Error('Unmatched process group member');
   for (const row of group.filter(active)) {
-    const executable = row.executable.split(/\s+/)[0]?.split('/').at(-1);
-    if (executable === 'CoreSimulatorService' || executable === 'com.apple.CoreSimulator.CoreSimulatorService'
-      || (executable === 'adb' && /\bfork-server\b.*\bserver\b/.test(row.executable))) throw new Error('Shared service cannot be stopped');
+    if (sharedService(row)) throw new Error('Shared service cannot be stopped');
   }
   return group;
 }

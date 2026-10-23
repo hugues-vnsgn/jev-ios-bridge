@@ -2,7 +2,7 @@ import { randomUUID } from 'node:crypto';
 import { performance } from 'node:perf_hooks';
 import type { Admission, AdmissionClaim, AdmittedSession, FenceRequest, NativeComponent, OwnerIdentity, RecoveryClaim } from '../../device/admission.js';
 import { z } from 'zod/v4';
-import { active, ownedGroup, verifyAppiumProof } from './proof.js';
+import { active, ownedGroup, sharedService, verifyAppiumProof } from './proof.js';
 import { androidProcessSchema, appiumComponentSchema, forwardInventorySchema, hostInventorySchema,
   parseEffectResult, settingKeySchema, settingsSchema, wdaInventorySchema, type AppiumComponent, type AppiumProof,
   androidIdentitySchema, type FenceEffect, type HostIdentity, type HostRow, type Transcript } from './schema.js';
@@ -85,6 +85,7 @@ export async function fenceAppium(input: FenceOptions & { admission: Admission; 
       for (const expected of known) {
         const current = rows.find(row => row.pid === expected.pid);
         if (current && current.startTime !== expected.startTime) throw new Error('Host PID was reused');
+        if (current && active(current) && sharedService(current)) throw new Error('Shared service cannot be stopped');
       }
       return target.kind === 'appium-process-group' ? ownedGroup(target, rows).filter(active) : rows.filter(row => row.pid === target.process.pid && active(row));
     };

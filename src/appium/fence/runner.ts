@@ -3,6 +3,8 @@ import type { AdbResult, AdbRunner } from '../../device/android/adb.js';
 import { androidStartTime, processGone, shellCommand } from '../../device/android/recovery.js';
 import { androidProcessSchema, forwardInventorySchema, hostInventorySchema, settingKeySchema, settingsSchema, wdaInventorySchema,
   type FenceEffect, type HostIdentity } from './schema.js';
+import { sharedService } from './proof.js';
+import { hostFenceIo } from './host.js';
 import type { FenceRunner } from './index.js';
 
 export type HostFenceIo = {
@@ -57,12 +59,13 @@ async function nativeCall<T>(signal: AbortSignal, call: () => Promise<T>): Promi
   signal.throwIfAborted();
   return result;
 }
-export function createFenceRunner(io: { host: HostFenceIo; adb: AdbRunner; simctl: SimctlRunner }): FenceRunner {
+export function createFenceRunner(io: { host?: HostFenceIo; adb: AdbRunner; simctl: SimctlRunner }): FenceRunner {
+  const host = io.host ?? hostFenceIo();
   const adb: AdbRunner = (args, signal) => nativeCall(signal, () => io.adb(args, signal));
   const simctl: SimctlRunner = (args, signal) => nativeCall(signal, () => io.simctl(args, signal));
-  const inventory = (signal: AbortSignal) => nativeCall(signal, () => io.host.inventory(signal));
-  const signalGroup: HostFenceIo['signalGroup'] = (pgid, name, signal) => nativeCall(signal, () => io.host.signalGroup(pgid, name, signal));
-  const signalProcess: HostFenceIo['signalProcess'] = (process, name, signal) => nativeCall(signal, () => io.host.signalProcess(process, name, signal));
+  const inventory = (signal: AbortSignal) => nativeCall(signal, () => host.inventory(signal));
+  const signalGroup: HostFenceIo['signalGroup'] = (pgid, name, signal) => nativeCall(signal, () => host.signalGroup(pgid, name, signal));
+  const signalProcess: HostFenceIo['signalProcess'] = (process, name, signal) => nativeCall(signal, () => host.signalProcess(process, name, signal));
   const processState = async (effect: { serial: string; pid: number }, signal: AbortSignal) => {
     const result = resultSchema.parse(await adb(shellCommand(effect.serial, ['cat', `/proc/${effect.pid}/stat`]), signal));
     if (processGone(result)) return androidProcessSchema.parse({ kind: 'absent' });
@@ -77,14 +80,14 @@ export function createFenceRunner(io: { host: HostFenceIo; adb: AdbRunner; simct
       case 'host-inventory': return hostInventorySchema.parse(await inventory(signal));
       case 'host-signal-group': {
         const rows = hostInventorySchema.parse(await inventory(signal)).filter(row => row.pgid === effect.pgid && row.state === 'running');
-        if (rows.some(row => !effect.members.some(member => member.pid === row.pid && member.startTime === row.startTime))) throw new Error('Process group identity differs');
+        if (rows.some(row => sharedService(row) || !effect.members.some(member => member.pid === row.pid && member.startTime === row.startTime))) throw new Error('Process group identity differs');
         if (rows.length) await signalGroup(effect.pgid, effect.signal, signal);
         return { ok: true };
       }
       case 'host-signal': {
         const rows = hostInventorySchema.parse(await inventory(signal));
         const current = rows.find(row => row.pid === effect.process.pid);
-        if (current && current.startTime !== effect.process.startTime) throw new Error('Host process identity differs');
+        if (current && (sharedService(current) || current.startTime !== effect.process.startTime)) throw new Error('Host process identity differs');
         if (current?.state === 'running') await signalProcess(effect.process, effect.signal, signal);
         return { ok: true };
       }

@@ -322,3 +322,29 @@ test('launch attestation finds an escaped orphan after its parent has already ex
   assert.deepEqual(runner.hosts.map(row => row.pid), [400, 999]);
   assert.equal(state(f.admission, f.claim.identity), 'available');
 });
+
+test('an inherited marker never grants ownership of a shared adb server', async t => {
+  const f = fixture(t); f.claim.registerComponent(JSON.parse(JSON.stringify(targets[0])));
+  f.claim.closeDispatch({ outcome: 'inconclusive', disposition: 'quarantined', payload: {}, evidenceRefs: [] });
+  const recovery = f.admission.claimRecovery(f.claim.identity, 'shared'); if (recovery.kind === 'refused') assert.fail();
+  const runner = new FakeRunner();
+  runner.hosts.push(JSON.parse(JSON.stringify({ pid: 500, startTime: 'shared-adb', ppid: 1, pgid: 500, state: 'running', executable: '/usr/bin/adb', sharedService: true,
+    runMarker: '0123456789abcdef0123456789abcdef', launchChain: [{ pid: 100, startTime: 'host-100' }] })));
+  const { fenceAppium } = await fenceModule();
+  const proof = await fenceAppium({ admission: f.admission, claim: recovery.claim, runner: runner.run, clock: runner.clock });
+  recovery.claim.submitFence(proof);
+  assert.deepEqual(runner.hosts.map(row => row.pid), [400, 999, 500]);
+  assert.equal(state(f.admission, f.claim.identity), 'available');
+});
+
+test('a descendant with inconsistent launch attestation remains quarantined', async t => {
+  const f = fixture(t); f.claim.registerComponent(JSON.parse(JSON.stringify(targets[0])));
+  f.claim.closeDispatch({ outcome: 'inconclusive', disposition: 'quarantined', payload: {}, evidenceRefs: [] });
+  const recovery = f.admission.claimRecovery(f.claim.identity, 'unattested'); if (recovery.kind === 'refused') assert.fail();
+  const runner = new FakeRunner();
+  runner.hosts.push(JSON.parse(JSON.stringify({ pid: 103, startTime: 'orphan-103', ppid: 1, pgid: 103, state: 'running', executable: '/escaped',
+    launchChain: [{ pid: 100, startTime: 'host-100' }] })));
+  const { fenceAppium } = await fenceModule();
+  await assert.rejects(() => fenceAppium({ admission: f.admission, claim: recovery.claim, runner: runner.run, clock: runner.clock }), /attestation/i);
+  assert.equal(state(f.admission, f.claim.identity), 'quarantined');
+});
