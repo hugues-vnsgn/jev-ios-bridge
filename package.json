@@ -31,7 +31,10 @@
     "README.md",
     "docs/guide",
     "LICENSE",
-    "CHANGELOG.md"
+    "CHANGELOG.md",
+    "stack/release",
+    "stack/wda/provenance.json",
+    "THIRD_PARTY_NOTICES.md"
   ],
   "scripts": {
     "build": "rm -rf dist && tsc -p tsconfig.build.json",
