@@ -1,7 +1,7 @@
 # Delivering the stack to users
 
 Type: grilling
-Status: open
+Status: resolved
 Labels: wayfinder:grilling
 Mode: HITL
 Parent: [Appium Phase 3 decision map](../map.md)
@@ -63,3 +63,39 @@ build plan or Phase 4.
 ## Comments
 
 Graduated on 2026-10-22 from Shipping the frozen Appium stack (section 10 of its report).
+Resolved on 2026-10-23 by the owner in a grilling session with the root; every choice took the recommended option.
+
+## Answer
+
+The owner accepts the recommended delivery: delivery option 3 with WDA option A
+and client `@modelcontextprotocol/sdk` 1.32.1. It is recorded in
+[ADR-0013](../../../docs/adr/0013-frozen-appium-stack-ships-as-release-archives.md),
+and the locked text is in the Phase 3 specification's "Entry and composition".
+
+1. **Apple-derived binaries.** Ship the exact Phase 1 runner. Apple's licence
+   terms are unverified, and the owner accepts that risk.
+2. **Size.** Accept it as-is, with no pruning. The shipped tree is the qualified tree.
+3. **Host.** Apple silicon only. Any other host refuses before effects.
+4. **iOS range.** Claim iOS 26.5 with Xcode 27.0 only. Other versions warn and
+   continue, named as unsupported in the report and `doctor`.
+5. **Node range.** Node 24 or later. Phase 4 adds one live case on Node 24.
+6. **npm tarball.** Keep both channels supported.
+7. **Extraction location.** One shared, content-addressed copy under the bridge's
+   per-account location (`~/Library/Application Support/jev-ios-bridge/`).
+8. **Licences.** A full third-party notices file at release: libvips (LGPL)
+   unmodified with its licence and source link, CC-BY attributions, WDA's BSD
+   text verbatim, and a hand check of packages with no licence metadata.
+9. **Runtime download.** None, for any part, including the npm graph.
+10. **Re-freezing.** Owner-triggered only, from a written recipe that the build
+    plan adds.
+
+- **Client package.** `@modelcontextprotocol/sdk` 1.32.1 is confirmed.
+- **The qualified WDA runner.** The root made a read-only backup on 2026-10-23
+  (`~/.codex/reports/jev-ios-bridge/phase3-build/wda-16.14.2-backup`, file-hash
+  digest `24e98539…`, identical to the source). The 7.5 MB archive and its
+  provenance record are committed in the first build PR that adds `stack/`.
+  Until then, do not delete the `feat/appium-mcp-migration` worktree.
+
+Spikes for the build plan or Phase 4: installing a roughly 100 MB archive plugin
+from a real release, concurrent first use by two processes, the space in the
+Application Support path, and the runner on other Xcode or iOS versions.

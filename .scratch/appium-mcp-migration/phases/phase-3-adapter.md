@@ -27,11 +27,76 @@ or required bounded operations. Keep extension operations allowlisted and
 session/app-bound. Do not expose arbitrary driver methods/scripts, remote
 session attachment, vendor internals or a runtime backend selector.
 
-Before importing/starting automation, verify selected runtime compatibility and
-restrict the child environment. Pin actual resolved versions and runtime
-artifacts rather than just an npm wrapper. Preserve the bridge's public MCP
-server dependency while choosing the required private MCP client; avoid assuming
-both protocol SDK generations can be silently replaced by one range.
+Before importing or starting automation, verify the selected runtime and
+restrict the child environment. Pin resolved versions and runtime artifacts, not
+an npm wrapper, and refuse any mismatch before session creation.
+
+**Frozen stack delivery** (owner, 2026-10-23; [ADR-0013](../../../docs/adr/0013-frozen-appium-stack-ships-as-release-archives.md)).
+The Phase 1 stack ships as bridge-owned release inputs and is never installed,
+built or downloaded when the bridge runs:
+
+- `stack/package.json` and `stack/package-lock.json` hold the Phase 1 candidate
+  files byte for byte. CI and host tests install them with
+  `npm ci --prefix stack`. They are not root dependencies of the product: the
+  product's `package.json` and lockfile list only the bridge's own dependencies
+  and the exact MCP client below, because Claude Code's automatic plugin install
+  refuses the stack lock (git-hosted optional dependencies, bundled copies).
+- The release builds one stack archive from that lock (`npm ci --ignore-scripts`
+  for darwin-arm64 under a pinned Node and npm), plus a manifest of every file
+  hash, package integrity and the three Android automation APK hashes. The
+  archive is a plain file in the npm tarball's `files` and in the plugin zip,
+  outside `node_modules`. It is not pruned: the shipped tree is the tree Phase 1
+  qualified. Both channels, the npm tarball and the plugin, stay supported.
+- The release also ships the exact Phase 1 WebDriverAgent runner (tree hash
+  `5d1fc1c99908e253303f6de35bf26ed4a74a75817f704e7a3646b72b5271ba04`, x86_64
+  and arm64) as a second archive, committed to the repository with a provenance
+  record: source package and integrity, Xcode and SDK versions, build command,
+  signing observations. It lands in the first build PR that adds `stack/`. The
+  archive hashes and the stack identity are constants of the built bridge.
+- On first use the bridge verifies each archive hash, extracts to a temporary
+  directory under its private per-account location
+  (`~/Library/Application Support/jev-ios-bridge/`), verifies the manifest, and
+  renames into a content-addressed directory without overwriting. The CLI and
+  the plugin share that one copy. Extraction uses no network, install scripts,
+  npm or xcodebuild. Every start re-checks the extraction marker and the Phase 1
+  loaded-file hashes and refuses on mismatch.
+- iOS sessions always set `appium:usePreinstalledWDA=true` and the absolute
+  `appium:prebuiltWDAPath` of the verified runner, plus the Phase 1
+  `wdaLaunchTimeout`. They refuse `webDriverAgentUrl`, `usePrebuiltWDA`,
+  `prebuildWDA`, `useNewWDA`, `derivedDataPath`, `bootstrapPath`, `agentPath`,
+  `useXctestrunFile`, `updatedWDABundleId`, `updatedWDABundleIdSuffix` and the
+  Xcode signing capabilities. The composition never exposes or calls
+  `appium_prepare_ios_simulator` or `prepare_ios_real_device`, never runs the
+  driver's or WDA package's download or build scripts, and refuses a WDA whose
+  reported version is not 16.14.2.
+- Android sessions use only the driver's packaged server, test and settings
+  APKs, whose hashes must match the manifest. Capabilities that skip server
+  installation or settings reinstall are not accepted.
+- The supported host is macOS on Apple silicon with Node 24 or later. Any other
+  host refuses before effects. Live evidence covers Node 26.8.1; Phase 4 adds
+  one live case on Node 24.
+- The supported iOS claim is iOS 26.5 with Xcode 27.0, the only pair the runner
+  is proven on. Another iOS runtime or Xcode version warns and continues: the
+  report and `doctor` name it as unsupported. The claim widens only with new
+  live proof.
+- The release carries a third-party notices file for the stack and the runner:
+  libvips (LGPL) shipped unmodified with its licence and source link, CC-BY
+  attributions, WDA's BSD text verbatim, and a hand check of packages with no
+  licence metadata.
+- Re-freezing is owner-triggered only. A written recipe covers it: new lock, new
+  runner, new hashes and the six iOS Phase 1 cases again. Nothing bumps the stack
+  automatically.
+
+**Private MCP client.** The private connection uses the `Client` of
+`@modelcontextprotocol/sdk`, a direct dependency pinned at exactly 1.32.1, the
+version and integrity frozen inside the stack. Startup compares them with the
+stack manifest. The client offers the SDK's latest protocol version through the
+plain `initialize` handshake and refuses any negotiated version outside the
+stack's recorded list. The public server keeps `@modelcontextprotocol/server`;
+the two SDK generations are different packages and stay separate. The client
+generation follows the frozen server's: a future stack on SDK 2.x changes the
+client in the same re-freeze, with legacy negotiation pinned explicitly, never
+`auto`, which would start an unowned second child.
 
 ## Observation contract
 
@@ -155,6 +220,14 @@ Pin zero forbidden calls for key-free capture/observed paths. Preserve all
 supported experimental public operations, not only happy-path scripted runs.
 Use source fixtures for native-helper bounds and require later live evidence
 for every claimed diagnostic/capability.
+
+Prove the delivery on the host: the packaged-install proof (npm tarball and
+plugin zip) contains both archives and the notices file; first-use extraction
+works offline; a tampered archive, extraction marker, manifest or runner is
+refused before any session; and Claude Code's install of the plugin completes.
+Installing the roughly 100 MB archive plugin from a real release and concurrent
+first use by two processes are named spikes in the build plan; anything they
+leave unproven is a Phase 4 claim.
 
 Exit with the complete preservation matrix, corresponding public contract
 checks, typecheck/full host/build checks and separate Standards/Spec review.
