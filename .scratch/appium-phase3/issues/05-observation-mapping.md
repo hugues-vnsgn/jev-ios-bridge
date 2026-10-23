@@ -1,7 +1,8 @@
 # Observation mapping
 
 Type: prototype
-Status: open
+Status: claimed
+Claimed by: root (Claude); artifact built by the Codex worker (brief ~/.codex/reports/jev-ios-bridge/phase3-build/P05-observation-prototype-brief.md); owner decides
 Labels: wayfinder:prototype
 Mode: HITL
 Parent: [Appium Phase 3 decision map](../map.md)
@@ -67,3 +68,4 @@ prototype as an asset.
 
 Charted on 2026-10-22.
 Claimed and released on 2026-10-22: the owner paused work before the prototype started. A ready worker brief is at `~/.codex/reports/jev-ios-bridge/phase3-build/P05-observation-prototype-brief.md`.
+Re-claimed on 2026-10-23: the owner resumed planning; the worker builds the prototype, the owner locks the mapping.
