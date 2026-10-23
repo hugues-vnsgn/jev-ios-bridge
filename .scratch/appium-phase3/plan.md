@@ -23,7 +23,7 @@ and the root asks the owner.
   - **Root:** Claude. Writes each brief, verifies, owns branch topology,
     asks the owner.
   - **Worker A:** the Codex pane at Orca leaf `04af4618`. It owns the device
-    lane: it finishes P08, runs P19, then builds P3.7 and P3.6.
+    lane: it finishes P08, runs P19, then builds P3.6 and P3.7.
   - **Worker B:** a second Codex pane at Orca leaf `fdc9c39c`. It owns the main
     chain: P3.1, P3.2, P3.3, P3.4, P3.5, P3.8, P3.9, P3.10.
   - Both workers use GPT-6.1-Sol only, with no subagent or reviewer on any
@@ -205,7 +205,7 @@ when approving this plan.
 
 ### P3.6 Native helpers and diagnostics
 
-- **Depends on.** P3.2 (it shares no files with P3.3 to P3.5). Cap 15M.
+- **Depends on.** P3.1 only. The native helpers never use the MCP client, so this PR branches from P3.1 beside P3.2. Cap 15M.
 - **Owns.**
   - `src/appium/native/`: the iOS `simctl launch --console-pty` launch and its
     console owner, the `log stream` observer, observed-preparation
