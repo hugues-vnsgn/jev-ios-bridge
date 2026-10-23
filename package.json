@@ -45,6 +45,7 @@
     "feasibility": "tsx spikes/feasibility/cli.ts"
   },
   "dependencies": {
+    "@modelcontextprotocol/sdk": "1.32.1",
     "@modelcontextprotocol/server": "2.1.0",
     "@typesafe-ai/sdk": "0.6.0",
     "mobilebuildmcp": "2.7.1",
