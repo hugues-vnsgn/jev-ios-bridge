@@ -1,7 +1,7 @@
 # Text replacement and shown value
 
 Type: prototype
-Status: claimed
+Status: resolved
 Claimed by: root (Claude); evidence built by the Codex worker (brief ~/.codex/reports/jev-ios-bridge/phase3-build/P07-text-replacement-brief.md); owner decides
 Labels: wayfinder:prototype
 Mode: HITL
@@ -50,3 +50,26 @@ the Phase 3 specification.
 ## Comments
 
 Charted on 2026-10-22.
+Resolved on 2026-10-23 by the owner after reviewing P07 with the root.
+
+## Answer
+
+Prototype `prototype/text-replacement` at `a6e3cbbc5`. The evidence is in
+`~/.codex/reports/jev-ios-bridge/phase3-build/P07-evidence/`. It used the
+fixture app.
+
+- **Sequence.**
+  - iOS: `clear` then `setValue`, as two dispatched commands. This worked on
+    plain, Unicode, masked, empty, pre-filled and secure fields. The
+    lost-acknowledgement test passed, with no retype.
+  - Android: `mobile: replaceElementValue`, one command. This worked on plain,
+    Unicode, masked and empty fields.
+- **Shown value.** The field's own fresh value. It is omitted when only the
+  hint shows, and secure fields stay masked.
+- **iOS typing limits** are relaxed.
+- **Echo filtering.** The child's stderr is redacted before anything is
+  persisted. P07 found typed values in appium-mcp's stderr.
+- **Not proved.** Android pre-filled and secure fields: the worker stopped at
+  the retry limit. They move to [19](19-observation-coverage-on-a-fixture-app.md).
+
+The text is under "Locked text replacement" in the Phase 3 specification.

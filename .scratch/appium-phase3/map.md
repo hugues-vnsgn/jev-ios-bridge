@@ -65,6 +65,7 @@ sorted by the owner on 2026-10-22; the build plan schedules them:
 
 <!-- one line per resolved ticket: [title](issues/NN-slug.md): gist -->
 
+- [Text replacement and shown value](issues/07-text-replacement-and-shown-value.md): iOS `clear` then `setValue` as two dispatched commands with no retype after a lost acknowledgement; Android `replaceElementValue`; the shown value is the field's own fresh value; the iOS typing limits are relaxed; child stderr is redacted before persisting.
 - [Fence evidence for Appium components](issues/11-fence-evidence-for-appium-components.md): native stop proof per component (process identity, WDA not running, `/proc` identity, forward absent, settings read back); foreign automation recognized by owned inventory (`DEVICE_BUSY` kept); recovery restores and releases only with every receipt; TERM, 5 s, KILL inside 45 s.
 - [Allowed device effects of a session](issues/17-allowed-device-effects.md): Android hidden-API keys, accessibility, instrumentation and forward allowed and undone by a clean delete; server APKs stay; the Settings helper is never installed; recovery restores everything after an unclean exit; iOS private HOME, never restarted; `skipLogCapture` always.
 - [Session lifetime](issues/10-session-lifetime.md): one child and one session per command; driven pause keeps the session and refreshes on the answer; observed sessions end before park; `delete_all` plus fence receipts; the frozen preinstalled WDA.
@@ -140,8 +141,7 @@ flowchart LR
     classDef claimed fill:#dbeafe,stroke:#2563eb,color:#1e3a8a
     classDef frontier fill:#dcfce7,stroke:#16a34a,color:#14532d,stroke-width:2px
     classDef blocked fill:#ffffff,stroke:#a1a1aa,color:#18181b
-    class T01,T02,T03,T04,T05,T06,T10,T11,T12,T13,T15,T16,T17,T18 resolved
-    class T07 claimed
+    class T01,T02,T03,T04,T05,T06,T07,T10,T11,T12,T13,T15,T16,T17,T18 resolved
     class T08,T19 frontier
     class T09,T14 blocked
 ```

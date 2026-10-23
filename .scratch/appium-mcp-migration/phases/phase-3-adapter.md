@@ -244,6 +244,33 @@ evidence, with current masking; a legitimate display transformation is not
 an execution failure. Suppress/filter upstream arguments, response echoes and
 errors before they become run logs or user-visible diagnostics.
 
+**Locked text replacement** (owner, 2026-10-23, [ticket 07](../../appium-phase3/issues/07-text-replacement-and-shown-value.md);
+prototype `prototype/text-replacement` at `a6e3cbbc5`):
+
+- **iOS.** `clear` then `setValue`, as two separately dispatched commands. If
+  `clear`'s acknowledgement is lost, dispatch closes and the partial outcome is
+  kept; `setValue` is never sent, and nothing is retyped (P07 proved this with a
+  child kill after the native clear). `setValueImmediate` is not used, because
+  it delegates to `setValue`.
+- **Android.** One `mobile: replaceElementValue`.
+- **One mutation.** Each sequence counts as one authorized mutation.
+- **Shown value.** The shown value is the field element's own value in a fresh
+  capture, never a neighbouring label and never Appium's echo. In P07 an iOS
+  formatted field showed `123456789` while its label read `123-456-789`, and the
+  field value counts. The shown value is omitted when the field exposes only its
+  hint or placeholder. Secure fields keep today's masking. A legitimate display
+  transformation is not an execution failure.
+- **iOS typing limits relaxed.** `UNSUPPORTED_LEADING_DASH_TEXT` and the
+  US-keyboard-only rule are no longer applied on iOS: P07 showed a leading
+  hyphen and multilingual Unicode accepted. The reason code stays in the
+  vocabulary. Scripts that were refused now run, which is an additive change.
+  Non-US keyboard layouts are a Phase 4 live check.
+- **Echo filtering.** appium-mcp writes tool arguments, including typed
+  values, to the child's stderr. The child's stderr goes to a bounded
+  in-memory buffer. Every typed value, secure-field content and value-bearing
+  argument is redacted before anything is written to run logs, evidence or
+  diagnostics. Secure values never reach disk.
+
 Keep existing iOS attach and coordinate requests explicitly refused before
 input. Prove Android conversion on at least two device sizes. Do not relabel
 Appium timings as app performance or copy unmeasured expiry/tap-alias metrics.

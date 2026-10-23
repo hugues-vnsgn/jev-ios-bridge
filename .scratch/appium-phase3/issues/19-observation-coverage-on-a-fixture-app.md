@@ -33,6 +33,10 @@ reference and show that both reach the same control: the app records which
 control received the tap. Show a node at depth 70 triggering the completeness
 refusal.
 
+Added from Text replacement (07): Android `mobile: replaceElementValue` on the
+pre-filled and secure fields, with the native-input count and the fresh shown
+value. P07 stopped at its retry limit before proving these.
+
 ## Completion criterion
 
 The owner confirms, or changes, the mapping rows for each feature and the tap-alias
