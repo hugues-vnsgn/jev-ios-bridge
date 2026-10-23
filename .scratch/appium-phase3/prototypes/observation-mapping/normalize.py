@@ -11,13 +11,15 @@ def normalize(xml,platform):
    if not a.get('type','').startswith('XCUIElementType'):continue
    kind=a['type'].removeprefix('XCUIElementType');role=roles.get(kind,'other')
    state={k:a[k]=='true' for k in ['enabled','visible','focused','selected'] if k in a}
-   row={'ref':f'p{len(rows)+1}','role':role,'actions':[],'state':state,'frame':{k:float(a.get(k,0)) for k in ['x','y','width','height']}}
-   for k in ['label','value','placeholder']:
+   row={'ref':f'e{len(rows)+1}','role':role,'actions':[],'state':state,'frame':{k:float(a.get(k,0)) for k in ['x','y','width','height']}}
+   for k in ['label','placeholder']:
     if a.get(k):row[k]=a[k]
-   if a.get('name'):row['identifier']=a['name']
-   if role in ['button','switch','text-field','cell','tab']:row['actions'].append('tap')
-   if role=='text-field':row['actions'].append('typeText')
-   if role in ['scroll-view','list']:row['actions'].append('swipeWithin')
+   if a.get('name') and a['name'] != a.get('label'):row['identifier']=a['name']
+   if role in ['text-field','switch','slider'] and a.get('value'):row['value']=a['value']
+   if state.get('enabled') is True:
+    if role in ['button','switch','text-field','cell','tab']:row['actions'] += ['tap','longPress','touch']
+    if role=='text-field':row['actions'].append('typeText')
+    if role in ['scroll-view','list']:row['actions'].append('swipeWithin')
    rows.append(row)
   return rows
  def node(n):
