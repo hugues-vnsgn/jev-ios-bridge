@@ -1,7 +1,7 @@
 # Session lifetime
 
 Type: grilling
-Status: open
+Status: resolved
 Labels: wayfinder:grilling
 Mode: HITL
 Parent: [Appium Phase 3 decision map](../map.md)
@@ -69,3 +69,21 @@ sections of the Phase 3 specification.
 Charted on 2026-10-22 as "Session lifetime and allowed device effects".
 Narrowed on 2026-10-22 after Device side effects of an Appium session: the
 effects choices moved to Allowed device effects of a session.
+Resolved on 2026-10-23 by the owner in a grilling session with the root.
+
+## Answer
+
+- **Ordinary runs, capture and attach.** One child and one session per command.
+  Each session maps to one admission attempt, owner generation and recorded
+  component.
+- **Paused driven runs.** The session stays alive. The bridge refreshes the
+  screen on the answer, and recreates the session if it is gone.
+- **Observed paths.** The preparation session is deleted before park, and the
+  action executor opens a fresh session without launch or reset. The root
+  derived this from the fixed constraints and did not ask it as a question.
+- **Disconnect.** `delete_all`, with the bridge fence still running and
+  recording receipts.
+- **WDA.** The driver-managed preinstalled frozen runner. `webDriverAgentUrl`
+  is refused.
+
+The text is under "Locked session lifetime" in the Phase 3 specification.

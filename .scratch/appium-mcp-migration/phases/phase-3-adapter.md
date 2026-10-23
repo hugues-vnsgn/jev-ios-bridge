@@ -238,6 +238,70 @@ Keep existing iOS attach and coordinate requests explicitly refused before
 input. Prove Android conversion on at least two device sizes. Do not relabel
 Appium timings as app performance or copy unmeasured expiry/tap-alias metrics.
 
+**Locked device effects** (owner, 2026-10-23, [ticket 17](../../appium-phase3/issues/17-allowed-device-effects.md); diffs on `prototype/device-effects` at `14588abc2`):
+
+- **Android, every path.** A session is allowed to:
+  - set the three hidden-API policy keys
+  - set `accessibility_enabled=1`
+  - start the UiAutomator2 instrumentation
+  - forward `tcp:18200`
+
+  A clean session delete undoes all four. On the first session, it may also
+  install the two UiAutomator2 server APKs and their Doze whitelist entries,
+  which stay installed. The Settings helper is never installed: any capability
+  that would install it or grant its privileges (notification listener,
+  `PROJECT_MEDIA`, permission grants, mock location) is refused, on emulators
+  and phones alike. The capability set is the P17 minimum: no `appPackage`,
+  `autoLaunch: false`, `skipUnlock: true`, `noReset: true`, plus
+  `skipDeviceInitialization` and `skipServerInstallation` once the server is
+  present.
+- **Android recovery.** After an unclean exit, recovery does four things:
+  - stops the owned instrumentation
+  - restores the three hidden-API keys to their recorded values
+  - restores `accessibility_enabled`
+  - removes only the owned forward
+
+  Each step is recorded as fence evidence. A leftover owned forward is cleared
+  before the next create, since it blocks the next session.
+- **iOS.** A session is allowed to reinstall and start the frozen WDA runner,
+  which stays installed after delete. The Appium child runs with a private HOME
+  under the bridge's per-account folder, so its Simulator and DeviceHub
+  preference writes (hardware keyboard off) never touch the user's real
+  `~/Library`. `isHeadless` follows the simulator's current presentation. A
+  session never restarts the simulator or quits Simulator.app; a capability set
+  that could do either is refused.
+- **Logs.** Every session on both platforms sets `skipLogCapture: true`.
+  Without it, the XCUITest driver kills the bridge's `log stream` (P17: the
+  stream PID exited with 143). The bridge's console, `log stream` and logcat
+  are the only log sources.
+
+**Locked session lifetime** (owner, 2026-10-23, [ticket 10](../../appium-phase3/issues/10-session-lifetime.md)):
+
+- **Ordinary runs, capture and attach.** One private MCP child and one Appium
+  session per command, started after admission and deleted at its end. Each
+  session maps to one admission attempt, one owner generation and one recorded
+  component (child PID and session id). Startup cost is accepted: about 6 s
+  warm, 12–78 s cold.
+- **Paused driven runs.** The session stays open while waiting for
+  `resolve_step`, within the existing pause budget; idle up to 900 s is proven.
+  On the answer, the bridge refreshes the screen before acting, as today. If
+  the session is gone, it creates a new one and hands back freshly. It never
+  acts without a fresh observation.
+- **Observed paths.** The preparation session is deleted before park, because a
+  parked allocation has no live driver. The action executor opens its own fresh
+  session with no launch, reset or termination. Session cleanup never releases
+  retained allocation capacity. Observed paths stay key-free.
+- **Disconnect.** The child runs with
+  `APPIUM_MCP_ON_CLIENT_DISCONNECT=delete_all`. P06 proved that stdin EOF and
+  killing the parent delete the sessions and end the child. Because
+  `delete_all` leaves no receipt, the bridge's fence still runs and records
+  receipts. A directly killed child leaves native components, which the fence
+  recovers.
+- **WDA.** WDA is the driver-managed preinstalled frozen runner, reinstalled
+  each session. `webDriverAgentUrl` is refused (ADR-0013).
+- **Idle timer.** `newCommandTimeout` is inert under appium-mcp (P06). The
+  bridge's own deadlines bound every wait.
+
 ## Mode compatibility
 
 | Mode/path | Required public behavior |

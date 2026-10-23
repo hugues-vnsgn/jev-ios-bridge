@@ -1,7 +1,7 @@
 # Allowed device effects of a session
 
 Type: prototype
-Status: claimed
+Status: resolved
 Claimed by: root (Claude); evidence built by the Codex worker (brief ~/.codex/reports/jev-ios-bridge/phase3-build/P17-device-effects-brief.md); owner decides
 Labels: wayfinder:prototype
 Mode: HITL
@@ -68,3 +68,30 @@ contradicts a preserved mode is a blocker to report.
 
 Graduated on 2026-10-22 from Device side effects of an Appium session (owner
 choices 1, 2, 3, 4, 6 and 8 of its report).
+Resolved on 2026-10-23 by the owner after reviewing the P17 diffs with the root.
+
+## Answer
+
+Prototype `prototype/device-effects` at `14588abc2`. The evidence is in
+`~/.codex/reports/jev-ios-bridge/phase3-build/P17-evidence/`.
+
+1. **Android helper and server packages.** The first session installs the two
+   server APKs and their Doze entries, which stay. The Settings helper is never
+   installed.
+2. **Phone privileges.** The minimal profile only. The Settings helper and its
+   privileges are refused.
+3. **Hidden-API policy.** The keys are allowed while a session is live. Clean
+   delete restores them. After an unclean exit, recovery restores the keys and
+   `accessibility_enabled`, stops the owned instrumentation and removes the
+   owned forward. P17 showed that restoring the keys alone leaves
+   `accessibility_enabled=1`.
+4. **iOS HOME.** A private bridge HOME. The hardware keyboard stays off.
+5. **`isHeadless`.** It follows the current presentation. A simulator restart,
+   or quitting Simulator.app, is never acceptable.
+6. **`skipLogCapture`.** Always true on both platforms. Without it, the driver
+   kills the bridge's `log stream`.
+
+Unproved: a fresh simulator's keyboard defaults, real-HOME effects, physical
+phone effects, and log payload delivery. These go to Phase 4, and print
+streaming goes to the fixture-app check. The text is under "Locked device
+effects" in the Phase 3 specification.
