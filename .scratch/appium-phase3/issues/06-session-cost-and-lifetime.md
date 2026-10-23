@@ -1,7 +1,8 @@
 # Session startup cost and lifetime
 
 Type: prototype
-Status: open
+Status: claimed
+Claimed by: root (Claude); evidence built by the Codex worker (brief ~/.codex/reports/jev-ios-bridge/phase3-build/P06-session-cost-brief.md); owner decides
 Labels: wayfinder:prototype
 Mode: HITL
 Parent: [Appium Phase 3 decision map](../map.md)
