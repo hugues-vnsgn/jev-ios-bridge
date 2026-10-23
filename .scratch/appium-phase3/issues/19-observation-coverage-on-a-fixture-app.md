@@ -1,7 +1,8 @@
 # Observation coverage on a fixture app
 
 Type: prototype
-Status: open
+Status: claimed
+Claimed by: root (Claude); evidence by Codex worker A (brief ~/.codex/reports/jev-ios-bridge/phase3-build/P19-fixture-coverage-brief.md)
 Labels: wayfinder:prototype
 Mode: HITL
 Parent: [Appium Phase 3 decision map](../map.md)
