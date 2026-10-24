@@ -1,5 +1,6 @@
-import { execFileSync, spawn } from 'node:child_process';
+import { spawn } from 'node:child_process';
 import type { Readable } from 'node:stream';
+import { executorOf, type StartLookup } from '../host-start.js';
 import { OutcomeUnknownError } from './ledger.js';
 
 export type AdbResult = { stdout: string; stderr: string; exitCode: number };
@@ -30,7 +31,7 @@ const spawnAdb: AdbSpawn = (file, args, options) => spawn(file, args, options);
  * a killed `adb` command's outcome would be unknown for good, keeping the lease. The runner lets it exit,
  * so its outcome is known, then throws the abort reason (release spec phase 4 item 8).
  */
-export function adbRunner(options: { adb: string; environment: NodeJS.ProcessEnv; spawn?: AdbSpawn }): AdbRunner {
+export function adbRunner(options: { adb: string; environment: NodeJS.ProcessEnv; spawn?: AdbSpawn; incarnation?: StartLookup }): AdbRunner {
   const { TYPESAFE_API_KEY: _jevKey, ...environment } = options.environment;
   const spawnChild = options.spawn ?? spawnAdb;
   return (args, signal, started) => new Promise((resolveResult, reject) => {
@@ -57,17 +58,7 @@ export function adbRunner(options: { adb: string; environment: NodeJS.ProcessEnv
         else resolveResult({ stdout, stderr, exitCode: code });
       });
     });
-    if (started && child.pid !== undefined) {
-      try {
-        const incarnation = execFileSync('/bin/ps', ['-p', String(child.pid), '-o', 'lstart='], {
-          encoding: 'utf8', timeout: 1000, env: { PATH:'/usr/bin:/bin',LC_ALL:'C',LANG:'C',TZ:'UTC' }, stdio:['ignore','pipe','ignore'],
-        }).trim();
-        if (incarnation) started({ pid: child.pid, incarnation });
-      } catch (error) {
-        if (error instanceof Error && !('status' in error)) settle(() => reject(new OutcomeUnknownError('adb', 'Host process binding failed', { cause: error })));
-      }
-    }
-
+    if (started && child.pid !== undefined) started(executorOf(child.pid, options.incarnation));
   });
 }
 

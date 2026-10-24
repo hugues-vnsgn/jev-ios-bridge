@@ -12,7 +12,7 @@ export type HostFenceIo = {
   signalGroup: (pgid: number, signal: 'SIGTERM' | 'SIGKILL', abort: AbortSignal) => Promise<void>;
   signalProcess: (process: HostIdentity, signal: 'SIGTERM' | 'SIGKILL', abort: AbortSignal) => Promise<void>;
 };
-type SimctlRunner = (args: string[], signal: AbortSignal, started?: (host: Executor) => void) => Promise<AdbResult>;
+export type SimctlRunner = (args: string[], signal: AbortSignal, started?: (host: Executor) => void) => Promise<AdbResult>;
 type NativeCall = (args: string[]) => Promise<AdbResult>;
 const resultSchema = z.strictObject({ stdout: z.string(), stderr: z.string(), exitCode: z.number().int() });
 const simulatorListSchema = z.object({ devices: z.record(z.string(), z.array(z.object({ udid: z.string(), state: z.string() }))) });
