@@ -834,7 +834,7 @@ export class AdmissionSqlite {
       record.phase = 'admitting'; this.saveAllocation(db, record); this.event(db, attempt, 'acquired'); return { kind: 'admitted', owner: identity };
     });
   }
-  failAllocation(expected: AllocationOwner, reason: AllocationReason, evidenceRefs: string[]): AllocationRecord {
+  failAllocation(expected: AllocationOwner, reason: AllocationReason, evidenceRefs: string[], fence?: FenceRequest): AllocationRecord {
     return this.write('failAllocation', db => {
       const record = this.ownedAllocation(db, expected);
       if (record.state !== 'preparing') throw new AdmissionError('DISPATCH_CLOSED', 'Preparation has ended');
@@ -849,7 +849,7 @@ export class AdmissionSqlite {
       record.phase = 'terminal'; record.evidenceRefs = [...evidenceRefs]; this.saveAllocation(db, record);
       if (attempt) {
         this.terminal(db, attempt, { outcome: uncertain ? 'inconclusive' : 'refused', disposition: uncertain ? 'quarantined' : 'available', payload: { reason }, evidenceRefs });
-        if (!uncertain) this.acceptFence(db,owner(attempt),this.completionProof(db,owner(attempt)),new Set());
+        if (!uncertain) this.acceptFence(db,owner(attempt),this.releaseProof(db,owner(attempt),fence),new Set());
       } else {
         const ownerId=generationId(expected.token,expected.generation);
         db.prepare('UPDATE owner_generations SET dispatch_closed_at=? WHERE id=? AND dispatch_closed_at IS NULL').run(this.options.now?.()??Date.now(),ownerId);
@@ -915,7 +915,7 @@ export class AdmissionSqlite {
       return { kind: 'allocation', allocation, attempt: attempt ? view(attempt) : null, admission: allocation.device ? this.deviceView(db, allocation.device) : null };
     });
   }
-  parkAllocation(expected: OwnerIdentity, readinessEvidence: string[], evidenceRefs: string[]): AllocationRecord {
+  parkAllocation(expected: OwnerIdentity, readinessEvidence: string[], evidenceRefs: string[], fence?: FenceRequest): AllocationRecord {
     return this.write('parkAllocation', db => {
       const row = this.owned(db, expected); const record = this.attemptAllocation(db, expected.attempt);
       if (!record || expected.attempt.kind !== 'preparation' || record.state !== 'preparing' || row.cancelled || record.cancellationRequested || !row.attached
@@ -931,7 +931,7 @@ export class AdmissionSqlite {
       record.owner = { ...record.owner, token: randomUUID(), generation: expected.generation + 1, process: { pid: 0, incarnation: 'parked' } };
       db.prepare("UPDATE attempts SET state='parked',attached=0 WHERE kind=? AND id=?").run(...key(expected.attempt));
       db.prepare('UPDATE owner_generations SET dispatch_closed_at=? WHERE id=? AND dispatch_closed_at IS NULL').run(now,generationId(expected.token,expected.generation));
-      this.acceptFence(db,expected,this.completionProof(db,expected),new Set());
+      this.acceptFence(db,expected,this.releaseProof(db,expected,fence),new Set());
       this.saveAllocation(db,record);
       db.prepare('UPDATE devices SET generation=?,lease_generation_id=? WHERE platform=? AND device=?').run(record.owner.generation,generationId(record.owner.token,record.owner.generation),expected.category,expected.device); this.event(db, expected.attempt, 'parked'); return record;
     });
@@ -1333,7 +1333,7 @@ export class AdmissionSqlite {
       }
       this.event(db, expected.attempt, 'settled', { command, success });
   }
-  finalize(expected: OwnerIdentity, candidate: TerminalCandidate, cancellationRequested = false, release = true): AttemptView {
+  finalize(expected: OwnerIdentity, candidate: TerminalCandidate, cancellationRequested = false, release = true, fence?: FenceRequest): AttemptView {
     return this.write('finalize', db => {
       const existing = db.prepare('SELECT * FROM attempts WHERE kind=? AND id=?').get(...key(expected.attempt)) as Row | undefined;
       if (existing?.state === 'terminal' && existing.platform===expected.category && existing.token === expected.token && existing.generation === expected.generation && existing.terminal === JSON.stringify(candidate)) return view(existing);
@@ -1349,8 +1349,7 @@ export class AdmissionSqlite {
       if (candidate.disposition === 'quarantined' && candidate.outcome !== 'inconclusive') throw new AdmissionError('INVALID_REQUEST', 'Quarantine requires inconclusive outcome');
       const terminal = this.terminal(db, row, candidate);
       if (release && candidate.disposition === 'available') {
-        const proof=this.completionProof(db,expected);
-        this.acceptFence(db,expected,proof,new Set());
+        this.acceptFence(db,expected,this.releaseProof(db,expected,fence),new Set());
       }
       return terminal;
     });
@@ -1415,6 +1414,31 @@ export class AdmissionSqlite {
     });
     return {requestId:'terminal-completion',kind:'stop',commands:[],components};
   }
+  /** The terminal receipt: a caller's fence proofs, with completed-command proofs for every component it leaves out. */
+  private releaseProof(db: DatabaseSync, expected: OwnerIdentity, fence?: FenceRequest): FenceRequest {
+    const completion=this.completionProof(db,expected);
+    if (!fence) return completion;
+    const named=new Set(fence.components.map(item=>item.componentId));
+    return {...fence,components:[...fence.components,...completion.components.filter(item=>!named.has(item.componentId))]};
+  }
+  /**
+   * With no recovery open, an owner's own fence commands are transcripts only when each was authorized after every
+   * other command of its generation settled, by transition order. A read taken before the last effect never counts.
+   */
+  private ownerFenceCommands(db: DatabaseSync, components: Row[], commands: Row[]): Set<string> {
+    const fences=new Set(components.filter(component=>component.kind==='appium-fence-command').map(component=>String(component.id)));
+    const others=commands.filter(command=>!fences.has(String(command.component_id)));
+    if (others.some(command=>command.state!=='settled')) return new Set();
+    const sequence=(event:string,field:string,command:unknown)=>db.prepare(`SELECT sequence FROM transitions WHERE event=? AND json_extract(detail,'$.${field}')=? ORDER BY sequence LIMIT 1`).get(event,String(command))?.sequence as number|undefined;
+    let last=0;
+    for (const other of others) {
+      const settled=sequence('settled','command',other.id);
+      if (settled===undefined) return new Set();
+      last=Math.max(last,settled);
+    }
+    return new Set(commands.filter(command=>fences.has(String(command.component_id))&&command.recovery_claim_id===null&&command.state==='settled'
+      &&(sequence('authorized','id',command.id)??0)>last).map(command=>String(command.id)));
+  }
   submitFence(expected: OwnerIdentity, request: FenceRequest, exited: ReadonlySet<string>, recovery?:RecoveryIdentity): FenceReceipt {
     return this.write('receipt',db=>this.acceptFence(db,expected,request,exited,recovery));
   }
@@ -1456,7 +1480,8 @@ export class AdmissionSqlite {
     if (generation.inventory_unknown_reason!==null) throw new AdmissionError('COVERAGE_UNKNOWN','Native inventory is incomplete');
     if (commands.some(command=>command.state!=='settled'&&!request.commands.includes(command.id))) throw new AdmissionError('COMMANDS_UNFENCED','Non-settled commands are missing from the receipt');
     const transcripts: Transcript[] = [];
-    for (const command of commands.filter(command => command.state === 'settled' && openRecovery && command.recovery_claim_id === openRecovery.id)) {
+    const ownerFences = openRecovery ? undefined : this.ownerFenceCommands(db, components, commands);
+    for (const command of commands.filter(command => command.state === 'settled' && (openRecovery ? command.recovery_claim_id === openRecovery.id : ownerFences!.has(String(command.id))))) {
       const invocation = components.find(item => item.id === command.component_id);
       const declaration = invocation && fenceCommandSchema.safeParse(JSON.parse(String(invocation.declaration)));
       if (!declaration?.success) continue;

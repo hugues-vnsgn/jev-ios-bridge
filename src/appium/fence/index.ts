@@ -1,7 +1,7 @@
 import { randomUUID } from 'node:crypto';
 import { performance } from 'node:perf_hooks';
 import { isDeepStrictEqual } from 'node:util';
-import type { Admission, AdmissionClaim, AdmittedSession, FenceRequest, NativeComponent, RecoveryClaim } from '../../device/admission.js';
+import type { Admission, AdmissionClaim, AdmittedSession, FenceRequest, NativeComponent, OwnerIdentity } from '../../device/admission.js';
 import { z } from 'zod/v4';
 import { active, groupHeld, ownedGroup, readbackOf, recordedRows, sameIdentity, settles, sharedService, verifyAppiumProof } from './proof.js';
 import { androidProcessSchema, appiumComponentSchema, automationForward, fenceCommandSchema, fenceExecutorsSchema, forwardInventorySchema, hostInventorySchema,
@@ -12,6 +12,8 @@ export type FenceRunner = (effect: FenceEffect, signal: AbortSignal, started?: (
 export type FenceOptions = { runner: FenceRunner; revalidate: (serial: string) => Promise<void>; signal?: AbortSignal; budgetMs?: number;
   clock?: { now: () => number; sleep: (ms: number, signal: AbortSignal) => Promise<void> } };
 type Dispatcher = Pick<AdmittedSession, 'dispatch'> & Pick<AdmissionClaim, 'observeComponent'>;
+/** Who fences: an open recovery claim, or the live owner itself after its last effect. Both record every read. */
+export type FenceClaim = Dispatcher & { readonly owner: OwnerIdentity };
 const POLL_CAP = 12;
 const defaultClock = { now: () => performance.now(), sleep: (ms: number, signal: AbortSignal) => new Promise<void>((resolve, reject) => {
   signal.throwIfAborted();
@@ -71,9 +73,9 @@ export function recordAppiumComponents(claim: AdmissionClaim, declarations: read
   for (const component of components) claim.registerComponent(component);
   return components;
 }
-export async function fenceAppium(input: FenceOptions & { admission: Admission; claim: RecoveryClaim }): Promise<FenceRequest> {
+export async function fenceAppium(input: FenceOptions & { admission: Admission; claim: FenceClaim }): Promise<FenceRequest> {
   const { admission, claim } = input;
-  const original = admission.readGeneration(claim.identity.owner);
+  const original = admission.readGeneration(claim.owner);
   if (original.inventoryUnknownReason !== null) throw new Error('Unknown component inventory remains quarantined');
   const targets = original.components.flatMap(component => {
     const parsed = appiumComponentSchema.safeParse(component.declaration);
@@ -194,7 +196,7 @@ export async function fenceAppium(input: FenceOptions & { admission: Admission; 
       if (!settles(effect, answer)) throw new Error(`Unproven component ${component.id}`);
       proofs.push({ componentId: component.id, proof: { kind: 'fenced-write', commandId: answer.id } });
     }
-    const view = admission.readGeneration(claim.identity.owner);
+    const view = admission.readGeneration(claim.owner);
     for (const component of view.components) {
       if (proofs.some(proof => proof.componentId === component.id)) continue;
       const commands = view.commands.filter(command => command.componentId === component.id);
