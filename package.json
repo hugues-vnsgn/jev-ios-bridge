@@ -37,7 +37,8 @@
     "THIRD_PARTY_NOTICES.md"
   ],
   "scripts": {
-    "build": "rm -rf dist && tsc -p tsconfig.build.json",
+    "build": "rm -rf dist && tsc -p tsconfig.build.json && node scripts/build-stack-archive.mjs",
+    "prepack": "npm run build",
     "typecheck": "tsc --noEmit",
     "test": "tsx --test tests/*.test.ts",
     "check": "npm run typecheck && npm test && npm run build",

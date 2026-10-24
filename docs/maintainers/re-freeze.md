@@ -11,13 +11,11 @@ Start only after the owner requests a re-freeze. A dependency update alone does 
 
    ```sh
    npm ci
-   npm run build
-   node scripts/build-stack-archive.mjs
    npm pack
    npm run build:plugin
    ```
 
-   The archive builder selects the pinned Node and npm through `npx` when needed. It installs the unpruned darwin-arm64 tree with scripts disabled, checks the Phase 1 hashes, and writes both archives plus `manifest.json` under `stack/release/`. It writes the archive identities into `dist/appium/stack-identity.js`. Run it after every `npm run build`, because TypeScript clears `dist/`. Commit the WDA archive, provenance, freeze inputs, and generated `THIRD_PARTY_NOTICES.md`. Leave `stack/release/` and every `node_modules/` out of git.
+   `npm run build` compiles TypeScript, then runs `scripts/build-stack-archive.mjs`. `npm pack` and `npm run build:plugin` each run that build first. The archive builder selects the pinned Node and npm through `npx` when needed. It installs the unpruned darwin-arm64 tree with scripts disabled, checks the Phase 1 hashes, and writes both archives plus `manifest.json` under `stack/release/`. It writes the archive identities into `dist/appium/stack-identity.js`. Commit the WDA archive, provenance, freeze inputs, and generated `THIRD_PARTY_NOTICES.md`. Leave `stack/release/` and every `node_modules/` out of git.
 7. Read the generated notices. Hand-check every package without a licence field, the Creative Commons attributions, WDA's verbatim BSD text, and the libvips source links and LGPL text. Keep all supplied licence and notice files in the unpruned archive. If libvips changes, update its component source versions and licence copies in `stack/licenses/`. The manifest records the containing archive's integrity for bundled packages. A Git dependency such as `fs-walk` has no registry integrity; keep its pinned `resolved` commit and every file hash instead of inventing an integrity value.
 8. Run `npm run typecheck`, `node --import tsx --test tests/appium-stack.test.ts`, then `npm run check` with no competing test run. Run `node tests/fixtures/observed-packaging/proof.mjs`. The proof must unpack the actual npm tarball and plugin zip and extract their stacks with network and non-tar subprocesses denied. Both installations must select the same content-addressed directory under the proof's temporary `Application Support` location.
 9. Re-record the Appium wire fixtures when the frozen identities change. Obtain the root's verification and the owner's merge approval. Follow the Phase 4 live release gates before publishing; this procedure does not authorize a release.
