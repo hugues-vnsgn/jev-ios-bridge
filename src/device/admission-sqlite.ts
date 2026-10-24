@@ -34,7 +34,7 @@ export class AdmissionError extends Error {
 }
 
 export type StoreOptions = AdmissionDependencies & { root: string; fixtureSchemaVersion?: 2 | 3 } & (
-  { mode: 'production'; durability?: 'full' } | { mode: 'test'; durability?: 'full' | 'fast' }
+  { mode: 'production'; durability?: 'full' } | { mode: 'test'; durability?: 'full' | 'fast'; busyTimeoutMs?: number }
 );
 const declarationSchema = z.strictObject({
   version: z.literal(1), writersStopped: z.literal(true), historicalRootsDeclaredOrExcluded: z.literal(true),
@@ -490,10 +490,12 @@ function absent(path: string): boolean {
   try { lstatSync(path); return false; }
   catch (error) { if ((error as NodeJS.ErrnoException).code === 'ENOENT') return true; throw error; }
 }
-function configure(db: DatabaseSync, durability: 'full' | 'fast' = 'full'): void {
+// Writers are short, but a full fsync under host load exceeds 250 ms; the wait stays bounded.
+const BUSY_TIMEOUT_MS = 5000;
+function configure(db: DatabaseSync, durability: 'full' | 'fast' = 'full', busyTimeoutMs = BUSY_TIMEOUT_MS): void {
   db.exec(durability === 'fast'
-    ? 'PRAGMA busy_timeout=250; PRAGMA foreign_keys=ON; PRAGMA synchronous=OFF; PRAGMA fullfsync=OFF;'
-    : 'PRAGMA busy_timeout=250; PRAGMA foreign_keys=ON; PRAGMA synchronous=EXTRA; PRAGMA fullfsync=ON;');
+    ? `PRAGMA busy_timeout=${busyTimeoutMs}; PRAGMA foreign_keys=ON; PRAGMA synchronous=OFF; PRAGMA fullfsync=OFF;`
+    : `PRAGMA busy_timeout=${busyTimeoutMs}; PRAGMA foreign_keys=ON; PRAGMA synchronous=EXTRA; PRAGMA fullfsync=ON;`);
   if (db.prepare('PRAGMA journal_mode').get()?.journal_mode !== 'delete') {
     throw new AdmissionError('STATE_UNAVAILABLE', 'Admission requires DELETE journal mode');
   }
@@ -643,7 +645,7 @@ export class AdmissionSqlite {
     secureSidecars(path);
     const db = new DatabaseSync(path);
     try {
-      configure(db, this.options.mode === 'test' ? this.options.durability : 'full');
+      configure(db, this.options.mode === 'test' ? this.options.durability : 'full', this.options.mode === 'test' ? this.options.busyTimeoutMs : undefined);
       return db;
     } catch (error) { db.close(); throw error; }
   }
