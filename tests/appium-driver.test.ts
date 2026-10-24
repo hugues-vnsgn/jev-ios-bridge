@@ -1,12 +1,16 @@
 import assert from 'node:assert/strict';
 import { existsSync, writeFileSync } from 'node:fs';
-import { test } from 'node:test';
+import { test, type TestContext } from 'node:test';
 import { join } from 'node:path';
 import { setTimeout as delay } from 'node:timers/promises';
 import { freeHostPort } from '../src/appium/ports.js';
 import type { DeviceDriver } from '../src/contracts/index.js';
 import { fakeSimulatorProbe } from './fixtures/android-device.js';
-import { UDID, WDA_BUNDLE, driverFixture, rewriteRecording } from './fixtures/appium-wire/driver-fixture.js';
+import { fakeProbeSpawn } from './fixtures/adb-spawn.js';
+import type { AdbRunner } from '../src/device/android/adb.js';
+import { identityProbe } from '../src/device/android/probe.js';
+import { DeviceReasonError } from '../src/device/index.js';
+import { UDID, WDA_BUNDLE, driverFixture, rewriteRecording, spliceRecordings } from './fixtures/appium-wire/driver-fixture.js';
 
 const live = () => new AbortController().signal;
 const ios = { target: { platform: 'ios', device: UDID, presentation: 'visible' }, identityProbe: fakeSimulatorProbe(UDID) } as const;
@@ -100,4 +104,60 @@ test('two simulators run at once on distinct host ports, each recorded in its ow
   await Promise.all([first.driver.close(live()), second.driver.close(live())]);
   assert.equal(first.admission.inspect({ category: 'ios-simulator', value: UDID })!.state, 'available');
   assert.equal(first.admission.inspect({ category: 'ios-simulator', value: other })!.state, 'available');
+});
+
+const SERIAL = 'PHONE123';
+const keyguard = (showing: boolean) => `WINDOW MANAGER POLICY STATE\n    KeyguardServiceDelegate\n      showing=${String(showing)}\n      interactiveState=INTERACTIVE_STATE_AWAKE\n`;
+const stat = (pid: number) => `${String(pid)} (app_process) S ${'0 '.repeat(18)}424242 0 0`;
+function androidWorld(t: TestContext, locked = false) {
+  const probe = identityProbe({ adb: '/fake/adb', environment: {}, host: { listener: async () => { throw new Error('no emulator'); }, directory: async () => { throw new Error('no emulator'); } } as never,
+    spawn: fakeProbeSpawn((_file, args) => args[0] === 'devices' ? `List of devices attached\n${SERIAL} device\n` : `${SERIAL}\n`).spawn });
+  const adbCalls: string[][] = [];
+  const adb: AdbRunner = async args => {
+    adbCalls.push([...args]);
+    const line = args.at(-1) ?? '';
+    if (line.includes('pidof')) return { stdout: '5001 5002\n', stderr: '', exitCode: 0 };
+    const pid = /\/proc\/(\d+)\/stat/.exec(line)?.[1];
+    return pid ? { stdout: stat(Number(pid)), stderr: '', exitCode: 0 } : { stdout: '', stderr: 'unexpected', exitCode: 1 };
+  };
+  const recording = (root: string) => spliceRecordings(root, [
+    { source: 'tests/fixtures/appium-wire/android/observe-2.jsonl', from: 0, to: 7 },
+    { source: 'tests/fixtures/appium-wire/android/extension.jsonl', from: 15, to: 17 },
+    { source: 'tests/fixtures/appium-wire/android/observe-2.jsonl', from: 7 }], [['android-test', SERIAL]]);
+  const f = driverFixture(t, recording, { target: { platform: 'android', device: SERIAL, category: 'android-phone', serverInstallation: { kind: 'install' } },
+    identityProbe: probe, adb, freePort: async () => 18200 }, 'none', command => command.kind === 'android-keyguard' ? keyguard(locked) : command.kind === 'android-wake' ? '' : undefined);
+  return { ...f, adbCalls };
+}
+const androidApp = { package: 'example.app', activity: '.Main', intentExtras: { route: 'settings' } };
+
+test('an Android run wakes natively, restarts through jev_start_activity, records every component and fences them all at close', async t => {
+  const f = androidWorld(t);
+  f.fence.processes.set(5001, '424242'); f.fence.processes.set(5002, '424242');
+  f.fence.forwards = [{ serial: SERIAL, local: 'tcp:18200', remote: 'tcp:6790' }];
+  await f.driver.prepare({ app: androidApp }, live());
+  assert.deepEqual(f.native.calls.map(call => call.command.kind), ['android-keyguard']);
+  assert.deepEqual(f.tools(), ['appium_session_management', 'jev_settings', 'jev_start_activity']);
+  const capabilities = JSON.parse(f.calls().find(call => call.params?.name === 'appium_session_management')!.params!.arguments!.capabilities as unknown as string) as Record<string, unknown>;
+  assert.equal(capabilities['appium:skipUnlock'], true);
+  assert.equal(capabilities['appium:systemPort'], 18200);
+  const owner = f.admission.inspect({ category: 'android-phone', value: SERIAL })!.owner!;
+  const kinds = f.admission.readGeneration(owner).components.map(component => component.kind).sort();
+  for (const kind of ['appium-forward', 'appium-process-group', 'appium-settings', 'appium-uiautomator2']) assert.ok(kinds.includes(kind), `${kind} recorded`);
+  const forward = f.admission.readGeneration(owner).components.find(component => component.kind === 'appium-forward')!.declaration;
+  assert.deepEqual({ ...(forward as object), id: 'x' }, { id: 'x', kind: 'appium-forward', serial: SERIAL, local: 'tcp:18200', remote: 'tcp:6790' });
+  assert.deepEqual(f.driver.preparation(), { deviceIdentity: SERIAL, serial: SERIAL, agentSha256: (f.driver.provenance() as { uiautomator2ServerSha256: string }).uiautomator2ServerSha256 });
+  assert.equal('wdaTreeSha256' in f.driver.provenance(), false);
+  await f.driver.observe(live());
+  await f.driver.close(live());
+  assert.deepEqual(f.tools().slice(-2), ['jev_terminate_app', 'appium_session_management']);
+  assert.deepEqual(f.fence.forwards, [], 'the owned forward is removed');
+  assert.equal(f.fence.processes.size, 0, 'both UiAutomator2 processes are stopped');
+  assert.equal(f.admission.inspect({ category: 'android-phone', value: SERIAL })!.state, 'available');
+});
+
+test('an Android device with a locked screen refuses with DEVICE_LOCKED before any session, and is available again', async t => {
+  const f = androidWorld(t, true);
+  await assert.rejects(f.driver.prepare({ app: androidApp }, live()), (error: unknown) => error instanceof DeviceReasonError && error.code === 'DEVICE_LOCKED');
+  assert.deepEqual(f.tools(), []);
+  assert.equal(f.admission.inspect({ category: 'android-phone', value: SERIAL })!.state, 'available');
 });

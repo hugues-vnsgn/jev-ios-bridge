@@ -25,7 +25,7 @@ import { launchIosConsole, observeIosLogs, observedIosPreparation } from './nati
 import { NativeHelperError, type NativeCommand, type NativeRunner } from './native/process.js';
 import { AppiumObservation, type AppiumObservedScreen } from './observe/index.js';
 import { ObservationIncompleteError } from './observe/normalize.js';
-import { AppiumOperations, type OperationName } from './operations/index.js';
+import { AppiumOperations, UnconfirmedOperationError, type OperationName } from './operations/index.js';
 import { allocateHostPorts, portComponents, type FreePort, type HostPorts } from './ports.js';
 import { AppiumCommandSession, createSessionProfile, type SessionProfile, type SessionProfileInput } from './session.js';
 import { StackError, type VerifiedStack } from './stack.js';
@@ -548,8 +548,17 @@ export class AppiumDriver implements DeviceDriver, IosPreparationDriver, Observe
     const cancel = () => controller.abort(signal.reason);
     signal.addEventListener('abort', cancel, { once: true });
     const deadline = setTimeout(() => controller.abort(new DeviceReasonError('TIMEOUT', `${operation} did not finish within ${String(timeoutMs)} ms`)), timeoutMs);
-    try { return await owner.dispatcher.dispatch(operation, () => effect(controller.signal)); }
-    finally { clearTimeout(deadline); this.aborters.delete(controller); signal.removeEventListener('abort', cancel); }
+    try {
+      const settled = await owner.dispatcher.dispatch(operation, async () => {
+        try { return { kind: 'value' as const, value: await effect(controller.signal) }; }
+        catch (error) {
+          if (controller.signal.aborted || outcomeUnknown(error)) throw error;
+          return { kind: 'error' as const, error };
+        }
+      });
+      if (settled.kind === 'error') throw settled.error;
+      return settled.value;
+    } finally { clearTimeout(deadline); this.aborters.delete(controller); signal.removeEventListener('abort', cancel); }
   }
 
   /** A read through the fence runner, recorded as its own fence command so cleanup can see what was read. */
@@ -632,6 +641,15 @@ export class AppiumDriver implements DeviceDriver, IosPreparationDriver, Observe
 }
 
 const screenOf = (result: Snapshot | ActOutcome): Snapshot => isActOutcome(result) ? result.screen : result;
+
+/** A command whose effect may or may not have happened stays uncertain, which keeps the device quarantined.
+ *  Any other failure came back with an answer, so its command settles, as on the legacy Android path. */
+function outcomeUnknown(error: unknown): boolean {
+  if (error instanceof UnconfirmedOperationError) return true;
+  if (error instanceof AppiumError) return error.code === 'TIMEOUT' || error.code === 'ACKNOWLEDGEMENT_LOST' || error.code === 'CONNECTION_LOST';
+  if (error instanceof NativeHelperError) return error.code === 'NATIVE_OUTCOME_UNKNOWN';
+  return !(error instanceof DeviceReasonError || error instanceof AdmissionError || error instanceof StackError);
+}
 
 /** A verified stack always lists the server APK; its absence is a damaged manifest. */
 function uiautomator2Server(stack: VerifiedStack): { sha256: string } {

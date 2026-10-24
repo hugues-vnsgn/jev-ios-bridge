@@ -80,14 +80,15 @@ export class FakeFence {
   };
 }
 
-export function driverFixture(t: TestContext, recording: (root: string) => string, options: Partial<AppiumDriverOptions> & Pick<AppiumDriverOptions, 'target' | 'identityProbe'>, fault = 'none') {
+export function driverFixture(t: TestContext, recording: (root: string) => string, options: Partial<AppiumDriverOptions> & Pick<AppiumDriverOptions, 'target' | 'identityProbe'>, fault = 'none',
+  nativeReply?: (command: NativeCommand) => string | undefined) {
   const root = realpathSync(mkdtempSync(join(tmpdir(), 'appium-driver-')));
   t.after(() => rmSync(root, { recursive: true, force: true }));
   for (const name of ['homes', 'logs', 'shots', 'locks', 'admission']) mkdirSync(join(root, name), { mode: 0o700 });
   const admission = options.admission ?? Admission.forTesting({ root: join(root, 'admission'), backend: 'fake', durability: 'fast' });
   const trace = join(root, 'trace.jsonl');
   const fence = new FakeFence();
-  const native = fakeNativeRunner();
+  const native = fakeNativeRunner(nativeReply);
   let port = 18100;
   const driver = new AppiumDriver({ stack: driverStack(t), admission, backend: 'fake', homeRoot: join(root, 'homes'), logFolder: join(root, 'logs'),
     screenshotFolder: join(root, 'shots'), lockRoot: join(root, 'locks'), fence: fence.run, nativeRunner: native.runner, freePort: async () => port++,
