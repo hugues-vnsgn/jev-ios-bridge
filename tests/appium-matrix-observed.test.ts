@@ -82,7 +82,7 @@ const outcome = (snapshot: Awaited<ReturnType<ObservedActionService['inspect']>>
   authority: snapshot.authority, actionAttempted: snapshot.actionAttempted, actionAcknowledged: snapshot.actionAcknowledged, admission: snapshot.admission });
 
 test('an observed tap on Appium: one input on a fresh session with no launch, key-free, retrieved identically, and a changed request conflicts',
-  { todo: '#78 fix round 1 item 1: finish closes the driver before beginFinalization; until then the action ends quarantined' }, async t => {
+  async t => {
     const o = await observed(t, world('ios', screens, tapLeadsDone));
     process.env.TYPESAFE_API_KEY = 'synthetic-key-not-for-children';
     t.after(() => { delete process.env.TYPESAFE_API_KEY; });
@@ -102,7 +102,7 @@ test('an observed tap on Appium: one input on a fresh session with no launch, ke
   });
 
 test('an observed action whose after-guard already holds is already_satisfied with no input',
-  { todo: '#78 fix round 1 item 1: finish closes the driver before beginFinalization; until then the action ends quarantined' }, async t => {
+  async t => {
     const o = await observed(t, world('ios', screens, [], 'both'));
     await o.service.start(request(o.allocationId));
     const result = await o.service.inspect('allocated', { waitMs: 10_000 });
