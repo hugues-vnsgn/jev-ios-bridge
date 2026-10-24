@@ -15,8 +15,11 @@ import { z } from 'zod/v4';
 export { actionRequest, fixtureCalls };
 const worker = fileURLToPath(new URL('./owner.ts', import.meta.url));
 type HostOwnerOptions = { gate?: string; mode?: string; fault?: string; enabled?: string; cwd?: string; waitMs?: number; projectDir?: string };
-function launchHostOwner({ root, transport, command, argument, options }: { root: string; transport: 'cli' | 'mcp'; command: string; argument: string; options: HostOwnerOptions }) {
-  const env: NodeJS.ProcessEnv = { PATH: process.env.PATH, HOME: process.env.HOME, TMPDIR: process.env.TMPDIR, NODE_NO_WARNINGS: '1', JEV_EXPERIMENTAL_OBSERVED: options.enabled ?? '1', HOST_PROJECT_DIR: options.projectDir ?? root };
+/** Which observed composition the owners run: the legacy fake MobileBuildMCP backend, or the Appium drivers over a world host. */
+export type HostComposition = 'legacy' | 'appium';
+function launchHostOwner({ root, transport, command, argument, options, composition = 'legacy' }: { root: string; transport: 'cli' | 'mcp'; command: string; argument: string; options: HostOwnerOptions; composition?: HostComposition }) {
+  const env: NodeJS.ProcessEnv = { PATH: process.env.PATH, HOME: process.env.HOME, TMPDIR: process.env.TMPDIR, NODE_NO_WARNINGS: '1', JEV_EXPERIMENTAL_OBSERVED: options.enabled ?? '1', HOST_PROJECT_DIR: options.projectDir ?? root,
+    ...(composition === 'appium' ? { HOST_COMPOSITION: 'appium' } : {}) };
   delete env.TYPESAFE_API_KEY;
   if (options.waitMs !== undefined) env.HOST_WAIT_MS = String(options.waitMs);
   return spawn(process.execPath, ['--import', import.meta.resolve('tsx'), worker, root, transport, command, argument, options.gate ?? '', options.mode ?? 'observed', options.fault ?? ''], {
@@ -35,7 +38,7 @@ function finalTraceErrors({ root, guard = () => {} }: { root: string; guard?: ()
   }
   return traceErrors;
 }
-export async function hostFixture(t: TestContext) {
+export async function hostFixture(t: TestContext, composition: HostComposition = 'legacy') {
   const root = await realpath(await mkdtemp(join(tmpdir(), 'jev-host-fault-')));
   await writeFile(join(root, 'test-context.json'), JSON.stringify({ name: t.name }), { mode: 0o600 });
   const fixture = await setupPublicFixture(root);
@@ -61,7 +64,7 @@ export async function hostFixture(t: TestContext) {
   const admission = () => Admission.forTesting({ root: fixture.store, backend: 'fake', initialize: false });
   async function requestFile(value: unknown, name = 'request.json') { const path = join(root, name); await writeFile(path, JSON.stringify(value)); return path; }
   function spawnOwner(transport: 'cli' | 'mcp', command = '', argument = '', options: HostOwnerOptions = {}) {
-    const child = launchHostOwner({ root, transport, command, argument, options });
+    const child = launchHostOwner({ root, transport, command, argument, options, composition });
     const sequence = ++commandSequence;
     let stdout = ''; let stderr = '';
     child.stdout!.on('data', data => { stdout += data; }); child.stderr!.on('data', data => { stderr += data; });

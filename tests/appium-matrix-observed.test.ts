@@ -1,7 +1,8 @@
 /**
  * Preservation matrix, observed preparation and action (P3.9). Preparation runs on the Appium preparation driver over
- * a real reservation; the action runs through the real ObservedActionService with Appium executors. The allocator
- * still builds its own driver, so its rows are named for P3.10.
+ * a real reservation; the action runs through the real ObservedActionService with Appium executors. The P3.10 rows
+ * run on the Appium composition elsewhere: the real ObservedAllocator in tests/appium-observed-allocation.test.ts, the
+ * cross-process races and export loss in tests/appium-observed-races.test.ts, and H02.01 in tests/appium-observed-public.test.ts.
  */
 import assert from 'node:assert/strict';
 import { Socket } from 'node:net';
@@ -123,10 +124,3 @@ test('cancelling an observed action before its input: CANCELLED, inconclusive an
   const retrieved = await o.service.start(request(o.allocationId));
   assert.deepEqual([retrieved.disposition, outcome(retrieved)], ['retrieved', outcome(cancelled)]);
 });
-
-test.todo('P3.10: ObservedAllocator on the Appium preparation driver (createPreparationDriver) prepares a fresh allocation once (create, boot, install, launch, readiness, park) and an identical prepare returns the same ready snapshot with no device call');
-test.todo('P3.10: a changed preparation request (timeoutMs) is ACTION_ID_CONFLICT with the store bytes unchanged, on the Appium preparation driver');
-test.todo('P3.10: cancel during each preparation phase, ready cancel and retire give retired_unused, and a later action is ALLOCATION_NOT_READY, on the Appium preparation driver');
-test.todo('P3.10: unknown fresh creation stays quarantined with CREATE_UNCONFIRMED, capacity held and HOST_CREATION_UNRESOLVED for the next prepare, with the Appium composition');
-test.todo('P3.10: cross-process races (H01, H03.01, H05.05) and export loss (H07.02) through tests/fixtures/observed-host owners on the Appium composition give the same publicPolicy and publicAuthority results');
-test.todo('P3.10: the seven observed public operations and their CLI and MCP envelopes stay key and network free (H02.01) on the Appium composition, with tests/golden/observed-replies-v1.json');

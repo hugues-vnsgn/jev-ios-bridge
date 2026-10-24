@@ -1,6 +1,7 @@
 import { mkdirSync, mkdtempSync, readFileSync, realpathSync, rmSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
-import { join, resolve } from 'node:path';
+import { join } from 'node:path';
+import { fileURLToPath } from 'node:url';
 import type { Cleanups } from './image-stack.js';
 import type { AppiumHost } from '../../../src/appium/composition.js';
 import type { AppiumDriverOptions, AppiumTarget } from '../../../src/appium/driver.js';
@@ -45,7 +46,7 @@ export function worldHost(t: Cleanups, options: HostOptions) {
       creates: () => toolCalls().filter(call => call.params?.arguments?.action === 'create'),
       environment: (): string[] => JSON.parse(readFileSync(trace + '.env', 'utf8')) as string[],
       goto: (screen: string) => writeFileSync(trace + '.goto', screen), release: () => writeFileSync(trace + '.release', ''),
-      child: { entrypoint: resolve('tests/fixtures/appium-wire/world-mcp.ts'), args: [file, trace], nodeArgs: ['--import', import.meta.resolve('tsx')] } };
+      child: { entrypoint: fileURLToPath(new URL('./world-mcp.ts', import.meta.url)), args: [file, trace], nodeArgs: ['--import', import.meta.resolve('tsx')] } };
   };
   const created = () => opened.flatMap(driver => driver.creates().map(create => ({ driver, create })));
   let runners = 0; let forwarded = 0; let uiautomatorStoppedAt = 0;
