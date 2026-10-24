@@ -35,7 +35,11 @@ function walk(directory: string): void {
 walk('');
 function fixture(t: TestContext, platform: 'ios' | 'android' = 'ios') {
   const root = mkdtempSync(join(tmpdir(), 'jev-private-client-'));
-  t.after(() => rmSync(root, { recursive: true, force: true }));
+  const clients: { close(): Promise<void> }[] = [];
+  t.after(async () => {
+    await Promise.allSettled(clients.map(client => client.close()));
+    rmSync(root, { recursive: true, force: true, maxRetries: 5, retryDelay: 50 });
+  });
   const stack: VerifiedStack = { root, nodeModules: join(root, 'node_modules'), wdaRunner: '/verified/wda.app', warnings: [],
     identity: { version: 1, stackSha256: '1'.repeat(64), wdaSha256: '2'.repeat(64), manifestSha256: '3'.repeat(64) },
     manifest: { version: 1, lockSha256: freeze.lockSha256, files: sdkFiles, loaded: Object.keys(sdkFiles),
@@ -53,10 +57,10 @@ function fixture(t: TestContext, platform: 'ios' | 'android' = 'ios') {
     const client = await PrivateAppiumClient.open({ stack, owner, homeRoot: join(root, 'homes'), timeoutMs: 20000,
       child: { entrypoint: resolve('tests/fixtures/appium-wire/fake-mcp.ts'), args: [file, fault, trace, environment], nodeArgs: ['--import', import.meta.resolve('tsx')] },
       onComponent: record => { records.push(record); } });
-    t.after(() => client.close()); return client;
+    clients.push(client); return client;
   }
   const calls = () => existsSync(trace) ? readFileSync(trace, 'utf8').trim().split('\n').map(line => JSON.parse(line)) : [];
-  return { root, stack, profile, records, trace, environment, recording, open, calls };
+  return { root, stack, profile, records, trace, environment, recording, clients, open, calls };
 }
 
 test('private child receives only the restricted environment and a mode-700 HOME', async t => {
@@ -90,7 +94,7 @@ test('the child uses an explicitly selected Android SDK without inheriting envir
   const client = await PrivateAppiumClient.open({ stack: f.stack, owner, homeRoot: join(f.root, 'homes'), androidSdkRoot: '/verified/android-sdk',
     child: { entrypoint: resolve('tests/fixtures/appium-wire/fake-mcp.ts'), nodeArgs: ['--import', import.meta.resolve('tsx')], args: [f.recording, 'none', f.trace, environment] },
     onComponent: () => {} });
-  t.after(() => client.close());
+  f.clients.push(client);
   const env = JSON.parse(readFileSync(environment, 'utf8'));
   assert.equal(env.ANDROID_HOME, '/verified/android-sdk');
   assert.equal(env.ANDROID_SDK_ROOT, '/verified/android-sdk');
@@ -299,7 +303,7 @@ test('started fake exposes the same ten names and extension parameter schemas', 
   const transport = new StdioClientTransport({ command: process.execPath, args: ['--import', import.meta.resolve('tsx'),
     resolve('tests/fixtures/appium-wire/fake-mcp.ts'), f.recording], stderr: 'pipe' });
   const client = new Client({ name: 'jev-ios-bridge-private', version: '1' }, { capabilities: {} });
-  t.after(() => client.close()); await client.connect(transport);
+  f.clients.push(client); await client.connect(transport);
   const tools = (await client.listTools()).tools;
   assert.deepEqual(tools.map(tool => tool.name).sort(), [...TOOL_NAMES].sort());
   assert.deepEqual(tools.find(tool => tool.name === 'jev_replace_text')?.inputSchema,
