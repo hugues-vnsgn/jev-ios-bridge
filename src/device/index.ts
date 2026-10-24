@@ -504,6 +504,9 @@ export interface ObservedActionDriver {
   tapOnce(ref: string, snapshot: Snapshot, context: ActionScenarioContext, signal: AbortSignal): Promise<Snapshot | undefined>;
   revokeIssuance(): void;
   close(signal: AbortSignal): Promise<void>;
+  /** A driver whose close fences device components bounds it by this budget, before the finish budget starts.
+   *  Without one, close shares the finish budget. */
+  readonly cleanupBudgetMs?: number;
 }
 
 export class MobileBuildMcpDriver implements DeviceDriver, IosPreparationDriver, ObservedActionDriver {

@@ -1,5 +1,6 @@
 import { isAbsolute, join, resolve } from 'node:path';
 import { setTimeout as delay } from 'node:timers/promises';
+import { CLEANUP_BUDGET_MS } from '../appium/fence/index.js';
 import { Admission, AdmissionError, type OwnerProcess } from '../device/admission.js';
 import type { ActionBinding, ConsumeAllocationResult, ObservedClaim, AllocationRecord, ActionRecordView } from '../device/admission-allocation.js';
 import { createObservedDriver } from '../device/factory.js';
@@ -162,18 +163,22 @@ export class ObservedActionService<Result = unknown> {
     await this.finish(request, directory, job, result);
   }
   private async finish(request: ObservedActionRequest, directory: string, job: ActionJob, result: ObservedTapResult): Promise<void> {
+    // The driver closes while the claim still issues, so it can fence its own components. A fencing driver's close
+    // (a group stop alone is TERM, 5 s, then KILL) has its own cleanup budget; any other close shares the finish budget.
+    const close = async (signal: AbortSignal) => {
+      try { await boundedObserved(() => job.driver!.close(signal), signal); }
+      catch { if (result.status !== 'inconclusive') result = { ...result, status: 'inconclusive', reason: 'FINISH_UNCONFIRMED' }; }
+    };
+    const cleanupBudgetMs = job.driver?.cleanupBudgetMs;
+    if (job.driver && cleanupBudgetMs !== undefined) await close(AbortSignal.timeout(Math.min(cleanupBudgetMs, CLEANUP_BUDGET_MS)));
     const controller = new AbortController();
     const timer = setTimeout(() => controller.abort(new Error('FINISH_UNCONFIRMED')), 5000);
     const finalization = controller.signal;
     try {
+      if (job.driver && cleanupBudgetMs === undefined) await close(finalization);
       let began = true;
       try { job.claim.beginFinalization(); }
       catch { this.unconfirmed.add(request.actionId); began = false; }
-
-      if (job.driver) {
-        try { await boundedObserved(() => job.driver!.close(finalization), finalization); }
-        catch { if (result.status !== 'inconclusive') result = { ...result, status: 'inconclusive', reason: 'FINISH_UNCONFIRMED' }; }
-      }
       if (!began) return;
       // Observation has completed; cancellation remains live throughout the separate finalization budget.
       if (job.controller.signal.aborted && result.status !== 'inconclusive') result = { ...result, status: 'inconclusive', reason: 'CANCELLED' };

@@ -15,6 +15,8 @@ type Dispatcher = Pick<AdmittedSession, 'dispatch'> & Pick<AdmissionClaim, 'obse
 /** Who fences: an open recovery claim, or the live owner itself after its last effect. Both record every read. */
 export type FenceClaim = Dispatcher & { readonly owner: OwnerIdentity };
 const POLL_CAP = 12;
+/** The shared cleanup budget: device-side fence steps, and the close that runs them, finish within it. */
+export const CLEANUP_BUDGET_MS = 45_000;
 const defaultClock = { now: () => performance.now(), sleep: (ms: number, signal: AbortSignal) => new Promise<void>((resolve, reject) => {
   signal.throwIfAborted();
   const abort = () => { clearTimeout(timer); reject(signal.reason); };
@@ -29,8 +31,8 @@ class CleanupBudget {
   private readonly externalAbort = () => this.controller.abort(this.options.signal?.reason);
   readonly signal = this.controller.signal;
   constructor(private readonly options: FenceOptions) {
-    const duration = options.budgetMs ?? 45000;
-    if (!(duration > 0 && duration <= 45000)) throw new Error('Invalid fence budget');
+    const duration = options.budgetMs ?? CLEANUP_BUDGET_MS;
+    if (!(duration > 0 && duration <= CLEANUP_BUDGET_MS)) throw new Error('Invalid fence budget');
     this.clock = options.clock ?? defaultClock;
     this.end = this.clock.now() + duration;
     options.signal?.addEventListener('abort', this.externalAbort, { once: true });
