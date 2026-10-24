@@ -25,13 +25,13 @@ export type AppiumDriverParts = Omit<AppiumDriverOptions, 'runId' | 'profile'>;
 export type AppiumHost = (request: { target: AppiumTarget; admission?: Admission }) => Promise<AppiumDriverParts>;
 
 /** The one Appium composition every entry point uses. The stack is verified per command, before any session. */
-export function productionAppiumHost(options: { environment?: NodeJS.ProcessEnv; stack?: FrozenStack; openAdmission?: () => Admission } = {}): AppiumHost {
+export function productionAppiumHost(options: { environment?: NodeJS.ProcessEnv; home?: string; stack?: FrozenStack; openAdmission?: () => Admission } = {}): AppiumHost {
   const { TYPESAFE_API_KEY: _key, ...environment } = options.environment ?? process.env;
   const openAdmission = options.openAdmission ?? (() => Admission.open());
   const support = join(userInfo().homedir, 'Library/Application Support/jev-ios-bridge');
   return async ({ target, admission }) => {
     // Android reports a missing adb first, as its tools check always has.
-    const adb = target.platform === 'android' ? await findAdb({ environment }) : 'adb';
+    const adb = target.platform === 'android' ? await findAdb({ environment, ...(options.home ? { home: options.home } : {}) }) : 'adb';
     const stack = await (options.stack ?? FrozenStack.shipped()).prepare();
     const runAdb = adbRunner({ adb, environment });
     const owned = ownedNativeRunner({ environment, record: () => {} });
