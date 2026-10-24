@@ -1,5 +1,5 @@
 import { z } from 'zod/v4';
-import type { OwnerProcess, AdmissionClaim, AttemptView, DeviceView } from './admission.js';
+import type { OwnerProcess, AdmissionClaim, AttemptView, DeviceView, FenceRequest } from './admission.js';
 import type { StagedArtifact } from '../observed/artifact.js';
 import type { CreationResult } from '../observed/create-source.js';
 
@@ -69,7 +69,7 @@ export interface AllocationReservation {
   stage(artifact: StagedArtifact): AllocationRecord;
   create(effect: () => Promise<CreationResult>): Promise<CreationResult>;
   admit(): { kind: 'admitted'; claim: PreparationClaim } | AllocationRefusal;
-  fail(reason: AllocationReason, evidenceRefs?: string[]): AllocationCommit;
+  fail(reason: AllocationReason, evidenceRefs?: string[], fence?: FenceRequest): AllocationCommit;
 }
 export interface PreparationClaim extends AdmissionClaim {
   park(readinessEvidence: string[], evidenceRefs?: string[]): AllocationCommit;

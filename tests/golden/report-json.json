@@ -110,5 +110,45 @@
       "log": "run.jsonl",
       "screenshots": []
     }
+  },
+  "appiumDeviceError": {
+    "reportVersion": 1,
+    "runId": "<runId>",
+    "bridgeVersion": "<bridgeVersion>",
+    "jevModel": "jev-1.13.0",
+    "projectionRule": "visible-full-text-v2",
+    "bundleId": "com.example.app",
+    "launchArgs": [],
+    "verdict": "inconclusive",
+    "reason": "DEVICE_ERROR",
+    "error": {
+      "code": "DEVICE_ERROR",
+      "phase": "observe",
+      "stepId": "verify",
+      "vendorCode": "NoSuchElementError",
+      "vendorSource": "appium"
+    },
+    "steps": 1,
+    "plannedSteps": 1,
+    "checkpointsPassed": 0,
+    "checkpointCount": 1,
+    "inputTokens": 0,
+    "durationMs": "<ms>",
+    "startedAt": "<timestamp>",
+    "finishedAt": "<timestamp>",
+    "checkpoints": [],
+    "evidence": {
+      "log": "run.jsonl",
+      "screenshots": []
+    },
+    "prepared": {
+      "stack": {
+        "backend": "appium",
+        "lockSha256": "f7732565cacdbe21b42f381c23a142cc75278502f30f95406b1f9cd73724bfba",
+        "extensionVersion": 1,
+        "clientVersion": "1.32.1",
+        "wdaTreeSha256": "5d1fc1c99908e253303f6de35bf26ed4a74a75817f704e7a3646b72b5271ba04"
+      }
+    }
   }
 }

@@ -14,8 +14,9 @@ export const settingsSchema = z.strictObject({ hidden_api_policy: text.nullable(
 export const settingKeySchema = z.enum(['hidden_api_policy', 'hidden_api_policy_p_apps', 'hidden_api_policy_pre_p_apps', 'accessibility_enabled']);
 export type SettingKey = z.infer<typeof settingKeySchema>;
 const runMarker = z.string().regex(/^[a-f0-9]{32}$/).brand<'LaunchMarker'>();
+// `launcher` is the bridge process that spawned the leader; the leader's inherited launch chain starts there.
 const groupSchema = z.strictObject({ id: text, kind: z.literal('appium-process-group'), leader: hostIdentitySchema, runMarker,
-  pgid: z.number().int().min(2).brand<'ProcessGroupId'>(), members: z.array(hostIdentitySchema).max(4096) })
+  pgid: z.number().int().min(2).brand<'ProcessGroupId'>(), members: z.array(hostIdentitySchema).max(4096), launcher: hostIdentitySchema.optional() })
   .refine(value => Number(value.pgid) === Number(value.leader.pid) && !value.members.some(member => member.pid === value.leader.pid)
     && new Set(value.members.map(member => member.pid)).size === value.members.length, 'Invalid owned group');
 export const appiumComponentSchema = z.discriminatedUnion('kind', [

@@ -1,4 +1,5 @@
-import type { Platform, RunEvent, StartMode, Verdict } from '../contracts/index.js';
+import { z } from 'zod/v4';
+import type { Platform, RunEvent, StackProvenance, StartMode, Verdict, VendorSource } from '../contracts/index.js';
 import { BRIDGE_VERSION } from '../version.js';
 import { isReasonCode, type ReasonCode } from './vocabulary.js';
 
@@ -28,7 +29,8 @@ export interface ReportJson {
   launchArgs: string[];
   verdict: Verdict;
   reason: ReasonCode;
-  error: { code: ReasonCode; phase: string | null; stepId: string | null; vendorCode?: string } | null;
+  /** `vendorSource` names the layer `vendorCode` came from; only Appium runs record one. */
+  error: { code: ReasonCode; phase: string | null; stepId: string | null; vendorCode?: string; vendorSource?: VendorSource } | null;
   steps: number;
   plannedSteps: number | null;
   checkpointsPassed: number;
@@ -48,6 +50,8 @@ export interface ReportJson {
   typedFields?: Array<{ stepId: string; shownValue: string }>;
   /** Runs whose script has a `do` step only (driven mode, experimental). */
   driven?: ReportDriven;
+  /** Appium runs only: the frozen stack the run drove the device with, from the `prepared` event. */
+  prepared?: { stack: StackProvenance };
 }
 
 /** Who decided an action: the script's own step, Jev, Claude answering a hand-back, or the bridge (the target
@@ -118,6 +122,11 @@ export interface ReportDriven {
 }
 
 const text = (value: unknown): string | null => typeof value === 'string' ? value : null;
+const sha256 = z.string().regex(/^[a-f0-9]{64}$/);
+const stackFields = { backend: z.literal('appium'), lockSha256: sha256, extensionVersion: z.number().int().positive(), clientVersion: z.string().min(1) };
+const stackSchema = z.union([z.strictObject({ ...stackFields, wdaTreeSha256: sha256 }),
+  z.strictObject({ ...stackFields, uiautomator2ServerSha256: sha256 })]) satisfies z.ZodType<StackProvenance>;
+const vendorSourceSchema = z.enum(['appium', 'adb', 'bridge']) satisfies z.ZodType<VendorSource>;
 const count = (value: unknown): number | null => typeof value === 'number' && Number.isFinite(value) ? value : null;
 
 /** Keeps only the entries of an unknown value whose value is itself a string; `{}` for anything else. */
@@ -276,6 +285,7 @@ export function buildReportJson(events: RunEvent[]): ReportJson {
   const verdict: Verdict = recorded === 'passed' || recorded === 'failed' ? recorded : 'inconclusive';
   const reason: ReasonCode = !verdictEvent ? 'INTERRUPTED' : isReasonCode(final?.reason) ? final.reason : 'INTERNAL_ERROR';
   const lastError = events.findLast(event => event.type === 'error');
+  const stack = stackSchema.safeParse(events.find(event => event.type === 'prepared')?.data.stack);
   const checkpoints: ReportCheckpoint[] = events.filter(event => event.type === 'checkpoint').map(event => {
     const observed = events.findLast(candidate => candidate.type === 'step' && candidate.sequence < event.sequence &&
       candidate.data.stepId === event.data.stepId);
@@ -315,6 +325,8 @@ export function buildReportJson(events: RunEvent[]): ReportJson {
       phase: text(lastError.data.phase),
       stepId: text(lastError.data.stepId),
       ...(typeof lastError.data.vendorCode === 'string' ? { vendorCode: lastError.data.vendorCode } : {}),
+      ...(typeof lastError.data.vendorCode === 'string' && vendorSourceSchema.safeParse(lastError.data.vendorSource).success
+        ? { vendorSource: vendorSourceSchema.parse(lastError.data.vendorSource) } : {}),
     } : null,
     steps,
     plannedSteps: Array.isArray(planned) ? planned.length : null,
@@ -332,5 +344,6 @@ export function buildReportJson(events: RunEvent[]): ReportJson {
     },
     ...androidReportFields(started, events),
     ...(driven ? { driven } : {}),
+    ...(stack.success ? { prepared: { stack: stack.data } } : {}),
   };
 }

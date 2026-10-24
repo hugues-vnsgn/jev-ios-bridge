@@ -114,6 +114,16 @@ test('observed preparation alone exposes bounded boot and install, without an au
   assert.throws(() => observedIosPreparation({ ...target, runner: fake.runner, role: 'run' as 'observed-preparation' }), { code: 'ROLE_REFUSED' });
 });
 
+test('observed preparation launches the app with one owned simctl launch, no console and no log stream', async () => {
+  const fake = fakeRunner();
+  const preparation = observedIosPreparation({ role: 'observed-preparation', ...target, runner: fake.runner, timeoutMs: 25 });
+  const launch = preparation.launch('dev.fixture', ['--demo', 'two words'], signal()); await Promise.resolve(); fake.calls[0]!.exit({ kind: 'exited', code: 0 });
+  assert.deepEqual(await launch, { exitCode: 0, stdout: '', stderr: '' });
+  assert.deepEqual(fake.calls.map(x => x.command), [
+    { kind: 'ios-launch', file: 'xcrun', args: ['simctl', '--set', '/private/sim set', 'launch', '--terminate-running-process', target.udid, 'dev.fixture', '--demo', 'two words'] },
+  ]);
+});
+
 const policy = (showing: boolean, awake: boolean) => `KeyguardServiceDelegate\n showing=${showing}\n interactiveState=INTERACTIVE_STATE_${awake ? 'AWAKE' : 'SLEEP'}\n`;
 function replyingRunner(replies: string[]) {
   const commands: NativeCommand[] = [];

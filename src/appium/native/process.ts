@@ -2,7 +2,7 @@ import { execFileSync, spawn } from 'node:child_process';
 import type { Readable } from 'node:stream';
 import type { OwnerProcess } from '../../device/admission.js';
 
-export type NativeKind = 'ios-console' | 'ios-log-stream' | 'ios-boot' | 'ios-install'
+export type NativeKind = 'ios-console' | 'ios-log-stream' | 'ios-boot' | 'ios-install' | 'ios-launch'
   | 'android-wake' | 'android-keyguard' | 'android-launcher' | 'android-foreground';
 export type NativeCommand = Readonly<{ kind: NativeKind; file: string; args: readonly string[] }>;
 export type NativeExit = { kind: 'exited'; code: number } | { kind: 'lost' };

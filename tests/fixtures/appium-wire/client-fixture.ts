@@ -6,7 +6,7 @@ import { dirname, join, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import type { VerifiedStack } from '../../../src/appium/stack.js';
 import type { OwnerIdentity } from '../../../src/device/admission.js';
-import { PrivateAppiumClient, type AppiumComponentRecord } from '../../../src/appium/client.js';
+import { PrivateAppiumClient, type AppiumComponentRecord, type ChildLaunch } from '../../../src/appium/client.js';
 import { createSessionProfile } from '../../../src/appium/session.js';
 
 const sha = (bytes: Buffer | string) => createHash('sha256').update(bytes).digest('hex');
@@ -46,8 +46,8 @@ export function clientFixture(t: TestContext, platform: 'ios' | 'android' = 'ios
   const profile = createSessionProfile(stack, platform === 'ios'
     ? { platform, device: 'ios-test', path: 'run', presentation: 'visible' }
     : { platform, device: 'android-test', path: 'capture', serverInstallation: { kind: 'install' } });
-  async function open(fault = 'none', file = recording) {
-    const client = await PrivateAppiumClient.open({ stack, owner, homeRoot: join(root, 'homes'), timeoutMs: 20000,
+  async function open(fault = 'none', file = recording, extra: { launch?: ChildLaunch } = {}) {
+    const client = await PrivateAppiumClient.open({ stack, owner, homeRoot: join(root, 'homes'), timeoutMs: 20000, ...extra,
       child: { entrypoint: resolve('tests/fixtures/appium-wire/fake-mcp.ts'), args: [file, fault, trace, environment], nodeArgs: ['--import', import.meta.resolve('tsx')] },
       onComponent: record => { records.push(record); } });
     clients.push(client); return client;

@@ -282,6 +282,7 @@ export class RecoveryClaim {
   private closed=false;
   constructor(private readonly store: AdmissionSqlite, readonly identity: RecoveryIdentity,
     private readonly fence: (request:FenceRequest)=>FenceReceipt) {}
+  get owner(): OwnerIdentity { return this.identity.owner; }
   observeComponent(componentId:string, observation:ComponentObservation):void { this.store.observeComponent(this.identity.owner,componentId,observation,this.identity); }
   registerComponent(component:ComponentInput):NativeComponent {return this.store.registerComponent(this.identity.owner,component,this.identity);}
   issue(request:CommandRequest):IssueResult {return this.store.authorizeRecovery(this.identity,request.operation,request);}
@@ -355,11 +356,14 @@ export interface AdmissionClaim {
   observeComponent(componentId: string, observation: ComponentObservation): void;
   issue(request: CommandRequest): IssueResult;
   markInventoryUnknown(reason: string): void;
+  /** The owner's own fence proofs for its release (park or an available finalize), taken after its last effect. */
+  stageFence(request: FenceRequest): void;
 }
 class OwnedClaim implements AdmissionClaim {
   private closed = false;
   private cancellationRequested = false;
   private attached = false;
+  private staged: FenceRequest | undefined;
   private closers: (() => void)[] = [];
   private releases: (() => void)[] = [];
   markerKnown(token: string): boolean { return this.store.markerKnown(this.identity, token); }
@@ -375,6 +379,8 @@ class OwnedClaim implements AdmissionClaim {
   registerComponent(component: ComponentInput): NativeComponent { return this.store.registerComponent(this.identity, component); }
   issue(request: CommandRequest): IssueResult { return this.store.issue(this.identity, request); }
   markInventoryUnknown(reason: string): void { this.store.markInventoryUnknown(this.identity, reason); }
+  stageFence(request: FenceRequest): void { this.staged = request; }
+  stagedFence(): FenceRequest | undefined { return this.staged; }
   private close(): void { this.closed = true; for (const callback of this.closers.splice(0)) callback(); }
   bindDriver(backend: 'real' | 'fake' = 'real'): AdmittedSession {
     if (this.closed || this.parentClosed() || this.attached) throw new AdmissionError('DISPATCH_CLOSED', 'Claim is closed or already attached');
@@ -385,7 +391,7 @@ class OwnedClaim implements AdmissionClaim {
   park(readinessEvidence: string[], evidenceRefs: string[] = []): AllocationCommit {
     if (this.closed || this.cancellationRequested || this.parentClosed()) throw new AdmissionError('DISPATCH_CLOSED', 'Claim is closed');
     this.close();
-    try { const allocation = this.store.parkAllocation(this.identity, readinessEvidence, evidenceRefs); this.notifyRelease(); return { authority: 'committed', allocation }; }
+    try { const allocation = this.store.parkAllocation(this.identity, readinessEvidence, evidenceRefs, this.staged); this.notifyRelease(); return { authority: 'committed', allocation }; }
     catch (error) { if (!(error instanceof AdmissionError) || error.code === 'STATE_UNAVAILABLE') return { authority: 'unconfirmed', reason: 'STATE_UNAVAILABLE' }; throw error; }
   }
   recordObservation(refs: string[]): AllocationRecord {
@@ -409,7 +415,7 @@ class OwnedClaim implements AdmissionClaim {
   finalize(candidate: TerminalCandidate): Finalization { return this.finish(candidate, true); }
   private finish(candidate: TerminalCandidate, release: boolean): Finalization {
     this.close();
-    try { const attempt = this.store.finalize(this.identity, candidate, this.cancellationRequested, release); if (release) this.notifyRelease(); return { authority: 'committed', attempt }; }
+    try { const attempt = this.store.finalize(this.identity, candidate, this.cancellationRequested, release, this.staged); if (release) this.notifyRelease(); return { authority: 'committed', attempt }; }
     catch (error) {
       if (error instanceof AdmissionError && error.code !== 'STATE_UNAVAILABLE') throw error;
       // Even a verified lost COMMIT reply is retrieval, never candidate publication.
@@ -533,6 +539,7 @@ class OwnedReservation implements AllocationReservation {
   readonly identity: AllocationOwner;
   readonly snapshot: AllocationRecord;
   private closed = false;
+  private admitted: OwnedClaim | undefined;
   constructor(private readonly store: AdmissionSqlite, snapshot: AllocationRecord) {
     this.snapshot = structuredClone(snapshot); this.identity = Object.freeze({ ...snapshot.owner, process: Object.freeze({ ...snapshot.owner.process }) });
   }
@@ -556,11 +563,12 @@ class OwnedReservation implements AllocationReservation {
     if (this.closed) throw new AdmissionError('DISPATCH_CLOSED', 'Reservation is closed');
     const result = this.store.admitAllocation(this.identity);
     if (result.kind !== 'admitted') return result;
-    return { kind: 'admitted', claim: new OwnedClaim(this.store, result.owner, () => this.closed) };
+    this.admitted = new OwnedClaim(this.store, result.owner, () => this.closed);
+    return { kind: 'admitted', claim: this.admitted };
   }
-  fail(reason: AllocationReason, evidenceRefs: string[] = []): AllocationCommit {
+  fail(reason: AllocationReason, evidenceRefs: string[] = [], fence?: FenceRequest): AllocationCommit {
     this.closed = true;
-    try { return { authority: 'committed', allocation: this.store.failAllocation(this.identity, reason, evidenceRefs) }; }
+    try { return { authority: 'committed', allocation: this.store.failAllocation(this.identity, reason, evidenceRefs, fence ?? this.admitted?.stagedFence()) }; }
     catch (error) { if (!(error instanceof AdmissionError) || error.code === 'STATE_UNAVAILABLE') return { authority: 'unconfirmed', reason: 'STATE_UNAVAILABLE' }; throw error; }
   }
 }

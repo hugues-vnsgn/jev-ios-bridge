@@ -20,8 +20,10 @@ export type AppiumComponentRecord =
   | { kind: 'appium-child'; owner: OwnerIdentity; pid: number; home: string }
   | { kind: 'appium-session'; owner: OwnerIdentity; childPid: number; sessionId: AppiumSessionId; platform: AppiumPlatform; device: string };
 type Child = { entrypoint: string; args?: string[]; nodeArgs?: string[] };
+/** Puts the child in its own process group and marks it for the fence: the Phase 1 run marker and the bridge's launch ancestry. */
+export type ChildLaunch = { runMarker: string; ancestry: readonly { pid: number; startTime: string }[] };
 type OpenOptions = { stack: VerifiedStack; owner: OwnerIdentity; homeRoot: string; child?: Child; profile?: SessionProfile; timeoutMs?: number; androidSdkRoot?: string;
-  onComponent: (record: AppiumComponentRecord) => void | Promise<void> };
+  launch?: ChildLaunch; onComponent: (record: AppiumComponentRecord) => void | Promise<void> };
 type ChildOptions = OpenOptions & { child: Child };
 type ManagementResult = { kind: 'created'; sessionId: AppiumSessionId } | { kind: 'deleted' };
 
@@ -73,8 +75,13 @@ class PrivateStdioTransport implements Transport {
     if (this.options.androidSdkRoot !== undefined) {
       env.ANDROID_HOME = this.options.androidSdkRoot; env.ANDROID_SDK_ROOT = this.options.androidSdkRoot;
     }
+    const launch = this.options.launch;
+    if (launch) {
+      env.JEV_PHASE1_RUN_MARKER = launch.runMarker;
+      env.JEV_PHASE1_ANCESTRY = Buffer.from(JSON.stringify(launch.ancestry)).toString('base64url');
+    }
     this.child = spawn(process.execPath, [...(this.options.child.nodeArgs ?? []), this.options.child.entrypoint, ...(this.options.child.args ?? [])],
-      { cwd: this.options.stack.root, env, stdio: ['pipe', 'pipe', 'pipe'], shell: false });
+      { cwd: this.options.stack.root, env, stdio: ['pipe', 'pipe', 'pipe'], shell: false, detached: launch !== undefined });
     const child = this.child;
     child.on('error', () => this.fail());
     child.on('exit', () => this.end());

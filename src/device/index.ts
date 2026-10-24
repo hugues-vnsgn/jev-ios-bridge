@@ -5,7 +5,7 @@ import { createRequire } from 'node:module';
 import { readFile, realpath } from 'node:fs/promises';
 import { isAbsolute, join, resolve } from 'node:path';
 import { isIosApp, type Action, type ActionScenarioContext, type ActPath, type AppProblem, type ElementAction, type LogSources, type DeviceDriver, type DeviceMetrics,
-  type Element, type PrepareScenarioContext, type Snapshot, type TapAliasRule } from '../contracts/index.js';
+  type Element, type PrepareScenarioContext, type Snapshot, type TapAliasRule, type VendorSource } from '../contracts/index.js';
 import { androidAvd, androidSerial } from '../scripted/schema.js';
 import { ROLES, type ReasonCode, type Role } from '../scripted/vocabulary.js';
 import { CompatibilityMarker, DeviceLeaseBusyError } from './lease.js';
@@ -106,11 +106,14 @@ export class DeviceCliError extends Error {
 export class DeviceReasonError extends Error {
   /** Set only when given, so an error built without one has no such property. */
   declare readonly vendorCode?: string;
+  /** Which layer `vendorCode` came from; set only with a vendor code. */
+  declare readonly vendorSource?: VendorSource;
 
-  constructor(readonly code: ReasonCode, message: string, options: { vendorCode?: string } = {}) {
+  constructor(readonly code: ReasonCode, message: string, options: { vendorCode?: string; vendorSource?: VendorSource } = {}) {
     super(message);
     this.name = 'DeviceReasonError';
     if (options.vendorCode !== undefined) this.vendorCode = options.vendorCode;
+    if (options.vendorCode !== undefined && options.vendorSource !== undefined) this.vendorSource = options.vendorSource;
   }
 }
 
@@ -501,6 +504,9 @@ export interface ObservedActionDriver {
   tapOnce(ref: string, snapshot: Snapshot, context: ActionScenarioContext, signal: AbortSignal): Promise<Snapshot | undefined>;
   revokeIssuance(): void;
   close(signal: AbortSignal): Promise<void>;
+  /** A driver whose close fences device components bounds it by this budget, before the finish budget starts.
+   *  Without one, close shares the finish budget. */
+  readonly cleanupBudgetMs?: number;
 }
 
 export class MobileBuildMcpDriver implements DeviceDriver, IosPreparationDriver, ObservedActionDriver {
