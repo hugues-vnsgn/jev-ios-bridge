@@ -879,8 +879,46 @@ for (const corruption of ['schema', 'inactive', 'marker', 'database', 'permissio
   });
 }
 
-test('bounded SQLite contention refuses acquisition while preserving the incumbent', t => {
+function holdWriteLock(root: string, milliseconds: number): Promise<ChildProcess> {
+  const script = `const { DatabaseSync } = require('node:sqlite'); const db = new DatabaseSync(process.argv[1]);
+    db.exec('BEGIN IMMEDIATE'); process.stdout.write('held\\n');
+    Atomics.wait(new Int32Array(new SharedArrayBuffer(4)), 0, 0, Number(process.argv[2])); db.exec('ROLLBACK'); db.close();`;
+  const child = spawn(process.execPath, ['-e', script, join(root, 'admission.sqlite'), String(milliseconds)], { stdio: ['ignore', 'pipe', 'inherit'] });
+  return new Promise((resolve, reject) => { child.once('error', reject); child.stdout!.once('data', () => resolve(child)); child.once('exit', () => reject(new Error('lock holder exited early'))); });
+}
+
+test('a writer waits out a lock held past the former 250 ms limit and gets the real answer', async t => {
   const { root, admission } = fixture(t);
+  const holder = await holdWriteLock(root, 1000);
+  t.after(() => { holder.kill('SIGKILL'); });
+  const start = performance.now();
+  const result = admission.acquire(request('patient'));
+  assert.equal(result.kind, 'acquired');
+  assert.ok(performance.now() - start >= 500, 'The acquire must have waited for the lock holder');
+});
+
+test('a contender waiting on a lock gets DEVICE_BUSY from the store, not a lock error', async t => {
+  const { root, admission } = fixture(t);
+  assert.equal(admission.acquire(request('incumbent')).kind, 'acquired');
+  const holder = await holdWriteLock(root, 1000);
+  t.after(() => { holder.kill('SIGKILL'); });
+  const result = admission.acquire({ ...request('contender'), attempt: { kind: 'legacy', id: 'contender' } });
+  assert.deepEqual(result.kind === 'refused' ? result.reason : result.kind, 'DEVICE_BUSY');
+});
+
+test('a lock held longer than the injected wait still refuses with STATE_UNAVAILABLE', async t => {
+  const { root } = fixture(t);
+  const impatient = Admission.forTesting({ root, backend: 'fake', initialize: false, busyTimeoutMs: 200 });
+  const holder = await holdWriteLock(root, 1500);
+  t.after(() => { holder.kill('SIGKILL'); });
+  const start = performance.now();
+  assert.throws(() => impatient.acquire(request('impatient')), { code: 'STATE_UNAVAILABLE' });
+  assert.ok(performance.now() - start < 1200, 'The wait must stay bounded by the injected timeout');
+});
+
+test('bounded SQLite contention refuses acquisition while preserving the incumbent', t => {
+  const { root } = fixture(t);
+  const admission = Admission.forTesting({ root, backend: 'fake', initialize: false, busyTimeoutMs: 250 });
   admission.acquire(request('incumbent'));
   const db = new DatabaseSync(join(root, 'admission.sqlite'));
   try {

@@ -36,12 +36,10 @@ function fakeDriver(overrides: Partial<DeviceDriver> = {}): DeviceDriver {
 const judge: ScriptedJudge = { async judge() { return success; } };
 
 async function finished(service: BridgeService, runId: string): Promise<Awaited<ReturnType<BridgeService['status']>>> {
-  for (let i = 0; i < 100; i++) {
-    const status = await service.status(runId);
-    if (status.state !== 'running') return status;
-    await new Promise(done => setTimeout(done, 5));
-  }
-  throw new Error('Run did not finish');
+  const completionDeadlineMs = 10_000;
+  const status = await service.status(runId, completionDeadlineMs);
+  assert.notEqual(status.state, 'running', 'Run did not finish within the 10 s completion deadline');
+  return status;
 }
 
 test('simultaneous starts keep distinct logs and share one watch server', async () => {
