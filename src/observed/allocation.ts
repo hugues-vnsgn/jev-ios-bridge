@@ -49,12 +49,13 @@ export class ObservedAllocator {
   private closed = false;
   private closing: Promise<void> | undefined;
   constructor(private readonly options: AllocatorOptions) {
-    if (!isAbsolute(options.runsDir) || options.runsDir.includes('\0') || options.runsDir.length > 4096 || (!options.fakeBackend && !options.createDriver)) throw new AllocationInputError('CONFIG_INVALID');
+    if (!isAbsolute(options.runsDir) || options.runsDir.includes('\0') || options.runsDir.length > 4096) throw new AllocationInputError('CONFIG_INVALID');
     if (options.fakeBackend && (!options.admission || !Object.hasOwn(options.fakeBackend, 'window')
       || typeof options.fakeBackend.process !== 'function' || typeof options.fakeBackend.runner !== 'function'
       || isProductionSourceProcess(options.fakeBackend.process) || (options.fakeBackend.window !== undefined && options.fakeBackend.window === deviceWindowOpener(false, {})))) throw new AllocationInputError('CONFIG_INVALID');
     this.admission = options.admission ?? Admission.open();
     this.admission.assertBackend(options.fakeBackend ? 'fake' : 'real');
+    if (!options.fakeBackend && !options.createDriver) throw new AllocationInputError('CONFIG_INVALID');
     this.host = options.fakeBackend?.host ?? installedHost();
   }
   private track<T>(promise: Promise<T>): Promise<T> {
