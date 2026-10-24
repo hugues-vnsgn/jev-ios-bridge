@@ -1,6 +1,7 @@
 /**
- * Preservation matrix, scripted version 1 (P3.9): the real bridge service and runner drive the Appium driver, its
- * private client, session, observation, operations, fence and admission. Only the private MCP provider is a fake.
+ * Preservation matrix, scripted version 1 (P3.9, P3.10): the real bridge service and runner drive the Appium driver, its
+ * private client, session, observation, operations, fence and admission, and the installed CLI and MCP composition
+ * builds that driver. Only the private MCP provider and Jev are fakes.
  */
 import assert from 'node:assert/strict';
 import { execFile } from 'node:child_process';

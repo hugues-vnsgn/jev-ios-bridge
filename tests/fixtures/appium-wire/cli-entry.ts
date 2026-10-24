@@ -1,7 +1,8 @@
 /**
  * The installed CLI composition (`runCli`) with only this Mac's Appium parts and Jev replaced: a world host and fake
  * judges. `argv[2]` is the root folder; JEV_TEST_CLI_ARGS (JSON) are the CLI arguments, `mcp` by default, so an MCP
- * session can start it as a fixture server. JEV_TEST_WORLDS holds the worlds and JEV_TEST_PLATFORM the device kind.
+ * session can start it as a fixture server. JEV_TEST_WORLDS holds the worlds and JEV_TEST_PLATFORM the device kind. After
+ * the command, the host's world traces and fence state are written to `<root>/host/outcome.json`.
  */
 import { mkdirSync, writeFileSync } from 'node:fs';
 import { join } from 'node:path';
@@ -26,8 +27,12 @@ const { runCli } = await import('../../../src/cli.js');
 const android = process.env.JEV_TEST_PLATFORM === 'android' ? androidTarget() : undefined;
 const world = worldHost({ after: () => {} }, { root: join(root, 'host'), worlds,
   ...(android ? { identityProbe: android.options.identityProbe, adb: android.options.adb, nativeReply: android.nativeReply } : { identityProbe: fakeSimulatorProbe(UDID) }) });
+// Forward rows already on the device that this bridge does not own, as JSON.
+world.fence.forwards.push(...JSON.parse(process.env.JEV_TEST_FOREIGN_FORWARDS ?? '[]') as typeof world.fence.forwards);
 await runCli(args, { host: world.host, projectDir,
   createJudge: () => ({ async judge(assertions) {
     return { probabilities: Object.fromEntries(assertions.map(assertion => [assertion.id, probability])), inputTokens: 1, latencyMs: 1, model: 'jev-1.13.0' };
   } }),
   createDrivenJudge: () => fakeDrivenJudge(JSON.parse(process.env.JEV_TEST_DRIVEN ?? '[]') as FakeStep[]) });
+writeFileSync(join(root, 'host', 'outcome.json'), JSON.stringify({ tools: world.opened.map(driver => driver.tools()), forwards: world.fence.forwards,
+  writes: world.fence.effects.filter(effect => ['wda-stop', 'host-signal', 'host-signal-group', 'android-stop', 'forward-remove', 'settings-write'].includes(effect.kind)) }));
