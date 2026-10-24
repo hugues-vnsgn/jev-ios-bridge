@@ -124,7 +124,7 @@ export class Admission {
   static open(): Admission {
     return new Admission({ root: admissionRoot(), mode: 'production' }, {});
   }
-  static forTesting(options: { root: string; backend: 'fake'; initialize?: boolean; durability?: 'full' | 'fast' } & AdmissionDependencies): Admission {
+  static forTesting(options: { root: string; backend: 'fake'; initialize?: boolean; durability?: 'full' | 'fast'; busyTimeoutMs?: number } & AdmissionDependencies): Admission {
     if (options.backend !== 'fake') throw new AdmissionError('INVALID_REQUEST', 'Test admission requires a fake backend');
     if (options.initialize !== false) AdmissionSqlite.initializeTestStore(options.root, options.durability);
     return new Admission({ ...options, mode: 'test' }, options);
