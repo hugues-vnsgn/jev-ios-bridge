@@ -13,6 +13,8 @@ if (environment) writeFileSync(environment, JSON.stringify(process.env), { mode:
 let index = 0;
 let sources = 0;
 let screens = 0;
+let deletions = 0;
+let lastDeletion = -1;
 const ids = new Map<string | number, string | number>();
 function normalized(message: JSONRPCMessage) {
   const output = structuredClone(message);
@@ -29,11 +31,14 @@ function send(message: unknown) {
   if (trace) appendFileSync(trace + '.replies', line, { mode: 0o600 });
   process.stdout.write(line);
 }
-function lateReply(reply: unknown): void {
-  if (!fault.endsWith('-held')) { setTimeout(() => send(reply), 250); return; }
+function heldReply(reply: unknown): void {
   const timer = setInterval(() => {
     if (trace && existsSync(trace + '.release')) { clearInterval(timer); send(reply); }
   }, 5);
+}
+function lateReply(reply: unknown): void {
+  if (!fault.endsWith('-held')) { setTimeout(() => send(reply), 250); return; }
+  heldReply(reply);
 }
 const input = createInterface({ input: process.stdin });
 input.on('close', () => process.exit(0));
@@ -50,7 +55,9 @@ input.on('line', line => {
       && request.params.arguments.action === 'delete') {
       const deletion = lines.findIndex((line, at) => at >= index && line.direction === 'client' && 'method' in line.message
         && line.message.method === 'tools/call' && line.message.params?.name === 'appium_session_management');
-      if (deletion !== -1) index = deletion;
+      if (deletion !== -1) index = lastDeletion = deletion;
+      else if (lastDeletion !== -1) index = lastDeletion;
+      deletions++;
     }
     const expected = lines[index++];
     if (!expected || expected.direction !== 'client' || !isDeepStrictEqual(normalized(request), normalized(expected.message))) throw new Error('WIRE_REQUEST_MISMATCH');
@@ -81,9 +88,17 @@ input.on('line', line => {
             lateReply(reply); return;
           }
           if (fault === 'source-lost') return;
+          if (fault === 'source-slow-screen-held' && sources === 1) { setTimeout(() => send(reply), 1000); return; }
+          if (fault === 'source-invalid') result.structuredContent.xml = '<AppiumAUT><XCUIElementTypeApplication></AppiumAUT>';
         }
         if (params.name === 'jev_screen' && ++screens === 2 && fault.startsWith('screen-late-second')) {
           lateReply(reply); return;
+        }
+        if (params.name === 'jev_screen' && fault === 'source-slow-screen-held' && screens === 1) { heldReply(reply); return; }
+        if (params.name === 'jev_screen' && fault === 'screen-invalid') result.structuredContent.pngBase64 = Buffer.from(z.string().parse(result.structuredContent.pngBase64), 'base64').subarray(0, 33).toString('base64');
+        if (params.name === 'appium_perform_actions' && fault === 'actions-lost') return;
+        if (params.arguments.action === 'delete' && fault === 'delete-late-first' && deletions === 1) {
+          reply.result = result; setTimeout(() => send(reply), 250); return;
         }
         if (params.name === 'jev_settings') {
           if (fault === 'lost') return;

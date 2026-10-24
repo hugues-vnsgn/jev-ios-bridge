@@ -126,8 +126,28 @@ test('iOS preserves real accessibility values on buttons and other roles, plus n
 });
 test('P05 choose-apple keeps the legacy e16 and e17 meanings without a numeric button selection flag or repeated text value', () => {
   const capture = normalizeSource('ios', fixture('ios-historical-choose-apple.xml'));
-  assert.deepEqual(capture.elements.filter(e => e.label === 'Add Apple ($2)').map(e => [e.role, e.identifier ?? null, e.value ?? null]),
-    [['button', 'choose.apple', null], ['text', null, null]]);
+  assert.deepEqual(capture.elements.filter(e => e.label === 'Add Apple ($2)').map(e => [e.ref, e.role, e.identifier ?? null, e.value ?? null]),
+    [['e16', 'button', 'choose.apple', null], ['e17', 'text', null, null]]);
+});
+test('iOS fields omit a value that only repeats the placeholder, keep a typed value, and add no placeholder key', () => {
+  const capture = normalizeSource('ios', fixture('ios-fields.xml'));
+  assert.deepEqual(capture.elements.filter(e => e.role === 'text-field').map(e => [e.identifier, e.value ?? null]), [
+    ['field.plain', null], ['field.secure', null], ['field.formatted', null], ['field.unicode', null],
+    ['field.empty', null], ['field.prefilled', 'Already filled'],
+  ]);
+  assert.equal(capture.elements.filter(e => 'placeholder' in e).length, 0);
+  const typed = normalizeSource('ios', iosSource(ios('SecureTextField', 'name="pw" value="secret1" placeholderValue="Password"')));
+  assert.equal(typed.elements[1]!.value, '•••••••');
+});
+test('iOS keeps a value on other roles when it repeats the identifier rather than the label', () => {
+  const capture = normalizeSource('ios', iosSource(ios('Other', 'name="Blue" value="Blue"')));
+  assert.deepEqual(capture.elements.slice(1).map(e => [e.role, e.identifier ?? null, e.value ?? null]), [['other', 'Blue', 'Blue']]);
+});
+test('Android validates the class attribute, so a sanitized tag for a $ class still maps', () => {
+  const capture = normalizeSource('android', fixture('android-number-picker.xml'));
+  assert.deepEqual(capture.elements.filter(e => e.role === 'text-field').map(e => [e.identifier, e.value, e.actions]),
+    [['android:id/numberpicker_input', '5', ['tap', 'typeText']]]);
+  incomplete(() => normalizeSource('android', androidSource(android().replace('class="android.widget.Button" ', ''))), 'invalid-source');
 });
 test('P05 live choose-none still has all three gap-proof fixes after keeping genuine accessibility values', () => {
   const capture = normalizeSource('ios', fixture('ios-live-choose-none.xml'));

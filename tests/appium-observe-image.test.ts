@@ -31,3 +31,22 @@ test('a tampered sharp native binary refuses before the codec loads even when om
   const { stack, binary } = imageStack(t); appendFileSync(binary, 'tampered');
   assert.throws(() => createScreenshotEncoder(stack), { code: 'STACK_FILE_MISMATCH' });
 });
+test('a screenshot whose ratio differs from the window rect is kept with both sizes for tapAt to judge', async t => {
+  const { stack } = imageStack(t); const encode = createScreenshotEncoder(stack);
+  const input = await screen(1080, 2400);
+  const result = await encode({ ...input, rect: { x: 0, y: 0, width: 1080, height: 2274 } });
+  assert.deepEqual(result.size, { width: 360, height: 800 });
+  assert.deepEqual(result.frame, { x: 0, y: 0, width: 1080, height: 2274 });
+});
+for (const [missing, omit] of [['platform', (name: string) => /^@img\/sharp-(?!libvips-)/.test(name)], ['libvips', (name: string) => name.startsWith('@img/sharp-libvips-')]] as const) {
+  test(`a missing sharp ${missing} package refuses before the codec loads`, t => {
+    const { stack } = imageStack(t, omit);
+    assert.throws(() => createScreenshotEncoder(stack), { code: 'STACK_FILE_MISMATCH' });
+  });
+}
+test('the codec is verified once per stack root, since a loaded native module cannot change in process', t => {
+  const { stack, binary } = imageStack(t);
+  createScreenshotEncoder(stack);
+  appendFileSync(binary, 'tampered');
+  assert.equal(typeof createScreenshotEncoder(stack), 'function');
+});
