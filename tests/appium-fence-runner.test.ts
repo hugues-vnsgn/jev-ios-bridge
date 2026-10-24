@@ -109,6 +109,21 @@ test('a group signal refuses a foreign or reused group member at the signal boun
   assert.deepEqual(calls, [{ pgid: 100, signal: 'SIGTERM' }]);
 });
 
+test('a write effect reports every native child it started before it fails', async () => {
+  const udid = 'ABCDEF00-0000-4000-8000-000000000001';
+  const bundleId = 'com.facebook.WebDriverAgentRunner.xctrunner';
+  const reported: unknown[] = [];
+  let child = 10;
+  const runner = createFenceRunner({ host: host(),
+    adb: async (args, _signal, started) => { child++; started?.({ pid: child, incarnation: `adb-${child}` }); return args[1] === '--list' ? result('one tcp:19333 tcp:6790\n') : result('', 1, 'error: cannot remove listener'); },
+    simctl: async (args, _signal, started) => { child++; started?.({ pid: child, incarnation: `simctl-${child}` }); return args[0] === 'terminate' ? result('', 1, 'failed') : result(`PID\tStatus\tLabel\n200\t0\tUIKitApplication:${bundleId}[test]\n`); } });
+  await assert.rejects(() => runner(fenceEffectSchema.parse({ kind: 'forward-remove', serial: 'one', local: 'tcp:19333', remote: 'tcp:6790' }), signal, process => reported.push(process)), /failed/);
+  assert.deepEqual(reported, [{ pid: 11, incarnation: 'adb-11' }, { pid: 12, incarnation: 'adb-12' }]);
+  reported.length = 0;
+  await assert.rejects(() => runner(fenceEffectSchema.parse({ kind: 'wda-stop', udid, bundleId, pid: 200 }), signal, process => reported.push(process)), /failed/);
+  assert.deepEqual(reported, [{ pid: 13, incarnation: 'simctl-13' }, { pid: 14, incarnation: 'simctl-14' }]);
+});
+
 test('a late native read cannot dispatch a stop after cleanup cancellation', async () => {
   const controller = new AbortController();
   const calls: string[][] = [];

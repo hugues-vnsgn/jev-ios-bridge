@@ -3,7 +3,7 @@ import { test, type TestContext } from 'node:test';
 import { mkdtempSync, rmSync, realpathSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
-import { Admission, type OwnerIdentity } from '../src/device/admission.js';
+import { Admission, type AdmissionDependencies, type OwnerIdentity } from '../src/device/admission.js';
 
 const device = 'ABCDEF00-0000-4000-8000-000000000001';
 const settings = { hidden_api_policy: null, hidden_api_policy_p_apps: '0', hidden_api_policy_pre_p_apps: '2', accessibility_enabled: '0' };
@@ -18,11 +18,11 @@ const targets = [
 
 const androidTargets = targets.filter(target => target.kind !== 'appium-wda');
 const state = (admission: Admission, owner: OwnerIdentity) => admission.inspect({ category: owner.category, value: owner.device })?.state;
-function fixture(t: TestContext, selected: readonly unknown[] = []) {
+function fixture(t: TestContext, selected: readonly unknown[] = [], dependencies: Pick<AdmissionDependencies, 'componentLiveness'> = {}) {
   const android = selected.some(target => typeof target === 'object' && target !== null && 'kind' in target && typeof target.kind === 'string' && ['appium-uiautomator2', 'appium-forward', 'appium-settings'].includes(target.kind));
   const root = realpathSync(mkdtempSync(join(tmpdir(), 'appium-fence-')));
   t.after(() => rmSync(root, { recursive: true, force: true }));
-  const admission = Admission.forTesting({ root, backend: 'fake', durability: 'fast', process: { pid: 900, incarnation: 'owner' }, ownerLiveness: () => 'dead' });
+  const admission = Admission.forTesting({ root, backend: 'fake', durability: 'fast', process: { pid: 900, incarnation: 'owner' }, ownerLiveness: () => 'dead', ...dependencies });
   const result = admission.acquire({ device: android ? 'serial-one' : device, category: android ? 'android-phone' : 'ios-simulator', attempt: { kind: 'legacy', id: 'owner' }, digest: 'one', intent: {} });
   if (result.kind !== 'acquired') assert.fail('Expected acquired owner');
   return { root, admission, claim: result.claim };
@@ -45,9 +45,16 @@ class FakeRunner {
   dying = new Map<number, number>();
   delay = 0;
   hang = false;
-  revalidations = 0;
+  revalidations: (string | undefined)[] = [];
   transportChanged = false;
-  revalidate = async () => { this.revalidations++; if (this.transportChanged) throw new Error('Android transport changed'); };
+  transport: string | undefined = undefined;
+  failing: import('../src/appium/fence/schema.js').FenceEffect['kind'] | undefined = undefined;
+  executors = 7000;
+  revalidate = async (serial?: string) => {
+    this.revalidations.push(serial);
+    if (this.transportChanged) throw new Error('Android transport changed');
+    if (this.transport !== undefined && serial !== this.transport) throw new Error('Recorded transport differs');
+  };
   hosts = [
     { pid: 100, startTime: 'host-100', ppid: 1, pgid: 100, state: 'running', executable: '/node' },
     { pid: 101, startTime: 'host-101', ppid: 100, pgid: 100, state: 'running', executable: '/driver' },
@@ -59,10 +66,13 @@ class FakeRunner {
   processes = new Map([[300, '12345'], [301, '12346']]);
   forwards = [{ serial: 'serial-one', local: 'tcp:19123', remote: 'tcp:6790' }, { serial: 'foreign', local: 'tcp:19124', remote: 'tcp:6790' }];
   values: Record<string, string | null> = { hidden_api_policy: '1', hidden_api_policy_p_apps: '1', hidden_api_policy_pre_p_apps: '1', accessibility_enabled: '1' };
-  run: import('../src/appium/fence/index.js').FenceRunner = async (effect, signal) => {
+  run: import('../src/appium/fence/index.js').FenceRunner = async (effect, signal, observe) => {
     this.events.push(structuredClone(effect));
     this.time += this.delay;
     if (this.hang) return new Promise((_, reject) => signal.addEventListener('abort', () => reject(signal.reason), { once: true }));
+    if (['wda-stop', 'android-stop', 'forward-remove', 'settings-write'].includes(effect.kind)) { this.executors++; observe?.({ pid: this.executors, incarnation: `adb-${this.executors}` }); }
+    const failed = this.failing === effect.kind;
+    const settled = <T>(value: T) => { if (failed) throw new Error('adb exited 1'); return value; };
     const exit = (pids: number[]) => {
       if (this.lag) for (const pid of pids) this.dying.set(pid, this.lag);
       else { this.hosts = this.hosts.filter(row => !pids.includes(row.pid)); for (const pid of pids) this.processes.delete(pid); }
@@ -82,13 +92,13 @@ class FakeRunner {
         if (effect.signal === 'SIGKILL' ? !this.ignoreKill : !this.resistTerm) exit([effect.process.pid]);
         return { ok: true };
       case 'wda-inventory': return structuredClone(this.wda);
-      case 'wda-stop': this.wda = this.wda.filter(row => row.pid !== effect.pid); return { ok: true };
+      case 'wda-stop': this.wda = this.wda.filter(row => row.pid !== effect.pid); return settled({ ok: true });
       case 'android-process': { tick(); const startTime = this.processes.get(effect.pid); return startTime ? { kind: 'running', startTime } : { kind: 'absent' }; }
-      case 'android-stop': exit([effect.process.pid]); return { ok: true };
+      case 'android-stop': exit([effect.process.pid]); return settled({ ok: true });
       case 'forward-inventory': return structuredClone(this.forwards);
-      case 'forward-remove': this.forwards = this.forwards.filter(row => row.serial !== effect.serial || row.local !== effect.local); return { ok: true };
+      case 'forward-remove': this.forwards = this.forwards.filter(row => row.serial !== effect.serial || row.local !== effect.local); return settled({ ok: true });
       case 'settings-read': return structuredClone(this.values);
-      case 'settings-write': this.values[effect.key] = effect.value; return { ok: true };
+      case 'settings-write': this.values[effect.key] = effect.value; return settled({ ok: true });
     }
   };
   clock = { now: () => this.time, sleep: async (ms: number) => { this.events.push({ wait: ms }); this.time += ms; } };
@@ -179,7 +189,24 @@ test('a changed Android transport keeps quarantine, writes nothing and leaves no
 test('the transport is revalidated before each effect that names the Android serial', async t => {
   const { runner } = await prepared(t, [targets[4]]);
   assert.deepEqual(runner.events.map(event => 'kind' in event ? event.kind : 'wait'), ['settings-read', 'settings-write', 'settings-write', 'settings-write', 'settings-write', 'settings-read']);
-  assert.equal(runner.revalidations, 6);
+  assert.deepEqual(runner.revalidations, Array<string>(6).fill('serial-one'));
+});
+
+test('a recorded serial now held by another AVD keeps quarantine and writes nothing to that device', async t => {
+  const f = fixture(t, androidTargets); for (const target of androidTargets) f.claim.registerComponent(JSON.parse(JSON.stringify(target)));
+  f.claim.closeDispatch({ outcome: 'inconclusive', disposition: 'quarantined', payload: {}, evidenceRefs: [] });
+  const runner = new FakeRunner(); runner.transport = 'serial-two';
+  const request = { device: f.claim.identity.device, category: f.claim.identity.category, attempt: { kind: 'legacy', id: 'next' }, digest: 'next', intent: {} } as const;
+  assert.deepEqual(await f.admission.acquireWithAppiumRecovery(request, { runner: runner.run, revalidate: runner.revalidate, clock: runner.clock }), { kind: 'refused', reason: 'DEVICE_QUARANTINED' });
+  assert.deepEqual(runner.revalidations, ['serial-one']);
+  assert.deepEqual(runner.events.filter(event => 'kind' in event && 'serial' in event), []);
+  assert.deepEqual(runner.values, { hidden_api_policy: '1', hidden_api_policy_p_apps: '1', hidden_api_policy_pre_p_apps: '1', accessibility_enabled: '1' });
+  assert.deepEqual([...runner.processes], [[300, '12345'], [301, '12346']]);
+  assert.deepEqual(runner.forwards.map(row => row.local), ['tcp:19123', 'tcp:19124']);
+  assert.deepEqual(f.admission.readGeneration(f.claim.identity).commands.filter(command => command.state !== 'settled'), []);
+  assert.equal(state(f.admission, f.claim.identity), 'quarantined');
+  runner.transport = 'serial-one';
+  assert.equal((await f.admission.acquireWithAppiumRecovery(request, { runner: runner.run, revalidate: runner.revalidate, clock: runner.clock })).kind, 'acquired');
 });
 
 test('cleanup retries converge after components have already stopped and settings are restored', async t => {
@@ -265,8 +292,8 @@ for (const fault of ['unknown-member', 'shared-service', 'surviving-kill', 'wron
   if (fault === 'unknown-create') assert.deepEqual(runner.events, []);
 });
 
-function quarantinedAndroidForward(t: TestContext) {
-  const f = fixture(t, [targets[3]]); f.claim.registerComponent(JSON.parse(JSON.stringify(targets[3])));
+function quarantinedAndroidForward(t: TestContext, dependencies: Pick<AdmissionDependencies, 'componentLiveness'> = {}, target: unknown = targets[3]) {
+  const f = fixture(t, [target], dependencies); f.claim.registerComponent(JSON.parse(JSON.stringify(target)));
   f.claim.closeDispatch({ outcome: 'inconclusive', disposition: 'quarantined', payload: {}, evidenceRefs: [] });
   const request = { device: f.claim.identity.device, category: f.claim.identity.category, attempt: { kind: 'legacy', id: 'next' }, digest: 'next', intent: {} } as const;
   return { ...f, request };
@@ -313,14 +340,90 @@ for (const forgery of ['unsettled-answer', 'write-command']) test(`a superseded 
   assert.equal(state(f.admission, f.claim.identity), 'quarantined');
 });
 
-test('an uncertain forward removal keeps the device quarantined after a clean sweep', async t => {
-  const f = quarantinedAndroidForward(t);
+test('an uncertain forward removal keeps the device quarantined only while its executor exit is unproven', async t => {
+  let executor: 'alive' | 'unknown' | 'exited' = 'alive';
+  const f = quarantinedAndroidForward(t, { componentLiveness: () => executor });
   const runner = new FakeRunner(); runner.delay = 23000;
   assert.deepEqual(await f.admission.acquireWithAppiumRecovery(f.request, { runner: runner.run, revalidate: runner.revalidate, clock: runner.clock }), { kind: 'refused', reason: 'DEVICE_QUARANTINED' });
   assert.deepEqual(runner.events.map(event => 'kind' in event ? event.kind : 'wait'), ['forward-inventory', 'forward-remove']);
   runner.delay = 0;
+  for (executor of ['alive', 'unknown'] as const) {
+    assert.deepEqual(await f.admission.acquireWithAppiumRecovery(f.request, { runner: runner.run, revalidate: runner.revalidate, clock: runner.clock }), { kind: 'refused', reason: 'DEVICE_QUARANTINED' });
+    assert.equal(state(f.admission, f.claim.identity), 'quarantined');
+  }
+  executor = 'exited';
+  assert.equal((await f.admission.acquireWithAppiumRecovery(f.request, { runner: runner.run, revalidate: runner.revalidate, clock: runner.clock })).kind, 'acquired');
+});
+
+async function failedWriteCovered(t: TestContext, target: unknown, failing: FakeRunner['failing']) {
+  const f = quarantinedAndroidForward(t, { componentLiveness: () => 'exited' }, target);
+  const runner = new FakeRunner(); runner.failing = failing;
+  assert.deepEqual(await f.admission.acquireWithAppiumRecovery(f.request, { runner: runner.run, revalidate: runner.revalidate, clock: runner.clock }), { kind: 'refused', reason: 'DEVICE_QUARANTINED' });
+  const failed = f.admission.readGeneration(f.claim.identity).commands.filter(command => command.state === 'uncertain');
+  assert.equal(failed.length, 1);
+  runner.failing = undefined;
+  const { fenceAppium } = await fenceModule();
+  let proof: Awaited<ReturnType<typeof fenceAppium>> | undefined;
+  const second = await f.admission.acquireWithRecovery(f.request, async claim => proof = await fenceAppium({ admission: f.admission, claim, runner: runner.run, revalidate: runner.revalidate, clock: runner.clock }));
+  assert.equal(second.kind, 'acquired');
+  const view = f.admission.readGeneration(f.claim.identity);
+  const covering = proof?.components.find(component => component.componentId === failed[0]!.componentId)?.proof;
+  assert.equal(covering?.kind, 'fenced-write');
+  const answer = view.commands.find(command => command.id === (covering as { commandId: string }).commandId)!;
+  assert.equal(answer.state, 'settled');
+  assert.equal(answer.recoveryClaimId, view.recoveries.at(-1)!.id);
+  return { f, runner, view, answer };
+}
+
+test('a failed forward removal is covered when its executor exited and a readback shows the pair absent', async t => {
+  const { f, runner, view, answer } = await failedWriteCovered(t, targets[3], 'forward-remove');
+  assert.deepEqual(runner.forwards, [{ serial: 'foreign', local: 'tcp:19124', remote: 'tcp:6790' }]);
+  assert.deepEqual((view.components.find(component => component.id === answer.componentId)!.declaration as { effect: unknown }).effect, { kind: 'forward-inventory' });
+  assert.equal(state(f.admission, f.claim.identity), 'available');
+});
+
+test('a failed settings write is covered when the readback equals the recorded values and its executor exited', async t => {
+  const { f, runner, view, answer } = await failedWriteCovered(t, targets[4], 'settings-write');
+  assert.deepEqual(runner.values, settings);
+  assert.deepEqual((view.components.find(component => component.id === answer.componentId)!.declaration as { effect: unknown }).effect, { kind: 'settings-read', serial: 'serial-one' });
+  assert.equal(state(f.admission, f.claim.identity), 'available');
+});
+
+test('a failed write whose readback shows the old state is not covered', async t => {
+  const f = quarantinedAndroidForward(t, { componentLiveness: () => 'exited' }, targets[4]);
+  const runner = new FakeRunner(); runner.failing = 'settings-write';
+  assert.deepEqual(await f.admission.acquireWithAppiumRecovery(f.request, { runner: runner.run, revalidate: runner.revalidate, clock: runner.clock }), { kind: 'refused', reason: 'DEVICE_QUARANTINED' });
+  runner.values.hidden_api_policy = '1';
+  runner.failing = 'settings-write';
   assert.deepEqual(await f.admission.acquireWithAppiumRecovery(f.request, { runner: runner.run, revalidate: runner.revalidate, clock: runner.clock }), { kind: 'refused', reason: 'DEVICE_QUARANTINED' });
   assert.equal(state(f.admission, f.claim.identity), 'quarantined');
+});
+
+test('host inventory polling backs off and stops after twelve reads', async t => {
+  const f = fixture(t); f.claim.registerComponent(JSON.parse(JSON.stringify(targets[0])));
+  f.claim.closeDispatch({ outcome: 'inconclusive', disposition: 'quarantined', payload: {}, evidenceRefs: [] });
+  const recovery = f.admission.claimRecovery(f.claim.identity, 'poll-cap'); if (recovery.kind === 'refused') assert.fail();
+  const runner = new FakeRunner(); runner.resistTerm = true; runner.ignoreKill = true;
+  const { fenceAppium } = await fenceModule();
+  await assert.rejects(() => fenceAppium({ admission: f.admission, claim: recovery.claim, runner: runner.run, revalidate: runner.revalidate, clock: runner.clock }));
+  const operations = runner.events.map(event => 'kind' in event ? event.kind : `wait ${event.wait}`);
+  const afterKill = operations.slice(operations.lastIndexOf('host-signal') + 1);
+  assert.deepEqual(afterKill.filter(operation => operation.startsWith('wait')), ['wait 500', 'wait 1000', 'wait 2000', 'wait 4000', 'wait 5000', 'wait 5000', 'wait 5000', 'wait 5000', 'wait 5000', 'wait 5000', 'wait 5000']);
+  assert.equal(afterKill.filter(operation => operation === 'host-inventory').length, 12);
+  assert.equal(state(f.admission, f.claim.identity), 'quarantined');
+});
+
+test('recorded host inventories hold only the rows that concern the target', async t => {
+  for (const [target, expected] of [[targets[0], [100, 101, 102]], [targets[5], [400]]] as const) {
+    const { admission, claim, recovery, proof } = await prepared(t, [target]);
+    recovery.submitFence(proof);
+    const view = admission.readGeneration(claim.identity);
+    const inventories = view.components.filter(component => (component.declaration as { effect?: { kind: string } }).effect?.kind === 'host-inventory')
+      .map(component => (view.componentObservations.find(observation => observation.componentId === component.id)!.payload as { result: { pid: number }[] }).result.map(row => row.pid));
+    assert.deepEqual(inventories[0], expected);
+    assert.ok(inventories.every(pids => pids.every(pid => (expected as readonly number[]).includes(pid))), `stored ${JSON.stringify(inventories)}`);
+    assert.equal(state(admission, claim.identity), 'available');
+  }
 });
 
 test('a hung runner is bounded by the cleanup budget and cannot release on a late reply', async t => {
