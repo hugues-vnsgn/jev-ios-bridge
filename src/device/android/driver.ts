@@ -27,7 +27,7 @@ import { deviceAgentClient, type AgentKey, type DeviceAgentClient } from './agen
 import { EVENT_FILTER, type AppExitWatch, type createExitWatch } from './exit-watch.js';
 import { deleteOldLogs, LOG_FOLDER, logcatStarter, privateLogFolder, type LogcatOutput, type LogcatStarter, type LogcatStream } from './logcat.js';
 import { mapAndroidTree } from './mapping.js';
-import { settle, type Clock, type SettledCapture } from './settle.js';
+import { settle, type Clock, type SettledCapture } from '../settle.js';
 import { adbEnvironment, androidTools, type AndroidTools } from './tools.js';
 
 /** Where the bridge pushes its device agent: its own path, never mobilecli's `/data/local/tmp/mobilecli.dex`. */

@@ -132,8 +132,8 @@ export type ActPath =
   | { path: 'screen-middle' };
 
 
-/** MobileBuildMCP 2.7.1's proven tap-alias collapsing. Only the pinned integration may carry it. */
-export type TapAliasRule = 'mobilebuildmcp-2.7.1';
+/** Proven same-label, same-frame button aliases. Internal driver capability. */
+export type TapAliasRule = 'same-frame-buttons-v1';
 
 export interface DeviceDriver {
   prepare(scenario: PrepareScenarioContext, signal: AbortSignal): Promise<void>;

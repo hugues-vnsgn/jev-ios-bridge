@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<AppiumAUT>
+  <XCUIElementTypeApplication type="XCUIElementTypeApplication" name="FixtureApp" label="FixtureApp" enabled="true" visible="true" accessible="false" x="0" y="0" width="402" height="874" index="0" traits="" processId="88269" bundleId="dev.jevbridge.fixture">
+    <XCUIElementTypeWindow type="XCUIElementTypeWindow" enabled="true" visible="true" accessible="false" x="0" y="0" width="402" height="874" index="0" traits="">
+      <XCUIElementTypeOther type="XCUIElementTypeOther" enabled="true" visible="true" accessible="false" x="0" y="0" width="402" height="874" index="0" traits="">
+        <XCUIElementTypeOther type="XCUIElementTypeOther" enabled="true" visible="true" accessible="false" x="0" y="0" width="402" height="874" index="0" traits="">
+          <XCUIElementTypeOther type="XCUIElementTypeOther" enabled="true" visible="true" accessible="false" x="0" y="0" width="402" height="874" index="0" traits="">
+            <XCUIElementTypeOther type="XCUIElementTypeOther" enabled="true" visible="true" accessible="false" x="0" y="0" width="402" height="874" index="0" traits="">
+              <XCUIElementTypeOther type="XCUIElementTypeOther" enabled="true" visible="true" accessible="false" x="0" y="0" width="402" height="874" index="0" traits="">
+                <XCUIElementTypeNavigationBar type="XCUIElementTypeNavigationBar" name="Fields" enabled="true" visible="true" accessible="false" x="0" y="62" width="402" height="106" index="0" traits="">
+                  <XCUIElementTypeOther type="XCUIElementTypeOther" name="back.fields" label="Back" enabled="true" visible="true" accessible="false" x="20" y="66" width="62" height="36" index="0" traits="">
+                    <XCUIElementTypeOther type="XCUIElementTypeOther" enabled="true" visible="true" accessible="false" x="20" y="66" width="62" height="36" index="0" traits="">
+                      <XCUIElementTypeButton type="XCUIElementTypeButton" name="back.fields" label="Back" enabled="true" visible="true" accessible="true" x="20" y="66" width="62" height="36" index="0" traits="Button"/>
+                    </XCUIElementTypeOther>
+                  </XCUIElementTypeOther>
+                  <XCUIElementTypeStaticText type="XCUIElementTypeStaticText" value="Fields" name="Fields" label="Fields" enabled="true" visible="true" accessible="true" x="16" y="120" width="94" height="43" index="1" traits="Header, StaticText"/>
+                </XCUIElementTypeNavigationBar>
+                <XCUIElementTypeOther type="XCUIElementTypeOther" enabled="true" visible="true" accessible="false" x="0" y="0" width="402" height="874" index="1" traits="">
+                  <XCUIElementTypeOther type="XCUIElementTypeOther" enabled="true" visible="true" accessible="false" x="0" y="0" width="402" height="874" index="0" traits="">
+                    <XCUIElementTypeOther type="XCUIElementTypeOther" enabled="true" visible="true" accessible="false" x="0" y="0" width="402" height="874" index="0" traits="">
+                      <XCUIElementTypeOther type="XCUIElementTypeOther" enabled="true" visible="true" accessible="false" x="0" y="0" width="402" height="874" index="0" traits="">
+                        <XCUIElementTypeScrollView type="XCUIElementTypeScrollView" name="fields.scroll" enabled="true" visible="true" accessible="false" x="16" y="184" width="370" height="640" index="0" traits="">
+                          <XCUIElementTypeOther type="XCUIElementTypeOther" enabled="true" visible="true" accessible="false" x="16" y="184" width="370" height="445" index="0" traits="">
+                            <XCUIElementTypeTextField type="XCUIElementTypeTextField" value="Plain" name="field.plain" label="" enabled="true" visible="true" accessible="true" x="16" y="184" width="370" height="34" index="0" placeholderValue="Plain" traits=""/>
+                            <XCUIElementTypeStaticText type="XCUIElementTypeStaticText" value="Committed plain: " name="committed.plain" label="Committed plain: " enabled="true" visible="true" accessible="true" x="16" y="225" width="134" height="24" index="1" traits="StaticText"/>
+                            <XCUIElementTypeSecureTextField type="XCUIElementTypeSecureTextField" value="Password" name="field.secure" label="" enabled="true" visible="true" accessible="true" x="16" y="260" width="370" height="34" index="2" placeholderValue="Password" traits=""/>
+                            <XCUIElementTypeStaticText type="XCUIElementTypeStaticText" value="Committed secure: " name="committed.secure" label="Committed secure: " enabled="true" visible="true" accessible="true" x="16" y="301" width="150" height="24" index="3" traits="StaticText"/>
+                            <XCUIElementTypeTextField type="XCUIElementTypeTextField" value="Formatted" name="field.formatted" label="" enabled="true" visible="true" accessible="true" x="16" y="336" width="370" height="35" index="4" placeholderValue="Formatted" traits=""/>
+                            <XCUIElementTypeStaticText type="XCUIElementTypeStaticText" value="Committed formatted: " name="committed.formatted" label="Committed formatted: " enabled="true" visible="true" accessible="true" x="16" y="377" width="173" height="24" index="5" traits="StaticText"/>
+                            <XCUIElementTypeTextField type="XCUIElementTypeTextField" value="Unicode" name="field.unicode" label="" enabled="true" visible="true" accessible="true" x="16" y="412" width="370" height="35" index="6" placeholderValue="Unicode" traits=""/>
+                            <XCUIElementTypeStaticText type="XCUIElementTypeStaticText" value="Committed unicode: " name="committed.unicode" label="Committed unicode: " enabled="true" visible="true" accessible="true" x="16" y="454" width="159" height="23" index="7" traits="StaticText"/>
+                            <XCUIElementTypeTextField type="XCUIElementTypeTextField" value="Empty hint" name="field.empty" label="" enabled="true" visible="true" accessible="true" x="16" y="488" width="370" height="35" index="8" placeholderValue="Empty hint" traits=""/>
+                            <XCUIElementTypeStaticText type="XCUIElementTypeStaticText" value="Committed empty: " name="committed.empty" label="Committed empty: " enabled="true" visible="true" accessible="true" x="16" y="530" width="146" height="23" index="9" traits="StaticText"/>
+                            <XCUIElementTypeTextField type="XCUIElementTypeTextField" value="Already filled" name="field.prefilled" label="" enabled="true" visible="true" accessible="true" x="16" y="564" width="370" height="35" index="10" placeholderValue="Prefilled" traits=""/>
+                            <XCUIElementTypeStaticText type="XCUIElementTypeStaticText" value="Committed prefilled: Already filled" name="committed.prefilled" label="Committed prefilled: Already filled" enabled="true" visible="true" accessible="true" x="16" y="606" width="258" height="23" index="11" traits="StaticText"/>
+                          </XCUIElementTypeOther>
+                          <XCUIElementTypeOther type="XCUIElementTypeOther" value="0%" name="Vertical scroll bar, 1 page" label="Vertical scroll bar, 1 page" enabled="true" visible="true" accessible="false" x="353" y="184" width="30" height="628" index="1" traits="Adjustable">
+                            <XCUIElementTypeOther type="XCUIElementTypeOther" enabled="true" visible="false" accessible="false" x="380" y="1016" width="3" height="7" index="0" traits=""/>
+                          </XCUIElementTypeOther>
+                          <XCUIElementTypeOther type="XCUIElementTypeOther" value="0%" name="Vertical scroll bar, 1 page" label="Vertical scroll bar, 1 page" enabled="true" visible="true" accessible="false" x="353" y="184" width="30" height="628" index="2" traits="Adjustable">
+                            <XCUIElementTypeOther type="XCUIElementTypeOther" enabled="true" visible="false" accessible="false" x="380" y="1016" width="3" height="7" index="0" traits=""/>
+                          </XCUIElementTypeOther>
+                        </XCUIElementTypeScrollView>
+                      </XCUIElementTypeOther>
+                    </XCUIElementTypeOther>
+                  </XCUIElementTypeOther>
+                </XCUIElementTypeOther>
+                <XCUIElementTypeOther type="XCUIElementTypeOther" enabled="true" visible="false" accessible="false" x="0" y="0" width="402" height="874" index="2" traits="">
+                  <XCUIElementTypeOther type="XCUIElementTypeOther" enabled="true" visible="false" accessible="false" x="0" y="0" width="402" height="874" index="0" traits=""/>
+                </XCUIElementTypeOther>
+              </XCUIElementTypeOther>
+            </XCUIElementTypeOther>
+          </XCUIElementTypeOther>
+        </XCUIElementTypeOther>
+      </XCUIElementTypeOther>
+    </XCUIElementTypeWindow>
+  </XCUIElementTypeApplication>
+</AppiumAUT>

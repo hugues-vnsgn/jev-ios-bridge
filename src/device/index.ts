@@ -505,7 +505,7 @@ export interface ObservedActionDriver {
 
 export class MobileBuildMcpDriver implements DeviceDriver, IosPreparationDriver, ObservedActionDriver {
   /** This pinned integration's proven tap-alias collapsing. The run reads it from the driver. */
-  readonly tapAliasRule: TapAliasRule = 'mobilebuildmcp-2.7.1';
+  readonly tapAliasRule: TapAliasRule = 'same-frame-buttons-v1';
   private readonly runner: CliRunner;
   private readonly window: DeviceWindowOpener | undefined;
   private resolvedIdentity: SimulatorIdentity | undefined;

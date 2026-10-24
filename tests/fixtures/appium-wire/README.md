@@ -33,3 +33,13 @@ The recorder creates a private child HOME, strips the environment, and discards 
 - Stdin EOF and parent loss, with child and session identities available to the fence.
 
 These cases require the final extension and the fixture app. Fault injection and the recorder round trip in this PR run on the host.
+
+## Observation replays
+
+`observe/` retains P05 XML captured on the observation-mapping prototype at `ed4a17729`. The `observe-1.jsonl` and `observe-2.jsonl` envelopes are hand-authored host fixtures around those sources and a generated one-pixel PNG. They make no new live-device claim. The original captured XML files remain separate for inspection.
+
+Observation faults add `source-late-first`, `source-late-second`, `source-lost` and `screen-late-second`. A late reply normally waits 250 ms. Appending `-held` waits for the test to create `<trace>.release`, so a manual clock can reach the settle deadline without depending on host speed. `source-slow-screen-held` returns the first source after 1 s and holds the first screenshot. `source-invalid` replaces each source with malformed XML, and `screen-invalid` truncates each PNG to its header. `delete-late-first` answers the first delete after 250 ms, and `actions-lost` never answers `appium_perform_actions` (`ios/actions.jsonl`). Cleanup may skip the remaining recorded steps to the owned delete request, and a repeated delete replays that request. No skipped input is dispatched.
+
+`observe/ios-fields.xml` is the P19 fixture-app Fields screen (`P19-evidence/ios-feature-proof/fields.xml`), where WDA reports each empty field's hint as both `placeholderValue` and `value`. `observe/android-number-picker.xml` is a hand-authored source for a `$` class, whose tag UiAutomator2 sanitizes.
+
+The corpus oracle converts the existing Android agent captures to equivalent XML in the test, then compares normalized elements, printed capture output and assertion text with the committed bytes. These are derived host fixtures, not newly recorded Appium wire. The three Android goldens stay unchanged.
