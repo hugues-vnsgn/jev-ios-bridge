@@ -63,10 +63,10 @@ Keep a password or other secret out of the script: write `{ "fromEnv": "NAME" }`
 
 ## How Android types values
 
-- **ASCII values** (plain English letters, digits, and punctuation) are typed directly. They never touch the device clipboard.
-- **Any other value** (`Tiếng Việt`, `café`, an emoji) is pasted: the bridge puts it on the device clipboard, pastes it into the field, then clears the clipboard. **The keyboard may keep it anyway.** Gboard, for one, still offers the pasted text as a clipboard suggestion after the clipboard is cleared, on Android 12 and 16. So a non-ASCII typed value can outlive the run on the device, and shouldn't be a real secret.
+- **Every value,** ASCII or not (`Tiếng Việt`, `café`, an emoji), goes to the field in one UiAutomator2 command, `mobile: replaceElementValue`, which replaces the field's text. The bridge doesn't put the value on the device clipboard.
+- **Releases before Appium** pasted non-ASCII values through the clipboard. Gboard, for one, kept the pasted text as a clipboard suggestion after the bridge cleared the clipboard, so a device used with those releases may still hold such a value.
 
-Either way, the field is tapped first, its text is replaced, and the next capture records what the field shows (`typedFields` in [`report.json`](report-json.md)).
+The next capture records what the field shows (`typedFields` in [`report.json`](report-json.md)).
 
 ## Steps
 

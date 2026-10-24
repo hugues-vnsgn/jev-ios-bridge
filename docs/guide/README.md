@@ -1,6 +1,6 @@
 # jev-ios-bridge guide
 
-jev-ios-bridge checks an iOS or Android app the way a person would read its screen. You write a script: taps, typing, swipes, waits, and checkpoints that make claims such as "The order total reads $5". The bridge runs it on an iOS simulator through [MobileBuildMCP](https://github.com/getsentry/MobileBuildMCP), or on an Android emulator or phone through `adb` and its own copy of [mobilecli](https://github.com/mobile-next/mobilecli)'s device agent. At each checkpoint, TypeSafe's Jev model judges your claims against the text on screen. You get one verdict (passed, failed, or inconclusive), with screenshots and a log behind it.
+jev-ios-bridge checks an iOS or Android app the way a person would read its screen. You write a script: taps, typing, swipes, waits, and checkpoints that make claims such as "The order total reads $5". The bridge runs it on an iOS simulator or an Android emulator or phone, through its own frozen copy of [Appium](https://appium.io): WebDriverAgent on iOS, UiAutomator2 and `adb` on Android. At each checkpoint, TypeSafe's Jev model judges your claims against the text on screen. You get one verdict (passed, failed, or inconclusive), with screenshots and a log behind it.
 
 ## What it's for
 

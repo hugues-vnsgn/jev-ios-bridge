@@ -111,15 +111,15 @@ test('the reason-code reference gives each code the vocabulary\'s own wording', 
   }
 });
 
-test('troubleshooting covers every Android reason code, crash lookups, and clearing leftovers by hand', () => {
+test('troubleshooting covers every Android reason code, crash lookups, and a crashed run\'s leftovers', () => {
   const reference = guidePage('reference/reason-codes.md');
   const android = reference.slice(reference.indexOf('## Device and app (Android)'));
   const codes = [...android.slice(0, android.indexOf('\n## ', 1)).matchAll(/^\| `([A-Z_]+)` \|/gm)].map(match => match[1]!);
   assert.ok(codes.length >= 9, `expected the Android codes, found ${codes.join(', ')}`);
   const page = guidePage('08-troubleshooting.md');
   for (const code of codes) assert.ok(page.includes(`\`${code}\``), `08-troubleshooting.md does not cover ${code}`);
-  for (const text of ['logcat -b crash -d', 'dumpsys activity exit-info', 'Screen still changing', 'forward --remove',
-    'CLASSPATH=/data/local/tmp/jev-ios-bridge-agent.dex']) {
+  for (const text of ['logcat -b crash -d', 'dumpsys activity exit-info', 'Screen still changing', '### A leftover from a crashed run',
+    'the run stops with `DEVICE_QUARANTINED`', 'Don\'t stop UiAutomator2 by hand']) {
     assert.ok(page.includes(text), `08-troubleshooting.md does not cover ${text}`);
   }
 });
@@ -163,10 +163,10 @@ test('the running page documents the optional MCP profile field and pre-run prof
   assert.match(page, /an unknown selection refuses with `PROFILE_NOT_FOUND`/);
 });
 
-test('the script-format reference says a non-ASCII typed value passes through the device clipboard', () => {
+test('the script-format reference says Android replaces a field\'s text in one command, off the clipboard', () => {
   const page = guidePage('reference/script-format.md');
-  assert.match(page, /clipboard/);
-  assert.match(page, /real secret/);
+  assert.match(page, /one UiAutomator2 command, `mobile: replaceElementValue`/);
+  assert.match(page, /The bridge doesn't put the value on the device clipboard/);
 });
 
 test('every whole script shown in the guide parses', () => {
