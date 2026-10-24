@@ -68,7 +68,8 @@ function rig(platform: AppiumPlatform, first: Element[] = platform === 'ios' ? i
   };
   let finished = 0;
   const session: OperationSession = { sessionId, profile: { platform }, client, async finish() { finished++; } };
-  const observation = { resolve: references.resolve.bind(references), invalidate: references.invalidate.bind(references), observe };
+  const observation = { resolve: references.resolve.bind(references), isCurrent: references.isCurrent.bind(references),
+    invalidate: references.invalidate.bind(references), observe };
   const operations = new AppiumOperations(session, observation, {
     now: options.now ?? (() => 2_000), ...(options.dispatch ? { dispatch: options.dispatch } : {}) });
   return { operations, calls, queue, behaviour, observe, get finished() { return finished; },
@@ -242,6 +243,32 @@ test('Android tapAt refuses out of bounds points, a changed orientation or size,
   for (const check of [bounds, rotated, resized, old]) assert.deepEqual(performed(check.calls), []);
   assert.deepEqual(old.calls, []);
 });
+test('a snapshot with no elements is still current, so back, scroll and tapAt dispatch', async () => {
+  const android = rig('android', []);
+  const back = await android.operations.back(await android.observe(), live());
+  assert.deepEqual(back.actPath, { path: 'back-key' });
+  const scrolled = await android.operations.scroll(await android.observe(), 'down', live());
+  assert.deepEqual(scrolled.actPath, { path: 'screen-middle' });
+  await android.operations.tapAt(await android.observe(), 5, 5, live());
+  assert.deepEqual(android.calls.map(call => call.tool), ['jev_android_back', 'appium_perform_actions', 'jev_screen', 'appium_perform_actions']);
+  const ios = rig('ios', []);
+  await ios.operations.back(await ios.observe(), live());
+  await ios.operations.scroll(await ios.observe(), 'up', live());
+  assert.deepEqual(ios.calls.map(call => call.tool), ['appium_perform_actions', 'appium_perform_actions']);
+  const old = rig('android', []); const first = await old.observe(); await old.observe();
+  await assert.rejects(old.operations.back(first, live()), StaleSnapshotError);
+  await assert.rejects(old.operations.scroll(first, 'down', live()), StaleSnapshotError);
+  await assert.rejects(old.operations.tapAt(first, 5, 5, live()), StaleSnapshotError);
+  assert.deepEqual(old.calls, []);
+});
+test('Android tapAt refuses a screenshot whose aspect differs from its frame by more than 1%, before any read or input', async () => {
+  const skewed = rig('android', undefined, { shot: { width: 1080, height: 2200 } });
+  await assert.rejects(skewed.operations.tapAt(await skewed.observe(), 5, 5, live()), { code: 'DEVICE_ERROR' });
+  assert.deepEqual(skewed.calls, []);
+  const within = rig('android', undefined, { shot: { width: 1080, height: 2390 } });
+  await within.operations.tapAt(await within.observe(), 5, 5, live());
+  assert.deepEqual(within.calls.map(call => call.tool), ['jev_screen', 'appium_perform_actions']);
+});
 test('iOS tapAt stays UNSUPPORTED_ACTION and sends nothing', async () => {
   const r = rig('ios');
   await assert.rejects(r.operations.tapAt(await r.observe(), 5, 5, live()), { code: 'UNSUPPORTED_ACTION' });
@@ -282,10 +309,19 @@ test('a secure field keeps its masking and a field the fresh capture cannot sing
   gone.queue.push(iosElements().filter(e => e.ref !== 'e3'));
   const none = await gone.operations.replaceText(before, 'e3', 'x', live());
   assert.equal('screen' in none.result, false);
-  const empty = rig('ios');
-  await assert.rejects(empty.operations.replaceText(await empty.observe(), 'e3', '', live()), { code: 'UNSUPPORTED_ACTION' });
-  assert.deepEqual(empty.calls, []);
 });
+for (const platform of ['ios', 'android'] as const) {
+  test(`${platform} replace text accepts empty text, sends it once and counts one mutation`, async () => {
+    const names: OperationName[] = [];
+    const r = rig(platform, undefined, { dispatch: async (operation, send) => { names.push(operation); await send(); } });
+    const field = platform === 'ios' ? 'e3' : 'e2';
+    const done = await r.operations.replaceText(await r.observe(), field, '', live());
+    assert.deepEqual(r.calls.map(call => call.tool), ['jev_replace_text']);
+    assert.equal((r.calls[0] as { arguments: { text: string } }).arguments.text, '');
+    assert.deepEqual(names, ['replace-text']);
+    assert.ok('screen' in done.result || 'elements' in done.result);
+  });
+}
 
 const mutations: Array<[string, AppiumPlatform, (o: AppiumOperations, e: Awaited<ReturnType<ReturnType<typeof rig>['observe']>>) => Promise<unknown>, OperationName]> = [
   ['tap', 'ios', (o, e) => o.tap(e, 'e2', live()), 'tap'],
@@ -357,7 +393,7 @@ test('a failed session delete surfaces as CLEANUP_FAILED without its cause', asy
   const r = rig('android');
   const failing = new AppiumOperations({ sessionId, profile: { platform: 'android' }, client: { dispatchOpen: true, performActions: async () => {},
     callExtension: (async () => { throw new Error('x'); }) as unknown as OperationsClient['callExtension'] },
-  finish: async () => { throw new Error('delete said SECRET'); } }, { resolve: () => { throw new Error('unused'); }, invalidate: () => {}, observe: r.observe });
+  finish: async () => { throw new Error('delete said SECRET'); } }, { resolve: () => { throw new Error('unused'); }, isCurrent: () => false, invalidate: () => {}, observe: r.observe });
   await assert.rejects(failing.close(), (error: unknown) => error instanceof DeviceReasonError && error.code === 'CLEANUP_FAILED' && !String(error.message).includes('SECRET'));
 });
 
@@ -398,15 +434,39 @@ test('through the real client, a lost reply to jev_replace_text sends it once, c
     element('e1', 'text-field', { x: 50, y: 500, width: 980, height: 120 }, { identifier: 'com.app:id/email', actions: ['tap', 'typeText'] })] }, Date.now(), true);
   const evidence = { snapshot, screenshot: { jpeg: Buffer.alloc(0), size: { width: 1080, height: 2400 }, frame: androidScreen, orientation: 'PORTRAIT' as const } };
   const operations = new AppiumOperations({ sessionId: session.sessionId, profile: session.profile,
-    client: { get dispatchOpen() { return client.dispatchOpen; }, performActions: async () => { throw new Error('no performActions on the client yet'); },
+    client: { get dispatchOpen() { return client.dispatchOpen; }, performActions: client.performActions.bind(client),
       callExtension: client.callExtension.bind(client) }, finish: () => session.finish() },
-  { resolve: input => references.resolve(input), invalidate: () => references.invalidate(), observe: async () => { throw new Error('unused'); } }, { timeoutMs: 400 });
+  { resolve: input => references.resolve(input), isCurrent: snapshot => references.isCurrent(snapshot), invalidate: () => references.invalidate(),
+    observe: async () => { throw new Error('unused'); } }, { timeoutMs: 400 });
   await assert.rejects(operations.replaceText(evidence, 'e1', 'replacement', live()), UnconfirmedOperationError);
   assert.equal(client.dispatchOpen, false);
   await assert.rejects(operations.replaceText(evidence, 'e1', 'replacement', live()), UnconfirmedOperationError);
   await operations.close();
   assert.deepEqual(f.calls().filter(call => call.method === 'tools/call').map(call => call.params.name),
     ['appium_session_management', 'jev_settings', 'jev_replace_text', 'appium_session_management']);
+});
+
+test('through the real client, an iOS tap is one appium_perform_actions on the owned session and the session is then deleted', async t => {
+  const f = clientFixture(t, 'ios');
+  const client = await f.open('none', resolve('tests/fixtures/appium-wire/ios/operations-tap.jsonl'));
+  const session = await AppiumCommandSession.start({ client, profile: f.profile });
+  const references = new ObservationReferences(session.sessionId, 'ios-test');
+  const screenshot: ScreenshotImage = { jpeg: Buffer.alloc(0), size: { width: 400, height: 800 }, frame: iosScreen, orientation: 'PORTRAIT' };
+  const issue = (hash: string) => references.issue({ truncated: false, screenHash: hash,
+    elements: [element('e1', 'button', { x: 0, y: 0, width: 20, height: 40 })] }, Date.now(), true);
+  const snapshot = issue('before');
+  const operations = new AppiumOperations({ sessionId: session.sessionId, profile: session.profile,
+    client: { get dispatchOpen() { return client.dispatchOpen; }, performActions: client.performActions.bind(client),
+      callExtension: client.callExtension.bind(client) }, finish: () => session.finish() },
+  { resolve: input => references.resolve(input), isCurrent: current => references.isCurrent(current), invalidate: () => references.invalidate(),
+    observe: async () => ({ snapshot: issue('after'), screenshot }) }, { timeoutMs: 2_000 });
+  const done = await operations.tap({ snapshot, screenshot }, 'e1', live());
+  assert.equal(done.holdMs, 50);
+  assert.equal('screen' in done.result, false);
+  await operations.close();
+  const sent = f.calls().filter(call => call.method === 'tools/call');
+  assert.deepEqual(sent.map(call => call.params.name), ['appium_session_management', 'jev_settings', 'appium_perform_actions', 'appium_session_management']);
+  assert.deepEqual(sent[2].params.arguments, { sessionId: 'ios-session', actions: pointer(move(10, 20), down, pause(50), up) });
 });
 
 test('an iOS attach session profile stays refused', t => {
