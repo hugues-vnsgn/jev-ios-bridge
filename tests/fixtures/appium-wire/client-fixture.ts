@@ -28,7 +28,11 @@ function walk(directory: string): void {
 walk('');
 export function clientFixture(t: TestContext, platform: 'ios' | 'android' = 'ios') {
   const root = mkdtempSync(join(tmpdir(), 'jev-private-client-'));
-  t.after(() => rmSync(root, { recursive: true, force: true }));
+  const clients: { close(): Promise<void> }[] = [];
+  t.after(async () => {
+    await Promise.allSettled(clients.map(client => client.close()));
+    rmSync(root, { recursive: true, force: true, maxRetries: 5, retryDelay: 50 });
+  });
   const stack: VerifiedStack = { root, nodeModules: join(root, 'node_modules'), wdaRunner: '/verified/wda.app', warnings: [],
     identity: { version: 1, stackSha256: '1'.repeat(64), wdaSha256: '2'.repeat(64), manifestSha256: '3'.repeat(64) },
     manifest: { version: 1, lockSha256: freeze.lockSha256, files: sdkFiles, loaded: Object.keys(sdkFiles),
@@ -46,8 +50,8 @@ export function clientFixture(t: TestContext, platform: 'ios' | 'android' = 'ios
     const client = await PrivateAppiumClient.open({ stack, owner, homeRoot: join(root, 'homes'), timeoutMs: 20000,
       child: { entrypoint: resolve('tests/fixtures/appium-wire/fake-mcp.ts'), args: [file, fault, trace, environment], nodeArgs: ['--import', import.meta.resolve('tsx')] },
       onComponent: record => { records.push(record); } });
-    t.after(() => client.close()); return client;
+    clients.push(client); return client;
   }
   const calls = () => existsSync(trace) ? readFileSync(trace, 'utf8').trim().split('\n').map(line => JSON.parse(line)) : [];
-  return { root, stack, profile, records, trace, environment, recording, open, calls };
+  return { root, stack, profile, records, trace, environment, recording, clients, open, calls };
 }
