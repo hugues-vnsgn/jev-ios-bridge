@@ -4,7 +4,7 @@ import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { isActOutcome, isIosApp, type Action, type ActionScenarioContext, type ActOutcome, type ActPath, type AppProblem, type DeviceDriver,
   type DevicePreparation, type LogSources, type PrepareScenarioContext, type Snapshot, type StackProvenance } from '../contracts/index.js';
-import { Admission, AdmissionError, type AdmissionClaim, type AdmittedSession, type CommandRequest } from '../device/admission.js';
+import { Admission, AdmissionError, type AdmissionClaim, type AdmittedSession, type CommandRequest, type FenceRequest } from '../device/admission.js';
 import type { AllocationCommit, ObservedClaim, PreparationClaim } from '../device/admission-allocation.js';
 import type { AdbRunner } from '../device/android/adb.js';
 import { androidStartTime, processGone, shellCommand } from '../device/android/recovery.js';
@@ -18,7 +18,7 @@ import { OperationTracker } from '../device/operation-tracker.js';
 import type { Clock } from '../device/settle.js';
 import type { ProfileBinding } from '../profiles.js';
 import { PrivateAppiumClient, type AppiumComponentRecord } from './client.js';
-import { fenceAppium, type FenceEffect, type FenceRunner } from './fence/index.js';
+import { fenceAppium, type FenceClaim, type FenceEffect, type FenceRunner } from './fence/index.js';
 import { appiumComponentSchema, fenceEffectSchema, hostIdentitySchema, type AppiumComponent, type HostIdentity } from './fence/schema.js';
 import { androidNativeHelpers } from './native/android.js';
 import { launchIosConsole, observeIosLogs, observedIosPreparation } from './native/ios.js';
@@ -606,7 +606,9 @@ export class AppiumDriver implements DeviceDriver, IosPreparationDriver, Observe
     if (terminated !== undefined) throw terminated;
   }
 
-  /** `settle` waits for the run's own in-flight operations; a failing `prepare` is itself one, so it passes false. */
+  /** `settle` waits for the run's own in-flight operations; a failing `prepare` is itself one, so it passes false.
+   *  A clean close fences its own components after its last effect and releases the device; only real uncertainty
+   *  quarantines it for a recovery claim. An observed claim stages its fence for the runtime's terminal. */
   private async finishClose(phase: Extract<Phase, { kind: 'admitted' | 'live' }>, signal: AbortSignal, settle: boolean): Promise<void> {
     const { owner } = phase;
     let failure: unknown;
@@ -616,26 +618,49 @@ export class AppiumDriver implements DeviceDriver, IosPreparationDriver, Observe
     } catch (error) { failure = error; }
     this.issuanceClosed = true;
     this.latest = undefined;
-    if (!owner.owned) { this.phase = { kind: 'closed' }; if (failure) throw failure; return; }
     try {
-      // A session delete is a hint, never a receipt (ADR-0011): the device is held until the fence proves every component.
-      const closed = owner.claim.closeDispatch({ outcome: 'inconclusive', disposition: 'quarantined', payload: {}, evidenceRefs: [] });
-      if (closed.authority !== 'committed') throw new DeviceReasonError('UI_ACTION_UNCONFIRMED', 'Device closure is unconfirmed');
-      const recovery = this.options.admission.claimRecovery(owner.claim.identity, randomUUID());
-      if (recovery.kind === 'refused') throw new DeviceReasonError('CLEANUP_FAILED', 'The cleanup claim was refused');
-      try {
-        const proof = await fenceAppium({ admission: this.options.admission, claim: recovery.claim, runner: this.options.fence,
-          revalidate: serial => this.revalidate(owner.identity, serial, signal), signal });
-        recovery.claim.submitFence(proof);
-      } catch (error) {
-        try { recovery.claim.close(); } catch { /* the quarantine stands */ }
-        throw new DeviceReasonError('CLEANUP_FAILED', `Appium components could not be fenced: ${error instanceof Error ? error.message : String(error)}`);
+      if (failure === undefined) {
+        try {
+          owner.claim.stageFence(await this.fenceOwn(owner, signal));
+          if (!owner.owned) return;
+          const closed = owner.claim.finalize({ outcome: 'completed', disposition: 'available', payload: {}, evidenceRefs: [] });
+          if (closed.authority !== 'committed') throw new DeviceReasonError('UI_ACTION_UNCONFIRMED', 'Device closure is unconfirmed');
+          await this.lease.release();
+          return;
+        } catch (error) {
+          failure = new DeviceReasonError('CLEANUP_FAILED', `Appium components could not be fenced: ${error instanceof Error ? error.message : String(error)}`);
+        }
       }
-      await this.lease.release();
+      if (owner.owned) await this.quarantineAndFence(owner, signal);
     } catch (error) {
       if (failure === undefined) throw error;
     } finally { this.phase = { kind: 'closed' }; }
     if (failure !== undefined) throw failure;
+  }
+
+  /** The live owner's own fence: every read is recorded after its last effect, so the store can bind the proofs. */
+  private fenceOwn(owner: Owner, signal: AbortSignal): Promise<FenceRequest> {
+    const claim: FenceClaim = { owner: owner.claim.identity, dispatch: owner.dispatcher.dispatch.bind(owner.dispatcher),
+      observeComponent: owner.claim.observeComponent.bind(owner.claim) };
+    return fenceAppium({ admission: this.options.admission, claim, runner: this.options.fence,
+      revalidate: serial => this.revalidate(owner.identity, serial, signal), signal });
+  }
+
+  /** Uncertain work holds the device; a recovery claim fences it and releases it only with every receipt. */
+  private async quarantineAndFence(owner: Owner, signal: AbortSignal): Promise<void> {
+    const closed = owner.claim.closeDispatch({ outcome: 'inconclusive', disposition: 'quarantined', payload: {}, evidenceRefs: [] });
+    if (closed.authority !== 'committed') throw new DeviceReasonError('UI_ACTION_UNCONFIRMED', 'Device closure is unconfirmed');
+    const recovery = this.options.admission.claimRecovery(owner.claim.identity, randomUUID());
+    if (recovery.kind === 'refused') throw new DeviceReasonError('CLEANUP_FAILED', 'The cleanup claim was refused');
+    try {
+      const proof = await fenceAppium({ admission: this.options.admission, claim: recovery.claim, runner: this.options.fence,
+        revalidate: serial => this.revalidate(owner.identity, serial, signal), signal });
+      recovery.claim.submitFence(proof);
+    } catch (error) {
+      try { recovery.claim.close(); } catch { /* the quarantine stands */ }
+      throw new DeviceReasonError('CLEANUP_FAILED', `Appium components could not be fenced: ${error instanceof Error ? error.message : String(error)}`);
+    }
+    await this.lease.release();
   }
 }
 

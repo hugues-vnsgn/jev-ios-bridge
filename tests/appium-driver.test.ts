@@ -6,7 +6,7 @@ import { setTimeout as delay } from 'node:timers/promises';
 import { freeHostPort } from '../src/appium/ports.js';
 import type { DeviceDriver } from '../src/contracts/index.js';
 import { AppiumDriver } from '../src/appium/driver.js';
-import type { Admission } from '../src/device/admission.js';
+import type { Admission, OwnerIdentity } from '../src/device/admission.js';
 import { fakeSimulatorProbe } from './fixtures/android-device.js';
 import { fakeProbeSpawn } from './fixtures/adb-spawn.js';
 import type { AdbRunner } from '../src/device/android/adb.js';
@@ -16,6 +16,11 @@ import { UDID, WDA_BUNDLE, driverFixture, rewriteRecording, spliceRecordings } f
 
 const live = () => new AbortController().signal;
 const ios = { target: { platform: 'ios', device: UDID, presentation: 'visible' }, identityProbe: fakeSimulatorProbe(UDID) } as const;
+/** A clean close fences itself and finalizes available: no quarantine and no recovery claim are ever recorded. */
+function assertNeverQuarantined(admission: Admission, owner: OwnerIdentity): void {
+  assert.deepEqual(admission.readAttempt(owner.attempt)?.terminal, { outcome: 'completed', disposition: 'available', payload: {}, evidenceRefs: [] });
+  assert.deepEqual(admission.readGeneration(owner).recoveries, []);
+}
 const observeRecording = (root: string) => rewriteRecording(root, 'tests/fixtures/appium-wire/ios/observe-2.jsonl', [['ios-test', UDID]]);
 
 test('an iOS run launches through the console helper, observes through one session, and close deletes the session and produces every receipt', async t => {
@@ -54,6 +59,7 @@ test('an iOS run launches through the console helper, observes through one sessi
   assert.equal(f.admission.inspect({ category: 'ios-simulator', value: UDID })!.state, 'available');
   assert.equal(f.admission.readGeneration(owner).commands.filter(command => command.state !== 'settled').length, 0);
   assert.equal(f.driver.appRunning(), undefined);
+  assertNeverQuarantined(f.admission, owner);
 });
 
 test('close settles an in-flight observation before the session delete, so the cleanup delete never hits NOT_ALLOWED', async t => {
@@ -155,6 +161,7 @@ test('an Android run wakes natively, restarts through jev_start_activity, record
   assert.deepEqual(f.fence.forwards, [], 'the owned forward is removed');
   assert.equal(f.fence.processes.size, 0, 'both UiAutomator2 processes are stopped');
   assert.equal(f.admission.inspect({ category: 'android-phone', value: SERIAL })!.state, 'available');
+  assertNeverQuarantined(f.admission, owner);
 });
 
 test('an Android device with a locked screen refuses with DEVICE_LOCKED before any session, and is available again', async t => {
