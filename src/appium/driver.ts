@@ -13,7 +13,7 @@ import { DeviceReasonError, StaleSnapshotError, type AdmittedAppContext, type Io
 import { executorOf, type StartLookup } from '../device/host-start.js';
 import { resolveIdentity, revalidateIdentity, type IdentityProbe, type ResolvedIdentity } from '../device/identity.js';
 import { CompatibilityMarker, DeviceLeaseBusyError } from '../device/lease.js';
-import { createNativeLogSource, readLogTail, type NativeLogSource } from '../device/logs.js';
+import { createNativeLogSource, type NativeLogSource } from '../device/logs.js';
 import { OperationTracker } from '../device/operation-tracker.js';
 import type { Clock } from '../device/settle.js';
 import type { ProfileBinding } from '../profiles.js';
@@ -75,7 +75,6 @@ type Phase =
   | { kind: 'idle' }
   | { kind: 'admitted'; owner: Owner; role: Role; app: AppIdentity }
   | { kind: 'live'; owner: Owner; role: Role; app: AppIdentity; command: Command }
-  | { kind: 'closing'; closing: Promise<void> }
   | { kind: 'closed' };
 type AppIdentity = { id: string; launchArgs?: string[]; activity?: string; intentExtras?: Record<string, string> };
 
@@ -83,6 +82,12 @@ const DEFAULT_TIMEOUT_MS = 120_000;
 const UIAUTOMATOR2_PACKAGES = ['io.appium.uiautomator2.server', 'io.appium.uiautomator2.server.test'];
 const refusal = (code: DeviceReasonError['code'], message: string, vendorCode?: string) =>
   new DeviceReasonError(code, message, vendorCode === undefined ? {} : { vendorCode, vendorSource: 'bridge' });
+
+/** An Android native helper runs adb, so its failure names adb as the vendor source. */
+function adbFailure(error: unknown): never {
+  if (error instanceof NativeHelperError) throw new DeviceReasonError('DEVICE_ERROR', error.message, { vendorCode: error.code, vendorSource: 'adb' });
+  throw error;
+}
 
 /** Maps an operation's failure to the bridge's vocabulary with its source, so `error.vendorSource` is truthful. */
 export function appiumFailure(error: unknown): unknown {
@@ -94,6 +99,7 @@ export function appiumFailure(error: unknown): unknown {
 
 export class AppiumDriver implements DeviceDriver, IosPreparationDriver, ObservedActionDriver {
   private phase: Phase = { kind: 'idle' };
+  private closing: Promise<void> | undefined;
   private readonly operations = new OperationTracker();
   private readonly lease: CompatibilityMarker;
   private latest: AppiumObservedScreen | undefined;
@@ -134,11 +140,10 @@ export class AppiumDriver implements DeviceDriver, IosPreparationDriver, Observe
   }
 
   close(signal: AbortSignal): Promise<void> {
-    if (this.phase.kind === 'closing') return this.phase.closing;
+    if (this.closing) return this.closing;
     if (this.phase.kind === 'closed' || this.phase.kind === 'idle') { this.phase = { kind: 'closed' }; return Promise.resolve(); }
-    const closing = this.finishClose(this.phase, signal, true);
-    this.phase = { kind: 'closing', closing };
-    return closing;
+    this.closing = this.finishClose(signal, true);
+    return this.closing;
   }
 
   actPath(): ActPath | undefined { return this.lastActPath; }
@@ -292,12 +297,13 @@ export class AppiumDriver implements DeviceDriver, IosPreparationDriver, Observe
       else if (role === 'run') helpers = await this.dispatch(owner, 'launch', signal, this.timeoutMs, issued => this.launchIos(owner, app, issued));
       const command = await this.openSession(owner, role, signal, helpers);
       this.phase = { kind: 'live', owner, role, app, command: { ...command, launched: role === 'run' } };
+      // A close that arrived meanwhile stops what is now live; prepare starts nothing more.
+      if (this.closing) throw new AdmissionError('DISPATCH_CLOSED', 'The driver is closing');
       if (identity.category !== 'ios-simulator') await this.startAndroidApp(owner, this.live(), app, role, signal);
     } catch (error) {
-      const phase = this.phase;
-      if (phase.kind === 'admitted' || phase.kind === 'live') {
-        const closing = this.finishClose(phase, AbortSignal.timeout(this.timeoutMs), false).catch(() => undefined);
-        this.phase = { kind: 'closing', closing }; await closing;
+      if (!this.closing && (this.phase.kind === 'admitted' || this.phase.kind === 'live')) {
+        this.closing = this.finishClose(AbortSignal.timeout(this.timeoutMs), false);
+        await this.closing.catch(() => undefined);
       }
       throw appiumFailure(error);
     }
@@ -391,10 +397,13 @@ export class AppiumDriver implements DeviceDriver, IosPreparationDriver, Observe
   private async recordAutomation(owner: Owner, device: string, signal: AbortSignal): Promise<void> {
     if (owner.identity.category === 'ios-simulator') {
       const rows = await this.fenceRead(owner, fenceEffectSchema.parse({ kind: 'wda-inventory', udid: owner.identity.value }), signal);
+      let recorded = 0;
       for (const row of Array.isArray(rows) ? rows : []) {
         const parsed = appiumComponentSchema.safeParse({ id: randomUUID(), kind: 'appium-wda', ...(row as object) });
-        if (parsed.success) this.register(owner, parsed.data);
+        if (parsed.success) { this.register(owner, parsed.data); recorded++; }
       }
+      // A created session implies a running runner; an empty listing is a missed identity, never "nothing to stop".
+      if (!recorded) owner.claim.markInventoryUnknown('WDA_IDENTITY_UNAVAILABLE');
       return;
     }
     const adb = this.options.adb;
@@ -412,6 +421,7 @@ export class AppiumDriver implements DeviceDriver, IosPreparationDriver, Observe
       return found;
     });
     if (processes.length) this.register(owner, appiumComponentSchema.parse({ id: randomUUID(), kind: 'appium-uiautomator2', serial: device, processes }));
+    else owner.claim.markInventoryUnknown('UIAUTOMATOR2_IDENTITY_UNAVAILABLE');
   }
 
   private async prepareAndroidDevice(owner: Owner, signal: AbortSignal): Promise<void> {
@@ -420,7 +430,7 @@ export class AppiumDriver implements DeviceDriver, IosPreparationDriver, Observe
     const values = await this.fenceRead(owner, fenceEffectSchema.parse({ kind: 'settings-read', serial }), signal);
     this.register(owner, appiumComponentSchema.parse({ id: randomUUID(), kind: 'appium-settings', serial, values }));
     const helpers = androidNativeHelpers({ serial, runner: this.nativeRunnerFor(owner), timeoutMs: Math.min(this.timeoutMs, 10_000) });
-    await this.dispatch(owner, 'android-wake', signal, this.timeoutMs, issued => helpers.wake(issued));
+    await this.dispatch(owner, 'android-wake', signal, this.timeoutMs, issued => helpers.wake(issued)).catch(adbFailure);
   }
 
   private async startAndroidApp(owner: Owner, live: Extract<Phase, { kind: 'live' }>, app: AppIdentity, role: Role, signal: AbortSignal): Promise<void> {
@@ -428,12 +438,12 @@ export class AppiumDriver implements DeviceDriver, IosPreparationDriver, Observe
     const serial = owner.identity.transport.serial;
     const helpers = androidNativeHelpers({ serial, runner: this.nativeRunnerFor(owner), timeoutMs: Math.min(this.timeoutMs, 10_000) });
     if (role === 'attach') {
-      const front = await this.dispatch(owner, 'android-foreground', signal, this.timeoutMs, issued => helpers.foreground(issued));
+      const front = await this.dispatch(owner, 'android-foreground', signal, this.timeoutMs, issued => helpers.foreground(issued)).catch(adbFailure);
       if (front !== app.id) throw refusal('APP_NOT_IN_FOREGROUND', `App ${app.id} is not in front (${front ?? 'no resumed activity'})`);
       return;
     }
     if (role !== 'run') return;
-    const activity = app.activity ?? await this.dispatch(owner, 'android-launcher', signal, this.timeoutMs, async issued => (await helpers.launcher(app.id, issued)).slice(app.id.length + 1));
+    const activity = app.activity ?? await this.dispatch(owner, 'android-launcher', signal, this.timeoutMs, async issued => (await helpers.launcher(app.id, issued)).slice(app.id.length + 1)).catch(adbFailure);
     await this.guarded(signal, () => live.command.operations.restart({ package: app.id, activity, ...(app.intentExtras ? { intentExtras: app.intentExtras } : {}) }, signal));
   }
 
@@ -448,8 +458,9 @@ export class AppiumDriver implements DeviceDriver, IosPreparationDriver, Observe
     };
     const console = await launchIosConsole({ ...target, bundleId: app.id, runner, source: await source('console'), signal, ...(app.launchArgs ? { args: app.launchArgs } : {}) });
     let logs: IosHelpers['logs'];
-    try { logs = await observeIosLogs({ ...target, bundleId: app.id, runner, source: await source('os'), signal }); }
-    catch { logs = undefined; }
+    const os = await source('os');
+    try { logs = await observeIosLogs({ ...target, bundleId: app.id, runner, source: os, signal }); }
+    catch { os.unavailable('SOURCE_LOST'); logs = undefined; }
     return { console, ...(logs ? { logs } : {}), sources };
   }
 
@@ -499,7 +510,9 @@ export class AppiumDriver implements DeviceDriver, IosPreparationDriver, Observe
     const live = this.live();
     const evidence = this.evidenceFor(snapshot);
     const ops = live.command.operations;
-    if (live.command.session.state === 'paused') await live.command.session.resume(async () => undefined);
+    if (live.command.session.state === 'paused' && (await live.command.session.resume(async () => undefined)).kind === 'session-lost') {
+      throw new DeviceReasonError('STATE_UNAVAILABLE', 'The Appium session was lost.');
+    }
     this.lastActPath = undefined;
     const performed = await this.guarded(signal, () => {
       switch (action.kind) {
@@ -531,9 +544,11 @@ export class AppiumDriver implements DeviceDriver, IosPreparationDriver, Observe
     const folder = await (this.screenshots ??= this.options.screenshotFolder !== undefined ? Promise.resolve(this.options.screenshotFolder) : mkdtemp(join(tmpdir(), 'jev-appium-screens-')));
     const screenshotPath = join(folder, `screen-${String(++this.sequence)}.jpg`);
     await writeFile(screenshotPath, screenshot.jpeg, { mode: 0o600 });
-    const sources = this.logSources();
+    // Each source reads its own tail, so a lost console or stream reads unavailable, never empty.
+    const [runtime, os] = this.helpers()?.sources ?? [];
     const logTails: Record<string, string> = {};
-    for (const [name, path] of Object.entries(sources)) logTails[name] = await readLogTail(path);
+    if (runtime) logTails.runtime = await runtime.readTail();
+    if (os) logTails.os = await os.readTail();
     Object.assign(snapshot, { screenshotPath, ...(Object.keys(logTails).length ? { logTails } : {}) });
     this.latest = { snapshot, screenshot };
     return result;
@@ -618,13 +633,16 @@ export class AppiumDriver implements DeviceDriver, IosPreparationDriver, Observe
   /** `settle` waits for the run's own in-flight operations; a failing `prepare` is itself one, so it passes false.
    *  A clean close fences its own components after its last effect and releases the device; only real uncertainty
    *  quarantines it for a recovery claim. An observed claim stages its fence for the runtime's terminal. */
-  private async finishClose(phase: Extract<Phase, { kind: 'admitted' | 'live' }>, signal: AbortSignal, settle: boolean): Promise<void> {
-    const { owner } = phase;
+  private async finishClose(signal: AbortSignal, settle: boolean): Promise<void> {
     let failure: unknown;
-    try {
-      if (settle) await this.operations.settle(signal);
-      if (phase.kind === 'live') await this.stopCommand(phase.command, phase.app.id, signal);
-    } catch (error) { failure = error; }
+    try { if (settle) await this.operations.settle(signal); }
+    catch (error) { failure = error; }
+    // Read after settle: a prepare that was still running may have installed a live command since close was called.
+    const phase = this.phase;
+    if (phase.kind !== 'admitted' && phase.kind !== 'live') { this.phase = { kind: 'closed' }; if (failure !== undefined) throw failure; return; }
+    const { owner } = phase;
+    try { if (failure === undefined && phase.kind === 'live') await this.stopCommand(phase.command, phase.app.id, signal); }
+    catch (error) { failure = error; }
     this.issuanceClosed = true;
     this.latest = undefined;
     try {
@@ -633,7 +651,7 @@ export class AppiumDriver implements DeviceDriver, IosPreparationDriver, Observe
           owner.claim.stageFence(await this.fenceOwn(owner, signal));
           if (!owner.owned) return;
           const closed = owner.claim.finalize({ outcome: 'completed', disposition: 'available', payload: {}, evidenceRefs: [] });
-          if (closed.authority !== 'committed') throw new DeviceReasonError('UI_ACTION_UNCONFIRMED', 'Device closure is unconfirmed');
+          if (closed.authority !== 'committed' && !this.released(owner)) throw new DeviceReasonError('UI_ACTION_UNCONFIRMED', 'Device closure is unconfirmed');
           await this.lease.release();
           return;
         } catch (error) {
@@ -645,6 +663,14 @@ export class AppiumDriver implements DeviceDriver, IosPreparationDriver, Observe
       if (failure === undefined) throw error;
     } finally { this.phase = { kind: 'closed' }; }
     if (failure !== undefined) throw failure;
+  }
+
+  /** A lost COMMIT reply: the store is the authority on whether the release committed. */
+  private released(owner: Owner): boolean {
+    try {
+      const attempt = this.options.admission.readAttempt(owner.claim.identity.attempt);
+      return attempt?.state === 'terminal' && attempt.terminal?.disposition === 'available' && owner.claim.markerReleased();
+    } catch { return false; }
   }
 
   /** The live owner's own fence: every read is recorded after its last effect, so the store can bind the proofs. */

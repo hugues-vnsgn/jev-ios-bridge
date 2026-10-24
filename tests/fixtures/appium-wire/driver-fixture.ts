@@ -65,8 +65,11 @@ export class FakeFence {
   processes = new Map<number, string>();
   /** Live host processes as the host sampler reports them; a signal ends the rows it reaches. */
   host: HostRow[] = [];
+  /** Fails the first effect it matches, once, as a lost device answer would. */
+  failOnce: ((effect: FenceEffect) => boolean) | undefined;
   run: FenceRunner = async effect => {
     this.effects.push(structuredClone(effect));
+    if (this.failOnce?.(effect)) { this.failOnce = undefined; throw new Error(`${effect.kind} failed`); }
     switch (effect.kind) {
       case 'host-inventory': return structuredClone(this.host);
       case 'host-signal': this.host = this.host.filter(row => row.pid !== effect.process.pid || row.startTime !== effect.process.startTime); return { ok: true };
@@ -111,6 +114,8 @@ export function driverFixture(t: TestContext, recording: (root: string) => strin
   const admission = options.admission ?? Admission.forTesting({ root: join(root, 'admission'), backend: 'fake', durability: 'fast' });
   const trace = join(root, 'trace.jsonl');
   const fence = new FakeFence();
+  // A created iOS session starts the WDA runner, so the device lists it until the fence stops it.
+  if (options.target.platform === 'ios') fence.wda = [{ udid: options.target.device, bundleId: WDA_BUNDLE, pid: 777 }];
   const native = fakeNativeRunner(nativeReply);
   let port = 18100;
   const driver = new AppiumDriver({ stack: driverStack(t), admission, backend: 'fake', homeRoot: join(root, 'homes'), logFolder: join(root, 'logs'),

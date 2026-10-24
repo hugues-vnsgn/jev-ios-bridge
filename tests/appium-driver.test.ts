@@ -1,18 +1,23 @@
 import assert from 'node:assert/strict';
-import { existsSync, writeFileSync } from 'node:fs';
+import { existsSync, mkdtempSync, readdirSync, readFileSync, realpathSync, rmSync, writeFileSync } from 'node:fs';
+import { tmpdir } from 'node:os';
 import { test, type TestContext } from 'node:test';
-import { join } from 'node:path';
+import { join, resolve } from 'node:path';
 import { setTimeout as delay } from 'node:timers/promises';
 import { freeHostPort } from '../src/appium/ports.js';
 import type { DeviceDriver } from '../src/contracts/index.js';
 import { AppiumDriver } from '../src/appium/driver.js';
-import type { Admission, OwnerIdentity } from '../src/device/admission.js';
+import { Admission, type OwnerIdentity } from '../src/device/admission.js';
+import { NativeHelperError } from '../src/appium/native/process.js';
+import { createRunLog } from '../src/log/index.js';
+import { runScriptedScenario } from '../src/scripted/run.js';
+import type { ScriptedJudge } from '../src/scripted/contracts.js';
 import { fakeSimulatorProbe } from './fixtures/android-device.js';
 import { fakeProbeSpawn } from './fixtures/adb-spawn.js';
 import type { AdbRunner } from '../src/device/android/adb.js';
 import { identityProbe } from '../src/device/android/probe.js';
 import { DeviceReasonError } from '../src/device/index.js';
-import { UDID, WDA_BUNDLE, driverFixture, hostRows, liveGroupRows, rewriteRecording, spliceRecordings } from './fixtures/appium-wire/driver-fixture.js';
+import { UDID, WDA_BUNDLE, driverFixture, fakeNativeRunner, hostRows, liveGroupRows, rewriteRecording, spliceRecordings } from './fixtures/appium-wire/driver-fixture.js';
 
 const live = () => new AbortController().signal;
 const ios = { target: { platform: 'ios', device: UDID, presentation: 'visible' }, identityProbe: fakeSimulatorProbe(UDID) } as const;
@@ -122,14 +127,14 @@ test('two simulators run at once on distinct host ports, each recorded in its ow
 const SERIAL = 'PHONE123';
 const keyguard = (showing: boolean) => `WINDOW MANAGER POLICY STATE\n    KeyguardServiceDelegate\n      showing=${String(showing)}\n      interactiveState=INTERACTIVE_STATE_AWAKE\n`;
 const stat = (pid: number) => `${String(pid)} (app_process) S ${'0 '.repeat(18)}424242 0 0`;
-function androidWorld(t: TestContext, locked = false) {
+function androidWorld(t: TestContext, locked = false, pids = '5001 5002\n', keyguardReply?: string) {
   const probe = identityProbe({ adb: '/fake/adb', environment: {}, host: { listener: async () => { throw new Error('no emulator'); }, directory: async () => { throw new Error('no emulator'); } } as never,
     spawn: fakeProbeSpawn((_file, args) => args[0] === 'devices' ? `List of devices attached\n${SERIAL} device\n` : `${SERIAL}\n`).spawn });
   const adbCalls: string[][] = [];
   const adb: AdbRunner = async args => {
     adbCalls.push([...args]);
     const line = args.at(-1) ?? '';
-    if (line.includes('pidof')) return { stdout: '5001 5002\n', stderr: '', exitCode: 0 };
+    if (line.includes('pidof')) return { stdout: pids, stderr: '', exitCode: pids ? 0 : 1 };
     const pid = /\/proc\/(\d+)\/stat/.exec(line)?.[1];
     return pid ? { stdout: stat(Number(pid)), stderr: '', exitCode: 0 } : { stdout: '', stderr: 'unexpected', exitCode: 1 };
   };
@@ -138,7 +143,7 @@ function androidWorld(t: TestContext, locked = false) {
     { source: 'tests/fixtures/appium-wire/android/extension.jsonl', from: 15, to: 17 },
     { source: 'tests/fixtures/appium-wire/android/observe-2.jsonl', from: 7 }], [['android-test', SERIAL]]);
   const f = driverFixture(t, recording, { target: { platform: 'android', device: SERIAL, category: 'android-phone', serverInstallation: { kind: 'install' } },
-    identityProbe: probe, adb, freePort: async () => 18200 }, 'none', command => command.kind === 'android-keyguard' ? keyguard(locked) : command.kind === 'android-wake' ? '' : undefined);
+    identityProbe: probe, adb, freePort: async () => 18200 }, 'none', command => command.kind === 'android-keyguard' ? keyguardReply ?? keyguard(locked) : command.kind === 'android-wake' ? '' : undefined);
   return { ...f, adbCalls };
 }
 const androidApp = { package: 'example.app', activity: '.Main', intentExtras: { route: 'settings' } };
@@ -284,4 +289,169 @@ test('a live private group is fenced through its recorded launcher: only that gr
   assert.deepEqual(f.fence.host.map(row => row.pid).sort(), [990010, 990020, process.pid].sort(), 'the sibling group, the unrelated shell and the bridge survive');
   assert.equal(f.admission.inspect({ category: 'ios-simulator', value: UDID })!.state, 'available');
   assertNeverQuarantined(f.admission, owner);
+});
+
+const wda = (udid = UDID, pid = 777) => [{ udid, bundleId: WDA_BUNDLE, pid }];
+const terminateRecording = (root: string) => { const [header, ...body] = readFileSync(resolve('tests/fixtures/appium-wire/ios/observe-2.jsonl'), 'utf8').trim().split('\n');
+  const path = join(root, 'terminate.jsonl'); writeFileSync(path, [header ?? '', ...body.slice(0, 7), ...body.slice(15)].map(line => line.replaceAll('ios-test', UDID)).join('\n') + '\n'); return path; };
+
+test('a lost console or log stream reads unavailable in the step tails, never empty', async t => {
+  const f = driverFixture(t, observeRecording, ios);
+  f.fence.wda = wda();
+  await f.driver.prepare({ app: { bundleId: 'example.app' } }, live());
+  f.native.calls[0]!.output.stdout('partial line\n');
+  f.native.calls[0]!.output.lost();
+  const snapshot = await f.driver.observe(live());
+  assert.equal(snapshot.logTails!.runtime, '[unavailable: SOURCE_LOST]');
+});
+
+test('a log stream that cannot start leaves the os source unavailable', async t => {
+  const inner = fakeNativeRunner();
+  const f = driverFixture(t, observeRecording, { ...ios, nativeRunner: async (command, output, signal) => {
+    if (command.kind === 'ios-log-stream') throw new NativeHelperError('NATIVE_UNAVAILABLE', 'log stream did not start');
+    return inner.runner(command, output, signal);
+  } });
+  f.fence.wda = wda();
+  await f.driver.prepare({ app: { bundleId: 'example.app' } }, live());
+  const snapshot = await f.driver.observe(live());
+  assert.match(snapshot.logTails!.os!, /^\[unavailable: /);
+});
+
+test('an empty automation inventory after a created session marks inventory unknown, so the device is never released on a hint', async t => {
+  const f = driverFixture(t, observeRecording, ios);
+  f.fence.wda = [];
+  await f.driver.prepare({ app: { bundleId: 'example.app' } }, live());
+  const owner = f.admission.inspect({ category: 'ios-simulator', value: UDID })!.owner!;
+  assert.equal(f.admission.readGeneration(owner).inventoryUnknownReason, 'WDA_IDENTITY_UNAVAILABLE');
+  await assert.rejects(f.driver.close(live()), (error: unknown) => error instanceof DeviceReasonError && error.code === 'CLEANUP_FAILED');
+  assert.equal(f.admission.inspect({ category: 'ios-simulator', value: UDID })!.state, 'quarantined');
+});
+
+test('an Android session whose UiAutomator2 processes cannot be listed marks inventory unknown', async t => {
+  const f = androidWorld(t, false, '');
+  await f.driver.prepare({ app: androidApp }, live());
+  const owner = f.admission.inspect({ category: 'android-phone', value: SERIAL })!.owner!;
+  assert.equal(f.admission.readGeneration(owner).inventoryUnknownReason, 'UIAUTOMATOR2_IDENTITY_UNAVAILABLE');
+});
+
+test('close while prepare is still launching waits, then stops the session and helpers prepare installed', async t => {
+  const inner = fakeNativeRunner();
+  let release!: () => void; const gate = new Promise<void>(done => { release = done; });
+  const f = driverFixture(t, terminateRecording, { ...ios, nativeRunner: async (command, output, signal) => {
+    if (command.kind === 'ios-console') await gate;
+    return inner.runner(command, output, signal);
+  } });
+  f.fence.wda = wda();
+  const preparing = f.driver.prepare({ app: { bundleId: 'example.app' } }, live()).catch((error: unknown) => error);
+  for (let waited = 0; !f.admission.inspect({ category: 'ios-simulator', value: UDID })?.owner && waited < 4000; waited += 10) await delay(10);
+  const closing = f.driver.close(live());
+  release();
+  await preparing; await closing;
+  assert.equal(f.tools().filter(name => name === 'appium_session_management').length, 2, 'the session prepare created is deleted');
+  assert.deepEqual(inner.calls.map(call => call.stops), [1, 1], 'the console and the log stream are stopped');
+  assert.equal(f.admission.inspect({ category: 'ios-simulator', value: UDID })!.state, 'available');
+});
+
+test('an act on a lost paused session refuses with STATE_UNAVAILABLE and sends nothing', async t => {
+  const f = driverFixture(t, observeRecording, ios);
+  f.fence.wda = wda();
+  await f.driver.prepare({ app: { bundleId: 'example.app' } }, live());
+  const snapshot = await f.driver.observe(live());
+  const owner = f.admission.inspect({ category: 'ios-simulator', value: UDID })!.owner!;
+  const group = f.admission.readGeneration(owner).components.find(component => component.kind === 'appium-process-group')!.declaration as { pgid: number };
+  process.kill(group.pgid, 'SIGKILL');
+  for (let waited = 0; waited < 4000; waited += 20) { try { process.kill(group.pgid, 0); await delay(20); } catch { break; } }
+  const target = snapshot.elements.find(element => element.actions.includes('tap'))!;
+  await assert.rejects(f.driver.act({ kind: 'tap', targetRef: target.ref }, snapshot, { app: { bundleId: 'example.app' }, values: {} }, live()),
+    (error: unknown) => error instanceof DeviceReasonError && error.code === 'STATE_UNAVAILABLE');
+  assert.equal(f.tools().includes('appium_perform_actions'), false);
+});
+
+test('an Android helper failure names adb as its vendor source', async t => {
+  const f = androidWorld(t, false, '5001 5002\n', 'no keyguard state here\n');
+  await assert.rejects(f.driver.prepare({ app: androidApp }, live()),
+    (error: unknown) => error instanceof DeviceReasonError && error.vendorSource === 'adb' && error.vendorCode === 'NATIVE_UNAVAILABLE');
+});
+
+test('a lost COMMIT reply on the clean close still releases the lease when the store committed the release', async t => {
+  const root = realpathSync(mkdtempSync(join(tmpdir(), 'appium-lost-commit-')));
+  t.after(() => rmSync(root, { recursive: true, force: true }));
+  let dropped = false;
+  const admission = Admission.forTesting({ root, backend: 'fake', durability: 'fast', fault: (point, operation) => {
+    if (point === 'afterCommit' && operation === 'finalize' && !dropped) { dropped = true; throw new Error('Lost COMMIT reply'); }
+  } });
+  const f = driverFixture(t, terminateRecording, { ...ios, admission });
+  f.fence.wda = wda();
+  await f.driver.prepare({ app: { bundleId: 'example.app' } }, live());
+  await f.driver.close(live());
+  assert.equal(dropped, true);
+  assert.equal(admission.inspect({ category: 'ios-simulator', value: UDID })!.state, 'available');
+  assert.deepEqual(readdirSync(join(f.root, 'locks')).filter(name => !name.startsWith('.')), [], 'the lease is released');
+});
+
+test('real uncertainty quarantines the device and leaves it to a recovery claim', async t => {
+  const inner = fakeNativeRunner();
+  const f = driverFixture(t, observeRecording, { ...ios, nativeRunner: async (command, output, signal) => {
+    if (command.kind === 'ios-console') throw new NativeHelperError('NATIVE_OUTCOME_UNKNOWN', 'the launch may have happened');
+    return inner.runner(command, output, signal);
+  } });
+  await assert.rejects(f.driver.prepare({ app: { bundleId: 'example.app' } }, live()));
+  const owner = f.admission.inspect({ category: 'ios-simulator', value: UDID })!.owner!;
+  assert.equal(f.admission.inspect({ category: 'ios-simulator', value: UDID })!.state, 'quarantined');
+  assert.deepEqual(f.admission.readAttempt(owner.attempt)?.terminal?.disposition, 'quarantined');
+  assert.equal(f.admission.readGeneration(owner).recoveries.length, 1, 'a recovery claim tried the fence');
+});
+
+test('a failed terminate fails the close after the session delete and helper stops still ran', async t => {
+  const f = driverFixture(t, terminateRecording, ios, 'extension-error-secret');
+  f.fence.wda = wda();
+  await f.driver.prepare({ app: { bundleId: 'example.app' } }, live());
+  await assert.rejects(f.driver.close(live()), (error: unknown) => error instanceof DeviceReasonError && error.code === 'UI_ACTION_UNCONFIRMED');
+  assert.deepEqual(f.tools().slice(-2), ['jev_terminate_app', 'appium_session_management']);
+  assert.deepEqual(f.native.calls.map(call => call.stops), [1, 1]);
+  const owner = f.admission.inspect({ category: 'ios-simulator', value: UDID })!.owner!;
+  assert.equal(f.admission.readGeneration(owner).recoveries.length, 1, 'the failure went through a recovery claim');
+});
+
+test('a failed own fence falls back to a recovery claim that releases the device', async t => {
+  const f = driverFixture(t, terminateRecording, ios);
+  f.fence.wda = wda();
+  await f.driver.prepare({ app: { bundleId: 'example.app' } }, live());
+  const owner = f.admission.inspect({ category: 'ios-simulator', value: UDID })!.owner!;
+  f.fence.failOnce = effect => effect.kind === 'wda-inventory';
+  await assert.rejects(f.driver.close(live()), (error: unknown) => error instanceof DeviceReasonError && error.code === 'CLEANUP_FAILED');
+  assert.equal(f.admission.inspect({ category: 'ios-simulator', value: UDID })!.state, 'available');
+  assert.equal(f.admission.readGeneration(owner).recoveries.length, 1);
+  assert.equal(f.admission.readAttempt(owner.attempt)?.terminal?.disposition, 'quarantined');
+});
+
+const scriptedCheckpoint = { id: 'verify', kind: 'checkpoint', guard: { present: [{ identifier: 'choose.apple' }] }, assertions: [{ id: 'shown', claim: 'The apple button is visible.' }] } as const;
+const judgeAll: ScriptedJudge = { async judge(assertions) { return { probabilities: Object.fromEntries(assertions.map(assertion => [assertion.id, 0.97])), inputTokens: 1, latencyMs: 1, model: 'jev-1.13.0' }; } };
+async function scriptedReport(t: TestContext, driver: DeviceDriver, scenario: unknown, runId: string): Promise<Record<string, unknown>> {
+  const runs = realpathSync(mkdtempSync(join(tmpdir(), 'appium-scripted-')));
+  t.after(() => rmSync(runs, { recursive: true, force: true }));
+  const log = await createRunLog(runs, runId);
+  const report = await runScriptedScenario({ runId, scenario: scenario as never, driver, judge: judgeAll, log });
+  assert.equal(report.verdict, 'passed');
+  return JSON.parse(readFileSync(join(runs, runId, 'report.json'), 'utf8')) as Record<string, unknown>;
+}
+const goldenKeys = (name: string) => Object.keys((JSON.parse(readFileSync(resolve('tests/golden/report-json.json'), 'utf8')) as Record<string, object>)[name]!).sort();
+
+test('runScriptedScenario drives an iOS scenario through the Appium driver to a passed report.json with prepared.stack', async t => {
+  const f = driverFixture(t, observeRecording, ios);
+  f.fence.wda = wda();
+  const report = await scriptedReport(t, f.driver, { version: 1, app: { bundleId: 'example.app' }, values: {}, steps: [scriptedCheckpoint] }, 'appium-ios-run');
+  assert.deepEqual(Object.keys(report).sort(), [...goldenKeys('passed'), 'prepared'].sort());
+  assert.deepEqual(report.prepared, { stack: f.driver.provenance() });
+  assert.equal(report.error, null);
+  assert.equal(f.admission.inspect({ category: 'ios-simulator', value: UDID })!.state, 'available');
+});
+
+test('runScriptedScenario drives an Android scenario through the Appium driver to a passed report.json with prepared.stack', async t => {
+  const f = androidWorld(t, false);
+  f.fence.processes.set(5001, '424242'); f.fence.processes.set(5002, '424242');
+  const report = await scriptedReport(t, f.driver, { version: 1, platform: 'android', app: androidApp, device: { serial: SERIAL }, values: {}, steps: [scriptedCheckpoint] }, 'appium-android-run');
+  assert.equal(report.platform, 'android');
+  assert.deepEqual(report.prepared, { stack: f.driver.provenance() });
+  assert.equal(f.admission.inspect({ category: 'android-phone', value: SERIAL })!.state, 'available');
 });
