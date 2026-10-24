@@ -44,14 +44,16 @@ export const EXTENSION_TOOL_NAMES = ['jev_session_inventory', 'jev_settings', 'j
   'jev_android_back', 'jev_start_activity', 'jev_terminate_app'] as const;
 export const TOOL_NAMES = [...PUBLIC_TOOL_NAMES, ...EXTENSION_TOOL_NAMES] as const;
 const binding = { extensionVersion: z.literal(EXTENSION_VERSION), sessionId: sessionIdSchema };
-const text = z.string().min(1).max(65536).refine(value => !value.includes('\0'));
+const noNul = (value: string) => !value.includes('\0');
+const text = z.string().min(1).max(65536).refine(noNul);
+const replacement = z.string().max(65536).refine(noNul);
 const appId = z.string().min(1).max(256).regex(/^[a-zA-Z0-9_][a-zA-Z0-9_.]*$/);
 export const locatorSchema = z.strictObject({ using: z.enum(['accessibility id', 'id', 'xpath', '-ios predicate string', '-ios class chain']), value: text });
 export const extensionArguments = {
   jev_session_inventory: z.strictObject(binding),
   jev_settings: settingsRequestSchema,
   jev_screen: z.strictObject(binding),
-  jev_replace_text: z.strictObject({ ...binding, locator: locatorSchema, text }),
+  jev_replace_text: z.strictObject({ ...binding, locator: locatorSchema, text: replacement }),
   jev_android_back: z.strictObject(binding),
   jev_start_activity: z.strictObject({ ...binding, package: appId, activity: z.string().min(1).max(256).regex(/^[a-zA-Z0-9_.]+$/),
     intentExtras: z.record(z.string().min(1).max(200), text).refine(extras => Object.keys(extras).length <= 20) }),

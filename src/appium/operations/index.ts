@@ -26,6 +26,7 @@ export interface OperationSession {
 }
 export interface OperationObservation {
   resolve(input: { sessionId: AppiumSessionId; snapshot: Snapshot; ref: string }): Element;
+  isCurrent(snapshot: Snapshot): boolean;
   invalidate(): void;
   observe(signal: AbortSignal): Promise<AppiumObservedScreen>;
 }
@@ -51,6 +52,7 @@ export class UnconfirmedOperationError extends DeviceReasonError {
 }
 
 const MAX_HOLD_MS = 10_000;
+const TAP_AT_ASPECT_TOLERANCE = 0.01;
 const REFUSED_BEFORE_INPUT: ReadonlySet<string> = new Set(['SESSION_MISMATCH', 'VERSION_MISMATCH', 'NOT_ALLOWED', 'NOT_UNIQUE']);
 const passThrough: OperationDispatcher = (_operation, send) => send();
 const unsupported = (message: string) => new DeviceReasonError('UNSUPPORTED_ACTION', message);
@@ -113,6 +115,8 @@ export class AppiumOperations {
       if (this.platform === 'ios') throw unsupported('iOS has no tap at a point.');
       this.current(evidence);
       const { frame, orientation, size } = evidence.screenshot;
+      if (Math.abs(size.width * frame.height - size.height * frame.width) > TAP_AT_ASPECT_TOLERANCE * size.height * frame.width)
+        throw new DeviceReasonError('DEVICE_ERROR', 'The screenshot does not match the screen it would be converted against.');
       const screen = await this.read(() => this.session.client.callExtension({ name: 'jev_screen', arguments: {} }, this.options.timeoutMs));
       if (screen.orientation !== orientation || screen.rect.x !== frame.x || screen.rect.y !== frame.y
         || screen.rect.width !== frame.width || screen.rect.height !== frame.height) throw new StaleSnapshotError('The screen size or orientation changed.');
@@ -125,7 +129,6 @@ export class AppiumOperations {
   replaceText(evidence: AppiumObservedScreen, ref: string, text: string, signal: AbortSignal): Promise<Performed> {
     return this.exclusive(signal, async () => {
       const target = this.target(evidence, ref, 'typeText');
-      if (text === '') throw unsupported('Replacing a field with empty text is not supported.');
       const field = textFieldOf(this.platform, evidence.snapshot, target);
       await this.mutate('replace-text', () => this.session.client.callExtension(
         { name: 'jev_replace_text', arguments: { locator: field.locator, text } }, this.options.timeoutMs));
@@ -166,11 +169,8 @@ export class AppiumOperations {
     try { return await work(); } finally { this.busy = false; }
   }
 
-  /** Observation exposes no "is this snapshot current" check, so one reference from it stands in. */
   private current({ snapshot }: AppiumObservedScreen): void {
-    const [first] = snapshot.elements;
-    if (!first || this.now() >= snapshot.expiresAt) throw new StaleSnapshotError();
-    this.observation.resolve({ sessionId: this.session.sessionId, snapshot, ref: first.ref });
+    if (this.now() >= snapshot.expiresAt || !this.observation.isCurrent(snapshot)) throw new StaleSnapshotError();
   }
 
   private target(evidence: AppiumObservedScreen, ref: string, action: 'tap' | 'swipeWithin' | 'typeText'): Element & { frame: NonNullable<Element['frame']> } {

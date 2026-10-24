@@ -81,7 +81,7 @@ export function createExtensionHandler(options: ExtensionOptions) {
           if (elements.length !== 1) return extensionFailure('NOT_UNIQUE');
           const element = elements[0];
           const id = z.string().min(1).parse(element?.ELEMENT ?? element?.['element-6066-11e4-a52e-4f735466cecf']);
-          if (options.platform === 'ios') { await invoke('clear', id); await invoke('setValue', text, id); }
+          if (options.platform === 'ios') { await invoke('clear', id); if (text !== '') await invoke('setValue', text, id); }
           else await invoke('execute', 'mobile: replaceElementValue', [{ elementId: id, text }]);
           reply = acknowledged(args.sessionId); break;
         }
