@@ -1,8 +1,3 @@
-/**
- * Preservation matrix, scripted version 1 (P3.9, P3.10): the real bridge service and runner drive the Appium driver, its
- * private client, session, observation, operations, fence and admission, and the installed CLI and MCP composition
- * builds that driver. Only the private MCP provider and Jev are fakes.
- */
 import assert from 'node:assert/strict';
 import { execFile } from 'node:child_process';
 import { mkdirSync, mkdtempSync, readFileSync, realpathSync, rmSync, writeFileSync } from 'node:fs';
@@ -322,7 +317,6 @@ test('a stack whose private client SDK does not match the frozen manifest is ref
   assert.equal(f.admission.inspect(IOS_DEVICE)!.state, 'available');
 });
 
-/** The installed CLI composition in its own process, over a world host and fake Jev; see cli-entry.ts. */
 async function cli(t: TestContext, worlds: ReturnType<typeof world>[], args: string[], env: Record<string, string> = {}) {
   const root = realpathSync(mkdtempSync(join(tmpdir(), 'appium-cli-')));
   t.after(() => rmSync(root, { recursive: true, force: true, maxRetries: 5, retryDelay: 50 }));
@@ -394,7 +388,7 @@ test('a tampered stack archive, manifest, extraction marker or WDA runner refuse
     else writeFileSync(join(release.artifactRoot, file), 'tampered');
     let stores = 0;
     const host = productionAppiumHost({ environment: {}, stack, openAdmission: () => { stores++; throw new Error('the store is never opened'); } });
-    const driver = createDriverFactory({ host, cwd: release.base })(parseScriptedScenario(checkpointOnly('Home is shown.')), { runId: 'tampered' });
+    const driver = createDriverFactory({ host, projectDir: release.base })(parseScriptedScenario(checkpointOnly('Home is shown.')), { runId: 'tampered' });
     const error = await driver.prepare({ app: { bundleId: 'example.app' } }, AbortSignal.timeout(10_000)).then(() => undefined, (failure: unknown) => failure);
     assert.ok(error instanceof DeviceReasonError);
     refusals.push([error.code, error.vendorCode, error.vendorSource]);

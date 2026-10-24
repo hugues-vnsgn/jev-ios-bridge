@@ -1,9 +1,3 @@
-/**
- * The installed CLI composition (`runCli`) with only this Mac's Appium parts and Jev replaced: a world host and fake
- * judges. `argv[2]` is the root folder; JEV_TEST_CLI_ARGS (JSON) are the CLI arguments, `mcp` by default, so an MCP
- * session can start it as a fixture server. JEV_TEST_WORLDS holds the worlds and JEV_TEST_PLATFORM the device kind. After
- * the command, the host's world traces and fence state are written to `<root>/host/outcome.json`.
- */
 import childProcess from 'node:child_process';
 import { appendFileSync, mkdirSync, writeFileSync } from 'node:fs';
 import { syncBuiltinESMExports } from 'node:module';
@@ -17,7 +11,6 @@ import { worldHost } from './world-host.js';
 import type { World } from './world-schema.js';
 
 const root = process.argv[2]!;
-// With JEV_TEST_EFFECT_LOG, every process start and outbound connection is recorded, one JSON line each.
 const effects = process.env.JEV_TEST_EFFECT_LOG;
 if (effects) {
   const record = (entry: object) => appendFileSync(effects, JSON.stringify(entry) + '\n');
@@ -37,13 +30,11 @@ const projectDir = join(root, 'project');
 mkdirSync(join(projectDir, '.jev'), { recursive: true });
 writeFileSync(join(projectDir, '.jev', 'config.json'), JSON.stringify({ drivenMode: true }));
 process.env.JEV_RUNS_DIR = join(root, 'runs');
-// The CLI reads its project folder when it loads.
 process.env.JEV_PROJECT_DIR = projectDir;
 const { runCli } = await import('../../../src/cli.js');
 const android = process.env.JEV_TEST_PLATFORM === 'android' ? androidTarget() : undefined;
 const world = worldHost({ after: () => {} }, { root: join(root, 'host'), worlds,
   ...(android ? { identityProbe: android.options.identityProbe, adb: android.options.adb, nativeReply: android.nativeReply } : { identityProbe: fakeSimulatorProbe(UDID) }) });
-// Forward rows already on the device that this bridge does not own, as JSON.
 world.fence.forwards.push(...JSON.parse(process.env.JEV_TEST_FOREIGN_FORWARDS ?? '[]') as typeof world.fence.forwards);
 await runCli(args, { host: world.host, projectDir,
   createJudge: () => ({ async judge(assertions) {

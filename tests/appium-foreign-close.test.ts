@@ -1,7 +1,3 @@
-/**
- * Foreign automation that appears while a run holds the device: the close checks ownership before any stop, so it
- * stops nothing (neither the foreign automation nor its own) and keeps the device quarantined.
- */
 import assert from 'node:assert/strict';
 import { test } from 'node:test';
 import { DeviceReasonError } from '../src/device/index.js';

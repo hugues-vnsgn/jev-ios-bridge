@@ -97,8 +97,6 @@ const cliOptions = {
   profile: { type: 'string' },
 } as const;
 
-/** Internal composition seam shared by the installed entry and isolated subprocess fixtures. `host` stands in for this
- *  Mac's Appium parts and the judges for Jev; everything else is the installed composition. */
 export type CliComposition = { observed?: ObservedComposition; legacy?: BridgeService; projectDir?: string; host?: AppiumHost;
   createJudge?: ServiceOptions['createJudge']; createDrivenJudge?: ServiceOptions['createDrivenJudge'] };
 type ServiceOptions = ConstructorParameters<typeof BridgeService>[0];
@@ -197,7 +195,7 @@ async function dispatchCli(args: string[], composition: CliComposition): Promise
     baseDir: runsDir(),
     agreeDevices: createDeviceAgreement(),
     env: { ...process.env, JEV_PROJECT_DIR: projectDir },
-    createDriver: createDriverFactory({ host, cwd: projectDir, defaultUdid: process.env.JEV_DEVICE_UDID || undefined,
+    createDriver: createDriverFactory({ host, projectDir, defaultUdid: process.env.JEV_DEVICE_UDID || undefined,
       defaultDevice: process.env.JEV_ANDROID_DEVICE, deviceWindow }),
     createJudge: composition.createJudge ?? (() => createAssertionJudge()),
     createDrivenJudge: composition.createDrivenJudge ?? (() => createDrivenJudge()),

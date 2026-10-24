@@ -4,7 +4,6 @@ import { join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { tmpdir } from 'node:os';
 import type { VerifiedStack } from '../../../src/appium/stack.js';
-/** A test's cleanup hooks, or a fixture process's own list. */
 export type Cleanups = { after(cleanup: () => unknown): void };
 
 export function imageStack(t: Cleanups, omit: (name: string) => boolean = () => false) {

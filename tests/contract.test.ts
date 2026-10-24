@@ -584,8 +584,6 @@ test('contract: --help lists capture and its options', { timeout: 10_000 }, asyn
   assert.match(stdout, /jev-ios-bridge capture \[--profile NAME\] \[--serial S \| --avd A\] \[--jev\]/);
 });
 
-/** The CLI's capture path on the Appium composition against a phone whose UiAutomator2 forward the bridge does not own:
- *  the exit code, once the refusal is checked. */
 async function captureWithForeignAgent(): Promise<number> {
   const cleanups: (() => unknown)[] = [];
   try {

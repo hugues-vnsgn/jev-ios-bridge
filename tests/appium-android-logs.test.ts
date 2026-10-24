@@ -1,7 +1,3 @@
-/**
- * Android app log and app-exit diagnostics on the Appium driver: the legacy logcat streams and exit watch, unchanged,
- * beside the extension's restart (ADR-0014, Phase 3 "Android restart").
- */
 import assert from 'node:assert/strict';
 import { appendFileSync, writeFileSync } from 'node:fs';
 import { join } from 'node:path';
@@ -48,8 +44,6 @@ function fakeLogcat(options: { refuse?: (args: string[]) => boolean; unconfirmed
   return { starter, started, events, appLog: () => started.find(entry => entry.args.includes('threadtime,year,uid'))! };
 }
 
-/** The phone's shell answers for the app's uid, the device time and the launched pid, and lists UiAutomator2 only once
- *  the session runs; anything else is the matrix phone. */
 function phoneShell(base: AdbRunner, sessionUp: () => boolean, onPidof: () => void): AdbRunner {
   return async (args, signal) => {
     const line = args.at(-1);
@@ -63,7 +57,6 @@ function phoneShell(base: AdbRunner, sessionUp: () => boolean, onPidof: () => vo
 
 function phone(t: TestContext, logcat: ReturnType<typeof fakeLogcat>, rules: WorldRule[] = []) {
   const target = androidTarget();
-  // The restart's stop of the previous instance shows in the events stream before the bridge reads the new pid.
   let sessionUp = () => false;
   const adb = phoneShell(target.options.adb, () => sessionUp(), () => { for (const line of OLD_PID_STOPPED) logcat.events()?.feed(line); });
   const f = worldFixture(t, world('android', screens, rules), { ...target.options, adb, logcat: logcat.starter, createExitWatch },

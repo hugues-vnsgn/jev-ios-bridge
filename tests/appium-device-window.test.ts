@@ -1,7 +1,3 @@
-/**
- * An iOS run brings its simulator's window to the front before launch, as a recorded and nonfatal step: a window that
- * won't open is a prepare warning, never a refusal, and attach or observed roles never open one.
- */
 import assert from 'node:assert/strict';
 import { test } from 'node:test';
 import type { DeviceWindowOpener } from '../src/device/index.js';

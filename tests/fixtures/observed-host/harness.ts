@@ -15,7 +15,6 @@ import { z } from 'zod/v4';
 export { actionRequest, fixtureCalls };
 const worker = fileURLToPath(new URL('./owner.ts', import.meta.url));
 type HostOwnerOptions = { gate?: string; mode?: string; fault?: string; enabled?: string; cwd?: string; waitMs?: number; projectDir?: string };
-/** Which observed composition the owners run: the legacy fake MobileBuildMCP backend, or the Appium drivers over a world host. */
 export type HostComposition = 'legacy' | 'appium';
 function launchHostOwner({ root, transport, command, argument, options, composition = 'legacy' }: { root: string; transport: 'cli' | 'mcp'; command: string; argument: string; options: HostOwnerOptions; composition?: HostComposition }) {
   const env: NodeJS.ProcessEnv = { PATH: process.env.PATH, HOME: process.env.HOME, TMPDIR: process.env.TMPDIR, NODE_NO_WARNINGS: '1', JEV_EXPERIMENTAL_OBSERVED: options.enabled ?? '1', HOST_PROJECT_DIR: options.projectDir ?? root,

@@ -1,7 +1,3 @@
-/**
- * H02.01 on the Appium composition: the seven observed public operations, through CLI and MCP owner processes that
- * run Appium drivers over a world host, stay key-free and network-free, and every reply keeps the frozen v1 shape.
- */
 import assert from 'node:assert/strict';
 import { readdir, readFile } from 'node:fs/promises';
 import { join } from 'node:path';
@@ -12,8 +8,6 @@ import { errorCode, snapshot, type PublicReply } from './fixtures/public-content
 
 const golden = JSON.parse(await readFile(new URL('./golden/observed-replies-v1.json', import.meta.url), 'utf8')) as { cases: { name: string; reply: Record<string, unknown>; exit: number }[] };
 const allocationNames: Record<string, string> = { prepared: 'prepared', action_completed: 'action_completed', refused: 'allocation_refused', uncertain: 'uncertain', retired_unused: 'retired_unused' };
-/** The frozen v1 case a reply belongs to: an action by its outcome, an allocation by its outcome (or its state while open),
- *  a busy refusal by its state. */
 function goldenCase(reply: PublicReply) {
   const raw = reply as Record<string, unknown>;
   const name = raw.kind === 'observed-action' ? raw.outcome ?? 'unresolved'
@@ -23,7 +17,6 @@ function goldenCase(reply: PublicReply) {
   assert.ok(found, `golden case for ${JSON.stringify(name)}`);
   return found;
 }
-/** The reply carries the golden fields, plus at most an additive vendorSource. */
 function assertGoldenShape(reply: PublicReply, exit?: number | null) {
   const row = goldenCase(reply);
   assert.deepEqual(Object.keys(reply).filter(key => key !== 'vendorSource').sort(), Object.keys(row.reply).sort(), row.name);

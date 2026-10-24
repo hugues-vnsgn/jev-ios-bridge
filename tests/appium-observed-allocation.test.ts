@@ -1,8 +1,3 @@
-/**
- * Observed preparation through the real ObservedAllocator on the Appium composition (P3.10): the allocator's
- * `createDriver` is `createPreparationDriver` over a world host, so every device effect is a recorded simctl helper or
- * a private Appium session, and the store is the only authority.
- */
 import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
 import { join } from 'node:path';

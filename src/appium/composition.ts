@@ -19,18 +19,14 @@ import { ownedNativeRunner, type NativeRunner } from './native/process.js';
 import { simctlRunner } from './native/simctl.js';
 import { FrozenStack, StackError } from './stack.js';
 
-/** What one command's driver needs besides its run: the verified stack, the store and the host's runners. */
 export type AppiumDriverParts = Omit<AppiumDriverOptions, 'runId' | 'profile'>;
-/** Builds a driver's parts for one target at its first device effect. Production reads the host; a test injects fakes. */
 export type AppiumHost = (request: { target: AppiumTarget; admission?: Admission }) => Promise<AppiumDriverParts>;
 
-/** The one Appium composition every entry point uses. The stack is verified per command, before any session. */
 export function productionAppiumHost(options: { environment?: NodeJS.ProcessEnv; home?: string; stack?: FrozenStack; openAdmission?: () => Admission } = {}): AppiumHost {
   const { TYPESAFE_API_KEY: _key, ...environment } = options.environment ?? process.env;
   const openAdmission = options.openAdmission ?? (() => Admission.open());
   const support = join(userInfo().homedir, 'Library/Application Support/jev-ios-bridge');
   return async ({ target, admission }) => {
-    // Android reports a missing adb first, as its tools check always has.
     const adb = target.platform === 'android' ? await findAdb({ environment, ...(options.home ? { home: options.home } : {}) }) : 'adb';
     const stack = await (options.stack ?? FrozenStack.shipped()).prepare();
     const runAdb = adbRunner({ adb, environment });
@@ -50,28 +46,20 @@ async function privateFolder(folder: string): Promise<string> {
   return await privateLogFolder(folder) ?? mkdtemp(join(tmpdir(), `${basename(folder)}-`));
 }
 
-/** A stack refusal is the bridge's own probe code, so a report names it as `DEVICE_ERROR` from the bridge. */
 function stackRefusal(error: unknown): unknown {
   return error instanceof StackError ? new DeviceReasonError('DEVICE_ERROR', error.message, { vendorCode: error.code, vendorSource: 'bridge' }) : error;
 }
 
 export type ComposedDriverOptions = {
   host: AppiumHost;
-  /** The device a run or a capture names. Observed roles take the device their claim admitted instead. */
   target?: () => Promise<AppiumTarget>;
-  /** iOS observed roles: the simulator presentation for the claimed device. */
   presentation?: 'visible' | 'headless';
-  /** iOS runs: brings the simulator window to the front before launch. */
   deviceWindow?: DeviceWindowOpener;
   admission?: Admission;
   runId?: string;
   profile?: ProfileBinding;
 };
 
-/**
- * One command's Appium driver, built at its first device effect: entry points construct it inertly, so a refused
- * stack or store surfaces in the command's own outcome, and an observed role binds the device its claim admitted.
- */
 export class ComposedAppiumDriver implements DeviceDriver, IosPreparationDriver, ObservedActionDriver {
   readonly tapAliasRule = 'same-frame-buttons-v1' as const;
   readonly cleanupBudgetMs = CLEANUP_BUDGET_MS;

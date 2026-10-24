@@ -1,9 +1,3 @@
-/**
- * Preservation matrix, observed preparation and action (P3.9). Preparation runs on the Appium preparation driver over
- * a real reservation; the action runs through the real ObservedActionService with Appium executors. The P3.10 rows
- * run on the Appium composition elsewhere: the real ObservedAllocator in tests/appium-observed-allocation.test.ts, the
- * cross-process races and export loss in tests/appium-observed-races.test.ts, and H02.01 in tests/appium-observed-public.test.ts.
- */
 import assert from 'node:assert/strict';
 import { Socket } from 'node:net';
 import { join } from 'node:path';

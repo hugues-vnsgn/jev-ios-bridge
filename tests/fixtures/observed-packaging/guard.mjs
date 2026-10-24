@@ -35,7 +35,6 @@ registerHooks({
       source = source.replace(pattern, '$& globalThis.__jevPackagingForbidden("AppiumDriver");');
     }
     if (url.endsWith('/dist/appium/stack.js')) {
-      // shipped() extracts into the real account's Application Support; forTesting stays open for offlineStack.
       const pattern = 'static shipped() {';
       if (!source.includes(pattern)) throw new Error('Stack safety guard no longer matches installed module');
       source = source.replace(pattern, pattern + ' globalThis.__jevPackagingForbidden("FrozenStack.shipped");');

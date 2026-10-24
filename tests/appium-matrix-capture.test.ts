@@ -1,7 +1,3 @@
-/**
- * Preservation matrix, Android capture and attach (P3.9, P3.10): the Appium driver's capture and attach, and the
- * `capture` command on the installed composition, with its flag and profile precedence, output, exits and refusals.
- */
 import assert from 'node:assert/strict';
 import { test } from 'node:test';
 import { UDID, WDA_BUNDLE } from './fixtures/appium-wire/driver-fixture.js';
@@ -84,7 +80,6 @@ test('automation the admission store does not own makes the command DEVICE_BUSY 
 const captureScreens = { home: androidScreen([{ className: 'android.widget.TextView', text: 'Home', id: 'example.app:id/home', bounds: [16, 100, 216, 140] },
   { className: 'android.widget.EditText', text: '', hint: 'Email', id: 'example.app:id/email', clickable: true, bounds: [16, 160, 300, 200] },
   { className: 'android.widget.Button', text: 'Next', clickable: true, enabled: false, bounds: [16, 220, 120, 260] }]) };
-/** captureCommand as the CLI builds it, over a world host: the device each command opened, its output and its exit. */
 function captures(t: Parameters<typeof worldHost>[0]) {
   const target = androidTarget();
   const w = worldHost(t, { worlds: [world('android', captureScreens)], identityProbe: target.options.identityProbe, adb: target.options.adb, nativeReply: target.nativeReply });

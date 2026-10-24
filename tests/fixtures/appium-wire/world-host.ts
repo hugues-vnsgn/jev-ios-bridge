@@ -14,7 +14,6 @@ import { worldSchema, type World } from './world-schema.js';
 
 type Call = { method?: string; params?: { name?: string; arguments?: Record<string, unknown> } };
 export type HostOptions = Pick<AppiumDriverOptions, 'identityProbe'> & Partial<Pick<AppiumDriverOptions, 'adb' | 'freePort'>> & {
-  /** The world each new driver opens on, in order; the last one repeats. */
   worlds: World[];
   nativeReply?: (command: NativeCommand) => string | undefined;
   admission?: Admission;
@@ -22,9 +21,6 @@ export type HostOptions = Pick<AppiumDriverOptions, 'identityProbe'> & Partial<P
 };
 const UIAUTOMATOR2_PIDS = [5001, 5002];
 
-/** The production composition's seam served by world providers: every driver an entry point builds opens the next world.
- *  As on a device, a created session starts its own automation (an iOS WDA runner, Android's UiAutomator2 and its
- *  forward), listed until the fence stops it, so ownership checks see what a real session leaves. */
 export function worldHost(t: Cleanups, options: HostOptions) {
   if (options.root) mkdirSync(options.root, { recursive: true, mode: 0o700 });
   const root = realpathSync(options.root ?? mkdtempSync(join(tmpdir(), 'appium-host-')));

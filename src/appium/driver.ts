@@ -46,17 +46,13 @@ export interface AppiumDriverOptions {
   target: AppiumTarget;
   /** The private root for each command's child HOME, mode 0700. */
   homeRoot: string;
-  /** Where the iOS console and log stream files go, and the private folder for Android's `<run ID>.log`. */
   logFolder: string;
   screenshotFolder?: string;
   identityProbe: IdentityProbe;
   fence: FenceRunner;
   nativeRunner: NativeRunner;
-  /** Android: reads UiAutomator2's device processes for the fence, and the app's uid, the device time and the app's pid. */
   adb?: AdbRunner;
-  /** Android: starts the app log and events logcat streams. Without one, an Android run keeps no app log. */
   logcat?: LogcatStarter;
-  /** Android: folds the events stream into `appRunning` and `appProblem`. Without one, the driver can't tell. */
   createExitWatch?: typeof createExitWatch;
   freePort?: FreePort;
   startLookup?: StartLookup;
@@ -70,7 +66,6 @@ export interface AppiumDriverOptions {
   /** Test seam: the fence's clock for its TERM, wait and poll steps. */
   fenceClock?: FenceOptions['clock'];
   timeoutMs?: number;
-  /** iOS runs: brings the simulator's window to the front before launch. A window that won't open is a warning. */
   deviceWindow?: DeviceWindowOpener;
 }
 
@@ -79,7 +74,6 @@ type AutomationInventory = { wda: unknown[]; uiautomator2: { serial: string; pid
 type Owner = { claim: AdmissionClaim; dispatcher: AdmittedSession; identity: ResolvedIdentity; owned: boolean };
 type IosHelpers = { platform: 'ios'; console: Awaited<ReturnType<typeof launchIosConsole>>; logs?: Awaited<ReturnType<typeof observeIosLogs>>; sources: NativeLogSource[] };
 type StreamEntry = { stream: LogcatStream; stopping: boolean };
-/** The run's logcat streams; `logFile` once the app log stream started, `watch` once the events stream did. */
 type AndroidHelpers = { platform: 'android'; streams: StreamEntry[]; logFile?: string; watch?: AppExitWatch };
 type Helpers = IosHelpers | AndroidHelpers;
 type Command = { client: PrivateAppiumClient; session: AppiumCommandSession; observation: AppiumObservation; operations: AppiumOperations;
@@ -546,19 +540,12 @@ export class AppiumDriver implements DeviceDriver, IosPreparationDriver, Observe
     }
     if (role !== 'run') return;
     const activity = app.activity ?? await this.dispatch(owner, 'android-launcher', signal, this.timeoutMs, async issued => (await helpers.launcher(app.id, issued)).slice(app.id.length + 1)).catch(adbFailure);
-    // Appium's start activity stops and starts in one call, so the streams start first. The stop's death of the old pid
-    // is no problem: only the launched pid counts, so no stop is marked expected, which would hide a later crash.
+    // No stop is marked expected before the restart: the mark is sticky and would hide a later crash of the new pid.
     const watch = await this.startStreams(owner, live.command, serial, app.id, signal);
     await this.guarded(signal, () => live.command.operations.restart({ package: app.id, activity, ...(app.intentExtras ? { intentExtras: app.intentExtras } : {}) }, signal));
     if (watch) await this.readPid(owner, serial, app.id, watch, signal);
   }
 
-  /**
-   * The two logcat streams, from the device's own time, so no earlier line and no stale crash is read: the app's log,
-   * by its uid, to `<run ID>.log` in the private folder, and the process events, line by line into the exit watch.
-   * A refused folder, a missing uid or device time, or a stream that won't start never refuses the run: that stream is
-   * skipped. Returns the watch once the events stream started.
-   */
   private async startStreams(owner: Owner, command: Command, serial: string, appPackage: string, signal: AbortSignal): Promise<AppExitWatch | undefined> {
     if (!this.options.logcat || !this.options.adb) return undefined;
     const folder = await privateLogFolder(this.options.logFolder);
@@ -580,7 +567,6 @@ export class AppiumDriver implements DeviceDriver, IosPreparationDriver, Observe
     return helpers.watch;
   }
 
-  /** One stream, registered by its host identity as soon as it runs, so a fence can stop one a crashed run left. */
   private async startStream(owner: Owner, helpers: AndroidHelpers, role: 'logcat' | 'exit-watch', args: string[], output: LogcatOutput, signal: AbortSignal,
     endedByItself?: () => void): Promise<boolean> {
     let stream: LogcatStream;
@@ -602,7 +588,7 @@ export class AppiumDriver implements DeviceDriver, IosPreparationDriver, Observe
     return this.dispatch(owner, operation, signal, this.timeoutMs, issued => adb(shellCommand(serial, words), issued));
   }
 
-  /** By an exact match on the whole package name in the full listing: a package passed as a filter matches substrings. */
+  // `pm list packages <filter>` matches substrings, so the full listing is matched exactly.
   private async appUid(owner: Owner, serial: string, appPackage: string, signal: AbortSignal): Promise<string | undefined> {
     const listed = await this.androidShell(owner, 'android-app-uid', serial, ['pm', 'list', 'packages', '-U'], signal);
     if (listed.exitCode !== 0) return undefined;
@@ -613,7 +599,7 @@ export class AppiumDriver implements DeviceDriver, IosPreparationDriver, Observe
     return undefined;
   }
 
-  /** The device's time as `-T` takes it, and its UTC offset: the events lines carry local time with no zone. */
+  // logcat's threadtime lines carry device-local time with no zone, so the UTC offset is read with the time.
   private async deviceTime(owner: Owner, serial: string, signal: AbortSignal): Promise<{ text: string; seconds: number; utcOffsetMinutes: number } | undefined> {
     const read = await this.androidShell(owner, 'android-device-time', serial, ['date', '+%s.%3N %z'], signal);
     const match = /^(\d+\.\d{3}) ([+-])(\d{2})(\d{2})$/.exec(read.stdout.trim());
@@ -622,7 +608,6 @@ export class AppiumDriver implements DeviceDriver, IosPreparationDriver, Observe
     return { text: match[1]!, seconds: Number(match[1]), utcOffsetMinutes: match[2] === '-' ? -minutes : minutes };
   }
 
-  /** `pidof` once, after the start and never earlier: it blinks during a cold start. Anything but one pid is none known. */
   private async readPid(owner: Owner, serial: string, appPackage: string, watch: AppExitWatch, signal: AbortSignal): Promise<void> {
     const found = await this.androidShell(owner, 'android-app-pid', serial, ['pidof', appPackage], signal);
     const pids = found.exitCode === 0 ? found.stdout.trim().split(/\s+/).filter(Boolean) : [];
@@ -646,7 +631,6 @@ export class AppiumDriver implements DeviceDriver, IosPreparationDriver, Observe
     return { platform: 'ios', console, ...(logs ? { logs } : {}), sources };
   }
 
-  /** A recorded, settled step: a window that won't open is answered, so it never leaves the device uncertain. */
   private async openWindow(owner: Owner, signal: AbortSignal): Promise<void> {
     const open = this.options.deviceWindow;
     if (!open) return;
@@ -812,9 +796,6 @@ export class AppiumDriver implements DeviceDriver, IosPreparationDriver, Observe
     return this.phase;
   }
 
-  /** The launched app is terminated unless `terminate` is undefined (park keeps it running for the action), then the
-   *  session is deleted and the helpers stopped. A failed terminate or an unconfirmed stream stop still runs the cleanup,
-   *  then fails the close, so an uncertain cleanup is never closed as completed. */
   private async stopCommand(command: Command, terminate: string | undefined, signal: AbortSignal): Promise<void> {
     const helpers = command.helpers;
     if (helpers?.platform === 'ios') helpers.console.expectStop();
@@ -936,8 +917,6 @@ function outcomeUnknown(error: unknown): boolean {
   return !(error instanceof DeviceReasonError || error instanceof AdmissionError || error instanceof StackError);
 }
 
-/** Stops every stream (SIGTERM, then SIGKILL after 1 s) and waits for it to exit; any stop that can't be confirmed is
- *  the error, so the close quarantines and the fence stops the registered process. */
 async function stopStreams(helpers: AndroidHelpers): Promise<DeviceReasonError | undefined> {
   const unconfirmed: number[] = [];
   for (const entry of helpers.streams) {

@@ -1,8 +1,3 @@
-/**
- * The cross-process observed races and the export-loss rows (H01, H03.01, H05.05, H07.02) on the Appium composition:
- * every owner process runs the real allocator and action service with Appium drivers over a world host, and the same
- * public policy and authority oracles hold as on the legacy backend.
- */
 import assert from 'node:assert/strict';
 import { spawn, spawnSync } from 'node:child_process';
 import { mkdir, symlink } from 'node:fs/promises';

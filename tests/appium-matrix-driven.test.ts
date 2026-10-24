@@ -1,8 +1,3 @@
-/**
- * Preservation matrix, driven version 2 (P3.9): a `do` step on the Appium driver hands back to Claude through the
- * real bridge service and takes the answer through `resolve`, and through the MCP `resolve_step` tool on the installed
- * composition. Fake Jev, fake MCP provider.
- */
 import assert from 'node:assert/strict';
 import { test, type TestContext } from 'node:test';
 import { setTimeout as delay } from 'node:timers/promises';

@@ -5,20 +5,13 @@ import { createExitWatch } from './android/exit-watch.js';
 import { MobileBuildMcpDriver, type IosPreparationDriver, type ObservedActionDriver, createMobileBuildMcpDriver, type MobileBuildMcpDriverOptions } from './index.js';
 import type { Profile, ProfileBinding } from '../profiles.js';
 
-/** One run's driver inputs: its ID, and the selected profile's binding and device category. */
 export type LegacyDriverRun = { runId: string; profile?: ProfileBinding; deviceCategory?: Profile['deviceCategory'] };
 
 export interface LegacyDriverFactoryOptions {
   mobileBuildMcp: MobileBuildMcpDriverOptions;
-  /** The Android driver's options, `JEV_ANDROID_DEVICE` as `defaultDevice` among them. The device comes from each script. */
   android?: Omit<AndroidDriverOptions, 'device' | 'runId'>;
 }
 
-/**
- * The pre-Appium drivers, kept in the tree for their own tests; no entry point reaches them. The driver is chosen per
- * script: the Android driver for an Android script, given the script's device, the run's ID and the app-exit watcher,
- * and the MobileBuildMCP driver for every other script.
- */
 export function createLegacyDriverFactory(options: LegacyDriverFactoryOptions):
   (scenario: ScriptedScenario, run?: LegacyDriverRun) => DeviceDriver {
   return (scenario: ScriptedScenario, run?: LegacyDriverRun) => {
@@ -31,7 +24,6 @@ export function createLegacyDriverFactory(options: LegacyDriverFactoryOptions):
   };
 }
 
-/** The pre-Appium preparation and action drivers, for their own tests and the allocator's fake backend. */
 export function createPreparationDriver(options: MobileBuildMcpDriverOptions): IosPreparationDriver {
   return new MobileBuildMcpDriver({ ...options, stopAppOnClose: false });
 }

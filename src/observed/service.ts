@@ -31,7 +31,6 @@ function ownerLiveness(owner: OwnerProcess): 'alive' | 'dead' | 'unknown' {
   try { process.kill(owner.pid, 0); return 'alive'; }
   catch (error) { return (error as NodeJS.ErrnoException).code === 'ESRCH' ? 'dead' : 'unknown'; }
 }
-/** The pre-Appium action driver with the observed capture policy fixed, for its own tests. */
 export function observedDriverFactory(options: MobileBuildMcpDriverOptions): () => ObservedActionDriver {
   return () => createObservedDriver({ ...options, capture: 'full', screenshots: true, stopAppOnClose: false,
     reuseActionCapture: false, verifyScreenshotAgreement: false });

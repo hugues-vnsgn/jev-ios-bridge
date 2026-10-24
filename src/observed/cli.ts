@@ -75,8 +75,6 @@ export async function validateObservedStartConfiguration(admission: Pick<Admissi
   }
 }
 
-/** Only installed CLI composition reaches this factory; test stores have no production override. Preparation and
- *  action both run on the Appium driver, bound to the simulator their claim admitted. */
 export function productionObservedComposition(options: { enabled: boolean; runsDir: string; host: AppiumHost }): ObservedComposition {
   let admission: Admission;
   return createObservedComposition({ enabled: options.enabled,

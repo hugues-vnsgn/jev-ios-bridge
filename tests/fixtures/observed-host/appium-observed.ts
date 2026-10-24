@@ -18,7 +18,6 @@ import { fixtureDevice } from '../observed-allocation-backend.js';
 import { mapPublicFixturePath } from '../observed-cli-server.js';
 import { fixtureObserver } from '../public-contention.js';
 
-/** The screen and rules each action mode answers with, so the public outcome matches the legacy fixture's mode. */
 const actionWorlds: Record<string, World> = {
   observed: fixtureWorld(),
   already: world('ios', { done: screens.done }),
@@ -26,14 +25,8 @@ const actionWorlds: Record<string, World> = {
   inconclusive: fixtureWorld([{ tool: 'appium_perform_actions', fault: { kind: 'error', code: 'DRIVER_ERROR' } }]),
   unresolved: fixtureWorld(),
 };
-/** The legacy fixture's operation names, so an effect trace reads the same on both compositions. */
 const effectNames: Record<string, string> = { 'ios-boot': 'boot', 'ios-install': 'install', 'ios-launch': 'launch-app' };
 
-/**
- * The observed runtime of `fixtureObserved` on the Appium composition: the real allocator and action service, with
- * preparation and action drivers built by `createPreparationDriver` and `createObservedDriver` over a world host.
- * Every device effect a legacy run traces (create, boot, install, launch, touch) enters the same authority observer.
- */
 export function appiumObserved(root: string, enabled: boolean, mode: string, hooks: { fault?: AdmissionDependencies['fault']; before?: (operation: string) => Promise<void>; evidence?: ObservedEvidenceStore } = {}) {
   let admission: Admission;
   let config: () => Promise<unknown>;
@@ -48,7 +41,6 @@ export function appiumObserved(root: string, enabled: boolean, mode: string, hoo
     try {
       admission = Admission.forTesting({ root: context.store, backend: 'fake', initialize: false, fault(point, operation) {
         if (point === 'afterCommit') observer.commit(operation);
-        // The tap's own authorization is the one that leaves its input pending; the input enters the observer there.
         if (point === 'afterCommit' && operation === 'authorize' && touch && [...actions].some(id => admission.readAllocationForAction(id)?.actionEvidence?.actionAttempted === null)) {
           touch(); touch = undefined;
         }

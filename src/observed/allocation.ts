@@ -18,8 +18,6 @@ export type { AllocationSnapshotV1, AllocationOperationError, AllocationResult }
 
 export type AllocatorOptions = {
   runsDir: string; admission?: Admission;
-  /** The preparation driver for one admitted allocation. Production passes the Appium driver; a fake backend without one
-   *  keeps the pre-Appium fake driver its own tests use. */
   createDriver?: () => IosPreparationDriver;
   fakeBackend?: { process: SourceProcess; runner: CliRunner; window: DeviceWindowOpener | undefined; host: InstalledHost };
 };
@@ -28,7 +26,6 @@ type Job = { actionId: string; digest: string; controller: AbortController; dead
   promise?: Promise<AllocationResult> };
 const stageReasons: Partial<Record<AllocationRecord['phase'], AllocationReason>> = { booting: 'BOOT_FAILED', installing: 'INSTALL_FAILED', launching: 'LAUNCH_FAILED', readiness: 'READINESS_FAILED' };
 class PreparationFailure extends Error { constructor(readonly reason: AllocationReason) { super(reason); } }
-/** An Appium driver step that came back with a refusal. A deadline, a lost reply or a lost helper is never one: its outcome is unknown. */
 function answeredRefusal(error: unknown): boolean {
   if (error instanceof NativeHelperError) return error.code === 'NATIVE_FAILED';
   if (error instanceof AppiumError) return !['TIMEOUT', 'ACKNOWLEDGEMENT_LOST', 'CONNECTION_LOST'].includes(error.code);
@@ -277,7 +274,6 @@ export class ObservedAllocator {
       }
       job.driver?.revokeIssuance();
       const finalizationSignal = AbortSignal.timeout(5000);
-      // A driver that fences its components closes under its own budget, as the action service closes one.
       const cleanupBudgetMs = job.driver?.cleanupBudgetMs;
       const closeSignal = cleanupBudgetMs === undefined ? finalizationSignal : AbortSignal.timeout(Math.min(cleanupBudgetMs, CLEANUP_BUDGET_MS));
       const finalized = await Promise.allSettled([

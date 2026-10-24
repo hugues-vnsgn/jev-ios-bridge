@@ -24,7 +24,6 @@ export interface CaptureContext {
   projectDir?: string;
   /** JEV_ANDROID_DEVICE. Empty counts as unset. */
   defaultDevice?: string | undefined;
-  /** Builds the capture's driver for the device the request selected: the CLI passes `appiumCaptureDriver`. */
   driver: (selection: CaptureSelection) => CaptureDriver;
   write: { stdout(text: string): void; stderr(text: string): void };
   /** Aborted by SIGINT or SIGTERM: the capture stops, and the driver is still closed. */
@@ -33,12 +32,10 @@ export interface CaptureContext {
   agreeDevices?: DeviceAgreement;
 }
 
-/** The device a capture names, after the flag, profile and environment precedence. */
 export type CaptureSelection = { device: AndroidDeviceName | undefined; name: string; defaultDevice: string | undefined; profile: ProfileBinding | undefined;
   category: 'android-emulator' | 'android-phone' | undefined };
 export interface CaptureDriver { capture(signal: AbortSignal): Promise<Snapshot>; close(signal: AbortSignal): Promise<void> }
 
-/** The Appium driver for a capture: the selected device, its profile category, and the packaged UiAutomator2 server. */
 export function appiumCaptureDriver(host: AppiumHost): (selection: CaptureSelection) => CaptureDriver {
   return selection => new ComposedAppiumDriver({ host, ...(selection.profile ? { profile: selection.profile } : {}),
     target: async () => ({ platform: 'android', device: selection.name, serverInstallation: { kind: 'install' }, ...(selection.category ? { category: selection.category } : {}) }) });

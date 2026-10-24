@@ -1,7 +1,3 @@
-/**
- * The Appium composition every entry point builds (P3.10): what the production host hands a driver, the order of its
- * refusals, and the pin that no entry point reaches MobileBuildMCP, mobilecli or the network.
- */
 import assert from 'node:assert/strict';
 import { execFile } from 'node:child_process';
 import { chmodSync, mkdirSync, mkdtempSync, readFileSync, realpathSync, rmSync, writeFileSync } from 'node:fs';
@@ -28,7 +24,6 @@ test('no entry composition module names a pre-Appium driver or the module that b
   assert.ok(legacy.test(readFileSync('src/device/legacy-factory.ts', 'utf8')), 'the pattern finds the legacy factory itself');
 });
 
-/** The installed CLI composition in its own process with every process start and connection recorded. */
 async function recorded(t: TestContext, platform: 'ios' | 'android', args: string[], scripts: Record<string, object> = {}) {
   const root = realpathSync(mkdtempSync(join(tmpdir(), 'appium-effects-')));
   t.after(() => rmSync(root, { recursive: true, force: true, maxRetries: 5, retryDelay: 50 }));
@@ -46,10 +41,8 @@ async function recorded(t: TestContext, platform: 'ios' | 'android', args: strin
   const effects = readFileSync(log, 'utf8').trim().split('\n').map(line => JSON.parse(line) as { kind: string; file?: string; args?: string[]; target?: unknown });
   return { ...result, effects, root };
 }
-/** The only process an entry point may start here: its private MCP child, as the world host serves it. */
 const privateChild = (effect: { kind: string; file?: string; args?: string[] }) => effect.kind === 'spawn' && effect.file === process.execPath
   && (effect.args ?? []).some(arg => arg.endsWith('tests/fixtures/appium-wire/world-mcp.ts'));
-/** The read-only start-time lookup that records a host process's identity. */
 const startTime = (effect: { kind: string; file?: string; args?: string[] }) => effect.kind === 'execFileSync' && effect.file === '/bin/ps'
   && effect.args?.length === 4 && effect.args[0] === '-p' && /^\d+$/.test(effect.args[1]!) && effect.args[2] === '-o' && effect.args[3] === 'lstart=';
 
@@ -82,7 +75,6 @@ test('MCP start_scenario on the installed composition starts only the private MC
   assert.deepEqual([effects.filter(effect => !privateChild(effect) && !startTime(effect)), effects.filter(privateChild).length], [[], 1]);
 });
 
-/** A fake Android SDK whose `adb` the tools check finds; nothing ever runs it. */
 function fakeSdk(t: TestContext) {
   const sdk = realpathSync(mkdtempSync(join(tmpdir(), 'jev-fake-sdk-')));
   t.after(() => rmSync(sdk, { recursive: true, force: true }));
@@ -110,7 +102,6 @@ test('the production host gives an Android driver the found adb\'s SDK, the lega
 test('an Android command with no adb refuses ANDROID_TOOLS_UNAVAILABLE before the stack is checked', async t => {
   const empty = realpathSync(mkdtempSync(join(tmpdir(), 'jev-no-sdk-')));
   t.after(() => rmSync(empty, { recursive: true, force: true }));
-  // An Intel host refuses at its very first stack step, so reaching the stack would change the code.
   const stack = FrozenStack.forTesting({ ...stackRelease(), host: { platform: 'darwin', arch: 'x64', node: '24.0.0' } });
   const host = productionAppiumHost({ environment: { ANDROID_HOME: empty, ANDROID_SDK_ROOT: empty, PATH: empty }, home: empty, stack,
     openAdmission: () => assert.fail('no store') });

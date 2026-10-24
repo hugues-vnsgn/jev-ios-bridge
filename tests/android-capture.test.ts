@@ -27,7 +27,6 @@ const captureOf = async (screen: string): Promise<Hierarchy> => (JSON.parse((JSO
 const judgedText = (screen: string) => readFile(join(ANDROID, 'observations', `${screen}.txt`), 'utf8');
 const captureGolden = join(import.meta.dirname, 'golden', 'android-capture.json');
 
-/** The pre-Appium Android driver, built for the command's selection as captureCommand built it before the switch. */
 const legacy = (parts: Omit<AndroidDriverOptions, 'device' | 'defaultDevice'>) => (selection: CaptureSelection) =>
   new AndroidDriver({ ...parts, profile: selection.profile, device: selection.device, defaultDevice: selection.defaultDevice,
     ...(selection.category ? { category: selection.category } : {}) });

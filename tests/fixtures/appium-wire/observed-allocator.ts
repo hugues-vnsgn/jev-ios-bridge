@@ -20,25 +20,15 @@ export const screens = { go: iosScreen([go], BUNDLE), done: iosScreen([done], BU
 export const tapLeadsDone: WorldRule[] = [{ tool: 'appium_perform_actions', when: 'go', to: 'done' }];
 export const fixtureWorld = (rules: WorldRule[] = tapLeadsDone): World => world('ios', screens, rules);
 const helpers = new Set(['ios-boot', 'ios-install', 'ios-launch']);
-/** The simulators the fake source creates, in order. */
 export const createdDevice = (serial: number) => `ABCDEF00-0000-4000-8000-${String(serial).padStart(12, '0')}`;
 
 export type HostWorld = {
-  /** The world each new driver opens on, in order; the last one repeats. */
   worlds?: World[];
-  /** A native command that exits with this code instead of 0; undefined answers it normally. */
   nativeExit?: (command: NativeCommand) => number | undefined;
-  /** A native command left running until the test ends it. */
   nativeHeld?: (command: NativeCommand) => boolean;
-  /** Live private groups as the host sampler reports them. A group outlives SIGTERM and ends at SIGKILL, so its stop
-   *  waits the fence's full TERM grace, on real time. */
   groupsSurviveTerm?: () => HostRow[];
 };
 
-/**
- * The world host for observed roles on one shared store and root. Each session start brings up its own WDA runner,
- * which the fence lists from that session on until a stop ends it, so every session's automation is owned by identity.
- */
 export function observedHost(t: Cleanups, options: HostWorld & { admission: Admission; root: string }) {
   const base = worldHost(t, { worlds: options.worlds ?? [fixtureWorld()], identityProbe: fakeSimulatorProbe(fixtureDevice, createdDevice(2), createdDevice(3)),
     admission: options.admission, root: options.root,
@@ -80,7 +70,6 @@ export function observedHost(t: Cleanups, options: HostWorld & { admission: Admi
 
 type StoreFault = NonNullable<NonNullable<Parameters<typeof allocationFixture>[0]>['fault']>;
 
-/** The real allocator over the fake host and source process, preparing on the Appium preparation driver. */
 export async function appiumAllocator(t: Cleanups, options: Omit<HostWorld, 'groupsSurviveTerm'> & { budgets?: Record<string, unknown>; groupsSurviveTerm?: boolean; fault?: StoreFault } = {}) {
   const { budgets, groupsSurviveTerm, fault, ...world } = options;
   const f = await allocationFixture(fault ? { fault } : {});

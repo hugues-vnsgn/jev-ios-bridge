@@ -497,7 +497,6 @@ export interface IosPreparationDriver {
   park(readinessEvidence: string[], evidenceRefs: string[], signal: AbortSignal): Promise<AllocationCommit>;
   revokeIssuance(): void;
   close(signal: AbortSignal): Promise<void>;
-  /** A driver whose close fences device components declares its own close budget. */
   readonly cleanupBudgetMs?: number;
 }
 export interface ObservedActionDriver {

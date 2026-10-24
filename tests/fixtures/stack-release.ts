@@ -9,7 +9,6 @@ const digest = (bytes: string | Buffer) => createHash('sha256').update(bytes).di
 export const RELEASE_RUNNER = 'wda/WebDriverAgentRunner-Runner.app/runner';
 export const RELEASE_LOADED = 'node_modules/appium-mcp/index.js';
 
-/** A two-file frozen stack release (stack and WDA archives, manifest, identity) for FrozenStack.forTesting. */
 export function stackRelease() {
   const base = mkdtempSync(join(tmpdir(), 'jev-stack-release-'));
   const artifactRoot = join(base, 'artifacts'); const tree = join(base, 'tree');
