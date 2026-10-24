@@ -6,7 +6,7 @@ import type { TestContext } from 'node:test';
 import { AppiumDriver, type AppiumDriverOptions } from '../../../src/appium/driver.js';
 import { Admission } from '../../../src/device/admission.js';
 import type { NativeCommand } from '../../../src/appium/native/process.js';
-import { FakeFence, driverStack, fakeNativeRunner } from './driver-fixture.js';
+import { FakeFence, WDA_BUNDLE, driverStack, fakeNativeRunner } from './driver-fixture.js';
 import { worldSchema, type World, type WorldRule } from './world-schema.js';
 
 export { worldSchema, type World, type WorldRule } from './world-schema.js';
@@ -75,16 +75,31 @@ export function worldFixture(t: TestContext, first: World, options: Overrides, n
   for (const name of ['homes', 'logs', 'shots', 'locks', 'admission']) mkdirSync(join(root, name), { mode: 0o700 });
   const admission = options.admission ?? Admission.forTesting({ root: join(root, 'admission'), backend: 'fake', durability: 'fast' });
   const fence = new FakeFence();
+  const traces: string[] = [];
+  const created = () => traces.reduce((count, trace) => {
+    try { return count + readFileSync(trace, 'utf8').split('\n').filter(line => line.includes('"action":"create"')).length; } catch { return count; }
+  }, 0);
+  let runners = 0;
+  // A created iOS session starts its own WDA runner, which the simulator lists until the fence stops it.
+  const run = fence.run;
+  fence.run = async (effect, ...rest) => {
+    if (effect.kind === 'wda-inventory' && options.target.platform === 'ios' && created() > runners) {
+      runners = created();
+      fence.wda.push({ udid: options.target.device, bundleId: WDA_BUNDLE, pid: 7000 + runners });
+    }
+    return run(effect, ...rest);
+  };
   const native = fakeNativeRunner(nativeReply);
   let port = 18100;
   let opened = 0;
   const open = (state: World, overrides: Partial<AppiumDriverOptions> = {}) => {
     const index = opened++;
     const trace = join(root, `trace-${String(index)}.jsonl`);
+    traces.push(trace);
     const file = join(root, `world-${String(index)}.json`);
     writeFileSync(file, JSON.stringify(worldSchema.parse(state)));
     const driver = new AppiumDriver({ stack: driverStack(t), admission, backend: 'fake', homeRoot: join(root, 'homes'), logFolder: join(root, 'logs'),
-      screenshotFolder: join(root, 'shots'), lockRoot: join(root, 'locks'), fence: fence.run, nativeRunner: native.runner, freePort: async () => port++,
+      screenshotFolder: join(root, 'shots'), lockRoot: join(root, 'locks'), fence: (...args) => fence.run(...args), nativeRunner: native.runner, freePort: async () => port++,
       startLookup: pid => `host-${String(pid)}`, runMarker: () => '0123456789abcdef0123456789abcdef', runId: `run-${String(index + 1)}`, timeoutMs: 20_000,
       child: { entrypoint: resolve('tests/fixtures/appium-wire/world-mcp.ts'), args: [file, trace], nodeArgs: ['--import', import.meta.resolve('tsx')] },
       ...options, ...overrides });

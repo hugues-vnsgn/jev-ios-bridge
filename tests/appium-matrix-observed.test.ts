@@ -46,7 +46,6 @@ async function reserve(admission: Admission) {
 /** A parked allocation prepared by the Appium preparation driver, and the action service whose executors are Appium drivers. */
 async function observed(t: TestContext, action: ReturnType<typeof world>) {
   const f = worldFixture(t, world('ios', { go: screens.go }), iosTarget, command => ['ios-boot', 'ios-install', 'ios-launch'].includes(command.kind) ? '' : undefined);
-  f.fence.wda = [{ udid: UDID, bundleId: WDA_BUNDLE, pid: 777 }];
   const { claim, allocationId } = await reserve(f.admission);
   await f.driver.attachPreparation(claim, context, live());
   await f.driver.boot(live()); await f.driver.install('/isolated/Fixture.app', live()); await f.driver.launch(live()); await f.driver.readiness(live());
@@ -75,6 +74,8 @@ test('observed preparation on Appium launches once through simctl with no consol
     ['simctl', 'launch', '--terminate-running-process', UDID, 'dev.fixture']]);
   assert.deepEqual(f.tools().filter(name => !['appium_get_page_source', 'jev_screen'].includes(name)), ['appium_session_management', 'jev_settings', 'appium_session_management'],
     'the preparation session is deleted before park, and the app is never terminated');
+  assert.deepEqual(f.fence.effects.filter(effect => effect.kind === 'wda-stop'), [{ kind: 'wda-stop', udid: UDID, bundleId: WDA_BUNDLE, pid: 7001 }],
+    'the runner the preparation session started is stopped before park');
   assert.deepEqual(f.fence.wda, []);
 });
 

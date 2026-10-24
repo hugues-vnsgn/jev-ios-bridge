@@ -94,7 +94,6 @@ async function runTwice(t: TestContext, f: Fixture, script: object, next: Parame
 
 test('scripted v1 on iOS: launch options, tap, replace, wait and checkpoint pass on Appium with exact attempts, a masked value, full cleanup and a next admission', async t => {
   const f = ios(t);
-  f.fence.wda = [{ udid: UDID, bundleId: WDA_BUNDLE, pid: 777 }];
   const { b, done, events, report, again, second } = await runTwice(t, f, iosScript, iosWorld());
   assert.deepEqual([done.report.verdict, done.report.reason], ['passed', 'ALL_CHECKPOINTS_PASSED']);
   assert.deepEqual(authorized(f.admission, 'run-1'), { 'appium-observe': 3, 'appium-replace-text': 1, 'appium-session-create': 1,
@@ -111,7 +110,8 @@ test('scripted v1 on iOS: launch options, tap, replace, wait and checkpoint pass
     ['passed', 'ALL_CHECKPOINTS_PASSED', null, ['-route', 'search'], 'appium']);
   assert.deepEqual(await filesContaining(f.root, SECRET), [], 'the typed value is in no bridge-written file, admission store included');
   assert.deepEqual(await filesContaining(b.root, SECRET), []);
-  assert.deepEqual(f.fence.effects.filter(effect => effect.kind === 'wda-stop'), [{ kind: 'wda-stop', udid: UDID, bundleId: WDA_BUNDLE, pid: 777 }]);
+  assert.deepEqual(f.fence.effects.filter(effect => effect.kind === 'wda-stop'), [{ kind: 'wda-stop', udid: UDID, bundleId: WDA_BUNDLE, pid: 7001 }],
+    'the runner the first session started is stopped by identity');
   assert.deepEqual(f.native.calls.slice(0, 2).map(call => [call.command.kind, call.stops]), [['ios-console', 1], ['ios-log-stream', 1]]);
   assertReleased(f);
   assert.deepEqual([(await again()).verdict, second.tools().at(-1)], ['passed', 'appium_session_management'], 'the next admission on the same device runs and closes');
