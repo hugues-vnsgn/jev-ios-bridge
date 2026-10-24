@@ -41,6 +41,8 @@ class FakeRunner {
   time = 0;
   resistTerm = false;
   ignoreKill = false;
+  lag = 0;
+  dying = new Map<number, number>();
   delay = 0;
   hang = false;
   hosts = [
@@ -58,18 +60,28 @@ class FakeRunner {
     this.events.push(structuredClone(effect));
     this.time += this.delay;
     if (this.hang) return new Promise((_, reject) => signal.addEventListener('abort', () => reject(signal.reason), { once: true }));
+    const exit = (pids: number[]) => {
+      if (this.lag) for (const pid of pids) this.dying.set(pid, this.lag);
+      else { this.hosts = this.hosts.filter(row => !pids.includes(row.pid)); for (const pid of pids) this.processes.delete(pid); }
+    };
+    const tick = () => {
+      for (const [pid, left] of this.dying) {
+        if (left > 1) { this.dying.set(pid, left - 1); continue; }
+        this.dying.delete(pid); this.hosts = this.hosts.filter(row => row.pid !== pid); this.processes.delete(pid);
+      }
+    };
     switch (effect.kind) {
-      case 'host-inventory': return structuredClone(this.hosts);
+      case 'host-inventory': tick(); return structuredClone(this.hosts);
       case 'host-signal-group':
-        if (effect.signal === 'SIGKILL' ? !this.ignoreKill : !this.resistTerm) this.hosts = this.hosts.filter(row => row.pgid !== effect.pgid);
+        if (effect.signal === 'SIGKILL' ? !this.ignoreKill : !this.resistTerm) exit(this.hosts.filter(row => row.pgid === effect.pgid).map(row => row.pid));
         return { ok: true };
       case 'host-signal':
-        if (effect.signal === 'SIGKILL' ? !this.ignoreKill : !this.resistTerm) this.hosts = this.hosts.filter(row => row.pid !== effect.process.pid);
+        if (effect.signal === 'SIGKILL' ? !this.ignoreKill : !this.resistTerm) exit([effect.process.pid]);
         return { ok: true };
       case 'wda-inventory': return structuredClone(this.wda);
       case 'wda-stop': this.wda = this.wda.filter(row => row.pid !== effect.pid); return { ok: true };
-      case 'android-process': { const startTime = this.processes.get(effect.pid); return startTime ? { kind: 'running', startTime } : { kind: 'absent' }; }
-      case 'android-stop': this.processes.delete(effect.process.pid); return { ok: true };
+      case 'android-process': { tick(); const startTime = this.processes.get(effect.pid); return startTime ? { kind: 'running', startTime } : { kind: 'absent' }; }
+      case 'android-stop': exit([effect.process.pid]); return { ok: true };
       case 'forward-inventory': return structuredClone(this.forwards);
       case 'forward-remove': this.forwards = this.forwards.filter(row => row.serial !== effect.serial || row.local !== effect.local); return { ok: true };
       case 'settings-read': return structuredClone(this.values);
@@ -124,6 +136,26 @@ test('TERM waits five seconds then KILL covers recorded and escaped descendants 
     { kind: 'host-signal', process: { pid: 102, startTime: 'host-102' }, signal: 'SIGKILL' },
   ]);
   assert.deepEqual(runner.hosts.map(row => row.pid), [400, 999]);
+  assert.equal(state(f.admission, f.claim.identity), 'available');
+});
+
+test('a process that exits shortly after its stop is polled within the budget before the final readback', async t => {
+  const selected = [targets[0], targets[2]];
+  const f = fixture(t, selected); for (const target of selected) f.claim.registerComponent(JSON.parse(JSON.stringify(target)));
+  f.claim.closeDispatch({ outcome: 'inconclusive', disposition: 'quarantined', payload: {}, evidenceRefs: [] });
+  const recovery = f.admission.claimRecovery(f.claim.identity, 'late-exit'); if (recovery.kind === 'refused') assert.fail();
+  const runner = new FakeRunner(); runner.resistTerm = true; runner.lag = 2;
+  const { fenceAppium } = await fenceModule();
+  const proof = await fenceAppium({ admission: f.admission, claim: recovery.claim, runner: runner.run, clock: runner.clock });
+  recovery.claim.submitFence(proof);
+  const operations = runner.events.map(event => 'kind' in event ? event.kind : `wait ${event.wait}`);
+  assert.deepEqual(operations.slice(operations.indexOf('host-signal-group', operations.indexOf('host-signal-group') + 1)), [
+    'host-signal-group', 'host-signal', 'host-inventory', 'wait 500', 'host-inventory',
+    'android-process', 'android-stop', 'android-process', 'wait 500', 'android-process',
+    'android-process', 'android-stop', 'android-process', 'wait 500', 'android-process',
+  ]);
+  assert.deepEqual(runner.hosts.map(row => row.pid), [400, 999]);
+  assert.deepEqual([...runner.processes], []);
   assert.equal(state(f.admission, f.claim.identity), 'available');
 });
 
@@ -250,7 +282,7 @@ for (const forgery of ['unsettled-answer', 'write-command']) test(`a superseded 
   const failed = view.commands.find(command => command.state === 'uncertain')!;
   const answer = view.commands.filter(command => command.recoveryClaimId === recovery.claim.identity.id && command.state === 'settled').at(-1)!;
   const components = (forged?.components ?? []).filter(component => component.componentId !== failed.componentId);
-  components.push({ componentId: failed.componentId, proof: { kind: 'superseded-read', commandId: forgery === 'unsettled-answer' ? failed.id : answer.id } });
+  components.push({ componentId: failed.componentId!, proof: { kind: 'superseded-read', commandId: forgery === 'unsettled-answer' ? failed.id : answer.id } });
   if (forgery === 'write-command') for (const component of view.components) if (!components.some(item => item.componentId === component.id)) {
     const settled = view.commands.find(command => command.componentId === component.id && command.state === 'settled');
     components.push({ componentId: component.id, proof: settled ? { kind: 'completed-command', commandId: settled.id } : { kind: 'appium-forward-removed', commandId: answer.id } });

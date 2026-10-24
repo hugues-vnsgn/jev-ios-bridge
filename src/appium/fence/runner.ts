@@ -14,6 +14,8 @@ export type HostFenceIo = {
 };
 type SimctlRunner = (args: string[], signal: AbortSignal) => Promise<AdbResult>;
 const resultSchema = z.strictObject({ stdout: z.string(), stderr: z.string(), exitCode: z.number().int() });
+const simulatorListSchema = z.object({ devices: z.record(z.string(), z.array(z.object({ udid: z.string(), state: z.string() }))) });
+const UIAUTOMATOR2_PACKAGES = ['io.appium.uiautomator2.server', 'io.appium.uiautomator2.server.test'];
 function checked(raw: unknown): AdbResult {
   const result = resultSchema.parse(raw);
   if (result.exitCode !== 0 || result.stderr !== '') throw new Error('Fence native query failed');
@@ -38,6 +40,10 @@ function settingRows(result: AdbResult): Map<string, string> {
     entries.set(key, line.slice(index + 1));
   }
   return entries;
+}
+function shutDown(udid: string, listing: AdbResult): boolean {
+  const devices = Object.values(simulatorListSchema.parse(JSON.parse(checked(listing).stdout)).devices).flat().filter(device => device.udid.toUpperCase() === udid);
+  return devices.length === 1 && devices[0]!.state === 'Shutdown';
 }
 function wdaRows(udid: string, result: AdbResult) {
   checked(result);
@@ -66,6 +72,12 @@ export function createFenceRunner(io: { host?: HostFenceIo; adb: AdbRunner; simc
   const inventory = (signal: AbortSignal) => nativeCall(signal, () => host.inventory(signal));
   const signalGroup: HostFenceIo['signalGroup'] = (pgid, name, signal) => nativeCall(signal, () => host.signalGroup(pgid, name, signal));
   const signalProcess: HostFenceIo['signalProcess'] = (process, name, signal) => nativeCall(signal, () => host.signalProcess(process, name, signal));
+  const wdaInventory = async (udid: string, signal: AbortSignal) => {
+    const listing = await simctl(['spawn', udid, 'launchctl', 'list'], signal);
+    if (listing.exitCode === 0 && listing.stderr === '') return wdaRows(udid, listing);
+    if (shutDown(udid, await simctl(['list', '-j', 'devices', udid], signal))) return wdaInventorySchema.parse([]);
+    throw new Error('Fence native query failed');
+  };
   const processState = async (effect: { serial: string; pid: number }, signal: AbortSignal) => {
     const result = resultSchema.parse(await adb(shellCommand(effect.serial, ['cat', `/proc/${effect.pid}/stat`]), signal));
     if (processGone(result)) return androidProcessSchema.parse({ kind: 'absent' });
@@ -91,9 +103,9 @@ export function createFenceRunner(io: { host?: HostFenceIo; adb: AdbRunner; simc
         if (current?.state === 'running') await signalProcess(effect.process, effect.signal, signal);
         return { ok: true };
       }
-      case 'wda-inventory': return wdaRows(effect.udid, await simctl(['spawn', effect.udid, 'launchctl', 'list'], signal));
+      case 'wda-inventory': return wdaInventory(effect.udid, signal);
       case 'wda-stop': {
-        const rows = wdaRows(effect.udid, await simctl(['spawn', effect.udid, 'launchctl', 'list'], signal));
+        const rows = await wdaInventory(effect.udid, signal);
         const matches = rows.filter(row => row.bundleId === effect.bundleId || row.pid === effect.pid);
         if (matches.some(row => row.bundleId !== effect.bundleId || row.pid !== effect.pid)) throw new Error('WDA identity differs');
         if (matches.length) checked(await simctl(['terminate', effect.udid, effect.bundleId], signal));
@@ -102,7 +114,9 @@ export function createFenceRunner(io: { host?: HostFenceIo; adb: AdbRunner; simc
       case 'android-process': return processState(effect, signal);
       case 'android-stop': {
         const current = await processState({ serial: effect.serial, pid: effect.process.pid }, signal);
-        if (current.kind === 'running' && current.startTime === effect.process.startTime) checked(await adb(shellCommand(effect.serial, ['kill', '-TERM', String(effect.process.pid)]), signal));
+        if (current.kind === 'running' && current.startTime === effect.process.startTime) {
+          for (const pkg of UIAUTOMATOR2_PACKAGES) checked(await adb(shellCommand(effect.serial, ['am', 'force-stop', pkg]), signal));
+        }
         return { ok: true };
       }
       case 'forward-inventory': return forwardRows(await adb(['forward', '--list'], signal));

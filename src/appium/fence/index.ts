@@ -77,7 +77,17 @@ export async function fenceAppium(input: FenceOptions & { admission: Admission; 
     transcripts.push(transcript);
     return transcript;
   };
-  const hostRead = async () => { const command = await query({ kind: 'host-inventory' }); return { command, rows: hostInventorySchema.parse(command.result) }; };
+  const poll = async (effect: FenceEffect, gone: (result: unknown) => boolean) => {
+    for (;;) {
+      const command = await query(effect);
+      if (gone(command.result)) return command;
+      await budget.sleep(500);
+    }
+  };
+  const hostRead = async (gone: (rows: HostRow[]) => boolean = () => true) => {
+    const command = await poll({ kind: 'host-inventory' }, result => gone(hostInventorySchema.parse(result)));
+    return { command, rows: hostInventorySchema.parse(command.result) };
+  };
   const wait = () => budget.sleep(5000);
   const stopHost = async (target: Extract<AppiumComponent, { kind: 'appium-process-group' | 'appium-native-helper' }>): Promise<AppiumProof> => {
     const before = await hostRead();
@@ -103,8 +113,7 @@ export async function fenceAppium(input: FenceOptions & { admission: Admission; 
       await wait();
       after = await hostRead();
       const surviving = remaining(after.rows);
-      if (surviving.length) { await signal(after.rows, surviving, 'SIGKILL'); after = await hostRead(); }
-      if (remaining(after.rows).length) throw new Error('Host process exit is not proven');
+      if (surviving.length) { await signal(after.rows, surviving, 'SIGKILL'); after = await hostRead(rows => !remaining(rows).length); }
     }
     return target.kind === 'appium-process-group'
       ? { kind: 'appium-group-stopped', beforeCommandId: before.command.id, afterCommandId: after.command.id }
@@ -119,20 +128,22 @@ export async function fenceAppium(input: FenceOptions & { admission: Admission; 
       switch (target.kind) {
         case 'appium-process-group': case 'appium-native-helper': proof = await stopHost(target); break;
         case 'appium-wda': {
+          const matching = (result: unknown) => wdaInventorySchema.parse(result).filter(row => row.udid === target.udid && (row.bundleId === target.bundleId || row.pid === target.pid));
           let command = await query({ kind: 'wda-inventory', udid: target.udid });
-          const rows = wdaInventorySchema.parse(command.result).filter(row => row.udid === target.udid && (row.bundleId === target.bundleId || row.pid === target.pid));
+          const rows = matching(command.result);
           if (rows.some(row => row.pid !== target.pid || row.bundleId !== target.bundleId)) throw new Error('WDA identity differs');
-          if (rows.length) { await query({ kind: 'wda-stop', udid: target.udid, bundleId: target.bundleId, pid: target.pid }); command = await query({ kind: 'wda-inventory', udid: target.udid }); }
+          if (rows.length) { await query({ kind: 'wda-stop', udid: target.udid, bundleId: target.bundleId, pid: target.pid }); command = await poll({ kind: 'wda-inventory', udid: target.udid }, result => !matching(result).length); }
           proof = { kind: 'appium-wda-stopped', commandId: command.id }; break;
         }
         case 'appium-uiautomator2': {
           const commandIds: string[] = [];
           for (const process of target.processes) {
-            let command = await query({ kind: 'android-process', serial: target.serial, pid: process.pid });
-            const current = androidProcessSchema.parse(command.result);
-            if (current.kind === 'running' && current.startTime === process.startTime) {
+            const read = { kind: 'android-process', serial: target.serial, pid: process.pid } as const;
+            const gone = (result: unknown) => { const state = androidProcessSchema.parse(result); return state.kind === 'absent' || state.startTime !== process.startTime; };
+            let command = await query(read);
+            if (!gone(command.result)) {
               await query({ kind: 'android-stop', serial: target.serial, process });
-              command = await query({ kind: 'android-process', serial: target.serial, pid: process.pid });
+              command = await poll(read, gone);
             }
             commandIds.push(command.id);
           }

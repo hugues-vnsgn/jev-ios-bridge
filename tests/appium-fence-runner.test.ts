@@ -26,13 +26,30 @@ test('Android settings restore uses recorded values, global policy keys, secure 
   ]);
 });
 
-test('Android instrumentation is matched by proc start time before stopping only its recorded PID', async () => {
+test('Android instrumentation is matched by proc start time then force-stopped by package', async () => {
   const calls: string[][] = [];
   const runner = createFenceRunner({ host: host(), adb: async args => { calls.push(args); return args.at(-1)?.includes("'cat'") ? result(stat(300, '12345')) : result(''); }, simctl: async () => result('') });
   assert.deepEqual(await runner(fenceEffectSchema.parse({ kind: 'android-stop', serial: 'one', process: { pid: 300, startTime: '12345' } }), signal), { ok: true });
-  assert.deepEqual(calls, [['-s', 'one', 'shell', "'cat' '/proc/300/stat'"], ['-s', 'one', 'shell', "'kill' '-TERM' '300'"]]);
+  assert.deepEqual(calls, [['-s', 'one', 'shell', "'cat' '/proc/300/stat'"],
+    ['-s', 'one', 'shell', "'am' 'force-stop' 'io.appium.uiautomator2.server'"], ['-s', 'one', 'shell', "'am' 'force-stop' 'io.appium.uiautomator2.server.test'"]]);
   assert.deepEqual(await runner(fenceEffectSchema.parse({ kind: 'android-stop', serial: 'one', process: { pid: 300, startTime: '99999' } }), signal), { ok: true });
-  assert.equal(calls.length, 3);
+  assert.equal(calls.length, 4);
+});
+
+test('a verified Shutdown simulator proves WDA absent while any other state keeps the failure', async () => {
+  const udid = 'ABCDEF00-0000-4000-8000-000000000001';
+  let state = 'Shutdown';
+  const calls: string[][] = [];
+  const runner = createFenceRunner({ host: host(), adb: async () => { throw new Error('Unexpected Android command'); }, simctl: async args => {
+    calls.push(args);
+    if (args[0] === 'spawn') return result('', 1, 'An error was encountered processing the command (domain=NSPOSIXErrorDomain, code=3):\nUnable to spawn process\n');
+    return result(JSON.stringify({ devices: { 'com.apple.CoreSimulator.SimRuntime.iOS-26-0': [{ udid, state, name: 'iPhone 17' }] } }));
+  } });
+  assert.deepEqual(await runner(fenceEffectSchema.parse({ kind: 'wda-inventory', udid }), signal), []);
+  assert.deepEqual(await runner(fenceEffectSchema.parse({ kind: 'wda-stop', udid, bundleId: 'com.facebook.WebDriverAgentRunner.xctrunner', pid: 200 }), signal), { ok: true });
+  state = 'Booted';
+  await assert.rejects(() => runner(fenceEffectSchema.parse({ kind: 'wda-inventory', udid }), signal), /failed/i);
+  assert.deepEqual(calls, [['spawn', udid, 'launchctl', 'list'], ['list', '-j', 'devices', udid], ['spawn', udid, 'launchctl', 'list'], ['list', '-j', 'devices', udid], ['spawn', udid, 'launchctl', 'list'], ['list', '-j', 'devices', udid]]);
 });
 
 test('forward removal rechecks the recorded pair and never uses a fixed port', async () => {
