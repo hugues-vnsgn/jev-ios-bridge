@@ -163,6 +163,26 @@ export interface DeviceDriver {
   /** What `prepare` worked around without failing (the iOS simulator window not opening), for the run log's
    *  `prepared` event. Messages are the driver's own wording, never a vendor's output. */
   prepareWarnings?(): string[];
+  /** The frozen automation stack this run drove the device with, for the `prepared` event's `stack` field.
+   *  Only the Appium driver implements it; the legacy drivers record none. */
+  provenance?(): StackProvenance;
+}
+
+/** Where an `error.vendorCode` comes from: the Appium layer, adb, or one of the bridge's own probes. */
+export type VendorSource = 'appium' | 'adb' | 'bridge';
+
+/** The frozen stack behind an Appium run, recorded additively in the `prepared` event and report.json. */
+export interface StackProvenance {
+  backend: 'appium';
+  /** SHA-256 of the stack's package-lock.json. */
+  lockSha256: string;
+  extensionVersion: number;
+  /** The private MCP client SDK version. */
+  clientVersion: string;
+  /** iOS: the WebDriverAgent runner's tree hash. */
+  wdaTreeSha256?: string;
+  /** Android: the UiAutomator2 server APK hash, also `prepared.agentSha256`. */
+  uiautomator2ServerSha256?: string;
 }
 
 /** The launched app exited (crashed, was killed or quit) or froze. The note names the cause, for the log pane. */
