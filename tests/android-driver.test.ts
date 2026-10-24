@@ -15,12 +15,12 @@ import { AGENT_DEVICE_PATH, AGENT_START_COMMAND, APP_PROBLEM_POLL_MS, APP_PROBLE
 import type { AppExitWatch } from '../src/device/android/exit-watch.js';
 import { createLegacyDriverFactory } from '../src/device/legacy-factory.js';
 import { OutcomeUnknownError } from '../src/device/android/ledger.js';
-import type { IdentityProbe } from '../src/device/android/probe.js';
+import { identityProbe, type IdentityProbe } from '../src/device/android/probe.js';
 import { mapAndroidTree } from '../src/device/android/mapping.js';
 import { screenHash } from '../src/device/android/settle.js';
 import type { ScriptedJudge } from '../src/scripted/contracts.js';
 import { runScriptedScenario } from '../src/scripted/run.js';
-import { fakeSpawn } from './fixtures/adb-spawn.js';
+import { fakeProbeSpawn, fakeSpawn } from './fixtures/adb-spawn.js';
 import { AGENT_CACHE, fakeAndroidAdmission, FakeAdb, fakeAgents, fakeClock, FakeStreams, FIXTURES, fixture, fixtureBytes, shellWords, type FakeEmulator } from './fixtures/android-device.js';
 import { androidScript } from './fixtures/android-script.js';
 import { withRunLog } from './fixtures/run-log.js';
@@ -172,6 +172,45 @@ test('an action on a device that went offline or unauthorized mid-run refuses wi
     });
   }
 });
+
+for (const serial of ['192.0.2.10:37123', 'adb-PHONE1-token._adb-tls-connect._tcp', 'PHONE1']) {
+  for (const [state, code] of [['offline', 'DEVICE_NOT_CONNECTED'], ['unauthorized', 'DEVICE_UNAUTHORIZED']] as const) {
+    test(`phone ${serial} becoming ${state} mid-run refuses ${code} before an action`, async () => {
+      const adb = new FakeAdb({ serial, avd: 'phone-fixture' });
+      const fake = fakeProbeSpawn((_file, args) => args[0] === 'devices'
+        ? adb.devicesText ?? `List of devices attached\n${serial} device\n` : 'PHONE1\n');
+      const probe = identityProbe({ adb: '/fake/adb', environment: {}, spawn: fake.spawn });
+      await withDriver(adb, async ({ driver, agents }) => {
+        await driver.prepare(app(), signal());
+        const snapshot = await driver.observe(signal());
+        adb.devicesText = `List of devices attached\n${serial} ${state}\n`;
+        const beforeAgent = agents.calls.length;
+        const beforeAdb = adb.calls.length;
+        await assert.rejects(driver.act({ kind: 'back' }, snapshot, values({}), signal()), reason(code));
+        assert.equal(agents.calls.length, beforeAgent, 'no action reached the agent');
+        assert.equal(adb.calls.length, beforeAdb, 'no effect reached adb');
+        adb.devicesText = undefined;
+        await driver.close(signal());
+      }, { device: { serial }, identityProbe: probe });
+    });
+  }
+}
+
+for (const state of ['authorizing', 'recovery', 'no permissions']) {
+  test(`a directly named phone in adb state ${state} reports that state`, async () => {
+    const adb = new FakeAdb({ serial: 'PHONE1', avd: 'phone-fixture' });
+    adb.devicesText = `List of devices attached\nPHONE1 ${state}\n`;
+    await withDriver(adb, async ({ driver }) => {
+      await assert.rejects(driver.prepare(app(), signal()), (error: unknown) => {
+        assert.ok(error instanceof DeviceReasonError);
+        assert.equal(error.code, 'DEVICE_NOT_CONNECTED');
+        assert.equal(error.message, `Device PHONE1 is ${state}`);
+        return true;
+      });
+      assert.equal(adb.calls.length, 0);
+    }, { device: { serial: 'PHONE1' } });
+  });
+}
 
 test('cleanup refuses a reused transport without mutating the replacement and keeps the marker', async () => {
   const adb = new FakeAdb(api31());

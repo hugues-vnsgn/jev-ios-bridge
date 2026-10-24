@@ -60,6 +60,9 @@ export async function revalidateIdentity(input: { identity: ResolvedIdentity; pr
   const identity = input.identity;
   const current = await resolveIdentity({ request: { category: identity.category,
     name: identity.category === 'ios-simulator' ? identity.value : identity.transport.serial }, probe: input.probe, signal: input.signal });
+  if (current.category === 'android-phone' && current.transport.state !== 'device') {
+    throw new IdentityResolutionError({ code: current.transport.state === 'unauthorized' ? 'DEVICE_UNAUTHORIZED' : 'DEVICE_NOT_CONNECTED' });
+  }
   const incarnationChanged = identity.category === 'android-emulator' && current.category === 'android-emulator' &&
     (identity.provenance.process.pid !== current.provenance.process.pid || identity.provenance.process.startedAt !== current.provenance.process.startedAt ||
       identity.provenance.directory.device !== current.provenance.directory.device || identity.provenance.directory.inode !== current.provenance.directory.inode);

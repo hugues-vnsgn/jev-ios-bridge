@@ -167,7 +167,9 @@ export function renderScriptedReport(report: ScriptedReport): string {
       ...(checkpoint.screenshotPath ? [`Screenshot: ${checkpoint.screenshotPath}`] : []),
     ].join('\n');
   const errorBlock = lastError ? [
-      `Execution problem: ${String(lastError.data.code ?? 'UNKNOWN')} during ${String(lastError.data.phase ?? 'run')}`,
+      `Execution problem: ${String(lastError.data.code ?? 'UNKNOWN')}` +
+        (typeof lastError.data.vendorCode === 'string' ? ` (${lastError.data.vendorCode})` : '') +
+        ` during ${String(lastError.data.phase ?? 'run')}`,
       ...(typeof lastStep?.data.observationSummary === 'string'
         ? [`Last observed screen:\n${bounded(lastStep.data.observationSummary, 1_500)}`] : []),
       ...(typeof lastStep?.data.screenshotPath === 'string' ? [`Last screenshot: ${lastStep.data.screenshotPath}`] : []),

@@ -98,6 +98,53 @@ generation follows the frozen server's: a future stack on SDK 2.x changes the
 client in the same re-freeze, with legacy negotiation pinned explicitly, never
 `auto`, which would start an unowned second child.
 
+**Locked extension contract** (root, 2026-10-23, under the owner's grant to decide; [ticket 09](../../appium-phase3/issues/09-extension-contract.md)):
+
+- **Public tools stay where they are safe.** The private server registers
+  exactly three public tools, and everything else is unregistered:
+  - `appium_session_management`. A bridge guard allows only create and delete.
+    `attach`, `select` and `remoteServerUrl` are refused before the call, and
+    the capabilities are checked against the pinned profile.
+  - `appium_perform_actions`. It is one command with no fallback (P08 source
+    audit), so it carries every tap, swipe, scroll, hold and iOS edge stroke.
+  - `appium_get_page_source`. Under the 10 s deadline and the bounded parser.
+  
+  Screenshots come from the extension, together with the frame they belong
+  to. The convenience handlers stay unregistered because they hide retries:
+  click, swipe, scroll, scroll-to-element, long press and execute-script.
+- **The extension** is named `jev-bridge`, version 1. It is loaded through
+  public `appium-mcp/core` by absolute file URL into the extracted stack, and
+  takes `zod` from the same tree. It has seven operations, and each one sends
+  at most the native commands listed:
+  - `jev_session_inventory`: the session id, platform and device id, plus
+    the driver component processes and ports, for the fence. Read only.
+  - `jev_settings`: applies the locked settings and returns the readback.
+  - `jev_screen`: the PNG plus the window rect and orientation, read the way
+    each platform needs (Android `getOrientation`, iOS `GET /orientation`).
+    Read only.
+  - `jev_replace_text`: the locked text sequence on exactly one element
+    matched by the bridge's locator. Zero or several matches refuse before
+    any input.
+  - `jev_android_back`: one `pressKeyCode(4)`.
+  - `jev_start_activity`: Android `startActivity` with the locked extras.
+  - `jev_terminate_app`: one terminate by bundle id or package.
+- **Binding.** Every request carries the session id and the extension
+  version. A different session gives `SESSION_MISMATCH`, a different version
+  gives `VERSION_MISMATCH`, and an unlisted operation gives `NOT_ALLOWED`.
+  Nothing is dispatched in those cases.
+- **Results.** Every result, public or extension, is parsed by a bridge-side
+  schema before use. An unparsable result counts as a lost acknowledgement.
+  Errors are one closed set (`SESSION_MISMATCH`, `VERSION_MISMATCH`,
+  `NOT_ALLOWED`, `NOT_UNIQUE`, `DRIVER_ERROR`, `TIMEOUT`), with redacted
+  messages.
+- **Never.** No arbitrary driver methods or scripts, no remote attachment, no
+  private upstream imports.
+- **Fake provider.** The fake provider replays the same tool names and
+  schemas from recorded wire. A recording's header carries the extension
+  version, so a version bump forces a re-record. The schemas live in one
+  module that the extension, the bridge and the fake all import.
+- No ADR. The contract is internal and versioned, so it is reversible.
+
 ## Observation contract
 
 Parse bounded XML with platform/root validation and entity/DTD refusal. Extract
@@ -214,6 +261,47 @@ content rather than trust a prose path. Preserve normal screenshots/watch
 behavior, without imposing the tracer's intentionally narrow image subset as
 an unreviewed product limitation.
 
+**Locked from fixture coverage** (root, 2026-10-23, under the owner's grant to decide; [ticket 19](../../appium-phase3/issues/19-observation-coverage-on-a-fixture-app.md); prototype `prototype/observation-mapping` at `ed4a17729`):
+
+- **Mapping rows confirmed.** On Android, the password, empty-hint, scroll,
+  duplicate and alias screens match today's driver on all 51 rows. iOS parity
+  against today's driver stays unknown, because MobileBuildMCP cannot target
+  the private set. It is listed for Phase 4.
+- **Tap alias confirmed.** On iOS, the two same-frame references dispatched to
+  the same control once each. Android merges that wrapper and control into one
+  reference, so it has no alias case. The vendor-free bridge rule stands.
+- **Duplicates.** Two independent same-label controls are refused as
+  ambiguous.
+- **Android text.** `mobile: replaceElementValue` made one native change on
+  both the pre-filled field and the secure field. Each shown value comes from
+  the field itself, and the secure value stays masked.
+- **Completeness.** An iOS tree at depth 45 renders, and depth 50 or more
+  refuses as incomplete. An Android node at depth 70 refuses.
+- **A page-source timeout ends the session.** A deep tree of nested UIViews
+  timed out at the 10 s deadline. WDA kept building that source and held back
+  the next input. So after any page-source timeout, the observation refuses as
+  incomplete, the bridge dispatches no further input on that session, and the
+  session is deleted and fenced. The next command opens a fresh session. Deep
+  real-app trees are a Phase 4 live check.
+- **The settle cap is a return deadline.** A capture that started before the
+  3 s cap finished at 3.09 s. Each capture gets the remaining budget as its
+  deadline. At the cap, the loop returns the last completed capture with
+  `settled: false` and keeps nothing that arrives later.
+- **The settle cap never cancels a page-source call.** Only the 10 s
+  page-source deadline cancels one, and only that deadline retires the
+  session. At the 3 s cap, observe returns the last completed capture with
+  `settled: false`, on time. A capture still in flight keeps its own 10 s
+  deadline, its result is discarded, and the session marks it pending. The
+  next command on that session waits for it to finish first. If it reaches
+  10 s, the timeout rule applies. If no capture completed before the cap,
+  the observation refuses as incomplete. (Root, 2026-10-23, answering
+  P3.4.)
+- **A capture is a pair.** Each settle capture is a page source plus a
+  `jev_screen` taken straight after it, under the same deadline. The
+  comparison uses the source hash. A pair counts only when both halves have
+  returned. So an observation always has a screenshot that matches its
+  tree, as reports, evidence and Android `tapAt` need.
+
 ## Operation contract
 
 Resolve guards and exactly one eligible target from fresh evidence before input.
@@ -274,6 +362,51 @@ prototype `prototype/text-replacement` at `a6e3cbbc5`):
 Keep existing iOS attach and coordinate requests explicitly refused before
 input. Prove Android conversion on at least two device sizes. Do not relabel
 Appium timings as app performance or copy unmeasured expiry/tap-alias metrics.
+
+**Locked tap and gestures** (root, 2026-10-23, under the owner's grant to decide; [ticket 08](../../appium-phase3/issues/08-tap-gestures-and-coordinates.md); prototype `prototype/tap-gestures` at `50810ecac`):
+
+- **One command per input.** Every tap, swipe, scroll, hold and iOS edge
+  stroke is exactly one explicit W3C sequence in one `appium_perform_actions`
+  call. A lost reply closes dispatch, and nothing is resent. P08 counted one
+  app callback per trial on both platforms.
+- **No convenience handlers.** In the frozen 1.97.0 source, iOS swipe can send
+  up to three mutations, long press two, and scroll-to-element loops. Element
+  click can scroll an offscreen element implicitly. None of them is used.
+- **Tap.** The pointer moves to the centre of the bound target's frame in the
+  fresh snapshot, presses, pauses 50 ms and releases.
+- **Swipe and scroll** keep today's geometry and `actPath`:
+  - Android strokes take 1000 ms. They run from 90% to 10% inside the largest
+    eligible scrollable, or from 70% to 30% of the screen when there is none.
+  - The iOS scroll keeps the stroke MobileBuildMCP actually made. Distance 0.4
+    is applied after 15% insets of at least 24 points, which gives 28% of a
+    tall frame (P08 measured 180 of 640 points). It keeps AXe's default
+    durations too: 1.0 s for a swipe, and a centred 200-point stroke in 0.5 s
+    for screen-middle.
+- **Back.**
+  - **Android:** the Back key through `jev_android_back`.
+  - **iOS:** the same order as today. If the screen has a navigation back
+    button, the bridge taps it (P08 counted one tap and saw the return).
+    Otherwise it makes AXe's left-edge stroke, from x=20 to width-20 in
+    0.3 s.
+
+  In P08 that edge stroke registered nothing and did not go back. It is kept
+  rather than refused, and its parity is a listed Phase 4 item, so no working
+  script is downgraded to `UNSUPPORTED_ACTION`.
+- **Observed tap with a hold.** Press, pause for the authored hold, release.
+  The authored hold is recorded. P08 measured iOS callbacks about 20–25 ms
+  above the authored value (median 74 ms for 50 ms). That is a fixture timing
+  span, not a defect.
+- **Screenshots and Android `tapAt`.**
+  - The `jev_screen` PNG becomes a JPEG at most 800 px on the long side, never
+    enlarged.
+  - `tapAt` converts screenshot pixels to device pixels using the frame
+    returned with that screenshot, rounded to whole pixels. It refuses if the
+    point is out of bounds, the evidence is stale, or the orientation or size
+    changed.
+  - P08 proved the path at identity scale on the 320×640 AVD. Unit tests
+    cover the scaling math. Non-unit scaling, a second size and rotation are
+    Phase 4 items.
+  - iOS `tapAt` stays `UNSUPPORTED_ACTION`.
 
 **Locked device effects** (owner, 2026-10-23, [ticket 17](../../appium-phase3/issues/17-allowed-device-effects.md); diffs on `prototype/device-effects` at `14588abc2`):
 

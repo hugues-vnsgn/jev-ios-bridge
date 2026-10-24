@@ -206,7 +206,7 @@ class DescendantCases(unittest.TestCase):
         (self.root / 'components/shared.json').write_text(json.dumps(record))
         fake_bin = self.root / 'bin';fake_bin.mkdir()
         ps = fake_bin / 'ps'
-        ps.write_text('#!' + sys.executable + '\nprint("/sdk/adb fork-server server")\n');ps.chmod(0o700)
+        ps.write_text('#!/bin/sh\nprintf "%s\\n" "/sdk/adb fork-server server"\n');ps.chmod(0o700)
         result = subprocess.run([sys.executable, str(EXPERIMENTS / 'stop-native-children.py'), str(self.root), str(self.owner_path), 'stop'],
                                 capture_output=True, text=True, env={**self.env, 'PATH': str(fake_bin) + os.pathsep + self.env['PATH']}, timeout=10)
         self.assertEqual(result.returncode, 0, result.stderr)
