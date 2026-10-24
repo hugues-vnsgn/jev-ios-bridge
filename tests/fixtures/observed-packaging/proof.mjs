@@ -56,7 +56,8 @@ function ok(result) { assert.equal(result.code, 0, result.stderr + '\n' + result
 const required = ['docs/guide/14-observed-actions.md', 'docs/guide/reference/observed-format.md', 'skills/test-ios/SKILL.md',
   'dist/cli.js', 'dist/mcp/observed.js', 'dist/observed/cli.js', 'dist/observed/service.js',
   'dist/observed/allocation.js', 'dist/device/admission-maintenance.js', 'dist/device/admission-sqlite.js',
-  'dist/appium/stack.js', 'dist/appium/stack-identity.js', 'stack/release/stack.tar.gz', 'stack/release/wda.tar.gz',
+  'dist/appium/stack.js', 'dist/appium/stack-identity.js', 'dist/appium/extension/entry.js', 'dist/appium/extension/server.js',
+  'dist/appium/extension/plugin.js', 'dist/appium/extension/operations.js', 'dist/appium/wire-schemas.js', 'stack/release/stack.tar.gz', 'stack/release/wda.tar.gz',
   'stack/release/manifest.json', 'THIRD_PARTY_NOTICES.md'];
 const sha = path => createHash('sha256').update(readFileSync(path)).digest('hex');
 function manifest(root) { return Object.fromEntries(required.map(file => [file, sha(join(root, file))])); }

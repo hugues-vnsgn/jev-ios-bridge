@@ -12,6 +12,7 @@ import { recoveryViewSchema, componentSchema, componentObservationSchema, type C
 import type { DeviceCategory, AdmissionDependencies, AdmissionRequest, AdmissionResult, AttemptIdentity, AttemptView, DeviceView, OwnerIdentity, OwnerProcess, TerminalCandidate, GenerationView, CommandRecord, ComponentInput, NativeComponent, CommandRequest, IssueResult, FenceRequest, FenceReceipt, RecoveryIdentity } from './admission.js';
 import { appiumComponentSchema, appiumProofSchema, fenceCommandSchema, parseEffectResult, readOnly, type Transcript } from '../appium/fence/schema.js';
 import { settles, verifyAppiumProof } from '../appium/fence/proof.js';
+import type { MarkerSource } from './admission.js';
 import { BRIDGE_VERSION } from '../version.js';
 import type { UpgradeDeclaration, UpgradeReceipt, UpgradeRecovery, UpgradeCheckpoint, PreservedRecords } from './admission-upgrade.js';
 import { IMPORT_REFUSAL_REASONS, type ImportRefusalReason } from '../scripted/vocabulary.js';
@@ -35,7 +36,7 @@ export class AdmissionError extends Error {
 }
 
 export type StoreOptions = AdmissionDependencies & { root: string; fixtureSchemaVersion?: 2 | 3 } & (
-  { mode: 'production'; durability?: 'full' } | { mode: 'test'; durability?: 'full' | 'fast' }
+  { mode: 'production'; durability?: 'full' } | { mode: 'test'; durability?: 'full' | 'fast'; busyTimeoutMs?: number }
 );
 const declarationSchema = z.strictObject({
   version: z.literal(1), writersStopped: z.literal(true), historicalRootsDeclaredOrExcluded: z.literal(true),
@@ -491,10 +492,12 @@ function absent(path: string): boolean {
   try { lstatSync(path); return false; }
   catch (error) { if ((error as NodeJS.ErrnoException).code === 'ENOENT') return true; throw error; }
 }
-function configure(db: DatabaseSync, durability: 'full' | 'fast' = 'full'): void {
+// Writers are short, but a full fsync under host load exceeds 250 ms; the wait stays bounded.
+const BUSY_TIMEOUT_MS = 5000;
+function configure(db: DatabaseSync, durability: 'full' | 'fast' = 'full', busyTimeoutMs = BUSY_TIMEOUT_MS): void {
   db.exec(durability === 'fast'
-    ? 'PRAGMA busy_timeout=250; PRAGMA foreign_keys=ON; PRAGMA synchronous=OFF; PRAGMA fullfsync=OFF;'
-    : 'PRAGMA busy_timeout=250; PRAGMA foreign_keys=ON; PRAGMA synchronous=EXTRA; PRAGMA fullfsync=ON;');
+    ? `PRAGMA busy_timeout=${busyTimeoutMs}; PRAGMA foreign_keys=ON; PRAGMA synchronous=OFF; PRAGMA fullfsync=OFF;`
+    : `PRAGMA busy_timeout=${busyTimeoutMs}; PRAGMA foreign_keys=ON; PRAGMA synchronous=EXTRA; PRAGMA fullfsync=ON;`);
   if (db.prepare('PRAGMA journal_mode').get()?.journal_mode !== 'delete') {
     throw new AdmissionError('STATE_UNAVAILABLE', 'Admission requires DELETE journal mode');
   }
@@ -644,7 +647,7 @@ export class AdmissionSqlite {
     secureSidecars(path);
     const db = new DatabaseSync(path);
     try {
-      configure(db, this.options.mode === 'test' ? this.options.durability : 'full');
+      configure(db, this.options.mode === 'test' ? this.options.durability : 'full', this.options.mode === 'test' ? this.options.busyTimeoutMs : undefined);
       return db;
     } catch (error) { db.close(); throw error; }
   }
@@ -1285,8 +1288,12 @@ export class AdmissionSqlite {
   private command(row: Row): CommandRecord {
     return { id: row.id, componentId: row.component_id, requestId: row.request_id, operation: row.operation, state: row.state, recoveryClaimId: row.recovery_claim_id };
   }
-  markerRecorded(identity: { category: DeviceCategory; value: string }, token: string): boolean {
-    return this.read(db => !!db.prepare('SELECT id FROM owner_generations WHERE platform=? AND device=? AND token=?')
+  private importedMarker(db: DatabaseSync, source: MarkerSource | undefined): boolean {
+    return !!source && !!db.prepare("SELECT path FROM import_sources WHERE path=? AND sha256=? AND kind='lease'")
+      .get(source.path, source.sha256);
+  }
+  markerRecorded(identity: { category: DeviceCategory; value: string }, token: string, source?: MarkerSource): boolean {
+    return this.read(db => this.importedMarker(db, source) || !!db.prepare('SELECT id FROM owner_generations WHERE platform=? AND device=? AND token=?')
       .get(identity.category, identity.value, token));
   }
   markerKnown(expected: OwnerIdentity, token: string): boolean {

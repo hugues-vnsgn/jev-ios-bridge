@@ -57,7 +57,7 @@ test('Nolan same-frame button aliases resolve one tap target without a vendor id
     (error: unknown) => error instanceof ScriptSelectionError && error.code === 'TARGET_AMBIGUOUS');
   assert.throws(() => assertScreenGuard(captured, { present: [{ role: 'button', label }] }),
     (error: unknown) => error instanceof ScriptSelectionError && error.code === 'GUARD_AMBIGUOUS');
-  const pinned = { tapAliasRule: 'mobilebuildmcp-2.7.1' } as const;
+  const pinned = { tapAliasRule: 'same-frame-buttons-v1' } as const;
   assert.equal(resolveActionTarget(captured, { role: 'button', label }, 'tap', pinned).ref, 'e30');
   assert.doesNotThrow(() => assertScreenGuard(captured,
     { present: [{ role: 'button', label }] }, pinned));
@@ -71,7 +71,7 @@ test('unidentified tap buttons with different frames or actions remain ambiguous
   const differentFrame: Element = { ...nolan, ref: 'e117', frame: { x: 22, y: 172, width: 40, height: 40 } };
   const differentActions: Element = { ...nolan, ref: 'e117', actions: ['tap', 'touch'] };
   const differentValue: Element = { ...nolan, ref: 'e117', value: 'different' };
-  const pinned = { tapAliasRule: 'mobilebuildmcp-2.7.1' } as const;
+  const pinned = { tapAliasRule: 'same-frame-buttons-v1' } as const;
   for (const other of [differentFrame, differentActions, differentValue]) {
     const captured = snapshot([nolan, other]);
     assert.throws(() => resolveActionTarget(captured, { role: 'button', label }, 'tap', pinned),
@@ -90,10 +90,10 @@ test('same-frame no-identifier aliases are not generalized to typing or swiping'
   const scroll: Element = { ref: 'e30', role: 'scroll-view', label: 'List', frame, state,
     actions: ['swipeWithin'] };
   assert.throws(() => resolveActionTarget(snapshot([field, { ...field, ref: 'e117' }]),
-    { role: 'text-field', label: 'Email' }, 'typeText', { tapAliasRule: 'mobilebuildmcp-2.7.1' }),
+    { role: 'text-field', label: 'Email' }, 'typeText', { tapAliasRule: 'same-frame-buttons-v1' }),
   (error: unknown) => error instanceof ScriptSelectionError && error.code === 'TARGET_AMBIGUOUS');
   assert.throws(() => resolveActionTarget(snapshot([scroll, { ...scroll, ref: 'e117' }]),
-    { role: 'scroll-view', label: 'List' }, 'swipeWithin', { tapAliasRule: 'mobilebuildmcp-2.7.1' }),
+    { role: 'scroll-view', label: 'List' }, 'swipeWithin', { tapAliasRule: 'same-frame-buttons-v1' }),
   (error: unknown) => error instanceof ScriptSelectionError && error.code === 'TARGET_AMBIGUOUS');
 });
 
@@ -820,7 +820,7 @@ test('the run reads the tap alias rule from the driver, not from a run-wide opti
   assert.equal(taps.length, 0, 'an ambiguous target is never tapped');
 
   const withRule = await runScriptedScenario({ runId: 'scripted-2', scenario: scripted, log: memoryLog(),
-    driver: { tapAliasRule: 'mobilebuildmcp-2.7.1', async prepare() {}, async observe() { return captured; },
+    driver: { tapAliasRule: 'same-frame-buttons-v1', async prepare() {}, async observe() { return captured; },
       async act(action) { if (action.kind === 'tap') taps.push(action.targetRef); }, async close() {} },
     judge: { async judge() { return { probabilities: { shown: 0.97 }, inputTokens: 3, latencyMs: 1, model: 'jev-1.13.0' }; } } });
   assert.equal(withRule.verdict, 'passed');
@@ -902,6 +902,25 @@ test('a DeviceReasonError carrying a vendorCode records it in the error event an
     const reportJson = JSON.parse(await readFile(join(root, 'vendor-code-agent', 'report.json'), 'utf8')) as { error: { vendorCode?: string } };
     assert.equal(reportJson.error.vendorCode, 'agent');
   });
+});
+
+test('identity sub-reasons appear beside the reason code in the human summary without changing recorded errors', async () => {
+  for (const [code, vendorCode] of [['DEVICE_IDENTITY_CONFLICT', 'TRANSPORT_CHANGED'], ['DEVICE_IDENTITY_UNAVAILABLE', 'PROVENANCE_INACCESSIBLE']] as const) {
+    await withRunLog('identity-summary', async (log, root) => {
+      const report = await runScriptedScenario({ runId: 'identity-summary', judge: markerJudge, log,
+        scenario: androidScript({ steps: [markerCheckpoint] }),
+        driver: { async prepare() { throw new DeviceReasonError(code, 'Identity refused', { vendorCode }); },
+          async observe() { assert.fail('No observation after identity refusal'); }, async act() {}, async close() {} } });
+      const events = (await readFile(join(root, 'identity-summary', 'run.jsonl'), 'utf8')).trim().split('\n')
+        .map(line => JSON.parse(line) as RunEvent);
+      const json = JSON.parse(await readFile(join(root, 'identity-summary', 'report.json'), 'utf8'));
+      assert.equal(events.find(event => event.type === 'error')?.data.vendorCode, vendorCode);
+      assert.deepEqual(json.error, { code, phase: 'prepare', stepId: null, vendorCode });
+      const summary = renderScriptedReport(report);
+      assert.equal(summary.split('\n').find(line => line.startsWith('Execution problem:')),
+        `Execution problem: ${code} (${vendorCode}) during prepare`);
+    });
+  }
 });
 
 test('a DeviceReasonError whose vendorCode fails the pattern check records none', async () => {

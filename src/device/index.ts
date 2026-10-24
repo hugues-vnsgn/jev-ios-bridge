@@ -505,7 +505,7 @@ export interface ObservedActionDriver {
 
 export class MobileBuildMcpDriver implements DeviceDriver, IosPreparationDriver, ObservedActionDriver {
   /** This pinned integration's proven tap-alias collapsing. The run reads it from the driver. */
-  readonly tapAliasRule: TapAliasRule = 'mobilebuildmcp-2.7.1';
+  readonly tapAliasRule: TapAliasRule = 'same-frame-buttons-v1';
   private readonly runner: CliRunner;
   private readonly window: DeviceWindowOpener | undefined;
   private resolvedIdentity: SimulatorIdentity | undefined;
@@ -823,7 +823,7 @@ export class MobileBuildMcpDriver implements DeviceDriver, IosPreparationDriver,
       `App ${bundleId} is not installed on simulator ${resolved.value}`, { vendorCode: 'APP_NOT_INSTALLED' });
     const admission = this.options.admission ?? Admission.open();
     admission.assertBackend(this.options.fakeBackend ? 'fake' : 'real');
-    try { this.lease.assertKnown(deviceId, token => admission.markerRecorded({ category: 'ios-simulator', value: deviceId }, token)); }
+    try { this.lease.assertKnown(deviceId, (token, source) => admission.markerRecorded({ category: 'ios-simulator', value: deviceId }, token, source)); }
     catch (error) {
       if (error instanceof DeviceLeaseBusyError) throw new DeviceCliError('DEVICE_BUSY', error.message);
       throw error;

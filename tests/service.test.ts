@@ -356,7 +356,7 @@ test('createDriver builds a driver per run from that run\'s scenario, and the ru
         async act(action) { taps.push(`${scenario.app.bundleId}:${action.targetRef}`); },
         async close() {},
       };
-      return scenario.app.bundleId === 'com.example.pinned' ? { ...driver, tapAliasRule: 'mobilebuildmcp-2.7.1' } : driver;
+      return scenario.app.bundleId === 'com.example.pinned' ? { ...driver, tapAliasRule: 'same-frame-buttons-v1' } : driver;
     },
     createJudge: () => ({ async judge() { return { probabilities: { shown: 1 },
       inputTokens: 1, latencyMs: 1, model: 'jev-1.13.0' }; } }),
