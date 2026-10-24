@@ -8,7 +8,7 @@ import { AdmissionError, AdmissionSqlite, type StoreOptions } from './admission-
 import type { ImportedObservedAction, MigrationReceipt } from './admission-migration.js';
 import type { EmulatorObservation } from './android/probe.js';
 import { fenceAppium, inspectForeignAutomation, type AutomationScope, type FenceOptions } from '../appium/fence/index.js';
-import { appiumComponentSchema, appiumProofSchema, fenceCommandSchema } from '../appium/fence/schema.js';
+import { appiumComponentSchema, appiumProofSchema, fenceCommandSchema, fenceExecutorsSchema } from '../appium/fence/schema.js';
 import { FENCE_REQUEST_KINDS } from '../scripted/vocabulary.js';
 
 export function parseFenceRequestKind(raw: unknown): 'stop' {
@@ -41,6 +41,7 @@ export const componentSchema = z.union([appiumComponentSchema, fenceCommandSchem
 export const componentObservationSchema = z.discriminatedUnion('kind', [
   z.strictObject({ kind: z.literal('host-start'), process: ownerProcessSchema }),
   z.strictObject({ kind: z.literal('agent-start'), pid: z.number().int().positive(), startTime: bindingText }),
+  fenceExecutorsSchema,
 ]);
 export type ComponentObservation = z.infer<typeof componentObservationSchema>;
 export type ComponentInput = z.infer<typeof componentSchema>;
@@ -219,7 +220,16 @@ export class Admission {
     const exited = new Set<string>();
     if (parsed.success) for (const component of parsed.data.components) {
       if ((component.proof.kind === 'host-process-exited' || component.proof.kind === 'adb-stopped' || component.proof.kind === 'android-stream-exited') &&
-        (this.dependencies.componentLiveness?.(component.proof.process) ?? componentLiveness(component.proof.process)) === 'exited') exited.add(component.componentId);
+        this.componentState(component.proof.process) === 'exited') exited.add(component.componentId);
+    }
+    const fenced = parsed.success ? parsed.data.components.filter(component => component.proof.kind === 'fenced-write') : [];
+    if (fenced.length) {
+      const observations = this.store.readGeneration(expected).componentObservations;
+      for (const component of fenced) {
+        const executors = observations.filter(observation => observation.componentId === component.componentId)
+          .map(observation => fenceExecutorsSchema.safeParse(observation.payload)).find(parsed => parsed.success);
+        if (executors?.data.processes.every(process => ['exited', 'reused'].includes(this.componentState(process)))) exited.add(component.componentId);
+      }
     }
     return this.store.submitFence(expected, request, exited, recovery);
   }

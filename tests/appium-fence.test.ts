@@ -379,14 +379,37 @@ test('a failed forward removal is covered when its executor exited and a readbac
   const { f, runner, view, answer } = await failedWriteCovered(t, targets[3], 'forward-remove');
   assert.deepEqual(runner.forwards, [{ serial: 'foreign', local: 'tcp:19124', remote: 'tcp:6790' }]);
   assert.deepEqual((view.components.find(component => component.id === answer.componentId)!.declaration as { effect: unknown }).effect, { kind: 'forward-inventory' });
-  assert.equal(state(f.admission, f.claim.identity), 'available');
+  assert.deepEqual(view.recoveries.map(recovery => recovery.closure), ['refused', 'accepted']);
+  assert.equal(f.admission.readAttempt(f.claim.identity.attempt)?.terminal?.outcome, 'inconclusive');
 });
 
 test('a failed settings write is covered when the readback equals the recorded values and its executor exited', async t => {
   const { f, runner, view, answer } = await failedWriteCovered(t, targets[4], 'settings-write');
   assert.deepEqual(runner.values, settings);
   assert.deepEqual((view.components.find(component => component.id === answer.componentId)!.declaration as { effect: unknown }).effect, { kind: 'settings-read', serial: 'serial-one' });
-  assert.equal(state(f.admission, f.claim.identity), 'available');
+  assert.deepEqual(view.recoveries.map(recovery => recovery.closure), ['refused', 'accepted']);
+});
+
+test('a fenced write refuses a readback from an earlier claim or a read of another kind', async t => {
+  const f = quarantinedAndroidForward(t, { componentLiveness: () => 'exited' });
+  const runner = new FakeRunner(); runner.failing = 'forward-remove';
+  await f.admission.acquireWithAppiumRecovery(f.request, { runner: runner.run, revalidate: runner.revalidate, clock: runner.clock });
+  runner.failing = undefined;
+  const earlier = f.admission.readGeneration(f.claim.identity);
+  const failed = earlier.commands.find(command => command.state === 'uncertain')!;
+  const stale = earlier.commands.find(command => command.state === 'settled')!;
+  const recovery = f.admission.claimRecovery(f.claim.identity, 'forged-write'); if (recovery.kind === 'refused') assert.fail();
+  const { fenceAppium } = await fenceModule();
+  const proof = await fenceAppium({ admission: f.admission, claim: recovery.claim, runner: runner.run, revalidate: runner.revalidate, clock: runner.clock });
+  const others = proof.components.filter(component => component.componentId !== failed.componentId);
+  const settingsRead = { id: 'forged-read', kind: 'appium-fence-command', effect: { kind: 'settings-read', serial: 'serial-one' } };
+  await recovery.claim.dispatch({ requestId: 'forged-read', componentId: 'forged-read', operation: 'appium-fence', payload: {}, recordResult: true, components: [JSON.parse(JSON.stringify(settingsRead))] }, async () => settings);
+  const otherKind = f.admission.readGeneration(f.claim.identity).commands.at(-1)!;
+  for (const commandId of [stale.id, otherKind.id]) {
+    const forged = { ...proof, components: [...others, { componentId: failed.componentId!, proof: { kind: 'fenced-write' as const, commandId } }, { componentId: 'forged-read', proof: { kind: 'completed-command' as const, commandId: otherKind.id } }] };
+    assert.throws(() => recovery.claim.submitFence(forged), { code: 'COVERAGE_INCOMPLETE' });
+  }
+  assert.equal(state(f.admission, f.claim.identity), 'quarantined');
 });
 
 test('a failed write whose readback shows the old state is not covered', async t => {
@@ -405,10 +428,10 @@ test('host inventory polling backs off and stops after twelve reads', async t =>
   const recovery = f.admission.claimRecovery(f.claim.identity, 'poll-cap'); if (recovery.kind === 'refused') assert.fail();
   const runner = new FakeRunner(); runner.resistTerm = true; runner.ignoreKill = true;
   const { fenceAppium } = await fenceModule();
-  await assert.rejects(() => fenceAppium({ admission: f.admission, claim: recovery.claim, runner: runner.run, revalidate: runner.revalidate, clock: runner.clock }));
+  await assert.rejects(() => fenceAppium({ admission: f.admission, claim: recovery.claim, runner: runner.run, revalidate: runner.revalidate, clock: runner.clock }), /poll cap/);
   const operations = runner.events.map(event => 'kind' in event ? event.kind : `wait ${event.wait}`);
   const afterKill = operations.slice(operations.lastIndexOf('host-signal') + 1);
-  assert.deepEqual(afterKill.filter(operation => operation.startsWith('wait')), ['wait 500', 'wait 1000', 'wait 2000', 'wait 4000', 'wait 5000', 'wait 5000', 'wait 5000', 'wait 5000', 'wait 5000', 'wait 5000', 'wait 5000']);
+  assert.deepEqual(afterKill.filter(operation => operation.startsWith('wait')), ['wait 500', 'wait 1000', 'wait 2000', 'wait 4000', 'wait 4000', 'wait 4000', 'wait 4000', 'wait 4000', 'wait 4000', 'wait 4000', 'wait 4000']);
   assert.equal(afterKill.filter(operation => operation === 'host-inventory').length, 12);
   assert.equal(state(f.admission, f.claim.identity), 'quarantined');
 });
@@ -494,7 +517,7 @@ test('leftover owned forward is absent before the next create and an unrelated f
   const runner = new FakeRunner();
   const { clearOwnedForwards } = await fenceModule();
   const session = f.claim.bindDriver('fake');
-  const proofs = await clearOwnedForwards({ admission: f.admission, owner: f.claim.identity, dispatcher: session, runner: runner.run, revalidate: runner.revalidate });
+  const proofs = await clearOwnedForwards({ admission: f.admission, claim: f.claim, dispatcher: session, runner: runner.run, revalidate: runner.revalidate });
   await session.dispatch('next-create', async () => {
     assert.deepEqual(runner.forwards, [{ serial: 'foreign', local: 'tcp:19124', remote: 'tcp:6790' }]);
     return { created: true };
@@ -577,7 +600,7 @@ test('startup forward cleanup has its own bounded budget even with a caller sign
   const runner = new FakeRunner(); runner.hang = true;
   const { clearOwnedForwards } = await fenceModule();
   const session = f.claim.bindDriver('fake');
-  await assert.rejects(() => clearOwnedForwards({ admission: f.admission, owner: f.claim.identity, dispatcher: session, runner: runner.run, revalidate: runner.revalidate,
+  await assert.rejects(() => clearOwnedForwards({ admission: f.admission, claim: f.claim, dispatcher: session, runner: runner.run, revalidate: runner.revalidate,
     signal: new AbortController().signal, budgetMs: 10 }), /budget/i);
   assert.equal(f.admission.readGeneration(f.claim.identity).commands[0]?.state, 'uncertain');
 });
@@ -594,7 +617,7 @@ test('a pre-create forward readback is never a final stop receipt', async t => {
   const f = fixture(t, [targets[3]]); f.claim.registerComponent(JSON.parse(JSON.stringify(targets[3])));
   const runner = new FakeRunner();
   const { clearOwnedForwards } = await fenceModule();
-  const proofs = await clearOwnedForwards({ admission: f.admission, owner: f.claim.identity, dispatcher: f.claim.bindDriver('fake'), runner: runner.run, revalidate: runner.revalidate });
+  const proofs = await clearOwnedForwards({ admission: f.admission, claim: f.claim, dispatcher: f.claim.bindDriver('fake'), runner: runner.run, revalidate: runner.revalidate });
   runner.forwards.push({ serial: 'serial-one', local: 'tcp:19123', remote: 'tcp:6790' });
   f.claim.closeDispatch({ outcome: 'inconclusive', disposition: 'quarantined', payload: {}, evidenceRefs: [] });
   const recovery = f.admission.claimRecovery(f.claim.identity, 'final'); if (recovery.kind === 'refused') assert.fail();

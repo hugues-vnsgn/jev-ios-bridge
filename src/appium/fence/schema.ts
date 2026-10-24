@@ -43,7 +43,7 @@ export const androidProcessSchema = z.discriminatedUnion('kind', [
   z.strictObject({ kind: z.literal('running'), startTime: androidIdentitySchema.shape.startTime }),
 ]);
 export const fenceEffectSchema = z.discriminatedUnion('kind', [
-  z.strictObject({ kind: z.literal('host-inventory') }),
+  z.strictObject({ kind: z.literal('host-inventory'), of: z.array(hostIdentitySchema).min(1).max(4096) }),
   z.strictObject({ kind: z.literal('host-signal-group'), pgid: groupSchema.shape.pgid, members: z.array(hostIdentitySchema).min(1).max(4096), signal: z.enum(['SIGTERM', 'SIGKILL']) }),
   z.strictObject({ kind: z.literal('host-signal'), process: hostIdentitySchema, signal: z.enum(['SIGTERM', 'SIGKILL']) }),
   z.strictObject({ kind: z.literal('wda-inventory'), udid }),
@@ -58,8 +58,14 @@ export const fenceEffectSchema = z.discriminatedUnion('kind', [
 export type FenceEffect = z.infer<typeof fenceEffectSchema>;
 const effectAccess = { 'host-inventory': 'read', 'host-signal-group': 'write', 'host-signal': 'write', 'wda-inventory': 'read', 'wda-stop': 'write',
   'android-process': 'read', 'android-stop': 'write', 'forward-inventory': 'read', 'forward-remove': 'write', 'settings-read': 'read', 'settings-write': 'write' } as const satisfies Record<FenceEffect['kind'], 'read' | 'write'>;
-export const readOnly = (effect: FenceEffect) => effectAccess[effect.kind] === 'read';
+type WriteKind = { [K in FenceEffect['kind']]: (typeof effectAccess)[K] extends 'write' ? K : never }[FenceEffect['kind']];
+export type WriteEffect = Extract<FenceEffect, { kind: WriteKind }>;
+export type ReadEffect = Exclude<FenceEffect, WriteEffect>;
+export const readOnly = (effect: FenceEffect): effect is ReadEffect => effectAccess[effect.kind] === 'read';
 export const fenceCommandSchema = z.strictObject({ id: text, kind: z.literal('appium-fence-command'), effect: fenceEffectSchema });
+export const executorSchema = z.strictObject({ pid: z.number().int().positive(), incarnation: z.string().min(1).max(500).refine(value => !!value.trim() && !value.includes('\0')) });
+export type Executor = z.infer<typeof executorSchema>;
+export const fenceExecutorsSchema = z.strictObject({ kind: z.literal('fence-executors'), processes: z.array(executorSchema).max(64) });
 export const appiumProofSchema = z.discriminatedUnion('kind', [
   z.strictObject({ kind: z.literal('appium-group-stopped'), beforeCommandId: text, afterCommandId: text }),
   z.strictObject({ kind: z.literal('appium-wda-stopped'), commandId: text }),
@@ -67,6 +73,7 @@ export const appiumProofSchema = z.discriminatedUnion('kind', [
   z.strictObject({ kind: z.literal('appium-forward-removed'), commandId: text }),
   z.strictObject({ kind: z.literal('appium-settings-restored'), commandId: text }),
   z.strictObject({ kind: z.literal('appium-helper-stopped'), commandId: text }),
+  z.strictObject({ kind: z.literal('fenced-write'), commandId: text }),
 ]);
 export type AppiumProof = z.infer<typeof appiumProofSchema>;
 export type HostIdentity = z.infer<typeof hostIdentitySchema>;

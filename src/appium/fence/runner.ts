@@ -2,7 +2,7 @@ import { z } from 'zod/v4';
 import type { AdbResult, AdbRunner } from '../../device/android/adb.js';
 import { androidStartTime, processGone, shellCommand } from '../../device/android/recovery.js';
 import { androidProcessSchema, forwardInventorySchema, hostInventorySchema, sameForward, settingKeySchema, settingsSchema, wdaInventorySchema,
-  type FenceEffect, type HostIdentity } from './schema.js';
+  type Executor, type FenceEffect, type HostIdentity } from './schema.js';
 import { sharedService } from './proof.js';
 import { hostFenceIo } from './host.js';
 import type { FenceRunner } from './index.js';
@@ -12,7 +12,8 @@ export type HostFenceIo = {
   signalGroup: (pgid: number, signal: 'SIGTERM' | 'SIGKILL', abort: AbortSignal) => Promise<void>;
   signalProcess: (process: HostIdentity, signal: 'SIGTERM' | 'SIGKILL', abort: AbortSignal) => Promise<void>;
 };
-type SimctlRunner = (args: string[], signal: AbortSignal) => Promise<AdbResult>;
+type SimctlRunner = (args: string[], signal: AbortSignal, started?: (host: Executor) => void) => Promise<AdbResult>;
+type NativeCall = (args: string[]) => Promise<AdbResult>;
 const resultSchema = z.strictObject({ stdout: z.string(), stderr: z.string(), exitCode: z.number().int() });
 const simulatorListSchema = z.object({ devices: z.record(z.string(), z.array(z.object({ udid: z.string(), state: z.string() }))) });
 const UIAUTOMATOR2_PACKAGES = ['io.appium.uiautomator2.server', 'io.appium.uiautomator2.server.test'];
@@ -66,74 +67,72 @@ async function nativeCall<T>(signal: AbortSignal, call: () => Promise<T>): Promi
   signal.throwIfAborted();
   return result;
 }
+async function wdaInventory(udid: string, simctl: NativeCall) {
+  const listing = await simctl(['spawn', udid, 'launchctl', 'list']);
+  if (listing.exitCode === 0 && listing.stderr === '') return wdaRows(udid, listing);
+  if (shutDown(udid, await simctl(['list', '-j', 'devices', udid]))) return wdaInventorySchema.parse([]);
+  throw new Error('Fence native query failed');
+}
+async function processState(effect: { serial: string; pid: number }, adb: NativeCall) {
+  const result = resultSchema.parse(await adb(shellCommand(effect.serial, ['cat', `/proc/${effect.pid}/stat`])));
+  if (processGone(result)) return androidProcessSchema.parse({ kind: 'absent' });
+  checked(result);
+  const startTime = androidStartTime(result.stdout);
+  if (!startTime || !result.stdout.startsWith(`${effect.pid} (`)) throw new Error('Malformed proc identity');
+  return androidProcessSchema.parse({ kind: 'running', startTime });
+}
 export function createFenceRunner(io: { host?: HostFenceIo; adb: AdbRunner; simctl: SimctlRunner }): FenceRunner {
   const host = io.host ?? hostFenceIo();
-  const adb: AdbRunner = (args, signal) => nativeCall(signal, () => io.adb(args, signal));
-  const simctl: SimctlRunner = (args, signal) => nativeCall(signal, () => io.simctl(args, signal));
-  const inventory = (signal: AbortSignal) => nativeCall(signal, () => host.inventory(signal));
-  const signalGroup: HostFenceIo['signalGroup'] = (pgid, name, signal) => nativeCall(signal, () => host.signalGroup(pgid, name, signal));
-  const signalProcess: HostFenceIo['signalProcess'] = (process, name, signal) => nativeCall(signal, () => host.signalProcess(process, name, signal));
-  const wdaInventory = async (udid: string, signal: AbortSignal) => {
-    const listing = await simctl(['spawn', udid, 'launchctl', 'list'], signal);
-    if (listing.exitCode === 0 && listing.stderr === '') return wdaRows(udid, listing);
-    if (shutDown(udid, await simctl(['list', '-j', 'devices', udid], signal))) return wdaInventorySchema.parse([]);
-    throw new Error('Fence native query failed');
-  };
-  const processState = async (effect: { serial: string; pid: number }, signal: AbortSignal) => {
-    const result = resultSchema.parse(await adb(shellCommand(effect.serial, ['cat', `/proc/${effect.pid}/stat`]), signal));
-    if (processGone(result)) return androidProcessSchema.parse({ kind: 'absent' });
-    checked(result);
-    const startTime = androidStartTime(result.stdout);
-    if (!startTime || !result.stdout.startsWith(`${effect.pid} (`)) throw new Error('Malformed proc identity');
-    return androidProcessSchema.parse({ kind: 'running', startTime });
-  };
-  return async (effect: FenceEffect, signal) => {
+  return async (effect: FenceEffect, signal, started) => {
     signal.throwIfAborted();
+    const adb: NativeCall = args => nativeCall(signal, () => io.adb(args, signal, started));
+    const simctl: NativeCall = args => nativeCall(signal, () => io.simctl(args, signal, started));
+    const inventory = () => nativeCall(signal, () => host.inventory(signal));
     switch (effect.kind) {
-      case 'host-inventory': return hostInventorySchema.parse(await inventory(signal));
+      case 'host-inventory': return hostInventorySchema.parse(await inventory());
       case 'host-signal-group': {
-        const rows = hostInventorySchema.parse(await inventory(signal)).filter(row => row.pgid === effect.pgid && row.state === 'running');
+        const rows = hostInventorySchema.parse(await inventory()).filter(row => row.pgid === effect.pgid && row.state === 'running');
         if (rows.some(row => sharedService(row) || !effect.members.some(member => member.pid === row.pid && member.startTime === row.startTime))) throw new Error('Process group identity differs');
-        if (rows.length) await signalGroup(effect.pgid, effect.signal, signal);
+        if (rows.length) await nativeCall(signal, () => host.signalGroup(effect.pgid, effect.signal, signal));
         return { ok: true };
       }
       case 'host-signal': {
-        const rows = hostInventorySchema.parse(await inventory(signal));
+        const rows = hostInventorySchema.parse(await inventory());
         const current = rows.find(row => row.pid === effect.process.pid && row.startTime === effect.process.startTime);
         if (current && sharedService(current)) throw new Error('Shared service cannot be signalled');
-        if (current?.state === 'running') await signalProcess(effect.process, effect.signal, signal);
+        if (current?.state === 'running') await nativeCall(signal, () => host.signalProcess(effect.process, effect.signal, signal));
         return { ok: true };
       }
-      case 'wda-inventory': return wdaInventory(effect.udid, signal);
+      case 'wda-inventory': return wdaInventory(effect.udid, simctl);
       case 'wda-stop': {
-        const rows = await wdaInventory(effect.udid, signal);
+        const rows = await wdaInventory(effect.udid, simctl);
         const matches = rows.filter(row => row.bundleId === effect.bundleId || row.pid === effect.pid);
         if (matches.some(row => row.bundleId !== effect.bundleId || row.pid !== effect.pid)) throw new Error('WDA identity differs');
-        if (matches.length) checked(await simctl(['terminate', effect.udid, effect.bundleId], signal));
+        if (matches.length) checked(await simctl(['terminate', effect.udid, effect.bundleId]));
         return { ok: true };
       }
-      case 'android-process': return processState(effect, signal);
+      case 'android-process': return processState(effect, adb);
       case 'android-stop': {
-        const current = await processState({ serial: effect.serial, pid: effect.process.pid }, signal);
+        const current = await processState({ serial: effect.serial, pid: effect.process.pid }, adb);
         if (current.kind === 'running' && current.startTime === effect.process.startTime) {
-          for (const pkg of UIAUTOMATOR2_PACKAGES) checked(await adb(shellCommand(effect.serial, ['am', 'force-stop', pkg]), signal));
+          for (const pkg of UIAUTOMATOR2_PACKAGES) checked(await adb(shellCommand(effect.serial, ['am', 'force-stop', pkg])));
         }
         return { ok: true };
       }
-      case 'forward-inventory': return forwardRows(await adb(['forward', '--list'], signal));
+      case 'forward-inventory': return forwardRows(await adb(['forward', '--list']));
       case 'forward-remove': {
-        if (forwardRows(await adb(['forward', '--list'], signal)).some(row => sameForward(row, effect))) checked(await adb(['-s', effect.serial, 'forward', '--remove', effect.local], signal));
+        if (forwardRows(await adb(['forward', '--list'])).some(row => sameForward(row, effect))) checked(await adb(['-s', effect.serial, 'forward', '--remove', effect.local]));
         return { ok: true };
       }
       case 'settings-read': {
-        const global = settingRows(await adb(shellCommand(effect.serial, ['settings', 'list', 'global']), signal));
-        const secure = settingRows(await adb(shellCommand(effect.serial, ['settings', 'list', 'secure']), signal));
+        const global = settingRows(await adb(shellCommand(effect.serial, ['settings', 'list', 'global'])));
+        const secure = settingRows(await adb(shellCommand(effect.serial, ['settings', 'list', 'secure'])));
         return settingsSchema.parse(Object.fromEntries(settingKeySchema.options.map(key => [key, (key === 'accessibility_enabled' ? secure : global).get(key) ?? null])));
       }
       case 'settings-write': {
         const namespace = effect.key === 'accessibility_enabled' ? 'secure' : 'global';
         const words = effect.value === null ? ['settings', 'delete', namespace, effect.key] : ['settings', 'put', namespace, effect.key, effect.value];
-        checked(await adb(shellCommand(effect.serial, words), signal));
+        checked(await adb(shellCommand(effect.serial, words)));
         return { ok: true };
       }
       default: { const exhaustive: never = effect; return exhaustive; }

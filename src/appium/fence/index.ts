@@ -1,16 +1,18 @@
 import { randomUUID } from 'node:crypto';
 import { performance } from 'node:perf_hooks';
 import { isDeepStrictEqual } from 'node:util';
-import type { Admission, AdmissionClaim, AdmittedSession, FenceRequest, NativeComponent, OwnerIdentity, RecoveryClaim } from '../../device/admission.js';
+import type { Admission, AdmissionClaim, AdmittedSession, FenceRequest, NativeComponent, RecoveryClaim } from '../../device/admission.js';
 import { z } from 'zod/v4';
-import { active, groupHeld, ownedGroup, sameIdentity, sharedService, verifyAppiumProof } from './proof.js';
-import { androidProcessSchema, appiumComponentSchema, automationForward, fenceCommandSchema, forwardInventorySchema, hostInventorySchema,
+import { active, groupHeld, ownedGroup, readbackOf, recordedRows, sameIdentity, settles, sharedService, verifyAppiumProof } from './proof.js';
+import { androidProcessSchema, appiumComponentSchema, automationForward, fenceCommandSchema, fenceExecutorsSchema, forwardInventorySchema, hostInventorySchema,
   parseEffectResult, readOnly, sameForward, settingKeySchema, settingsSchema, wdaInventorySchema, type AppiumComponent, type AppiumProof,
-  androidIdentitySchema, type FenceEffect, type HostIdentity, type HostRow, type Transcript } from './schema.js';
+  androidIdentitySchema, type Executor, type FenceEffect, type HostIdentity, type HostRow, type Transcript } from './schema.js';
 export type { FenceEffect } from './schema.js';
-export type FenceRunner = (effect: FenceEffect, signal: AbortSignal) => Promise<unknown>;
-export type FenceOptions = { runner: FenceRunner; revalidate: () => Promise<void>; signal?: AbortSignal; budgetMs?: number;
+export type FenceRunner = (effect: FenceEffect, signal: AbortSignal, started?: (host: Executor) => void) => Promise<unknown>;
+export type FenceOptions = { runner: FenceRunner; revalidate: (serial: string) => Promise<void>; signal?: AbortSignal; budgetMs?: number;
   clock?: { now: () => number; sleep: (ms: number, signal: AbortSignal) => Promise<void> } };
+type Dispatcher = Pick<AdmittedSession, 'dispatch'> & Pick<AdmissionClaim, 'observeComponent'>;
+const POLL_CAP = 12;
 const defaultClock = { now: () => performance.now(), sleep: (ms: number, signal: AbortSignal) => new Promise<void>((resolve, reject) => {
   signal.throwIfAborted();
   const abort = () => { clearTimeout(timer); reject(signal.reason); };
@@ -47,6 +49,23 @@ class CleanupBudget {
   sleep(ms: number) { return this.run(() => this.clock.sleep(ms, this.signal)); }
   close() { clearTimeout(this.timer); this.options.signal?.removeEventListener('abort', this.externalAbort); }
 }
+function recordedQuery(input: FenceOptions, budget: CleanupBudget, dispatcher: Dispatcher) {
+  const keepExecutorsForLaterProof = (id: string, executors: Executor[]) => dispatcher.observeComponent(id, { kind: 'fence-executors', processes: executors });
+  return async (effect: FenceEffect): Promise<Transcript> => {
+    budget.check();
+    if ('serial' in effect) await budget.run(() => input.revalidate(effect.serial));
+    const id = randomUUID();
+    let commandId = '';
+    const result = await dispatcher.dispatch({ requestId: id, componentId: id, operation: 'appium-fence', payload: {}, recordResult: true,
+      components: [{ id, kind: 'appium-fence-command', effect }] }, async command => {
+        commandId = command;
+        const executors: Executor[] = [];
+        try { return await budget.run(async () => recordedRows(effect, parseEffectResult(effect, await input.runner(effect, budget.signal, process => executors.push(process))))); }
+        catch (error) { if (!readOnly(effect)) keepExecutorsForLaterProof(id, executors); throw error; }
+      });
+    return { id: commandId, effect, result };
+  };
+}
 export function recordAppiumComponents(claim: AdmissionClaim, declarations: readonly unknown[]): AppiumComponent[] {
   const components = declarations.map(raw => appiumComponentSchema.parse(raw));
   for (const component of components) claim.registerComponent(component);
@@ -62,36 +81,32 @@ export async function fenceAppium(input: FenceOptions & { admission: Admission; 
   });
   const budget = new CleanupBudget(input);
   const check = () => budget.check();
-  const bounded = <T>(work: () => Promise<T>) => budget.run(work);
   const transcripts: Transcript[] = [];
+  const recorded = recordedQuery(input, budget, claim);
   const query = async (effect: FenceEffect) => {
-    check();
-    if ('serial' in effect) await bounded(input.revalidate);
-    const id = randomUUID();
-    let commandId = '';
-    const result = await claim.dispatch({ requestId: id, componentId: id, operation: 'appium-fence', payload: {}, recordResult: true,
-      components: [{ id, kind: 'appium-fence-command', effect }] }, async command => {
-        commandId = command;
-        return bounded(async () => parseEffectResult(effect, await input.runner(effect, budget.signal)));
-      });
-    const transcript = { id: commandId, effect, result };
+    const transcript = await recorded(effect);
     transcripts.push(transcript);
     return transcript;
   };
   const poll = async (effect: FenceEffect, gone: (result: unknown) => boolean) => {
-    for (;;) {
+    let delay = 500;
+    for (let reads = 1; ; reads++) {
       const command = await query(effect);
       if (gone(command.result)) return command;
-      await budget.sleep(500);
+      if (reads === POLL_CAP) throw new Error('Stop evidence not reached within the poll cap');
+      await budget.sleep(delay);
+      delay = Math.min(delay * 2, 4000);
     }
   };
-  const hostRead = async (gone: (rows: HostRow[]) => boolean = () => true) => {
-    const command = await poll({ kind: 'host-inventory' }, result => gone(hostInventorySchema.parse(result)));
+  const hostRead = async (of: HostIdentity[], gone: (rows: HostRow[]) => boolean = () => true) => {
+    const command = await poll({ kind: 'host-inventory', of }, result => gone(hostInventorySchema.parse(result)));
     return { command, rows: hostInventorySchema.parse(command.result) };
   };
   const wait = () => budget.sleep(5000);
   const stopHost = async (target: Extract<AppiumComponent, { kind: 'appium-process-group' | 'appium-native-helper' }>): Promise<AppiumProof> => {
-    const before = await hostRead();
+    const identity = (row: HostIdentity): HostIdentity => ({ pid: row.pid, startTime: row.startTime });
+    const named = (group: typeof target) => (group.kind === 'appium-process-group' ? [group.leader, ...group.members] : [group.process]).map(identity);
+    const before = await hostRead(named(target));
     const live = (rows: HostRow[]) => {
       const found = target.kind === 'appium-process-group' ? ownedGroup(target, rows).filter(active) : rows.filter(row => sameIdentity(row, target.process) && active(row));
       if (found.some(sharedService)) throw new Error('Shared service cannot be stopped');
@@ -101,7 +116,6 @@ export async function fenceAppium(input: FenceOptions & { admission: Admission; 
     const expanded = target.kind === 'appium-process-group' ? { ...target, members: [...target.members,
       ...recorded.filter(row => row.pid !== target.leader.pid && !target.members.some(member => member.pid === row.pid))] } : target;
     const remaining = (rows: HostRow[]) => expanded.kind === 'appium-process-group' ? ownedGroup(expanded, rows).filter(active) : live(rows);
-    const identity = (row: HostRow): HostIdentity => ({ pid: row.pid, startTime: row.startTime });
     const signal = async (inventory: HostRow[], rows: HostRow[], name: 'SIGTERM' | 'SIGKILL') => {
       const group = target.kind === 'appium-process-group' && groupHeld(target, inventory) ? target : undefined;
       const grouped = group ? rows.filter(row => row.pgid === group.pgid) : [];
@@ -112,9 +126,9 @@ export async function fenceAppium(input: FenceOptions & { admission: Admission; 
     if (recorded.length) {
       await signal(before.rows, recorded, 'SIGTERM');
       await wait();
-      after = await hostRead();
+      after = await hostRead(named(expanded));
       const surviving = remaining(after.rows);
-      if (surviving.length) { await signal(after.rows, surviving, 'SIGKILL'); after = await hostRead(rows => !remaining(rows).length); }
+      if (surviving.length) { await signal(after.rows, surviving, 'SIGKILL'); after = await hostRead(named(expanded), rows => !remaining(rows).length); }
     }
     return target.kind === 'appium-process-group'
       ? { kind: 'appium-group-stopped', beforeCommandId: before.command.id, afterCommandId: after.command.id }
@@ -163,16 +177,30 @@ export async function fenceAppium(input: FenceOptions & { admission: Admission; 
       if (!verifyAppiumProof(target, proof, transcripts)) throw new Error(`Missing stop evidence for ${target.id}`);
       proofs.push({ componentId: target.id, proof });
     }
+    for (const component of original.components) {
+      const invocation = fenceCommandSchema.safeParse(component.declaration);
+      if (!invocation.success || original.commands.filter(command => command.componentId === component.id).every(command => command.state === 'settled')) continue;
+      const effect = invocation.data.effect;
+      if (readOnly(effect)) {
+        const answered = transcripts.find(transcript => isDeepStrictEqual(transcript.effect, effect)) ?? await query(effect);
+        proofs.push({ componentId: component.id, proof: { kind: 'superseded-read', commandId: answered.id } });
+        continue;
+      }
+      const executors = original.componentObservations.filter(observation => observation.componentId === component.id)
+        .map(observation => fenceExecutorsSchema.safeParse(observation.payload)).find(parsed => parsed.success);
+      if (!executors) throw new Error(`Unproven component ${component.id}`);
+      if (!executors.data.processes.every(process => ['exited', 'reused'].includes(admission.componentState(process)))) throw new Error(`Executor exit is not proven for ${component.id}`);
+      const answer = transcripts.find(transcript => settles(effect, transcript)) ?? await query(readbackOf(effect));
+      if (!settles(effect, answer)) throw new Error(`Unproven component ${component.id}`);
+      proofs.push({ componentId: component.id, proof: { kind: 'fenced-write', commandId: answer.id } });
+    }
     const view = admission.readGeneration(claim.identity.owner);
     for (const component of view.components) {
       if (proofs.some(proof => proof.componentId === component.id)) continue;
       const commands = view.commands.filter(command => command.componentId === component.id);
       const completed = commands.find(command => command.state === 'settled');
       if (['one-shot', 'adb-command', 'appium-fence-command'].includes(component.kind) && completed && commands.every(command => command.state === 'settled')) { proofs.push({ componentId: component.id, proof: { kind: 'completed-command', commandId: completed.id } }); continue; }
-      const invocation = fenceCommandSchema.safeParse(component.declaration);
-      const answered = invocation.success && readOnly(invocation.data.effect) ? transcripts.find(transcript => isDeepStrictEqual(transcript.effect, invocation.data.effect)) : undefined;
-      if (!answered) throw new Error(`Unproven component ${component.id}`);
-      proofs.push({ componentId: component.id, proof: { kind: 'superseded-read', commandId: answered.id } });
+      throw new Error(`Unproven component ${component.id}`);
     }
     check();
     return { requestId: randomUUID(), kind: 'stop', components: proofs, commands: view.commands.filter(command => command.state !== 'settled').map(command => command.id) };
@@ -207,24 +235,13 @@ async function removeOwnedForward(target: Extract<AppiumComponent, { kind: 'appi
   return proof;
 }
 
-export async function clearOwnedForwards(input: FenceOptions & { admission: Admission; owner: OwnerIdentity; dispatcher: Pick<AdmittedSession, 'dispatch'> }): Promise<FenceRequest['components']> {
-  const targets = input.admission.readGeneration(input.owner).components.flatMap(component => {
+export async function clearOwnedForwards(input: FenceOptions & { admission: Admission; claim: Pick<AdmissionClaim, 'identity' | 'observeComponent'>; dispatcher: Pick<AdmittedSession, 'dispatch'> }): Promise<FenceRequest['components']> {
+  const targets = input.admission.readGeneration(input.claim.identity).components.flatMap(component => {
     const parsed = appiumComponentSchema.safeParse(component.declaration);
     return parsed.success && parsed.data.kind === 'appium-forward' ? [parsed.data] : [];
   });
   const budget = new CleanupBudget(input);
-  const query = async (effect: FenceEffect) => {
-    budget.check();
-    if ('serial' in effect) await budget.run(input.revalidate);
-    const id = randomUUID();
-    let commandId = '';
-    const result = await input.dispatcher.dispatch({ requestId: id, componentId: id, operation: 'appium-fence', payload: {}, recordResult: true,
-      components: [{ id, kind: 'appium-fence-command', effect }] }, async command => {
-        commandId = command;
-        return budget.run(async () => parseEffectResult(effect, await input.runner(effect, budget.signal)));
-      });
-    return { id: commandId, effect, result };
-  };
+  const query = recordedQuery(input, budget, { dispatch: input.dispatcher.dispatch.bind(input.dispatcher), observeComponent: input.claim.observeComponent.bind(input.claim) });
   try {
     const proofs: FenceRequest['components'] = [];
     for (const target of targets) {
