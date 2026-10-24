@@ -1,10 +1,11 @@
 import { randomUUID } from 'node:crypto';
 import { performance } from 'node:perf_hooks';
+import { isDeepStrictEqual } from 'node:util';
 import type { Admission, AdmissionClaim, AdmittedSession, FenceRequest, NativeComponent, OwnerIdentity, RecoveryClaim } from '../../device/admission.js';
 import { z } from 'zod/v4';
 import { active, groupHeld, ownedGroup, sameIdentity, sharedService, verifyAppiumProof } from './proof.js';
-import { androidProcessSchema, appiumComponentSchema, forwardInventorySchema, hostInventorySchema,
-  parseEffectResult, settingKeySchema, settingsSchema, wdaInventorySchema, type AppiumComponent, type AppiumProof,
+import { androidProcessSchema, appiumComponentSchema, fenceCommandSchema, forwardInventorySchema, hostInventorySchema,
+  parseEffectResult, readOnly, settingKeySchema, settingsSchema, wdaInventorySchema, type AppiumComponent, type AppiumProof,
   androidIdentitySchema, type FenceEffect, type HostIdentity, type HostRow, type Transcript } from './schema.js';
 export type { FenceEffect } from './schema.js';
 export type FenceRunner = (effect: FenceEffect, signal: AbortSignal) => Promise<unknown>;
@@ -155,8 +156,11 @@ export async function fenceAppium(input: FenceOptions & { admission: Admission; 
       if (proofs.some(proof => proof.componentId === component.id)) continue;
       const commands = view.commands.filter(command => command.componentId === component.id);
       const completed = commands.find(command => command.state === 'settled');
-      if (['one-shot', 'adb-command', 'appium-fence-command'].includes(component.kind) && completed && commands.every(command => command.state === 'settled')) proofs.push({ componentId: component.id, proof: { kind: 'completed-command', commandId: completed.id } });
-      else throw new Error(`Unproven component ${component.id}`);
+      if (['one-shot', 'adb-command', 'appium-fence-command'].includes(component.kind) && completed && commands.every(command => command.state === 'settled')) { proofs.push({ componentId: component.id, proof: { kind: 'completed-command', commandId: completed.id } }); continue; }
+      const invocation = fenceCommandSchema.safeParse(component.declaration);
+      const answered = invocation.success && readOnly(invocation.data.effect) ? transcripts.find(transcript => isDeepStrictEqual(transcript.effect, invocation.data.effect)) : undefined;
+      if (!answered) throw new Error(`Unproven component ${component.id}`);
+      proofs.push({ componentId: component.id, proof: { kind: 'superseded-read', commandId: answered.id } });
     }
     check();
     return { requestId: randomUUID(), kind: 'stop', components: proofs, commands: view.commands.filter(command => command.state !== 'settled').map(command => command.id) };

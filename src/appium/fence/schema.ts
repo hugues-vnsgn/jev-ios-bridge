@@ -51,6 +51,9 @@ export const fenceEffectSchema = z.discriminatedUnion('kind', [
   z.strictObject({ kind: z.literal('settings-write'), serial, key: settingKeySchema, value: text.nullable() }),
 ]);
 export type FenceEffect = z.infer<typeof fenceEffectSchema>;
+const effectAccess = { 'host-inventory': 'read', 'host-signal-group': 'write', 'host-signal': 'write', 'wda-inventory': 'read', 'wda-stop': 'write',
+  'android-process': 'read', 'android-stop': 'write', 'forward-inventory': 'read', 'forward-remove': 'write', 'settings-read': 'read', 'settings-write': 'write' } as const satisfies Record<FenceEffect['kind'], 'read' | 'write'>;
+export const readOnly = (effect: FenceEffect) => effectAccess[effect.kind] === 'read';
 export const fenceCommandSchema = z.strictObject({ id: text, kind: z.literal('appium-fence-command'), effect: fenceEffectSchema });
 export const appiumProofSchema = z.discriminatedUnion('kind', [
   z.strictObject({ kind: z.literal('appium-group-stopped'), beforeCommandId: text, afterCommandId: text }),

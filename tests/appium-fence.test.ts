@@ -211,6 +211,64 @@ for (const fault of ['unknown-member', 'shared-service', 'surviving-kill', 'wron
   if (fault === 'unknown-create') assert.deepEqual(runner.events, []);
 });
 
+function quarantinedAndroidForward(t: TestContext) {
+  const f = fixture(t, [targets[3]]); f.claim.registerComponent(JSON.parse(JSON.stringify(targets[3])));
+  f.claim.closeDispatch({ outcome: 'inconclusive', disposition: 'quarantined', payload: {}, evidenceRefs: [] });
+  const request = { device: f.claim.identity.device, category: f.claim.identity.category, attempt: { kind: 'legacy', id: 'next' }, digest: 'next', intent: {} } as const;
+  return { ...f, request };
+}
+
+test('a sweep that fails on its deadline is covered by the next sweep and the device releases', async t => {
+  const f = quarantinedAndroidForward(t);
+  const runner = new FakeRunner(); runner.delay = 46000;
+  const first = await f.admission.acquireWithAppiumRecovery(f.request, { runner: runner.run, clock: runner.clock });
+  assert.deepEqual(first, { kind: 'refused', reason: 'DEVICE_QUARANTINED' });
+  assert.deepEqual(f.admission.readGeneration(f.claim.identity).commands.map(command => [command.operation, command.state]), [['appium-fence', 'uncertain']]);
+  runner.delay = 0;
+  const { fenceAppium } = await fenceModule();
+  let proof: Awaited<ReturnType<typeof fenceAppium>> | undefined;
+  const second = await f.admission.acquireWithRecovery(f.request, async claim => proof = await fenceAppium({ admission: f.admission, claim, runner: runner.run, clock: runner.clock }));
+  assert.equal(second.kind, 'acquired');
+  const view = f.admission.readGeneration(f.claim.identity);
+  assert.deepEqual(view.recoveries.map(recovery => recovery.closure), ['refused', 'accepted']);
+  const failed = view.commands.find(command => command.state === 'uncertain')!;
+  assert.deepEqual(proof?.commands, [failed.id]);
+  const covering = proof?.components.find(component => component.componentId === failed.componentId)?.proof;
+  assert.equal(covering?.kind, 'superseded-read');
+  assert.equal(view.commands.find(command => command.id === (covering as { commandId: string }).commandId)?.state, 'settled');
+});
+
+for (const forgery of ['unsettled-answer', 'write-command']) test(`a superseded read refuses a ${forgery} forgery`, async t => {
+  const f = quarantinedAndroidForward(t);
+  const runner = new FakeRunner(); runner.delay = forgery === 'write-command' ? 23000 : 46000;
+  await f.admission.acquireWithAppiumRecovery(f.request, { runner: runner.run, clock: runner.clock });
+  runner.delay = 0;
+  const recovery = f.admission.claimRecovery(f.claim.identity, forgery); if (recovery.kind === 'refused') assert.fail();
+  const { fenceAppium } = await fenceModule();
+  const forged = await fenceAppium({ admission: f.admission, claim: recovery.claim, runner: runner.run, clock: runner.clock }).catch(() => undefined);
+  const view = f.admission.readGeneration(f.claim.identity);
+  const failed = view.commands.find(command => command.state === 'uncertain')!;
+  const answer = view.commands.filter(command => command.recoveryClaimId === recovery.claim.identity.id && command.state === 'settled').at(-1)!;
+  const components = (forged?.components ?? []).filter(component => component.componentId !== failed.componentId);
+  components.push({ componentId: failed.componentId, proof: { kind: 'superseded-read', commandId: forgery === 'unsettled-answer' ? failed.id : answer.id } });
+  if (forgery === 'write-command') for (const component of view.components) if (!components.some(item => item.componentId === component.id)) {
+    const settled = view.commands.find(command => command.componentId === component.id && command.state === 'settled');
+    components.push({ componentId: component.id, proof: settled ? { kind: 'completed-command', commandId: settled.id } : { kind: 'appium-forward-removed', commandId: answer.id } });
+  }
+  assert.throws(() => recovery.claim.submitFence({ requestId: forgery, kind: 'stop', components, commands: [failed.id] }), { code: 'COVERAGE_INCOMPLETE' });
+  assert.equal(state(f.admission, f.claim.identity), 'quarantined');
+});
+
+test('an uncertain forward removal keeps the device quarantined after a clean sweep', async t => {
+  const f = quarantinedAndroidForward(t);
+  const runner = new FakeRunner(); runner.delay = 23000;
+  assert.deepEqual(await f.admission.acquireWithAppiumRecovery(f.request, { runner: runner.run, clock: runner.clock }), { kind: 'refused', reason: 'DEVICE_QUARANTINED' });
+  assert.deepEqual(runner.events.map(event => 'kind' in event ? event.kind : 'wait'), ['forward-inventory', 'forward-remove']);
+  runner.delay = 0;
+  assert.deepEqual(await f.admission.acquireWithAppiumRecovery(f.request, { runner: runner.run, clock: runner.clock }), { kind: 'refused', reason: 'DEVICE_QUARANTINED' });
+  assert.equal(state(f.admission, f.claim.identity), 'quarantined');
+});
+
 test('a hung runner is bounded by the cleanup budget and cannot release on a late reply', async t => {
   const f = fixture(t, [targets[3]]); f.claim.registerComponent(JSON.parse(JSON.stringify(targets[3])));
   f.claim.closeDispatch({ outcome: 'inconclusive', disposition: 'quarantined', payload: {}, evidenceRefs: [] });

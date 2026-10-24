@@ -10,7 +10,7 @@ import type { StagedArtifact } from '../observed/artifact.js';
 import type { CreationResult } from '../observed/create-source.js';
 import { recoveryViewSchema, componentSchema, componentObservationSchema, type ComponentObservation, commandRequestSchema, fenceRequestSchema } from './admission.js';
 import type { DeviceCategory, AdmissionDependencies, AdmissionRequest, AdmissionResult, AttemptIdentity, AttemptView, DeviceView, OwnerIdentity, OwnerProcess, TerminalCandidate, GenerationView, CommandRecord, ComponentInput, NativeComponent, CommandRequest, IssueResult, FenceRequest, FenceReceipt, RecoveryIdentity } from './admission.js';
-import { appiumComponentSchema, appiumProofSchema, fenceCommandSchema, parseEffectResult, type Transcript } from '../appium/fence/schema.js';
+import { appiumComponentSchema, appiumProofSchema, fenceCommandSchema, parseEffectResult, readOnly, type Transcript } from '../appium/fence/schema.js';
 import { verifyAppiumProof } from '../appium/fence/proof.js';
 import { BRIDGE_VERSION } from '../version.js';
 import type { UpgradeDeclaration, UpgradeReceipt, UpgradeRecovery, UpgradeCheckpoint, PreservedRecords } from './admission-upgrade.js';
@@ -1466,14 +1466,14 @@ export class AdmissionSqlite {
     }
     for (const component of components) {
       const fenceCommand = fenceCommandSchema.safeParse(JSON.parse(String(component.declaration)));
-      if (fenceCommand.success) {
+      const evidence=request.components.find(item=>item.componentId===component.id)?.proof;
+      if (fenceCommand.success && !(evidence?.kind === 'superseded-read' && readOnly(fenceCommand.data.effect))) {
         const command = commands.find(command => command.component_id === component.id && command.state === 'settled');
         const observation = command && db.prepare('SELECT payload FROM component_observations WHERE owner_generation_id=? AND component_id=?').all(id, component.id)
           .map(row => JSON.parse(String(row.payload))).find(row => row.commandId === command.id);
         try { if (!observation) throw new Error('Missing result'); parseEffectResult(fenceCommand.data.effect, observation.result); }
         catch { throw new AdmissionError('COVERAGE_INCOMPLETE','Fence invocation has no validated completion'); }
       }
-      const evidence=request.components.find(item=>item.componentId===component.id)?.proof;
       if (!evidence) throw new AdmissionError('COVERAGE_INCOMPLETE','A component has no stop proof');
       const appium = appiumComponentSchema.safeParse(JSON.parse(String(component.declaration)));
       if (appium.success) {
@@ -1481,6 +1481,11 @@ export class AdmissionSqlite {
         try {
           if (!proof.success || !verifyAppiumProof(appium.data, proof.data, transcripts)) throw new Error('Missing proof');
         } catch { throw new AdmissionError('COVERAGE_INCOMPLETE','Appium stop evidence is missing or unbound'); }
+      } else if (evidence.kind==='superseded-read') {
+        const answer=commands.find(command=>command.id===evidence.commandId&&command.state==='settled'&&openRecovery&&command.recovery_claim_id===openRecovery.id);
+        const answerComponent=answer&&components.find(item=>item.id===answer.component_id);
+        const asked=answerComponent&&fenceCommandSchema.safeParse(JSON.parse(String(answerComponent.declaration)));
+        if (!fenceCommand.success || !readOnly(fenceCommand.data.effect) || !asked?.success || !isDeepStrictEqual(asked.data.effect,fenceCommand.data.effect)) throw new AdmissionError('COVERAGE_INCOMPLETE','A failed read has no later answer from this recovery');
       } else if (evidence.kind==='completed-command') {
         if (!['one-shot','adb-command','appium-fence-command'].includes(component.kind) || !commands.some(command=>command.id===evidence.commandId&&command.component_id===component.id&&command.state==='settled') || commands.some(command=>command.component_id===component.id&&command.state!=='settled')) throw new AdmissionError('COVERAGE_INCOMPLETE','One-shot invocation has not completed');
       } else if (evidence.kind === 'adb-stopped' || evidence.kind === 'android-stream-exited') {

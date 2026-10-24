@@ -49,6 +49,7 @@ export type CommandRequest = z.infer<typeof commandRequestSchema>;
 export type IssueResult = { kind: 'issued' | 'retrieved'; command: CommandRecord };
 const stopProofSchema = z.union([appiumProofSchema, z.discriminatedUnion('kind', [
   z.strictObject({ kind: z.literal('completed-command'), commandId: bindingText }),
+  z.strictObject({ kind: z.literal('superseded-read'), commandId: bindingText }),
   z.strictObject({ kind: z.literal('adb-stopped'), process: ownerProcessSchema, commandId: bindingText }),
   z.strictObject({ kind: z.literal('android-component-stopped'), commandId: bindingText }),
   z.strictObject({ kind: z.literal('android-stream-exited'), process: ownerProcessSchema }),
