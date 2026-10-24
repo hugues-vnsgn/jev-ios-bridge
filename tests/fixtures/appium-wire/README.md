@@ -47,3 +47,9 @@ The corpus oracle converts the existing Android agent captures to equivalent XML
 ## Operation replays
 
 `android/replace-text-lost.jsonl` is hand-authored. It records the session create, the settings readback and one `jev_replace_text` request with no reply, then the owned delete. It makes no live-device claim. The operations test runs it through the real client with a short call timeout, so the lost acknowledgement closes dispatch and the trace shows the request sent once.
+
+## World provider
+
+`world-mcp.ts` is the controllable provider behind the preservation matrix (`tests/appium-matrix-*.test.ts`). It replays no recording. A test builds a world with `world.ts`: named page sources, built with `iosScreen` or `androidScreen`, and rules that act on each tool call. A rule names a tool. It can narrow to the nth call, the current screen (`when`) or a subset of the arguments (`match`). It can then move to another screen (`to`) or apply a fault: `lost`, `late`, `held`, an extension `error` code, `exit`, `disconnect`, `malformed` or `schema`. `{{typed}}` in a source is replaced by the last replaced text. A `.goto` file beside the trace moves the screen from the test, and a `.release` file answers a held reply.
+
+Every request passes the shared request schemas and every answer passes `checkedToolReply`, so a world cannot reply with what the real extension could not. The provider writes the request trace, a `.replies` file and a `.env` file listing the child's environment names. It records no live device evidence.
