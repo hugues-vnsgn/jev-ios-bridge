@@ -35,7 +35,7 @@ function walk(directory: string): void {
 walk('');
 function fixture(t: TestContext, platform: 'ios' | 'android' = 'ios') {
   const root = mkdtempSync(join(tmpdir(), 'jev-private-client-'));
-  const clients: PrivateAppiumClient[] = [];
+  const clients: { close(): Promise<void> }[] = [];
   t.after(async () => {
     await Promise.allSettled(clients.map(client => client.close()));
     rmSync(root, { recursive: true, force: true, maxRetries: 5, retryDelay: 50 });
@@ -301,7 +301,7 @@ test('started fake exposes the same ten names and extension parameter schemas', 
   const transport = new StdioClientTransport({ command: process.execPath, args: ['--import', import.meta.resolve('tsx'),
     resolve('tests/fixtures/appium-wire/fake-mcp.ts'), f.recording], stderr: 'pipe' });
   const client = new Client({ name: 'jev-ios-bridge-private', version: '1' }, { capabilities: {} });
-  t.after(() => client.close()); await client.connect(transport);
+  f.clients.push(client); await client.connect(transport);
   const tools = (await client.listTools()).tools;
   assert.deepEqual(tools.map(tool => tool.name).sort(), [...TOOL_NAMES].sort());
   assert.deepEqual(tools.find(tool => tool.name === 'jev_replace_text')?.inputSchema,

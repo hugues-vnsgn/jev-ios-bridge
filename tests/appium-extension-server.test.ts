@@ -10,16 +10,18 @@ import { TOOL_NAMES, SOURCE_SETTINGS, checkedToolReply, type ToolReply } from '.
 
 test('controlled bootstrap starts through public core and exposes exactly ten tools', async t => {
   const root = mkdtempSync(join(tmpdir(), 'jev-extension-server-'));
-  t.after(() => rmSync(root, { recursive: true, force: true }));
   const profile = join(root, 'profile.json');
   writeFileSync(profile, JSON.stringify({ platform: 'ios', device: 'test-only', capabilities: { 'appium:udid': 'test-only' } }));
   const transport = new StdioClientTransport({ command: process.execPath,
     args: ['--import', import.meta.resolve('tsx'), resolve('src/appium/extension/entry.ts'), resolve('.scratch/appium-mcp-migration/candidate-stack'), profile],
     stderr: 'pipe', env: { HOME: root, APPIUM_HOME: root, APPIUM_MCP_ON_CLIENT_DISCONNECT: 'delete_all', ALLOW_REMOTE_APP_URLS: 'false', PATH: '/usr/bin:/bin' } });
   const client = new Client({ name: 'host-contract-test', version: '1' });
+  t.after(async () => {
+    await Promise.allSettled([client.close()]);
+    rmSync(root, { recursive: true, force: true, maxRetries: 5, retryDelay: 50 });
+  });
   let stderr = '';
   transport.stderr?.on('data', chunk => { stderr += String(chunk); });
-  t.after(() => client.close());
   await client.connect(transport);
   const tools = (await client.listTools()).tools;
   assert.deepEqual(tools.map(tool => tool.name).sort(), [...TOOL_NAMES].sort());
