@@ -210,7 +210,7 @@ export class AppiumDriver implements DeviceDriver, IosPreparationDriver, Observe
 
   async readiness(signal: AbortSignal, timeoutMs = this.timeoutMs): Promise<Snapshot> {
     const live = this.live();
-    return this.dispatch(live.owner, 'readiness', signal, timeoutMs, issued => this.observeLive(live, issued));
+    return this.observeLive(live, signal, 'readiness', timeoutMs);
   }
 
   /** The preparation session ends before park: a parked allocation has no live driver. */
@@ -464,26 +464,24 @@ export class AppiumDriver implements DeviceDriver, IosPreparationDriver, Observe
 
   private async observeIssued(signal: AbortSignal): Promise<Snapshot> {
     const live = this.live();
-    return this.dispatch(live.owner, 'appium-observe', signal, this.timeoutMs, issued => this.observeLive(live, issued));
+    return this.observeLive(live, signal, 'appium-observe', this.timeoutMs);
   }
 
-  /** A paused driven session is refreshed before use; a lost one is replaced by a fresh child and session, and the screen is a fresh hand-back. */
-  private async observeLive(live: Extract<Phase, { kind: 'live' }>, signal: AbortSignal): Promise<Snapshot> {
-    const { command } = live;
-    const refresh = (observation: AppiumObservation) => () => observation.observe(signal);
-    if (command.session.state === 'ready') {
-      const observed = await this.guarded(signal, refresh(command.observation));
-      command.session.pause();
-      return this.remember(observed.snapshot, observed.screenshot);
-    }
-    const resumed = await this.guarded(signal, () => command.session.resume(() => command.observation.observe(signal), live.role === 'run' && live.command.launched
-      ? async () => {
-        const replacement = await this.openSession(live.owner, live.role, signal, command.helpers);
+  /** A paused driven session is refreshed before use; a lost one is replaced by a fresh child and session, and the
+   *  screen is a fresh hand-back. The replacement opens outside any dispatch: a nested dispatch would wait on itself. */
+  private async observeLive(live: Extract<Phase, { kind: 'live' }>, signal: AbortSignal, operation: string, timeoutMs: number): Promise<Snapshot> {
+    const observe = () => this.dispatch(live.owner, operation, signal, timeoutMs, issued => live.command.observation.observe(issued));
+    const session = live.command.session;
+    const observed = await this.guarded(signal, async () => {
+      if (session.state === 'ready') return observe();
+      const resumed = await session.resume(observe, live.role === 'run' && live.command.launched ? async () => {
+        const replacement = await this.openSession(live.owner, live.role, signal, live.command.helpers);
         live.command = { ...replacement, launched: true };
         return replacement.session;
-      } : undefined));
-    if (resumed.kind === 'session-lost') throw new DeviceReasonError('STATE_UNAVAILABLE', 'The Appium session was lost.');
-    const observed = resumed.kind === 'handback' ? await this.guarded(signal, refresh(live.command.observation)) : resumed.observation;
+      } : undefined);
+      if (resumed.kind === 'session-lost') throw new DeviceReasonError('STATE_UNAVAILABLE', 'The Appium session was lost.');
+      return resumed.observation;
+    });
     live.command.session.pause();
     return this.remember(observed.snapshot, observed.screenshot);
   }

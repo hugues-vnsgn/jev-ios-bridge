@@ -161,3 +161,23 @@ test('an Android device with a locked screen refuses with DEVICE_LOCKED before a
   assert.deepEqual(f.tools(), []);
   assert.equal(f.admission.inspect({ category: 'android-phone', value: SERIAL })!.state, 'available');
 });
+
+test('a paused run whose session was lost is replaced by a fresh child and session, and observes afresh without acting', async t => {
+  let allocated = 0;
+  const f = driverFixture(t, observeRecording, { ...ios, freePort: async () => 18100 + (allocated++ % 2) });
+  await f.driver.prepare({ app: { bundleId: 'example.app' } }, live());
+  await f.driver.observe(live());
+  const owner = f.admission.inspect({ category: 'ios-simulator', value: UDID })!.owner!;
+  const groups = () => f.admission.readGeneration(owner).components.filter(component => component.kind === 'appium-process-group')
+    .map(component => (component.declaration as { pgid: number }).pgid);
+  const [lost] = groups();
+  process.kill(lost!, 'SIGKILL');
+  for (let waited = 0; waited < 4000; waited += 20) { try { process.kill(lost!, 0); await delay(20); } catch { break; } }
+  const fresh = await f.driver.observe(live());
+  assert.ok(fresh.elements.length > 0);
+  assert.equal(groups().length, 2, 'the replacement child is recorded before its session');
+  assert.equal(f.tools().filter(name => name === 'appium_perform_actions').length, 0, 'nothing acted');
+  assert.equal(f.tools().filter(name => name === 'appium_session_management').length, 2, 'one create per child');
+  await f.driver.close(live());
+  assert.equal(f.admission.inspect({ category: 'ios-simulator', value: UDID })!.state, 'available');
+});
