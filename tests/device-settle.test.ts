@@ -5,7 +5,7 @@ import { setTimeout as delay } from 'node:timers/promises';
 const signal = () => new AbortController().signal;
 function clock(): Clock {
   const start = performance.now();
-  return { now: () => (performance.now() - start) * 100, sleep: ms => delay(ms / 100), timeout: ms => AbortSignal.timeout(Math.ceil(ms / 100)) };
+  return { now: () => (performance.now() - start) * 100, sleep: ms => delay(ms / 100), timeout: ms => { const abort = new AbortController(); setTimeout(() => abort.abort(), Math.ceil(ms / 100)); return abort.signal; } };
 }
 test('shared settle compares normalized hashes and returns the matching second capture', async () => {
   let count = 0;

@@ -114,3 +114,35 @@ test('the XML path preserves the android-render golden byte for byte', () => {
   const rendered = renderAssertionState({ ...capture, deviceId: 'test', sequence: 1, capturedAt: 0, expiresAt: 60000 }, 'android');
   assert.equal(JSON.stringify(rendered, null, 2) + '\n', readFileSync(new URL('./golden/android-render.json', import.meta.url), 'utf8'));
 });
+
+test('iOS preserves real accessibility values on buttons and other roles, plus numeric switch values', () => {
+  const capture = normalizeSource('ios', iosSource(
+    ios('Button', 'label="°F" value="selected"') + ios('Button', 'label="Distance" value="Miles"') +
+    ios('Switch', 'label="Enabled" value="1"') + ios('Image', 'label="Rating" value="Five stars"')));
+  assert.deepEqual(capture.elements.slice(1).map(e => ({ role: e.role, label: e.label, value: e.value })), [
+    { role: 'button', label: '°F', value: 'selected' }, { role: 'button', label: 'Distance', value: 'Miles' },
+    { role: 'switch', label: 'Enabled', value: '1' }, { role: 'image', label: 'Rating', value: 'Five stars' },
+  ]);
+});
+test('P05 choose-apple keeps the legacy e16 and e17 meanings without a numeric button selection flag or repeated text value', () => {
+  const capture = normalizeSource('ios', fixture('ios-historical-choose-apple.xml'));
+  assert.deepEqual(capture.elements.filter(e => e.label === 'Add Apple ($2)').map(e => [e.role, e.identifier ?? null, e.value ?? null]),
+    [['button', 'choose.apple', null], ['text', null, null]]);
+});
+test('P05 live choose-none still has all three gap-proof fixes after keeping genuine accessibility values', () => {
+  const capture = normalizeSource('ios', fixture('ios-live-choose-none.xml'));
+  assert.deepEqual(capture.elements.filter(e => e.role === 'text').map(e => [e.label, e.value ?? null]),
+    [['Sample Shop', null], ['Choose two items', null], ['Selected: None', null]]);
+  assert.deepEqual(capture.elements.filter(e => e.role === 'button').map(e => [e.identifier, e.actions]), [
+    ['choose.apple', ['tap', 'longPress', 'touch']], ['choose.bread', ['tap', 'longPress', 'touch']], ['order.complete', []],
+  ]);
+  assert.equal(capture.elements.filter(e => e.identifier && e.identifier === e.label).length, 0);
+});
+test('iOS accepts per-node odd geometry, since only structural defects refuse', () => {
+  const capture = normalizeSource('ios', iosSource(ios('Button', 'label="Odd"').replace('width="100"', 'width="-4"')));
+  assert.deepEqual(capture.elements[1]!.frame, { x: 0, y: 0, width: -4, height: 50 });
+});
+test('iOS keeps a typed value on input controls even when it equals the label', () => {
+  const capture = normalizeSource('ios', iosSource(ios('TextField', 'label="Name" value="Name"') + ios('StaticText', 'label="Name" value="Name"')));
+  assert.deepEqual(capture.elements.slice(1).map(e => e.value ?? null), ['Name', null]);
+});

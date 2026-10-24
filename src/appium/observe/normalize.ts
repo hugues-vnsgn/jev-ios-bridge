@@ -42,6 +42,14 @@ const iosRoles: Readonly<Record<string, Role>> = {
   Switch: 'switch', Slider: 'slider', Cell: 'cell', ScrollView: 'scroll-view', Table: 'list', CollectionView: 'list', Tab: 'tab',
 };
 const tappable = new Set<Role>(['button', 'keyboard-key', 'switch', 'text-field', 'cell', 'tab']);
+const inputRoles = new Set<Role>(['text-field', 'switch', 'slider']);
+function accessibilityValue(role: Role, a: Record<string, string>): string | undefined {
+  const value = a.value;
+  if (!value) return undefined;
+  if (!inputRoles.has(role) && (value === a.label || value === a.name)) return undefined;
+  if (role === 'button' && (value === '0' || value === '1')) return undefined;
+  return value;
+}
 function iosElements(root: SourceNode): Element[] {
   const elements: Element[] = [];
   const visit = (node: SourceNode): void => {
@@ -53,7 +61,6 @@ function iosElements(root: SourceNode): Element[] {
     const enabled = boolean(node, 'enabled', true)!, visible = boolean(node, 'visible', true)!;
     const focused = boolean(node, 'focused');
     const frame = { x: numeric(node, 'x'), y: numeric(node, 'y'), width: numeric(node, 'width'), height: numeric(node, 'height') };
-    if (frame.width < 0 || frame.height < 0) invalid();
     const actions: string[] = [];
     if (enabled) {
       if (tappable.has(role)) actions.push('tap');
@@ -66,8 +73,8 @@ function iosElements(root: SourceNode): Element[] {
     if (a.label) element.label = a.label;
     if (a.name && a.name !== a.label) element.identifier = a.name;
     if (a.placeholder) element.placeholder = a.placeholder;
-    if (a.value && ['text-field', 'switch', 'slider'].includes(role)) element.value = kind === 'SecureTextField'
-      ? a.value.replace(/[^•●*]/gu, '•') : a.value;
+    const value = accessibilityValue(role, a);
+    if (value !== undefined) element.value = kind === 'SecureTextField' ? value.replace(/[^•●*]/gu, '•') : value;
     elements.push(element);
     node.children.forEach(visit);
   };
