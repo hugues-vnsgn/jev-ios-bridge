@@ -53,7 +53,8 @@ export class UnconfirmedOperationError extends DeviceReasonError {
 
 const MAX_HOLD_MS = 10_000;
 const TAP_AT_ASPECT_TOLERANCE = 0.01;
-const REFUSED_BEFORE_INPUT: ReadonlySet<string> = new Set(['SESSION_MISMATCH', 'VERSION_MISMATCH', 'NOT_ALLOWED', 'NOT_UNIQUE']);
+/** Codes the extension answers before any input reaches the device. */
+export const REFUSED_BEFORE_INPUT: ReadonlySet<string> = new Set(['SESSION_MISMATCH', 'VERSION_MISMATCH', 'NOT_ALLOWED', 'NOT_UNIQUE']);
 const passThrough: OperationDispatcher = (_operation, send) => send();
 const unsupported = (message: string) => new DeviceReasonError('UNSUPPORTED_ACTION', message);
 

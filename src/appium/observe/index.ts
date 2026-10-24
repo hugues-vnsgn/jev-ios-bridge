@@ -27,6 +27,22 @@ export class AppiumObservation {
   /** True only for this session's latest snapshot while its dispatch is still open. */
   isCurrent(snapshot: Snapshot): boolean { return this.session.client.dispatchOpen && this.references.isCurrent(snapshot); }
   invalidate(): void { this.references.invalidate(); }
+  /** The current screen settled from page source alone, with no screenshot: what `capture` reports. */
+  async capture(signal: AbortSignal): Promise<Snapshot> {
+    this.invalidate();
+    try {
+      await this.session.client.awaitPendingObservation();
+      const result = await settleCaptures(async () => ({ capture: normalizeSource(this.session.profile.platform, await this.session.client.pageSource(this.options.sourceTimeoutMs)),
+        capturedAt: Date.now() }), pair => pair.capture.screenHash, this.clock, signal, { returnDeadline: true });
+      return this.references.issue(result.tree.capture, result.tree.capturedAt, result.settled);
+    } catch (error) { throw this.incomplete(error, signal); }
+  }
+  private incomplete(error: unknown, signal: AbortSignal): unknown {
+    if (signal.aborted) return signal.reason;
+    if (error instanceof ObservationIncompleteError) return error;
+    if (error instanceof SettleDeadlineError || (error instanceof AppiumError && error.code === 'TIMEOUT')) return new ObservationIncompleteError('timeout');
+    return new ObservationIncompleteError('driver-error');
+  }
   async observe(signal: AbortSignal): Promise<AppiumObservedScreen> {
     this.invalidate();
     try {
@@ -37,11 +53,6 @@ export class AppiumObservation {
         return { capture, screenshot, capturedAt: Date.now() };
       }, this.options.sourceTimeoutMs), pair => pair.capture.screenHash, this.clock, signal, { returnDeadline: true });
       return { snapshot: this.references.issue(result.tree.capture, result.tree.capturedAt, result.settled), screenshot: result.tree.screenshot };
-    } catch (error) {
-      if (signal.aborted) throw signal.reason;
-      if (error instanceof ObservationIncompleteError) throw error;
-      if (error instanceof SettleDeadlineError || (error instanceof AppiumError && error.code === 'TIMEOUT')) throw new ObservationIncompleteError('timeout');
-      throw new ObservationIncompleteError('driver-error');
-    }
+    } catch (error) { throw this.incomplete(error, signal); }
   }
 }
