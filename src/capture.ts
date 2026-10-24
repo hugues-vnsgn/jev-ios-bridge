@@ -1,6 +1,6 @@
 import type { Element, Snapshot } from './contracts/index.js';
 import { DeviceReasonError, selectAndroidDeviceName } from './device/index.js';
-import { ComposedAppiumDriver, productionAppiumHost, type AppiumHost } from './appium/composition.js';
+import { ComposedAppiumDriver, type AppiumHost } from './appium/composition.js';
 import { ScriptedObservationError, renderAssertionState } from './scripted/observe.js';
 import { androidAvd, androidSerial } from './scripted/schema.js';
 import { REASON_CODES } from './scripted/vocabulary.js';
@@ -24,8 +24,8 @@ export interface CaptureContext {
   projectDir?: string;
   /** JEV_ANDROID_DEVICE. Empty counts as unset. */
   defaultDevice?: string | undefined;
-  /** Builds the capture's driver for the device the request selected. Defaults to the Appium driver on this host. */
-  driver?: ((selection: CaptureSelection) => CaptureDriver) | undefined;
+  /** Builds the capture's driver for the device the request selected: the CLI passes `appiumCaptureDriver`. */
+  driver: (selection: CaptureSelection) => CaptureDriver;
   write: { stdout(text: string): void; stderr(text: string): void };
   /** Aborted by SIGINT or SIGTERM: the capture stops, and the driver is still closed. */
   signal: AbortSignal;
@@ -133,7 +133,7 @@ export async function captureCommand(request: CaptureRequest, context: CaptureCo
     // The device checks run here, before the driver's tools check, so a missing or malformed name is
     // reported first, as `run` does.
     const name = selectAndroidDeviceName(device, context.defaultDevice, 'Pass --serial or --avd, or set JEV_ANDROID_DEVICE');
-    const driver = (context.driver ?? appiumCaptureDriver(productionAppiumHost()))({ device, name, defaultDevice: context.defaultDevice, profile: selected?.binding,
+    const driver = context.driver({ device, name, defaultDevice: context.defaultDevice, profile: selected?.binding,
       category: selected && selected.profile.deviceCategory !== 'ios-simulator' ? selected.profile.deviceCategory : undefined });
     const operationMs = selected?.profile.budgets?.operationMs;
     const captureSignal = operationMs === undefined ? signal : AbortSignal.any([signal, AbortSignal.timeout(operationMs)]);
