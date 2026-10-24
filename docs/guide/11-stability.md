@@ -54,7 +54,7 @@ These stay compatible for every 1.x release:
 
 - **The Appium stack** that drives both platforms is frozen. It ships with the bridge as release archives, and the bridge checks their hashes before it uses them. Nothing in it is installed, built or downloaded when the bridge runs. The iOS runner is the exact WebDriverAgent 16.14.2 build the stack was qualified with, and the Android UiAutomator2 server APKs are pinned by SHA-256 too. The stack changes only when the project owner asks for a re-freeze. A written recipe covers it (`docs/maintainers/re-freeze.md` and ADR-0013 in the repository): a new lock, a new runner, new hashes, and the iOS qualification cases run again. Nothing updates it automatically.
 - **Supported host:** macOS on Apple silicon with Node 24 or later. On any other host, the bridge refuses before it touches a device.
-- **Supported iOS:** iOS 26.5 with Xcode 27.0, the only pair the runner is proven on. Another iOS or Xcode version still runs, with a warning that names it as unsupported.
+- **Supported iOS:** iOS 26.5 with Xcode 27.0, the only pair the runner is proven on. Another iOS or Xcode version is outside that claim.
 - **The Jev model** stays pinned (`jev-1.13.0`). A new model, or any change to the screen text sent to Jev, must first pass the frozen assertion test: no confidently wrong answer, and at most 3 of 48 uncertain. It then ships as a minor release, named in the release notes and in every report. 1.0 sends observation shape `visible-full-text-v2`: the v1 text plus scroll-bar lines, adopted after that test. Android runs send `android-full-text-v1`. A change to it re-runs Android's 10-screen check, which must give no confidently wrong answer.
 
 ## Upgrading from 0.1.0
