@@ -2,7 +2,7 @@ import { randomUUID } from 'node:crypto';
 import { performance } from 'node:perf_hooks';
 import type { Admission, AdmissionClaim, AdmittedSession, FenceRequest, NativeComponent, OwnerIdentity, RecoveryClaim } from '../../device/admission.js';
 import { z } from 'zod/v4';
-import { active, ownedGroup, sharedService, verifyAppiumProof } from './proof.js';
+import { active, groupHeld, ownedGroup, sameIdentity, sharedService, verifyAppiumProof } from './proof.js';
 import { androidProcessSchema, appiumComponentSchema, forwardInventorySchema, hostInventorySchema,
   parseEffectResult, settingKeySchema, settingsSchema, wdaInventorySchema, type AppiumComponent, type AppiumProof,
   androidIdentitySchema, type FenceEffect, type HostIdentity, type HostRow, type Transcript } from './schema.js';
@@ -80,33 +80,29 @@ export async function fenceAppium(input: FenceOptions & { admission: Admission; 
   const wait = () => budget.sleep(5000);
   const stopHost = async (target: Extract<AppiumComponent, { kind: 'appium-process-group' | 'appium-native-helper' }>): Promise<AppiumProof> => {
     const before = await hostRead();
-    const known = target.kind === 'appium-process-group' ? [target.leader, ...target.members] : [target.process];
     const live = (rows: HostRow[]) => {
-      for (const expected of known) {
-        const current = rows.find(row => row.pid === expected.pid);
-        if (current && current.startTime !== expected.startTime) throw new Error('Host PID was reused');
-        if (current && active(current) && sharedService(current)) throw new Error('Shared service cannot be stopped');
-      }
-      return target.kind === 'appium-process-group' ? ownedGroup(target, rows).filter(active) : rows.filter(row => row.pid === target.process.pid && active(row));
+      const found = target.kind === 'appium-process-group' ? ownedGroup(target, rows).filter(active) : rows.filter(row => sameIdentity(row, target.process) && active(row));
+      if (found.some(sharedService)) throw new Error('Shared service cannot be stopped');
+      return found;
     };
     const recorded = live(before.rows);
     const expanded = target.kind === 'appium-process-group' ? { ...target, members: [...target.members,
       ...recorded.filter(row => row.pid !== target.leader.pid && !target.members.some(member => member.pid === row.pid))] } : target;
     const remaining = (rows: HostRow[]) => expanded.kind === 'appium-process-group' ? ownedGroup(expanded, rows).filter(active) : live(rows);
-    const signal = async (rows: HostRow[], name: 'SIGTERM' | 'SIGKILL') => {
-      if (target.kind === 'appium-process-group' && rows.some(row => row.pgid === target.pgid)) await query({ kind: 'host-signal-group', pgid: target.pgid, members: rows.filter(row => row.pgid === target.pgid).map(row => ({ pid: row.pid, startTime: row.startTime })), signal: name });
-      for (const row of rows) if (target.kind === 'appium-native-helper' || row.pgid !== target.pgid) {
-        const process: HostIdentity = { pid: row.pid, startTime: row.startTime };
-        await query({ kind: 'host-signal', process, signal: name });
-      }
+    const identity = (row: HostRow): HostIdentity => ({ pid: row.pid, startTime: row.startTime });
+    const signal = async (inventory: HostRow[], rows: HostRow[], name: 'SIGTERM' | 'SIGKILL') => {
+      const group = target.kind === 'appium-process-group' && groupHeld(target, inventory) ? target : undefined;
+      const grouped = group ? rows.filter(row => row.pgid === group.pgid) : [];
+      if (group && grouped.length) await query({ kind: 'host-signal-group', pgid: group.pgid, members: grouped.map(identity), signal: name });
+      for (const row of rows) if (!grouped.includes(row)) await query({ kind: 'host-signal', process: identity(row), signal: name });
     };
     let after = before;
     if (recorded.length) {
-      await signal(recorded, 'SIGTERM');
+      await signal(before.rows, recorded, 'SIGTERM');
       await wait();
       after = await hostRead();
       const surviving = remaining(after.rows);
-      if (surviving.length) { await signal(surviving, 'SIGKILL'); after = await hostRead(); }
+      if (surviving.length) { await signal(after.rows, surviving, 'SIGKILL'); after = await hostRead(); }
       if (remaining(after.rows).length) throw new Error('Host process exit is not proven');
     }
     return target.kind === 'appium-process-group'
@@ -133,8 +129,7 @@ export async function fenceAppium(input: FenceOptions & { admission: Admission; 
           for (const process of target.processes) {
             let command = await query({ kind: 'android-process', serial: target.serial, pid: process.pid });
             const current = androidProcessSchema.parse(command.result);
-            if (current.kind === 'running') {
-              if (current.startTime !== process.startTime) throw new Error('Android PID identity differs');
+            if (current.kind === 'running' && current.startTime === process.startTime) {
               await query({ kind: 'android-stop', serial: target.serial, process });
               command = await query({ kind: 'android-process', serial: target.serial, pid: process.pid });
             }

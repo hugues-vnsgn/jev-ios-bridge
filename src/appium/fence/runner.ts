@@ -86,8 +86,8 @@ export function createFenceRunner(io: { host?: HostFenceIo; adb: AdbRunner; simc
       }
       case 'host-signal': {
         const rows = hostInventorySchema.parse(await inventory(signal));
-        const current = rows.find(row => row.pid === effect.process.pid);
-        if (current && (sharedService(current) || current.startTime !== effect.process.startTime)) throw new Error('Host process identity differs');
+        const current = rows.find(row => row.pid === effect.process.pid && row.startTime === effect.process.startTime);
+        if (current && sharedService(current)) throw new Error('Shared service cannot be signalled');
         if (current?.state === 'running') await signalProcess(effect.process, effect.signal, signal);
         return { ok: true };
       }
@@ -102,10 +102,7 @@ export function createFenceRunner(io: { host?: HostFenceIo; adb: AdbRunner; simc
       case 'android-process': return processState(effect, signal);
       case 'android-stop': {
         const current = await processState({ serial: effect.serial, pid: effect.process.pid }, signal);
-        if (current.kind === 'running') {
-          if (current.startTime !== effect.process.startTime) throw new Error('Android process identity differs');
-          checked(await adb(shellCommand(effect.serial, ['kill', '-TERM', String(effect.process.pid)]), signal));
-        }
+        if (current.kind === 'running' && current.startTime === effect.process.startTime) checked(await adb(shellCommand(effect.serial, ['kill', '-TERM', String(effect.process.pid)]), signal));
         return { ok: true };
       }
       case 'forward-inventory': return forwardRows(await adb(['forward', '--list'], signal));

@@ -2,19 +2,18 @@ import { isDeepStrictEqual } from 'node:util';
 import { androidProcessSchema, forwardInventorySchema, hostInventorySchema, settingsSchema, wdaInventorySchema,
   type AppiumComponent, type AppiumProof, type HostIdentity, type HostRow, type Transcript } from './schema.js';
 
-const sameIdentity = (row: HostIdentity, expected: HostIdentity) => row.pid === expected.pid && row.startTime === expected.startTime;
+export const sameIdentity = (row: HostIdentity, expected: HostIdentity) => row.pid === expected.pid && row.startTime === expected.startTime;
+const reused = (rows: HostRow[], identity: HostIdentity) => rows.some(row => row.pid === identity.pid && row.startTime !== identity.startTime);
 export function sharedService(row: HostRow): boolean {
   const executable = row.executable.split(/\s+/)[0]?.split('/').at(-1);
   return row.sharedService === true || executable === 'CoreSimulatorService' || executable === 'com.apple.CoreSimulator.CoreSimulatorService'
     || (executable === 'adb' && /\bfork-server\b.*\bserver\b/.test(row.executable));
 }
 export const active = (row: HostRow) => row.state === 'running';
-export function ownedGroup(target: Extract<AppiumComponent, { kind: 'appium-process-group' }>, rows: HostRow[]): HostRow[] {
-  const recorded = [target.leader, ...target.members];
-  for (const identity of recorded) {
-    const current = rows.find(row => row.pid === identity.pid);
-    if (current && !sameIdentity(current, identity)) throw new Error('Recorded PID identity differs');
-  }
+type Group = Extract<AppiumComponent, { kind: 'appium-process-group' }>;
+export const groupHeld = (target: Group, rows: HostRow[]) => !reused(rows, target.leader);
+export function ownedGroup(target: Group, rows: HostRow[]): HostRow[] {
+  const recorded = [target.leader, ...target.members].filter(identity => !reused(rows, identity));
   const linked = new Set(recorded.map(row => Number(row.pid)));
   for (const row of rows.filter(active)) {
     const ancestor = row.launchChain?.[0];
@@ -31,7 +30,7 @@ export function ownedGroup(target: Extract<AppiumComponent, { kind: 'appium-proc
     for (const row of rows) if (linked.has(row.ppid)) linked.add(row.pid);
   }
   const group = rows.filter(row => linked.has(row.pid));
-  if (rows.some(row => active(row) && row.pgid === target.pgid && !linked.has(row.pid))) throw new Error('Unmatched process group member');
+  if (groupHeld(target, rows) && rows.some(row => active(row) && row.pgid === target.pgid && !linked.has(row.pid))) throw new Error('Unmatched process group member');
   for (const row of group.filter(active)) {
     if (sharedService(row)) throw new Error('Shared service cannot be stopped');
   }
@@ -47,7 +46,7 @@ export function verifyAppiumProof(target: AppiumComponent, proof: AppiumProof, t
       const initial = hostInventorySchema.parse(before.result), final = hostInventorySchema.parse(after.result);
       const recorded = ownedGroup(target, initial);
       const expanded = { ...target, members: [...target.members, ...recorded.filter(row => row.pid !== target.leader.pid && !target.members.some(member => member.pid === row.pid))] };
-      return !ownedGroup(expanded, final).some(active) && !final.some(row => active(row) && row.pgid === target.pgid);
+      return !ownedGroup(expanded, final).some(active) && !(groupHeld(target, final) && final.some(row => active(row) && row.pgid === target.pgid));
     }
     case 'appium-wda': {
       if (proof.kind !== 'appium-wda-stopped') return false;
@@ -59,8 +58,9 @@ export function verifyAppiumProof(target: AppiumComponent, proof: AppiumProof, t
       if (proof.kind !== 'appium-uiautomator2-stopped' || proof.commandIds.length !== target.processes.length || new Set(proof.commandIds).size !== proof.commandIds.length) return false;
       return target.processes.every(process => proof.commandIds.some(id => {
         const command = read(id);
-        return command?.effect.kind === 'android-process' && command.effect.serial === target.serial && command.effect.pid === process.pid
-          && androidProcessSchema.parse(command.result).kind === 'absent';
+        if (command?.effect.kind !== 'android-process' || command.effect.serial !== target.serial || command.effect.pid !== process.pid) return false;
+        const state = androidProcessSchema.parse(command.result);
+        return state.kind === 'absent' || state.startTime !== process.startTime;
       }));
     }
     case 'appium-forward': {
@@ -76,7 +76,7 @@ export function verifyAppiumProof(target: AppiumComponent, proof: AppiumProof, t
     case 'appium-native-helper': {
       if (proof.kind !== 'appium-helper-stopped') return false;
       const command = read(proof.commandId);
-      return command?.effect.kind === 'host-inventory' && !hostInventorySchema.parse(command.result).some(row => row.pid === target.process.pid && active(row));
+      return command?.effect.kind === 'host-inventory' && !hostInventorySchema.parse(command.result).some(row => sameIdentity(row, target.process) && active(row));
     }
     default: { const exhaustive: never = target; return exhaustive; }
   }

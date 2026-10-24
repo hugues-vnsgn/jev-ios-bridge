@@ -36,7 +36,7 @@ function inventory(stdout: string) {
     const sharedService = /(?:^|\/)CoreSimulatorService(?:\s|$)|(?:^|\/)com\.apple\.CoreSimulator\.CoreSimulatorService(?:\s|$)/.test(command)
       || ((executable?.split('/').at(-1) === 'adb') && /\bfork-server\b.*\bserver\b/.test(command));
     rows.push({ pid, ppid: Number(match[2]), pgid: Number(match[3]), state: match[4]?.startsWith('Z') ? 'zombie' : 'running',
-      startTime: match[5]?.replace(/\s+/g, ' '), executable, ...(sharedService ? { sharedService: true } : {}),
+      startTime: match[5], executable, ...(sharedService ? { sharedService: true } : {}),
       ...(marker === undefined ? {} : { runMarker: marker }), ...(chain === undefined ? {} : { launchChain: ancestry(chain) }) });
   }
   try { return hostInventorySchema.parse(rows); }

@@ -139,14 +139,65 @@ test('cleanup retries converge after components have already stopped and setting
   assert.equal(proof.kind, 'stop');
 });
 
-for (const fault of ['reused-pid', 'unknown-member', 'shared-service', 'surviving-kill', 'wrong-forward', 'wrong-wda', 'unreadable', 'deadline', 'unknown-create']) test(`${fault} retains quarantine`, async t => {
+test('a reused PID counts as gone while the process now holding it survives', async t => {
+  const f = fixture(t); for (const target of [targets[0], targets[5]]) f.claim.registerComponent(JSON.parse(JSON.stringify(target)));
+  f.claim.closeDispatch({ outcome: 'inconclusive', disposition: 'quarantined', payload: {}, evidenceRefs: [] });
+  const recovery = f.admission.claimRecovery(f.claim.identity, 'reused'); if (recovery.kind === 'refused') assert.fail();
+  const runner = new FakeRunner();
+  runner.hosts[0]!.startTime = 'reused-100'; runner.hosts[3]!.startTime = 'reused-400';
+  const { fenceAppium } = await fenceModule();
+  const proof = await fenceAppium({ admission: f.admission, claim: recovery.claim, runner: runner.run, clock: runner.clock });
+  recovery.claim.submitFence(proof);
+  assert.deepEqual(runner.events.filter(event => 'signal' in event || 'wait' in event), [
+    { kind: 'host-signal', process: { pid: 101, startTime: 'host-101' }, signal: 'SIGTERM' },
+    { kind: 'host-signal', process: { pid: 102, startTime: 'host-102' }, signal: 'SIGTERM' },
+    { wait: 5000 },
+  ]);
+  assert.deepEqual(runner.hosts.map(row => [row.pid, row.startTime]), [[100, 'reused-100'], [400, 'reused-400'], [999, 'foreign']]);
+  assert.equal(state(f.admission, f.claim.identity), 'available');
+});
+
+test('a reused Android PID counts as gone without a stop', async t => {
+  const f = fixture(t, [targets[2]]); f.claim.registerComponent(JSON.parse(JSON.stringify(targets[2])));
+  f.claim.closeDispatch({ outcome: 'inconclusive', disposition: 'quarantined', payload: {}, evidenceRefs: [] });
+  const recovery = f.admission.claimRecovery(f.claim.identity, 'reused-android'); if (recovery.kind === 'refused') assert.fail();
+  const runner = new FakeRunner(); runner.processes.set(300, '77777');
+  const { fenceAppium } = await fenceModule();
+  const proof = await fenceAppium({ admission: f.admission, claim: recovery.claim, runner: runner.run, clock: runner.clock });
+  recovery.claim.submitFence(proof);
+  assert.deepEqual(runner.events.filter(event => 'kind' in event && event.kind === 'android-stop').map(event => 'process' in event && event.process.pid), [301]);
+  assert.deepEqual([...runner.processes], [[300, '77777']]);
+  assert.equal(state(f.admission, f.claim.identity), 'available');
+});
+
+test('a recorded start time with a one-digit day matches the host sampler', async t => {
+  const f = fixture(t);
+  const group = { id: 'group', kind: 'appium-process-group', leader: { pid: 100, startTime: 'Fri Oct  3 10:00:00 2026' }, runMarker: '0123456789abcdef0123456789abcdef', pgid: 100, members: [] };
+  f.claim.registerComponent(JSON.parse(JSON.stringify(group)));
+  f.claim.closeDispatch({ outcome: 'inconclusive', disposition: 'quarantined', payload: {}, evidenceRefs: [] });
+  const recovery = f.admission.claimRecovery(f.claim.identity, 'one-digit-day'); if (recovery.kind === 'refused') assert.fail();
+  const signals: unknown[] = [];
+  let alive = true;
+  const { hostFenceIo } = await import('../src/appium/fence/host.js');
+  const { createFenceRunner } = await import('../src/appium/fence/runner.js');
+  const io = hostFenceIo({ controllerPid: 900, run: async args => ({ exitCode: 0, stderr: '', stdout: args[0] === '-p' ? '900\n'
+    : `${alive ? '100 1 100 S Fri Oct  3 10:00:00 2026 /node\n' : ''}999 1 999 S Fri Oct  3 09:00:00 2026 /foreign\n` }),
+    kill: (pid, signal) => { signals.push({ pid, signal }); alive = false; } });
+  const unexpected = async () => { throw new Error('Unexpected device command'); };
+  const { fenceAppium } = await fenceModule();
+  const proof = await fenceAppium({ admission: f.admission, claim: recovery.claim, runner: createFenceRunner({ host: io, adb: unexpected, simctl: unexpected }), clock: { now: () => 0, sleep: async () => {} } });
+  recovery.claim.submitFence(proof);
+  assert.deepEqual(signals, [{ pid: -100, signal: 'SIGTERM' }]);
+  assert.equal(state(f.admission, f.claim.identity), 'available');
+});
+
+for (const fault of ['unknown-member', 'shared-service', 'surviving-kill', 'wrong-forward', 'wrong-wda', 'unreadable', 'deadline', 'unknown-create']) test(`${fault} retains quarantine`, async t => {
   const selected = fault === 'wrong-wda' ? targets.filter(target => !['appium-uiautomator2', 'appium-forward', 'appium-settings'].includes(target.kind)) : androidTargets;
   const f = fixture(t, selected); for (const target of selected) f.claim.registerComponent(JSON.parse(JSON.stringify(target)));
   if (fault === 'unknown-create') f.claim.markInventoryUnknown('unknown-creation');
   f.claim.closeDispatch({ outcome: 'inconclusive', disposition: 'quarantined', payload: {}, evidenceRefs: [] });
   const recovery = f.admission.claimRecovery(f.claim.identity, fault); if (recovery.kind === 'refused') assert.fail();
   const runner = new FakeRunner();
-  if (fault === 'reused-pid') runner.hosts[0]!.startTime = 'reused';
   if (fault === 'unknown-member') runner.hosts.push({ pid: 888, startTime: 'unowned', ppid: 1, pgid: 100, state: 'running', executable: '/other' });
   if (fault === 'shared-service') runner.hosts[1]!.executable = '/CoreSimulatorService';
   if (fault === 'surviving-kill') { runner.resistTerm = true; runner.ignoreKill = true; }

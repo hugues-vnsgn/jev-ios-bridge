@@ -31,7 +31,7 @@ test('Android instrumentation is matched by proc start time before stopping only
   const runner = createFenceRunner({ host: host(), adb: async args => { calls.push(args); return args.at(-1)?.includes("'cat'") ? result(stat(300, '12345')) : result(''); }, simctl: async () => result('') });
   assert.deepEqual(await runner(fenceEffectSchema.parse({ kind: 'android-stop', serial: 'one', process: { pid: 300, startTime: '12345' } }), signal), { ok: true });
   assert.deepEqual(calls, [['-s', 'one', 'shell', "'cat' '/proc/300/stat'"], ['-s', 'one', 'shell', "'kill' '-TERM' '300'"]]);
-  await assert.rejects(() => runner(fenceEffectSchema.parse({ kind: 'android-stop', serial: 'one', process: { pid: 300, startTime: '99999' } }), signal), /identity/i);
+  assert.deepEqual(await runner(fenceEffectSchema.parse({ kind: 'android-stop', serial: 'one', process: { pid: 300, startTime: '99999' } }), signal), { ok: true });
   assert.equal(calls.length, 3);
 });
 
@@ -58,6 +58,17 @@ test('WDA termination matches simulator, runner bundle and PID, with launchctl r
   assert.deepEqual(await runner(fenceEffectSchema.parse({ kind: 'wda-stop', udid, bundleId, pid: 200 }), signal), { ok: true });
   assert.deepEqual(await runner(fenceEffectSchema.parse({ kind: 'wda-inventory', udid }), signal), []);
   assert.deepEqual(calls, [['spawn', udid, 'launchctl', 'list'], ['spawn', udid, 'launchctl', 'list'], ['terminate', udid, bundleId], ['spawn', udid, 'launchctl', 'list']]);
+});
+
+test('a single-process signal reaches only the recorded identity and skips a reused PID', async () => {
+  const calls: unknown[] = [];
+  let rows = [{ pid: 101, startTime: 'one', ppid: 1, pgid: 101, state: 'running', executable: '/driver' }];
+  const runner = createFenceRunner({ host: { inventory: async () => rows, signalGroup: async () => {}, signalProcess: async (process, signal) => { calls.push({ process, signal }); } }, adb: async () => result(''), simctl: async () => result('') });
+  const effect = fenceEffectSchema.parse({ kind: 'host-signal', process: { pid: 101, startTime: 'one' }, signal: 'SIGTERM' });
+  assert.deepEqual(await runner(effect, signal), { ok: true });
+  rows = [{ ...rows[0]!, startTime: 'reused' }];
+  assert.deepEqual(await runner(effect, signal), { ok: true });
+  assert.deepEqual(calls, [{ process: { pid: 101, startTime: 'one' }, signal: 'SIGTERM' }]);
 });
 
 test('a group signal refuses a foreign or reused group member at the signal boundary', async () => {
