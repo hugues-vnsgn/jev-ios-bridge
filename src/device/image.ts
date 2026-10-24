@@ -107,6 +107,9 @@ function verifyImageCodec(stack: VerifiedStack): string {
   };
   try { visit('node_modules/sharp'); }
   catch (error) { if (error instanceof StackError) throw error; mismatch(); }
+  const native = (name: string) => [...verified].some(path => path.endsWith(`node_modules/@img/${name}`));
+  const host = [`${process.platform}-${process.arch}`, `${process.platform}musl-${process.arch}`];
+  if (!host.some(target => native(`sharp-${target}`) && native(`sharp-libvips-${target}`))) mismatch();
   return join(stack.nodeModules, 'sharp');
 }
 
@@ -127,10 +130,24 @@ export class ScreenshotError extends Error {
   constructor() { super('The screen image is invalid.'); }
 }
 
+const codecs = new Map<string, z.infer<typeof callable>>();
+function imageCodec(stack: VerifiedStack): z.infer<typeof callable> {
+  const root = resolve(stack.root);
+  let factory = codecs.get(root);
+  if (!factory) {
+    const path = verifyImageCodec(stack);
+    factory = callable.parse(createRequire(join(stack.root, 'package.json'))(path));
+    codecs.set(root, factory);
+  }
+  return factory;
+}
+
+/**
+ * The window frame and the JPEG's own size travel together and are never compared here: an Android window can
+ * exclude the navigation bar. Android `tapAt` refuses when the screenshot it converts is inconsistent with its frame.
+ */
 export function createScreenshotEncoder(stack: VerifiedStack): (screen: ExtensionResult<'jev_screen'>) => Promise<ScreenshotImage> {
-  const path = verifyImageCodec(stack);
-  const require = createRequire(join(stack.root, 'package.json'));
-  const factory = callable.parse(require(path));
+  const factory = imageCodec(stack);
   return async input => {
     try {
       const screen = screenResultSchema.parse(input);
@@ -143,8 +160,6 @@ export function createScreenshotEncoder(stack: VerifiedStack): (screen: Extensio
       const { width, height } = metadata;
       if (width !== height && (width > height) !== (screen.orientation === 'LANDSCAPE')) throw new ScreenshotError();
       if (screen.rect.width !== screen.rect.height && (screen.rect.width > screen.rect.height) !== (width > height)) throw new ScreenshotError();
-      const ratio = (width / height) / (screen.rect.width / screen.rect.height);
-      if (Math.abs(ratio - 1) > 0.01) throw new ScreenshotError();
       codecCall(image, 'resize', { width: 800, height: 800, fit: 'inside', withoutEnlargement: true });
       codecCall(image, 'jpeg', { quality: 80 });
       const jpeg = z.instanceof(Buffer).parse(await codecCall(image, 'toBuffer'));

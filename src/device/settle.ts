@@ -14,7 +14,7 @@ export type SettledCapture = { tree: AndroidTree; screenHash: string; settled: b
 
 /** Measured from when the earlier capture returned to when the later one starts (release spec phase 4 item 7). */
 export const SETTLE_GAP_MS = 250;
-/** Measured from the rule's start. The last completed capture returns by this deadline. Late replies are discarded. */
+/** Measured from the rule's start. No capture starts at or after it; see `settleCaptures` for one still running. */
 export const SETTLE_CAP_MS = 3_000;
 
 
@@ -58,20 +58,30 @@ function beforeDeadline<T>(work: Promise<T>, deadline: AbortSignal, signal: Abor
   });
 }
 
+/**
+ * Capture until two captures at least `SETTLE_GAP_MS` apart match, the newer one becoming the one to match each
+ * time they don't. No capture starts at or after `SETTLE_CAP_MS`. The legacy Android driver keeps a capture that
+ * started before the cap, however late it returns. With `returnDeadline`, the Appium path instead returns the last
+ * capture completed by the cap, discards a later one without cancelling it, and refuses when none completed.
+ */
 export async function settleCaptures<T>(capture: (signal: AbortSignal) => Promise<T>, hash: (tree: T) => string,
-  clock: Clock, signal: AbortSignal): Promise<{ tree: T; screenHash: string; settled: boolean }> {
+  clock: Clock, signal: AbortSignal, options: { returnDeadline?: boolean } = {}): Promise<{ tree: T; screenHash: string; settled: boolean }> {
   const end = clock.now() + SETTLE_CAP_MS;
-  let previous: Completed<T> | undefined;
-  while (clock.now() < end) {
+  const take = (): Promise<Completed<T> | undefined> => {
     signal.throwIfAborted();
-    const remaining = end - clock.now();
     const work = capture(signal).then(tree => ({ tree, screenHash: hash(tree), returnedAt: clock.now() }));
-    const next = await beforeDeadline(work, clock.timeout(remaining), signal);
-    if (!next || next.returnedAt >= end) break;
+    return options.returnDeadline ? beforeDeadline(work, clock.timeout(end - clock.now()), signal) : work;
+  };
+  let previous: Completed<T> | undefined;
+  while (true) {
+    const next = await take();
+    if (!next || (options.returnDeadline && next.returnedAt >= end)) break;
     if (previous && next.screenHash === previous.screenHash) return { tree: next.tree, screenHash: next.screenHash, settled: true };
     previous = next;
     if (next.returnedAt + SETTLE_GAP_MS >= end) break;
-    await beforeDeadline(clock.sleep(SETTLE_GAP_MS).then(() => true), clock.timeout(end - clock.now()), signal);
+    const wait = next.returnedAt + SETTLE_GAP_MS - clock.now();
+    if (wait > 0) await clock.sleep(wait);
+    if (options.returnDeadline && clock.now() >= end) break;
   }
   if (!previous) throw new SettleDeadlineError();
   return { tree: previous.tree, screenHash: previous.screenHash, settled: false };
