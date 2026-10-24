@@ -9,7 +9,7 @@ import { androidProcessSchema, appiumComponentSchema, fenceCommandSchema, forwar
   androidIdentitySchema, type FenceEffect, type HostIdentity, type HostRow, type Transcript } from './schema.js';
 export type { FenceEffect } from './schema.js';
 export type FenceRunner = (effect: FenceEffect, signal: AbortSignal) => Promise<unknown>;
-export type FenceOptions = { runner: FenceRunner; signal?: AbortSignal; budgetMs?: number;
+export type FenceOptions = { runner: FenceRunner; revalidate: () => Promise<void>; signal?: AbortSignal; budgetMs?: number;
   clock?: { now: () => number; sleep: (ms: number, signal: AbortSignal) => Promise<void> } };
 const defaultClock = { now: () => performance.now(), sleep: (ms: number, signal: AbortSignal) => new Promise<void>((resolve, reject) => {
   signal.throwIfAborted();
@@ -66,6 +66,7 @@ export async function fenceAppium(input: FenceOptions & { admission: Admission; 
   const transcripts: Transcript[] = [];
   const query = async (effect: FenceEffect) => {
     check();
+    if ('serial' in effect) await bounded(input.revalidate);
     const id = randomUUID();
     let commandId = '';
     const result = await claim.dispatch({ requestId: id, componentId: id, operation: 'appium-fence', payload: {}, recordResult: true,
@@ -212,6 +213,7 @@ export async function clearOwnedForwards(input: FenceOptions & { admission: Admi
   const budget = new CleanupBudget(input);
   const query = async (effect: FenceEffect) => {
     budget.check();
+    if ('serial' in effect) await budget.run(input.revalidate);
     const id = randomUUID();
     let commandId = '';
     const result = await input.dispatcher.dispatch({ requestId: id, componentId: id, operation: 'appium-fence', payload: {}, recordResult: true,

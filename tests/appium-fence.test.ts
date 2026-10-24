@@ -45,6 +45,9 @@ class FakeRunner {
   dying = new Map<number, number>();
   delay = 0;
   hang = false;
+  revalidations = 0;
+  transportChanged = false;
+  revalidate = async () => { this.revalidations++; if (this.transportChanged) throw new Error('Android transport changed'); };
   hosts = [
     { pid: 100, startTime: 'host-100', ppid: 1, pgid: 100, state: 'running', executable: '/node' },
     { pid: 101, startTime: 'host-101', ppid: 100, pgid: 100, state: 'running', executable: '/driver' },
@@ -98,7 +101,7 @@ async function prepared(t: TestContext, selected: readonly unknown[]) {
   if (recovery.kind === 'refused') assert.fail('Expected recovery claim');
   const runner = new FakeRunner();
   const { fenceAppium } = await fenceModule();
-  const proof = await fenceAppium({ admission: f.admission, claim: recovery.claim, runner: runner.run, clock: runner.clock });
+  const proof = await fenceAppium({ admission: f.admission, claim: recovery.claim, runner: runner.run, revalidate: runner.revalidate, clock: runner.clock });
   return { ...f, recovery: recovery.claim, runner, proof };
 }
 const proofKinds = ['appium-group-stopped', 'appium-wda-stopped', 'appium-uiautomator2-stopped', 'appium-forward-removed', 'appium-settings-restored', 'appium-helper-stopped'];
@@ -126,7 +129,7 @@ test('TERM waits five seconds then KILL covers recorded and escaped descendants 
   const recovery = f.admission.claimRecovery(f.claim.identity, 'stop'); if (recovery.kind === 'refused') assert.fail();
   const runner = new FakeRunner(); runner.resistTerm = true;
   const { fenceAppium } = await fenceModule();
-  const proof = await fenceAppium({ admission: f.admission, claim: recovery.claim, runner: runner.run, clock: runner.clock });
+  const proof = await fenceAppium({ admission: f.admission, claim: recovery.claim, runner: runner.run, revalidate: runner.revalidate, clock: runner.clock });
   recovery.claim.submitFence(proof);
   assert.deepEqual(runner.events.filter(event => 'signal' in event || 'wait' in event), [
     { kind: 'host-signal-group', pgid: 100, members: [{ pid: 100, startTime: 'host-100' }, { pid: 101, startTime: 'host-101' }], signal: 'SIGTERM' },
@@ -146,7 +149,7 @@ test('a process that exits shortly after its stop is polled within the budget be
   const recovery = f.admission.claimRecovery(f.claim.identity, 'late-exit'); if (recovery.kind === 'refused') assert.fail();
   const runner = new FakeRunner(); runner.resistTerm = true; runner.lag = 2;
   const { fenceAppium } = await fenceModule();
-  const proof = await fenceAppium({ admission: f.admission, claim: recovery.claim, runner: runner.run, clock: runner.clock });
+  const proof = await fenceAppium({ admission: f.admission, claim: recovery.claim, runner: runner.run, revalidate: runner.revalidate, clock: runner.clock });
   recovery.claim.submitFence(proof);
   const operations = runner.events.map(event => 'kind' in event ? event.kind : `wait ${event.wait}`);
   assert.deepEqual(operations.slice(operations.indexOf('host-signal-group', operations.indexOf('host-signal-group') + 1)), [
@@ -159,10 +162,30 @@ test('a process that exits shortly after its stop is polled within the budget be
   assert.equal(state(f.admission, f.claim.identity), 'available');
 });
 
+test('a changed Android transport keeps quarantine, writes nothing and leaves no uncertain command', async t => {
+  const f = fixture(t, androidTargets); for (const target of androidTargets) f.claim.registerComponent(JSON.parse(JSON.stringify(target)));
+  f.claim.closeDispatch({ outcome: 'inconclusive', disposition: 'quarantined', payload: {}, evidenceRefs: [] });
+  const runner = new FakeRunner(); runner.transportChanged = true;
+  const request = { device: f.claim.identity.device, category: f.claim.identity.category, attempt: { kind: 'legacy', id: 'next' }, digest: 'next', intent: {} } as const;
+  assert.deepEqual(await f.admission.acquireWithAppiumRecovery(request, { runner: runner.run, revalidate: runner.revalidate, clock: runner.clock }), { kind: 'refused', reason: 'DEVICE_QUARANTINED' });
+  assert.deepEqual(runner.events.filter(event => 'kind' in event && ['android-stop', 'settings-write', 'forward-remove'].includes(event.kind)), []);
+  assert.deepEqual(runner.values, { hidden_api_policy: '1', hidden_api_policy_p_apps: '1', hidden_api_policy_pre_p_apps: '1', accessibility_enabled: '1' });
+  assert.deepEqual([...runner.processes], [[300, '12345'], [301, '12346']]);
+  assert.deepEqual(f.admission.readGeneration(f.claim.identity).commands.filter(command => command.state !== 'settled'), []);
+  runner.transportChanged = false;
+  assert.equal((await f.admission.acquireWithAppiumRecovery(request, { runner: runner.run, revalidate: runner.revalidate, clock: runner.clock })).kind, 'acquired');
+});
+
+test('the transport is revalidated before each effect that names the Android serial', async t => {
+  const { runner } = await prepared(t, [targets[4]]);
+  assert.deepEqual(runner.events.map(event => 'kind' in event ? event.kind : 'wait'), ['settings-read', 'settings-write', 'settings-write', 'settings-write', 'settings-write', 'settings-read']);
+  assert.equal(runner.revalidations, 6);
+});
+
 test('cleanup retries converge after components have already stopped and settings are restored', async t => {
   const { admission, claim, recovery, runner, proof } = await prepared(t, androidTargets);
   const { fenceAppium } = await fenceModule();
-  const again = await fenceAppium({ admission, claim: recovery, runner: runner.run, clock: runner.clock });
+  const again = await fenceAppium({ admission, claim: recovery, runner: runner.run, revalidate: runner.revalidate, clock: runner.clock });
   const receipt = recovery.submitFence(again);
   assert.equal(receipt.proof.components.filter(row => row.proof.kind !== 'completed-command').length, 5);
   assert.deepEqual(runner.values, settings);
@@ -178,7 +201,7 @@ test('a reused PID counts as gone while the process now holding it survives', as
   const runner = new FakeRunner();
   runner.hosts[0]!.startTime = 'reused-100'; runner.hosts[3]!.startTime = 'reused-400';
   const { fenceAppium } = await fenceModule();
-  const proof = await fenceAppium({ admission: f.admission, claim: recovery.claim, runner: runner.run, clock: runner.clock });
+  const proof = await fenceAppium({ admission: f.admission, claim: recovery.claim, runner: runner.run, revalidate: runner.revalidate, clock: runner.clock });
   recovery.claim.submitFence(proof);
   assert.deepEqual(runner.events.filter(event => 'signal' in event || 'wait' in event), [
     { kind: 'host-signal', process: { pid: 101, startTime: 'host-101' }, signal: 'SIGTERM' },
@@ -195,7 +218,7 @@ test('a reused Android PID counts as gone without a stop', async t => {
   const recovery = f.admission.claimRecovery(f.claim.identity, 'reused-android'); if (recovery.kind === 'refused') assert.fail();
   const runner = new FakeRunner(); runner.processes.set(300, '77777');
   const { fenceAppium } = await fenceModule();
-  const proof = await fenceAppium({ admission: f.admission, claim: recovery.claim, runner: runner.run, clock: runner.clock });
+  const proof = await fenceAppium({ admission: f.admission, claim: recovery.claim, runner: runner.run, revalidate: runner.revalidate, clock: runner.clock });
   recovery.claim.submitFence(proof);
   assert.deepEqual(runner.events.filter(event => 'kind' in event && event.kind === 'android-stop').map(event => 'process' in event && event.process.pid), [301]);
   assert.deepEqual([...runner.processes], [[300, '77777']]);
@@ -217,7 +240,7 @@ test('a recorded start time with a one-digit day matches the host sampler', asyn
     kill: (pid, signal) => { signals.push({ pid, signal }); alive = false; } });
   const unexpected = async () => { throw new Error('Unexpected device command'); };
   const { fenceAppium } = await fenceModule();
-  const proof = await fenceAppium({ admission: f.admission, claim: recovery.claim, runner: createFenceRunner({ host: io, adb: unexpected, simctl: unexpected }), clock: { now: () => 0, sleep: async () => {} } });
+  const proof = await fenceAppium({ admission: f.admission, claim: recovery.claim, runner: createFenceRunner({ host: io, adb: unexpected, simctl: unexpected }), revalidate: async () => {}, clock: { now: () => 0, sleep: async () => {} } });
   recovery.claim.submitFence(proof);
   assert.deepEqual(signals, [{ pid: -100, signal: 'SIGTERM' }]);
   assert.equal(state(f.admission, f.claim.identity), 'available');
@@ -238,7 +261,7 @@ for (const fault of ['unknown-member', 'shared-service', 'surviving-kill', 'wron
   if (fault === 'deadline') runner.delay = 23000;
   const { fenceAppium } = await fenceModule();
   await assert.rejects(() => fenceAppium({ admission: f.admission, claim: recovery.claim,
-    runner: fault === 'unreadable' ? async () => ({ invalid: true }) : runner.run, clock: runner.clock }));
+    runner: fault === 'unreadable' ? async () => ({ invalid: true }) : runner.run, revalidate: runner.revalidate, clock: runner.clock }));
   assert.equal(state(f.admission, f.claim.identity), 'quarantined');
   if (fault === 'unknown-create') assert.deepEqual(runner.events, []);
 });
@@ -253,13 +276,13 @@ function quarantinedAndroidForward(t: TestContext) {
 test('a sweep that fails on its deadline is covered by the next sweep and the device releases', async t => {
   const f = quarantinedAndroidForward(t);
   const runner = new FakeRunner(); runner.delay = 46000;
-  const first = await f.admission.acquireWithAppiumRecovery(f.request, { runner: runner.run, clock: runner.clock });
+  const first = await f.admission.acquireWithAppiumRecovery(f.request, { runner: runner.run, revalidate: runner.revalidate, clock: runner.clock });
   assert.deepEqual(first, { kind: 'refused', reason: 'DEVICE_QUARANTINED' });
   assert.deepEqual(f.admission.readGeneration(f.claim.identity).commands.map(command => [command.operation, command.state]), [['appium-fence', 'uncertain']]);
   runner.delay = 0;
   const { fenceAppium } = await fenceModule();
   let proof: Awaited<ReturnType<typeof fenceAppium>> | undefined;
-  const second = await f.admission.acquireWithRecovery(f.request, async claim => proof = await fenceAppium({ admission: f.admission, claim, runner: runner.run, clock: runner.clock }));
+  const second = await f.admission.acquireWithRecovery(f.request, async claim => proof = await fenceAppium({ admission: f.admission, claim, runner: runner.run, revalidate: runner.revalidate, clock: runner.clock }));
   assert.equal(second.kind, 'acquired');
   const view = f.admission.readGeneration(f.claim.identity);
   assert.deepEqual(view.recoveries.map(recovery => recovery.closure), ['refused', 'accepted']);
@@ -273,11 +296,11 @@ test('a sweep that fails on its deadline is covered by the next sweep and the de
 for (const forgery of ['unsettled-answer', 'write-command']) test(`a superseded read refuses a ${forgery} forgery`, async t => {
   const f = quarantinedAndroidForward(t);
   const runner = new FakeRunner(); runner.delay = forgery === 'write-command' ? 23000 : 46000;
-  await f.admission.acquireWithAppiumRecovery(f.request, { runner: runner.run, clock: runner.clock });
+  await f.admission.acquireWithAppiumRecovery(f.request, { runner: runner.run, revalidate: runner.revalidate, clock: runner.clock });
   runner.delay = 0;
   const recovery = f.admission.claimRecovery(f.claim.identity, forgery); if (recovery.kind === 'refused') assert.fail();
   const { fenceAppium } = await fenceModule();
-  const forged = await fenceAppium({ admission: f.admission, claim: recovery.claim, runner: runner.run, clock: runner.clock }).catch(() => undefined);
+  const forged = await fenceAppium({ admission: f.admission, claim: recovery.claim, runner: runner.run, revalidate: runner.revalidate, clock: runner.clock }).catch(() => undefined);
   const view = f.admission.readGeneration(f.claim.identity);
   const failed = view.commands.find(command => command.state === 'uncertain')!;
   const answer = view.commands.filter(command => command.recoveryClaimId === recovery.claim.identity.id && command.state === 'settled').at(-1)!;
@@ -294,10 +317,10 @@ for (const forgery of ['unsettled-answer', 'write-command']) test(`a superseded 
 test('an uncertain forward removal keeps the device quarantined after a clean sweep', async t => {
   const f = quarantinedAndroidForward(t);
   const runner = new FakeRunner(); runner.delay = 23000;
-  assert.deepEqual(await f.admission.acquireWithAppiumRecovery(f.request, { runner: runner.run, clock: runner.clock }), { kind: 'refused', reason: 'DEVICE_QUARANTINED' });
+  assert.deepEqual(await f.admission.acquireWithAppiumRecovery(f.request, { runner: runner.run, revalidate: runner.revalidate, clock: runner.clock }), { kind: 'refused', reason: 'DEVICE_QUARANTINED' });
   assert.deepEqual(runner.events.map(event => 'kind' in event ? event.kind : 'wait'), ['forward-inventory', 'forward-remove']);
   runner.delay = 0;
-  assert.deepEqual(await f.admission.acquireWithAppiumRecovery(f.request, { runner: runner.run, clock: runner.clock }), { kind: 'refused', reason: 'DEVICE_QUARANTINED' });
+  assert.deepEqual(await f.admission.acquireWithAppiumRecovery(f.request, { runner: runner.run, revalidate: runner.revalidate, clock: runner.clock }), { kind: 'refused', reason: 'DEVICE_QUARANTINED' });
   assert.equal(state(f.admission, f.claim.identity), 'quarantined');
 });
 
@@ -307,14 +330,14 @@ test('a hung runner is bounded by the cleanup budget and cannot release on a lat
   const recovery = f.admission.claimRecovery(f.claim.identity, 'hang'); if (recovery.kind === 'refused') assert.fail();
   const runner = new FakeRunner(); runner.hang = true;
   const { fenceAppium } = await fenceModule();
-  await assert.rejects(() => fenceAppium({ admission: f.admission, claim: recovery.claim, runner: runner.run, budgetMs: 10 }), /budget/i);
+  await assert.rejects(() => fenceAppium({ admission: f.admission, claim: recovery.claim, runner: runner.run, revalidate: runner.revalidate, budgetMs: 10 }), /budget/i);
   assert.equal(state(f.admission, f.claim.identity), 'quarantined');
 });
 
 test('dead-owner sweep acquires only after all Appium receipts and preserves the old outcome', async t => {
   const f = fixture(t, androidTargets); for (const target of androidTargets) f.claim.registerComponent(JSON.parse(JSON.stringify(target)));
   const runner = new FakeRunner();
-  const result = await f.admission.acquireWithAppiumRecovery({ device: f.claim.identity.device, category: f.claim.identity.category, attempt: { kind: 'legacy', id: 'next' }, digest: 'next', intent: {} }, { runner: runner.run, clock: runner.clock });
+  const result = await f.admission.acquireWithAppiumRecovery({ device: f.claim.identity.device, category: f.claim.identity.category, attempt: { kind: 'legacy', id: 'next' }, digest: 'next', intent: {} }, { runner: runner.run, revalidate: runner.revalidate, clock: runner.clock });
   assert.equal(result.kind, 'acquired');
   assert.equal(f.admission.readAttempt(f.claim.identity.attempt)?.terminal?.outcome, 'inconclusive');
   assert.deepEqual(runner.values, settings);
@@ -341,7 +364,7 @@ test('leftover owned forward is absent before the next create and an unrelated f
   const runner = new FakeRunner();
   const { clearOwnedForwards } = await fenceModule();
   const session = f.claim.bindDriver('fake');
-  const proofs = await clearOwnedForwards({ admission: f.admission, owner: f.claim.identity, dispatcher: session, runner: runner.run });
+  const proofs = await clearOwnedForwards({ admission: f.admission, owner: f.claim.identity, dispatcher: session, runner: runner.run, revalidate: runner.revalidate });
   await session.dispatch('next-create', async () => {
     assert.deepEqual(runner.forwards, [{ serial: 'foreign', local: 'tcp:19124', remote: 'tcp:6790' }]);
     return { created: true };
@@ -419,7 +442,7 @@ test('startup forward cleanup has its own bounded budget even with a caller sign
   const runner = new FakeRunner(); runner.hang = true;
   const { clearOwnedForwards } = await fenceModule();
   const session = f.claim.bindDriver('fake');
-  await assert.rejects(() => clearOwnedForwards({ admission: f.admission, owner: f.claim.identity, dispatcher: session, runner: runner.run,
+  await assert.rejects(() => clearOwnedForwards({ admission: f.admission, owner: f.claim.identity, dispatcher: session, runner: runner.run, revalidate: runner.revalidate,
     signal: new AbortController().signal, budgetMs: 10 }), /budget/i);
   assert.equal(f.admission.readGeneration(f.claim.identity).commands[0]?.state, 'uncertain');
 });
@@ -436,7 +459,7 @@ test('a pre-create forward readback is never a final stop receipt', async t => {
   const f = fixture(t, [targets[3]]); f.claim.registerComponent(JSON.parse(JSON.stringify(targets[3])));
   const runner = new FakeRunner();
   const { clearOwnedForwards } = await fenceModule();
-  const proofs = await clearOwnedForwards({ admission: f.admission, owner: f.claim.identity, dispatcher: f.claim.bindDriver('fake'), runner: runner.run });
+  const proofs = await clearOwnedForwards({ admission: f.admission, owner: f.claim.identity, dispatcher: f.claim.bindDriver('fake'), runner: runner.run, revalidate: runner.revalidate });
   runner.forwards.push({ serial: 'serial-one', local: 'tcp:19123', remote: 'tcp:6790' });
   f.claim.closeDispatch({ outcome: 'inconclusive', disposition: 'quarantined', payload: {}, evidenceRefs: [] });
   const recovery = f.admission.claimRecovery(f.claim.identity, 'final'); if (recovery.kind === 'refused') assert.fail();
@@ -458,7 +481,7 @@ test('launch attestation finds an escaped orphan after its parent has already ex
   runner.hosts.push(JSON.parse(JSON.stringify({ pid: 103, startTime: 'orphan-103', ppid: 1, pgid: 103, state: 'running', executable: '/escaped',
     runMarker: '0123456789abcdef0123456789abcdef', launchChain: [{ pid: 100, startTime: 'host-100' }, { pid: 101, startTime: 'host-101' }] })));
   const { fenceAppium } = await fenceModule();
-  const proof = await fenceAppium({ admission: f.admission, claim: recovery.claim, runner: runner.run, clock: runner.clock });
+  const proof = await fenceAppium({ admission: f.admission, claim: recovery.claim, runner: runner.run, revalidate: runner.revalidate, clock: runner.clock });
   recovery.claim.submitFence(proof);
   assert.deepEqual(runner.hosts.map(row => row.pid), [400, 999]);
   assert.equal(state(f.admission, f.claim.identity), 'available');
@@ -472,7 +495,7 @@ test('an inherited marker never grants ownership of a shared adb server', async 
   runner.hosts.push(JSON.parse(JSON.stringify({ pid: 500, startTime: 'shared-adb', ppid: 1, pgid: 500, state: 'running', executable: '/usr/bin/adb', sharedService: true,
     runMarker: '0123456789abcdef0123456789abcdef', launchChain: [{ pid: 100, startTime: 'host-100' }] })));
   const { fenceAppium } = await fenceModule();
-  const proof = await fenceAppium({ admission: f.admission, claim: recovery.claim, runner: runner.run, clock: runner.clock });
+  const proof = await fenceAppium({ admission: f.admission, claim: recovery.claim, runner: runner.run, revalidate: runner.revalidate, clock: runner.clock });
   recovery.claim.submitFence(proof);
   assert.deepEqual(runner.hosts.map(row => row.pid), [400, 999, 500]);
   assert.equal(state(f.admission, f.claim.identity), 'available');
@@ -486,6 +509,6 @@ test('a descendant with inconsistent launch attestation remains quarantined', as
   runner.hosts.push(JSON.parse(JSON.stringify({ pid: 103, startTime: 'orphan-103', ppid: 1, pgid: 103, state: 'running', executable: '/escaped',
     launchChain: [{ pid: 100, startTime: 'host-100' }] })));
   const { fenceAppium } = await fenceModule();
-  await assert.rejects(() => fenceAppium({ admission: f.admission, claim: recovery.claim, runner: runner.run, clock: runner.clock }), /attestation/i);
+  await assert.rejects(() => fenceAppium({ admission: f.admission, claim: recovery.claim, runner: runner.run, revalidate: runner.revalidate, clock: runner.clock }), /attestation/i);
   assert.equal(state(f.admission, f.claim.identity), 'quarantined');
 });
