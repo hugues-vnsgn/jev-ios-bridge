@@ -3,6 +3,7 @@ import { test } from 'node:test';
 import { settleCaptures, SettleDeadlineError, type Clock } from '../src/device/settle.js';
 import { setTimeout as delay } from 'node:timers/promises';
 const signal = () => new AbortController().signal;
+const deadline = { returnDeadline: true };
 function clock(): Clock {
   const start = performance.now();
   return { now: () => (performance.now() - start) * 100, sleep: ms => delay(ms / 100), timeout: ms => { const abort = new AbortController(); setTimeout(() => abort.abort(), Math.ceil(ms / 100)); return abort.signal; } };
@@ -14,7 +15,7 @@ test('shared settle compares normalized hashes and returns the matching second c
 });
 test('the return cap keeps the last completed capture and never cancels or keeps a late reply', async () => {
   const c = clock(); let count = 0; let finish: (s: string) => void = () => {}; let wireSignal: AbortSignal | undefined;
-  const pending = settleCaptures(async s => { wireSignal = s; return ++count === 1 ? 'first' : new Promise<string>(done => { finish = done; }); }, s => s, c, signal());
+  const pending = settleCaptures(async s => { wireSignal = s; return ++count === 1 ? 'first' : new Promise<string>(done => { finish = done; }); }, s => s, c, signal(), deadline);
   assert.deepEqual(await pending, { tree: 'first', screenHash: 'first', settled: false });
   assert.equal(wireSignal?.aborted, false);
   finish('late');
@@ -23,10 +24,10 @@ test('the return cap keeps the last completed capture and never cancels or keeps
 test('a capture which completes after the cap is discarded even if the clock advances synchronously', async () => {
   let time = 0, count = 0;
   const c: Clock = { now: () => time, sleep: async ms => { time += ms; }, timeout: () => signal() };
-  const result = await settleCaptures(async () => { time += ++count === 1 ? 100 : 3000; return String(count); }, s => s, c, signal());
+  const result = await settleCaptures(async () => { time += ++count === 1 ? 100 : 3000; return String(count); }, s => s, c, signal(), deadline);
   assert.deepEqual(result, { tree: '1', screenHash: '1', settled: false });
 });
 test('the return cap refuses when no capture has completed', async () => {
-  const result = settleCaptures(() => new Promise<string>(() => {}), s => s, clock(), signal());
+  const result = settleCaptures(() => new Promise<string>(() => {}), s => s, clock(), signal(), deadline);
   await assert.rejects(result, SettleDeadlineError);
 });

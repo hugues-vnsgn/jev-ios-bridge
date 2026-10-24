@@ -120,3 +120,18 @@ test('the screen hash sees every change outside the status bar and ignores key o
   assert.equal(screenHash(reordered), base);
   assert.match(base, /^[0-9a-f]{64}$/);
 });
+
+test('a capture that starts before the cap and returns after it is kept, as the legacy driver always did', async () => {
+  const fake = fakeCapture([screen('Loading'), screen('Home'), screen('Home')], 1000);
+  const result = await settle(fake.capture, fake.clock, live());
+  assert.deepEqual(fake.starts, [0, 1250, 2500]);
+  assert.equal(fake.now(), 3500);
+  assert.deepEqual(result, { tree: screen('Home'), screenHash: screenHash(screen('Home')), settled: true });
+});
+
+test('a first capture slower than the cap still comes back unsettled instead of refusing', async () => {
+  const fake = fakeCapture([screen('Home')], 3200);
+  const result = await settle(fake.capture, fake.clock, live());
+  assert.deepEqual(fake.starts, [0]);
+  assert.deepEqual(result, { tree: screen('Home'), screenHash: screenHash(screen('Home')), settled: false });
+});

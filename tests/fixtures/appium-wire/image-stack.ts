@@ -4,11 +4,12 @@ import { join, resolve } from 'node:path';
 import { tmpdir } from 'node:os';
 import type { TestContext } from 'node:test';
 import type { VerifiedStack } from '../../../src/appium/stack.js';
-export function imageStack(t: TestContext) {
+export function imageStack(t: TestContext, omit: (name: string) => boolean = () => false) {
   const root = mkdtempSync(join(tmpdir(), 'jev-image-stack-'));
   t.after(() => rmSync(root, { recursive: true, force: true }));
   const source = resolve('.scratch/appium-mcp-migration/candidate-stack/node_modules');
-  const names = ['sharp', 'detect-libc', 'semver', ...readdirSync(join(source, '@img')).map(n => `@img/${n}`)];
+  const available = ['sharp', 'detect-libc', 'semver', ...readdirSync(join(source, '@img')).map(n => `@img/${n}`)];
+  const names = available.filter(name => !omit(name));
   const files: VerifiedStack['manifest']['files'] = {};
   const packages: VerifiedStack['manifest']['packages'] = [];
   for (const name of names) {
@@ -29,7 +30,7 @@ export function imageStack(t: TestContext) {
     identity: { version: 1, stackSha256: '1'.repeat(64), wdaSha256: '2'.repeat(64), manifestSha256: '3'.repeat(64) },
     manifest: { version: 1, lockSha256: '4'.repeat(64), files, loaded: ['node_modules/sharp/package.json'], packages, androidApks: [],
       wda: { version: '16.14.2', path: 'wda', treeSha256: '5'.repeat(64) } } };
-  const binary = Object.keys(files).find(p => p.endsWith('.node'));
-  if (!binary) throw new Error('Sharp native fixture missing');
+  const binary = Object.keys(files).find(p => p.endsWith('.node')) ?? 'node_modules/missing.node';
+  if (!files[binary] && names.length === available.length) throw new Error('Sharp native fixture missing');
   return { stack, binary: join(root, binary) };
 }

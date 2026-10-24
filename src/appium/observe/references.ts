@@ -17,6 +17,8 @@ export class ObservationReferences {
     this.targets = new Map(snapshot.elements.map(element => [element.ref, structuredClone(element)]));
     return snapshot;
   }
+  /** True only for the latest snapshot issued here, including one with no elements. */
+  isCurrent(snapshot: Snapshot): boolean { return this.current !== undefined && snapshot === this.current; }
   resolve({ sessionId, snapshot, ref }: { sessionId: AppiumSessionId; snapshot: Snapshot; ref: string }): Element {
     const element = this.targets.get(ref);
     if (sessionId !== this.sessionId || snapshot !== this.current || !element) throw new StaleSnapshotError();

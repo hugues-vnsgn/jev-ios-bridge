@@ -21,7 +21,6 @@ function numeric(node: SourceNode, key: string): number {
 }
 function androidNode(node: SourceNode): AndroidNode {
   const a = node.attributes;
-  if (node.name !== 'node' && node.name !== a.class) invalid();
   if (!a.class) invalid();
   const bounds = /^\[(-?\d+),(-?\d+)\]\[(-?\d+),(-?\d+)\]$/.exec(a.bounds ?? '');
   if (!bounds) return invalid();
@@ -46,8 +45,9 @@ const inputRoles = new Set<Role>(['text-field', 'switch', 'slider']);
 function accessibilityValue(role: Role, a: Record<string, string>): string | undefined {
   const value = a.value;
   if (!value) return undefined;
-  if (!inputRoles.has(role) && (value === a.label || value === a.name)) return undefined;
+  if (!inputRoles.has(role) && value === a.label) return undefined;
   if (role === 'button' && (value === '0' || value === '1')) return undefined;
+  if (role === 'text-field' && value === a.placeholderValue) return undefined;
   return value;
 }
 function iosElements(root: SourceNode): Element[] {
@@ -72,7 +72,6 @@ function iosElements(root: SourceNode): Element[] {
       state: { enabled, visible, ...(focused === undefined ? {} : { focused }) }, frame };
     if (a.label) element.label = a.label;
     if (a.name && a.name !== a.label) element.identifier = a.name;
-    if (a.placeholder) element.placeholder = a.placeholder;
     const value = accessibilityValue(role, a);
     if (value !== undefined) element.value = kind === 'SecureTextField' ? value.replace(/[^•●*]/gu, '•') : value;
     elements.push(element);

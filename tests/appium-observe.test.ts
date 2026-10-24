@@ -3,7 +3,8 @@ import { test } from 'node:test';
 import { writeFileSync } from 'node:fs';
 import { resolve } from 'node:path';
 import { setTimeout as delay } from 'node:timers/promises';
-import { AppiumObservation } from '../src/appium/observe/index.js';
+import { AppiumObservation, ObservationReferences } from '../src/appium/observe/index.js';
+import { sessionIdSchema } from '../src/appium/wire-schemas.js';
 import { AppiumCommandSession } from '../src/appium/session.js';
 import { clientFixture } from './fixtures/appium-wire/client-fixture.js';
 import { imageStack } from './fixtures/appium-wire/image-stack.js';
@@ -114,4 +115,57 @@ test('a pair with a late screenshot is discarded as a whole and drains before in
   assert.deepEqual(f.calls().filter(c => c.method === 'tools/call').map(c => c.params.name),
     ['appium_session_management', 'jev_settings', 'appium_get_page_source', 'jev_screen', 'appium_get_page_source', 'jev_screen', 'jev_terminate_app']);
   await session.finish();
+});
+test('after the cap, a cancel and stopDispatch, finishing waits for the pending pair and deletes the session', async t => {
+  const f = clientFixture(t); const { stack } = imageStack(t);
+  const client = await f.open('source-late-second-held', resolve('tests/fixtures/appium-wire/ios/observe-2.jsonl'));
+  const session = await AppiumCommandSession.start({ client, profile: f.profile });
+  const manual = manualClock(); const command = new AbortController();
+  const observation = new AppiumObservation(session, stack, { clock: manual.clock });
+  const pending = observation.observe(command.signal);
+  await waitForCall(f, 'appium_get_page_source', 2);
+  manual.expire();
+  assert.equal((await pending).snapshot.settled, false);
+  command.abort(new Error('cancelled'));
+  client.stopDispatch();
+  const finishing = session.finish();
+  await delay(50);
+  writeFileSync(f.trace + '.release', 'release');
+  await finishing;
+  assert.deepEqual(f.calls().filter(c => c.method === 'tools/call').map(c => c.params.name),
+    ['appium_session_management', 'jev_settings', 'appium_get_page_source', 'jev_screen', 'appium_get_page_source', 'appium_session_management']);
+});
+for (const [fault, reason] of [['source-invalid', 'invalid-source'], ['screen-invalid', 'driver-error']] as const) {
+  test(`${fault} refuses that observation as incomplete and keeps the session for later input`, async t => {
+    const f = clientFixture(t); const { stack } = imageStack(t);
+    const client = await f.open(fault, resolve('tests/fixtures/appium-wire/ios/observe-1.jsonl'));
+    const session = await AppiumCommandSession.start({ client, profile: f.profile });
+    await assert.rejects(new AppiumObservation(session, stack).observe(live()), { code: 'TRUNCATED', truncated: true, reason });
+    assert.equal(client.dispatchOpen, true);
+    assert.equal((await client.callExtension({ name: 'jev_terminate_app', arguments: { appId: 'example.app' } })).acknowledged, true);
+    await session.finish();
+    assert.deepEqual(f.calls().filter(c => c.method === 'tools/call').map(c => c.params.name),
+      ['appium_session_management', 'jev_settings', 'appium_get_page_source', 'jev_screen', 'jev_terminate_app', 'appium_session_management']);
+  });
+}
+test('isCurrent holds only for the latest snapshot while the session stays open', async t => {
+  const f = clientFixture(t); const { stack } = imageStack(t);
+  const client = await f.open('none', resolve('tests/fixtures/appium-wire/ios/observe-2.jsonl'));
+  const session = await AppiumCommandSession.start({ client, profile: f.profile });
+  const observation = new AppiumObservation(session, stack);
+  const { snapshot } = await observation.observe(live());
+  assert.equal(observation.isCurrent(snapshot), true);
+  assert.equal(observation.isCurrent({ ...snapshot }), false);
+  client.stopDispatch();
+  assert.equal(observation.isCurrent(snapshot), false);
+});
+test('an empty snapshot is current until the next one is issued, so back and scroll can act on it', () => {
+  const references = new ObservationReferences(sessionIdSchema.parse('ios-session'), 'ios-test');
+  const empty = references.issue({ elements: [], truncated: false, screenHash: 'empty' }, 0, true);
+  assert.deepEqual(empty.elements, []);
+  assert.equal(references.isCurrent(empty), true);
+  const next = references.issue({ elements: [], truncated: false, screenHash: 'empty' }, 1, true);
+  assert.deepEqual([references.isCurrent(empty), references.isCurrent(next)], [false, true]);
+  references.invalidate();
+  assert.equal(references.isCurrent(next), false);
 });
