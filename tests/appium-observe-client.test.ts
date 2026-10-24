@@ -12,7 +12,8 @@ test('guarded source calls preserve the explicit session, and pending pairs drai
   const first = await client.capturePair(async pair => pair);
   assert.match(first.xml, /AppiumAUT/);
   const pending = client.capturePair(async pair => pair);
-  await delay(20);
+  const sourceCalls = () => f.calls().filter(c => c.params?.name === 'appium_get_page_source').length;
+  for (const deadline = Date.now() + 5000; sourceCalls() < 2 && Date.now() < deadline;) await delay(10);
   assert.equal(client.observationPending, true);
   const input = client.callExtension({ name: 'jev_terminate_app', arguments: { appId: 'example.app' } });
   assert.deepEqual(f.calls().filter(c => c.method === 'tools/call').map(c => c.params.name),
