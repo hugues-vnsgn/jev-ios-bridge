@@ -13,7 +13,7 @@ import { DeviceAgentError, type AndroidNode, type DeviceAgentClient } from '../s
 import { PINNED_AGENT_SHA256 } from '../src/device/android/agent-supply.js';
 import { AGENT_DEVICE_PATH, AGENT_START_COMMAND, APP_PROBLEM_POLL_MS, APP_PROBLEM_WAIT_MS, AndroidDriver, productionClock, type AndroidDriverOptions } from '../src/device/android/driver.js';
 import type { AppExitWatch } from '../src/device/android/exit-watch.js';
-import { createDriverFactory } from '../src/device/factory.js';
+import { createLegacyDriverFactory } from '../src/device/legacy-factory.js';
 import { OutcomeUnknownError } from '../src/device/android/ledger.js';
 import type { IdentityProbe } from '../src/device/android/probe.js';
 import { mapAndroidTree } from '../src/device/android/mapping.js';
@@ -2042,7 +2042,7 @@ async function runCaptured(capture: string, options: { pid: string; lateFrom?: n
     }
     await sleep(ms);
   };
-  const createDriver = createDriverFactory({
+  const createDriver = createLegacyDriverFactory({
     mobileBuildMcp: { cwd: parent, lockRoot: parent, runner: async () => assert.fail('an Android script never reaches the iOS driver') },
     android: { runner: adb.run, agentClient: agents.agentClient, clock, leaseRoot, admission: fakeAndroidAdmission(leaseRoot), fakeBackend: true, freePort: async () => ports.shift()!,
       logcat: streams, logFolder: folder,

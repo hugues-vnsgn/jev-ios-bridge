@@ -3,6 +3,7 @@ import { open } from 'node:fs/promises';
 import { constants } from 'node:fs';
 import { resolve } from 'node:path';
 import type { Admission } from '../device/admission.js';
+import type { AppiumHost } from '../appium/composition.js';
 import type { ObservedActionService } from './service.js';
 import type { AllocationResult, AllocationOperationError, AllocationSnapshotV1 } from './allocation.js';
 import { parseObservedAction, ObservedOperationError, observedActionIdSchema, observedAllocationIdSchema,
@@ -74,20 +75,21 @@ export async function validateObservedStartConfiguration(admission: Pick<Admissi
   }
 }
 
-/** Only installed CLI composition reaches this factory; test stores have no production override. */
-export function productionObservedComposition(options: { enabled: boolean; runsDir: string; cwd: string }): ObservedComposition {
+/** Only installed CLI composition reaches this factory; test stores have no production override. Preparation and
+ *  action both run on the Appium driver, bound to the simulator their claim admitted. */
+export function productionObservedComposition(options: { enabled: boolean; runsDir: string; host: AppiumHost }): ObservedComposition {
   let admission: Admission;
   return createObservedComposition({ enabled: options.enabled,
     async create() {
-      const [{ Admission }, { ObservedAllocator }, { ObservedActionService, observedDriverFactory }, { deviceWindowOpener }, { BRIDGE_VERSION }] = await Promise.all([
-        import('../device/admission.js'), import('./allocation.js'), import('./service.js'), import('../device/index.js'), import('../version.js')]);
+      const [{ Admission }, { ObservedAllocator }, { ObservedActionService }, { createObservedDriver, createPreparationDriver }, { deviceWindowOpener }, { BRIDGE_VERSION }] = await Promise.all([
+        import('../device/admission.js'), import('./allocation.js'), import('./service.js'), import('../device/factory.js'), import('../device/index.js'), import('../version.js')]);
       try { admission = Admission.open(); }
       catch { throw new ObservedOperationError('STORE_UNAVAILABLE', 'Existing admission authority is unavailable', { acceptance: 'unknown' }); }
       const runsDir = resolve(options.runsDir);
-      const allocator = new ObservedAllocator({ admission, runsDir });
-      const deviceWindow = deviceWindowOpener(false);
+      const drivers = { host: options.host, admission, presentation: deviceWindowOpener(false) ? 'visible' as const : 'headless' as const };
+      const allocator = new ObservedAllocator({ admission, runsDir, createDriver: () => createPreparationDriver(drivers) });
       return new ObservedActionService({ admission, allocator, runsDir, bridgeVersion: BRIDGE_VERSION, backend: 'real', enabled: options.enabled,
-        createDriver: observedDriverFactory({ cwd: options.cwd, admission, ...(deviceWindow ? { deviceWindow } : {}) }) });
+        createDriver: () => createObservedDriver(drivers) });
     },
     async beforeStart(request) {
       const { readAllocationConfig } = await import('./allocation-config.js');

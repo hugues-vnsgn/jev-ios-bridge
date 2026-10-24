@@ -23,9 +23,10 @@ import { REASON_CODES, ROLES } from '../src/scripted/vocabulary.js';
 import * as vocabularyApi from '../src/scripted/vocabulary.js';
 import * as admissionApi from '../src/device/admission.js';
 import { BridgeService } from '../src/service.js';
-import { captureCommand } from '../src/capture.js';
-import { PINNED_AGENT_SHA256 } from '../src/device/android/agent-supply.js';
-import { AGENT_CACHE, fakeAndroidAdmission, FakeStreams, FakeAdb, fakeAgents, fakeClock } from './fixtures/android-device.js';
+import { appiumCaptureDriver, captureCommand } from '../src/capture.js';
+import { SERIAL, androidTarget } from './fixtures/appium-wire/matrix.js';
+import { androidScreen, world as appiumWorld } from './fixtures/appium-wire/world.js';
+import { worldHost } from './fixtures/appium-wire/world-host.js';
 import { androidScript } from './fixtures/android-script.js';
 import { openMcpSession } from './fixtures/mcp-session.js';
 
@@ -583,22 +584,26 @@ test('contract: --help lists capture and its options', { timeout: 10_000 }, asyn
   assert.match(stdout, /jev-ios-bridge capture \[--profile NAME\] \[--serial S \| --avd A\] \[--jev\]/);
 });
 
-/** The CLI's capture path against a fake device whose foreign agent holds it: the exit code, once the refusal is checked. */
+/** The CLI's capture path on the Appium composition against a phone whose UiAutomator2 forward the bridge does not own:
+ *  the exit code, once the refusal is checked. */
 async function captureWithForeignAgent(): Promise<number> {
-  const root = await mkdtemp(join(tmpdir(), 'jev-contract-capture-'));
+  const cleanups: (() => unknown)[] = [];
   try {
-    const adb = new FakeAdb({ serial: 'emulator-5554', avd: 'jev-actions-api31', agents: new Map([[4984, 'foreign']]) });
+    const target = androidTarget();
+    const world = worldHost({ after: cleanup => { cleanups.push(cleanup); } }, { worlds: [appiumWorld('android', { home: androidScreen([]) })],
+      identityProbe: target.options.identityProbe, adb: target.options.adb, nativeReply: target.nativeReply });
+    const foreign = { serial: SERIAL, local: 'tcp:18300', remote: 'tcp:6790' };
+    world.fence.forwards = [foreign];
     let stdout = '';
     let stderr = '';
-    const code = await captureCommand({ avd: 'jev-actions-api31' }, { signal: new AbortController().signal,
-      driver: { admission: fakeAndroidAdmission(root), fakeBackend: true, logcat: new FakeStreams(adb), runner: adb.run, agentClient: fakeAgents(adb).agentClient, clock: fakeClock(), leaseRoot: root,
-        tools: async () => ({ adb: '/sdk/platform-tools/adb', agent: { path: AGENT_CACHE, sha256: PINNED_AGENT_SHA256 } }) },
+    const code = await captureCommand({ serial: SERIAL }, { signal: new AbortController().signal, driver: appiumCaptureDriver(world.host),
       write: { stdout: text => { stdout += text; }, stderr: text => { stderr += text; } } });
     assert.match(stderr, /^DEVICE_BUSY: /);
     assert.equal(stdout, '');
-    assert.ok(adb.emulators.get('emulator-5554')!.agents!.has(4984), 'the foreign agent is left running');
+    assert.deepEqual(world.fence.forwards, [foreign], 'the foreign automation is left running');
+    assert.deepEqual(world.opened[0]!.calls(), [], 'no private child started');
     return code;
-  } finally { await rm(root, { recursive: true, force: true }); }
+  } finally { for (const cleanup of cleanups.reverse()) await cleanup(); }
 }
 
 test('contract: capture refusals print the reason code on stderr and need no TYPESAFE_API_KEY', { timeout: 20_000 }, async () => {

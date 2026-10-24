@@ -2,9 +2,11 @@ import { createHash } from 'node:crypto';
 import { cpSync, lstatSync, mkdtempSync, readFileSync, readdirSync, rmSync } from 'node:fs';
 import { join, resolve } from 'node:path';
 import { tmpdir } from 'node:os';
-import type { TestContext } from 'node:test';
 import type { VerifiedStack } from '../../../src/appium/stack.js';
-export function imageStack(t: TestContext, omit: (name: string) => boolean = () => false) {
+/** A test's cleanup hooks, or a fixture process's own list. */
+export type Cleanups = { after(cleanup: () => unknown): void };
+
+export function imageStack(t: Cleanups, omit: (name: string) => boolean = () => false) {
   const root = mkdtempSync(join(tmpdir(), 'jev-image-stack-'));
   t.after(() => rmSync(root, { recursive: true, force: true }));
   const source = resolve('.scratch/appium-mcp-migration/candidate-stack/node_modules');

@@ -1,13 +1,13 @@
 import type { Element, Snapshot } from './contracts/index.js';
 import { DeviceReasonError, selectAndroidDeviceName } from './device/index.js';
-import { AndroidDriver, type AndroidDriverOptions } from './device/android/driver.js';
+import { ComposedAppiumDriver, productionAppiumHost, type AppiumHost } from './appium/composition.js';
 import { ScriptedObservationError, renderAssertionState } from './scripted/observe.js';
 import { androidAvd, androidSerial } from './scripted/schema.js';
 import { REASON_CODES } from './scripted/vocabulary.js';
 import { DEFAULT_CLEANUP_MS } from './scripted/run.js';
 // capture exits with the CLI's own codes (release spec open point 12): "passed" when it printed, "could not start" when not.
 import { EXIT } from './exit-codes.js';
-import { agreeProfileDevice, ProfileError, readProfile, profileDevice, type DeviceAgreement } from './profiles.js';
+import { agreeProfileDevice, ProfileError, readProfile, profileDevice, type AndroidDeviceName, type DeviceAgreement, type ProfileBinding } from './profiles.js';
 import { resolve } from 'node:path';
 
 export interface CaptureRequest {
@@ -24,13 +24,24 @@ export interface CaptureContext {
   projectDir?: string;
   /** JEV_ANDROID_DEVICE. Empty counts as unset. */
   defaultDevice?: string | undefined;
-  /** The Android driver's parts. Injectable for tests; the device comes from the request. */
-  driver?: Omit<AndroidDriverOptions, 'device' | 'defaultDevice'> | undefined;
+  /** Builds the capture's driver for the device the request selected. Defaults to the Appium driver on this host. */
+  driver?: ((selection: CaptureSelection) => CaptureDriver) | undefined;
   write: { stdout(text: string): void; stderr(text: string): void };
   /** Aborted by SIGINT or SIGTERM: the capture stops, and the driver is still closed. */
   signal: AbortSignal;
   /** Resolves a flag's name against the profile's other-kind name. Without it such a pair refuses. */
   agreeDevices?: DeviceAgreement;
+}
+
+/** The device a capture names, after the flag, profile and environment precedence. */
+export type CaptureSelection = { device: AndroidDeviceName | undefined; name: string; defaultDevice: string | undefined; profile: ProfileBinding | undefined;
+  category: 'android-emulator' | 'android-phone' | undefined };
+export interface CaptureDriver { capture(signal: AbortSignal): Promise<Snapshot>; close(signal: AbortSignal): Promise<void> }
+
+/** The Appium driver for a capture: the selected device, its profile category, and the packaged UiAutomator2 server. */
+export function appiumCaptureDriver(host: AppiumHost): (selection: CaptureSelection) => CaptureDriver {
+  return selection => new ComposedAppiumDriver({ host, ...(selection.profile ? { profile: selection.profile } : {}),
+    target: async () => ({ platform: 'android', device: selection.name, serverInstallation: { kind: 'install' }, ...(selection.category ? { category: selection.category } : {}) }) });
 }
 
 /** Thrown on once the capture's own failure was printed, so it isn't printed twice. */
@@ -121,9 +132,9 @@ export async function captureCommand(request: CaptureRequest, context: CaptureCo
     }
     // The device checks run here, before the driver's tools check, so a missing or malformed name is
     // reported first, as `run` does.
-    selectAndroidDeviceName(device, context.defaultDevice, 'Pass --serial or --avd, or set JEV_ANDROID_DEVICE');
-    const driver = new AndroidDriver({ ...context.driver, profile: selected?.binding, device, defaultDevice: context.defaultDevice,
-      ...(selected && selected.profile.deviceCategory !== 'ios-simulator' ? { category: selected.profile.deviceCategory } : {}) });
+    const name = selectAndroidDeviceName(device, context.defaultDevice, 'Pass --serial or --avd, or set JEV_ANDROID_DEVICE');
+    const driver = (context.driver ?? appiumCaptureDriver(productionAppiumHost()))({ device, name, defaultDevice: context.defaultDevice, profile: selected?.binding,
+      category: selected && selected.profile.deviceCategory !== 'ios-simulator' ? selected.profile.deviceCategory : undefined });
     const operationMs = selected?.profile.budgets?.operationMs;
     const captureSignal = operationMs === undefined ? signal : AbortSignal.any([signal, AbortSignal.timeout(operationMs)]);
     try {

@@ -10,13 +10,13 @@ import type { NativeCommand, NativeExit, NativeOutput, NativeProcess, NativeRunn
 import { AppiumDriver, type AppiumDriverOptions } from '../../../src/appium/driver.js';
 import { extensionFailure } from '../../../src/appium/wire-schemas.js';
 import { clientFixture } from './client-fixture.js';
-import { imageStack } from './image-stack.js';
+import { imageStack, type Cleanups } from './image-stack.js';
 
 export const UDID = 'ABCDEF00-0000-4000-8000-000000000001';
 export const WDA_BUNDLE = 'com.facebook.WebDriverAgentRunner.xctrunner';
 
 /** One stack that verifies both the private SDK (client) and sharp (observation). */
-export function driverStack(t: TestContext): VerifiedStack {
+export function driverStack(t: Cleanups): VerifiedStack {
   const client = clientFixture(t).stack; const image = imageStack(t).stack;
   return { ...image, wdaRunner: client.wdaRunner, manifest: { ...image.manifest, lockSha256: client.manifest.lockSha256, files: { ...image.manifest.files, ...client.manifest.files },
     packages: [...image.manifest.packages, ...client.manifest.packages], androidApks: client.manifest.androidApks, wda: client.manifest.wda } };

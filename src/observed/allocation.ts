@@ -3,7 +3,7 @@ import { isAbsolute, join, dirname, resolve } from 'node:path';
 import { Admission, AdmissionError } from '../device/admission.js';
 import type { ActionBinding, AllocationRecord, AllocationReservation, AllocationReason, ConsumeAllocationResult } from '../device/admission-allocation.js';
 import { DeviceCliError, deviceWindowOpener, type CliRunner, type DeviceWindowOpener, type IosPreparationDriver } from '../device/index.js';
-import { createPreparationDriver } from '../device/factory.js';
+import { createPreparationDriver } from '../device/legacy-factory.js';
 import { inspectArtifact, stageArtifact, verifyStagedArtifact, ArtifactError, type ArtifactRequest } from './artifact.js';
 import { createSimulator, type SourceProcess } from './create-source.js';
 import { selectSuppliedSource } from './supplied-source.js';
@@ -15,6 +15,9 @@ export type { AllocationSnapshotV1, AllocationOperationError, AllocationResult }
 
 export type AllocatorOptions = {
   runsDir: string; admission?: Admission;
+  /** The preparation driver for one admitted allocation. Production passes the Appium driver; a fake backend without one
+   *  keeps the pre-Appium fake driver its own tests use. */
+  createDriver?: () => IosPreparationDriver;
   fakeBackend?: { process: SourceProcess; runner: CliRunner; window: DeviceWindowOpener | undefined; host: InstalledHost };
 };
 type Job = { actionId: string; digest: string; controller: AbortController; deadline: number;
@@ -46,7 +49,7 @@ export class ObservedAllocator {
   private closed = false;
   private closing: Promise<void> | undefined;
   constructor(private readonly options: AllocatorOptions) {
-    if (!isAbsolute(options.runsDir) || options.runsDir.includes('\0') || options.runsDir.length > 4096) throw new AllocationInputError('CONFIG_INVALID');
+    if (!isAbsolute(options.runsDir) || options.runsDir.includes('\0') || options.runsDir.length > 4096 || (!options.fakeBackend && !options.createDriver)) throw new AllocationInputError('CONFIG_INVALID');
     if (options.fakeBackend && (!options.admission || !Object.hasOwn(options.fakeBackend, 'window')
       || typeof options.fakeBackend.process !== 'function' || typeof options.fakeBackend.runner !== 'function'
       || isProductionSourceProcess(options.fakeBackend.process) || (options.fakeBackend.window !== undefined && options.fakeBackend.window === deviceWindowOpener(false, {})))) throw new AllocationInputError('CONFIG_INVALID');
@@ -206,7 +209,7 @@ export class ObservedAllocator {
       }
       this.check(job); job.phase = 'admitting'; const admitted = job.reservation.admit();
       if (admitted.kind !== 'admitted') throw new PreparationFailure(admitted.reason);
-      job.driver = createPreparationDriver({ cwd: evidenceDirectory, admission: this.admission, capture: 'full', screenshots: true,
+      job.driver = this.options.createDriver?.() ?? createPreparationDriver({ cwd: evidenceDirectory, admission: this.admission, capture: 'full', screenshots: true,
         ...(this.options.fakeBackend ? { runner: this.options.fakeBackend.runner, deviceWindow: this.options.fakeBackend.window ?? (async () => {}),
           fakeBackend: { runner: this.options.fakeBackend.runner, window: this.options.fakeBackend.window }, lockRoot: join(this.options.runsDir, 'leases') } : {}) });
       await job.driver.attachPreparation(admitted.claim, { app: { bundleId: request.app.bundleId } }, job.controller.signal);

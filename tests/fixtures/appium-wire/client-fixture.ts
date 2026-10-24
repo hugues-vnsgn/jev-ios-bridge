@@ -1,4 +1,5 @@
 import type { TestContext } from 'node:test';
+import type { Cleanups } from './image-stack.js';
 import { createHash } from 'node:crypto';
 import { existsSync, lstatSync, mkdtempSync, readFileSync, readdirSync, rmSync } from 'node:fs';
 import { tmpdir } from 'node:os';
@@ -26,7 +27,7 @@ function walk(directory: string): void {
   }
 }
 walk('');
-export function clientFixture(t: TestContext, platform: 'ios' | 'android' = 'ios') {
+export function clientFixture(t: Cleanups, platform: 'ios' | 'android' = 'ios') {
   const root = mkdtempSync(join(tmpdir(), 'jev-private-client-'));
   const clients: { close(): Promise<void> }[] = [];
   t.after(async () => {
