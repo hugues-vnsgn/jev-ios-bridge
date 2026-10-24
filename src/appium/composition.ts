@@ -6,7 +6,8 @@ import type { Action, ActionScenarioContext, ActOutcome, ActPath, AppProblem, De
 import { Admission, AdmissionError } from '../device/admission.js';
 import type { AllocationCommit, ObservedClaim, PreparationClaim } from '../device/admission-allocation.js';
 import { adbRunner } from '../device/android/adb.js';
-import { LOG_FOLDER, privateLogFolder } from '../device/android/logcat.js';
+import { createExitWatch } from '../device/android/exit-watch.js';
+import { LOG_FOLDER, logcatStarter, privateLogFolder } from '../device/android/logcat.js';
 import { identityProbe } from '../device/android/probe.js';
 import { findAdb } from '../device/android/tools.js';
 import { DeviceReasonError, type AdmittedAppContext, type IosPreparationDriver, type ObservedActionDriver, type PreparationInventoryStatus } from '../device/index.js';
@@ -40,7 +41,8 @@ export function productionAppiumHost(options: { environment?: NodeJS.ProcessEnv;
       target: target.platform === 'android' && sdkRoot && !target.androidSdkRoot ? { ...target, androidSdkRoot: sdkRoot } : target,
       logFolder: await privateFolder(target.platform === 'android' ? LOG_FOLDER : join(tmpdir(), 'jev-ios-logs')),
       identityProbe: identityProbe({ adb, environment }), adb: runAdb, nativeRunner,
-      fence: createFenceRunner({ adb: runAdb, simctl: simctlRunner({ environment }) }) };
+      fence: createFenceRunner({ adb: runAdb, simctl: simctlRunner({ environment }) }),
+      ...(target.platform === 'android' ? { logcat: logcatStarter({ adb, environment }), createExitWatch } : {}) };
   };
 }
 
