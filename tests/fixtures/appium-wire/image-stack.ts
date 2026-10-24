@@ -1,6 +1,7 @@
 import { createHash } from 'node:crypto';
 import { cpSync, lstatSync, mkdtempSync, readFileSync, readdirSync, rmSync } from 'node:fs';
-import { join, resolve } from 'node:path';
+import { join } from 'node:path';
+import { fileURLToPath } from 'node:url';
 import { tmpdir } from 'node:os';
 import type { VerifiedStack } from '../../../src/appium/stack.js';
 /** A test's cleanup hooks, or a fixture process's own list. */
@@ -9,7 +10,7 @@ export type Cleanups = { after(cleanup: () => unknown): void };
 export function imageStack(t: Cleanups, omit: (name: string) => boolean = () => false) {
   const root = mkdtempSync(join(tmpdir(), 'jev-image-stack-'));
   t.after(() => rmSync(root, { recursive: true, force: true }));
-  const source = resolve('.scratch/appium-mcp-migration/candidate-stack/node_modules');
+  const source = fileURLToPath(new URL('../../../.scratch/appium-mcp-migration/candidate-stack/node_modules', import.meta.url));
   const available = ['sharp', 'detect-libc', 'semver', ...readdirSync(join(source, '@img')).map(n => `@img/${n}`)];
   const names = available.filter(name => !omit(name));
   const files: VerifiedStack['manifest']['files'] = {};

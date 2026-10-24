@@ -1,6 +1,7 @@
 import { mkdirSync, mkdtempSync, readFileSync, realpathSync, rmSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
-import { join, resolve } from 'node:path';
+import { join } from 'node:path';
+import { fileURLToPath } from 'node:url';
 import type { Cleanups } from './image-stack.js';
 import type { AppiumHost } from '../../../src/appium/composition.js';
 import type { AppiumDriverOptions, AppiumTarget } from '../../../src/appium/driver.js';
@@ -38,7 +39,7 @@ export function worldHost(t: Cleanups, options: HostOptions) {
     return { target, trace, admission: shared ?? admission, calls, toolCalls, tools: () => toolCalls().map(call => call.params!.name!),
       environment: (): string[] => JSON.parse(readFileSync(trace + '.env', 'utf8')) as string[],
       goto: (screen: string) => writeFileSync(trace + '.goto', screen), release: () => writeFileSync(trace + '.release', ''),
-      child: { entrypoint: resolve('tests/fixtures/appium-wire/world-mcp.ts'), args: [file, trace], nodeArgs: ['--import', import.meta.resolve('tsx')] } };
+      child: { entrypoint: fileURLToPath(new URL('./world-mcp.ts', import.meta.url)), args: [file, trace], nodeArgs: ['--import', import.meta.resolve('tsx')] } };
   };
   const host: AppiumHost = async ({ target, admission: shared }) => {
     const driver = opening(opened.length, target, shared);
