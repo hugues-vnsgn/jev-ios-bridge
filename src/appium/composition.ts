@@ -10,7 +10,7 @@ import { createExitWatch } from '../device/android/exit-watch.js';
 import { LOG_FOLDER, logcatStarter, privateLogFolder } from '../device/android/logcat.js';
 import { identityProbe } from '../device/android/probe.js';
 import { findAdb } from '../device/android/tools.js';
-import { DeviceReasonError, type AdmittedAppContext, type IosPreparationDriver, type ObservedActionDriver, type PreparationInventoryStatus } from '../device/index.js';
+import { DeviceReasonError, type AdmittedAppContext, type DeviceWindowOpener, type IosPreparationDriver, type ObservedActionDriver, type PreparationInventoryStatus } from '../device/index.js';
 import type { ProfileBinding } from '../profiles.js';
 import { AppiumDriver, type AppiumDriverOptions, type AppiumTarget } from './driver.js';
 import { CLEANUP_BUDGET_MS } from './fence/index.js';
@@ -61,6 +61,8 @@ export type ComposedDriverOptions = {
   target?: () => Promise<AppiumTarget>;
   /** iOS observed roles: the simulator presentation for the claimed device. */
   presentation?: 'visible' | 'headless';
+  /** iOS runs: brings the simulator window to the front before launch. */
+  deviceWindow?: DeviceWindowOpener;
   admission?: Admission;
   runId?: string;
   profile?: ProfileBinding;
@@ -83,12 +85,12 @@ export class ComposedAppiumDriver implements DeviceDriver, IosPreparationDriver,
   private open(target: () => Promise<AppiumTarget>): Promise<AppiumDriver> {
     if (this.closed || this.revoked) return Promise.reject(new AdmissionError('DISPATCH_CLOSED', 'Device issuance is closed'));
     if (this.opening) return Promise.reject(new Error('Driver is already prepared'));
-    const { host, admission, runId, profile } = this.options;
+    const { host, admission, runId, profile, deviceWindow } = this.options;
     this.opening = (async () => {
       let parts: AppiumDriverParts;
       try { parts = await host({ target: await target(), ...(admission ? { admission } : {}) }); }
       catch (error) { throw stackRefusal(error); }
-      const driver = new AppiumDriver({ ...parts, ...(runId ? { runId } : {}), ...(profile ? { profile } : {}) });
+      const driver = new AppiumDriver({ ...parts, ...(runId ? { runId } : {}), ...(profile ? { profile } : {}), ...(deviceWindow ? { deviceWindow } : {}) });
       this.driver = driver;
       if (this.revoked) driver.revokeIssuance();
       return driver;
@@ -140,6 +142,7 @@ export class ComposedAppiumDriver implements DeviceDriver, IosPreparationDriver,
   appProblem(): AppProblem | undefined { return this.driver?.appProblem(); }
   logSources(): LogSources { return this.driver?.logSources() ?? {}; }
   preparation(): DevicePreparation | undefined { return this.driver?.preparation(); }
+  prepareWarnings(): string[] { return this.driver?.prepareWarnings() ?? []; }
   provenance(): StackProvenance { return this.live().provenance(); }
 
   revokeIssuance(): void { this.revoked = true; this.driver?.revokeIssuance(); }

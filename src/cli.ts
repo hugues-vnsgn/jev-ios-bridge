@@ -198,7 +198,7 @@ async function dispatchCli(args: string[], composition: CliComposition): Promise
     agreeDevices: createDeviceAgreement(),
     env: { ...process.env, JEV_PROJECT_DIR: projectDir },
     createDriver: createDriverFactory({ host, cwd: projectDir, defaultUdid: process.env.JEV_DEVICE_UDID || undefined,
-      defaultDevice: process.env.JEV_ANDROID_DEVICE, presentation: deviceWindow ? 'visible' : 'headless' }),
+      defaultDevice: process.env.JEV_ANDROID_DEVICE, deviceWindow }),
     createJudge: composition.createJudge ?? (() => createAssertionJudge()),
     createDrivenJudge: composition.createDrivenJudge ?? (() => createDrivenJudge()),
     logPane: { cliPath: fileURLToPath(import.meta.url), openWindow: !parsed.values['no-log-pane'],

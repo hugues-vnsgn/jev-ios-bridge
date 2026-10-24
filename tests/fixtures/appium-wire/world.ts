@@ -111,7 +111,7 @@ export function worldFixture(t: TestContext, first: World, options: Overrides, n
   const adb = options.adb;
   const sessionAdb: AdbRunner | undefined = adb && (async (args, ...rest) => {
     syncForward();
-    if (!(args.at(-1) ?? '').includes('pidof')) return adb(args, ...rest);
+    if (!(args.at(-1) ?? '').includes('pidof') || !(args.at(-1) ?? '').includes('io.appium.uiautomator2')) return adb(args, ...rest);
     if (created() <= uiautomatorStoppedAt) return { stdout: '', stderr: '', exitCode: 1 };
     for (const pid of UIAUTOMATOR2_PIDS) if (!fence.processes.has(pid)) fence.processes.set(pid, '424242');
     return { stdout: UIAUTOMATOR2_PIDS.join(' ') + '\n', stderr: '', exitCode: 0 };

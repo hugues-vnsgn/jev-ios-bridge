@@ -10,7 +10,7 @@ import type { AdbRunner } from '../device/android/adb.js';
 import { EVENT_FILTER, type AppExitWatch, type createExitWatch } from '../device/android/exit-watch.js';
 import { deleteOldLogs, privateLogFolder, type LogcatOutput, type LogcatStarter, type LogcatStream } from '../device/android/logcat.js';
 import { androidStartTime, processGone, shellCommand } from '../device/android/recovery.js';
-import { DeviceReasonError, StaleSnapshotError, type AdmittedAppContext, type IosPreparationDriver, type ObservedActionDriver,
+import { DeviceReasonError, StaleSnapshotError, type AdmittedAppContext, type DeviceWindowOpener, type IosPreparationDriver, type ObservedActionDriver,
   type PreparationInventoryStatus } from '../device/index.js';
 import { executorOf, type StartLookup } from '../device/host-start.js';
 import { resolveIdentity, revalidateIdentity, type IdentityProbe, type ResolvedIdentity } from '../device/identity.js';
@@ -70,6 +70,8 @@ export interface AppiumDriverOptions {
   /** Test seam: the fence's clock for its TERM, wait and poll steps. */
   fenceClock?: FenceOptions['clock'];
   timeoutMs?: number;
+  /** iOS runs: brings the simulator's window to the front before launch. A window that won't open is a warning. */
+  deviceWindow?: DeviceWindowOpener;
 }
 
 type Role = 'run' | 'capture' | 'attach' | 'observed-prepare' | 'observed-action';
@@ -129,6 +131,7 @@ export class AppiumDriver implements DeviceDriver, IosPreparationDriver, Observe
   private readonly runId: string;
   private readonly timeoutMs: number;
   private readonly aborters = new Set<AbortController>();
+  private readonly warnings: string[] = [];
 
   constructor(private readonly options: AppiumDriverOptions) {
     if (options.admission.mode === 'test' && options.backend !== 'fake') throw new AdmissionError('STATE_UNAVAILABLE', 'Test admission requires the fake backend');
@@ -195,6 +198,8 @@ export class AppiumDriver implements DeviceDriver, IosPreparationDriver, Observe
     if (owner.identity.category === 'ios-simulator') return undefined;
     return { deviceIdentity: owner.identity.value, serial: owner.identity.transport.serial, agentSha256: uiautomator2Server(this.options.stack).sha256 };
   }
+
+  prepareWarnings(): string[] { return [...this.warnings]; }
 
   provenance(): StackProvenance {
     const { manifest } = this.options.stack;
@@ -322,7 +327,10 @@ export class AppiumDriver implements DeviceDriver, IosPreparationDriver, Observe
       await this.refuseForeign(owner, signal);
       let helpers: IosHelpers | undefined;
       if (identity.category !== 'ios-simulator') await this.prepareAndroidDevice(owner, signal);
-      else if (role === 'run') helpers = await this.dispatch(owner, 'launch', signal, this.timeoutMs, issued => this.launchIos(owner, app, issued));
+      else if (role === 'run') {
+        await this.openWindow(owner, signal);
+        helpers = await this.dispatch(owner, 'launch', signal, this.timeoutMs, issued => this.launchIos(owner, app, issued));
+      }
       const command = await this.openSession(owner, role, signal, helpers);
       this.phase = { kind: 'live', owner, role, app, command: { ...command, launched: role === 'run' } };
       // A close that arrived meanwhile stops what is now live; prepare starts nothing more.
@@ -635,6 +643,14 @@ export class AppiumDriver implements DeviceDriver, IosPreparationDriver, Observe
     try { logs = await observeIosLogs({ ...target, bundleId: app.id, runner, source: os, signal }); }
     catch { os.unavailable('SOURCE_LOST'); logs = undefined; }
     return { platform: 'ios', console, ...(logs ? { logs } : {}), sources };
+  }
+
+  /** A recorded, settled step: a window that won't open is answered, so it never leaves the device uncertain. */
+  private async openWindow(owner: Owner, signal: AbortSignal): Promise<void> {
+    const open = this.options.deviceWindow;
+    if (!open) return;
+    const opened = await this.dispatch(owner, 'window', signal, 10_000, issued => open(owner.identity.value, issued).then(() => true, () => false));
+    if (!opened) this.warnings.push('Simulator window not opened: Simulator could not be opened on the run\'s device.');
   }
 
   private iosTarget(owner: Owner): { udid: string; deviceSet?: string } {

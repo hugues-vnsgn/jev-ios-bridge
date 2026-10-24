@@ -394,7 +394,7 @@ test('a tampered stack archive, manifest, extraction marker or WDA runner refuse
     else writeFileSync(join(release.artifactRoot, file), 'tampered');
     let stores = 0;
     const host = productionAppiumHost({ environment: {}, stack, openAdmission: () => { stores++; throw new Error('the store is never opened'); } });
-    const driver = createDriverFactory({ host, cwd: release.base, presentation: 'headless' })(parseScriptedScenario(checkpointOnly('Home is shown.')), { runId: 'tampered' });
+    const driver = createDriverFactory({ host, cwd: release.base })(parseScriptedScenario(checkpointOnly('Home is shown.')), { runId: 'tampered' });
     const error = await driver.prepare({ app: { bundleId: 'example.app' } }, AbortSignal.timeout(10_000)).then(() => undefined, (failure: unknown) => failure);
     assert.ok(error instanceof DeviceReasonError);
     refusals.push([error.code, error.vendorCode, error.vendorSource]);

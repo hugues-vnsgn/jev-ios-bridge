@@ -2,7 +2,7 @@ import type { DeviceDriver } from '../contracts/index.js';
 import type { ScriptedScenario } from '../scripted/contracts.js';
 import { ComposedAppiumDriver, type AppiumHost } from '../appium/composition.js';
 import type { Admission } from './admission.js';
-import { selectAndroidDeviceName, selectDeviceId, type IosPreparationDriver, type ObservedActionDriver } from './index.js';
+import { selectAndroidDeviceName, selectDeviceId, type DeviceWindowOpener, type IosPreparationDriver, type ObservedActionDriver } from './index.js';
 import type { AndroidDeviceName, DeviceAgreement, Profile, ProfileBinding } from '../profiles.js';
 import { identityProbe } from './android/probe.js';
 import { adbEnvironment, findAdb } from './android/tools.js';
@@ -19,7 +19,8 @@ export interface DriverFactoryOptions {
   defaultUdid?: string | undefined;
   /** JEV_ANDROID_DEVICE. */
   defaultDevice?: string | undefined;
-  presentation: 'visible' | 'headless';
+  /** Brings an iOS run's simulator to the front; without one the simulator runs headless. */
+  deviceWindow?: DeviceWindowOpener | undefined;
 }
 
 /**
@@ -28,11 +29,13 @@ export interface DriverFactoryOptions {
  * config. The choice runs at the driver's first effect, so a missing device is the run's own outcome.
  */
 export function createDriverFactory(options: DriverFactoryOptions): (scenario: ScriptedScenario, run?: DriverRun) => DeviceDriver {
+  const { deviceWindow } = options;
   return (scenario, run) => new ComposedAppiumDriver({ host: options.host, ...(run ? { runId: run.runId } : {}), ...(run?.profile ? { profile: run.profile } : {}),
+    ...(deviceWindow ? { deviceWindow } : {}),
     target: async () => scenario.platform === 'android'
       ? { platform: 'android', device: selectAndroidDeviceName(scenario.device, options.defaultDevice), serverInstallation: { kind: 'install' },
         ...(run?.deviceCategory === 'android-emulator' || run?.deviceCategory === 'android-phone' ? { category: run.deviceCategory } : {}) }
-      : { platform: 'ios', device: await selectDeviceId(options.cwd, scenario.device?.udid, options.defaultUdid), presentation: options.presentation } });
+      : { platform: 'ios', device: await selectDeviceId(options.cwd, scenario.device?.udid, options.defaultUdid), presentation: deviceWindow ? 'visible' : 'headless' } });
 }
 
 /** Observed preparation and action bind the simulator their claim admitted; they share the observed runtime's store. */
