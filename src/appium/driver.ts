@@ -100,6 +100,7 @@ export class AppiumDriver implements DeviceDriver, IosPreparationDriver, Observe
   private tapOnceIssued = false;
   private issuanceClosed = false;
   private screenshots: Promise<string> | undefined;
+  private preparationClaim: PreparationClaim | undefined;
   private readonly runId: string;
   private readonly timeoutMs: number;
   private readonly aborters = new Set<AbortController>();
@@ -167,6 +168,7 @@ export class AppiumDriver implements DeviceDriver, IosPreparationDriver, Observe
 
   async attachPreparation(claim: PreparationClaim, context: AdmittedAppContext, signal: AbortSignal): Promise<void> {
     if (claim.identity.attempt.kind !== 'preparation') throw new AdmissionError('INVALID_REQUEST', 'Expected preparation ownership');
+    this.preparationClaim = claim;
     await this.attach(claim, 'observed-prepare', { id: context.app.bundleId, ...(context.app.launchArgs ? { launchArgs: context.app.launchArgs } : {}) }, signal);
   }
 
@@ -203,8 +205,9 @@ export class AppiumDriver implements DeviceDriver, IosPreparationDriver, Observe
 
   async launch(signal: AbortSignal, timeoutMs = this.timeoutMs): Promise<void> {
     const admitted = this.admitted();
-    const helpers = await this.dispatch(admitted.owner, 'launch', signal, timeoutMs, issued => this.launchIos(admitted.owner, admitted.app, issued));
-    const command = await this.openSession(admitted.owner, admitted.role, signal, helpers);
+    const steps = observedIosPreparation({ ...this.iosTarget(admitted.owner), role: 'observed-preparation', runner: this.options.nativeRunner, timeoutMs });
+    await this.dispatch(admitted.owner, 'launch', signal, timeoutMs, issued => steps.launch(admitted.app.id, admitted.app.launchArgs ?? [], issued));
+    const command = await this.openSession(admitted.owner, admitted.role, signal);
     this.phase = { ...admitted, kind: 'live', command: { ...command, launched: true } };
   }
 
@@ -217,13 +220,15 @@ export class AppiumDriver implements DeviceDriver, IosPreparationDriver, Observe
   async park(readinessEvidence: string[], evidenceRefs: string[], signal: AbortSignal): Promise<AllocationCommit> {
     const live = this.live();
     if (live.role !== 'observed-prepare') throw new AdmissionError('DISPATCH_CLOSED', 'Preparation is not attached');
-    await this.operations.settle(signal);
-    await this.stopCommand(live.command, undefined, signal);
-    if (!('park' in live.owner.claim) || typeof live.owner.claim.park !== 'function') throw new AdmissionError('DISPATCH_CLOSED', 'Preparation claim cannot park');
-    const result = (live.owner.claim as PreparationClaim).park(readinessEvidence, evidenceRefs);
+    const claim = this.preparationClaim;
+    if (!claim) throw new AdmissionError('DISPATCH_CLOSED', 'Preparation claim cannot park');
     this.issuanceClosed = true;
-    this.phase = { kind: 'closed' };
-    return result;
+    try {
+      await this.operations.settle(signal);
+      await this.stopCommand(live.command, undefined, signal);
+      claim.stageFence(await this.fenceOwn(live.owner, signal));
+      return claim.park(readinessEvidence, evidenceRefs);
+    } finally { this.phase = { kind: 'closed' }; }
   }
 
   revokeIssuance(): void {

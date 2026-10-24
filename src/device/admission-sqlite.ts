@@ -1431,7 +1431,8 @@ export class AdmissionSqlite {
     if (others.some(command=>command.state!=='settled')) return new Set();
     const sequence=(event:string,field:string,command:unknown)=>db.prepare(`SELECT sequence FROM transitions WHERE event=? AND json_extract(detail,'$.${field}')=? ORDER BY sequence LIMIT 1`).get(event,String(command))?.sequence as number|undefined;
     let last=0;
-    for (const other of others) {
+    // An allocation's own command (creation) has no attempt; admission required it settled, so it precedes them all.
+    for (const other of others.filter(command=>command.kind!==null)) {
       const settled=sequence('settled','command',other.id);
       if (settled===undefined) return new Set();
       last=Math.max(last,settled);

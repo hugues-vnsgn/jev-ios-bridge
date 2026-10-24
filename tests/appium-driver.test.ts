@@ -212,24 +212,36 @@ async function parkedAllocation(admission: Admission) {
 }
 const observedContext = { app: { bundleId: 'dev.fixture' }, device: { udid: UDID }, values: {} };
 
-test('observed preparation deletes its session before park and keeps the app; the action opens a fresh session with no launch',
-  { todo: 'Root: parkAllocation (admission-sqlite.ts:934) accepts only completed-command proofs, so a preparation with Appium components cannot park' }, async t => {
-  const f = driverFixture(t, observeRecording, ios, 'none', command => command.kind === 'ios-boot' || command.kind === 'ios-install' ? '' : undefined);
+test('observed preparation launches once without helpers, deletes its session and fences before park, and keeps the app', async t => {
+  const f = driverFixture(t, observeRecording, ios, 'none', command => ['ios-boot', 'ios-install', 'ios-launch'].includes(command.kind) ? '' : undefined);
+  f.fence.wda = [{ udid: UDID, bundleId: WDA_BUNDLE, pid: 777 }];
   const p = await parkedAllocation(f.admission);
   await f.driver.attachPreparation(p.claim, observedContext, live());
   await f.driver.boot(live());
   await f.driver.install('/isolated/Fixture.app', live());
   await f.driver.launch(live());
-  assert.deepEqual(f.native.calls.map(call => call.command.kind), ['ios-boot', 'ios-install', 'ios-console', 'ios-log-stream']);
+  assert.deepEqual(f.native.calls.map(call => call.command.kind), ['ios-boot', 'ios-install', 'ios-launch'], 'no console and no log stream');
+  assert.deepEqual(f.native.calls[2]!.command.args, ['simctl', 'launch', '--terminate-running-process', UDID, 'dev.fixture']);
   await f.driver.readiness(live());
   const parked = await f.driver.park(['/isolated/evidence/readiness.json'], [], live());
   assert.equal(parked.authority, 'committed');
   assert.deepEqual(f.tools().filter(name => name === 'appium_session_management' || name === 'jev_terminate_app'), ['appium_session_management', 'appium_session_management'],
     'the preparation session is created and deleted, and the app is never terminated');
+  assert.deepEqual(f.fence.effects.filter(effect => effect.kind === 'wda-stop'), [{ kind: 'wda-stop', udid: UDID, bundleId: WDA_BUNDLE, pid: 777 }]);
+  assert.deepEqual(f.fence.wda, [], 'the runner is not running on that simulator at park');
+});
+
+test('the observed action opens a fresh session with no launch, and fences its components before the runtime terminal', async t => {
+  const f = driverFixture(t, observeRecording, ios, 'none', command => ['ios-boot', 'ios-install', 'ios-launch'].includes(command.kind) ? '' : undefined);
+  const p = await parkedAllocation(f.admission);
+  await f.driver.attachPreparation(p.claim, observedContext, live());
+  await f.driver.boot(live()); await f.driver.install('/isolated/Fixture.app', live()); await f.driver.launch(live()); await f.driver.readiness(live());
+  assert.equal((await f.driver.park(['/isolated/evidence/readiness.json'], [], live())).authority, 'committed');
   const consumed = f.admission.consumeAllocation({ allocationId: p.id, actionId: 'allocated', actionDigest: digest, request: {}, appBundleId: 'dev.fixture',
     evidence: { bridgeVersion: 'fixture', directory: '/isolated/action', request: '/isolated/action/request.json' } });
   if (consumed.kind !== 'consumed') throw new Error('consume');
   const executor = driverFixture(t, observeRecording, ios, 'none');
+  executor.fence.wda = [{ udid: UDID, bundleId: WDA_BUNDLE, pid: 778 }];
   const action = new AppiumDriver({ ...executor.driver['options'], admission: f.admission });
   executor.drivers.push(action);
   await action.attachObserved(consumed.claim, observedContext, live());
@@ -237,4 +249,8 @@ test('observed preparation deletes its session before park and keeps the app; th
   assert.deepEqual(executor.tools(), ['appium_session_management', 'jev_settings']);
   await action.close(live());
   assert.deepEqual(executor.tools(), ['appium_session_management', 'jev_settings', 'appium_session_management'], 'deleted, never terminated');
+  assert.deepEqual(executor.fence.effects.filter(effect => effect.kind === 'wda-stop'), [{ kind: 'wda-stop', udid: UDID, bundleId: WDA_BUNDLE, pid: 778 }]);
+  consumed.claim.recordActionReceipt({ actionAttempted: false, actionAcknowledged: false });
+  const terminal = consumed.claim.finalize({ outcome: 'refused', disposition: 'available', payload: {}, evidenceRefs: [] });
+  assert.equal(terminal.authority, 'committed', 'the staged fence covers every Appium component of the action');
 });

@@ -67,5 +67,7 @@ export function observedIosPreparation(options: IosTarget & { role: 'observed-pr
   return {
     boot: (signal: AbortSignal) => run('ios-boot', ['boot', options.udid], signal),
     install: (path: string, signal: AbortSignal) => run('ios-install', ['install', options.udid, path], signal),
+    /** One owned launch with no console: a parked allocation has no live owner for a helper to outlive park. */
+    launch: (bundleId: string, args: readonly string[], signal: AbortSignal) => run('ios-launch', ['launch', '--terminate-running-process', options.udid, bundleId, ...args], signal),
   };
 }
