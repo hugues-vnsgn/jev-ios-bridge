@@ -1,0 +1,312 @@
+{
+  "packageVersion": "16.14.2",
+  "bundleIdentifier": "com.facebook.WebDriverAgentRunner.xctrunner",
+  "treeSha256": "5d1fc1c99908e253303f6de35bf26ed4a74a75817f704e7a3646b72b5271ba04",
+  "files": [
+    {
+      "path": "AppIcon60x60@2x.png",
+      "sha256": "6f9bcb5f1619d68d5f9e583fbcb01926aed94e385f377cb7601ec81753b31344",
+      "bytes": 7727
+    },
+    {
+      "path": "AppIcon76x76@2x~ipad.png",
+      "sha256": "e5e9bb002e740d233cf9c8901db612e6835ee2ba83520e30ff0782d79d8265a2",
+      "bytes": 10559
+    },
+    {
+      "path": "Assets.car",
+      "sha256": "9ea252e306cb3008bd641b28d2d38994e58c0e1e54758009e705d6fbf9a45d36",
+      "bytes": 155800
+    },
+    {
+      "path": "Frameworks/ResultDataPublisher.framework/Info.plist",
+      "sha256": "39d1fc3bdd405543dd5b689fff065b3001c316dc518459990c72a7675e8731d6",
+      "bytes": 894
+    },
+    {
+      "path": "Frameworks/ResultDataPublisher.framework/ResultDataPublisher",
+      "sha256": "b8e4be53756366ee4482a5b6d764fabf3f02b114108ab7254a5c54efd396ac8d",
+      "bytes": 2318560
+    },
+    {
+      "path": "Frameworks/ResultDataPublisher.framework/_CodeSignature/CodeResources",
+      "sha256": "e582e1c0b2cec61c6135e4123c34c49da28e9358b37c8f182a8054ccf8d5fb3d",
+      "bytes": 2018
+    },
+    {
+      "path": "Frameworks/ResultDataPublisher.framework/version.plist",
+      "sha256": "21ee0f28da57411ec3d0d1fbb8af8006e37f66e514513a1c032f3d9280b1d53b",
+      "bytes": 526
+    },
+    {
+      "path": "Frameworks/Testing.framework/Info.plist",
+      "sha256": "6d860c294e14a4b262c20afb942a7e54764bb724dd1b9cc1e8cb9f6939b65cee",
+      "bytes": 907
+    },
+    {
+      "path": "Frameworks/Testing.framework/Testing",
+      "sha256": "8cb0e54e1b505901db8062fe715ab1231e2e7903530533cd12b16307a7a02ed0",
+      "bytes": 7033984
+    },
+    {
+      "path": "Frameworks/Testing.framework/_CodeSignature/CodeResources",
+      "sha256": "d6fa23913694b92115a09db9f23ef698bc516aabbce3c4d3ea730f879476bcab",
+      "bytes": 4780
+    },
+    {
+      "path": "Frameworks/Testing.framework/version.plist",
+      "sha256": "0d6de3b591bf52bced98bbec40dfd39e0094dbfbca453d4635cbdc546e590808",
+      "bytes": 515
+    },
+    {
+      "path": "Frameworks/XCTAutomationSupport.framework/Info.plist",
+      "sha256": "0123b43e14fa88d50afcf4bac2167185bb752803054a19303b9ca4a54ca6dd14",
+      "bytes": 957
+    },
+    {
+      "path": "Frameworks/XCTAutomationSupport.framework/XCTAutomationSupport",
+      "sha256": "ca1acd92e81257f890aa7b01558d0cc437238f0ba86e9d3716fda15450a0aa73",
+      "bytes": 1535312
+    },
+    {
+      "path": "Frameworks/XCTAutomationSupport.framework/_CodeSignature/CodeResources",
+      "sha256": "001e48f19dff6b97e6e27426c7ae15d822c0c89ed9cec5ace209d57b8fd1bd82",
+      "bytes": 2018
+    },
+    {
+      "path": "Frameworks/XCTAutomationSupport.framework/version.plist",
+      "sha256": "66f83aaea343db256d632ab45c5aa2ab0dd02b7aa66852bc66d3840346dfafc8",
+      "bytes": 516
+    },
+    {
+      "path": "Frameworks/XCTest.framework/Info.plist",
+      "sha256": "749d225432acd85d93ff6ba7e7e3d3038520c470723a7010f6e91fafe9d92a64",
+      "bytes": 879
+    },
+    {
+      "path": "Frameworks/XCTest.framework/XCTest",
+      "sha256": "7bf6c2ae415e0a70958e4e2116ed9a97bf9557fdf403674d351b566d5be4f582",
+      "bytes": 208176
+    },
+    {
+      "path": "Frameworks/XCTest.framework/_CodeSignature/CodeResources",
+      "sha256": "cb2bcb1fa9c62a5fdfd1d2d72ff68c9288d4597c043a066b90b8274fb26f6b18",
+      "bytes": 17362
+    },
+    {
+      "path": "Frameworks/XCTest.framework/version.plist",
+      "sha256": "66f83aaea343db256d632ab45c5aa2ab0dd02b7aa66852bc66d3840346dfafc8",
+      "bytes": 516
+    },
+    {
+      "path": "Frameworks/XCTestCore.framework/Info.plist",
+      "sha256": "1a2bc5cd50573a95e7bf2026ab80fd95e98db8e011325d860c8ba1e3a4621879",
+      "bytes": 887
+    },
+    {
+      "path": "Frameworks/XCTestCore.framework/XCTestCore",
+      "sha256": "0ee85c9db43fcfffbad9d1f8cf4555fcbe62420685dd97bfbe1b7742c84d81ef",
+      "bytes": 4405888
+    },
+    {
+      "path": "Frameworks/XCTestCore.framework/_CodeSignature/CodeResources",
+      "sha256": "6b15e9b1b61580c7744e7ff602081acba51d51267822a715758c91024c2d28e2",
+      "bytes": 2018
+    },
+    {
+      "path": "Frameworks/XCTestCore.framework/version.plist",
+      "sha256": "66f83aaea343db256d632ab45c5aa2ab0dd02b7aa66852bc66d3840346dfafc8",
+      "bytes": 516
+    },
+    {
+      "path": "Frameworks/XCTestSupport.framework/Info.plist",
+      "sha256": "420b018384f723d93be15c2279b738d70c122fa6887edfff12261c8c0bd52bf4",
+      "bytes": 893
+    },
+    {
+      "path": "Frameworks/XCTestSupport.framework/XCTestSupport",
+      "sha256": "f72c4f56556be625c4f61ec323991fca08ddf12bb30f310ad645b866b5b6135a",
+      "bytes": 300816
+    },
+    {
+      "path": "Frameworks/XCTestSupport.framework/_CodeSignature/CodeResources",
+      "sha256": "c969f98acdf6c4bec6d01db873de356462d836a669496bad8ea82282f45e7434",
+      "bytes": 2018
+    },
+    {
+      "path": "Frameworks/XCTestSupport.framework/version.plist",
+      "sha256": "66f83aaea343db256d632ab45c5aa2ab0dd02b7aa66852bc66d3840346dfafc8",
+      "bytes": 516
+    },
+    {
+      "path": "Frameworks/XCUIAutomation.framework/Info.plist",
+      "sha256": "933750f2d2354f2b8ee45f596a6fa6229ff85db24d007b7dfe6ae0c8844fbdee",
+      "bytes": 895
+    },
+    {
+      "path": "Frameworks/XCUIAutomation.framework/XCUIAutomation",
+      "sha256": "7a5f92eaf8028768ea58c32b1417bc94bf8fefb4900e17c752a31b1492cdd8d7",
+      "bytes": 3598688
+    },
+    {
+      "path": "Frameworks/XCUIAutomation.framework/_CodeSignature/CodeResources",
+      "sha256": "73bf85d7bb2bac9f0411b40ce49f877b7fd0061d06e658d71fe22b1c794ff426",
+      "bytes": 10084
+    },
+    {
+      "path": "Frameworks/XCUIAutomation.framework/version.plist",
+      "sha256": "66f83aaea343db256d632ab45c5aa2ab0dd02b7aa66852bc66d3840346dfafc8",
+      "bytes": 516
+    },
+    {
+      "path": "Frameworks/_Testing_Foundation.framework/Info.plist",
+      "sha256": "ee1ceee1b8f093f36892e898e5cf6b7c025fc80a27f9f367a5a42ebe347c3203",
+      "bytes": 940
+    },
+    {
+      "path": "Frameworks/_Testing_Foundation.framework/_CodeSignature/CodeResources",
+      "sha256": "28ce3b5ac327b5b77c1921fc1fdbd1bbd5fc0bad2cb6b1d53ae7dcdfde24e4c6",
+      "bytes": 3382
+    },
+    {
+      "path": "Frameworks/_Testing_Foundation.framework/_Testing_Foundation",
+      "sha256": "28783e77a11c3d22bba1847c01098d2665a81018805a80a424c7f32d4e9cd54a",
+      "bytes": 237056
+    },
+    {
+      "path": "Frameworks/_Testing_Foundation.framework/version.plist",
+      "sha256": "0d6de3b591bf52bced98bbec40dfd39e0094dbfbca453d4635cbdc546e590808",
+      "bytes": 515
+    },
+    {
+      "path": "Frameworks/libXCTestSwiftSupport.dylib",
+      "sha256": "f2292a327bdd324f709d316f0df07dbb92502fed14e42e7c841a4ff38db3ff06",
+      "bytes": 2156528
+    },
+    {
+      "path": "Frameworks/lib_TestingInterop.dylib",
+      "sha256": "50fc777fe5e3d726ca26d96aa125a50059643268c59403d3b0dfbd4f7198e9a9",
+      "bytes": 137968
+    },
+    {
+      "path": "Info.plist",
+      "sha256": "5fcf23256b261c0462ddb0a0689ca611efa708c07b337a90c64298728ad9a79b",
+      "bytes": 11458
+    },
+    {
+      "path": "PkgInfo",
+      "sha256": "82502191c9484b04d685374f9879a0066069c49b8acae7a04b01d38d07e8eca0",
+      "bytes": 8
+    },
+    {
+      "path": "PlugIns/WebDriverAgentRunner.xctest/AppIcon60x60@2x.png",
+      "sha256": "6f9bcb5f1619d68d5f9e583fbcb01926aed94e385f377cb7601ec81753b31344",
+      "bytes": 7727
+    },
+    {
+      "path": "PlugIns/WebDriverAgentRunner.xctest/AppIcon76x76@2x~ipad.png",
+      "sha256": "e5e9bb002e740d233cf9c8901db612e6835ee2ba83520e30ff0782d79d8265a2",
+      "bytes": 10559
+    },
+    {
+      "path": "PlugIns/WebDriverAgentRunner.xctest/Assets.car",
+      "sha256": "9ea252e306cb3008bd641b28d2d38994e58c0e1e54758009e705d6fbf9a45d36",
+      "bytes": 155800
+    },
+    {
+      "path": "PlugIns/WebDriverAgentRunner.xctest/Frameworks/WebDriverAgentLib.framework/Info.plist",
+      "sha256": "4bde7787d39be186e2ad53791b49e696c5f6c9e42696a441066634c64a359645",
+      "bytes": 785
+    },
+    {
+      "path": "PlugIns/WebDriverAgentRunner.xctest/Frameworks/WebDriverAgentLib.framework/WebDriverAgentLib",
+      "sha256": "e76be83777577e659a0855c0be912541ab06d75b7a3010f435e52ee05332a69b",
+      "bytes": 2680816
+    },
+    {
+      "path": "PlugIns/WebDriverAgentRunner.xctest/Info.plist",
+      "sha256": "6187dffbb660ec81f99de1ea4d11ec84d282e24b2cb54e483003fbfabdbb5069",
+      "bytes": 1137
+    },
+    {
+      "path": "PlugIns/WebDriverAgentRunner.xctest/WebDriverAgentRunner",
+      "sha256": "3bdfade53dd39c780374c2094505f507285f5c43dabcc1e6ba4ccdd2c7146bc6",
+      "bytes": 86920
+    },
+    {
+      "path": "WebDriverAgentRunner-Runner",
+      "sha256": "28fcfad44cbcdd2d5843919131a11f1b18d81b4c9709cc92523184926f2ded28",
+      "bytes": 179264
+    }
+  ],
+  "architectures": [
+    "x86_64",
+    "arm64"
+  ],
+  "signing": [
+    {
+      "argv": [
+        "codesign",
+        "-dvvv",
+        "/Users/hugues_mini/Codes/AgentTools/jev-ios-bridge/.worktrees/feat/appium-mcp-migration/.scratch/appium-mcp-migration/runtime/wda-16.14.2/Build/Products/Debug-iphonesimulator/WebDriverAgentRunner-Runner.app"
+      ],
+      "exitCode": 0,
+      "stdout": "",
+      "stderr": "Executable=/Users/hugues_mini/Codes/AgentTools/jev-ios-bridge/.worktrees/feat/appium-mcp-migration/.scratch/appium-mcp-migration/runtime/wda-16.14.2/Build/Products/Debug-iphonesimulator/WebDriverAgentRunner-Runner.app/WebDriverAgentRunner-Runner\nIdentifier=com.apple.XCTRunner\nFormat=app bundle with Mach-O universal (x86_64 arm64)\nCodeDirectory v=20400 size=823 flags=0x0(none) hashes=20+2 location=embedded\nHash type=sha256 size=32\nCandidateCDHash sha256=ea15410be117352961e7aa8395943fc7090e839f\nCandidateCDHashFull sha256=ea15410be117352961e7aa8395943fc7090e839f156d155e6ecd4fe27f1c08c8\nHash choices=sha256\nCMSDigest=ea15410be117352961e7aa8395943fc7090e839f156d155e6ecd4fe27f1c08c8\nCMSDigestType=2\nCDHash=ea15410be117352961e7aa8395943fc7090e839f\nSignature size=4412\nAuthority=Software Signing\nAuthority=Apple Code Signing Certification Authority\nAuthority=Apple Root CA\nInfo.plist=not bound\nTeamIdentifier=59GAB85EFG\nSealed Resources=none\nInternal requirements count=1 size=68\nTotal signatures=1\nChosen signature=1\n"
+    },
+    {
+      "argv": [
+        "codesign",
+        "--verify",
+        "--deep",
+        "--strict",
+        "/Users/hugues_mini/Codes/AgentTools/jev-ios-bridge/.worktrees/feat/appium-mcp-migration/.scratch/appium-mcp-migration/runtime/wda-16.14.2/Build/Products/Debug-iphonesimulator/WebDriverAgentRunner-Runner.app"
+      ],
+      "exitCode": 1,
+      "stdout": "",
+      "stderr": "/Users/hugues_mini/Codes/AgentTools/jev-ios-bridge/.worktrees/feat/appium-mcp-migration/.scratch/appium-mcp-migration/runtime/wda-16.14.2/Build/Products/Debug-iphonesimulator/WebDriverAgentRunner-Runner.app: code has no resources but signature indicates they must be present\n"
+    }
+  ],
+  "architectureObservation": {
+    "argv": [
+      "lipo",
+      "-archs",
+      "/Users/hugues_mini/Codes/AgentTools/jev-ios-bridge/.worktrees/feat/appium-mcp-migration/.scratch/appium-mcp-migration/runtime/wda-16.14.2/Build/Products/Debug-iphonesimulator/WebDriverAgentRunner-Runner.app/WebDriverAgentRunner-Runner"
+    ],
+    "exitCode": 0,
+    "stdout": "x86_64 arm64\n",
+    "stderr": ""
+  },
+  "sourcePackage": {
+    "path": "node_modules/appium-xcuitest-driver/node_modules/appium-webdriveragent",
+    "name": "appium-webdriveragent",
+    "version": "16.14.2",
+    "bundledIn": {
+      "path": "node_modules/appium-xcuitest-driver",
+      "version": "12.17.1",
+      "resolved": "https://registry.npmjs.org/appium-xcuitest-driver/-/appium-xcuitest-driver-12.17.1.tgz",
+      "integrity": "sha512-+nIyKjqkvgI48jcIBOHX8ztAq68JCpxc7ITKcTRgT1K3B7mpdfIfE7ysthvSu5MRAVPhvKGOxoZbOaMKmukIDw=="
+    },
+    "packageJsonSha256": "986f011684e461e335190858c8efcc78c66f12dbcd6fd0dcae9815ae845c4a7c"
+  },
+  "xcode": "27.0 (27A266a)",
+  "sdk": "iPhoneSimulator27.0.sdk",
+  "buildCommand": [
+    "xcodebuild",
+    "-project",
+    "candidate-stack/node_modules/appium-xcuitest-driver/node_modules/appium-webdriveragent/WebDriverAgent.xcodeproj",
+    "-scheme",
+    "WebDriverAgentRunner",
+    "-configuration",
+    "Debug",
+    "-destination",
+    "generic/platform=iOS Simulator",
+    "-derivedDataPath",
+    "runtime/wda-16.14.2",
+    "CODE_SIGNING_ALLOWED=NO",
+    "build-for-testing"
+  ],
+  "archiveSha256": "ff0ea807f5e2b972edb56256a3664830b62e629097f2dc3fffd09e68a6050dca",
+  "evidence": ".scratch/appium-mcp-migration/evidence/phase1-freeze-20261018.json",
+  "buildEvidence": ".audit/phase1-finish-20261018/1C-wda-build.log"
+}

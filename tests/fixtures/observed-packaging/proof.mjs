@@ -23,6 +23,8 @@ for (const file of ['src', 'scripts', 'skills', 'docs/guide', 'plugin', 'package
   'tsconfig.build.json', 'tsconfig.json', 'README.md', 'CHANGELOG.md', 'LICENSE']) {
   cpSync(join(checkout, file), join(snapshot, file), { recursive: true });
 }
+cpSync(join(checkout, 'stack'), join(snapshot, 'stack'), { recursive: true, filter: path => !path.split('/').includes('node_modules') && !path.includes('/stack/release') });
+if (existsSync(join(checkout, 'THIRD_PARTY_NOTICES.md'))) cpSync(join(checkout, 'THIRD_PARTY_NOTICES.md'), join(snapshot, 'THIRD_PARTY_NOTICES.md'));
 // Build tools may use checkout deps. Installed proof projects never inherit this link.
 symlinkSync(realpathSync(join(checkout, 'node_modules')), join(snapshot, 'node_modules'), 'dir');
 const commands = join(evidence, 'commands.jsonl');
@@ -53,7 +55,9 @@ async function run(command, args, cwd = snapshot, extra = {}) {
 function ok(result) { assert.equal(result.code, 0, result.stderr + '\n' + result.stdout); assert.equal(result.signal, null); return result.stdout; }
 const required = ['docs/guide/14-observed-actions.md', 'docs/guide/reference/observed-format.md', 'skills/test-ios/SKILL.md',
   'dist/cli.js', 'dist/mcp/observed.js', 'dist/observed/cli.js', 'dist/observed/service.js',
-  'dist/observed/allocation.js', 'dist/device/admission-maintenance.js', 'dist/device/admission-sqlite.js'];
+  'dist/observed/allocation.js', 'dist/device/admission-maintenance.js', 'dist/device/admission-sqlite.js',
+  'dist/appium/stack.js', 'dist/appium/stack-identity.js', 'stack/release/stack.tar.gz', 'stack/release/wda.tar.gz',
+  'stack/release/manifest.json', 'THIRD_PARTY_NOTICES.md'];
 const sha = path => createHash('sha256').update(readFileSync(path)).digest('hex');
 function manifest(root) { return Object.fromEntries(required.map(file => [file, sha(join(root, file))])); }
 async function mcp(cli, cwd, gate, guardLog) {
@@ -124,8 +128,45 @@ async function smoke(root, bin, cwd, name) {
   for (const gate of ['0', 'true', '1']) await mcp(cli, cwd, gate, guardLog);
   assert.equal(readFileSync(guardLog, 'utf8'), '', 'Startup/schema validation attempted a forbidden effect');
 }
+async function offlineStack(root, dataRoot = join(evidence, 'Application Support', 'stacks')) {
+  const script = `
+    import assert from 'node:assert/strict';
+    import cp from 'node:child_process';
+    import net from 'node:net';
+    import http from 'node:http';
+    import https from 'node:https';
+    import { syncBuiltinESMExports } from 'node:module';
+    import { promisify } from 'node:util';
+    import { join } from 'node:path';
+    import { pathToFileURL } from 'node:url';
+    const refuse = () => { throw new Error('Offline extraction attempted a forbidden effect'); };
+    globalThis.fetch = refuse; net.connect = net.createConnection = net.Socket.prototype.connect = refuse;
+    http.request = http.get = https.request = https.get = refuse;
+    const execFile = cp.execFile;
+    const validate = (command, args) => { assert.equal(command, '/usr/bin/tar'); assert.equal(['-tzf', '-xzf'].includes(args[0]), true); };
+    const allowed = (...args) => { validate(...args); return execFile(...args); };
+    allowed[promisify.custom] = (...args) => { validate(...args); return execFile[promisify.custom](...args); };
+    cp.execFile = allowed;
+    for (const name of ['spawn', 'spawnSync', 'exec', 'execSync', 'execFileSync', 'fork']) cp[name] = refuse;
+    syncBuiltinESMExports();
+    const root = process.argv[1];
+    const { FrozenStack } = await import(pathToFileURL(join(root, 'dist/appium/stack.js')));
+    const { default: identity } = await import(pathToFileURL(join(root, 'dist/appium/stack-identity.js')));
+    const stack = FrozenStack.forTesting({ artifactRoot: join(root, 'stack/release'), dataRoot: process.argv[2], identity,
+      host: { platform: 'darwin', arch: 'arm64', node: process.versions.node } });
+    const first = await stack.prepare({ iosVersion: '26.5', xcodeVersion: '27.0' });
+    const second = await stack.prepare();
+    assert.equal(first.root, second.root);
+    assert.equal(first.manifest.wda.treeSha256, '5d1fc1c99908e253303f6de35bf26ed4a74a75817f704e7a3646b72b5271ba04');
+    assert.equal(first.manifest.loaded.length, 3499);
+    assert.equal(first.manifest.androidApks.length, 3);
+    assert.deepEqual(first.warnings, []);
+    process.stdout.write(JSON.stringify({ root: first.root, identity, loaded: first.manifest.loaded.length, offline: true }));`;
+  return JSON.parse(ok(await run(process.execPath, ['--input-type=module', '-e', script, root, dataRoot])));
+}
 try {
   ok(await run('npm', ['run', 'build'], snapshot));
+  ok(await run(process.execPath, ['scripts/build-stack-archive.mjs'], snapshot));
   const packed = JSON.parse(ok(await run('npm', ['pack', '--json', '--pack-destination', evidence])))[0];
   const tarball = join(evidence, packed.filename);
   for (const file of required) assert.ok(packed.files.some(f => f.path === file), 'tarball missing ' + file);
@@ -138,6 +179,7 @@ try {
   assert.ok(!lstatSync(installed).isSymbolicLink());
   assert.deepEqual(manifest(installed), manifest(snapshot));
   await smoke(installed, bin, clean, 'npm');
+  const npmStack = await offlineStack(installed);
   ok(await run('npm', ['run', 'build:plugin']));
   const plugin = join(snapshot, 'build/plugin/jev-ios-bridge');
   for (const file of required) assert.ok(existsSync(join(plugin, file)), 'plugin missing ' + file);
@@ -146,18 +188,26 @@ try {
   const market = JSON.parse(readFileSync(join(snapshot, 'build/plugin/marketplace.json'), 'utf8'));
   const zip = join(snapshot, 'build/plugin', market.plugins[0].source.url.split('/').at(-1));
   assert.equal(sha(zip), market.plugins[0].source.sha256);
-  // Install the copied plugin in an independent location, as Claude Code does.
   const pluginInstall = join(evidence, 'plugin');
-  cpSync(plugin, pluginInstall, { recursive: true });
+  mkdirSync(pluginInstall);
+  ok(await run('unzip', ['-q', zip, '-d', pluginInstall]));
+  for (const file of required) assert.ok(existsSync(join(pluginInstall, file)), 'plugin zip missing ' + file);
   assert.ok(!existsSync(join(pluginInstall, 'node_modules')));
   ok(await run('npm', ['ci', '--ignore-scripts', '--no-audit', '--no-fund'], pluginInstall));
   // The plugin has no npm bin declaration; invoke its compiled CLI directly.
   const pluginBin = join(pluginInstall, 'dist/cli.js'); chmodSync(pluginBin, 0o755);
   await smoke(pluginInstall, pluginBin, pluginInstall, 'plugin');
+  const pluginFreshStack = await offlineStack(pluginInstall, join(evidence, 'Application Support', 'plugin-stacks'));
+  assert.deepEqual(pluginFreshStack.identity, npmStack.identity);
+  const pluginStack = await offlineStack(pluginInstall);
+  assert.deepEqual(pluginStack, npmStack, 'Both installation channels must share the same verified extracted tree');
+  for (const file of required.filter(file => file !== 'skills/test-ios/SKILL.md'))
+    assert.equal(sha(join(pluginInstall, file)), sha(join(installed, file)), `Installation payload differs: ${file}`);
   const summary = { status: 'PASS', node: process.version, evidence, commands, cleanInstall: true, symlink: true, shebang: true,
     skips: 0, cliOperationsPerInstallation: 7, mcpGateCasesPerInstallation: 3, installations: 2, mcpSchemaErrorCalls: 34, commandCount: sequence, plugin: true, forbiddenEffects: 0,
     tarball: { path: tarball, sha256: sha(tarball) }, pluginZip: { path: zip, sha256: sha(zip) },
-    source: manifest(snapshot), installed: manifest(installed), pluginFiles: manifest(pluginInstall) };
+    source: manifest(snapshot), installed: manifest(installed), pluginFiles: manifest(pluginInstall),
+    stack: { npm: npmStack, plugin: pluginFreshStack, sharedReuse: true, offlineExtractions: 2 } };
   writeFileSync(join(evidence, 'summary.json'), JSON.stringify(summary, null, 2) + '\n');
   console.log(JSON.stringify(summary));
 } catch (error) {

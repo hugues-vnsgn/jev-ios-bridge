@@ -1,9 +1,5 @@
 #!/usr/bin/env node
-// Builds the Claude Code plugin zip for a GitHub release: the bridge, its /test-ios and /test-android skills,
-// and its MCP server, for iOS and Android.
-// Dependencies aren't bundled. Claude Code installs them from the lockfile on install
-// (npm ci --ignore-scripts), which keeps MobileBuildMCP's bundled AXe binary executable.
-// Output: build/plugin/jev-ios-bridge/ (the plugin root), its zip, and the marketplace.json that points at the zip.
+// The installer accepts bridge dependencies; the frozen stack travels as opaque archives.
 import { execFileSync } from 'node:child_process';
 import { createHash } from 'node:crypto';
 import { cpSync, mkdirSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
@@ -22,7 +18,6 @@ const skillRewrites = {
   ],
 };
 
-/** The plugin's copy of skills/<name>/SKILL.md. Throws when the skill no longer mentions a path it rewrites. */
 export function rewriteSkill(name, skill) {
   for (const [from, to] of skillRewrites[name]) {
     if (!skill.includes(from)) throw new Error(`skills/${name}/SKILL.md no longer mentions ${from}; update build-plugin.mjs`);
@@ -44,7 +39,11 @@ function build() {
   rmSync(out, { recursive: true, force: true });
   mkdirSync(root, { recursive: true });
   execFileSync('npm', ['run', 'build'], { stdio: 'inherit' });
-  for (const path of ['dist', 'docs/guide', 'README.md', 'LICENSE', 'CHANGELOG.md']) cpSync(path, join(root, path), { recursive: true });
+  execFileSync(process.execPath, ['scripts/build-stack-archive.mjs'], { stdio: 'inherit' });
+  for (const path of ['dist', 'docs/guide', 'README.md', 'LICENSE', 'CHANGELOG.md', 'stack/release', 'stack/wda/provenance.json', 'THIRD_PARTY_NOTICES.md']) {
+    mkdirSync(join(root, path, '..'), { recursive: true });
+    cpSync(path, join(root, path), { recursive: true });
+  }
 
   mkdirSync(join(root, '.claude-plugin'));
   writeFileSync(join(root, '.claude-plugin/plugin.json'), json({ ...JSON.parse(readFileSync('plugin/plugin.json', 'utf8')), version: pkg.version }));
@@ -60,7 +59,6 @@ function build() {
   cpSync('package-lock.json', join(root, 'package-lock.json'));
   execFileSync('npm', ['install', '--package-lock-only', '--ignore-scripts', '--no-audit', '--no-fund'], { cwd: root, stdio: 'inherit' });
 
-  // The plugin root sits at the top of the zip.
   execFileSync('zip', ['-qrX', join('..', basename(zip)), '.'], { cwd: root });
   const sha256 = createHash('sha256').update(readFileSync(zip)).digest('hex');
   writeFileSync(join(out, 'marketplace.json'), json({
