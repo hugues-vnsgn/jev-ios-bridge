@@ -24,18 +24,19 @@ export type AppiumDriverParts = Omit<AppiumDriverOptions, 'runId' | 'profile'>;
 export type AppiumHost = (request: { target: AppiumTarget; admission?: Admission }) => Promise<AppiumDriverParts>;
 
 /** The one Appium composition every entry point uses. The stack is verified per command, before any session. */
-export function productionAppiumHost(source: NodeJS.ProcessEnv = process.env): AppiumHost {
-  const { TYPESAFE_API_KEY: _key, ...environment } = source;
+export function productionAppiumHost(options: { environment?: NodeJS.ProcessEnv; stack?: FrozenStack; openAdmission?: () => Admission } = {}): AppiumHost {
+  const { TYPESAFE_API_KEY: _key, ...environment } = options.environment ?? process.env;
+  const openAdmission = options.openAdmission ?? (() => Admission.open());
   const support = join(userInfo().homedir, 'Library/Application Support/jev-ios-bridge');
   return async ({ target, admission }) => {
     // Android reports a missing adb first, as its tools check always has.
     const adb = target.platform === 'android' ? await findAdb({ environment }) : 'adb';
-    const stack = await FrozenStack.shipped().prepare();
+    const stack = await (options.stack ?? FrozenStack.shipped()).prepare();
     const runAdb = adbRunner({ adb, environment });
     const owned = ownedNativeRunner({ environment, record: () => {} });
     const nativeRunner: NativeRunner = (command, output, signal) => owned(command.file === 'adb' ? { ...command, file: adb } : command, output, signal);
     const sdkRoot = basename(dirname(adb)) === 'platform-tools' ? dirname(dirname(adb)) : undefined;
-    return { stack, admission: admission ?? Admission.open(), backend: 'real', homeRoot: join(support, 'homes'),
+    return { stack, admission: admission ?? openAdmission(), backend: 'real', homeRoot: join(support, 'homes'),
       target: target.platform === 'android' && sdkRoot && !target.androidSdkRoot ? { ...target, androidSdkRoot: sdkRoot } : target,
       logFolder: await privateFolder(target.platform === 'android' ? LOG_FOLDER : join(tmpdir(), 'jev-ios-logs')),
       identityProbe: identityProbe({ adb, environment }), adb: runAdb, nativeRunner,

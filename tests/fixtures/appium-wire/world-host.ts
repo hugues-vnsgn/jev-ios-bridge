@@ -25,9 +25,10 @@ const UIAUTOMATOR2_PIDS = [5001, 5002];
  *  As on a device, a created session starts its own automation (an iOS WDA runner, Android's UiAutomator2 and its
  *  forward), listed until the fence stops it, so ownership checks see what a real session leaves. */
 export function worldHost(t: Cleanups, options: HostOptions) {
-  const root = options.root ?? realpathSync(mkdtempSync(join(tmpdir(), 'appium-host-')));
+  if (options.root) mkdirSync(options.root, { recursive: true, mode: 0o700 });
+  const root = realpathSync(options.root ?? mkdtempSync(join(tmpdir(), 'appium-host-')));
   if (!options.root) t.after(() => rmSync(root, { recursive: true, force: true, maxRetries: 5, retryDelay: 50 }));
-  for (const name of ['homes', 'logs', 'shots', 'locks', 'admission']) mkdirSync(join(root, name), { recursive: true, mode: 0o700 });
+  for (const name of ['homes', 'logs', 'shots', 'locks', 'admission']) mkdirSync(join(root, name), { mode: 0o700 });
   const admission = options.admission ?? Admission.forTesting({ root: join(root, 'admission'), backend: 'fake', durability: 'fast' });
   const fence = new FakeFence();
   const native = fakeNativeRunner(options.nativeReply);

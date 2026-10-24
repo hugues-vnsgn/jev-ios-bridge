@@ -226,6 +226,6 @@ export class AppiumOperations {
   private refusal(error: unknown): DeviceReasonError {
     const code = error instanceof AppiumError ? error.code : undefined;
     if (code === 'NOT_UNIQUE') return new DeviceReasonError('TARGET_AMBIGUOUS', 'The target matched more than one element.');
-    return new DeviceReasonError('DEVICE_ERROR', 'The Appium layer refused the operation.', code === undefined ? {} : { vendorCode: code });
+    return new DeviceReasonError('DEVICE_ERROR', 'The Appium layer refused the operation.', code === undefined ? {} : { vendorCode: code, vendorSource: 'appium' });
   }
 }
