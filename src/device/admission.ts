@@ -7,6 +7,8 @@ import { z } from 'zod/v4';
 import { AdmissionError, AdmissionSqlite, type StoreOptions } from './admission-sqlite.js';
 import type { ImportedObservedAction, MigrationReceipt } from './admission-migration.js';
 import type { EmulatorObservation } from './android/probe.js';
+import { fenceAppium, inspectForeignAutomation, type AutomationScope, type FenceOptions } from '../appium/fence/index.js';
+import { appiumComponentSchema, appiumProofSchema, fenceCommandSchema, fenceExecutorsSchema } from '../appium/fence/schema.js';
 import { FENCE_REQUEST_KINDS } from '../scripted/vocabulary.js';
 
 export function parseFenceRequestKind(raw: unknown): 'stop' {
@@ -28,38 +30,44 @@ export type CommandRecord = { id: string; componentId: string | null; requestId:
   state: 'outstanding' | 'settled' | 'uncertain'; recoveryClaimId: string | null };
 const bindingText = z.string().min(1).max(500).refine(value => !!value.trim() && !value.includes('\0'));
 const ownerProcessSchema = z.strictObject({ pid: z.number().int().positive(), incarnation: bindingText });
-export const componentSchema = z.discriminatedUnion('kind', [
+export const componentSchema = z.union([appiumComponentSchema, fenceCommandSchema, z.discriminatedUnion('kind', [
   z.strictObject({ id: bindingText, kind: z.literal('one-shot'), operation: bindingText }),
   z.strictObject({ id: bindingText, kind: z.literal('host-process'), process: ownerProcessSchema }),
   z.strictObject({ id: bindingText, kind: z.literal('adb-command'), serial: bindingText, args: z.array(z.string()).min(1) }),
   z.strictObject({ id: bindingText, kind: z.literal('android-stream'), serial: bindingText, args: z.array(z.string()).min(1) }),
   z.strictObject({ id: bindingText, kind: z.literal('android-agent'), serial: bindingText, classpath: bindingText, className: bindingText }),
   z.strictObject({ id: bindingText, kind: z.literal('android-forward'), serial: bindingText, local: bindingText, remote: bindingText }),
-]);
+])]);
 export const componentObservationSchema = z.discriminatedUnion('kind', [
   z.strictObject({ kind: z.literal('host-start'), process: ownerProcessSchema }),
   z.strictObject({ kind: z.literal('agent-start'), pid: z.number().int().positive(), startTime: bindingText }),
+  fenceExecutorsSchema,
 ]);
 export type ComponentObservation = z.infer<typeof componentObservationSchema>;
 export type ComponentInput = z.infer<typeof componentSchema>;
 export const commandRequestSchema = z.strictObject({ requestId: bindingText, componentId: bindingText, operation: bindingText, payload: z.json(), recordResult: z.boolean().optional(), components: z.array(componentSchema).optional() });
 export type CommandRequest = z.infer<typeof commandRequestSchema>;
 export type IssueResult = { kind: 'issued' | 'retrieved'; command: CommandRecord };
-const stopProofSchema = z.discriminatedUnion('kind', [
+const stopProofSchema = z.union([appiumProofSchema, z.discriminatedUnion('kind', [
   z.strictObject({ kind: z.literal('completed-command'), commandId: bindingText }),
+  z.strictObject({ kind: z.literal('superseded-read'), commandId: bindingText }),
   z.strictObject({ kind: z.literal('adb-stopped'), process: ownerProcessSchema, commandId: bindingText }),
   z.strictObject({ kind: z.literal('android-component-stopped'), commandId: bindingText }),
   z.strictObject({ kind: z.literal('android-stream-exited'), process: ownerProcessSchema }),
   z.strictObject({ kind: z.literal('host-process-exited'), process: ownerProcessSchema,
     evidenceRefs: z.array(z.string().min(1).max(4096).refine(value => isAbsolute(value) && !value.includes('\0'))).min(1) }),
-]);
+])]);
 export const fenceRequestSchema = z.strictObject({ requestId: bindingText, kind: z.enum(FENCE_REQUEST_KINDS),
   components: z.array(z.strictObject({ componentId: bindingText, proof: stopProofSchema })), commands: z.array(bindingText) });
 export type FenceRequest = z.infer<typeof fenceRequestSchema>;
 export type FenceReceipt = { id: string; owner: OwnerIdentity; requestId: string; acceptedAt: number; proof: FenceRequest };
+export const recoveryViewSchema = z.discriminatedUnion('closure', [
+  z.strictObject({ id: bindingText, process: ownerProcessSchema, closedAt: z.null(), closure: z.null() }),
+  z.strictObject({ id: bindingText, process: ownerProcessSchema, closedAt: z.number().int().nonnegative(), closure: z.enum(['accepted', 'refused', 'abandoned']) }),
+]);
 export type GenerationView = { owner: OwnerIdentity; dispatchClosedAt: number | null; inventoryUnknownReason: string | null;
   components: NativeComponent[]; commands: CommandRecord[]; componentObservations: { componentId: string; payload: unknown }[]; observations: { commandId: string; payload: unknown }[];
-  recoveries: { id: string; process: OwnerProcess; closedAt: number | null; closure: 'accepted' | 'refused' | 'abandoned' | null }[] };
+  recoveries: z.infer<typeof recoveryViewSchema>[] };
 export type RecoveryIdentity = { id: string; owner: OwnerIdentity; token: string; process: OwnerProcess };
 export type TerminalCandidate = { outcome: 'observed' | 'completed' | 'refused' | 'inconclusive'; disposition: 'available' | 'quarantined'; payload: unknown; evidenceRefs: string[] };
 export type AttemptView = { identity: AttemptIdentity; category: DeviceCategory; device: string; digest: string; intent: unknown; owner: OwnerIdentity; state: 'active' | 'parked' | 'terminal'; cancellationRequested: boolean; terminal: TerminalCandidate | null };
@@ -199,13 +207,29 @@ export class Admission {
     const canonical=canonicalDevice(identity);
     return this.store.readDeviceAttributes(canonical);
   }
+  inspectAppiumAutomation(identity: DeviceIdentity, inventory: Parameters<typeof inspectForeignAutomation>[1], transport?: { serial: string }): ReturnType<typeof inspectForeignAutomation> {
+    const canonical = canonicalDevice(identity);
+    const scope: AutomationScope | undefined = canonical.category === 'ios-simulator' ? { udid: canonical.value }
+      : canonical.category === 'android-phone' ? { serial: canonical.value } : transport;
+    if (!scope) throw new AdmissionError('INVALID_REQUEST', 'Emulator automation inspection needs the transport serial');
+    return inspectForeignAutomation(this.store.readOwnedComponents(canonical), inventory, scope);
+  }
   componentState(process: OwnerProcess): 'exited' | 'alive' | 'reused' | 'unknown' { return this.dependencies.componentLiveness?.(process) ?? componentLiveness(process); }
   submitFence(expected: OwnerIdentity, request: FenceRequest, recovery?: RecoveryIdentity): FenceReceipt {
     const parsed = fenceRequestSchema.safeParse(request);
     const exited = new Set<string>();
     if (parsed.success) for (const component of parsed.data.components) {
       if ((component.proof.kind === 'host-process-exited' || component.proof.kind === 'adb-stopped' || component.proof.kind === 'android-stream-exited') &&
-        (this.dependencies.componentLiveness?.(component.proof.process) ?? componentLiveness(component.proof.process)) === 'exited') exited.add(component.componentId);
+        this.componentState(component.proof.process) === 'exited') exited.add(component.componentId);
+    }
+    const fenced = parsed.success ? parsed.data.components.filter(component => component.proof.kind === 'fenced-write') : [];
+    if (fenced.length) {
+      const observations = this.store.readGeneration(expected).componentObservations;
+      for (const component of fenced) {
+        const executors = observations.filter(observation => observation.componentId === component.componentId)
+          .map(observation => fenceExecutorsSchema.safeParse(observation.payload)).find(parsed => parsed.success);
+        if (executors?.data.processes.every(process => ['exited', 'reused'].includes(this.componentState(process)))) exited.add(component.componentId);
+      }
     }
     return this.store.submitFence(expected, request, exited, recovery);
   }
@@ -215,6 +239,9 @@ export class Admission {
     const result=this.store.claimRecovery(expected,requestId,this.dependencies.process??currentProcess(),abandoned);
     if (result.kind==='refused') return result;
     return {kind:result.kind,claim:new RecoveryClaim(this.store,result.identity,(request)=>this.submitFence(expected,request,result.identity))};
+  }
+  acquireWithAppiumRecovery(request: AdmissionRequest, options: FenceOptions): Promise<AdmissionResult> {
+    return this.acquireWithRecovery(request, claim => fenceAppium({ ...options, admission: this, claim }));
   }
   async acquireWithRecovery(request: AdmissionRequest, sweep: (claim: RecoveryClaim)=>Promise<FenceRequest>): Promise<AdmissionResult> {
     const acquired=this.acquire(request);
