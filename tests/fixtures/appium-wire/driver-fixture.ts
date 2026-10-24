@@ -2,10 +2,10 @@ import { mkdirSync, mkdtempSync, readFileSync, realpathSync, rmSync, writeFileSy
 import { tmpdir } from 'node:os';
 import { join, resolve } from 'node:path';
 import type { TestContext } from 'node:test';
-import { Admission } from '../../../src/device/admission.js';
+import { Admission, type OwnerIdentity } from '../../../src/device/admission.js';
 import type { VerifiedStack } from '../../../src/appium/stack.js';
 import type { FenceRunner } from '../../../src/appium/fence/index.js';
-import type { FenceEffect } from '../../../src/appium/fence/schema.js';
+import { hostInventorySchema, type FenceEffect, type HostRow } from '../../../src/appium/fence/schema.js';
 import type { NativeCommand, NativeExit, NativeOutput, NativeProcess, NativeRunner } from '../../../src/appium/native/process.js';
 import { AppiumDriver, type AppiumDriverOptions } from '../../../src/appium/driver.js';
 import { clientFixture } from './client-fixture.js';
@@ -63,11 +63,14 @@ export class FakeFence {
   forwards: { serial: string; local: string; remote: string }[] = [];
   values: Record<string, string | null> = { hidden_api_policy: '1', hidden_api_policy_p_apps: '1', hidden_api_policy_pre_p_apps: '1', accessibility_enabled: '1' };
   processes = new Map<number, string>();
+  /** Live host processes as the host sampler reports them; a signal ends the rows it reaches. */
+  host: HostRow[] = [];
   run: FenceRunner = async effect => {
     this.effects.push(structuredClone(effect));
     switch (effect.kind) {
-      case 'host-inventory': return [];
-      case 'host-signal': case 'host-signal-group': return { ok: true };
+      case 'host-inventory': return structuredClone(this.host);
+      case 'host-signal': this.host = this.host.filter(row => row.pid !== effect.process.pid || row.startTime !== effect.process.startTime); return { ok: true };
+      case 'host-signal-group': this.host = this.host.filter(row => row.pgid !== effect.pgid); return { ok: true };
       case 'wda-inventory': return structuredClone(this.wda.filter(row => row.udid === effect.udid));
       case 'wda-stop': this.wda = this.wda.filter(row => row.pid !== effect.pid); return { ok: true };
       case 'android-process': { const startTime = this.processes.get(effect.pid); return startTime ? { kind: 'running', startTime } : { kind: 'absent' }; }
@@ -78,6 +81,21 @@ export class FakeFence {
       case 'settings-write': this.values[effect.key] = effect.value; return { ok: true };
     }
   };
+}
+
+/** The fence's TERM, wait and poll steps run on virtual time, so a group stop costs no real 5 s. */
+export function virtualClock() {
+  let time = 0;
+  return { now: () => time, sleep: async (ms: number, signal: AbortSignal) => { signal.throwIfAborted(); time += ms; } };
+}
+
+export const hostRows = (rows: unknown[]): HostRow[] => hostInventorySchema.parse(rows);
+
+/** The rows the real host sampler reports for a live private child: the leader, launched by this process. */
+export function liveGroupRows(admission: Admission, owner: OwnerIdentity): HostRow[] {
+  const group = admission.readGeneration(owner).components.find(component => component.kind === 'appium-process-group')!.declaration as
+    { leader: { pid: number; startTime: string }; runMarker: string; pgid: number; launcher: { pid: number; startTime: string } };
+  return hostRows([{ ...group.leader, ppid: group.launcher.pid, pgid: group.pgid, state: 'running', executable: '/usr/local/bin/node', runMarker: group.runMarker, launchChain: [group.launcher] }]);
 }
 
 export function driverFixture(t: TestContext, recording: (root: string) => string, options: Partial<AppiumDriverOptions> & Pick<AppiumDriverOptions, 'target' | 'identityProbe'>, fault = 'none',
@@ -97,7 +115,7 @@ export function driverFixture(t: TestContext, recording: (root: string) => strin
   let port = 18100;
   const driver = new AppiumDriver({ stack: driverStack(t), admission, backend: 'fake', homeRoot: join(root, 'homes'), logFolder: join(root, 'logs'),
     screenshotFolder: join(root, 'shots'), lockRoot: join(root, 'locks'), fence: fence.run, nativeRunner: native.runner, freePort: async () => port++,
-    startLookup: pid => `host-${String(pid)}`, runMarker: () => '0123456789abcdef0123456789abcdef', runId: 'run-1', timeoutMs: 20_000,
+    startLookup: pid => `host-${String(pid)}`, runMarker: () => '0123456789abcdef0123456789abcdef', runId: 'run-1', timeoutMs: 20_000, fenceClock: virtualClock(),
     child: { entrypoint: resolve('tests/fixtures/appium-wire/fake-mcp.ts'), args: [recording(root), fault, trace, join(root, 'environment.json')], nodeArgs: ['--import', import.meta.resolve('tsx')] },
     ...options });
   drivers.push(driver);

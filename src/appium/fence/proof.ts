@@ -66,9 +66,11 @@ export function ownedGroup(target: Group, rows: HostRow[]): HostRow[] {
     const ancestor = row.launchChain?.[0];
     if (ancestor && sameIdentity(ancestor, target.leader) && row.runMarker !== target.runMarker && !sharedService(row)) throw new Error('Launch attestation is inconsistent');
   }
+  // Ownership needs this group's marker and a chain that starts at the leader or its recorded launcher; the
+  // inconsistency check above stays on the leader, since one launcher runs several groups with their own markers.
   for (const row of rows.filter(row => row.runMarker === target.runMarker && active(row) && !sharedService(row))) {
     const ancestor = row.launchChain?.[0];
-    if (!ancestor || !sameIdentity(ancestor, target.leader)) throw new Error('Launch ancestry is unprovable');
+    if (!ancestor || !(sameIdentity(ancestor, target.leader) || (target.launcher !== undefined && sameIdentity(ancestor, target.launcher)))) throw new Error('Launch ancestry is unprovable');
     seeds.add(row.pid);
   }
   const linked = withDescendants(seeds, rows);

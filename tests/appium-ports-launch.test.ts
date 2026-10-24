@@ -2,6 +2,8 @@ import assert from 'node:assert/strict';
 import { execFileSync } from 'node:child_process';
 import { readFileSync } from 'node:fs';
 import { test } from 'node:test';
+import { ownedGroup } from '../src/appium/fence/proof.js';
+import { appiumComponentSchema, hostInventorySchema } from '../src/appium/fence/schema.js';
 import { createSessionProfile } from '../src/appium/session.js';
 import { allocateHostPorts, portComponents } from '../src/appium/ports.js';
 import { clientFixture } from './fixtures/appium-wire/client-fixture.js';
@@ -40,7 +42,15 @@ test('the private child runs in its own process group and carries the run marker
   assert.equal(pgid, child.pid);
   const env = JSON.parse(readFileSync(f.environment, 'utf8'));
   assert.equal(env.JEV_PHASE1_RUN_MARKER, '0123456789abcdef0123456789abcdef');
-  assert.deepEqual(JSON.parse(Buffer.from(env.JEV_PHASE1_ANCESTRY, 'base64url').toString('utf8')), ancestry);
+  const inherited = JSON.parse(Buffer.from(env.JEV_PHASE1_ANCESTRY, 'base64url').toString('utf8')) as typeof ancestry;
+  assert.deepEqual(inherited, ancestry);
+  const leader = { pid: child.pid, startTime: 'Fri Oct 24 09:00:01 2026' };
+  const rows = hostInventorySchema.parse([{ ...leader, ppid: process.pid, pgid: child.pid, state: 'running', executable: '/usr/local/bin/node',
+    runMarker: env.JEV_PHASE1_RUN_MARKER, launchChain: inherited }]);
+  const group = (launcher?: (typeof ancestry)[number]) => appiumComponentSchema.parse({ id: 'group', kind: 'appium-process-group', leader, runMarker: env.JEV_PHASE1_RUN_MARKER,
+    pgid: child.pid, members: [], ...(launcher ? { launcher } : {}) }) as Parameters<typeof ownedGroup>[0];
+  assert.deepEqual(ownedGroup(group(ancestry[0]), rows).map(row => row.pid), [child.pid], 'a chain that starts at the recorded launcher is owned');
+  assert.throws(() => ownedGroup(group(), rows), /Launch ancestry is unprovable/);
   const plain = await f.open();
   const other = plain.components.find(record => record.kind === 'appium-child');
   if (other?.kind !== 'appium-child') assert.fail('child record missing');

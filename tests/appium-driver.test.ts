@@ -12,7 +12,7 @@ import { fakeProbeSpawn } from './fixtures/adb-spawn.js';
 import type { AdbRunner } from '../src/device/android/adb.js';
 import { identityProbe } from '../src/device/android/probe.js';
 import { DeviceReasonError } from '../src/device/index.js';
-import { UDID, WDA_BUNDLE, driverFixture, rewriteRecording, spliceRecordings } from './fixtures/appium-wire/driver-fixture.js';
+import { UDID, WDA_BUNDLE, driverFixture, hostRows, liveGroupRows, rewriteRecording, spliceRecordings } from './fixtures/appium-wire/driver-fixture.js';
 
 const live = () => new AbortController().signal;
 const ios = { target: { platform: 'ios', device: UDID, presentation: 'visible' }, identityProbe: fakeSimulatorProbe(UDID) } as const;
@@ -39,6 +39,8 @@ test('an iOS run launches through the console helper, observes through one sessi
   assert.equal(group.leader.startTime, `host-${String(group.leader.pid)}`);
   assert.equal(group.pgid, group.leader.pid);
   assert.equal(f.driver.appRunning(), true);
+  f.fence.host = [...liveGroupRows(f.admission, owner), ...hostRows(f.native.calls.map(call => ({ pid: call.child.process.pid, startTime: call.child.process.incarnation,
+    ppid: process.pid, pgid: call.child.process.pid, state: 'running', executable: '/usr/bin/xcrun' })))];
   const sources = f.driver.logSources();
   assert.match(sources.runtime!, /run-1-console\.log$/); assert.match(sources.os!, /run-1-os\.log$/);
   f.native.calls[0]!.output.stdout('hello from the app\n');
@@ -56,6 +58,9 @@ test('an iOS run launches through the console helper, observes through one sessi
   assert.equal(f.native.calls[0]!.stops, 1); assert.equal(f.native.calls[1]!.stops, 1);
   assert.deepEqual(f.fence.effects.filter(effect => effect.kind === 'wda-stop'), [{ kind: 'wda-stop', udid: UDID, bundleId: WDA_BUNDLE, pid: 777 }]);
   assert.deepEqual(f.fence.wda, []);
+  assert.deepEqual(f.fence.host, [], 'the group and both helpers were stopped by identity');
+  assert.equal(f.fence.effects.filter(effect => effect.kind === 'host-signal-group').length, 1);
+  assert.deepEqual(f.fence.effects.flatMap(effect => effect.kind === 'host-signal' ? [effect.process.pid] : []).sort(), f.native.calls.map(call => call.child.process.pid).sort());
   assert.equal(f.admission.inspect({ category: 'ios-simulator', value: UDID })!.state, 'available');
   assert.equal(f.admission.readGeneration(owner).commands.filter(command => command.state !== 'settled').length, 0);
   assert.equal(f.driver.appRunning(), undefined);
@@ -155,9 +160,11 @@ test('an Android run wakes natively, restarts through jev_start_activity, record
   assert.deepEqual({ ...(forward as object), id: 'x' }, { id: 'x', kind: 'appium-forward', serial: SERIAL, local: 'tcp:18200', remote: 'tcp:6790' });
   assert.deepEqual(f.driver.preparation(), { deviceIdentity: SERIAL, serial: SERIAL, agentSha256: (f.driver.provenance() as { uiautomator2ServerSha256: string }).uiautomator2ServerSha256 });
   assert.equal('wdaTreeSha256' in f.driver.provenance(), false);
+  f.fence.host = liveGroupRows(f.admission, owner);
   await f.driver.observe(live());
   await f.driver.close(live());
   assert.deepEqual(f.tools().slice(-2), ['jev_terminate_app', 'appium_session_management']);
+  assert.deepEqual(f.fence.host, [], 'the private group was stopped');
   assert.deepEqual(f.fence.forwards, [], 'the owned forward is removed');
   assert.equal(f.fence.processes.size, 0, 'both UiAutomator2 processes are stopped');
   assert.equal(f.admission.inspect({ category: 'android-phone', value: SERIAL })!.state, 'available');
@@ -253,4 +260,28 @@ test('the observed action opens a fresh session with no launch, and fences its c
   consumed.claim.recordActionReceipt({ actionAttempted: false, actionAcknowledged: false });
   const terminal = consumed.claim.finalize({ outcome: 'refused', disposition: 'available', payload: {}, evidenceRefs: [] });
   assert.equal(terminal.authority, 'committed', 'the staged fence covers every Appium component of the action');
+});
+
+test('a live private group is fenced through its recorded launcher: only that group stops, and a sibling group and an unrelated process are never signalled', async t => {
+  const f = driverFixture(t, observeRecording, ios);
+  await f.driver.prepare({ app: { bundleId: 'example.app' } }, live());
+  const owner = f.admission.inspect({ category: 'ios-simulator', value: UDID })!.owner!;
+  const group = f.admission.readGeneration(owner).components.find(component => component.kind === 'appium-process-group')!.declaration as
+    { leader: { pid: number; startTime: string }; runMarker: string; pgid: number };
+  const bridge = { pid: process.pid, startTime: `host-${String(process.pid)}` };
+  f.fence.host = hostRows([
+    { ...bridge, ppid: 1, pgid: process.pid, state: 'running', executable: '/usr/local/bin/node' },
+    { ...group.leader, ppid: bridge.pid, pgid: group.pgid, state: 'running', executable: '/usr/local/bin/node', runMarker: group.runMarker, launchChain: [bridge] },
+    { pid: 990001, startTime: 'descendant', ppid: group.leader.pid, pgid: group.pgid, state: 'running', executable: '/sdk/platform-tools/adb', runMarker: group.runMarker, launchChain: [bridge] },
+    { pid: 990010, startTime: 'sibling', ppid: bridge.pid, pgid: 990010, state: 'running', executable: '/usr/local/bin/node', runMarker: 'fedcba9876543210fedcba9876543210', launchChain: [bridge] },
+    { pid: 990020, startTime: 'unrelated', ppid: 1, pgid: 990020, state: 'running', executable: '/bin/zsh' },
+  ]);
+  await f.driver.observe(live());
+  await f.driver.close(live());
+  const signals = f.fence.effects.filter(effect => effect.kind === 'host-signal' || effect.kind === 'host-signal-group');
+  assert.deepEqual(signals.map(effect => effect.kind === 'host-signal-group' ? `group ${String(effect.pgid)} ${effect.signal}` : `process ${String(effect.process.pid)} ${effect.signal}`),
+    [`group ${String(group.pgid)} SIGTERM`]);
+  assert.deepEqual(f.fence.host.map(row => row.pid).sort(), [990010, 990020, process.pid].sort(), 'the sibling group, the unrelated shell and the bridge survive');
+  assert.equal(f.admission.inspect({ category: 'ios-simulator', value: UDID })!.state, 'available');
+  assertNeverQuarantined(f.admission, owner);
 });

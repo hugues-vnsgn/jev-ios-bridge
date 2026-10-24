@@ -18,7 +18,7 @@ import { OperationTracker } from '../device/operation-tracker.js';
 import type { Clock } from '../device/settle.js';
 import type { ProfileBinding } from '../profiles.js';
 import { PrivateAppiumClient, type AppiumComponentRecord } from './client.js';
-import { fenceAppium, type FenceClaim, type FenceEffect, type FenceRunner } from './fence/index.js';
+import { fenceAppium, type FenceClaim, type FenceEffect, type FenceOptions, type FenceRunner } from './fence/index.js';
 import { appiumComponentSchema, fenceEffectSchema, hostIdentitySchema, type AppiumComponent, type HostIdentity } from './fence/schema.js';
 import { androidNativeHelpers } from './native/android.js';
 import { launchIosConsole, observeIosLogs, observedIosPreparation } from './native/ios.js';
@@ -61,6 +61,8 @@ export interface AppiumDriverOptions {
   profile?: ProfileBinding;
   lockRoot?: string;
   clock?: Clock;
+  /** Test seam: the fence's clock for its TERM, wait and poll steps. */
+  fenceClock?: FenceOptions['clock'];
   timeoutMs?: number;
 }
 
@@ -371,7 +373,7 @@ export class AppiumDriver implements DeviceDriver, IosPreparationDriver, Observe
       onComponent: (record: AppiumComponentRecord) => {
         if (record.kind !== 'appium-child') return;
         const leader = this.hostIdentity(record.pid);
-        this.register(owner, appiumComponentSchema.parse({ id: randomUUID(), kind: 'appium-process-group', leader, runMarker, pgid: record.pid, members: [] }));
+        this.register(owner, appiumComponentSchema.parse({ id: randomUUID(), kind: 'appium-process-group', leader, runMarker, pgid: record.pid, members: [], launcher: self }));
       } });
     try {
       const session = await this.dispatch(owner, 'appium-session-create', signal, this.timeoutMs, () => AppiumCommandSession.start({ client, profile, timeoutMs: this.timeoutMs }));
@@ -648,8 +650,10 @@ export class AppiumDriver implements DeviceDriver, IosPreparationDriver, Observe
     const claim: FenceClaim = { owner: owner.claim.identity, dispatch: owner.dispatcher.dispatch.bind(owner.dispatcher),
       observeComponent: owner.claim.observeComponent.bind(owner.claim) };
     return fenceAppium({ admission: this.options.admission, claim, runner: this.options.fence,
-      revalidate: serial => this.revalidate(owner.identity, serial, signal), signal });
+      revalidate: serial => this.revalidate(owner.identity, serial, signal), signal, ...this.fenceClock() });
   }
+
+  private fenceClock(): Pick<FenceOptions, 'clock'> { return this.options.fenceClock ? { clock: this.options.fenceClock } : {}; }
 
   /** Uncertain work holds the device; a recovery claim fences it and releases it only with every receipt. */
   private async quarantineAndFence(owner: Owner, signal: AbortSignal): Promise<void> {
@@ -659,7 +663,7 @@ export class AppiumDriver implements DeviceDriver, IosPreparationDriver, Observe
     if (recovery.kind === 'refused') throw new DeviceReasonError('CLEANUP_FAILED', 'The cleanup claim was refused');
     try {
       const proof = await fenceAppium({ admission: this.options.admission, claim: recovery.claim, runner: this.options.fence,
-        revalidate: serial => this.revalidate(owner.identity, serial, signal), signal });
+        revalidate: serial => this.revalidate(owner.identity, serial, signal), signal, ...this.fenceClock() });
       recovery.claim.submitFence(proof);
     } catch (error) {
       try { recovery.claim.close(); } catch { /* the quarantine stands */ }
