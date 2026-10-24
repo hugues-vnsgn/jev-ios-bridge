@@ -43,3 +43,7 @@ Observation faults add `source-late-first`, `source-late-second`, `source-lost` 
 `observe/ios-fields.xml` is the P19 fixture-app Fields screen (`P19-evidence/ios-feature-proof/fields.xml`), where WDA reports each empty field's hint as both `placeholderValue` and `value`. `observe/android-number-picker.xml` is a hand-authored source for a `$` class, whose tag UiAutomator2 sanitizes.
 
 The corpus oracle converts the existing Android agent captures to equivalent XML in the test, then compares normalized elements, printed capture output and assertion text with the committed bytes. These are derived host fixtures, not newly recorded Appium wire. The three Android goldens stay unchanged.
+
+## Operation replays
+
+`android/replace-text-lost.jsonl` is hand-authored. It records the session create, the settings readback and one `jev_replace_text` request with no reply, then the owned delete. It makes no live-device claim. The operations test runs it through the real client with a short call timeout, so the lost acknowledgement closes dispatch and the trace shows the request sent once.

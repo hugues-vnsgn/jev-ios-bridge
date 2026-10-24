@@ -34,6 +34,22 @@ test('Android replacement is one mobile replaceElementValue command', async () =
   assert.deepEqual(await f.handler.call('jev_replace_text', { ...base, locator, text: 'replacement' }), success);
   assert.deepEqual(f.calls, [['findElements', 'accessibility id', 'username'], ['execute', 'mobile: replaceElementValue', [{ elementId: 'field-1', text: 'replacement' }]]]);
 });
+test('iOS empty replacement clears once and never calls setValue', async () => {
+  const f = fixture();
+  assert.deepEqual(await f.handler.call('jev_replace_text', { ...base, locator, text: '' }), success);
+  assert.deepEqual(f.calls, [['findElements', 'accessibility id', 'username'], ['clear', 'field-1']]);
+});
+test('Android empty replacement is one replaceElementValue with empty text', async () => {
+  const f = fixture('android');
+  assert.deepEqual(await f.handler.call('jev_replace_text', { ...base, locator, text: '' }), success);
+  assert.deepEqual(f.calls, [['findElements', 'accessibility id', 'username'], ['execute', 'mobile: replaceElementValue', [{ elementId: 'field-1', text: '' }]]]);
+});
+test('an empty locator value and an empty intent extra stay refused', async () => {
+  const f = fixture('android');
+  assert.deepEqual(await f.handler.call('jev_replace_text', { ...base, locator: { using: 'id', value: '' }, text: '' }), error('NOT_ALLOWED'));
+  assert.deepEqual(await f.handler.call('jev_start_activity', { ...base, package: 'example.app', activity: '.Main', intentExtras: { route: '' } }), error('NOT_ALLOWED'));
+  assert.deepEqual(f.calls, []);
+});
 test('a lost clear acknowledgement stops setValue and closes subsequent dispatch with a redacted error', async () => {
   const f = fixture();
   f.driver.clear = async (...args) => { f.calls.push(['clear', ...args]); throw new Error('password private-test-value'); };
