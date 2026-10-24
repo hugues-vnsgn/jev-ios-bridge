@@ -1,9 +1,10 @@
 import { spawn, type ChildProcessWithoutNullStreams } from 'node:child_process';
 import { createHash } from 'node:crypto';
-import { lstatSync, mkdirSync, mkdtempSync, readFileSync, readdirSync } from 'node:fs';
+import { lstatSync, mkdirSync, mkdtempSync, readFileSync, readdirSync, writeFileSync } from 'node:fs';
 import { dirname, isAbsolute, join, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { once } from 'node:events';
+import { z } from 'zod/v4';
 import { Client } from '@modelcontextprotocol/sdk/client/index.js';
 import { JSONRPCMessageSchema, type JSONRPCMessage } from '@modelcontextprotocol/sdk/types.js';
 import type { Transport } from '@modelcontextprotocol/sdk/shared/transport.js';
@@ -12,14 +13,16 @@ import type { VerifiedStack } from './stack.js';
 import { validateSessionCapabilities, type SessionProfile } from './session.js';
 import { AppiumError, CLIENT_SDK, EXTENSION_VERSION, FROZEN_PROTOCOL_VERSIONS, SOURCE_SETTINGS,
   creationResultSchema, deletionResultSchema, extensionErrorSchema, sessionManagementSchema,
-  settingsResultSchema, toolResultSchema, type AppiumErrorCode, type AppiumPlatform, type AppiumSessionId } from './wire-schemas.js';
+  settingsResultSchema, checkedToolReply, extensionRequestSchema, extensionResults, type ExtensionCall, type ExtensionResult,
+  type AppiumErrorCode, type AppiumPlatform, type AppiumSessionId } from './wire-schemas.js';
 
 export type AppiumComponentRecord =
   | { kind: 'appium-child'; owner: OwnerIdentity; pid: number; home: string }
   | { kind: 'appium-session'; owner: OwnerIdentity; childPid: number; sessionId: AppiumSessionId; platform: AppiumPlatform; device: string };
 type Child = { entrypoint: string; args?: string[]; nodeArgs?: string[] };
-type OpenOptions = { stack: VerifiedStack; owner: OwnerIdentity; homeRoot: string; child: Child; timeoutMs?: number; androidSdkRoot?: string;
+type OpenOptions = { stack: VerifiedStack; owner: OwnerIdentity; homeRoot: string; child?: Child; profile?: SessionProfile; timeoutMs?: number; androidSdkRoot?: string;
   onComponent: (record: AppiumComponentRecord) => void | Promise<void> };
+type ChildOptions = OpenOptions & { child: Child };
 type ManagementResult = { kind: 'created'; sessionId: AppiumSessionId } | { kind: 'deleted' };
 
 function verifyClientSdk(stack: VerifiedStack): void {
@@ -60,7 +63,7 @@ class PrivateStdioTransport implements Transport {
   private pending = Buffer.alloc(0);
   private stderrTail = Buffer.alloc(0);
   private closing: Promise<void> | undefined;
-  constructor(private readonly options: OpenOptions, private readonly home: string, private readonly recordPid: (pid: number) => Promise<void>) {}
+  constructor(private readonly options: ChildOptions, private readonly home: string, private readonly recordPid: (pid: number) => Promise<void>) {}
   setProtocolVersion(version: string): void {
     if (!FROZEN_PROTOCOL_VERSIONS.includes(version)) throw new AppiumError('PROTOCOL_VERSION_MISMATCH');
   }
@@ -79,8 +82,8 @@ class PrivateStdioTransport implements Transport {
     child.stdout.on('error', () => this.fail());
     child.stdin.on('error', () => this.fail());
     child.stderr.on('error', () => this.fail());
-    child.stderr.on('data', (chunk: Buffer) => {
-      this.stderrTail = Buffer.concat([this.stderrTail, chunk]).subarray(-65536);
+    child.stderr.on('data', () => {
+      this.stderrTail = Buffer.concat([this.stderrTail, Buffer.from('[private appium stderr redacted]\n')]).subarray(-65536);
     });
     child.stdout.on('data', (chunk: Buffer) => {
       if (this.closed) return;
@@ -133,7 +136,7 @@ export class PrivateAppiumClient {
   private created = false;
   private session: { id: AppiumSessionId; profile: SessionProfile } | undefined;
   private closing: Promise<void> | undefined;
-  private constructor(private readonly options: OpenOptions, home: string) {
+  private constructor(private readonly options: ChildOptions, home: string) {
     this.transport = new PrivateStdioTransport(options, home, async pid => {
       const record = { kind: 'appium-child', owner: structuredClone(options.owner), pid, home } satisfies AppiumComponentRecord;
       this.records.push(record); await options.onComponent(structuredClone(record));
@@ -143,13 +146,19 @@ export class PrivateAppiumClient {
   }
   static async open(options: OpenOptions): Promise<PrivateAppiumClient> {
     verifyClientSdk(options.stack);
-    if (!isAbsolute(options.homeRoot) || !isAbsolute(options.child.entrypoint)
+    if (!isAbsolute(options.homeRoot) || (options.child !== undefined && !isAbsolute(options.child.entrypoint)) || (!options.child && !options.profile)
       || (options.androidSdkRoot !== undefined && !isAbsolute(options.androidSdkRoot))) throw new AppiumError('NOT_ALLOWED');
     mkdirSync(options.homeRoot, { recursive: true, mode: 0o700 });
     const directory = lstatSync(options.homeRoot);
     if (!directory.isDirectory() || directory.uid !== process.getuid?.() || (directory.mode & 0o077) !== 0) throw new AppiumError('NOT_ALLOWED');
     const home = mkdtempSync(join(options.homeRoot, 'command-'));
-    const client = new PrivateAppiumClient(options, home);
+    let child = options.child;
+    if (!child) {
+      const profileFile = join(home, 'profile.json');
+      writeFileSync(profileFile, JSON.stringify(options.profile), { mode: 0o600, flag: 'wx' });
+      child = { entrypoint: fileURLToPath(new URL('./extension/entry.js', import.meta.url)), args: [options.stack.root, profileFile] };
+    }
+    const client = new PrivateAppiumClient({ ...options, child }, home);
     try { await client.sdk.connect(client.transport, { timeout: options.timeoutMs ?? 120000 }); return client; }
     catch (error) {
       await client.close();
@@ -168,18 +177,33 @@ export class PrivateAppiumClient {
     this.inFlight = true;
     try {
       const result: unknown = await this.sdk.callTool({ name, arguments: args }, undefined, { timeout: timeoutMs ?? this.options.timeoutMs ?? 120000, resetTimeoutOnProgress: false });
-      const parsed = toolResultSchema.safeParse(result);
-      if (!parsed.success) return this.fault('ACKNOWLEDGEMENT_LOST');
-      if (parsed.data.isError) {
-        const failure = extensionErrorSchema.safeParse(parsed.data.structuredContent);
-        return this.fault(failure.success ? failure.data.error.code : 'DRIVER_ERROR');
+      const parsed = checkedToolReply(name, args, result);
+      if (parsed.isError) {
+        const failure = extensionErrorSchema.safeParse(parsed.structuredContent);
+        return this.fault(failure.success ? failure.data.error.code : 'ACKNOWLEDGEMENT_LOST');
       }
-      return parsed.data;
+      return parsed;
     } catch (error) {
       this.dispatch = false;
       if (error instanceof AppiumError) throw error;
       throw new AppiumError('ACKNOWLEDGEMENT_LOST');
     } finally { this.inFlight = false; }
+  }
+  async callExtension(request: Extract<ExtensionCall, { name: 'jev_session_inventory' }>, timeoutMs?: number): Promise<ExtensionResult<'jev_session_inventory'>>;
+  async callExtension(request: Extract<ExtensionCall, { name: 'jev_settings' }>, timeoutMs?: number): Promise<ExtensionResult<'jev_settings'>>;
+  async callExtension(request: Extract<ExtensionCall, { name: 'jev_screen' }>, timeoutMs?: number): Promise<ExtensionResult<'jev_screen'>>;
+  async callExtension(request: Extract<ExtensionCall, { name: 'jev_replace_text' }>, timeoutMs?: number): Promise<ExtensionResult<'jev_replace_text'>>;
+  async callExtension(request: Extract<ExtensionCall, { name: 'jev_android_back' }>, timeoutMs?: number): Promise<ExtensionResult<'jev_android_back'>>;
+  async callExtension(request: Extract<ExtensionCall, { name: 'jev_start_activity' }>, timeoutMs?: number): Promise<ExtensionResult<'jev_start_activity'>>;
+  async callExtension(request: Extract<ExtensionCall, { name: 'jev_terminate_app' }>, timeoutMs?: number): Promise<ExtensionResult<'jev_terminate_app'>>;
+  async callExtension(request: ExtensionCall, timeoutMs?: number) {
+    const session = this.session;
+    if (!session) throw new AppiumError('SESSION_MISMATCH');
+    const parsed = extensionRequestSchema.safeParse({ name: request.name,
+      arguments: { ...request.arguments, sessionId: session.id, extensionVersion: EXTENSION_VERSION } });
+    if (!parsed.success) throw new AppiumError('NOT_ALLOWED');
+    const reply = await this.call(parsed.data.name, parsed.data.arguments, timeoutMs);
+    return z.parse(extensionResults[parsed.data.name], reply.structuredContent);
   }
   async manageSession(input: unknown, profile: SessionProfile, timeoutMs?: number): Promise<ManagementResult> {
     const parsed = sessionManagementSchema.safeParse(input);

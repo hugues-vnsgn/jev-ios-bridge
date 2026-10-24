@@ -2,8 +2,7 @@ import { createHash } from 'node:crypto';
 import { readFileSync } from 'node:fs';
 import { z } from 'zod/v4';
 import { JSONRPCMessageSchema } from '@modelcontextprotocol/sdk/types.js';
-import { EXTENSION_VERSION, FROZEN_PROTOCOL_VERSIONS, creationResultSchema, deletionResultSchema,
-  publicToolRequestSchema, settingsRequestSchema, settingsResultSchema, toolResultSchema } from '../../../src/appium/wire-schemas.js';
+import { EXTENSION_VERSION, FROZEN_PROTOCOL_VERSIONS, checkedToolReply, extensionRequestSchema, publicToolRequestSchema } from '../../../src/appium/wire-schemas.js';
 
 const hash = z.string().regex(/^[a-f0-9]{64}$/);
 export const recordingHeaderSchema = z.strictObject({ format: z.literal('jev-appium-wire'), version: z.literal(1),
@@ -33,18 +32,12 @@ export function readRecording(path: string): { header: RecordingHeader; lines: W
   for (const { direction, message } of lines) {
     if (direction !== 'client' || !('method' in message) || message.method !== 'tools/call') continue;
     const params = z.object({ name: z.string(), arguments: z.unknown() }).parse(message.params);
-    if (params.name === 'jev_settings') settingsRequestSchema.parse(params.arguments);
+    if (params.name.startsWith('jev_')) extensionRequestSchema.parse(params);
     else publicToolRequestSchema.parse(params);
   }
   return { header, lines };
 }
 export function validateRecordedResult(request: unknown, input: unknown): void {
-  const params = z.object({ name: z.string(), arguments: z.object({ action: z.string().optional() }).passthrough() }).parse(request);
-  const reply = toolResultSchema.parse(input);
-  if (reply.isError) return;
-  if (params.name === 'jev_settings') settingsResultSchema.parse(reply.structuredContent);
-  if (params.name === 'appium_session_management') {
-    if (params.arguments.action === 'create') creationResultSchema.parse(reply.structuredContent);
-    else deletionResultSchema.parse(reply.structuredContent);
-  }
+  const params = z.object({ name: z.string(), arguments: z.unknown() }).parse(request);
+  checkedToolReply(params.name, params.arguments, input);
 }

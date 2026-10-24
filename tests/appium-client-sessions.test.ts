@@ -7,11 +7,14 @@ import { dirname, join, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { spawnSync } from 'node:child_process';
 import { setTimeout as delay } from 'node:timers/promises';
+import { Client } from '@modelcontextprotocol/sdk/client/index.js';
+import { StdioClientTransport } from '@modelcontextprotocol/sdk/client/stdio.js';
 import type { VerifiedStack } from '../src/appium/stack.js';
 import type { OwnerIdentity } from '../src/device/admission.js';
 import { PrivateAppiumClient, type AppiumComponentRecord } from '../src/appium/client.js';
 import { AppiumCommandSession, createSessionProfile } from '../src/appium/session.js';
 import { readRecording } from './fixtures/appium-wire/recording.js';
+import { TOOL_NAMES, toolDefinitions } from '../src/appium/wire-schemas.js';
 
 const sha = (bytes: Buffer | string) => createHash('sha256').update(bytes).digest('hex');
 const owner: OwnerIdentity = { category: 'ios-simulator', device: 'ios-test', attempt: { kind: 'legacy', id: 'run-1' },
@@ -32,7 +35,7 @@ function walk(directory: string): void {
 walk('');
 function fixture(t: TestContext, platform: 'ios' | 'android' = 'ios') {
   const root = mkdtempSync(join(tmpdir(), 'jev-private-client-'));
-  const clients: PrivateAppiumClient[] = [];
+  const clients: { close(): Promise<void> }[] = [];
   t.after(async () => {
     await Promise.allSettled(clients.map(client => client.close()));
     rmSync(root, { recursive: true, force: true, maxRetries: 5, retryDelay: 50 });
@@ -180,7 +183,7 @@ test('Android skips server installation only for matching verified packaged APKs
 
 for (const fault of ['settings-error', 'settings-unequal', 'settings-missing', 'foreign-session', 'foreign-version', 'create-unowned', 'create-duplicate']) test(`${fault} refuses and preserves component records`, async t => {
   const f = fixture(t); const client = await f.open(fault);
-  await assert.rejects(AppiumCommandSession.start({ client, profile: f.profile }), { code: fault.startsWith('create-') ? 'ACKNOWLEDGEMENT_LOST' : fault === 'foreign-session' ? 'SESSION_MISMATCH' : fault === 'foreign-version' ? 'VERSION_MISMATCH' : 'SETTINGS_READBACK_MISMATCH' });
+  await assert.rejects(AppiumCommandSession.start({ client, profile: f.profile }), { code: fault === 'settings-unequal' ? 'SETTINGS_READBACK_MISMATCH' : 'ACKNOWLEDGEMENT_LOST' });
   assert.equal(client.components[0]?.kind, 'appium-child');
   if (!fault.startsWith('create-')) assert.equal(client.components.find(x => x.kind === 'appium-session')?.sessionId, 'ios-session');
   assert.equal(f.calls().filter(x => x.params?.arguments?.action === 'create').length, 1);
@@ -291,4 +294,46 @@ test('a named host case records stdio exchanges which replay through the client'
   assert.equal(recording.lines.length, 9);
   const session = await AppiumCommandSession.start({ client: await f.open('none', output), profile: f.profile });
   assert.equal(session.sessionId, 'ios-session'); await session.finish();
+});
+
+test('started fake exposes the same ten names and extension parameter schemas', async t => {
+  const f = fixture(t);
+  const transport = new StdioClientTransport({ command: process.execPath, args: ['--import', import.meta.resolve('tsx'),
+    resolve('tests/fixtures/appium-wire/fake-mcp.ts'), f.recording], stderr: 'pipe' });
+  const client = new Client({ name: 'jev-ios-bridge-private', version: '1' }, { capabilities: {} });
+  f.clients.push(client); await client.connect(transport);
+  const tools = (await client.listTools()).tools;
+  assert.deepEqual(tools.map(tool => tool.name).sort(), [...TOOL_NAMES].sort());
+  assert.deepEqual(tools.find(tool => tool.name === 'jev_replace_text')?.inputSchema,
+    toolDefinitions().find(tool => tool.name === 'jev_replace_text')?.inputSchema);
+});
+for (const platform of ['ios', 'android'] as const) test(`${platform} extension replay binds the client's session and version on every operation`, async t => {
+  const f = fixture(t, platform); const client = await f.open('none', resolve(`tests/fixtures/appium-wire/${platform}/extension.jsonl`));
+  await assert.rejects(client.callExtension({ name: 'jev_screen', arguments: {} }), { code: 'SESSION_MISMATCH' });
+  const session = await AppiumCommandSession.start({ client, profile: f.profile });
+  const binding = { extensionVersion: 1, sessionId: `${platform}-session` };
+  assert.deepEqual(await client.callExtension({ name: 'jev_session_inventory', arguments: {} }), {
+    ...binding, platform, device: `${platform}-test`, ports: [], hostProcesses: [], deviceProcesses: { status: 'unknown' } });
+  const screen = await client.callExtension({ name: 'jev_screen', arguments: {} });
+  assert.equal(screen.orientation, 'PORTRAIT');
+  assert.deepEqual(screen, { ...binding, pngBase64: 'iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/x8AAwMCAO+jG1sAAAAASUVORK5CYII=',
+    rect: { x: 0, y: 0, width: 390, height: 844 }, orientation: 'PORTRAIT' });
+  assert.deepEqual(await client.callExtension({ name: 'jev_replace_text', arguments: { locator: { using: 'accessibility id', value: 'username' }, text: 'replacement' } }), { ...binding, acknowledged: true });
+  if (platform === 'android') {
+    assert.deepEqual(await client.callExtension({ name: 'jev_android_back', arguments: {} }), { ...binding, acknowledged: true });
+    assert.deepEqual(await client.callExtension({ name: 'jev_start_activity', arguments: { package: 'example.app', activity: '.Main', intentExtras: { route: 'settings' } } }), { ...binding, acknowledged: true });
+  }
+  assert.deepEqual(await client.callExtension({ name: 'jev_terminate_app', arguments: { appId: 'example.app' } }), { ...binding, acknowledged: true });
+  await session.finish();
+  const calls = f.calls().filter(x => x.params?.name?.startsWith('jev_'));
+  assert.deepEqual(calls.map(call => [call.params.arguments.sessionId, call.params.arguments.extensionVersion]),
+    Array.from({ length: platform === 'android' ? 7 : 5 }, () => [`${platform}-session`, 1]));
+});
+for (const fault of ['extension-malformed', 'extension-error-secret']) test(`${fault} loses acknowledgement, redacts error and closes later dispatch`, async t => {
+  const f = fixture(t); const client = await f.open(fault, resolve('tests/fixtures/appium-wire/ios/extension.jsonl'));
+  await AppiumCommandSession.start({ client, profile: f.profile });
+  await assert.rejects(client.callExtension({ name: 'jev_session_inventory', arguments: {} }), { code: 'ACKNOWLEDGEMENT_LOST', message: 'ACKNOWLEDGEMENT_LOST' });
+  await assert.rejects(client.callExtension({ name: 'jev_screen', arguments: {} }), { code: 'CONNECTION_LOST' });
+  assert.equal(f.calls().filter(x => x.params?.name === 'jev_session_inventory').length, 1);
+  assert.equal(f.calls().filter(x => x.params?.name === 'jev_screen').length, 0);
 });
