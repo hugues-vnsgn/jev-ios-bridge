@@ -4,7 +4,7 @@ import { mkdir, mkdtemp, readdir, readFile, rm, writeFile } from 'node:fs/promis
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { test } from 'node:test';
-import { captureCommand, type CaptureRequest } from '../src/capture.js';
+import { captureCommand, type CaptureRequest, type CaptureSelection } from '../src/capture.js';
 import { createDeviceAgreement } from '../src/device/factory.js';
 import { DeviceReasonError } from '../src/device/index.js';
 import { DeviceAgentError, type AndroidNode } from '../src/device/android/agent-client.js';
@@ -26,6 +26,10 @@ const captureOf = async (screen: string): Promise<Hierarchy> => (JSON.parse((JSO
   await readFile(join(ANDROID, 'captures', `${screen}.json`), 'utf8')) as { data: { rawData: string } }).data.rawData) as { hierarchy: Hierarchy }).hierarchy;
 const judgedText = (screen: string) => readFile(join(ANDROID, 'observations', `${screen}.txt`), 'utf8');
 const captureGolden = join(import.meta.dirname, 'golden', 'android-capture.json');
+
+const legacy = (parts: Omit<AndroidDriverOptions, 'device' | 'defaultDevice'>) => (selection: CaptureSelection) =>
+  new AndroidDriver({ ...parts, profile: selection.profile, device: selection.device, defaultDevice: selection.defaultDevice,
+    ...(selection.category ? { category: selection.category } : {}) });
 /** The screens the CLI's capture path replays: between them, every field `capture` prints. */
 const SCREENS = ['settings-2-display', 'cmp-3-number-input'];
 const PRINTED_FIELDS = ['role', 'label', 'value', 'identifier', 'placeholder', 'state', 'selectable'];
@@ -79,7 +83,7 @@ test('capture selects a profile over the environment and checks a serial flag ag
       pixel: { platform: 'android', deviceCategory: 'android-emulator', device: 'jev-actions-api31' },
     } }));
     let stderr = '';
-    const context = { projectDir: root, defaultDevice: 'Invalid_environment_AVD', driver: parts, signal: signal(),
+    const context = { projectDir: root, defaultDevice: 'Invalid_environment_AVD', driver: legacy(parts), signal: signal(),
       agreeDevices: createDeviceAgreement({ probe: adb.identityProbe }),
       write: { stdout() {}, stderr: (text: string) => { stderr += text; } } };
     assert.equal(await captureCommand({ profile: 'pixel', serial: 'emulator-5556' }, context), 3);
@@ -101,7 +105,7 @@ test('capture with a phone profile refuses an emulator transport of that name be
       phone: { platform: 'android', deviceCategory: 'android-phone', device: 'emulator-5554' },
     } }));
     let stderr = '';
-    const context = { projectDir: root, driver: parts, signal: signal(), write: { stdout() {}, stderr: (text: string) => { stderr += text; } } };
+    const context = { projectDir: root, driver: legacy(parts), signal: signal(), write: { stdout() {}, stderr: (text: string) => { stderr += text; } } };
     assert.equal(await captureCommand({ profile: 'phone' }, context), 3);
     assert.match(stderr, /^DEVICE_NOT_FOUND: /m);
     assert.equal(adb.calls.length, 0);
@@ -115,7 +119,7 @@ test('capture ignores an iOS default, but an explicit iOS profile refuses before
       ios: { platform: 'ios', deviceCategory: 'ios-simulator', device: 'ABCDEF00-0000-4000-8000-000000000001' },
     } }));
     let stderr = '';
-    const context = { projectDir: root, defaultDevice: 'jev-actions-api31', driver: parts, signal: signal(),
+    const context = { projectDir: root, defaultDevice: 'jev-actions-api31', driver: legacy(parts), signal: signal(),
       write: { stdout() {}, stderr: (text: string) => { stderr += text; } } };
     assert.equal(await captureCommand({ profile: 'ios' }, context), 3);
     assert.deepEqual(stderr.split(/\r?\n/).filter(line => line.startsWith('PROFILE_CONFLICT:')),
@@ -160,7 +164,7 @@ test('capture applies profile operation and cleanup budgets to a stalled screen 
     }) };
     const keepAlive = setTimeout(() => {}, 30_000);
     try {
-      assert.equal(await captureCommand({}, { projectDir: root, driver, signal: signal(),
+      assert.equal(await captureCommand({}, { projectDir: root, driver: legacy(driver), signal: signal(),
         write: { stdout: text => { stdout += text; }, stderr: text => { stderr += text; } } }), 3);
       assert.equal(operationSignal?.aborted, true);
       assert.equal(stdout, '');
@@ -204,7 +208,7 @@ test('capture cleanup uses the profile deadline and retains the lease when fenci
     } };
     const keepAlive = setTimeout(() => {}, 30_000);
     try {
-      assert.equal(await captureCommand({ profile: 'pixel' }, { projectDir: root, driver, signal: signal(),
+      assert.equal(await captureCommand({ profile: 'pixel' }, { projectDir: root, driver: legacy(driver), signal: signal(),
         write: { stdout: text => { stdout += text; }, stderr: text => { stderr += text; } } }), 3);
       assert.equal(cleanupSignal?.aborted, true);
       assert.equal(stdout, '');
@@ -368,7 +372,7 @@ interface Printed { code: number; stdout: string; stderr: string }
 async function capture(request: CaptureRequest, setup: Setup, options: { defaultDevice?: string; signal?: AbortSignal } = {}): Promise<Printed> {
   let stdout = '';
   let stderr = '';
-  const code = await captureCommand(request, { defaultDevice: options.defaultDevice, driver: setup.parts, signal: options.signal ?? signal(),
+  const code = await captureCommand(request, { defaultDevice: options.defaultDevice, driver: legacy(setup.parts), signal: options.signal ?? signal(),
     write: { stdout: text => { stdout += text; }, stderr: text => { stderr += text; } } });
   return { code, stdout, stderr };
 }

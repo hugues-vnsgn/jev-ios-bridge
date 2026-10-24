@@ -18,7 +18,7 @@ for (const [signal, exitCode] of [['SIGINT', 130], ['SIGTERM', 143]] as const) {
 import { appendFileSync } from 'node:fs';
 import { runCli } from ${JSON.stringify(new URL('../src/cli.ts', import.meta.url).href)};
 import { BridgeService } from ${JSON.stringify(new URL('../src/service.ts', import.meta.url).href)};
-import { createDriverFactory } from ${JSON.stringify(new URL('../src/device/factory.ts', import.meta.url).href)};
+import { createLegacyDriverFactory } from ${JSON.stringify(new URL('../src/device/legacy-factory.ts', import.meta.url).href)};
 import { createAssertionJudge } from ${JSON.stringify(new URL('../src/scripted/jev.ts', import.meta.url).href)};
 import { PINNED_AGENT_SHA256 } from ${JSON.stringify(new URL('../src/device/android/agent-supply.ts', import.meta.url).href)};
 import { AGENT_CACHE, FakeAdb, FakeStreams, fakeAgents, fakeClock, fakeAndroidAdmission } from ${JSON.stringify(new URL('./fixtures/android-device.ts', import.meta.url).href)};
@@ -31,7 +31,7 @@ const runner = async (...args) => {
   return adb.run(...args);
 };
 await runCli(process.argv.slice(2), { legacy: new BridgeService({ baseDir: root + '/runs',
-  createDriver: createDriverFactory({ android: {
+  createDriver: createLegacyDriverFactory({ android: {
     admission: fakeAndroidAdmission(root), fakeBackend: true, identityProbe: adb.identityProbe,
     runner, leaseRoot: root + '/markers', clock: fakeClock(), freePort: async () => 49526,
     logcat: streams, logFolder: root,

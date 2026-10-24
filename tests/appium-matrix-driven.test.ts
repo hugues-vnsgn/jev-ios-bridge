@@ -1,7 +1,3 @@
-/**
- * Preservation matrix, driven version 2 (P3.9): a `do` step on the Appium driver hands back to Claude through the
- * real bridge service and takes the answer through `resolve`, as `resolve_step` does. Fake Jev, fake MCP provider.
- */
 import assert from 'node:assert/strict';
 import { test, type TestContext } from 'node:test';
 import { setTimeout as delay } from 'node:timers/promises';
@@ -9,6 +5,8 @@ import { readRunEvents } from '../src/log/index.js';
 import { ANDROID_DEVICE, IOS_DEVICE, androidTarget, authorized, bridge, iosTarget } from './fixtures/appium-wire/matrix.js';
 import { androidScreen, iosScreen, png, world, worldFixture, type IosNode, type WorldRule } from './fixtures/appium-wire/world.js';
 import type { FakeStep } from './fixtures/driven-judge.js';
+import { openMcpSession } from './fixtures/mcp-session.js';
+import { UDID } from './fixtures/appium-wire/driver-fixture.js';
 
 const welcome: IosNode = { type: 'StaticText', name: 'welcome', label: 'Welcome', frame: [16, 100, 200, 40] };
 const signIn: IosNode = { type: 'Button', name: 'sign.in', label: 'Sign in', frame: [20, 200, 200, 44] };
@@ -108,7 +106,32 @@ test('a paused session lost while Claude decides is replaced by a fresh child, a
   assert.deepEqual(taps(p.f).slice(p.inputsAtPause), []);
 });
 
-test.todo('P3.10: the MCP resolve_step tool on the Appium composition answers a pause from run_scenario exactly as tests/mcp-handback.test.ts pins for the legacy driver');
+test('MCP resolve_step on the Appium composition: a local-only pause ends the wait, a bad answer is refused with the pause open, a tap goes home and the run passes', { timeout: 60_000 }, async () => {
+  const local = { version: 2, app: { bundleId: 'example.app' }, values: {}, steps: [
+    { id: 'signIn', kind: 'do', intent: 'Sign in', doneWhen: 'Home shows', effect: 'none', localOnly: true },
+    { id: 'verify', kind: 'checkpoint', guard: { present: [{ identifier: 'home' }] }, assertions: [{ id: 'shown', claim: 'Home is shown.' }] }] };
+  const session = await openMcpSession('appium-driven', { fixture: 'tests/fixtures/appium-wire/cli-entry.ts', env: { JEV_TEST_WORLDS: JSON.stringify([world('ios', screens, rules)]),
+    JEV_EXPERIMENTAL_DRIVEN: '1', JEV_LOG_PANE: 'off', JEV_DEVICE_WINDOW: 'off', JEV_DEVICE_UDID: UDID, TYPESAFE_API_KEY: 'synthetic-key-not-for-children' } });
+  try {
+    assert.ok((await session.listTools()).some((tool: { name: string }) => tool.name === 'resolve_step'));
+    const { runId } = JSON.parse((await session.callTool('start_scenario', { scenario: local })).content[0].text) as { runId: string };
+    const paused = (await session.callTool('get_report', { runId, waitMs: 45_000 })).content[0].text as string;
+    assert.match(paused, /^Status: needs_claude/);
+    assert.match(paused, /Reason: LOCAL_ONLY_STEP/);
+    const ref = /(e\d+): button "Sign in"/.exec(paused)![1]!;
+    const pauseId = /Pause: (\S+)/.exec(paused)![1]!;
+    const refused = await session.callTool('resolve_step', { runId, pauseId, answer: { kind: 'tap', ref: 'nope' } });
+    assert.equal(refused.isError, true);
+    assert.match(refused.content[0].text, /"nope" is not on the paused screen[^]*The pause is still open/);
+    const tapped = await session.callTool('resolve_step', { runId, pauseId, answer: { kind: 'tap', ref } });
+    assert.match(tapped.content[0].text, /^Answer tap accepted/);
+    const second = (await session.callTool('get_report', { runId, waitMs: 45_000 })).content[0].text as string;
+    const secondId = /Pause: (\S+)/.exec(second)![1]!;
+    assert.notEqual(secondId, pauseId);
+    await session.callTool('resolve_step', { runId, pauseId: secondId, answer: { kind: 'done' } });
+    assert.match((await session.callTool('get_report', { runId, waitMs: 45_000 })).content[0].text as string, /^Status: finished\nRun \S+: passed\n/);
+  } finally { await session.close(); }
+});
 
 const androidScreens = {
   login: androidScreen([{ className: 'android.widget.TextView', text: 'Welcome', bounds: [16, 100, 216, 140] }, { className: 'android.view.View', description: 'Sign in', bounds: [20, 200, 220, 244] }]),

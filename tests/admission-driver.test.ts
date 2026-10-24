@@ -7,7 +7,7 @@ import { mkdtempSync, mkdirSync, readFileSync, realpathSync, rmSync } from 'node
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import type { AllocationReservationInput } from '../src/device/admission-allocation.js';
-import { createPreparationDriver, createObservedDriver } from '../src/device/factory.js';
+import { createPreparationDriver, createObservedDriver } from '../src/device/legacy-factory.js';
 import { Admission } from '../src/device/admission.js';
 import { MobileBuildMcpDriver, deviceWindowOpener, DeviceCliError, type CliRunner, type MobileBuildMcpDriverOptions } from '../src/device/index.js';
 

@@ -1,9 +1,9 @@
-/**
- * Preservation matrix, scripted version 1 (P3.9): the real bridge service and runner drive the Appium driver, its
- * private client, session, observation, operations, fence and admission. Only the private MCP provider is a fake.
- */
 import assert from 'node:assert/strict';
+import { execFile } from 'node:child_process';
+import { mkdirSync, mkdtempSync, readFileSync, realpathSync, rmSync, writeFileSync } from 'node:fs';
 import { readFile } from 'node:fs/promises';
+import { tmpdir } from 'node:os';
+import { resolve } from 'node:path';
 import { join } from 'node:path';
 import { test, type TestContext } from 'node:test';
 import { setTimeout as delay } from 'node:timers/promises';
@@ -15,8 +15,16 @@ import { UDID, WDA_BUNDLE } from './fixtures/appium-wire/driver-fixture.js';
 import { ANDROID_DEVICE, IOS_DEVICE, SERIAL, androidTarget, authorized, bridge, filesContaining, iosTarget, passingJudge } from './fixtures/appium-wire/matrix.js';
 import { androidScreen, iosScreen, world, worldFixture, type IosNode, type WorldRule } from './fixtures/appium-wire/world.js';
 import { withRunLog } from './fixtures/run-log.js';
+import { openMcpSession } from './fixtures/mcp-session.js';
+import { RELEASE_RUNNER, stackRelease } from './fixtures/stack-release.js';
+import { productionAppiumHost } from '../src/appium/composition.js';
+import { FrozenStack } from '../src/appium/stack.js';
+import { createDriverFactory } from '../src/device/factory.js';
+import { DeviceReasonError } from '../src/device/index.js';
+import { parseScriptedScenario } from '../src/scripted/schema.js';
 
 const SECRET = 'synthetic-secret-4d2c';
+const goldenKeys = (name: string) => Object.keys((JSON.parse(readFileSync(resolve('tests/golden/report-json.json'), 'utf8')) as Record<string, object>)[name]!).sort();
 const header: IosNode = { type: 'StaticText', name: 'title', label: 'Header', frame: [16, 60, 200, 40] };
 const loading = iosScreen([header, { type: 'StaticText', label: 'Loading', frame: [16, 200, 200, 40] }]);
 const iosScreens = {
@@ -309,6 +317,82 @@ test('a stack whose private client SDK does not match the frozen manifest is ref
   assert.equal(f.admission.inspect(IOS_DEVICE)!.state, 'available');
 });
 
-test.todo('P3.10: `jev-ios-bridge run <script>` on the Appium composition exits 0 for passed, 1 for failed, 2 for inconclusive and 3 for could-not-start, with the same --json report as run_scenario');
-test.todo('P3.10: MCP run_scenario and get_report on the Appium composition return the same envelopes as tests/golden/report-json.json, plus prepared.stack and error.vendorSource');
-test.todo('P3.10: a tampered stack archive, extraction marker, manifest or WDA runner is refused at composition before the driver opens any session (packaging proof, both archives)');
+async function cli(t: TestContext, worlds: ReturnType<typeof world>[], args: string[], env: Record<string, string> = {}) {
+  const root = realpathSync(mkdtempSync(join(tmpdir(), 'appium-cli-')));
+  t.after(() => rmSync(root, { recursive: true, force: true, maxRetries: 5, retryDelay: 50 }));
+  mkdirSync(join(root, 'project'), { recursive: true });
+  const files = Object.fromEntries(args.filter(arg => arg.endsWith('.json')).map(arg => [arg, join(root, 'project', arg)]));
+  return { root, files, run: (scripts: Record<string, object>) => {
+    for (const [name, script] of Object.entries(scripts)) writeFileSync(files[name] ?? join(root, 'project', name), JSON.stringify(script));
+    const { TYPESAFE_API_KEY: _key, JEV_DEVICE_UDID: _udid, JEV_ANDROID_DEVICE: _android, ...inherited } = process.env;
+    return new Promise<{ code: number | null; stdout: string; stderr: string }>(done => {
+      execFile(process.execPath, ['--import', 'tsx', 'tests/fixtures/appium-wire/cli-entry.ts', root], { env: { ...inherited, JEV_LOG_PANE: 'off', JEV_DEVICE_WINDOW: 'off',
+        TYPESAFE_API_KEY: 'synthetic-key-not-for-children', JEV_TEST_WORLDS: JSON.stringify(worlds), JEV_TEST_CLI_ARGS: JSON.stringify(args), ...env }, timeout: 60_000 },
+      (error, stdout, stderr) => done({ code: error ? (typeof error.code === 'number' ? error.code : null) : 0, stdout, stderr }));
+    });
+  } };
+}
+const checkpointOnly = (claim: string) => ({ version: 1, app: { bundleId: 'example.app' }, device: { udid: UDID }, values: {},
+  steps: [{ id: 'verify', kind: 'checkpoint', guard: { present: [{ identifier: 'home' }] }, assertions: [{ id: 'shown', claim }] }] });
+
+test('`jev-ios-bridge run` on the Appium composition exits 0, 1, 2 and 3, and --json prints the run\'s own report.json', { timeout: 120_000 }, async t => {
+  const exits: Record<string, number | null> = {};
+  for (const [verdict, probability] of [['passed', '0.97'], ['failed', '0.02'], ['inconclusive', '0.5']] as const) {
+    const run = await cli(t, [iosWorld()], ['run', 'script.json', '--json', '--no-log-pane', '--no-device-window'], { JEV_TEST_PROBABILITY: probability });
+    const result = await run.run({ 'script.json': checkpointOnly('Home is shown.') });
+    exits[verdict] = result.code;
+    const printed = JSON.parse(result.stdout) as { runId: string; verdict: string; prepared: { stack: { backend: string } } };
+    assert.equal(printed.verdict, verdict);
+    assert.deepEqual(printed, JSON.parse(await readFile(join(run.root, 'runs', printed.runId, 'report.json'), 'utf8')), 'the same report run_scenario points to');
+    assert.equal(printed.prepared.stack.backend, 'appium');
+  }
+  const refused = await cli(t, [iosWorld()], ['run', 'script.json', '--json', '--no-log-pane']);
+  const result = await refused.run({ 'script.json': { ...checkpointOnly('Home is shown.'), device: undefined } });
+  exits.couldNotStart = result.code;
+  assert.match(result.stderr, /simulator UDID/);
+  assert.equal(result.stdout, '');
+  assert.deepEqual(exits, { passed: 0, failed: 1, inconclusive: 2, couldNotStart: 3 });
+});
+
+test('MCP start_scenario and get_report on the Appium composition: report.json keeps the golden fields plus prepared.stack, and a device error names its source', { timeout: 60_000 }, async () => {
+  const worlds = [iosWorld(), iosWorld([{ tool: 'jev_replace_text', fault: { kind: 'error', code: 'NOT_ALLOWED' } }])];
+  const session = await openMcpSession('appium-run', { fixture: 'tests/fixtures/appium-wire/cli-entry.ts', env: { JEV_TEST_WORLDS: JSON.stringify(worlds),
+    JEV_LOG_PANE: 'off', JEV_DEVICE_WINDOW: 'off', TYPESAFE_API_KEY: 'synthetic-key-not-for-children' } });
+  try {
+    const finish = async (scenario: object) => {
+      const { runId } = JSON.parse((await session.callTool('start_scenario', { scenario })).content[0].text) as { runId: string };
+      const text = (await session.callTool('get_report', { runId, waitMs: 45_000 })).content[0].text as string;
+      const path = /Full local evidence: (\S+)\/run\.jsonl/.exec(text)![1]!;
+      return { text, report: JSON.parse(await readFile(join(path, 'report.json'), 'utf8')) as Record<string, unknown> };
+    };
+    const passed = await finish(checkpointOnly('Home is shown.'));
+    assert.match(passed.text, /^Status: finished\nRun \S+: passed\nALL_CHECKPOINTS_PASSED\n/);
+    assert.deepEqual(Object.keys(passed.report).sort(), [...goldenKeys('passed'), 'prepared'].sort());
+    assert.deepEqual(Object.keys((passed.report.prepared as { stack: object }).stack).sort(), ['backend', 'clientVersion', 'extensionVersion', 'lockSha256', 'wdaTreeSha256']);
+    const failed = await finish(iosScript);
+    assert.deepEqual(Object.keys(failed.report).sort(), goldenKeys('appiumDeviceError'));
+    assert.deepEqual([failed.report.verdict, failed.report.reason, failed.report.error], ['inconclusive', 'DEVICE_ERROR',
+      { code: 'DEVICE_ERROR', phase: 'act', stepId: 'type', vendorCode: 'NOT_ALLOWED', vendorSource: 'appium' }]);
+  } finally { await session.close(); }
+});
+
+test('a tampered stack archive, manifest, extraction marker or WDA runner refuses at composition before any store, child or session', async t => {
+  const cases = [['stack.tar.gz', 'STACK_ARCHIVE_MISMATCH', false], ['wda.tar.gz', 'WDA_ARCHIVE_MISMATCH', false], ['manifest.json', 'STACK_MANIFEST_MISMATCH', false],
+    ['.verified.json', 'STACK_MARKER_MISMATCH', true], [RELEASE_RUNNER, 'WDA_MISMATCH', true]] as const;
+  const refusals: [string, string | undefined, string | undefined][] = [];
+  for (const [file, , extracted] of cases) {
+    const release = stackRelease();
+    t.after(() => rmSync(release.base, { recursive: true, force: true }));
+    const stack = FrozenStack.forTesting(release);
+    if (extracted) writeFileSync(join((await stack.prepare()).root, file), 'tampered');
+    else writeFileSync(join(release.artifactRoot, file), 'tampered');
+    let stores = 0;
+    const host = productionAppiumHost({ environment: {}, stack, openAdmission: () => { stores++; throw new Error('the store is never opened'); } });
+    const driver = createDriverFactory({ host, projectDir: release.base })(parseScriptedScenario(checkpointOnly('Home is shown.')), { runId: 'tampered' });
+    const error = await driver.prepare({ app: { bundleId: 'example.app' } }, AbortSignal.timeout(10_000)).then(() => undefined, (failure: unknown) => failure);
+    assert.ok(error instanceof DeviceReasonError);
+    refusals.push([error.code, error.vendorCode, error.vendorSource]);
+    assert.equal(stores, 0);
+  }
+  assert.deepEqual(refusals, cases.map(([, code]) => ['DEVICE_ERROR', code, 'bridge']));
+});

@@ -9,10 +9,11 @@ import { parseArgs } from 'node:util';
 import { serveStdio } from '@modelcontextprotocol/server/stdio';
 import { z } from 'zod/v4';
 import { BridgeService } from './service.js';
-import { captureCommand } from './capture.js';
+import { appiumCaptureDriver, captureCommand } from './capture.js';
 import { createMcpServer } from './mcp/index.js';
 import { DeviceCliError, DeviceReasonError, deviceWindowOpener, selectAndroidDeviceName, selectDeviceId } from './device/index.js';
 import { createDeviceAgreement, createDriverFactory } from './device/factory.js';
+import { productionAppiumHost, type AppiumHost } from './appium/composition.js';
 import { createAssertionJudge } from './scripted/jev.js';
 import { createDrivenJudge } from './driven/decide.js';
 import { renderPause } from './driven/handback.js';
@@ -96,8 +97,9 @@ const cliOptions = {
   profile: { type: 'string' },
 } as const;
 
-/** Internal composition seam shared by the installed entry and isolated subprocess fixtures. */
-export type CliComposition = { observed?: ObservedComposition; legacy?: BridgeService; projectDir?: string };
+export type CliComposition = { observed?: ObservedComposition; legacy?: BridgeService; projectDir?: string; host?: AppiumHost;
+  createJudge?: ServiceOptions['createJudge']; createDrivenJudge?: ServiceOptions['createDrivenJudge'] };
+type ServiceOptions = ConstructorParameters<typeof BridgeService>[0];
 async function dispatchCli(args: string[], composition: CliComposition): Promise<void> {
   const projectDir = composition.projectDir ?? resolve(process.env.JEV_PROJECT_DIR?.trim() || process.cwd());
   let parsed;
@@ -107,8 +109,9 @@ async function dispatchCli(args: string[], composition: CliComposition): Promise
   const [command, argument] = parsed.positionals;
   if (parsed.values.version) { console.log(BRIDGE_VERSION); return; }
   if (parsed.values.help || !command) { console.log(USAGE); return; }
+  const host = composition.host ?? productionAppiumHost();
   if (isObservedCommand(command)) {
-    const module = composition.observed ?? productionObservedComposition({ enabled: process.env.JEV_EXPERIMENTAL_OBSERVED === '1', runsDir: runsDir(), cwd: projectDir });
+    const module = composition.observed ?? productionObservedComposition({ enabled: process.env.JEV_EXPERIMENTAL_OBSERVED === '1', runsDir: runsDir(), host });
     const controller = new AbortController(); let signalExit: number | undefined; let signalStarted: number | undefined;
     let output = Promise.resolve();
     const stop = (code: number) => () => {
@@ -154,7 +157,7 @@ async function dispatchCli(args: string[], composition: CliComposition): Promise
   if (command !== 'capture' && (serial !== undefined || avd !== undefined || jev)) throw new StartError('--serial, --avd and --jev apply only to capture');
   if (command === 'capture') {
     const interrupted = new AbortController();
-    const captured = captureCommand({ serial, avd, jev, profile: parsed.values.profile }, { projectDir,
+    const captured = captureCommand({ serial, avd, jev, profile: parsed.values.profile }, { projectDir, driver: appiumCaptureDriver(host),
       defaultDevice: process.env.JEV_ANDROID_DEVICE, signal: interrupted.signal, agreeDevices: createDeviceAgreement(),
       write: { stdout: text => { process.stdout.write(text); }, stderr: text => { process.stderr.write(text); } } });
     // As a run's handlers do: close the driver, then exit.
@@ -192,20 +195,15 @@ async function dispatchCli(args: string[], composition: CliComposition): Promise
     baseDir: runsDir(),
     agreeDevices: createDeviceAgreement(),
     env: { ...process.env, JEV_PROJECT_DIR: projectDir },
-    createDriver: createDriverFactory({ mobileBuildMcp: { cwd: projectDir,
-      ...(process.env.JEV_DEVICE_UDID ? { defaultUdid: process.env.JEV_DEVICE_UDID } : {}),
-      capture: 'full', screenshots: true,
-      ...(deviceWindow ? { deviceWindow } : {}),
-      // Measurement aid for release checks; costs one extra capture per observation.
-      ...(process.env.JEV_VERIFY_SCREENSHOT_AGREEMENT === '1' ? { verifyScreenshotAgreement: true } : {}) },
-      android: { defaultDevice: process.env.JEV_ANDROID_DEVICE } }),
-    createJudge: () => createAssertionJudge(),
-    createDrivenJudge: () => createDrivenJudge(),
+    createDriver: createDriverFactory({ host, projectDir, defaultUdid: process.env.JEV_DEVICE_UDID || undefined,
+      defaultDevice: process.env.JEV_ANDROID_DEVICE, deviceWindow }),
+    createJudge: composition.createJudge ?? (() => createAssertionJudge()),
+    createDrivenJudge: composition.createDrivenJudge ?? (() => createDrivenJudge()),
     logPane: { cliPath: fileURLToPath(import.meta.url), openWindow: !parsed.values['no-log-pane'],
       // MCP's stdout carries the protocol, so pane notices go to stderr in both modes.
       onNotice: (_runId, text) => { console.error(text); } },
   });
-  const observed = command === 'mcp' ? composition.observed ?? productionObservedComposition({ enabled: process.env.JEV_EXPERIMENTAL_OBSERVED === '1', runsDir: runsDir(), cwd: projectDir }) : undefined;
+  const observed = command === 'mcp' ? composition.observed ?? productionObservedComposition({ enabled: process.env.JEV_EXPERIMENTAL_OBSERVED === '1', runsDir: runsDir(), host }) : undefined;
   let closing = false;
   const close = async () => {
     if (closing) return;

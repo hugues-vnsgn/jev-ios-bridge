@@ -13,7 +13,7 @@ On Android, an element can also carry a `placeholder` (an empty field's grey hin
 
 ## See what the bridge sees
 
-Capture the screen your script will be on:
+On iOS, MobileBuildMCP, which installs with the bridge, prints the screen's accessibility tree. The bridge reads the screen through Appium instead, so treat this as a close guide rather than the bridge's own capture:
 
 ```sh
 npx mobilebuildmcp ui-automation snapshot-ui --simulator-id <UUID> --verbose --output json

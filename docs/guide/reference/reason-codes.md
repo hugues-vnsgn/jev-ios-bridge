@@ -1,6 +1,6 @@
 # Reason codes
 
-Every verdict and error event carries one of these codes, in `reason` and `error.code` in [`report.json`](report-json.md). The list is owned by the bridge and frozen for 1.x: releases may add codes but never rename or remove one, or change its meaning. A MobileBuildMCP error whose code isn't one of the bridge's codes shipped through 1.1 becomes `DEVICE_ERROR`, and MobileBuildMCP's own code is kept in `error.vendorCode`; this keeps a later Android-only addition from silently changing an iOS error's reason. On Android, an `adb` or device agent failure the bridge has no code for is `DEVICE_ERROR` too, with `vendorCode` `adb` or `agent`.
+Every verdict and error event carries one of these codes, in `reason` and `error.code` in [`report.json`](report-json.md). The list is owned by the bridge and frozen for 1.x: releases may add codes but never rename or remove one, or change its meaning. An error from a layer below the bridge whose code isn't one of the bridge's codes shipped through 1.1 becomes `DEVICE_ERROR`. Its own code is kept in `error.vendorCode`, and `error.vendorSource` names the layer: `appium` for an Appium or W3C error name, `adb` for an `adb` failure, or `bridge` for one of the bridge's own device checks, such as `APP_NOT_INSTALLED`. This keeps a later Android-only addition from silently changing an iOS error's reason.
 
 What to do about each: [troubleshooting](../08-troubleshooting.md).
 
@@ -76,7 +76,7 @@ What to do about each: [troubleshooting](../08-troubleshooting.md).
 | `EMPTY_CAPTURE` | The device layer returned no usable elements. |
 | `UNSUPPORTED_ACTION` | The target does not support the requested action. |
 | `MISSING_VALUE` | A typing step named a value the script did not supply, or a value's environment variable is not set. |
-| `UNSUPPORTED_LEADING_DASH_TEXT` | The pinned device layer cannot type text that starts with a hyphen. |
+| `UNSUPPORTED_LEADING_DASH_TEXT` | A typed value starts with a hyphen, which the bridge's earlier iOS device layer could not type. |
 | `UI_ACTION_UNCONFIRMED` | A device operation was never acknowledged, so the device lock was kept. |
 | `CLEANUP_FAILED` | Device cleanup did not finish. |
 | `APP_EXITED` | The app under test exited during the run (a crash or a quit); check its crash report. |
@@ -93,7 +93,7 @@ What to do about each: [troubleshooting](../08-troubleshooting.md).
 | `APP_NOT_INSTALLED` | The app's package isn't installed on the device. |
 | `APP_NOT_RESPONDING` | The app froze (Android showed "App isn't responding") during the run. |
 | `DEVICE_UNSUPPORTED` | The device is below Android 12 (API 31), which this bridge does not support. |
-| `ANDROID_TOOLS_UNAVAILABLE` | adb could not be found, the pinned mobilecli package is missing, or the device agent copied out of it does not match the pinned SHA-256. |
+| `ANDROID_TOOLS_UNAVAILABLE` | adb could not be found, or, before Appium, the device agent the bridge copied out of mobilecli was missing or did not match its pinned SHA-256. |
 
 ## Driven mode (experimental)
 

@@ -9,7 +9,7 @@ import { ObservedActionJournal } from '../src/experimental/observed-journal.js';
 import { runObservedExperiment } from '../src/experimental/observed-run.js';
 import { Admission, type AdmissionDependencies } from '../src/device/admission.js';
 import { ObservedActionService, observedDriverFactory } from '../src/observed/service.js';
-import { createObservedDriver } from '../src/device/factory.js';
+import { createObservedDriver } from '../src/device/legacy-factory.js';
 import type { AllocationReservationInput } from '../src/device/admission-allocation.js';
 import { FileObservedEvidence, type ObservedEvidenceStore } from '../src/observed/evidence.js';
 import type { CliRunner } from '../src/device/index.js';

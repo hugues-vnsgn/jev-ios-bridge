@@ -609,10 +609,15 @@ UI or injects input as a fallback.
 - **iOS observed preparation.** Availability and `Booted` polling use the
   existing simctl probe. Boot and install use bounded, owned `simctl boot` and
   `simctl install`, for observed preparation only, beside ADR-0009's creation.
-  Launch follows the iOS rule above. The readiness capture goes through the Appium
-  session and this specification's normalizer. Ordinary runs keep their
+  Launch follows the observed launch ruling below. The readiness capture goes
+  through the Appium session and this specification's normalizer. Ordinary runs keep their
   preconditions, a booted device with the app installed, and never boot or
   install.
+- **iOS observed launch** (root, 2026-10-24). Observed preparation launches
+  the app with one owned `simctl launch --terminate-running-process`, without
+  `--console-pty`, instead of the console helper, and starts no `log stream`.
+  A parked allocation has no live owner process for a console helper to
+  outlive the park. Ordinary runs keep the console rule above.
 - **Android restart.** Force-stop and start move to Appium as
   `mobile: startActivity` with stop and wait, through the extension. The exit
   watch marks that stop as expected and reads the PID after start. Logcat and

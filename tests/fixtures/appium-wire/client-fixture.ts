@@ -1,4 +1,5 @@
 import type { TestContext } from 'node:test';
+import type { Cleanups } from './image-stack.js';
 import { createHash } from 'node:crypto';
 import { existsSync, lstatSync, mkdtempSync, readFileSync, readdirSync, rmSync } from 'node:fs';
 import { tmpdir } from 'node:os';
@@ -13,8 +14,8 @@ const sha = (bytes: Buffer | string) => createHash('sha256').update(bytes).diges
 const owner: OwnerIdentity = { category: 'ios-simulator', device: 'ios-test', attempt: { kind: 'legacy', id: 'run-1' },
   token: 'owner-token', generation: 7, process: { pid: process.pid, incarnation: 'host-test' } };
 const sdkRoot = resolve(dirname(fileURLToPath(import.meta.resolve('@modelcontextprotocol/sdk/client/index.js'))), '../../..');
-const lock = JSON.parse(readFileSync('stack/package-lock.json', 'utf8'));
-const freeze = JSON.parse(readFileSync('stack/freeze.json', 'utf8'));
+const lock = JSON.parse(readFileSync(new URL('../../../stack/package-lock.json', import.meta.url), 'utf8'));
+const freeze = JSON.parse(readFileSync(new URL('../../../stack/freeze.json', import.meta.url), 'utf8'));
 const sdkFiles: VerifiedStack['manifest']['files'] = {};
 function walk(directory: string): void {
   for (const entry of readdirSync(join(sdkRoot, directory), { withFileTypes: true })) {
@@ -26,7 +27,7 @@ function walk(directory: string): void {
   }
 }
 walk('');
-export function clientFixture(t: TestContext, platform: 'ios' | 'android' = 'ios') {
+export function clientFixture(t: Cleanups, platform: 'ios' | 'android' = 'ios') {
   const root = mkdtempSync(join(tmpdir(), 'jev-private-client-'));
   const clients: { close(): Promise<void> }[] = [];
   t.after(async () => {

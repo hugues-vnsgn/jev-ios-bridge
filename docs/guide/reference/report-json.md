@@ -13,7 +13,7 @@ Each finished run writes `report.json` into its evidence folder. `run --json` an
 | `launchArgs` | array of strings | Arguments the app was launched with; empty when none, and always empty on Android. |
 | `verdict` | `passed`, `failed`, or `inconclusive` | The recorded verdict. |
 | `reason` | string | A [reason code](reason-codes.md). |
-| `error` | object or null | The last error: `code` (a reason code), `phase`, `stepId`, and `vendorCode` when MobileBuildMCP supplied its own code, or on Android, `adb` or `agent` for the part that failed. An Appium run's error with a `vendorCode` also has `vendorSource`: `appium`, `adb`, or `bridge`, the layer the code came from. |
+| `error` | object or null | The last error: `code` (a reason code), `phase`, `stepId`, and `vendorCode` when the error came from a layer below the bridge: an Appium or W3C error name, an `adb` failure, or a code from one of the bridge's own device checks, such as `APP_NOT_INSTALLED`. An error with a `vendorCode` also has `vendorSource`, the layer the code came from: `appium`, `adb`, or `bridge`. Reports from releases before Appium have no `vendorSource`; their `vendorCode` is MobileBuildMCP's code on iOS, or `adb` or `agent` on Android. |
 | `steps` | number | Steps executed. |
 | `plannedSteps` | number or null | Steps in the script. |
 | `checkpointsPassed` | number | Checkpoints that passed. |
@@ -34,7 +34,7 @@ Android runs add these fields, recorded from the run's `started` and `action` ev
 | `intentExtras` | object: string → string | The script's `app.intentExtras`; `{}` when none. |
 | `typedFields` | array | Only when the run typed: one `{ "stepId", "shownValue" }` per replace-text step, with the field's text as the screen showed it after typing. A password field's shown value is dots. Script values in it are masked. |
 
-Runs driven through Appium add one field, recorded from the run's `prepared` event. Other runs never have it.
+Runs driven through Appium add one field, recorded from the run's `prepared` event. Reports from releases before Appium never have it.
 
 | Field | Type | Meaning |
 | --- | --- | --- |
@@ -55,7 +55,7 @@ A run whose script has a `do` step ([driven steps](../13-driven-steps.md), exper
 | `doSteps` | array | Every `do` step that ran, in order; a step run again after a revision is listed again. `stepId`, and `completedBy`: `jev` when Jev's done check ended it (with `done`, its step-done probability), `claude` when Claude answered `done`, or null when it ended without being done (stopped, revised, timed out, `STEP_NOT_DONE`, or still running). |
 | `handbacks` | array | Every pause for Claude, in order: `stepId`; `reason` (see [why a step was handed back](../13-driven-steps.md#why-a-step-was-handed-back)); `answer`, Claude's answer kind, or null when none came; `waitMs`, from the pause to the answer, or null; and `event`, the `run.jsonl` sequence number of the `handback` event. |
 
-The device the run used isn't in `report.json`. On Android, the `prepared` event in `run.jsonl` records it: the device identity, the serial, the device agent's SHA-256, and `sweptLeftovers: true` when the run cleared a crashed run's leftovers. The prose report names them too.
+The device the run used isn't in `report.json`. On Android, the `prepared` event in `run.jsonl` records it: the device identity, the serial, and the device agent's SHA-256, which is now the UiAutomator2 server APK's hash. Runs from releases before Appium also record `sweptLeftovers: true` when the run cleared a crashed run's leftovers. The prose report names them too.
 
 A run whose process stopped before recording a verdict has no `report.json`. For such a run, `report <run-id> --json` builds one with verdict `inconclusive` and reason `INTERRUPTED`.
 

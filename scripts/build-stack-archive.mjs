@@ -11,16 +11,19 @@ const sha = bytes => createHash('sha256').update(bytes).digest('hex');
 const read = path => JSON.parse(readFileSync(path, 'utf8'));
 const json = value => JSON.stringify(value, null, 2) + '\n';
 const stack = join(root, 'stack'); const out = join(stack, 'release');
+// npm pack --json runs this through prepack; keep stdout for its JSON.
+const logs = ['inherit', 2, 2];
 
 if (process.versions.node !== node || execFileSync('npm', ['--version'], { encoding: 'utf8' }).trim() !== npm) {
-  execFileSync('npx', ['--yes', `--package=node@${node}`, `--package=npm@${npm}`, '--', 'node', fileURLToPath(import.meta.url)], { cwd: root, stdio: 'inherit' });
+  execFileSync('npx', ['--yes', `--package=node@${node}`, `--package=npm@${npm}`, '--', 'node', fileURLToPath(import.meta.url)], { cwd: root, stdio: logs });
 } else {
   const freeze = read(join(stack, 'freeze.json')); const provenance = read(join(stack, 'wda/provenance.json'));
   if (sha(readFileSync(join(stack, 'package-lock.json'))) !== freeze.lockSha256 || sha(readFileSync(join(stack, 'package.json'))) !== freeze.packageSha256)
     throw new Error('Phase 1 candidate files differ. Re-freezing requires the owner.');
+  if (!existsSync(join(root, 'dist/appium/stack.js'))) throw new Error('dist/appium/stack.js is missing; run npm run build, which builds the archives too.');
   const wdaArchive = join(stack, 'wda/wda-16.14.2.tar.gz');
   if (sha(readFileSync(wdaArchive)) !== provenance.archiveSha256) throw new Error('Qualified WDA archive differs.');
-  execFileSync('npm', ['ci', '--ignore-scripts', '--os=darwin', '--cpu=arm64', '--prefix', stack, '--no-audit', '--no-fund'], { cwd: root, stdio: 'inherit' });
+  execFileSync('npm', ['ci', '--ignore-scripts', '--dry-run=false', '--json=false', '--os=darwin', '--cpu=arm64', '--prefix', stack, '--no-audit', '--no-fund'], { cwd: root, stdio: logs });
   rmSync(out, { recursive: true, force: true }); mkdirSync(out, { recursive: true });
   mkdirSync(join(root, 'build'), { recursive: true });
   const work = mkdtempSync(join(root, 'build/stack-'));
@@ -73,14 +76,13 @@ with destination.open('wb') as output, gzip.GzipFile(fileobj=output,mode='wb',fi
         if entry.isfile():
             with path.open('rb') as content: archive.addfile(entry,content)
         else: archive.addfile(entry)
-`, stack, join(out, 'stack.tar.gz')], { stdio: 'inherit', maxBuffer: 1024 * 1024 });
+`, stack, join(out, 'stack.tar.gz')], { stdio: logs, maxBuffer: 1024 * 1024 });
     cpSync(wdaArchive, join(out, 'wda.tar.gz'));
     const identity = { version: 1, stackSha256: sha(readFileSync(join(out, 'stack.tar.gz'))),
       wdaSha256: provenance.archiveSha256, manifestSha256: sha(readFileSync(join(out, 'manifest.json'))) };
     const identityModule = `export default ${json(identity).trim()};\n`;
-    if (!existsSync(join(root, 'dist/appium/stack.js'))) execFileSync('npm', ['run', 'build'], { cwd: root, stdio: 'inherit' });
     writeFileSync(join(root, 'dist/appium/stack-identity.js'), identityModule);
     generateNotices({ root, files, packages });
-    console.log(JSON.stringify({ ...identity, node, npm, packages: packages.length, files: Object.keys(files).length, loaded: manifest.loaded.length, wdaFiles: runnerFiles.length }));
+    console.error(JSON.stringify({ ...identity, node, npm, packages: packages.length, files: Object.keys(files).length, loaded: manifest.loaded.length, wdaFiles: runnerFiles.length }));
   } finally { rmSync(work, { recursive: true, force: true }); }
 }

@@ -22,7 +22,7 @@ npm install ./jev-ios-bridge-1.2.0.tgz
 npx jev-ios-bridge --version     # 1.2.0
 ```
 
-This also installs the device layers the bridge uses: `mobilebuildmcp@2.7.1` for iOS, and `mobilecli@1.0.14`, whose device agent the bridge uses on Android.
+The package carries the frozen Appium stack the bridge drives both platforms with, as release archives. On first use the bridge checks their hashes and unpacks them under `~/Library/Application Support/jev-ios-bridge/`, with no network access. It also installs MobileBuildMCP, which this guide uses to build apps.
 
 ## 2. Keep your TypeSafe key private
 

@@ -497,6 +497,7 @@ export interface IosPreparationDriver {
   park(readinessEvidence: string[], evidenceRefs: string[], signal: AbortSignal): Promise<AllocationCommit>;
   revokeIssuance(): void;
   close(signal: AbortSignal): Promise<void>;
+  readonly cleanupBudgetMs?: number;
 }
 export interface ObservedActionDriver {
   attachObserved(claim: ObservedClaim, context: AdmittedAppContext, signal: AbortSignal): Promise<void>;
