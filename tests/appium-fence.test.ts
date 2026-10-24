@@ -246,7 +246,7 @@ test('a recorded start time with a one-digit day matches the host sampler', asyn
   assert.equal(state(f.admission, f.claim.identity), 'available');
 });
 
-for (const fault of ['unknown-member', 'shared-service', 'surviving-kill', 'wrong-forward', 'wrong-wda', 'unreadable', 'deadline', 'unknown-create']) test(`${fault} retains quarantine`, async t => {
+for (const fault of ['unknown-member', 'shared-service', 'surviving-kill', 'wrong-wda', 'unreadable', 'deadline', 'unknown-create']) test(`${fault} retains quarantine`, async t => {
   const selected = fault === 'wrong-wda' ? targets.filter(target => !['appium-uiautomator2', 'appium-forward', 'appium-settings'].includes(target.kind)) : androidTargets;
   const f = fixture(t, selected); for (const target of selected) f.claim.registerComponent(JSON.parse(JSON.stringify(target)));
   if (fault === 'unknown-create') f.claim.markInventoryUnknown('unknown-creation');
@@ -256,7 +256,6 @@ for (const fault of ['unknown-member', 'shared-service', 'surviving-kill', 'wron
   if (fault === 'unknown-member') runner.hosts.push({ pid: 888, startTime: 'unowned', ppid: 1, pgid: 100, state: 'running', executable: '/other' });
   if (fault === 'shared-service') runner.hosts[1]!.executable = '/CoreSimulatorService';
   if (fault === 'surviving-kill') { runner.resistTerm = true; runner.ignoreKill = true; }
-  if (fault === 'wrong-forward') runner.forwards[0]!.remote = 'tcp:9999';
   if (fault === 'wrong-wda') runner.wda[0]!.pid = 201;
   if (fault === 'deadline') runner.delay = 23000;
   const { fenceAppium } = await fenceModule();
@@ -349,13 +348,41 @@ test('owned automation inventory is available while each foreign automation kind
   const owned = targets.map(target => ({ id: target.id, kind: target.kind, declaration: target }));
   const inventory = { wda: [{ udid: device, bundleId: 'com.facebook.WebDriverAgentRunner.xctrunner', pid: 200 }],
     uiautomator2: [{ serial: 'serial-one', pid: 300, startTime: '12345' }], forwards: [{ serial: 'serial-one', local: 'tcp:19123', remote: 'tcp:6790' }] };
-  assert.deepEqual(inspectForeignAutomation(owned, inventory), { kind: 'available' });
+  const scope = (key: 'wda' | 'uiautomator2' | 'forwards') => key === 'wda' ? { udid: device } : { serial: 'serial-one' };
+  assert.deepEqual(inspectForeignAutomation(owned, inventory, { udid: device }), { kind: 'available' });
+  assert.deepEqual(inspectForeignAutomation(owned, inventory, { serial: 'serial-one' }), { kind: 'available' });
   for (const key of ['wda', 'uiautomator2', 'forwards'] as const) {
     const modified = structuredClone(inventory);
     if (key === 'wda') modified.wda[0]!.pid = 999;
     if (key === 'uiautomator2') modified.uiautomator2[0]!.startTime = '999';
-    if (key === 'forwards') modified.forwards[0]!.remote = 'tcp:9999';
-    assert.deepEqual(inspectForeignAutomation(owned, modified), { kind: 'refused', reason: 'DEVICE_BUSY', exitCode: 3 });
+    if (key === 'forwards') modified.forwards[0]!.local = 'tcp:8200';
+    assert.deepEqual(inspectForeignAutomation(owned, modified, scope(key)), { kind: 'refused', reason: 'DEVICE_BUSY', exitCode: 3 });
+  }
+});
+
+test('automation on another device or a non-automation forward is never foreign', async () => {
+  const { inspectForeignAutomation } = await fenceModule();
+  const elsewhere = { wda: [{ udid: 'ABCDEF00-0000-4000-8000-000000000002', bundleId: 'com.facebook.WebDriverAgentRunner.xctrunner', pid: 777 }],
+    uiautomator2: [{ serial: 'serial-two', pid: 300, startTime: '999' }],
+    forwards: [{ serial: 'serial-two', local: 'tcp:8200', remote: 'tcp:6790' }, { serial: 'serial-one', local: 'tcp:8081', remote: 'tcp:8081' }] };
+  assert.deepEqual(inspectForeignAutomation([], elsewhere, { udid: device }), { kind: 'available' });
+  assert.deepEqual(inspectForeignAutomation([], elsewhere, { serial: 'serial-one' }), { kind: 'available' });
+  assert.deepEqual(inspectForeignAutomation([], elsewhere, { serial: 'serial-two' }), { kind: 'refused', reason: 'DEVICE_BUSY', exitCode: 3 });
+  assert.deepEqual(inspectForeignAutomation([], { ...elsewhere, forwards: [{ serial: 'serial-one', local: 'tcp:8201', remote: 'tcp:7810' }] }, { serial: 'serial-one' }), { kind: 'refused', reason: 'DEVICE_BUSY', exitCode: 3 });
+});
+
+test('a forward row with the owned local port but another serial or remote proves the owned pair is gone', async t => {
+  for (const other of [{ serial: 'other', local: 'tcp:19123', remote: 'tcp:6790' }, { serial: 'serial-one', local: 'tcp:19123', remote: 'tcp:9999' }]) {
+    const f = fixture(t, [targets[3]]); f.claim.registerComponent(JSON.parse(JSON.stringify(targets[3])));
+    f.claim.closeDispatch({ outcome: 'inconclusive', disposition: 'quarantined', payload: {}, evidenceRefs: [] });
+    const recovery = f.admission.claimRecovery(f.claim.identity, 'pair'); if (recovery.kind === 'refused') assert.fail();
+    const runner = new FakeRunner(); runner.forwards = [other];
+    const { fenceAppium } = await fenceModule();
+    const proof = await fenceAppium({ admission: f.admission, claim: recovery.claim, runner: runner.run, revalidate: runner.revalidate, clock: runner.clock });
+    recovery.claim.submitFence(proof);
+    assert.deepEqual(runner.events.map(event => 'kind' in event ? event.kind : 'wait'), ['forward-inventory']);
+    assert.deepEqual(runner.forwards, [other]);
+    assert.equal(state(f.admission, f.claim.identity), 'available');
   }
 });
 
@@ -434,7 +461,12 @@ test('foreign automation checks use the admission inventory for the exact device
   for (const target of [targets[2], targets[3]]) f.claim.registerComponent(JSON.parse(JSON.stringify(target)));
   const inventory = { wda: [], uiautomator2: [{ serial: 'serial-one', pid: 300, startTime: '12345' }], forwards: [{ serial: 'serial-one', local: 'tcp:19123', remote: 'tcp:6790' }] };
   assert.deepEqual(f.admission.inspectAppiumAutomation({ category: 'android-phone', value: 'serial-one' }, inventory), { kind: 'available' });
-  assert.deepEqual(f.admission.inspectAppiumAutomation({ category: 'android-phone', value: 'unowned-device' }, inventory), { kind: 'refused', reason: 'DEVICE_BUSY', exitCode: 3 });
+  assert.deepEqual(f.admission.inspectAppiumAutomation({ category: 'android-phone', value: 'unowned-device' }, inventory), { kind: 'available' });
+  const busy = { ...inventory, uiautomator2: [{ serial: 'unowned-device', pid: 300, startTime: '12345' }] };
+  assert.deepEqual(f.admission.inspectAppiumAutomation({ category: 'android-phone', value: 'unowned-device' }, busy), { kind: 'refused', reason: 'DEVICE_BUSY', exitCode: 3 });
+  assert.deepEqual(f.admission.inspectAppiumAutomation({ category: 'android-phone', value: 'serial-one' }, busy), { kind: 'available' });
+  assert.deepEqual(f.admission.inspectAppiumAutomation({ category: 'android-emulator', value: '/avd/one.avd' }, busy, { serial: 'unowned-device' }), { kind: 'refused', reason: 'DEVICE_BUSY', exitCode: 3 });
+  assert.throws(() => f.admission.inspectAppiumAutomation({ category: 'android-emulator', value: '/avd/one.avd' }, busy), { code: 'INVALID_REQUEST' });
 });
 
 test('startup forward cleanup has its own bounded budget even with a caller signal', async t => {

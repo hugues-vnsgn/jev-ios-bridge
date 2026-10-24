@@ -7,7 +7,7 @@ import { z } from 'zod/v4';
 import { AdmissionError, AdmissionSqlite, type StoreOptions } from './admission-sqlite.js';
 import type { ImportedObservedAction, MigrationReceipt } from './admission-migration.js';
 import type { EmulatorObservation } from './android/probe.js';
-import { fenceAppium, inspectForeignAutomation, type FenceOptions } from '../appium/fence/index.js';
+import { fenceAppium, inspectForeignAutomation, type AutomationScope, type FenceOptions } from '../appium/fence/index.js';
 import { appiumComponentSchema, appiumProofSchema, fenceCommandSchema } from '../appium/fence/schema.js';
 import { FENCE_REQUEST_KINDS } from '../scripted/vocabulary.js';
 
@@ -206,8 +206,12 @@ export class Admission {
     const canonical=canonicalDevice(identity);
     return this.store.readDeviceAttributes(canonical);
   }
-  inspectAppiumAutomation(identity: DeviceIdentity, inventory: Parameters<typeof inspectForeignAutomation>[1]): ReturnType<typeof inspectForeignAutomation> {
-    return inspectForeignAutomation(this.store.readOwnedComponents(canonicalDevice(identity)), inventory);
+  inspectAppiumAutomation(identity: DeviceIdentity, inventory: Parameters<typeof inspectForeignAutomation>[1], transport?: { serial: string }): ReturnType<typeof inspectForeignAutomation> {
+    const canonical = canonicalDevice(identity);
+    const scope: AutomationScope | undefined = canonical.category === 'ios-simulator' ? { udid: canonical.value }
+      : canonical.category === 'android-phone' ? { serial: canonical.value } : transport;
+    if (!scope) throw new AdmissionError('INVALID_REQUEST', 'Emulator automation inspection needs the transport serial');
+    return inspectForeignAutomation(this.store.readOwnedComponents(canonical), inventory, scope);
   }
   componentState(process: OwnerProcess): 'exited' | 'alive' | 'reused' | 'unknown' { return this.dependencies.componentLiveness?.(process) ?? componentLiveness(process); }
   submitFence(expected: OwnerIdentity, request: FenceRequest, recovery?: RecoveryIdentity): FenceReceipt {

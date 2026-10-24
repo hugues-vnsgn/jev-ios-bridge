@@ -57,8 +57,13 @@ test('forward removal rechecks the recorded pair and never uses a fixed port', a
   const runner = createFenceRunner({ host: host(), adb: async args => { calls.push(args); return result(args[0] === 'forward' ? 'one tcp:19333 tcp:6790\nother tcp:19334 tcp:6790\n' : ''); }, simctl: async () => result('') });
   assert.deepEqual(await runner(fenceEffectSchema.parse({ kind: 'forward-remove', serial: 'one', local: 'tcp:19333', remote: 'tcp:6790' }), signal), { ok: true });
   assert.deepEqual(calls, [['forward', '--list'], ['-s', 'one', 'forward', '--remove', 'tcp:19333']]);
-  await assert.rejects(() => runner(fenceEffectSchema.parse({ kind: 'forward-remove', serial: 'one', local: 'tcp:19334', remote: 'tcp:6790' }), signal), /identity/i);
-  assert.equal(calls.length, 3);
+  assert.deepEqual(await runner(fenceEffectSchema.parse({ kind: 'forward-remove', serial: 'one', local: 'tcp:19334', remote: 'tcp:6790' }), signal), { ok: true });
+  assert.deepEqual(calls.slice(2), [['forward', '--list']]);
+});
+
+test('the forward inventory keeps tcp pairs and ignores non-tcp rows', async () => {
+  const runner = createFenceRunner({ host: host(), adb: async () => result('one tcp:19333 tcp:6790\none tcp:9222 localabstract:chrome_devtools_remote\none tcp:8700 jdwp:12345\none local:/tmp/sock tcp:5555\n'), simctl: async () => result('') });
+  assert.deepEqual(await runner(fenceEffectSchema.parse({ kind: 'forward-inventory' }), signal), [{ serial: 'one', local: 'tcp:19333', remote: 'tcp:6790' }]);
 });
 
 test('WDA termination matches simulator, runner bundle and PID, with launchctl readback', async () => {

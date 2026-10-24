@@ -94,7 +94,7 @@ The UI-automation program the bridge runs on an Android device to read its scree
 _Avoid_: DeviceServer, server, mobilecli
 
 **Foreign agent**:
-UiAutomator2 instrumentation or server, a WDA runner, or an automation forward on a device whose identity is not owned in the admission store. It makes the device busy. The bridge's recorded components are owned automation.
+UiAutomator2 instrumentation or server, a WDA runner, or an automation forward (a forward to a UiAutomator2 device port) on the device being admitted, whose identity is not owned in the admission store. It makes the device busy. Automation on another device, a forward to any other port, and the bridge's recorded components are never foreign.
 
 **Fence**:
 Stopping a native component and confirming it can no longer act, so that no command sent through it whose outcome was unknown can still take effect. This applies to device agents, adb commands, host streams, port forwards, MobileBuildMCP invocations and Appium sessions. Each component needs its own stop evidence.

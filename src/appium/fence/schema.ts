@@ -33,6 +33,11 @@ export const hostRowSchema = hostIdentitySchema.extend({ ppid: z.number().int().
 export const hostInventorySchema = z.array(hostRowSchema).max(65536).refine(rows => new Set(rows.map(row => row.pid)).size === rows.length);
 export const wdaInventorySchema = z.array(z.strictObject({ udid, bundleId: text, pid: hostPid })).max(4096);
 export const forwardInventorySchema = z.array(z.strictObject({ serial, local: port, remote: port })).max(4096);
+export type ForwardPair = z.infer<typeof forwardInventorySchema>[number];
+export const sameForward = (row: ForwardPair, pair: ForwardPair) => row.serial === pair.serial && row.local === pair.local && row.remote === pair.remote;
+// The UiAutomator2 server and its MJPEG stream listen on these device ports; any other remote is not automation.
+const automationRemotes = new Set(['tcp:6790', 'tcp:7810']);
+export const automationForward = (row: ForwardPair) => automationRemotes.has(row.remote);
 export const androidProcessSchema = z.discriminatedUnion('kind', [
   z.strictObject({ kind: z.literal('absent') }),
   z.strictObject({ kind: z.literal('running'), startTime: androidIdentitySchema.shape.startTime }),

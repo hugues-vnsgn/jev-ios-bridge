@@ -1,7 +1,7 @@
 import { z } from 'zod/v4';
 import type { AdbResult, AdbRunner } from '../../device/android/adb.js';
 import { androidStartTime, processGone, shellCommand } from '../../device/android/recovery.js';
-import { androidProcessSchema, forwardInventorySchema, hostInventorySchema, settingKeySchema, settingsSchema, wdaInventorySchema,
+import { androidProcessSchema, forwardInventorySchema, hostInventorySchema, sameForward, settingKeySchema, settingsSchema, wdaInventorySchema,
   type FenceEffect, type HostIdentity } from './schema.js';
 import { sharedService } from './proof.js';
 import { hostFenceIo } from './host.js';
@@ -23,11 +23,12 @@ function checked(raw: unknown): AdbResult {
 }
 function forwardRows(result: AdbResult) {
   checked(result);
+  const tcp = /^tcp:\d+$/;
   return forwardInventorySchema.parse(result.stdout.trim() ? result.stdout.trim().split(/\r?\n/).map(line => {
     const words = line.trim().split(/\s+/);
     if (words.length !== 3) throw new Error('Malformed forward inventory');
-    return { serial: words[0], local: words[1], remote: words[2] };
-  }) : []);
+    return { serial: words[0]!, local: words[1]!, remote: words[2]! };
+  }).filter(row => tcp.test(row.local) && tcp.test(row.remote)) : []);
 }
 function settingRows(result: AdbResult): Map<string, string> {
   checked(result);
@@ -121,9 +122,7 @@ export function createFenceRunner(io: { host?: HostFenceIo; adb: AdbRunner; simc
       }
       case 'forward-inventory': return forwardRows(await adb(['forward', '--list'], signal));
       case 'forward-remove': {
-        const rows = forwardRows(await adb(['forward', '--list'], signal)).filter(row => row.local === effect.local);
-        if (rows.some(row => row.serial !== effect.serial || row.remote !== effect.remote)) throw new Error('Forward identity differs');
-        if (rows.length) checked(await adb(['-s', effect.serial, 'forward', '--remove', effect.local], signal));
+        if (forwardRows(await adb(['forward', '--list'], signal)).some(row => sameForward(row, effect))) checked(await adb(['-s', effect.serial, 'forward', '--remove', effect.local], signal));
         return { ok: true };
       }
       case 'settings-read': {

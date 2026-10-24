@@ -4,8 +4,8 @@ import { isDeepStrictEqual } from 'node:util';
 import type { Admission, AdmissionClaim, AdmittedSession, FenceRequest, NativeComponent, OwnerIdentity, RecoveryClaim } from '../../device/admission.js';
 import { z } from 'zod/v4';
 import { active, groupHeld, ownedGroup, sameIdentity, sharedService, verifyAppiumProof } from './proof.js';
-import { androidProcessSchema, appiumComponentSchema, fenceCommandSchema, forwardInventorySchema, hostInventorySchema,
-  parseEffectResult, readOnly, settingKeySchema, settingsSchema, wdaInventorySchema, type AppiumComponent, type AppiumProof,
+import { androidProcessSchema, appiumComponentSchema, automationForward, fenceCommandSchema, forwardInventorySchema, hostInventorySchema,
+  parseEffectResult, readOnly, sameForward, settingKeySchema, settingsSchema, wdaInventorySchema, type AppiumComponent, type AppiumProof,
   androidIdentitySchema, type FenceEffect, type HostIdentity, type HostRow, type Transcript } from './schema.js';
 export type { FenceEffect } from './schema.js';
 export type FenceRunner = (effect: FenceEffect, signal: AbortSignal) => Promise<unknown>;
@@ -179,12 +179,16 @@ export async function fenceAppium(input: FenceOptions & { admission: Admission; 
   } finally { budget.close(); }
 }
 
+export type AutomationScope = { udid: string } | { serial: string };
 export function inspectForeignAutomation(owned: readonly NativeComponent[], inventory: {
   wda: unknown; uiautomator2: unknown; forwards: unknown;
-}): { kind: 'available' } | { kind: 'refused'; reason: 'DEVICE_BUSY'; exitCode: 3 } {
+}, scope: AutomationScope): { kind: 'available' } | { kind: 'refused'; reason: 'DEVICE_BUSY'; exitCode: 3 } {
   const components = owned.flatMap(component => { const parsed = appiumComponentSchema.safeParse(component.declaration); return parsed.success ? [parsed.data] : []; });
-  const wda = wdaInventorySchema.parse(inventory.wda), forwards = forwardInventorySchema.parse(inventory.forwards);
-  const uia = androidInventorySchema.parse(inventory.uiautomator2);
+  const onSimulator = (row: { udid: string }) => 'udid' in scope && row.udid.toUpperCase() === scope.udid.toUpperCase();
+  const onSerial = (row: { serial: string }) => 'serial' in scope && row.serial === scope.serial;
+  const wda = wdaInventorySchema.parse(inventory.wda).filter(onSimulator);
+  const forwards = forwardInventorySchema.parse(inventory.forwards).filter(row => onSerial(row) && automationForward(row));
+  const uia = androidInventorySchema.parse(inventory.uiautomator2).filter(onSerial);
   const foreign = wda.some(row => !components.some(target => target.kind === 'appium-wda' && target.udid === row.udid && target.bundleId === row.bundleId && target.pid === row.pid))
     || forwards.some(row => !components.some(target => target.kind === 'appium-forward' && target.serial === row.serial && target.local === row.local && target.remote === row.remote))
     || uia.some(row => !components.some(target => target.kind === 'appium-uiautomator2' && target.serial === row.serial && target.processes.some(process => process.pid === row.pid && process.startTime === row.startTime)));
@@ -194,9 +198,7 @@ const androidInventorySchema = z.array(androidIdentitySchema.extend({ serial: z.
 
 async function removeOwnedForward(target: Extract<AppiumComponent, { kind: 'appium-forward' }>, query: (effect: FenceEffect) => Promise<Transcript>): Promise<AppiumProof> {
   let command = await query({ kind: 'forward-inventory' });
-  const rows = forwardInventorySchema.parse(command.result).filter(row => row.local === target.local);
-  if (rows.some(row => row.serial !== target.serial || row.remote !== target.remote)) throw new Error('Forward identity differs');
-  if (rows.length) {
+  if (forwardInventorySchema.parse(command.result).some(row => sameForward(row, target))) {
     await query({ kind: 'forward-remove', serial: target.serial, local: target.local, remote: target.remote });
     command = await query({ kind: 'forward-inventory' });
   }

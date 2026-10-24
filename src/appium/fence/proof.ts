@@ -1,5 +1,5 @@
 import { isDeepStrictEqual } from 'node:util';
-import { androidProcessSchema, forwardInventorySchema, hostInventorySchema, settingsSchema, wdaInventorySchema,
+import { androidProcessSchema, forwardInventorySchema, hostInventorySchema, sameForward, settingsSchema, wdaInventorySchema,
   type AppiumComponent, type AppiumProof, type HostIdentity, type HostRow, type Transcript } from './schema.js';
 
 export const sameIdentity = (row: HostIdentity, expected: HostIdentity) => row.pid === expected.pid && row.startTime === expected.startTime;
@@ -66,7 +66,7 @@ export function verifyAppiumProof(target: AppiumComponent, proof: AppiumProof, t
     case 'appium-forward': {
       if (proof.kind !== 'appium-forward-removed') return false;
       const command = read(proof.commandId);
-      return command?.effect.kind === 'forward-inventory' && !forwardInventorySchema.parse(command.result).some(row => row.local === target.local);
+      return command?.effect.kind === 'forward-inventory' && !forwardInventorySchema.parse(command.result).some(row => sameForward(row, target));
     }
     case 'appium-settings': {
       if (proof.kind !== 'appium-settings-restored') return false;
