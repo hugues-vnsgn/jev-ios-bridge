@@ -18,7 +18,7 @@ import { OperationTracker } from '../device/operation-tracker.js';
 import type { Clock } from '../device/settle.js';
 import type { ProfileBinding } from '../profiles.js';
 import { PrivateAppiumClient, type AppiumComponentRecord } from './client.js';
-import { fenceAppium, type FenceClaim, type FenceEffect, type FenceOptions, type FenceRunner } from './fence/index.js';
+import { CLEANUP_BUDGET_MS, fenceAppium, type FenceClaim, type FenceEffect, type FenceOptions, type FenceRunner } from './fence/index.js';
 import { appiumComponentSchema, fenceEffectSchema, hostIdentitySchema, type AppiumComponent, type HostIdentity } from './fence/schema.js';
 import { androidNativeHelpers } from './native/android.js';
 import { launchIosConsole, observeIosLogs, observedIosPreparation } from './native/ios.js';
@@ -116,6 +116,8 @@ export class AppiumDriver implements DeviceDriver, IosPreparationDriver, Observe
   }
 
   readonly tapAliasRule = 'same-frame-buttons-v1' as const;
+  /** Close fences the device components, so the observed runtime bounds it by the shared cleanup budget. */
+  readonly cleanupBudgetMs = CLEANUP_BUDGET_MS;
 
   // ---------- DeviceDriver ----------
 
@@ -380,7 +382,7 @@ export class AppiumDriver implements DeviceDriver, IosPreparationDriver, Observe
       await this.recordAutomation(owner, device, signal);
       const observation = new AppiumObservation(session, this.options.stack, { ...(this.options.clock ? { clock: this.options.clock } : {}) });
       const operations = new AppiumOperations(session, observation, { timeoutMs: this.timeoutMs,
-        dispatch: (operation: OperationName, send: () => Promise<void>) => this.dispatch(owner, `appium-${operation}`, signal, this.timeoutMs, send) });
+        dispatch: (operation: OperationName, send: () => Promise<void>) => this.dispatch(owner, commandName(role, operation), signal, this.timeoutMs, send) });
       return { client, session, observation, operations, profile, ports, ...(helpers ? { helpers } : {}) };
     } catch (error) { await client.close(); throw error; }
   }
@@ -674,6 +676,9 @@ export class AppiumDriver implements DeviceDriver, IosPreparationDriver, Observe
 }
 
 const screenOf = (result: Snapshot | ActOutcome): Snapshot => isActOutcome(result) ? result.screen : result;
+
+/** The observed action's one tap is the store's `tap` command, the one its single-tap guard and receipt facts read. */
+const commandName = (role: Role, operation: OperationName) => role === 'observed-action' && operation === 'tap' ? 'tap' : `appium-${operation}`;
 
 /** A command whose effect may or may not have happened stays uncertain, which keeps the device quarantined.
  *  Any other failure came back with an answer, so its command settles, as on the legacy Android path. */
