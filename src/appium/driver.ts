@@ -218,7 +218,7 @@ export class AppiumDriver implements DeviceDriver, IosPreparationDriver, Observe
     const live = this.live();
     if (live.role !== 'observed-prepare') throw new AdmissionError('DISPATCH_CLOSED', 'Preparation is not attached');
     await this.operations.settle(signal);
-    await this.stopCommand(live.command, live.app.id, signal);
+    await this.stopCommand(live.command, undefined, signal);
     if (!('park' in live.owner.claim) || typeof live.owner.claim.park !== 'function') throw new AdmissionError('DISPATCH_CLOSED', 'Preparation claim cannot park');
     const result = (live.owner.claim as PreparationClaim).park(readinessEvidence, evidenceRefs);
     this.issuanceClosed = true;
@@ -585,13 +585,14 @@ export class AppiumDriver implements DeviceDriver, IosPreparationDriver, Observe
     return this.phase;
   }
 
-  /** The launched app is terminated, then the session deleted and the helpers stopped. A failed terminate still
-   *  runs the cleanup, then fails the close, so an uncertain terminate is never closed as completed. */
-  private async stopCommand(command: Command, appId: string, signal: AbortSignal): Promise<void> {
+  /** The launched app is terminated unless `terminate` is undefined (park keeps it running for the action), then the
+   *  session is deleted and the helpers stopped. A failed terminate still runs the cleanup, then fails the close, so an
+   *  uncertain terminate is never closed as completed. */
+  private async stopCommand(command: Command, terminate: string | undefined, signal: AbortSignal): Promise<void> {
     command.helpers?.console.expectStop();
     let terminated: unknown;
-    if (command.launched && command.session.state !== 'lost' && command.client.dispatchOpen) {
-      terminated = await command.operations.terminate(appId, signal).then(() => undefined, (error: unknown) => error ?? new Error('Terminate failed'));
+    if (terminate !== undefined && command.launched && command.session.state !== 'lost' && command.client.dispatchOpen) {
+      terminated = await command.operations.terminate(terminate, signal).then(() => undefined, (error: unknown) => error ?? new Error('Terminate failed'));
     }
     try { await command.operations.close(); }
     finally {

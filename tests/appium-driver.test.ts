@@ -5,6 +5,8 @@ import { join } from 'node:path';
 import { setTimeout as delay } from 'node:timers/promises';
 import { freeHostPort } from '../src/appium/ports.js';
 import type { DeviceDriver } from '../src/contracts/index.js';
+import { AppiumDriver } from '../src/appium/driver.js';
+import type { Admission } from '../src/device/admission.js';
 import { fakeSimulatorProbe } from './fixtures/android-device.js';
 import { fakeProbeSpawn } from './fixtures/adb-spawn.js';
 import type { AdbRunner } from '../src/device/android/adb.js';
@@ -180,4 +182,51 @@ test('a paused run whose session was lost is replaced by a fresh child and sessi
   assert.equal(f.tools().filter(name => name === 'appium_session_management').length, 2, 'one create per child');
   await f.driver.close(live());
   assert.equal(f.admission.inspect({ category: 'ios-simulator', value: UDID })!.state, 'available');
+});
+
+const digest = 'a'.repeat(64);
+async function parkedAllocation(admission: Admission) {
+  const reserved = admission.reserveAllocation({ actionId: 'allocated', preparationDigest: digest, preparation: {}, appBundleId: 'dev.fixture',
+    source: { kind: 'create', deviceTypeId: 'device-type', runtimeId: 'runtime' }, inspectedContentDigest: digest,
+    artifactBytes: 100, configVersion: 1, configDigest: digest, evidenceDirectory: '/isolated/evidence',
+    budgets: { maxRetainedAllocations: 8, maxConcurrentPreparations: 1, reservationBytesPerAllocation: 800,
+      maxReservedBytes: 6400, minFreeBytes: 2000, maxArtifactBytes: 200, createTimeoutMs: 60000, bootTimeoutMs: 120000,
+      installTimeoutMs: 120000, launchTimeoutMs: 30000, readinessTimeoutMs: 30000, readyTtlMs: 300000, timeoutMs: 360000 },
+    storage: { simulatorFreeBytes: 10000, stagingFreeBytes: 10000 } });
+  if (reserved.kind !== 'reserved') throw new Error('reserve');
+  const reservation = reserved.reservation;
+  reservation.stage({ stagedPath: '/isolated/Fixture.app', contentDigest: digest, bytes: 100, maxBytes: 200,
+    metadata: { bundleId: 'dev.fixture', executable: 'Fixture', architecture: 'arm64', minimumOSVersion: '27.0', build: { id: 'fixture', origin: 'host' } } });
+  await reservation.create(async () => ({ status: 'created', udid: UDID, provenance: { kind: 'simctl-create',
+    allocationId: reservation.identity.allocationId, name: `jev-observed-${reservation.identity.allocationId}`, deviceTypeId: 'device-type', runtimeId: 'runtime' } }));
+  const admitted = reservation.admit();
+  if (admitted.kind !== 'admitted') throw new Error('admit');
+  return { claim: admitted.claim, id: reservation.identity.allocationId };
+}
+const observedContext = { app: { bundleId: 'dev.fixture' }, device: { udid: UDID }, values: {} };
+
+test('observed preparation deletes its session before park and keeps the app; the action opens a fresh session with no launch',
+  { todo: 'Root: parkAllocation (admission-sqlite.ts:934) accepts only completed-command proofs, so a preparation with Appium components cannot park' }, async t => {
+  const f = driverFixture(t, observeRecording, ios, 'none', command => command.kind === 'ios-boot' || command.kind === 'ios-install' ? '' : undefined);
+  const p = await parkedAllocation(f.admission);
+  await f.driver.attachPreparation(p.claim, observedContext, live());
+  await f.driver.boot(live());
+  await f.driver.install('/isolated/Fixture.app', live());
+  await f.driver.launch(live());
+  assert.deepEqual(f.native.calls.map(call => call.command.kind), ['ios-boot', 'ios-install', 'ios-console', 'ios-log-stream']);
+  await f.driver.readiness(live());
+  const parked = await f.driver.park(['/isolated/evidence/readiness.json'], [], live());
+  assert.equal(parked.authority, 'committed');
+  assert.deepEqual(f.tools().filter(name => name === 'appium_session_management' || name === 'jev_terminate_app'), ['appium_session_management', 'appium_session_management'],
+    'the preparation session is created and deleted, and the app is never terminated');
+  const consumed = f.admission.consumeAllocation({ allocationId: p.id, actionId: 'allocated', actionDigest: digest, request: {}, appBundleId: 'dev.fixture',
+    evidence: { bridgeVersion: 'fixture', directory: '/isolated/action', request: '/isolated/action/request.json' } });
+  if (consumed.kind !== 'consumed') throw new Error('consume');
+  const executor = driverFixture(t, observeRecording, ios, 'none');
+  const action = new AppiumDriver({ ...executor.driver['options'], admission: f.admission });
+  await action.attachObserved(consumed.claim, observedContext, live());
+  assert.deepEqual(executor.native.calls, [], 'no launch, console or log stream');
+  assert.deepEqual(executor.tools(), ['appium_session_management', 'jev_settings']);
+  await action.close(live());
+  assert.deepEqual(executor.tools(), ['appium_session_management', 'jev_settings', 'appium_session_management'], 'deleted, never terminated');
 });
