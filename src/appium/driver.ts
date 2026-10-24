@@ -19,13 +19,13 @@ import type { Clock } from '../device/settle.js';
 import type { ProfileBinding } from '../profiles.js';
 import { PrivateAppiumClient, type AppiumComponentRecord } from './client.js';
 import { CLEANUP_BUDGET_MS, fenceAppium, type FenceClaim, type FenceEffect, type FenceOptions, type FenceRunner } from './fence/index.js';
-import { appiumComponentSchema, fenceEffectSchema, hostIdentitySchema, type AppiumComponent, type HostIdentity } from './fence/schema.js';
+import { appiumComponentSchema, fenceEffectSchema, hostIdentitySchema, wdaInventorySchema, type AppiumComponent, type HostIdentity } from './fence/schema.js';
 import { androidNativeHelpers } from './native/android.js';
 import { launchIosConsole, observeIosLogs, observedIosPreparation } from './native/ios.js';
 import { NativeHelperError, type NativeCommand, type NativeRunner } from './native/process.js';
 import { AppiumObservation, type AppiumObservedScreen } from './observe/index.js';
 import { ObservationIncompleteError } from './observe/normalize.js';
-import { AppiumOperations, UnconfirmedOperationError, type OperationName } from './operations/index.js';
+import { AppiumOperations, REFUSED_BEFORE_INPUT, UnconfirmedOperationError, type OperationName } from './operations/index.js';
 import { allocateHostPorts, portComponents, type FreePort, type HostPorts } from './ports.js';
 import { AppiumCommandSession, createSessionProfile, type SessionProfile, type SessionProfileInput } from './session.js';
 import { StackError, type VerifiedStack } from './stack.js';
@@ -67,6 +67,7 @@ export interface AppiumDriverOptions {
 }
 
 type Role = 'run' | 'capture' | 'attach' | 'observed-prepare' | 'observed-action';
+type AutomationInventory = { wda: unknown[]; uiautomator2: { serial: string; pid: number; startTime: string }[]; forwards: unknown[] };
 type Owner = { claim: AdmissionClaim; dispatcher: AdmittedSession; identity: ResolvedIdentity; owned: boolean };
 type IosHelpers = { console: Awaited<ReturnType<typeof launchIosConsole>>; logs?: Awaited<ReturnType<typeof observeIosLogs>>; sources: NativeLogSource[] };
 type Command = { client: PrivateAppiumClient; session: AppiumCommandSession; observation: AppiumObservation; operations: AppiumOperations;
@@ -82,6 +83,11 @@ const DEFAULT_TIMEOUT_MS = 120_000;
 const UIAUTOMATOR2_PACKAGES = ['io.appium.uiautomator2.server', 'io.appium.uiautomator2.server.test'];
 const refusal = (code: DeviceReasonError['code'], message: string, vendorCode?: string) =>
   new DeviceReasonError(code, message, vendorCode === undefined ? {} : { vendorCode, vendorSource: 'bridge' });
+
+function readyTransport(identity: Exclude<ResolvedIdentity, { category: 'ios-simulator' }>): void {
+  if (identity.transport.state === 'unauthorized') throw new DeviceReasonError('DEVICE_UNAUTHORIZED', `Device ${identity.transport.serial} has not accepted this Mac's USB-debugging key`);
+  if (identity.transport.state !== 'device') throw new DeviceReasonError('DEVICE_NOT_CONNECTED', `Device ${identity.transport.serial} is ${identity.transport.state}`);
+}
 
 /** An Android native helper runs adb, so its failure names adb as the vendor source. */
 function adbFailure(error: unknown): never {
@@ -109,6 +115,7 @@ export class AppiumDriver implements DeviceDriver, IosPreparationDriver, Observe
   private issuanceClosed = false;
   private screenshots: Promise<string> | undefined;
   private preparationClaim: PreparationClaim | undefined;
+  private handback: Snapshot | undefined;
   private readonly runId: string;
   private readonly timeoutMs: number;
   private readonly aborters = new Set<AbortController>();
@@ -133,6 +140,12 @@ export class AppiumDriver implements DeviceDriver, IosPreparationDriver, Observe
 
   observe(signal: AbortSignal): Promise<Snapshot> {
     return this.operations.track(() => this.observeIssued(signal));
+  }
+
+  /** Android capture, as AndroidDriver.capture: the current screen settled under admission from page source alone,
+   *  with no launch, reset, stop, screenshot or Jev request. The caller closes the driver after it. */
+  capture(signal: AbortSignal): Promise<Snapshot> {
+    return this.operations.track(() => this.captureIssued(signal));
   }
 
   act(action: Action, snapshot: Snapshot, scenario: ActionScenarioContext, signal: AbortSignal): Promise<Snapshot | ActOutcome> {
@@ -285,13 +298,11 @@ export class AppiumDriver implements DeviceDriver, IosPreparationDriver, Observe
       if (identity.state !== 'Booted') throw new DeviceReasonError('DEVICE_NOT_BOOTED', `Simulator ${identity.value} is not booted (state: ${identity.state}).`);
       const installed = await this.options.identityProbe.simulatorApp({ deviceSet: identity.deviceSet, udid: identity.value, bundleId: app.id, signal });
       if (installed.kind === 'missing') throw refusal('DEVICE_ERROR', `App ${app.id} is not installed on simulator ${identity.value}`, 'APP_NOT_INSTALLED');
-    } else {
-      if (identity.transport.state === 'unauthorized') throw new DeviceReasonError('DEVICE_UNAUTHORIZED', `Device ${identity.transport.serial} has not accepted this Mac's USB-debugging key`);
-      if (identity.transport.state !== 'device') throw new DeviceReasonError('DEVICE_NOT_CONNECTED', `Device ${identity.transport.serial} is ${identity.transport.state}`);
-    }
+    } else readyTransport(identity);
     const owner = await this.admit(identity, { app, start: scenario.start ?? 'restart' }, signal);
     this.phase = { kind: 'admitted', owner, role, app };
     try {
+      await this.refuseForeign(owner, signal);
       let helpers: IosHelpers | undefined;
       if (identity.category !== 'ios-simulator') await this.prepareAndroidDevice(owner, signal);
       else if (role === 'run') helpers = await this.dispatch(owner, 'launch', signal, this.timeoutMs, issued => this.launchIos(owner, app, issued));
@@ -300,6 +311,32 @@ export class AppiumDriver implements DeviceDriver, IosPreparationDriver, Observe
       // A close that arrived meanwhile stops what is now live; prepare starts nothing more.
       if (this.closing) throw new AdmissionError('DISPATCH_CLOSED', 'The driver is closing');
       if (identity.category !== 'ios-simulator') await this.startAndroidApp(owner, this.live(), app, role, signal);
+    } catch (error) {
+      if (!this.closing && (this.phase.kind === 'admitted' || this.phase.kind === 'live')) {
+        this.closing = this.finishClose(AbortSignal.timeout(this.timeoutMs), false);
+        await this.closing.catch(() => undefined);
+      }
+      throw appiumFailure(error);
+    }
+  }
+
+  private async captureIssued(signal: AbortSignal): Promise<Snapshot> {
+    if (this.phase.kind !== 'idle') throw new Error('Driver is already prepared');
+    if (this.options.target.platform !== 'android') throw refusal('UNSUPPORTED_ACTION', 'Capture is Android-only, as today.');
+    signal.throwIfAborted();
+    const identity = await this.resolve(signal);
+    if (identity.category === 'ios-simulator') throw refusal('UNSUPPORTED_ACTION', 'Capture is Android-only, as today.');
+    readyTransport(identity);
+    const app: AppIdentity = { id: '' };
+    const owner = await this.admit(identity, { capture: true }, signal);
+    this.phase = { kind: 'admitted', owner, role: 'capture', app };
+    try {
+      await this.refuseForeign(owner, signal);
+      await this.prepareAndroidDevice(owner, signal);
+      const command = await this.openSession(owner, 'capture', signal);
+      this.phase = { kind: 'live', owner, role: 'capture', app, command: { ...command, launched: false } };
+      if (this.closing) throw new AdmissionError('DISPATCH_CLOSED', 'The driver is closing');
+      return await this.guarded(signal, () => this.dispatch(owner, 'appium-capture', signal, this.timeoutMs, issued => command.observation.capture(issued)));
     } catch (error) {
       if (!this.closing && (this.phase.kind === 'admitted' || this.phase.kind === 'live')) {
         this.closing = this.finishClose(AbortSignal.timeout(this.timeoutMs), false);
@@ -364,6 +401,7 @@ export class AppiumDriver implements DeviceDriver, IosPreparationDriver, Observe
 
   private async openSession(owner: Owner, role: Role, signal: AbortSignal, helpers?: IosHelpers): Promise<Omit<Command, 'launched'>> {
     const target = this.options.target;
+    const before = await this.refuseForeign(owner, signal);
     const ports = await allocateHostPorts(target.platform, this.options.freePort);
     const device = owner.identity.category === 'ios-simulator' ? owner.identity.value : owner.identity.transport.serial;
     const path = role;
@@ -385,43 +423,79 @@ export class AppiumDriver implements DeviceDriver, IosPreparationDriver, Observe
       } });
     try {
       const session = await this.dispatch(owner, 'appium-session-create', signal, this.timeoutMs, () => AppiumCommandSession.start({ client, profile, timeoutMs: this.timeoutMs }));
-      await this.recordAutomation(owner, device, signal);
+      await this.recordAutomation(owner, device, before, signal);
       const observation = new AppiumObservation(session, this.options.stack, { ...(this.options.clock ? { clock: this.options.clock } : {}) });
       const operations = new AppiumOperations(session, observation, { timeoutMs: this.timeoutMs,
-        dispatch: (operation: OperationName, send: () => Promise<void>) => this.dispatch(owner, commandName(role, operation), signal, this.timeoutMs, send) });
+        dispatch: (operation: OperationName, send: () => Promise<void>) => this.dispatch(owner, commandName(role, operation), signal, this.timeoutMs, send,
+          { input: INPUTS.has(operation) }) });
       return { client, session, observation, operations, profile, ports, ...(helpers ? { helpers } : {}) };
     } catch (error) { await client.close(); throw error; }
   }
 
-  /** The automation the session started on the device, recorded by identity before any further effect. */
-  private async recordAutomation(owner: Owner, device: string, signal: AbortSignal): Promise<void> {
+  /** What automation runs on the device right now, read with recorded reads and no effect. */
+  private async automationInventory(owner: Owner, signal: AbortSignal, options: { cleanup?: boolean } = {}): Promise<AutomationInventory> {
     if (owner.identity.category === 'ios-simulator') {
-      const rows = await this.fenceRead(owner, fenceEffectSchema.parse({ kind: 'wda-inventory', udid: owner.identity.value }), signal);
-      let recorded = 0;
-      for (const row of Array.isArray(rows) ? rows : []) {
-        const parsed = appiumComponentSchema.safeParse({ id: randomUUID(), kind: 'appium-wda', ...(row as object) });
-        if (parsed.success) { this.register(owner, parsed.data); recorded++; }
+      const wda = await this.fenceRead(owner, fenceEffectSchema.parse({ kind: 'wda-inventory', udid: owner.identity.value }), signal);
+      return { wda: Array.isArray(wda) ? wda : [], uiautomator2: [], forwards: [] };
+    }
+    const serial = owner.identity.transport.serial;
+    const forwards = await this.fenceRead(owner, fenceEffectSchema.parse({ kind: 'forward-inventory' }), signal);
+    const processes = this.options.adb ? await this.uiautomator2Processes(owner, serial, signal, options) : [];
+    return { wda: [], uiautomator2: processes.map(process => ({ serial, ...process })), forwards: Array.isArray(forwards) ? forwards : [] };
+  }
+
+  /** Automation the store does not own on this device makes the command DEVICE_BUSY before any effect; it is never touched. */
+  private async refuseForeign(owner: Owner, signal: AbortSignal, options: { cleanup?: boolean } = {}): Promise<AutomationInventory> {
+    const inventory = await this.automationInventory(owner, signal, options);
+    const { identity } = owner;
+    const verdict = this.options.admission.inspectAppiumAutomation({ category: identity.category, value: identity.value }, inventory,
+      identity.category === 'ios-simulator' ? undefined : { serial: identity.transport.serial });
+    if (verdict.kind === 'refused') throw new DeviceReasonError('DEVICE_BUSY', 'Automation the bridge does not own is running on this device.');
+    return inventory;
+  }
+
+  private ownsAutomation(owner: Owner): boolean {
+    return this.options.admission.readGeneration(owner.claim.identity).components
+      .some(component => component.kind === 'appium-wda' || component.kind === 'appium-uiautomator2' || component.kind === 'appium-forward');
+  }
+
+  /**
+   * The automation the session started, recorded by identity before any further effect: only what the pre-create
+   * inventory did not list, so nothing foreign is ever owned. A created session implies a running runner, so an empty
+   * listing is a missed identity, never "nothing to stop".
+   */
+  private async recordAutomation(owner: Owner, device: string, before: AutomationInventory, signal: AbortSignal): Promise<void> {
+    if (owner.identity.category === 'ios-simulator') {
+      const rows = wdaInventorySchema.parse((await this.automationInventory(owner, signal)).wda);
+      const known = wdaInventorySchema.parse(before.wda);
+      for (const row of rows.filter(row => !known.some(prior => prior.pid === row.pid && prior.bundleId === row.bundleId))) {
+        this.register(owner, appiumComponentSchema.parse({ id: randomUUID(), kind: 'appium-wda', ...row }));
       }
-      // A created session implies a running runner; an empty listing is a missed identity, never "nothing to stop".
-      if (!recorded) owner.claim.markInventoryUnknown('WDA_IDENTITY_UNAVAILABLE');
+      if (!rows.length) owner.claim.markInventoryUnknown('WDA_IDENTITY_UNAVAILABLE');
       return;
     }
-    const adb = this.options.adb;
-    if (!adb) { owner.claim.markInventoryUnknown('UIAUTOMATOR2_IDENTITY_UNAVAILABLE'); return; }
-    const processes = await this.dispatch(owner, 'uiautomator2-identity', signal, this.timeoutMs, async issued => {
-      const listed = await adb(shellCommand(device, ['pidof', ...UIAUTOMATOR2_PACKAGES]), issued);
+    if (!this.options.adb) { owner.claim.markInventoryUnknown('UIAUTOMATOR2_IDENTITY_UNAVAILABLE'); return; }
+    const processes = await this.uiautomator2Processes(owner, device, signal);
+    const fresh = processes.filter(process => !before.uiautomator2.some(prior => prior.pid === process.pid && prior.startTime === process.startTime));
+    if (fresh.length) this.register(owner, appiumComponentSchema.parse({ id: randomUUID(), kind: 'appium-uiautomator2', serial: device, processes: fresh }));
+    if (!processes.length) owner.claim.markInventoryUnknown('UIAUTOMATOR2_IDENTITY_UNAVAILABLE');
+  }
+
+  /** UiAutomator2's device processes by /proc identity, read with a recorded command. */
+  private uiautomator2Processes(owner: Owner, serial: string, signal: AbortSignal, options: { cleanup?: boolean } = {}): Promise<{ pid: number; startTime: string }[]> {
+    const adb = this.options.adb!;
+    return this.dispatch(owner, 'uiautomator2-identity', signal, this.timeoutMs, async issued => {
+      const listed = await adb(shellCommand(serial, ['pidof', ...UIAUTOMATOR2_PACKAGES]), issued);
       const pids = listed.exitCode === 0 ? listed.stdout.trim().split(/\s+/).filter(Boolean).map(Number).filter(pid => Number.isSafeInteger(pid) && pid > 0) : [];
       const found: { pid: number; startTime: string }[] = [];
       for (const pid of pids) {
-        const stat = await adb(shellCommand(device, ['cat', `/proc/${String(pid)}/stat`]), issued);
+        const stat = await adb(shellCommand(serial, ['cat', `/proc/${String(pid)}/stat`]), issued);
         if (processGone(stat)) continue;
         const startTime = androidStartTime(stat.stdout);
         if (startTime) found.push({ pid, startTime });
       }
       return found;
-    });
-    if (processes.length) this.register(owner, appiumComponentSchema.parse({ id: randomUUID(), kind: 'appium-uiautomator2', serial: device, processes }));
-    else owner.claim.markInventoryUnknown('UIAUTOMATOR2_IDENTITY_UNAVAILABLE');
+    }, options);
   }
 
   private async prepareAndroidDevice(owner: Owner, signal: AbortSignal): Promise<void> {
@@ -492,6 +566,7 @@ export class AppiumDriver implements DeviceDriver, IosPreparationDriver, Observe
   private async observeLive(live: Extract<Phase, { kind: 'live' }>, signal: AbortSignal, operation: string, timeoutMs: number): Promise<Snapshot> {
     const observe = () => this.dispatch(live.owner, operation, signal, timeoutMs, issued => live.command.observation.observe(issued));
     const session = live.command.session;
+    let replaced = false;
     const observed = await this.guarded(signal, async () => {
       if (session.state === 'ready') return observe();
       const resumed = await session.resume(observe, live.role === 'run' && live.command.launched ? async () => {
@@ -500,10 +575,13 @@ export class AppiumDriver implements DeviceDriver, IosPreparationDriver, Observe
         return replacement.session;
       } : undefined);
       if (resumed.kind === 'session-lost') throw new DeviceReasonError('STATE_UNAVAILABLE', 'The Appium session was lost.');
+      replaced = resumed.kind === 'handback';
       return resumed.observation;
     });
     live.command.session.pause();
-    return this.remember(observed.snapshot, observed.screenshot);
+    const snapshot = await this.remember(observed.snapshot, observed.screenshot);
+    this.handback = replaced ? snapshot : undefined;
+    return snapshot;
   }
 
   private async actIssued(action: Action, snapshot: Snapshot, scenario: ActionScenarioContext, signal: AbortSignal): Promise<Snapshot | ActOutcome> {
@@ -535,6 +613,8 @@ export class AppiumDriver implements DeviceDriver, IosPreparationDriver, Observe
 
   private evidenceFor(snapshot: Snapshot): AppiumObservedScreen {
     if (!this.latest || this.latest.snapshot !== snapshot) throw new StaleSnapshotError('Target reference is from an older snapshot');
+    // A replacement session's first screen is a fresh hand-back: no answer given for the lost session acts on it.
+    if (snapshot === this.handback) throw new StaleSnapshotError('The session was replaced: observe again before acting');
     return this.latest;
   }
 
@@ -562,9 +642,12 @@ export class AppiumDriver implements DeviceDriver, IosPreparationDriver, Observe
   }
 
   /** One recorded command in the owner's ledger, bounded by its own deadline and the caller's signal. */
-  private async dispatch<T>(owner: Owner, operation: string, signal: AbortSignal, timeoutMs: number, effect: (signal: AbortSignal) => Promise<T>): Promise<T> {
+  /** `input`: a device input whose failure after send is never an answer, unless the extension refused it before input.
+   *  `cleanup`: a read close makes after issuance has closed. */
+  private async dispatch<T>(owner: Owner, operation: string, signal: AbortSignal, timeoutMs: number, effect: (signal: AbortSignal) => Promise<T>,
+    options: { input?: boolean; cleanup?: boolean } = {}): Promise<T> {
     signal.throwIfAborted();
-    if (this.issuanceClosed) throw new AdmissionError('DISPATCH_CLOSED', 'Device issuance is closed');
+    if (this.issuanceClosed && !options.cleanup) throw new AdmissionError('DISPATCH_CLOSED', 'Device issuance is closed');
     const controller = new AbortController();
     this.aborters.add(controller);
     const cancel = () => controller.abort(signal.reason);
@@ -574,7 +657,7 @@ export class AppiumDriver implements DeviceDriver, IosPreparationDriver, Observe
       const settled = await owner.dispatcher.dispatch(operation, async () => {
         try { return { kind: 'value' as const, value: await effect(controller.signal) }; }
         catch (error) {
-          if (controller.signal.aborted || outcomeUnknown(error)) throw error;
+          if (controller.signal.aborted || outcomeUnknown(error) || (options.input && !refusedBeforeInput(error))) throw error;
           return { kind: 'error' as const, error };
         }
       });
@@ -645,6 +728,15 @@ export class AppiumDriver implements DeviceDriver, IosPreparationDriver, Observe
     catch (error) { failure = error; }
     this.issuanceClosed = true;
     this.latest = undefined;
+    // Before any stop: automation the store does not own beside ours holds the device, and nothing is stopped.
+    let foreign = false;
+    if (failure === undefined && this.ownsAutomation(owner)) {
+      try { await this.refuseForeign(owner, signal, { cleanup: true }); }
+      catch (error) {
+        foreign = error instanceof DeviceReasonError && error.code === 'DEVICE_BUSY';
+        failure = foreign ? error : new DeviceReasonError('CLEANUP_FAILED', `Automation inventory could not be read: ${error instanceof Error ? error.message : String(error)}`);
+      }
+    }
     try {
       if (failure === undefined) {
         try {
@@ -658,7 +750,8 @@ export class AppiumDriver implements DeviceDriver, IosPreparationDriver, Observe
           failure = new DeviceReasonError('CLEANUP_FAILED', `Appium components could not be fenced: ${error instanceof Error ? error.message : String(error)}`);
         }
       }
-      if (owner.owned) await this.quarantineAndFence(owner, signal);
+      if (foreign) { if (owner.owned) owner.claim.closeDispatch({ outcome: 'inconclusive', disposition: 'quarantined', payload: {}, evidenceRefs: [] }); }
+      else if (owner.owned) await this.quarantineAndFence(owner, signal);
     } catch (error) {
       if (failure === undefined) throw error;
     } finally { this.phase = { kind: 'closed' }; }
@@ -702,6 +795,10 @@ export class AppiumDriver implements DeviceDriver, IosPreparationDriver, Observe
 }
 
 const screenOf = (result: Snapshot | ActOutcome): Snapshot => isActOutcome(result) ? result.screen : result;
+
+/** Mutations that reach the device as input; an unconfirmed one keeps the device quarantined, as the legacy drivers do. */
+const INPUTS: ReadonlySet<OperationName> = new Set(['tap', 'swipe', 'scroll', 'back', 'tap-at', 'replace-text']);
+const refusedBeforeInput = (error: unknown) => error instanceof AppiumError && REFUSED_BEFORE_INPUT.has(error.code);
 
 /** The observed action's one tap is the store's `tap` command, the one its single-tap guard and receipt facts read. */
 const commandName = (role: Role, operation: OperationName) => role === 'observed-action' && operation === 'tap' ? 'tap' : `appium-${operation}`;
