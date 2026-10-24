@@ -1,5 +1,5 @@
 import { setTimeout as delay } from 'node:timers/promises';
-import type { Action, ActionScenarioContext, ActOutcome, AppProblem, DeviceDriver, Element, LogSources, Platform, PrepareScenarioContext, RunLog, Snapshot, Verdict } from '../contracts/index.js';
+import type { Action, ActionScenarioContext, ActOutcome, AppProblem, DeviceDriver, Element, LogSources, Platform, PrepareScenarioContext, RunLog, Snapshot, VendorSource, Verdict } from '../contracts/index.js';
 import { isActOutcome } from '../contracts/index.js';
 import { DeviceCliError, DeviceReasonError, StaleSnapshotError } from '../device/index.js';
 import type { AssertionJudgment, ScriptedJudge, ScriptedScenario, ScriptedStep } from './contracts.js';
@@ -140,7 +140,7 @@ async function appProblemCode(driver: DeviceDriver, signal: AbortSignal): Promis
 }
 
 /** A bridge-owned reason code, plus the device layer's own code when the bridge doesn't own it. */
-interface Failure { code: string; vendorCode?: string }
+interface Failure { code: string; vendorCode?: string; vendorSource?: VendorSource }
 
 const VENDOR_CODE = /^[A-Za-z0-9_.-]{1,80}$/;
 
@@ -152,7 +152,8 @@ function failureOf(error: unknown, signal: AbortSignal): Failure {
   // An Android error may carry the device layer that failed (`agent`, `adb`) as its vendorCode.
   if (error instanceof DeviceReasonError) {
     const vendorCode = error.vendorCode;
-    return { code: error.code, ...(vendorCode !== undefined && VENDOR_CODE.test(vendorCode) ? { vendorCode } : {}) };
+    if (vendorCode === undefined || !VENDOR_CODE.test(vendorCode)) return { code: error.code };
+    return { code: error.code, vendorCode, ...(error.vendorSource === undefined ? {} : { vendorSource: error.vendorSource }) };
   }
   if (error instanceof DeviceCliError) {
     if (MOBILEBUILDMCP_PASSTHROUGH_CODES.has(error.code)) return { code: error.code };
@@ -316,7 +317,9 @@ export async function runScriptedScenario(options: ScriptedRunOptions): Promise<
     const logSources = options.driver.logSources?.() ?? {};
     const preparation = options.driver.preparation?.();
     const prepareWarnings = options.driver.prepareWarnings?.() ?? [];
+    const stack = options.driver.provenance?.();
     await options.log.append('prepared', { prepareDurationMs,
+      ...(stack ? { stack } : {}),
       ...(Object.keys(logSources).length ? { logSources } : {}),
       ...(prepareWarnings.length ? { warnings: prepareWarnings } : {}),
       ...(preparation ? { deviceIdentity: preparation.deviceIdentity, serial: preparation.serial,
@@ -523,6 +526,7 @@ export async function runScriptedScenario(options: ScriptedRunOptions): Promise<
     reason = failure.code;
     await options.log.append('error', { stepId: activeStepId, phase, code: reason,
       ...(failure.vendorCode === undefined ? {} : { vendorCode: failure.vendorCode }),
+      ...(failure.vendorSource === undefined ? {} : { vendorSource: failure.vendorSource }),
       ...(activeStepStarted === undefined ? {} : {
         stepDurationMs: Math.max(0, performance.now() - activeStepStarted),
       }) });

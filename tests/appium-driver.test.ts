@@ -4,6 +4,7 @@ import { test } from 'node:test';
 import { join } from 'node:path';
 import { setTimeout as delay } from 'node:timers/promises';
 import { freeHostPort } from '../src/appium/ports.js';
+import type { DeviceDriver } from '../src/contracts/index.js';
 import { fakeSimulatorProbe } from './fixtures/android-device.js';
 import { UDID, WDA_BUNDLE, driverFixture, rewriteRecording } from './fixtures/appium-wire/driver-fixture.js';
 
@@ -37,6 +38,8 @@ test('an iOS run launches through the console helper, observes through one sessi
   assert.equal(snapshot.logTails!.runtime, 'hello from the app\n');
   assert.deepEqual(f.driver.provenance(), { backend: 'appium', lockSha256: f.driver['options'].stack.manifest.lockSha256, extensionVersion: 1, clientVersion: '1.32.1',
     wdaTreeSha256: '5d1fc1c99908e253303f6de35bf26ed4a74a75817f704e7a3646b72b5271ba04' });
+  assert.equal(f.driver.preparation(), undefined, 'iOS records no prepared device fields, as today');
+  assert.equal((f.driver as DeviceDriver).metrics, undefined, 'an Appium run emits no iOS reference metrics');
   await f.driver.close(live());
   assert.deepEqual(f.tools(), ['appium_session_management', 'jev_settings', 'appium_get_page_source', 'jev_screen', 'appium_get_page_source', 'jev_screen', 'jev_terminate_app', 'appium_session_management']);
   assert.equal(f.native.calls[0]!.stops, 1); assert.equal(f.native.calls[1]!.stops, 1);

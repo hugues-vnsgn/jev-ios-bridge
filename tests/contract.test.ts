@@ -13,7 +13,7 @@ import { createInterface } from 'node:readline';
 import { test } from 'node:test';
 import { promisify } from 'node:util';
 import type { DeviceDriver, RunEvent, Snapshot } from '../src/contracts/index.js';
-import { DeviceCliError } from '../src/device/index.js';
+import { DeviceCliError, DeviceReasonError } from '../src/device/index.js';
 import { createRunLog } from '../src/log/index.js';
 import type { ScriptedJudge } from '../src/scripted/contracts.js';
 import type { ScriptedStep } from '../src/scripted/contracts.js';
@@ -239,6 +239,12 @@ function screen(screenshotPath: string): Snapshot {
       state: { visible: true, enabled: true }, actions: [] }] };
 }
 
+// An Appium run: the frozen stack it drove the device with, and a failure whose vendor code names its layer.
+const appiumStack = { backend: 'appium', lockSha256: 'f7732565cacdbe21b42f381c23a142cc75278502f30f95406b1f9cd73724bfba', extensionVersion: 1,
+  clientVersion: '1.32.1', wdaTreeSha256: '5d1fc1c99908e253303f6de35bf26ed4a74a75817f704e7a3646b72b5271ba04' } as const;
+const appiumFailure: DeviceDriver = { async prepare() {}, async act() {}, async close() {},
+  provenance: () => appiumStack, async observe() { throw new DeviceReasonError('DEVICE_ERROR', 'no such element', { vendorCode: 'NoSuchElementError', vendorSource: 'appium' }); } };
+
 const judge = (probability: number): ScriptedJudge => ({
   async judge(assertions) {
     return { probabilities: Object.fromEntries(assertions.map(assertion => [assertion.id, probability])),
@@ -281,7 +287,7 @@ test('contract: report.json shape for passed, failed, and device-error runs', as
     const ok: DeviceDriver = { async prepare() {}, async observe() { return screen(image); }, async act() {}, async close() {} };
     const vendorFailure: DeviceDriver = { ...ok, async prepare() { throw new DeviceCliError('APP_NOT_INSTALLED', 'not installed', true); } };
     const reports: Record<string, unknown> = {};
-    for (const [name, driver, probability] of [['passed', ok, 1], ['failed', ok, 0], ['deviceError', vendorFailure, 1]] as const) {
+    for (const [name, driver, probability] of [['passed', ok, 1], ['failed', ok, 0], ['deviceError', vendorFailure, 1], ['appiumDeviceError', appiumFailure, 1]] as const) {
       const runId = await recordRun(join(root, name), driver, probability);
       reports[name] = stable(JSON.parse(await readFile(join(root, name, runId, 'report.json'), 'utf8')), runId);
     }
@@ -330,6 +336,15 @@ test('contract: report.json shape for an Android run', async () => {
   } finally { await rm(root, { recursive: true, force: true }); }
 });
 
+/** The fields an Appium run adds to its `prepared` and `error` events (ADR-0005 only adds). */
+async function appiumEventFields(runsDir: string): Promise<Record<string, string[]>> {
+  const runId = await recordRun(runsDir, appiumFailure, 1);
+  const events = (await readFile(join(runsDir, runId, 'run.jsonl'), 'utf8')).trim().split('\n').map(line => JSON.parse(line) as RunEvent);
+  const prepared = events.find(event => event.type === 'prepared')!;
+  return { preparedFields: Object.keys(prepared.data).sort(), stackFields: Object.keys(prepared.data.stack as object).sort(),
+    errorFields: Object.keys(events.find(event => event.type === 'error')!.data).sort() };
+}
+
 test('contract: evidence folder names, JSONL envelope, event types, and verdict event', async () => {
   const root = await mkdtemp(join(tmpdir(), 'jev-contract-evidence-'));
   try {
@@ -349,6 +364,7 @@ test('contract: evidence folder names, JSONL envelope, event types, and verdict 
       eventTypes: events.map(event => event.type),
       startedFields: Object.keys(events[0]!.data).sort(),
       verdictFields: Object.keys(verdict.data).sort(),
+      appium: await appiumEventFields(join(root, 'appium')),
     });
   } finally { await rm(root, { recursive: true, force: true }); }
 });

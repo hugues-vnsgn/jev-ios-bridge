@@ -28,7 +28,7 @@ import { ObservationIncompleteError } from './observe/normalize.js';
 import { AppiumOperations, type OperationName } from './operations/index.js';
 import { allocateHostPorts, portComponents, type FreePort, type HostPorts } from './ports.js';
 import { AppiumCommandSession, createSessionProfile, type SessionProfile, type SessionProfileInput } from './session.js';
-import type { VerifiedStack } from './stack.js';
+import { StackError, type VerifiedStack } from './stack.js';
 import { AppiumError, CLIENT_SDK, EXTENSION_VERSION, type AppiumPlatform } from './wire-schemas.js';
 
 /** The device one driver instance serves. Chosen per command by the composition, never inside the driver. */
@@ -149,20 +149,18 @@ export class AppiumDriver implements DeviceDriver, IosPreparationDriver, Observe
     return { ...(runtime ? { runtime: runtime.path } : {}), ...(os ? { os: os.path } : {}) };
   }
 
-  /** What `prepare` set up, plus the frozen stack this run drove the device with. */
-  preparation(): DevicePreparation {
-    const live = this.live();
-    const value = live.owner.identity.value;
-    const serial = live.owner.identity.category === 'ios-simulator' ? value : live.owner.identity.transport.serial;
-    return { deviceIdentity: value, serial, agentSha256: this.provenance().uiautomator2ServerSha256 ?? this.provenance().wdaTreeSha256 ?? '' };
+  /** Android only, as today: the device `prepare` set up, with the UiAutomator2 server APK as its agent. */
+  preparation(): DevicePreparation | undefined {
+    const { owner } = this.live();
+    if (owner.identity.category === 'ios-simulator') return undefined;
+    return { deviceIdentity: owner.identity.value, serial: owner.identity.transport.serial, agentSha256: uiautomator2Server(this.options.stack).sha256 };
   }
 
   provenance(): StackProvenance {
     const { manifest } = this.options.stack;
-    const server = manifest.androidApks.find(apk => apk.package === 'io.appium.uiautomator2.server');
-    return { backend: 'appium', lockSha256: manifest.lockSha256, extensionVersion: EXTENSION_VERSION, clientVersion: CLIENT_SDK.version,
-      ...(this.options.target.platform === 'ios' ? { wdaTreeSha256: manifest.wda.treeSha256 } : {}),
-      ...(this.options.target.platform === 'android' && server ? { uiautomator2ServerSha256: server.sha256 } : {}) };
+    const common = { backend: 'appium', lockSha256: manifest.lockSha256, extensionVersion: EXTENSION_VERSION, clientVersion: CLIENT_SDK.version } as const;
+    return this.options.target.platform === 'ios' ? { ...common, wdaTreeSha256: manifest.wda.treeSha256 }
+      : { ...common, uiautomator2ServerSha256: uiautomator2Server(this.options.stack).sha256 };
   }
 
   // ---------- IosPreparationDriver ----------
@@ -634,6 +632,13 @@ export class AppiumDriver implements DeviceDriver, IosPreparationDriver, Observe
 }
 
 const screenOf = (result: Snapshot | ActOutcome): Snapshot => isActOutcome(result) ? result.screen : result;
+
+/** A verified stack always lists the server APK; its absence is a damaged manifest. */
+function uiautomator2Server(stack: VerifiedStack): { sha256: string } {
+  const server = stack.manifest.androidApks.find(apk => apk.package === UIAUTOMATOR2_PACKAGES[0]);
+  if (!server) throw new StackError('STACK_FILE_MISMATCH', 'The frozen stack lists no UiAutomator2 server APK.');
+  return server;
+}
 
 function helperRole(command: NativeCommand): 'console' | 'log-stream' | undefined {
   return command.kind === 'ios-console' ? 'console' : command.kind === 'ios-log-stream' ? 'log-stream' : undefined;

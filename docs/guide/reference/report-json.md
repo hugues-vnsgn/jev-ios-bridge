@@ -13,7 +13,7 @@ Each finished run writes `report.json` into its evidence folder. `run --json` an
 | `launchArgs` | array of strings | Arguments the app was launched with; empty when none, and always empty on Android. |
 | `verdict` | `passed`, `failed`, or `inconclusive` | The recorded verdict. |
 | `reason` | string | A [reason code](reason-codes.md). |
-| `error` | object or null | The last error: `code` (a reason code), `phase`, `stepId`, and `vendorCode` when MobileBuildMCP supplied its own code, or on Android, `adb` or `agent` for the part that failed. |
+| `error` | object or null | The last error: `code` (a reason code), `phase`, `stepId`, and `vendorCode` when MobileBuildMCP supplied its own code, or on Android, `adb` or `agent` for the part that failed. An Appium run's error with a `vendorCode` also has `vendorSource`: `appium`, `adb`, or `bridge`, the layer the code came from. |
 | `steps` | number | Steps executed. |
 | `plannedSteps` | number or null | Steps in the script. |
 | `checkpointsPassed` | number | Checkpoints that passed. |
@@ -33,6 +33,12 @@ Android runs add these fields, recorded from the run's `started` and `action` ev
 | `activity` | string or null | The script's `app.activity`, or `null` when the launcher activity started. |
 | `intentExtras` | object: string → string | The script's `app.intentExtras`; `{}` when none. |
 | `typedFields` | array | Only when the run typed: one `{ "stepId", "shownValue" }` per replace-text step, with the field's text as the screen showed it after typing. A password field's shown value is dots. Script values in it are masked. |
+
+Runs driven through Appium add one field, recorded from the run's `prepared` event. Other runs never have it.
+
+| Field | Type | Meaning |
+| --- | --- | --- |
+| `prepared` | object | `stack`, the frozen automation stack the run used: `backend` (`"appium"`), `lockSha256` (the stack's lock file hash), `extensionVersion`, `clientVersion` (the private MCP client), and `wdaTreeSha256` on iOS or `uiautomator2ServerSha256` on Android. |
 
 ## Runs with `do` steps
 

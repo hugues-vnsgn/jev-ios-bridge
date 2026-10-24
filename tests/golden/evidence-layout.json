@@ -41,5 +41,26 @@
     "reason",
     "steps",
     "verdict"
-  ]
+  ],
+  "appium": {
+    "preparedFields": [
+      "prepareDurationMs",
+      "stack"
+    ],
+    "stackFields": [
+      "backend",
+      "clientVersion",
+      "extensionVersion",
+      "lockSha256",
+      "wdaTreeSha256"
+    ],
+    "errorFields": [
+      "code",
+      "phase",
+      "stepDurationMs",
+      "stepId",
+      "vendorCode",
+      "vendorSource"
+    ]
+  }
 }
