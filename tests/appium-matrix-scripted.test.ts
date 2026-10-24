@@ -94,7 +94,6 @@ async function runTwice(t: TestContext, f: Fixture, script: object, next: Parame
 
 test('scripted v1 on iOS: launch options, tap, replace, wait and checkpoint pass on Appium with exact attempts, a masked value, full cleanup and a next admission', async t => {
   const f = ios(t);
-  f.fence.wda = [{ udid: UDID, bundleId: WDA_BUNDLE, pid: 777 }];
   const { b, done, events, report, again, second } = await runTwice(t, f, iosScript, iosWorld());
   assert.deepEqual([done.report.verdict, done.report.reason], ['passed', 'ALL_CHECKPOINTS_PASSED']);
   assert.deepEqual(authorized(f.admission, 'run-1'), { 'appium-observe': 3, 'appium-replace-text': 1, 'appium-session-create': 1,
@@ -111,7 +110,8 @@ test('scripted v1 on iOS: launch options, tap, replace, wait and checkpoint pass
     ['passed', 'ALL_CHECKPOINTS_PASSED', null, ['-route', 'search'], 'appium']);
   assert.deepEqual(await filesContaining(f.root, SECRET), [], 'the typed value is in no bridge-written file, admission store included');
   assert.deepEqual(await filesContaining(b.root, SECRET), []);
-  assert.deepEqual(f.fence.effects.filter(effect => effect.kind === 'wda-stop'), [{ kind: 'wda-stop', udid: UDID, bundleId: WDA_BUNDLE, pid: 777 }]);
+  assert.deepEqual(f.fence.effects.filter(effect => effect.kind === 'wda-stop'), [{ kind: 'wda-stop', udid: UDID, bundleId: WDA_BUNDLE, pid: 7001 }],
+    'the runner the first session started is stopped by identity');
   assert.deepEqual(f.native.calls.slice(0, 2).map(call => [call.command.kind, call.stops]), [['ios-console', 1], ['ios-log-stream', 1]]);
   assertReleased(f);
   assert.deepEqual([(await again()).verdict, second.tools().at(-1)], ['passed', 'appium_session_management'], 'the next admission on the same device runs and closes');
@@ -121,12 +121,10 @@ test('scripted v1 on iOS: launch options, tap, replace, wait and checkpoint pass
 test('scripted v1 on Android: activity and intent extras restart through the extension, the typed field is redacted in report.json, and every component is fenced', async t => {
   const phone = androidTarget();
   const f = worldFixture(t, world('android', androidScreens, flow), phone.options, phone.nativeReply);
-  f.fence.processes.set(5001, '424242'); f.fence.processes.set(5002, '424242');
-  f.fence.forwards = [{ serial: SERIAL, local: 'tcp:18200', remote: 'tcp:6790' }];
   const { b, done, events, report, again } = await runTwice(t, f, androidScript, world('android', androidScreens, flow));
   assert.deepEqual([done.report.verdict, done.report.reason], ['passed', 'ALL_CHECKPOINTS_PASSED']);
   assert.deepEqual(authorized(f.admission, 'run-1'), { 'android-wake': 1, 'appium-observe': 3, 'appium-replace-text': 1, 'appium-restart': 1,
-    'appium-session-create': 1, 'appium-tap': 2, 'appium-terminate': 1, 'uiautomator2-identity': 1 });
+    'appium-session-create': 1, 'appium-tap': 2, 'appium-terminate': 1 });
   const wire = f.toolCalls();
   assert.deepEqual(wire.find(call => call.params!.name === 'jev_start_activity')!.params!.arguments, { extensionVersion: 1, sessionId: 'android-session',
     package: 'example.app', activity: '.Main', intentExtras: { route: 'search' } });
@@ -245,8 +243,7 @@ test('a tap the provider answers with DRIVER_ERROR is unconfirmed: it is sent on
   assert.deepEqual(f.tools().slice(f.tools().indexOf('appium_perform_actions')), ['appium_perform_actions', 'appium_session_management']);
 });
 
-test('a run that reports UI_ACTION_UNCONFIRMED keeps the device, as the legacy drivers do when an input is unconfirmed',
-  { todo: 'D2 (reported to the root): an answered DRIVER_ERROR tap is reported unconfirmed but finalizes completed and available' }, async t => {
+test('a run that reports UI_ACTION_UNCONFIRMED keeps the device, as the legacy drivers do when an input is unconfirmed', async t => {
     const f = ios(t, [{ tool: 'appium_perform_actions', nth: 1, fault: { kind: 'error', code: 'DRIVER_ERROR' } }]);
     const { done } = await runTwice(t, f, iosScript, iosWorld());
     assert.deepEqual([done.report.verdict, done.report.reason], ['inconclusive', 'CLEANUP_FAILED']);
@@ -265,7 +262,6 @@ test('the private MCP child dying during an observation, before any input: no in
 test('an Android phone that disconnects during a tap: the fence cannot revalidate the serial, so nothing is released and the next admission is refused', async t => {
   const phone = androidTarget();
   const f = worldFixture(t, world('android', androidScreens, [{ tool: 'appium_perform_actions', nth: 1, fault: { kind: 'exit', code: 9 } }, ...flow]), phone.options, phone.nativeReply);
-  f.fence.forwards = [{ serial: SERIAL, local: 'tcp:18200', remote: 'tcp:6790' }];
   const b = await bridge(t, [f.driver, f.open(world('android', androidScreens, flow)).driver]);
   const { runId } = await b.service.start(androidScript);
   for (let waited = 0; !f.tools().includes('appium_perform_actions') && waited < 10_000; waited += 20) await delay(20);

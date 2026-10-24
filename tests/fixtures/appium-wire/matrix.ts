@@ -20,13 +20,12 @@ export const iosTarget = { target: { platform: 'ios', device: UDID, presentation
 
 const keyguard = (showing: boolean) => `WINDOW MANAGER POLICY STATE\n    KeyguardServiceDelegate\n      showing=${String(showing)}\n      interactiveState=INTERACTIVE_STATE_AWAKE\n`;
 const procStat = (pid: number) => `${String(pid)} (app_process) S ${'0 '.repeat(18)}424242 0 0`;
-/** A USB phone whose transport the test can take away, with two UiAutomator2 processes for the fence to find. */
+/** A USB phone whose transport the test can take away; the world fixture answers its UiAutomator2 `pidof`. */
 export function androidTarget(device = { state: 'device' }) {
   const probe = identityProbe({ adb: '/fake/adb', environment: {}, host: { listener: async () => { throw new Error('no emulator'); }, directory: async () => { throw new Error('no emulator'); } } as never,
     spawn: fakeProbeSpawn((_file, args) => args[0] === 'devices' ? `List of devices attached\n${SERIAL} ${device.state}\n` : `${SERIAL}\n`).spawn });
   const adb: AdbRunner = async args => {
     const line = args.at(-1) ?? '';
-    if (line.includes('pidof')) return { stdout: '5001 5002\n', stderr: '', exitCode: 0 };
     const pid = /\/proc\/(\d+)\/stat/.exec(line)?.[1];
     return pid ? { stdout: procStat(Number(pid)), stderr: '', exitCode: 0 } : { stdout: '', stderr: 'unexpected', exitCode: 1 };
   };
@@ -59,13 +58,14 @@ export async function bridge(t: TestContext, drivers: DeviceDriver[], jev: FakeS
   return { root, service, finished, runDir: (runId: string) => join(service.baseDir, runId) };
 }
 
-/** The device operations the admission authorized for one run's owner, counted by name. Fence reads are left out:
- *  their number follows the components the fake fence reports, and their effects are pinned on the fence itself. */
+/** The device operations the admission authorized for one run's owner, counted by name. Automation inventory reads
+ *  are left out: their number follows how often ownership is checked, and their effects are pinned on the fence. */
+const INVENTORY_READS = new Set(['appium-fence', 'uiautomator2-identity']);
 export function authorized(admission: Admission, attemptId: string): Record<string, number> {
   const owner = admission.readAttempt({ kind: 'legacy', id: attemptId })!.owner;
   const counts: Record<string, number> = {};
   for (const command of admission.readGeneration(owner).commands) {
-    if (command.operation !== 'appium-fence') counts[command.operation] = (counts[command.operation] ?? 0) + 1;
+    if (!INVENTORY_READS.has(command.operation)) counts[command.operation] = (counts[command.operation] ?? 0) + 1;
   }
   return Object.fromEntries(Object.entries(counts).sort(([a], [b]) => a.localeCompare(b)));
 }

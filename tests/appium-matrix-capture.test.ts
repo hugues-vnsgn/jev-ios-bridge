@@ -53,8 +53,7 @@ test('start attach refuses APP_NOT_IN_FOREGROUND when another app is in front, a
   assert.equal(f.admission.inspect(ANDROID_DEVICE)!.state, 'available');
 });
 
-test('the Appium driver captures the current screen with no launch, reset, stop or screenshot, as AndroidDriver.capture does',
-  { todo: 'D1 (reported to the root): AppiumDriver has no capture path, and observe always takes a screenshot' }, async t => {
+test('the Appium driver captures the current screen with no launch, reset, stop or screenshot, as AndroidDriver.capture does', async t => {
     const f = phone(t);
     const capture = Reflect.get(f.driver, 'capture') as unknown;
     assert.equal(typeof capture, 'function', 'a capture entry the capture command can call');
@@ -64,8 +63,7 @@ test('the Appium driver captures the current screen with no launch, reset, stop 
     assert.deepEqual(f.tools(), ['appium_session_management', 'jev_settings', 'appium_get_page_source', 'appium_get_page_source', 'appium_session_management']);
   });
 
-test('automation the admission store does not own makes the command DEVICE_BUSY before any session, and is left running',
-  { todo: 'D4 (reported to the root): the driver never calls inspectAppiumAutomation and records a foreign WDA as its own' }, async t => {
+test('automation the admission store does not own makes the command DEVICE_BUSY before any session, and is left running', async t => {
     const ios = worldFixture(t, world('ios', { home: iosScreen([{ type: 'StaticText', label: 'Home', frame: [16, 100, 200, 40] }]) }), iosTarget);
     ios.fence.wda = [{ udid: UDID, bundleId: WDA_BUNDLE, pid: 999 }];
     await assert.rejects(ios.driver.prepare({ app: { bundleId: 'example.app' } }, live()), busy);

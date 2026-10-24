@@ -94,8 +94,7 @@ for (const [name, moveTo] of [['a different screen', 'other'], ['the same button
   });
 }
 
-test('a paused session lost while Claude decides is replaced by a fresh child, and Claude gets a fresh hand-back with no input',
-  { todo: 'D3 (reported to the root): the replacement session is observed as a refresh, so the stale answer is tapped' }, async t => {
+test('a paused session lost while Claude decides is replaced by a fresh child, and Claude gets a fresh hand-back with no input', async t => {
   const p = await paused(t, [{ choice: 'none_fits', confidence: 0.9 }]);
   const owner = p.f.admission.inspect(IOS_DEVICE)!.owner!;
   const groups = () => p.f.admission.readGeneration(owner).components.filter(component => component.kind === 'appium-process-group');

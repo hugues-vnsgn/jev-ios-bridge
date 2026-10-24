@@ -5,8 +5,9 @@ import { join, resolve } from 'node:path';
 import type { TestContext } from 'node:test';
 import { AppiumDriver, type AppiumDriverOptions } from '../../../src/appium/driver.js';
 import { Admission } from '../../../src/device/admission.js';
+import type { AdbRunner } from '../../../src/device/android/adb.js';
 import type { NativeCommand } from '../../../src/appium/native/process.js';
-import { FakeFence, driverStack, fakeNativeRunner } from './driver-fixture.js';
+import { FakeFence, WDA_BUNDLE, driverStack, fakeNativeRunner } from './driver-fixture.js';
 import { worldSchema, type World, type WorldRule } from './world-schema.js';
 
 export { worldSchema, type World, type WorldRule } from './world-schema.js';
@@ -60,6 +61,7 @@ export function androidScreen(views: AndroidView[], pkg = 'example.app'): string
     ...views.map(node), '</android.widget.FrameLayout>', '</hierarchy>'].join('\n');
 }
 
+const UIAUTOMATOR2_PIDS = [5001, 5002];
 type Overrides = Partial<AppiumDriverOptions> & Pick<AppiumDriverOptions, 'target' | 'identityProbe'>;
 type Call = { method?: string; params?: { name?: string; arguments?: Record<string, unknown> } };
 
@@ -75,19 +77,59 @@ export function worldFixture(t: TestContext, first: World, options: Overrides, n
   for (const name of ['homes', 'logs', 'shots', 'locks', 'admission']) mkdirSync(join(root, name), { mode: 0o700 });
   const admission = options.admission ?? Admission.forTesting({ root: join(root, 'admission'), backend: 'fake', durability: 'fast' });
   const fence = new FakeFence();
+  const traces: string[] = [];
+  const created = () => traces.reduce((count, trace) => {
+    try { return count + readFileSync(trace, 'utf8').split('\n').filter(line => line.includes('"action":"create"')).length; } catch { return count; }
+  }, 0);
+  let runners = 0;
+  let forwarded = 0;
+  // A created Android session forwards its UiAutomator2 system port, listed until the fence removes it.
+  const syncForward = () => {
+    if (options.target.platform !== 'android' || created() <= forwarded) return;
+    forwarded = created();
+    fence.forwards.push({ serial: options.target.device, local: `tcp:${String(systemPort())}`, remote: 'tcp:6790' });
+  };
+  const systemPort = () => {
+    const capabilities = traces.flatMap(trace => { try { return readFileSync(trace, 'utf8').trim().split('\n'); } catch { return []; } })
+      .map(line => JSON.parse(line) as Call).filter(call => call.params?.arguments?.action === 'create').at(-1)!.params!.arguments!.capabilities;
+    return (JSON.parse(String(capabilities)) as Record<string, number>)['appium:systemPort'];
+  };
+  // A created iOS session starts its own WDA runner, which the simulator lists until the fence stops it.
+  const run = fence.run;
+  fence.run = async (effect, ...rest) => {
+    syncForward();
+    if (effect.kind === 'wda-inventory' && options.target.platform === 'ios' && created() > runners) {
+      runners = created();
+      fence.wda.push({ udid: options.target.device, bundleId: WDA_BUNDLE, pid: 7000 + runners });
+    }
+    const result = await run(effect, ...rest);
+    if (effect.kind === 'android-stop' && !UIAUTOMATOR2_PIDS.some(pid => fence.processes.has(pid))) uiautomatorStoppedAt = created();
+    return result;
+  };
+  // A created Android session starts UiAutomator2, which `pidof` lists until the fence stops both processes.
+  let uiautomatorStoppedAt = 0;
+  const adb = options.adb;
+  const sessionAdb: AdbRunner | undefined = adb && (async (args, ...rest) => {
+    syncForward();
+    if (!(args.at(-1) ?? '').includes('pidof')) return adb(args, ...rest);
+    if (created() <= uiautomatorStoppedAt) return { stdout: '', stderr: '', exitCode: 1 };
+    for (const pid of UIAUTOMATOR2_PIDS) if (!fence.processes.has(pid)) fence.processes.set(pid, '424242');
+    return { stdout: UIAUTOMATOR2_PIDS.join(' ') + '\n', stderr: '', exitCode: 0 };
+  });
   const native = fakeNativeRunner(nativeReply);
   let port = 18100;
   let opened = 0;
   const open = (state: World, overrides: Partial<AppiumDriverOptions> = {}) => {
     const index = opened++;
     const trace = join(root, `trace-${String(index)}.jsonl`);
+    traces.push(trace);
     const file = join(root, `world-${String(index)}.json`);
     writeFileSync(file, JSON.stringify(worldSchema.parse(state)));
     const driver = new AppiumDriver({ stack: driverStack(t), admission, backend: 'fake', homeRoot: join(root, 'homes'), logFolder: join(root, 'logs'),
-      screenshotFolder: join(root, 'shots'), lockRoot: join(root, 'locks'), fence: fence.run, nativeRunner: native.runner, freePort: async () => port++,
+      screenshotFolder: join(root, 'shots'), lockRoot: join(root, 'locks'), fence: (...args) => fence.run(...args), nativeRunner: native.runner, freePort: async () => port++,
       startLookup: pid => `host-${String(pid)}`, runMarker: () => '0123456789abcdef0123456789abcdef', runId: `run-${String(index + 1)}`, timeoutMs: 20_000,
       child: { entrypoint: resolve('tests/fixtures/appium-wire/world-mcp.ts'), args: [file, trace], nodeArgs: ['--import', import.meta.resolve('tsx')] },
-      ...options, ...overrides });
+      ...options, ...(sessionAdb ? { adb: sessionAdb } : {}), ...overrides });
     drivers.push(driver);
     const calls = (): Call[] => { try { return readFileSync(trace, 'utf8').trim().split('\n').map(line => JSON.parse(line) as Call); } catch { return []; } };
     const toolCalls = () => calls().filter(call => call.method === 'tools/call');
