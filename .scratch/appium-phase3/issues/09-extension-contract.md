@@ -1,7 +1,7 @@
 # Extension contract
 
 Type: grilling
-Status: open
+Status: resolved
 Labels: wayfinder:grilling
 Mode: HITL
 Parent: [Appium Phase 3 decision map](../map.md)
@@ -63,3 +63,15 @@ add an ADR only if the trade-off is hard to reverse.
 ## Comments
 
 Charted on 2026-10-22.
+Resolved on 2026-10-23 by the root under the owner's grant to decide.
+
+## Answer
+
+Three public tools stay registered: session create and delete behind a guard,
+`appium_perform_actions` and page source. The `jev-bridge` v1 extension adds
+seven allowlisted operations bound to the session: inventory, settings,
+screen, replace text, Android back, start activity and terminate. Results are
+schema-checked, and errors come from one closed set. The fake replays the same
+schemas, and the extension version sits in each recording header. Because the
+contract is internal and versioned, there is no ADR. The locked text is
+"Locked extension contract" in the Phase 3 specification.

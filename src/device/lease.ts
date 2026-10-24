@@ -1,7 +1,8 @@
-import { closeSync, mkdirSync, openSync, readFileSync, unlinkSync, writeFileSync } from 'node:fs';
+import { closeSync, mkdirSync, openSync, readFileSync, realpathSync, unlinkSync, writeFileSync } from 'node:fs';
+import { createHash } from 'node:crypto';
 import { tmpdir } from 'node:os';
-import { join } from 'node:path';
-import type { AdmissionClaim } from './admission.js';
+import { basename, dirname, join } from 'node:path';
+import type { AdmissionClaim, MarkerSource } from './admission.js';
 
 export const DEFAULT_LEASE_ROOT = join(tmpdir(), 'jev-ios-bridge-device-locks');
 
@@ -17,17 +18,18 @@ export class CompatibilityMarker {
   constructor(private readonly options: { root?: string } = {}) {}
   get held(): boolean { return this.file !== undefined; }
 
-  assertKnown(deviceIdentity: string, recorded: (token: string) => boolean): void {
+  assertKnown(deviceIdentity: string, recorded: (token: string, source: MarkerSource) => boolean): void {
     const path = this.path(deviceIdentity);
-    let text: string;
-    try { text = readFileSync(path, 'utf8'); }
+    let bytes: Buffer;
+    try { bytes = readFileSync(path); }
     catch (error) {
       if (error instanceof Error && 'code' in error && error.code === 'ENOENT') return;
       throw error;
     }
     let existing: unknown;
-    try { existing = JSON.parse(text); } catch {}
-    if (!existing || typeof existing !== 'object' || !('token' in existing) || typeof existing.token !== 'string' || !recorded(existing.token)) {
+    try { existing = JSON.parse(bytes.toString('utf8')); } catch {}
+    if (!existing || typeof existing !== 'object' || !('token' in existing) || typeof existing.token !== 'string' ||
+        !recorded(existing.token, { path: join(realpathSync(dirname(path)), basename(path)), sha256: createHash('sha256').update(bytes).digest('hex') })) {
       throw new DeviceLeaseBusyError(deviceIdentity, existing && typeof existing === 'object' && 'pid' in existing && typeof existing.pid === 'number'
         ? { processId: existing.pid, ownedProcesses: [] } : undefined, path, false);
     }

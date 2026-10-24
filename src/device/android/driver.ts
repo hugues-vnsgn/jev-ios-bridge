@@ -675,7 +675,7 @@ export class AndroidDriver implements DeviceDriver {
     if (this.options.fakeBackend && (!this.options.runner || !this.options.agentClient || !this.options.logcat || !this.options.admission)) throw new DeviceReasonError('STATE_UNAVAILABLE', 'Fake Android admission requires injected adb, agent and streams');
     const admission = this.options.admission ?? Admission.open();
     admission.assertBackend(this.options.fakeBackend ? 'fake' : 'real');
-    try { this.lease.assertKnown(identity, token => admission.markerRecorded({ category: resolved.category, value: resolved.value }, token)); }
+    try { this.lease.assertKnown(identity, (token, source) => admission.markerRecorded({ category: resolved.category, value: resolved.value }, token, source)); }
     catch (error) {
       if (error instanceof DeviceLeaseBusyError) throw new DeviceReasonError('DEVICE_BUSY', error.message);
       throw error;
@@ -683,7 +683,7 @@ export class AndroidDriver implements DeviceDriver {
     const unrecordedProbe = this.probe;
     const acquired = await admission.acquireWithRecovery({ category: resolved.category, device: resolved.value,
       attempt: { kind: 'legacy', id: this.runId }, digest: this.runId,
-      intent: { identity: resolved, profile: this.options.profile ?? null }, transport: resolved.transport, signal,
+      intent: { identity: resolved, profile: this.options.profile ?? null }, transport: { serial, state: 'device' }, signal,
       ...(resolved.category === 'android-emulator' ? { provenance: resolved.provenance } : {}) },
       async recovery => {
         const recorder = Object.assign((file: string, args: string[], effect: ProbeInvocation['execute']) =>

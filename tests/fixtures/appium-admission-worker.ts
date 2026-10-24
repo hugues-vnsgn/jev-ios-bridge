@@ -28,6 +28,6 @@ process.on('message', async (message: any) => {
       const finalized = claim.finalize({ outcome: 'inconclusive', disposition: 'quarantined', payload: protocol, evidenceRefs: [] });
       process.send!({ authority: finalized.authority, protocol });
     }
-  } catch (error) { process.send!({ status: 'refused', reason: (error as { code?: string }).code ?? 'PROCESS_FAILED' }); }
+  } catch (error) { const code = (error as { code?: string }).code ?? 'PROCESS_FAILED'; process.send!({ kind: 'error', status: 'refused', reason: code, code, message: (error as Error).message }); }
 });
 process.send!({ ready: true, productionRoot: admissionRoot() });

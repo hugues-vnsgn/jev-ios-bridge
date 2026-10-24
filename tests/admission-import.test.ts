@@ -8,6 +8,8 @@ import { DatabaseSync } from 'node:sqlite';
 import { Admission } from '../src/device/admission.js';
 import type { MigrationDeclaration } from '../src/device/admission-migration.js';
 import { importAdmissionForTesting } from '../src/device/admission-import.js';
+import { DeviceCliError, MobileBuildMcpDriver } from '../src/device/index.js';
+import { fakeSimulatorProbe } from './fixtures/android-device.js';
 
 const uuid = 'AAAAAAAA-BBBB-4CCC-8DDD-EEEEEEEEEEEE';
 const declaration: MigrationDeclaration = { version: 1, writersStopped: true, historicalRootsDeclaredOrExcluded: true,
@@ -31,6 +33,34 @@ function storeFiles(path: string): unknown {
   return readdirSync(path, { withFileTypes: true }).sort((a,b) => a.name.localeCompare(b.name)).map(entry => [entry.name,entry.isDirectory()?storeFiles(join(path,entry.name)):readFileSync(join(path,entry.name)).toString('hex')]);
 }
 const digest = (path: string) => createHash('sha256').update(readFileSync(path)).digest('hex');
+
+for (const changed of [false, true]) {
+  test(`an imported legacy marker ${changed ? 'with changed bytes stays busy' : 'refuses with its historical quarantine'}`, async t => {
+    const options = fixture(t);
+    const path = lease(options.defaultRoots.leases, uuid);
+    const original = readFileSync(path, 'utf8');
+    importAdmissionForTesting(declaration, options);
+    const marker = changed ? original + '\n' : original;
+    writeFileSync(path, marker);
+    const driver = new MobileBuildMcpDriver({ admission: options.admission, runId: 'imported-marker',
+      cwd: options.defaultRoots.leases, lockRoot: options.defaultRoots.leases, identityProbe: fakeSimulatorProbe(uuid),
+      fakeBackend: { window: undefined, runner: async () => { assert.fail('No native effect after import refusal'); } } });
+    await assert.rejects(driver.prepare({ app: { bundleId: 'com.example.app' }, device: { udid: uuid } }, new AbortController().signal),
+      (error: unknown) => {
+        assert.ok(error instanceof DeviceCliError);
+        assert.equal(error.code, 'DEVICE_BUSY');
+        if (changed) assert.match(error.message, /requires legacy lease import/);
+        else {
+          assert.equal(error.message, 'Device admission refused: DEVICE_QUARANTINED');
+          assert.doesNotMatch(error.message, /requires legacy lease import/);
+        }
+        return true;
+      });
+    assert.equal(readFileSync(path, 'utf8'), marker);
+    assert.equal(options.admission.inspect(uuid)?.state, 'quarantined');
+    assert.equal(options.admission.readAttempt({ kind: 'legacy', id: 'imported-marker' }), undefined);
+  });
+}
 
 test('UUID lease imports as historical quarantine without changing its source', t => {
   const options = fixture(t);
