@@ -8,8 +8,10 @@ import { isAbsolute, join, resolve } from 'node:path';
 import { z } from 'zod/v4';
 import type { StagedArtifact } from '../observed/artifact.js';
 import type { CreationResult } from '../observed/create-source.js';
-import { componentSchema, componentObservationSchema, type ComponentObservation, commandRequestSchema, fenceRequestSchema } from './admission.js';
+import { recoveryViewSchema, componentSchema, componentObservationSchema, type ComponentObservation, commandRequestSchema, fenceRequestSchema } from './admission.js';
 import type { DeviceCategory, AdmissionDependencies, AdmissionRequest, AdmissionResult, AttemptIdentity, AttemptView, DeviceView, OwnerIdentity, OwnerProcess, TerminalCandidate, GenerationView, CommandRecord, ComponentInput, NativeComponent, CommandRequest, IssueResult, FenceRequest, FenceReceipt, RecoveryIdentity } from './admission.js';
+import { appiumComponentSchema, appiumProofSchema, fenceCommandSchema, parseEffectResult, readOnly, type Transcript } from '../appium/fence/schema.js';
+import { settles, verifyAppiumProof } from '../appium/fence/proof.js';
 import type { MarkerSource } from './admission.js';
 import { BRIDGE_VERSION } from '../version.js';
 import type { UpgradeDeclaration, UpgradeReceipt, UpgradeRecovery, UpgradeCheckpoint, PreservedRecords } from './admission-upgrade.js';
@@ -1132,6 +1134,16 @@ export class AdmissionSqlite {
       if(!isDeepStrictEqual(recovery.owner,expected))throw new AdmissionError('STALE_OWNER','Recovery names another generation');
       this.ownedRecovery(db,recovery);
     } else this.owned(db,expected);
+    const appium = appiumComponentSchema.safeParse(input);
+    const invocation = fenceCommandSchema.safeParse(input);
+    const target = appium.success ? appium.data : invocation.success ? invocation.data.effect : undefined;
+    if (target && 'udid' in target && (expected.category !== 'ios-simulator' || target.udid !== expected.device)) throw new AdmissionError('INVALID_REQUEST','Component names another simulator');
+    if (target && 'serial' in target) {
+      const attempt = db.prepare('SELECT transport FROM attempts WHERE kind=? AND id=?').get(...key(expected.attempt));
+      const transport = z.object({ serial: z.string().min(1) }).safeParse(attempt?.transport ? JSON.parse(String(attempt.transport)) : null);
+      const serial = expected.category === 'android-phone' ? expected.device : expected.category === 'android-emulator' && transport.success ? transport.data.serial : undefined;
+      if (target.serial !== serial) throw new AdmissionError('INVALID_REQUEST','Component names another Android transport');
+    }
     const generation = db.prepare('SELECT dispatch_closed_at FROM owner_generations WHERE id=?').get(ownerId);
     if (!recovery&&generation?.dispatch_closed_at !== null) throw new AdmissionError('DISPATCH_CLOSED','Inventory is closed');
     db.prepare('INSERT INTO components(id,owner_generation_id,platform,device,kind,declaration,registered_at) VALUES (?,?,?,?,?,?,?)')
@@ -1269,7 +1281,7 @@ export class AdmissionSqlite {
       const observations = db.prepare("SELECT command_id,detail FROM transitions WHERE owner_generation_id=? AND event='late-reply' ORDER BY sequence").all(id)
         .map(row => ({ commandId: String(row.command_id), payload: JSON.parse(String(row.detail)) }));
       const recoveries=db.prepare('SELECT * FROM recovery_claims WHERE owner_generation_id=? ORDER BY rowid').all(id)
-        .map(row=>({id:String(row.id),process:JSON.parse(String(row.claimant_process)),closedAt:row.closed_at as number|null,closure:row.closure as 'accepted'|'refused'|'abandoned'|null}));
+        .map(row=>recoveryViewSchema.parse({id:String(row.id),process:JSON.parse(String(row.claimant_process)),closedAt:row.closed_at,closure:row.closure}));
       return { owner: owner(attempt), dispatchClosedAt: generation.dispatch_closed_at, inventoryUnknownReason: generation.inventory_unknown_reason, components, commands, componentObservations, observations, recoveries };
     });
   }
@@ -1293,6 +1305,11 @@ export class AdmissionSqlite {
   }
   markerReleased(expected: OwnerIdentity): boolean {
     return this.read(db=>!!db.prepare('SELECT id FROM fence_receipts WHERE owner_generation_id=?').get(generationId(expected.token,expected.generation)));
+  }
+  readOwnedComponents(identity: { category: DeviceCategory; value: string }): NativeComponent[] {
+    return this.read(db => db.prepare(`SELECT c.* FROM components c WHERE c.platform=? AND c.device=?
+      AND NOT EXISTS(SELECT 1 FROM fence_receipts f WHERE f.owner_generation_id=c.owner_generation_id) ORDER BY c.rowid`)
+      .all(identity.category, identity.value).map(row => ({ id: String(row.id), kind: String(row.kind), declaration: JSON.parse(String(row.declaration)) })));
   }
   readDeviceAttributes(identity: { category: DeviceCategory; value: string }): unknown {
     return this.read(db=>{
@@ -1445,11 +1462,44 @@ export class AdmissionSqlite {
     if (generation.dispatch_closed_at===null || (attempt.terminal===null&&attempt.state!=='parked')) throw new AdmissionError('DISPATCH_OPEN','Dispatch and outcome must close before release');
     if (generation.inventory_unknown_reason!==null) throw new AdmissionError('COVERAGE_UNKNOWN','Native inventory is incomplete');
     if (commands.some(command=>command.state!=='settled'&&!request.commands.includes(command.id))) throw new AdmissionError('COMMANDS_UNFENCED','Non-settled commands are missing from the receipt');
+    const transcripts: Transcript[] = [];
+    for (const command of commands.filter(command => command.state === 'settled' && openRecovery && command.recovery_claim_id === openRecovery.id)) {
+      const invocation = components.find(item => item.id === command.component_id);
+      const declaration = invocation && fenceCommandSchema.safeParse(JSON.parse(String(invocation.declaration)));
+      if (!declaration?.success) continue;
+      const observation = db.prepare('SELECT payload FROM component_observations WHERE owner_generation_id=? AND component_id=?').all(id, invocation!.id)
+        .map(row => JSON.parse(String(row.payload))).find(row => row.commandId === command.id);
+      if (observation) transcripts.push({ id: String(command.id), effect: declaration.data.effect, result: observation.result });
+    }
     for (const component of components) {
+      const fenceCommand = fenceCommandSchema.safeParse(JSON.parse(String(component.declaration)));
       const evidence=request.components.find(item=>item.componentId===component.id)?.proof;
+      if (fenceCommand.success && !(evidence?.kind === 'superseded-read' && readOnly(fenceCommand.data.effect)) && !(evidence?.kind === 'fenced-write' && !readOnly(fenceCommand.data.effect))) {
+        const command = commands.find(command => command.component_id === component.id && command.state === 'settled');
+        const observation = command && db.prepare('SELECT payload FROM component_observations WHERE owner_generation_id=? AND component_id=?').all(id, component.id)
+          .map(row => JSON.parse(String(row.payload))).find(row => row.commandId === command.id);
+        try { if (!observation) throw new Error('Missing result'); parseEffectResult(fenceCommand.data.effect, observation.result); }
+        catch { throw new AdmissionError('COVERAGE_INCOMPLETE','Fence invocation has no validated completion'); }
+      }
       if (!evidence) throw new AdmissionError('COVERAGE_INCOMPLETE','A component has no stop proof');
-      if (evidence.kind==='completed-command') {
-        if (!['one-shot','adb-command'].includes(component.kind) || !commands.some(command=>command.id===evidence.commandId&&command.component_id===component.id&&command.state==='settled') || commands.some(command=>command.component_id===component.id&&command.state!=='settled')) throw new AdmissionError('COVERAGE_INCOMPLETE','One-shot invocation has not completed');
+      const appium = appiumComponentSchema.safeParse(JSON.parse(String(component.declaration)));
+      if (appium.success) {
+        const proof = appiumProofSchema.safeParse(evidence);
+        try {
+          if (!proof.success || !verifyAppiumProof(appium.data, proof.data, transcripts)) throw new Error('Missing proof');
+        } catch { throw new AdmissionError('COVERAGE_INCOMPLETE','Appium stop evidence is missing or unbound'); }
+      } else if (evidence.kind==='superseded-read') {
+        const answer=commands.find(command=>command.id===evidence.commandId&&command.state==='settled'&&openRecovery&&command.recovery_claim_id===openRecovery.id);
+        const answerComponent=answer&&components.find(item=>item.id===answer.component_id);
+        const asked=answerComponent&&fenceCommandSchema.safeParse(JSON.parse(String(answerComponent.declaration)));
+        if (!fenceCommand.success || !readOnly(fenceCommand.data.effect) || !asked?.success || !isDeepStrictEqual(asked.data.effect,fenceCommand.data.effect)) throw new AdmissionError('COVERAGE_INCOMPLETE','A failed read has no later answer from this recovery');
+      } else if (evidence.kind==='fenced-write') {
+        const answer=transcripts.find(transcript=>transcript.id===evidence.commandId);
+        let proven=false;
+        try { proven=!!answer && fenceCommand.success && !readOnly(fenceCommand.data.effect) && exited.has(component.id) && settles(fenceCommand.data.effect,answer); } catch { proven=false; }
+        if (!proven) throw new AdmissionError('COVERAGE_INCOMPLETE','A failed write has no proven executor exit and readback from this recovery');
+      } else if (evidence.kind==='completed-command') {
+        if (!['one-shot','adb-command','appium-fence-command'].includes(component.kind) || !commands.some(command=>command.id===evidence.commandId&&command.component_id===component.id&&command.state==='settled') || commands.some(command=>command.component_id===component.id&&command.state!=='settled')) throw new AdmissionError('COVERAGE_INCOMPLETE','One-shot invocation has not completed');
       } else if (evidence.kind === 'adb-stopped' || evidence.kind === 'android-stream-exited') {
         const declaration=componentSchema.safeParse(JSON.parse(component.declaration));
         const observations=db.prepare('SELECT payload FROM component_observations WHERE owner_generation_id=? AND component_id=?').all(id,component.id)
@@ -1495,10 +1545,10 @@ export class AdmissionSqlite {
           const rows=result.data.stdout.trim()?result.data.stdout.trim().split('\n').map(line=>line.trim().split(/\s+/)):[];
           if (!isDeepStrictEqual(args,['forward','--list']) || result.data.exitCode!==0 || result.data.stderr!=='' || rows.some(row=>row.length!==3) || rows.some(row=>row[0]===target.serial&&row[1]===target.local)) throw new AdmissionError('COVERAGE_INCOMPLETE','Recorded forward removal is not proven');
         } else throw new AdmissionError('COVERAGE_INCOMPLETE','Unsupported Android component');
-      } else {
+      } else if (evidence.kind === 'host-process-exited') {
         const declaration=componentSchema.safeParse(JSON.parse(component.declaration));
         if (!declaration.success || declaration.data.kind!=='host-process' || !isDeepStrictEqual(declaration.data.process,evidence.process) || !exited.has(component.id)) throw new AdmissionError('COVERAGE_INCOMPLETE','Host process exit is not proven');
-      }
+      } else throw new AdmissionError('COVERAGE_INCOMPLETE','Receipt kind differs from component kind');
     }
     if (db.prepare('SELECT id FROM fence_receipts WHERE owner_generation_id=?').get(id)) throw new AdmissionError('UNBOUND_PROOF','A different receipt already covers this generation');
     const receiptId=randomUUID(),acceptedAt=this.options.now?.()??Date.now();
