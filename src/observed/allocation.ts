@@ -1,8 +1,11 @@
 import * as fs from 'node:fs/promises';
 import { isAbsolute, join, dirname, resolve } from 'node:path';
+import { CLEANUP_BUDGET_MS } from '../appium/fence/index.js';
+import { NativeHelperError } from '../appium/native/process.js';
+import { AppiumError } from '../appium/wire-schemas.js';
 import { Admission, AdmissionError } from '../device/admission.js';
 import type { ActionBinding, AllocationRecord, AllocationReservation, AllocationReason, ConsumeAllocationResult } from '../device/admission-allocation.js';
-import { DeviceCliError, deviceWindowOpener, type CliRunner, type DeviceWindowOpener, type IosPreparationDriver } from '../device/index.js';
+import { DeviceCliError, DeviceReasonError, deviceWindowOpener, type CliRunner, type DeviceWindowOpener, type IosPreparationDriver } from '../device/index.js';
 import { createPreparationDriver } from '../device/legacy-factory.js';
 import { inspectArtifact, stageArtifact, verifyStagedArtifact, ArtifactError, type ArtifactRequest } from './artifact.js';
 import { createSimulator, type SourceProcess } from './create-source.js';
@@ -25,6 +28,13 @@ type Job = { actionId: string; digest: string; controller: AbortController; dead
   promise?: Promise<AllocationResult> };
 const stageReasons: Partial<Record<AllocationRecord['phase'], AllocationReason>> = { booting: 'BOOT_FAILED', installing: 'INSTALL_FAILED', launching: 'LAUNCH_FAILED', readiness: 'READINESS_FAILED' };
 class PreparationFailure extends Error { constructor(readonly reason: AllocationReason) { super(reason); } }
+/** An Appium driver step that came back with a refusal. A deadline, a lost reply or a lost helper is never one: its outcome is unknown. */
+function answeredRefusal(error: unknown): boolean {
+  if (error instanceof NativeHelperError) return error.code === 'NATIVE_FAILED';
+  if (error instanceof AppiumError) return !['TIMEOUT', 'ACKNOWLEDGEMENT_LOST', 'CONNECTION_LOST'].includes(error.code);
+  if (error instanceof DeviceReasonError) return !['TIMEOUT', 'STATE_UNAVAILABLE', 'UI_ACTION_UNCONFIRMED'].includes(error.code);
+  return false;
+}
 function abortable<T>(promise: Promise<T>, signal: AbortSignal): Promise<T> {
   if (signal.aborted) return Promise.reject(signal.reason);
   return new Promise((done, fail) => {
@@ -253,6 +263,7 @@ export class ObservedAllocator {
         : error instanceof ArtifactError ? error.reason : error instanceof DeviceCliError && error.terminalAcknowledged
           ? stageReasons[job.phase] ?? 'ADMISSION_REFUSED'
           : job.controller.signal.aborted && job.controller.signal.reason instanceof PreparationFailure ? job.controller.signal.reason.reason
+          : !job.controller.signal.aborted && answeredRefusal(error) ? stageReasons[job.phase] ?? 'ADMISSION_REFUSED'
           : error instanceof AdmissionError ? 'STATE_UNAVAILABLE' : job.phase === 'readiness' ? 'READINESS_FAILED' : 'PREPARATION_UNCONFIRMED';
       if (!job.reservation) {
         if (job.reservationAttempted) {
@@ -265,9 +276,12 @@ export class ObservedAllocator {
       }
       job.driver?.revokeIssuance();
       const finalizationSignal = AbortSignal.timeout(5000);
+      // A driver that fences its components closes under its own budget, as the action service closes one.
+      const cleanupBudgetMs = job.driver?.cleanupBudgetMs;
+      const closeSignal = cleanupBudgetMs === undefined ? finalizationSignal : AbortSignal.timeout(Math.min(cleanupBudgetMs, CLEANUP_BUDGET_MS));
       const finalized = await Promise.allSettled([
         this.persistDiagnostics(job, finalizationSignal),
-        job.driver ? abortable(this.track(job.driver.close(finalizationSignal)), finalizationSignal) : Promise.resolve(),
+        job.driver ? abortable(this.track(job.driver.close(closeSignal)), closeSignal) : Promise.resolve(),
       ]);
       // A deadline wrapper is not proof that the underlying local close settled.
       const alreadyUncertain = ['PREPARATION_UNCONFIRMED', 'CREATE_UNCONFIRMED', 'READINESS_FAILED', 'CANCELLED'].includes(reason);
