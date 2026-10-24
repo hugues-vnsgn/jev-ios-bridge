@@ -8,13 +8,16 @@ import { AppiumError, capabilitiesSchema, platformSchema, type AppiumSessionId, 
 const text = z.string().min(1).max(4096).refine(value => !value.includes('\0'));
 const path = z.enum(['run', 'driven', 'capture', 'attach', 'observed-prepare', 'observed-action']);
 const apkSchema = z.strictObject({ package: text, sha256: z.string().regex(/^[a-f0-9]{64}$/) });
+const port = z.number().int().min(1024).max(65535);
+const DEFAULT_PORTS = Object.freeze({ wdaLocalPort: 18100, mjpegServerPort: 18101, systemPort: 18200 });
 const profileInputSchema = z.discriminatedUnion('platform', [
   z.strictObject({ platform: z.literal('ios'), device: text, path, presentation: z.enum(['visible', 'headless']),
-    simulatorSet: text.refine(isAbsolute).optional() }),
+    simulatorSet: text.refine(isAbsolute).optional(),
+    ports: z.strictObject({ wdaLocalPort: port, mjpegServerPort: port }).refine(ports => ports.wdaLocalPort !== ports.mjpegServerPort).optional() }),
   z.strictObject({ platform: z.literal('android'), device: text, path, serverInstallation: z.discriminatedUnion('kind', [
     z.strictObject({ kind: z.literal('install') }),
     z.strictObject({ kind: z.literal('verified'), device: text, apks: z.array(apkSchema).length(2) }),
-  ]) }),
+  ]), ports: z.strictObject({ systemPort: port }).optional() }),
 ]);
 export type SessionProfileInput = z.infer<typeof profileInputSchema>;
 const profileSchema = z.strictObject({ platform: platformSchema, device: text, path, capabilities: capabilitiesSchema }).brand<'SessionProfile'>();
@@ -30,8 +33,8 @@ export function createSessionProfile(stack: VerifiedStack, input: SessionProfile
     'appium:shouldTerminateApp': false, 'appium:skipLogCapture': true };
   if (selection.platform === 'ios') {
     capabilities = { ...common, platformName: 'iOS', 'appium:automationName': 'XCUITest', 'appium:usePreinstalledWDA': true,
-      'appium:prebuiltWDAPath': stack.wdaRunner, 'appium:wdaLaunchTimeout': 120000, 'appium:wdaLocalPort': 18100,
-      'appium:mjpegServerPort': 18101, 'appium:simulatorPasteboardAutomaticSync': 'system', 'appium:connectHardwareKeyboard': false,
+      'appium:prebuiltWDAPath': stack.wdaRunner, 'appium:wdaLaunchTimeout': 120000, 'appium:wdaLocalPort': selection.ports?.wdaLocalPort ?? DEFAULT_PORTS.wdaLocalPort,
+      'appium:mjpegServerPort': selection.ports?.mjpegServerPort ?? DEFAULT_PORTS.mjpegServerPort, 'appium:simulatorPasteboardAutomaticSync': 'system', 'appium:connectHardwareKeyboard': false,
       'appium:isHeadless': selection.presentation === 'headless',
       ...(selection.simulatorSet === undefined ? {} : { 'appium:simulatorDevicesSetPath': selection.simulatorSet }) };
   } else {
@@ -41,7 +44,7 @@ export function createSessionProfile(stack: VerifiedStack, input: SessionProfile
       if (installation.device !== selection.device || expected.length !== 2 || !expected.every(apk => installation.apks.some(installed => installed.package === apk.package && installed.sha256 === apk.sha256)))
         throw new AppiumError('NOT_ALLOWED');
     }
-    capabilities = { ...common, platformName: 'Android', 'appium:automationName': 'UiAutomator2', 'appium:systemPort': 18200,
+    capabilities = { ...common, platformName: 'Android', 'appium:automationName': 'UiAutomator2', 'appium:systemPort': selection.ports?.systemPort ?? DEFAULT_PORTS.systemPort,
       'appium:mjpegServerPort': 0, 'appium:dontStopAppOnReset': true, 'appium:forceAppLaunch': false,
       'appium:skipDeviceInitialization': true, 'appium:skipServerInstallation': installation.kind === 'verified', 'appium:skipUnlock': true,
       'appium:skipLogcatCapture': true, 'appium:suppressKillServer': true, 'appium:autoGrantPermissions': false,
