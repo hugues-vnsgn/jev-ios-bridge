@@ -379,6 +379,7 @@ class OwnedClaim implements AdmissionClaim {
   issue(request: CommandRequest): IssueResult { return this.store.issue(this.identity, request); }
   markInventoryUnknown(reason: string): void { this.store.markInventoryUnknown(this.identity, reason); }
   stageFence(request: FenceRequest): void { this.staged = request; }
+  stagedFence(): FenceRequest | undefined { return this.staged; }
   private close(): void { this.closed = true; for (const callback of this.closers.splice(0)) callback(); }
   bindDriver(backend: 'real' | 'fake' = 'real'): AdmittedSession {
     if (this.closed || this.parentClosed() || this.attached) throw new AdmissionError('DISPATCH_CLOSED', 'Claim is closed or already attached');
@@ -537,6 +538,7 @@ class OwnedReservation implements AllocationReservation {
   readonly identity: AllocationOwner;
   readonly snapshot: AllocationRecord;
   private closed = false;
+  private admitted: OwnedClaim | undefined;
   constructor(private readonly store: AdmissionSqlite, snapshot: AllocationRecord) {
     this.snapshot = structuredClone(snapshot); this.identity = Object.freeze({ ...snapshot.owner, process: Object.freeze({ ...snapshot.owner.process }) });
   }
@@ -560,11 +562,12 @@ class OwnedReservation implements AllocationReservation {
     if (this.closed) throw new AdmissionError('DISPATCH_CLOSED', 'Reservation is closed');
     const result = this.store.admitAllocation(this.identity);
     if (result.kind !== 'admitted') return result;
-    return { kind: 'admitted', claim: new OwnedClaim(this.store, result.owner, () => this.closed) };
+    this.admitted = new OwnedClaim(this.store, result.owner, () => this.closed);
+    return { kind: 'admitted', claim: this.admitted };
   }
   fail(reason: AllocationReason, evidenceRefs: string[] = [], fence?: FenceRequest): AllocationCommit {
     this.closed = true;
-    try { return { authority: 'committed', allocation: this.store.failAllocation(this.identity, reason, evidenceRefs, fence) }; }
+    try { return { authority: 'committed', allocation: this.store.failAllocation(this.identity, reason, evidenceRefs, fence ?? this.admitted?.stagedFence()) }; }
     catch (error) { if (!(error instanceof AdmissionError) || error.code === 'STATE_UNAVAILABLE') return { authority: 'unconfirmed', reason: 'STATE_UNAVAILABLE' }; throw error; }
   }
 }

@@ -57,3 +57,48 @@ test('a later effect filed under an existing fence component is refused, and the
   assert.equal(f.admission.inspect(UDID)?.state, 'active');
   void early;
 });
+
+const digest = 'a'.repeat(64);
+async function failingPreparation(t: TestContext) {
+  const root = realpathSync(mkdtempSync(join(tmpdir(), 'appium-owner-fail-')));
+  t.after(() => rmSync(root, { recursive: true, force: true }));
+  const admission = Admission.forTesting({ root, backend: 'fake', durability: 'fast' });
+  const reserved = admission.reserveAllocation({ actionId: 'one', preparationDigest: digest, preparation: {}, appBundleId: 'dev.fixture',
+    source: { kind: 'supplied', inventoryId: 'one', udid: UDID, deviceTypeId: 'device', runtimeId: 'runtime',
+      creation: { createdAt: 'fixture', origin: 'fixture', evidenceRef: '/isolated/creation' }, attestation: { freshUnused: true, exclusive: true } },
+    inspectedContentDigest: digest, artifactBytes: 100, configVersion: 1, configDigest: digest, evidenceDirectory: '/isolated/preparation',
+    budgets: { maxRetainedAllocations: 8, maxConcurrentPreparations: 1, reservationBytesPerAllocation: 800, maxReservedBytes: 6400,
+      minFreeBytes: 2000, maxArtifactBytes: 200, createTimeoutMs: 60000, bootTimeoutMs: 120000, installTimeoutMs: 120000,
+      launchTimeoutMs: 30000, readinessTimeoutMs: 30000, readyTtlMs: 300000, timeoutMs: 360000 },
+    storage: { simulatorFreeBytes: 10000, stagingFreeBytes: 10000 } });
+  if (reserved.kind !== 'reserved') assert.fail('reserve');
+  const reservation = reserved.reservation;
+  reservation.stage({ stagedPath: '/isolated/Fixture.app', contentDigest: digest, bytes: 100, maxBytes: 200,
+    metadata: { bundleId: 'dev.fixture', executable: 'Fixture', architecture: 'arm64', minimumOSVersion: '27.0', build: { id: 'fixture', origin: 'fixture' } } });
+  const admitted = reservation.admit();
+  if (admitted.kind !== 'admitted') assert.fail('admit');
+  const claim = admitted.claim;
+  const session = claim.bindDriver('fake');
+  for (const operation of ['boot', 'install', 'launch']) await session.dispatch(operation, async () => true);
+  claim.registerComponent(JSON.parse(JSON.stringify({ id: 'wda', kind: 'appium-wda', udid: UDID, bundleId: WDA, pid: 777 })));
+  const fenceClaim: FenceClaim = { owner: claim.identity, dispatch: session.dispatch.bind(session), observeComponent: claim.observeComponent.bind(claim) };
+  const runner: FenceRunner = async effect => { if (effect.kind === 'wda-inventory') return []; throw new Error(`Unexpected ${effect.kind}`); };
+  return { admission, reservation, claim, fence: () => fenceAppium({ admission, claim: fenceClaim, runner, revalidate: async () => {}, signal: live() }) };
+}
+
+test('a failed preparation releases through the fence its claim staged', async t => {
+  const f = await failingPreparation(t);
+  f.claim.stageFence(await f.fence());
+  const failed = f.reservation.fail('LAUNCH_FAILED');
+  assert.equal(failed.authority, 'committed');
+  assert.deepEqual(failed.authority === 'committed' ? [failed.allocation.state, failed.allocation.outcome] : [], ['retained', 'refused']);
+  assert.equal(f.admission.inspect(UDID)?.state, 'available');
+});
+
+test('a failed preparation whose Appium components have no proof is quarantined, never left preparing', async t => {
+  const f = await failingPreparation(t);
+  const failed = f.reservation.fail('LAUNCH_FAILED');
+  assert.equal(failed.authority, 'committed');
+  assert.deepEqual(failed.authority === 'committed' ? [failed.allocation.state, failed.allocation.outcome] : [], ['quarantined', 'uncertain']);
+  assert.equal(f.admission.inspect(UDID)?.state, 'quarantined');
+});

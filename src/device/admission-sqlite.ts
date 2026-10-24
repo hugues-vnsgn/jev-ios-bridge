@@ -836,26 +836,38 @@ export class AdmissionSqlite {
   }
   failAllocation(expected: AllocationOwner, reason: AllocationReason, evidenceRefs: string[], fence?: FenceRequest): AllocationRecord {
     return this.write('failAllocation', db => {
-      const record = this.ownedAllocation(db, expected);
-      if (record.state !== 'preparing') throw new AdmissionError('DISPATCH_CLOSED', 'Preparation has ended');
-      const attempt = db.prepare("SELECT * FROM attempts WHERE kind='preparation' AND id=?").get(record.allocationId) as Row | undefined;
-      const unfinished = db.prepare("SELECT id FROM commands WHERE kind='preparation' AND attempt_id=? AND state!='settled'").get(record.allocationId);
-      const dispatched = db.prepare("SELECT id FROM commands WHERE kind='preparation' AND attempt_id=?").get(record.allocationId);
-      const uncertain = record.phase === 'creating' || !!unfinished || (record.cancellationRequested && !!dispatched)
+      const current = this.ownedAllocation(db, expected);
+      if (current.state !== 'preparing') throw new AdmissionError('DISPATCH_CLOSED', 'Preparation has ended');
+      const attempt = db.prepare("SELECT * FROM attempts WHERE kind='preparation' AND id=?").get(current.allocationId) as Row | undefined;
+      const unfinished = db.prepare("SELECT id FROM commands WHERE kind='preparation' AND attempt_id=? AND state!='settled'").get(current.allocationId);
+      const dispatched = db.prepare("SELECT id FROM commands WHERE kind='preparation' AND attempt_id=?").get(current.allocationId);
+      const uncertain = current.phase === 'creating' || !!unfinished || (current.cancellationRequested && !!dispatched)
         || ['PREPARATION_UNCONFIRMED','CREATE_UNCONFIRMED','READINESS_FAILED'].includes(reason);
-      if (record.phase==='creating') db.prepare("UPDATE owner_generations SET inventory_unknown_reason='unknown-creation' WHERE id=? AND inventory_unknown_reason IS NULL").run(generationId(expected.token,expected.generation));
-      record.state = uncertain ? 'quarantined' : 'retained'; record.outcome = uncertain ? 'uncertain' : 'refused'; record.reason = reason;
-      if (record.phase === 'reserved' && !dispatched && !attempt) record.capacityHeld = false;
-      record.phase = 'terminal'; record.evidenceRefs = [...evidenceRefs]; this.saveAllocation(db, record);
-      if (attempt) {
-        this.terminal(db, attempt, { outcome: uncertain ? 'inconclusive' : 'refused', disposition: uncertain ? 'quarantined' : 'available', payload: { reason }, evidenceRefs });
-        if (!uncertain) this.acceptFence(db,owner(attempt),this.releaseProof(db,owner(attempt),fence),new Set());
-      } else {
-        const ownerId=generationId(expected.token,expected.generation);
-        db.prepare('UPDATE owner_generations SET dispatch_closed_at=? WHERE id=? AND dispatch_closed_at IS NULL').run(this.options.now?.()??Date.now(),ownerId);
-        db.prepare("UPDATE commands SET state='uncertain' WHERE owner_generation_id=? AND state='outstanding'").run(ownerId);
+      if (current.phase==='creating') db.prepare("UPDATE owner_generations SET inventory_unknown_reason='unknown-creation' WHERE id=? AND inventory_unknown_reason IS NULL").run(generationId(expected.token,expected.generation));
+      const conclude = (uncertain: boolean): AllocationRecord => {
+        const record = this.ownedAllocation(db, expected);
+        record.state = uncertain ? 'quarantined' : 'retained'; record.outcome = uncertain ? 'uncertain' : 'refused'; record.reason = reason;
+        if (record.phase === 'reserved' && !dispatched && !attempt) record.capacityHeld = false;
+        record.phase = 'terminal'; record.evidenceRefs = [...evidenceRefs]; this.saveAllocation(db, record);
+        if (attempt) {
+          this.terminal(db, attempt, { outcome: uncertain ? 'inconclusive' : 'refused', disposition: uncertain ? 'quarantined' : 'available', payload: { reason }, evidenceRefs });
+          if (!uncertain) this.acceptFence(db,owner(attempt),this.releaseProof(db,owner(attempt),fence),new Set());
+        } else {
+          const ownerId=generationId(expected.token,expected.generation);
+          db.prepare('UPDATE owner_generations SET dispatch_closed_at=? WHERE id=? AND dispatch_closed_at IS NULL').run(this.options.now?.()??Date.now(),ownerId);
+          db.prepare("UPDATE commands SET state='uncertain' WHERE owner_generation_id=? AND state='outstanding'").run(ownerId);
+        }
+        return record;
+      };
+      if (uncertain || !attempt) return conclude(uncertain);
+      // A release whose proof the store refuses becomes a quarantine, so a failed preparation never stays preparing.
+      db.exec('SAVEPOINT fail_release');
+      try { const released = conclude(false); db.exec('RELEASE fail_release'); return released; }
+      catch (error) {
+        if (!(error instanceof AdmissionError)) throw error;
+        db.exec('ROLLBACK TO fail_release'); db.exec('RELEASE fail_release');
+        return conclude(true);
       }
-      return record;
     });
   }
   private attemptAllocation(db: DatabaseSync, identity: AttemptIdentity): AllocationRecord | undefined {
