@@ -83,7 +83,12 @@ export class FakeFence {
 export function driverFixture(t: TestContext, recording: (root: string) => string, options: Partial<AppiumDriverOptions> & Pick<AppiumDriverOptions, 'target' | 'identityProbe'>, fault = 'none',
   nativeReply?: (command: NativeCommand) => string | undefined) {
   const root = realpathSync(mkdtempSync(join(tmpdir(), 'appium-driver-')));
-  t.after(() => rmSync(root, { recursive: true, force: true }));
+  const drivers: AppiumDriver[] = [];
+  // One hook, close before removal: a live fake child writes under root, so removing first can throw and skip the close.
+  t.after(async () => {
+    for (const opened of drivers) await opened.close(AbortSignal.timeout(30_000)).catch(() => undefined);
+    rmSync(root, { recursive: true, force: true, maxRetries: 5, retryDelay: 50 });
+  });
   for (const name of ['homes', 'logs', 'shots', 'locks', 'admission']) mkdirSync(join(root, name), { mode: 0o700 });
   const admission = options.admission ?? Admission.forTesting({ root: join(root, 'admission'), backend: 'fake', durability: 'fast' });
   const trace = join(root, 'trace.jsonl');
@@ -95,7 +100,8 @@ export function driverFixture(t: TestContext, recording: (root: string) => strin
     startLookup: pid => `host-${String(pid)}`, runMarker: () => '0123456789abcdef0123456789abcdef', runId: 'run-1', timeoutMs: 20_000,
     child: { entrypoint: resolve('tests/fixtures/appium-wire/fake-mcp.ts'), args: [recording(root), fault, trace, join(root, 'environment.json')], nodeArgs: ['--import', import.meta.resolve('tsx')] },
     ...options });
+  drivers.push(driver);
   const calls = () => { try { return readFileSync(trace, 'utf8').trim().split('\n').map(line => JSON.parse(line) as { method?: string; params?: { name?: string; arguments?: Record<string, unknown> } }); } catch { return []; } };
   const tools = () => calls().filter(call => call.method === 'tools/call').map(call => call.params!.name!);
-  return { root, admission, driver, fence, native, trace, calls, tools };
+  return { root, admission, driver, drivers, fence, native, trace, calls, tools };
 }

@@ -224,6 +224,7 @@ test('observed preparation deletes its session before park and keeps the app; th
   if (consumed.kind !== 'consumed') throw new Error('consume');
   const executor = driverFixture(t, observeRecording, ios, 'none');
   const action = new AppiumDriver({ ...executor.driver['options'], admission: f.admission });
+  executor.drivers.push(action);
   await action.attachObserved(consumed.claim, observedContext, live());
   assert.deepEqual(executor.native.calls, [], 'no launch, console or log stream');
   assert.deepEqual(executor.tools(), ['appium_session_management', 'jev_settings']);
