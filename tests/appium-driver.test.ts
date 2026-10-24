@@ -1,7 +1,9 @@
 import assert from 'node:assert/strict';
 import { existsSync, writeFileSync } from 'node:fs';
 import { test } from 'node:test';
+import { join } from 'node:path';
 import { setTimeout as delay } from 'node:timers/promises';
+import { freeHostPort } from '../src/appium/ports.js';
 import { fakeSimulatorProbe } from './fixtures/android-device.js';
 import { UDID, WDA_BUNDLE, driverFixture, rewriteRecording } from './fixtures/appium-wire/driver-fixture.js';
 
@@ -60,4 +62,39 @@ test('close settles an in-flight observation before the session delete, so the c
   await closing;
   assert.deepEqual(f.tools().slice(-3), ['jev_screen', 'jev_terminate_app', 'appium_session_management']);
   assert.equal(f.admission.inspect({ category: 'ios-simulator', value: UDID })!.state, 'available');
+});
+
+test('two simulators run at once on distinct host ports, each recorded in its own session profile', async t => {
+  const other = 'ABCDEF00-0000-4000-8000-000000000002';
+  const probe = fakeSimulatorProbe(UDID, other);
+  const device = (udid: string) => {
+    let root = ''; const got: number[] = [];
+    const recording = (at: string) => { root = at; return join(at, 'recording.jsonl'); };
+    const freePort = async () => {
+      got.push(await freeHostPort());
+      if (got.length === 2) rewriteRecording(root, 'tests/fixtures/appium-wire/ios/observe-2.jsonl', [['ios-test', udid],
+        ['wdaLocalPort\\":18100', `wdaLocalPort\\":${String(got[0])}`], ['mjpegServerPort\\":18101', `mjpegServerPort\\":${String(got[1])}`]]);
+      return got.at(-1)!;
+    };
+    return { recording, freePort };
+  };
+  const a = device(UDID); const b = device(other);
+  const first = driverFixture(t, a.recording, { ...ios, identityProbe: probe, freePort: a.freePort });
+  const second = driverFixture(t, b.recording, { target: { platform: 'ios', device: other, presentation: 'visible' }, identityProbe: probe,
+    freePort: b.freePort, admission: first.admission, runId: 'run-2' });
+  await Promise.all([first.driver.prepare({ app: { bundleId: 'example.app' } }, live()), second.driver.prepare({ app: { bundleId: 'example.app' } }, live())]);
+  const ports = (f: typeof first) => {
+    const created = f.calls().find(call => call.params?.name === 'appium_session_management')!.params!.arguments!.capabilities as unknown as string;
+    const capabilities = JSON.parse(created) as Record<string, number>;
+    return [capabilities['appium:wdaLocalPort']!, capabilities['appium:mjpegServerPort']!];
+  };
+  const used = [...ports(first), ...ports(second)];
+  assert.equal(new Set(used).size, 4, `four distinct host ports: ${used.join(', ')}`);
+  assert.equal(used.some(port => port === 18100 || port === 18101), false, 'no fixed Phase 2 port');
+  assert.equal(first.admission.inspect({ category: 'ios-simulator', value: UDID })!.state, 'active');
+  assert.equal(first.admission.inspect({ category: 'ios-simulator', value: other })!.state, 'active');
+  await Promise.all([first.driver.observe(live()), second.driver.observe(live())]);
+  await Promise.all([first.driver.close(live()), second.driver.close(live())]);
+  assert.equal(first.admission.inspect({ category: 'ios-simulator', value: UDID })!.state, 'available');
+  assert.equal(first.admission.inspect({ category: 'ios-simulator', value: other })!.state, 'available');
 });
