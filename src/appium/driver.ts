@@ -365,7 +365,8 @@ export class AppiumDriver implements DeviceDriver, IosPreparationDriver, Observe
     const revalidate = (serial: string) => this.revalidate(identity, serial, signal);
     const acquired = await admission.acquireWithAppiumRecovery({ category: identity.category, device: identity.value, attempt: { kind: 'legacy', id: this.runId },
       digest: createHash('sha256').update(JSON.stringify({ intent, runId: this.runId })).digest('hex'), intent, signal,
-      ...(identity.category !== 'ios-simulator' ? { transport: identity.transport } : {}),
+      // Every caller has passed readyTransport, so the state is `device`, as AndroidDriver records it.
+      ...(identity.category !== 'ios-simulator' ? { transport: { serial: identity.transport.serial, state: 'device' as const } } : {}),
       ...(identity.category === 'android-emulator' ? { provenance: identity.provenance } : {}) }, { runner: this.options.fence, revalidate, signal });
     if (acquired.kind !== 'acquired') {
       throw new DeviceReasonError(acquired.kind === 'refused' && acquired.reason === 'DEVICE_QUARANTINED' ? 'DEVICE_QUARANTINED' : 'DEVICE_BUSY',
