@@ -29,7 +29,7 @@ import { AppiumOperations, UnconfirmedOperationError, type OperationName } from 
 import { allocateHostPorts, portComponents, type FreePort, type HostPorts } from './ports.js';
 import { AppiumCommandSession, createSessionProfile, type SessionProfile, type SessionProfileInput } from './session.js';
 import { StackError, type VerifiedStack } from './stack.js';
-import { AppiumError, CLIENT_SDK, EXTENSION_VERSION, type AppiumPlatform } from './wire-schemas.js';
+import { AppiumError, CLIENT_SDK, EXTENSION_VERSION } from './wire-schemas.js';
 
 /** The device one driver instance serves. Chosen per command by the composition, never inside the driver. */
 export type AppiumTarget =
