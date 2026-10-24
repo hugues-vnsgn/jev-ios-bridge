@@ -45,3 +45,15 @@ test('an owner fence read issued before a later effect is refused: the device is
     (error: unknown) => error instanceof AdmissionError && error.code === 'COVERAGE_INCOMPLETE');
   assert.notEqual(f.admission.inspect(UDID)?.state, 'available');
 });
+
+test('a later effect filed under an existing fence component is refused, and the early fence never releases the device', async t => {
+  const f = owner(t);
+  const early = await f.fence();
+  const fenceComponent = f.admission.readGeneration(f.claim.identity).components.find(component => component.kind === 'appium-fence-command')!.id;
+  await assert.rejects(async () => f.session.dispatch({ requestId: 'late-tap', componentId: fenceComponent, operation: 'tap', payload: {} }, async () => undefined),
+    (error: unknown) => error instanceof AdmissionError && error.code === 'INVALID_REQUEST');
+  const reused = f.admission.readGeneration(f.claim.identity).commands.filter(command => command.componentId === fenceComponent);
+  assert.equal(reused.length, 1, 'a fence component carries exactly one command');
+  assert.equal(f.admission.inspect(UDID)?.state, 'active');
+  void early;
+});

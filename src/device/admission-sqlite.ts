@@ -1226,6 +1226,7 @@ export class AdmissionSqlite {
     const id = randomUUID(), componentId=input?.componentId??id;
     if (input) {
       if (!db.prepare('SELECT id FROM components WHERE id=? AND owner_generation_id=?').get(componentId,ownerId)) throw new AdmissionError('INVALID_REQUEST','Command component is not registered');
+      this.assertFenceComponentUse(db, ownerId, componentId, input);
     } else db.prepare('INSERT INTO components(id,owner_generation_id,platform,device,kind,declaration,registered_at) VALUES (?,?,?,?,?,?,?)')
       .run(id,ownerId,expected.category,expected.device,'one-shot',JSON.stringify({ id,kind:'one-shot',operation }),this.options.now?.()??Date.now());
     db.prepare("INSERT INTO commands(id,kind,attempt_id,token,generation,operation,state,platform,device,owner_generation_id,component_id,origin,request_id,request_digest) VALUES (?,?,?,?,?,?,'outstanding',?,?,?,?,'native',?,?)")
@@ -1414,6 +1415,14 @@ export class AdmissionSqlite {
     });
     return {requestId:'terminal-completion',kind:'stop',commands:[],components};
   }
+  /** A fence component carries exactly one command, the one whose own request declared it, so no later effect can
+   *  be filed under a fence read and hide from the owner's ordering check. */
+  private assertFenceComponentUse(db: DatabaseSync, ownerId: string, componentId: string, input: CommandRequest): void {
+    const component=db.prepare('SELECT kind FROM components WHERE id=? AND owner_generation_id=?').get(componentId,ownerId);
+    if (component?.kind!=='appium-fence-command') return;
+    if (input.operation!=='appium-fence' || !input.components?.some(item=>item.id===componentId)
+      || db.prepare('SELECT id FROM commands WHERE owner_generation_id=? AND component_id=?').get(ownerId,componentId)) throw new AdmissionError('INVALID_REQUEST','A fence component carries only its own fence command');
+  }
   /** The terminal receipt: a caller's fence proofs, with completed-command proofs for every component it leaves out. */
   private releaseProof(db: DatabaseSync, expected: OwnerIdentity, fence?: FenceRequest): FenceRequest {
     const completion=this.completionProof(db,expected);
@@ -1424,21 +1433,30 @@ export class AdmissionSqlite {
   /**
    * With no recovery open, an owner's own fence commands are transcripts only when each was authorized after every
    * other command of its generation settled, by transition order. A read taken before the last effect never counts.
+   * A fence command is an `appium-fence` command alone on the fence component its own request declared.
    */
-  private ownerFenceCommands(db: DatabaseSync, components: Row[], commands: Row[]): Set<string> {
-    const fences=new Set(components.filter(component=>component.kind==='appium-fence-command').map(component=>String(component.id)));
-    const others=commands.filter(command=>!fences.has(String(command.component_id)));
+  private ownerFenceCommands(db: DatabaseSync, expected: OwnerIdentity, components: Row[], commands: Row[]): Set<string> {
+    const fenceComponents=new Set(components.filter(component=>component.kind==='appium-fence-command').map(component=>String(component.id)));
+    const isFence=(command:Row)=>command.operation==='appium-fence'&&fenceComponents.has(String(command.component_id))
+      &&commands.filter(other=>other.component_id===command.component_id).length===1;
+    const others=commands.filter(command=>!isFence(command));
     if (others.some(command=>command.state!=='settled')) return new Set();
-    const sequence=(event:string,field:string,command:unknown)=>db.prepare(`SELECT sequence FROM transitions WHERE event=? AND json_extract(detail,'$.${field}')=? ORDER BY sequence LIMIT 1`).get(event,String(command))?.sequence as number|undefined;
+    const authorized=new Map<string,number>(), settled=new Map<string,number>();
+    for (const row of db.prepare("SELECT sequence,event,detail FROM transitions WHERE kind=? AND attempt_id=? AND event IN ('authorized','settled') ORDER BY sequence").all(...key(expected.attempt))) {
+      const detail=JSON.parse(String(row.detail)) as { id?: unknown; command?: unknown };
+      const command=row.event==='authorized'?detail.id:detail.command;
+      const seen=row.event==='authorized'?authorized:settled;
+      if (typeof command==='string'&&!seen.has(command)) seen.set(command,Number(row.sequence));
+    }
     let last=0;
     // An allocation's own command (creation) has no attempt; admission required it settled, so it precedes them all.
     for (const other of others.filter(command=>command.kind!==null)) {
-      const settled=sequence('settled','command',other.id);
-      if (settled===undefined) return new Set();
-      last=Math.max(last,settled);
+      const at=settled.get(String(other.id));
+      if (at===undefined) return new Set();
+      last=Math.max(last,at);
     }
-    return new Set(commands.filter(command=>fences.has(String(command.component_id))&&command.recovery_claim_id===null&&command.state==='settled'
-      &&(sequence('authorized','id',command.id)??0)>last).map(command=>String(command.id)));
+    return new Set(commands.filter(command=>isFence(command)&&command.recovery_claim_id===null&&command.state==='settled'
+      &&(authorized.get(String(command.id))??0)>last).map(command=>String(command.id)));
   }
   submitFence(expected: OwnerIdentity, request: FenceRequest, exited: ReadonlySet<string>, recovery?:RecoveryIdentity): FenceReceipt {
     return this.write('receipt',db=>this.acceptFence(db,expected,request,exited,recovery));
@@ -1481,7 +1499,7 @@ export class AdmissionSqlite {
     if (generation.inventory_unknown_reason!==null) throw new AdmissionError('COVERAGE_UNKNOWN','Native inventory is incomplete');
     if (commands.some(command=>command.state!=='settled'&&!request.commands.includes(command.id))) throw new AdmissionError('COMMANDS_UNFENCED','Non-settled commands are missing from the receipt');
     const transcripts: Transcript[] = [];
-    const ownerFences = openRecovery ? undefined : this.ownerFenceCommands(db, components, commands);
+    const ownerFences = openRecovery ? undefined : this.ownerFenceCommands(db, expected, components, commands);
     for (const command of commands.filter(command => command.state === 'settled' && (openRecovery ? command.recovery_claim_id === openRecovery.id : ownerFences!.has(String(command.id))))) {
       const invocation = components.find(item => item.id === command.component_id);
       const declaration = invocation && fenceCommandSchema.safeParse(JSON.parse(String(invocation.declaration)));
@@ -1641,6 +1659,7 @@ export class AdmissionSqlite {
     const id=randomUUID(),componentId=input?.componentId??id;
     if(input) {
       if(!db.prepare('SELECT id FROM components WHERE id=? AND owner_generation_id=?').get(componentId,ownerId))throw new AdmissionError('INVALID_REQUEST','Recovery component is not registered');
+      this.assertFenceComponentUse(db, ownerId, componentId, input);
     } else db.prepare('INSERT INTO components(id,owner_generation_id,platform,device,kind,declaration,registered_at) VALUES (?,?,?,?,?,?,?)')
       .run(id,ownerId,owner.category,owner.device,'one-shot',JSON.stringify({id,kind:'one-shot',operation}),this.options.now?.()??Date.now());
     db.prepare("INSERT INTO commands(id,kind,attempt_id,token,generation,operation,state,platform,device,owner_generation_id,component_id,recovery_claim_id,origin,request_id,request_digest) VALUES (?,?,?,?,?,?,'outstanding',?,?,?,?,?,'native',?,?)")
