@@ -9,7 +9,7 @@ flowchart LR
     Host[Host agent] -->|One complete script| Bridge[Mobile Scenario Verification]
     Bridge -->|Session and command calls| Device[Frozen Appium stack, iOS and Android]
     Device -->|Fresh snapshots and acknowledgements| Bridge
-    Bridge -->|Owned native helpers: launch, logs, boot, install| Native[simctl, log stream, adb]
+    Bridge -->|Owned native helpers for launch, logs, boot and install| Native[simctl, log stream, adb]
     Native -->|App output, state and results| Bridge
     Bridge -->|Current screen and claims| Jev[TypeSafe Jev]
     Jev -->|Assertion probabilities| Bridge
