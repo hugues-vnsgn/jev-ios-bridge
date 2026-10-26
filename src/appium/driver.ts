@@ -313,7 +313,7 @@ export class AppiumDriver implements DeviceDriver, IosPreparationDriver, Observe
       const installed = await this.options.identityProbe.simulatorApp({ deviceSet: identity.deviceSet, udid: identity.value, bundleId: app.id, signal });
       if (installed.kind === 'missing') throw refusal('DEVICE_ERROR', `App ${app.id} is not installed on simulator ${identity.value}`, 'APP_NOT_INSTALLED');
     } else readyTransport(identity);
-    const owner = await this.admit(identity, { app, start: scenario.start ?? 'restart' }, signal);
+    const owner = await this.admit(identity, { app, start: scenario.start ?? 'restart', ...(this.options.profile ? { profile: this.options.profile } : {}) }, signal);
     this.phase = { kind: 'admitted', owner, role, app };
     try {
       await this.refuseForeign(owner, signal);
