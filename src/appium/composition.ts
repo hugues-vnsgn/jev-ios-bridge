@@ -53,8 +53,16 @@ async function privateFolder(folder: string): Promise<string> {
   return await privateLogFolder(folder) ?? mkdtemp(join(tmpdir(), `${basename(folder)}-`));
 }
 
+/** A frozen stack that failed its check: refused before any device work, with the code a run reports. */
+export class StackRefusalError extends DeviceReasonError {
+  constructor(error: StackError) {
+    super('DEVICE_ERROR', error.message, { vendorCode: error.code, vendorSource: 'bridge' });
+    this.name = 'StackRefusalError';
+  }
+}
+
 function stackRefusal(error: unknown): unknown {
-  return error instanceof StackError ? new DeviceReasonError('DEVICE_ERROR', error.message, { vendorCode: error.code, vendorSource: 'bridge' }) : error;
+  return error instanceof StackError ? new StackRefusalError(error) : error;
 }
 
 export type ComposedDriverOptions = {

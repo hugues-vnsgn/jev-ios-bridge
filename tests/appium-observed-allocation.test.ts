@@ -136,7 +136,10 @@ test('a simctl install whose result is lost (NATIVE_OUTCOME_UNKNOWN) stays PREPA
 
 test('a damaged frozen stack during preparation is HOST_PREREQUISITE_MISSING, not ADMISSION_REFUSED, with no device effect and the device released', async t => {
   const { f, w, allocator } = await appiumAllocator(t, { stackRefused: 'STACK_MANIFEST_MISMATCH' });
-  assert.deepEqual(terminal(await allocator.prepare(f.request())), refused('HOST_PREREQUISITE_MISSING'));
+  const result = await allocator.prepare(f.request());
+  assert.deepEqual(terminal(result), refused('HOST_PREREQUISITE_MISSING'));
+  const diagnostics = await readFile(join(f.admission.readAllocation(String((result as { allocationId: string }).allocationId))!.evidenceDirectory, 'source-diagnostics.json'), 'utf8');
+  assert.ok(diagnostics.includes('"code":"DEVICE_ERROR","vendorCode":"STACK_MANIFEST_MISMATCH"'), diagnostics);
   assert.deepEqual([w.native.calls, w.opened], [[], []]);
   assert.equal(f.admission.inspect(fixtureDevice)?.state, 'available');
 });

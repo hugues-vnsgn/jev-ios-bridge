@@ -1,5 +1,6 @@
 import * as fs from 'node:fs/promises';
 import { isAbsolute, join, dirname, resolve } from 'node:path';
+import { StackRefusalError } from '../appium/composition.js';
 import { CLEANUP_BUDGET_MS } from '../appium/fence/index.js';
 import { NativeHelperError } from '../appium/native/process.js';
 import { AppiumError } from '../appium/wire-schemas.js';
@@ -149,7 +150,8 @@ export class ObservedAllocator {
     if (job.diagnosticsClosed || job.controller.signal.aborted) return;
     try {
       const bounded = (value: string) => Buffer.from(value).subarray(0, 16384).toString('utf8');
-      const value = outcome instanceof Error ? { operation, error: bounded(outcome.message), ...(outcome instanceof DeviceCliError ? { code: bounded(outcome.code), terminalAcknowledged: outcome.terminalAcknowledged } : {}) }
+      const value = outcome instanceof Error ? { operation, error: bounded(outcome.message), ...(outcome instanceof DeviceCliError ? { code: bounded(outcome.code), terminalAcknowledged: outcome.terminalAcknowledged } : {}),
+        ...(outcome instanceof DeviceReasonError ? { code: outcome.code, ...(outcome.vendorCode !== undefined ? { vendorCode: bounded(outcome.vendorCode) } : {}) } : {}) }
         : { operation, exitCode: (outcome as { exitCode: number | null }).exitCode,
           stdout: bounded((outcome as { stdout: string }).stdout), stderr: bounded((outcome as { stderr: string }).stderr) };
       const entry = JSON.stringify(value);
@@ -258,7 +260,8 @@ export class ObservedAllocator {
     } catch (error) {
       this.diagnostic(job, 'preparation/' + job.phase, error); job.diagnosticsClosed = true;
       const reason = error instanceof PreparationFailure ? error.reason : error instanceof AllocationPrerequisiteError ? error.reason
-        : error instanceof ArtifactError ? error.reason : error instanceof DeviceCliError && error.terminalAcknowledged
+        : error instanceof ArtifactError ? error.reason : error instanceof StackRefusalError ? 'HOST_PREREQUISITE_MISSING'
+        : error instanceof DeviceCliError && error.terminalAcknowledged
           ? stageReasons[job.phase] ?? 'ADMISSION_REFUSED'
           : job.controller.signal.aborted && job.controller.signal.reason instanceof PreparationFailure ? job.controller.signal.reason.reason
           : !job.controller.signal.aborted && answeredRefusal(error) ? stageReasons[job.phase] ?? 'ADMISSION_REFUSED'
