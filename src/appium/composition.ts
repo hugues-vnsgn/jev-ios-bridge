@@ -66,14 +66,13 @@ function stackRefusal(error: unknown): unknown {
   return error instanceof StackError ? new StackRefusalError(error) : error;
 }
 
+/** A run or capture names its device; a preparation or observed driver drives the device its admission claim holds. */
 export type ComposedDriverOptions = {
   host: AppiumHost;
-  target?: () => Promise<AppiumTarget>;
   deviceWindow?: DeviceWindowOpener;
-  admission?: Admission;
   runId?: string;
   profile?: ProfileBinding;
-};
+} & ({ target: () => Promise<AppiumTarget>; admission?: Admission } | { target?: never; admission: Admission });
 
 export class ComposedAppiumDriver implements DeviceDriver, IosPreparationDriver, ObservedActionDriver {
   readonly tapAliasRule = 'same-frame-buttons-v1' as const;
