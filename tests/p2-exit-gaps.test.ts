@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict';
 import { execFileSync, spawn } from 'node:child_process';
-import { mkdirSync, mkdtempSync, realpathSync, readFileSync, rmSync, writeFileSync, statSync } from 'node:fs';
+import { mkdirSync, mkdtempSync, realpathSync, readFileSync, writeFileSync, statSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { test, type TestContext } from 'node:test';
@@ -11,12 +11,13 @@ import { identityProbe } from '../src/device/android/probe.js';
 import { recoverAndroid } from '../src/device/android/recovery.js';
 import type { LogcatStarter } from '../src/device/android/logcat.js';
 import { bounded } from './fixtures/admission-race-harness.js';
+import { killLater, teardown } from './fixtures/teardown.js';
 import { fakeProbeSpawn } from './fixtures/adb-spawn.js';
 import { FakeAdb, FakeStreams } from './fixtures/android-device.js';
 
 function fixture(t: TestContext) {
   const root = realpathSync(mkdtempSync(join(tmpdir(), 'p2-exit-gaps-')));
-  t.after(() => rmSync(root, { recursive: true, force: true }));
+  teardown(t, root);
   mkdirSync(join(root, 'admission'), { mode: 0o700 });
   const admission = Admission.forTesting({ root: join(root, 'admission'), backend: 'fake', durability: 'full' });
   return { root, admission, database: () => readFileSync(join(root, 'admission/admission.sqlite')) };
@@ -39,10 +40,8 @@ async function owner(t: TestContext, root: string, mode: string, name = '', comp
   const closed = new Promise<{ code: number | null; signal: NodeJS.Signals | null }>(resolve => child.once('close', (code, signal) => {
     resolve({ code, signal }); for (const wake of waiting) wake();
   }));
-  t.after(async () => {
-    if (child.exitCode === null && child.signalCode === null) child.kill('SIGKILL');
-    await bounded(`${mode} owner cleanup`, closed);
-  });
+  killLater(t, child);
+  t.after(async () => { await bounded(`${mode} owner cleanup`, closed); });
   async function next(kind: z.infer<typeof messageSchema>['kind']) {
     let wake = () => {};
     try {
@@ -95,10 +94,8 @@ async function hostProcess(t: TestContext, label: string) {
   const child = spawn(process.execPath, ['-e', "process.on('message', () => {}); process.send('ready');"],
     { stdio: ['ignore', 'ignore', 'ignore', 'ipc'], env: {} });
   const closed = new Promise<void>(resolve => child.once('close', () => resolve()));
-  t.after(async () => {
-    if (child.exitCode === null && child.signalCode === null) child.kill('SIGKILL');
-    await bounded(`E10 ${label} cleanup`, closed);
-  });
+  killLater(t, child);
+  t.after(async () => { await bounded(`E10 ${label} cleanup`, closed); });
   await bounded(`E10 ${label} started`, new Promise<void>((resolve, reject) => {
     child.once('error', reject);
     child.once('close', () => reject(new Error(`${label} exited before ready`)));

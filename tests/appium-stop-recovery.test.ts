@@ -6,6 +6,7 @@ import { join } from 'node:path';
 import { spawn, spawnSync } from 'node:child_process';
 import { once } from 'node:events';
 import { fileURLToPath } from 'node:url';
+import { teardown } from './fixtures/teardown.js';
 
 // Phase 1's agreed seam: a controllable bridge process and its durable replies.
 // This disposable journal is neither admission authority nor a device lease.
@@ -59,17 +60,14 @@ test('partial native evidence cannot settle uncertainty or publish a released le
 
 test('stopping the owned process group ends a surviving child and leaves an independent process alive', async t => {
   const directory = mkdtempSync(join(tmpdir(), 'appium-group-stop-'));
-  t.after(() => rmSync(directory, { recursive: true, force: true }));
   const launcher = fileURLToPath(new URL('../.scratch/appium-mcp-migration/candidate-stack/experiments/owned-launcher.py', import.meta.url));
   const stop = fileURLToPath(new URL('../.scratch/appium-mcp-migration/candidate-stack/experiments/stop-group.py', import.meta.url));
   const fixture = fileURLToPath(new URL('./fixtures/appium-stop-group.mjs', import.meta.url));
   const owner = join(directory, 'owner.json');
   const foreign = spawn(process.execPath, ['-e', 'setInterval(() => {}, 1000)'], { stdio: 'ignore' });
-  t.after(() => foreign.kill('SIGKILL'));
   const child = spawn('python3', [launcher, owner, process.execPath, fixture], { stdio: ['ignore', 'pipe', 'pipe'] });
-  t.after(() => {
+  teardown(t, directory, [child, foreign], () => {
     if (existsSync(owner)) spawnSync('python3', [stop, owner], { timeout: 15_000 });
-    if (child.exitCode === null && child.signalCode === null) child.kill('SIGKILL');
   });
   const ready = await Promise.race([once(child.stdout!, 'data'), once(child, 'exit').then(() => { throw new Error('Owned launcher exited before readiness'); })]);
   const helper = JSON.parse(String(ready[0])).helperPid;
@@ -105,13 +103,12 @@ test('the native shutdown helper refuses a foreign simulator before probing or c
 
 test('a bridge waits for a competing SQLite writer before closing dispatch', async t => {
   const directory = mkdtempSync(join(tmpdir(), 'appium-journal-contention-'));
-  t.after(() => rmSync(directory, { recursive: true, force: true }));
   call(directory, 'initialize', { runId: 'contended', platform: 'ios', device: 'private-device' });
   const fixture = fileURLToPath(new URL('./fixtures/appium-journal-writer.mjs', import.meta.url));
   // The controlled external writer holds a real SQLite lock. Assertions stay
   // at the bridge's public process boundary; no stored outcome is queried.
   const peer = spawn(process.execPath, [fixture, directory], { stdio: ['ignore', 'ignore', 'pipe', 'ipc'] });
-  t.after(() => { if (peer.exitCode === null && peer.signalCode === null) peer.kill('SIGKILL'); });
+  teardown(t, directory, [peer]);
   const ready = await Promise.race([once(peer, 'message'), once(peer, 'exit').then(() => { throw new Error('Writer exited before holding its lock'); })]);
   assert.deepEqual(ready[0], { holding: true });
   call(directory, 'close');
