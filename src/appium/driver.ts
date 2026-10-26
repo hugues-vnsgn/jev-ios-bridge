@@ -686,7 +686,7 @@ export class AppiumDriver implements DeviceDriver, IosPreparationDriver, Observe
     if (!open) return;
     // Only a real open failure is a warning: one cut short by cancellation or closed issuance has an unknown outcome.
     const opened = await this.dispatch(owner, 'window', signal, 10_000, issued => open(owner.identity.value, issued).then(() => true, () => {
-      if (issued.aborted) throw issued.reason;
+      if (signal.aborted) throw signal.reason;
       if (this.issuanceClosed) throw new AdmissionError('DISPATCH_CLOSED', 'Device issuance is closed');
       return false;
     }));

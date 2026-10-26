@@ -389,7 +389,7 @@ export class ScriptValueError extends Error {
  */
 export function resolveScriptValues(script: ScriptedScenarioSource,
   env: Readonly<Record<string, string | undefined>>): ScriptedScenario {
-    const values: Record<string, string> = {};
+  const values: Record<string, string> = {};
   for (const [key, value] of Object.entries(script.values)) {
     if (typeof value === 'string') { values[key] = value; continue; }
     const text = Object.hasOwn(env, value.fromEnv) ? env[value.fromEnv] : undefined;

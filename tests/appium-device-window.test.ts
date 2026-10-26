@@ -42,3 +42,14 @@ test('a window open cut short by the run\'s cancellation is no warning: the prep
   assert.deepEqual(f.driver.prepareWarnings(), []);
   assert.equal(f.native.calls.length, 0, 'nothing is launched');
 });
+
+test('a window open that outlives its own deadline is a prepare warning and the device is released', async t => {
+  const deviceWindow: DeviceWindowOpener = (_udid, signal) => new Promise((_done, reject) => {
+    signal.addEventListener('abort', () => { reject(new Error('open was killed')); }, { once: true });
+  });
+  const f = worldFixture(t, home, { ...iosTarget, deviceWindow });
+  await f.driver.prepare({ app: { bundleId: 'example.app' } }, live());
+  assert.deepEqual(f.driver.prepareWarnings(), ['Simulator window not opened: Simulator could not be opened on the run\'s device.']);
+  await f.driver.close(live());
+  assert.equal(f.admission.inspect(IOS_DEVICE)!.state, 'available');
+});
