@@ -72,7 +72,8 @@ export type ComposedDriverOptions = {
   deviceWindow?: DeviceWindowOpener;
   runId?: string;
   profile?: ProfileBinding;
-} & ({ target: () => Promise<AppiumTarget>; admission?: Admission } | { target?: never; admission: Admission });
+} & ({ target: () => Promise<AppiumTarget>; admission?: Admission; targetWarnings?: readonly string[] }
+  | { target?: never; admission: Admission; targetWarnings?: never });
 
 export class ComposedAppiumDriver implements DeviceDriver, IosPreparationDriver, ObservedActionDriver {
   readonly tapAliasRule = 'same-frame-buttons-v1' as const;
@@ -144,7 +145,7 @@ export class ComposedAppiumDriver implements DeviceDriver, IosPreparationDriver,
   appProblem(): AppProblem | undefined { return this.driver?.appProblem(); }
   logSources(): LogSources { return this.driver?.logSources() ?? {}; }
   preparation(): DevicePreparation | undefined { return this.driver?.preparation(); }
-  prepareWarnings(): string[] { return this.driver?.prepareWarnings() ?? []; }
+  prepareWarnings(): string[] { return this.driver ? [...this.options.targetWarnings ?? [], ...this.driver.prepareWarnings()] : []; }
   provenance(): StackProvenance { return this.live().provenance(); }
 
   revokeIssuance(): void { this.revoked = true; this.driver?.revokeIssuance(); }
