@@ -7,7 +7,8 @@ import { setTimeout as delay } from 'node:timers/promises';
 import { freeHostPort } from '../src/appium/ports.js';
 import { fenceEffectSchema } from '../src/appium/fence/schema.js';
 import type { DeviceDriver } from '../src/contracts/index.js';
-import { AppiumDriver } from '../src/appium/driver.js';
+import { AppiumDriver, appiumFailure } from '../src/appium/driver.js';
+import { AppiumError } from '../src/appium/wire-schemas.js';
 import { Admission, type OwnerIdentity } from '../src/device/admission.js';
 import { NativeHelperError } from '../src/appium/native/process.js';
 import { createRunLog } from '../src/log/index.js';
@@ -522,4 +523,15 @@ test('D4: an automation forward the store does not own makes an Android command 
   await assert.rejects(f.driver.prepare({ app: androidApp }, live()), (error: unknown) => error instanceof DeviceReasonError && error.code === 'DEVICE_BUSY');
   assert.deepEqual([f.calls(), f.native.calls, f.fence.forwards], [[], [], [{ serial: SERIAL, local: 'tcp:18300', remote: 'tcp:6790' }]]);
   assert.equal(f.fence.effects.some(effect => effect.kind === 'settings-read' || effect.kind === 'forward-remove'), false);
+});
+
+test('a failure names its true source: the bridge for its own client and extension refusals, adb for an Android helper, Appium for the driver', () => {
+  const source = (error: unknown, platform: 'ios' | 'android') => {
+    const mapped = appiumFailure(error, platform);
+    return mapped instanceof DeviceReasonError ? [mapped.vendorCode, mapped.vendorSource] : mapped;
+  };
+  assert.deepEqual(['SESSION_MISMATCH', 'VERSION_MISMATCH', 'NOT_ALLOWED', 'DRIVER_ERROR'].map(code => source(new AppiumError(code as never), 'ios')),
+    [['SESSION_MISMATCH', 'bridge'], ['VERSION_MISMATCH', 'bridge'], ['NOT_ALLOWED', 'bridge'], ['DRIVER_ERROR', 'appium']]);
+  assert.deepEqual([source(new NativeHelperError('NATIVE_FAILED', 'adb failed'), 'android'), source(new NativeHelperError('NATIVE_FAILED', 'simctl failed'), 'ios')],
+    [['NATIVE_FAILED', 'adb'], ['NATIVE_FAILED', 'bridge']]);
 });

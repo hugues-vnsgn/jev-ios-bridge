@@ -372,7 +372,7 @@ test('MCP start_scenario and get_report on the Appium composition: report.json k
     const failed = await finish(iosScript);
     assert.deepEqual(Object.keys(failed.report).sort(), goldenKeys('appiumDeviceError'));
     assert.deepEqual([failed.report.verdict, failed.report.reason, failed.report.error], ['inconclusive', 'DEVICE_ERROR',
-      { code: 'DEVICE_ERROR', phase: 'act', stepId: 'type', vendorCode: 'NOT_ALLOWED', vendorSource: 'appium' }]);
+      { code: 'DEVICE_ERROR', phase: 'act', stepId: 'type', vendorCode: 'NOT_ALLOWED', vendorSource: 'bridge' }]);
   } finally { await session.close(); }
 });
 
