@@ -1,7 +1,7 @@
 ---
 status: accepted
 date: 2026-10-12
-implementation: not-started
+implementation: in-progress
 ---
 
 # Shared admission and evidenced native fencing

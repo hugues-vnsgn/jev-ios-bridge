@@ -1,7 +1,7 @@
 ---
 status: accepted
 date: 2026-10-19
-implementation: not-started
+implementation: in-progress
 ---
 
 # Forward-only offline admission store upgrades

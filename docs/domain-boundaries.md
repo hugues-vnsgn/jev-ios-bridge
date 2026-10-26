@@ -13,7 +13,7 @@ One bounded context, **iOS Scenario Verification**, owns the scenario, script, g
 | Execute scenarios and justify verdicts | Core | The bridge owns the run and verification policy |
 | Prepare the app and coordinate device access | Supporting | Modules within the verification context, using the external device layer |
 | Store and present evidence in reports and watch views | Supporting | Modules within the verification context; sufficient evidence to justify a verdict remains a core responsibility |
-| Supply judgments, device automation, and MCP transport | External services or generic infrastructure | Jev, MobileBuildMCP, and the MCP implementation supply these capabilities |
+| Supply judgments, device automation, and MCP transport | External services or generic infrastructure | Jev, the frozen Appium stack, and the MCP implementation supply these capabilities |
 
 The bridge's verification policy owns the verdict. Jev supplies judgments. The device layer supplies captures and action results. Reports and watch views present the recorded outcome without recomputing it. An unsuccessful tap supplies execution evidence; the policy decides whether it warrants failed or inconclusive. The scripted policy distinguishes false assertions from uncertain judgments and execution failures; see [Step-loop policy](../.scratch/jev-ios-bridge/issues/11-step-loop-policy.md).
 
@@ -26,7 +26,7 @@ The bridge is the only owned bounded context. External boxes show the suppliers 
 ```mermaid
 flowchart LR
     Jev["Jev<br/>(generic, external vendor)"]
-    DeviceLayer["MobileBuildMCP<br/>(generic, external device layer)"]
+    DeviceLayer["Frozen Appium stack<br/>(generic, external device layer)"]
     Verification["iOS Scenario Verification<br/>(core, bridge-owned context)"]
     Host["Host agent<br/>(external consumer)"]
 
@@ -40,7 +40,7 @@ An ACL, or anti-corruption layer, translates a supplier's model into the bridge'
 | Boundary | What crosses it | Basis for the inferred relationship |
 | --- | --- | --- |
 | Jev and bridge | Observation state and typed questions go out; judgments come back | The bridge interprets vendor answer types under its own policy. Jev does not own the verdict. See [architecture](architecture.md) |
-| Device layer and bridge | Device requests go out; snapshots, screenshots, action results, and log pointers come back | The device driver isolates vendor details, including temporary element references. See [ADR-0002](adr/0002-mobilebuildmcp-as-device-layer.md) |
+| Device layer and bridge | Device requests go out; snapshots, screenshots, action results, and log pointers come back | The Appium driver isolates vendor details, including temporary element references. See [ADR-0010](adr/0010-appium-mcp-as-the-shared-device-layer.md), which replaces the provider choices in [ADR-0002](adr/0002-mobilebuildmcp-as-device-layer.md) and [ADR-0006](adr/0006-mobilecli-device-agent-as-android-device-layer.md) at cutover |
 | Bridge and host agent | The host submits a scenario; the bridge returns a report with verdict and evidence | The bridge defines a common tool contract for hosts to consume. Schemas and call patterns are recorded in [Tool surface](../.scratch/jev-ios-bridge/issues/15-tool-surface.md) |
 
 The run log, report, and watch view stay inside the verification context. Their data flow does not establish another bounded context or imply event sourcing. The app under test and device are the objects being exercised through the device layer; this map does not model the app's own business domain.

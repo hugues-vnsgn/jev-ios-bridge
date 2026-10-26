@@ -1,7 +1,7 @@
 ---
 status: accepted
 date: 2026-10-12
-implementation: not-started
+implementation: in-progress
 ---
 
 # Appium MCP as the shared device layer
