@@ -1,5 +1,12 @@
 # Changelog
 
+## Unreleased
+
+- Both platforms move to one frozen Appium stack, replacing MobileBuildMCP on iOS and mobilecli's device agent on Android. WebDriverAgent drives iOS, and UiAutomator2 with `adb` drives Android.
+- The stack ships as release archives and is checked by hash and unpacked offline on first use. iOS is qualified on iOS 26.5 with Xcode 27.0; other versions warn and continue.
+- The admission store becomes the device authority for every entry point. A compatibility marker file still tells an older binary that a device is busy.
+- Not released. Live iOS and Android acceptance, and the cutover, are still to come. The published release, v1.4.0, drives devices through MobileBuildMCP and mobilecli's device agent.
+
 ## 1.4.0 — 2026-10-11
 
 - Experimental observed iOS actions, durable admission and bounded simulator allocation.
