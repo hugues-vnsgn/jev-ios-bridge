@@ -2,7 +2,7 @@
 
 `plugin.json` here is the plugin's manifest, without its version. `npm run build:plugin` (from `scripts/build-plugin.mjs`) turns it into a plugin that Claude Code installs from a GitHub release:
 
-- `build/plugin/jev-ios-bridge/`: the plugin root, with `dist/`, the guide, the `/test-ios` and `/test-android` skills, and a runtime-only `package.json` and lockfile;
+- `build/plugin/jev-ios-bridge/`: the plugin root, with `dist/`, the guide, the `/test-ios` and `/test-android` skills, the frozen stack's release archives (`stack/release`), the WebDriverAgent provenance record (`stack/wda/provenance.json`), `THIRD_PARTY_NOTICES.md`, and a runtime-only `package.json` and lockfile;
 - `build/plugin/jev-ios-bridge-plugin-<version>.zip`: that folder, zipped;
 - `build/plugin/marketplace.json`: an `archive` source for the zip's release URL, pinned by its SHA-256.
 
