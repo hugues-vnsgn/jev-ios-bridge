@@ -131,7 +131,7 @@ test('scripted v1 on Android: activity and intent extras restart through the ext
   const f = worldFixture(t, world('android', androidScreens, flow), phone.options, phone.nativeReply);
   const { b, done, events, report, again } = await runTwice(t, f, androidScript, world('android', androidScreens, flow));
   assert.deepEqual([done.report.verdict, done.report.reason], ['passed', 'ALL_CHECKPOINTS_PASSED']);
-  assert.deepEqual(authorized(f.admission, 'run-1'), { 'android-wake': 1, 'appium-observe': 3, 'appium-replace-text': 1, 'appium-restart': 1,
+  assert.deepEqual(authorized(f.admission, 'run-1'), { 'android-preflight-api': 1, 'android-preflight-boot': 1, 'android-preflight-installed': 1, 'android-wake': 1, 'appium-observe': 3, 'appium-replace-text': 1, 'appium-restart': 1,
     'appium-session-create': 1, 'appium-tap': 2, 'appium-terminate': 1 });
   const wire = f.toolCalls();
   assert.deepEqual(wire.find(call => call.params!.name === 'jev_start_activity')!.params!.arguments, { extensionVersion: 1, sessionId: 'android-session',

@@ -86,6 +86,7 @@ type Phase =
 type AppIdentity = { id: string; launchArgs?: string[]; activity?: string; intentExtras?: Record<string, string> };
 
 const DEFAULT_TIMEOUT_MS = 120_000;
+const MIN_ANDROID_API = 31;
 const UIAUTOMATOR2_PACKAGES = ['io.appium.uiautomator2.server', 'io.appium.uiautomator2.server.test'];
 const refusal = (code: DeviceReasonError['code'], message: string, vendorCode?: string) =>
   new DeviceReasonError(code, message, vendorCode === undefined ? {} : { vendorCode, vendorSource: 'bridge' });
@@ -322,7 +323,7 @@ export class AppiumDriver implements DeviceDriver, IosPreparationDriver, Observe
     try {
       await this.refuseForeign(owner, signal);
       let helpers: IosHelpers | undefined;
-      if (identity.category !== 'ios-simulator') await this.prepareAndroidDevice(owner, signal);
+      if (identity.category !== 'ios-simulator') await this.prepareAndroidDevice(owner, app.id, signal);
       else if (role === 'run') {
         await this.openWindow(owner, signal);
         helpers = await this.dispatch(owner, 'launch', signal, this.timeoutMs, issued => this.launchIos(owner, app, issued));
@@ -353,7 +354,7 @@ export class AppiumDriver implements DeviceDriver, IosPreparationDriver, Observe
     this.phase = { kind: 'admitted', owner, role: 'capture', app };
     try {
       await this.refuseForeign(owner, signal);
-      await this.prepareAndroidDevice(owner, signal);
+      await this.prepareAndroidDevice(owner, undefined, signal);
       const command = await this.openSession(owner, 'capture', signal);
       this.phase = { kind: 'live', owner, role: 'capture', app, command: { ...command, launched: false } };
       if (this.closing) throw new AdmissionError('DISPATCH_CLOSED', 'The driver is closing');
@@ -520,9 +521,28 @@ export class AppiumDriver implements DeviceDriver, IosPreparationDriver, Observe
     }, options);
   }
 
-  private async prepareAndroidDevice(owner: Owner, signal: AbortSignal): Promise<void> {
+  /** The legacy device checks, in their order, as recorded reads before any effect: API level, boot, then the app installed.
+   *  Capture names no app, so it skips the installed check. */
+  private async preflightAndroid(owner: Owner, serial: string, appPackage: string | undefined, signal: AbortSignal): Promise<void> {
+    const read = async (operation: string, words: string[]) => {
+      const reply = await this.androidShell(owner, operation, serial, words, signal);
+      if (reply.exitCode !== 0) throw new DeviceReasonError('DEVICE_ERROR', `adb could not run ${words.join(' ')} on ${serial}`, { vendorCode: 'NATIVE_FAILED', vendorSource: 'adb' });
+      return reply.stdout.trim();
+    };
+    const api = Number(await read('android-preflight-api', ['getprop', 'ro.build.version.sdk']));
+    if (!Number.isInteger(api) || api < MIN_ANDROID_API) {
+      throw new DeviceReasonError('DEVICE_UNSUPPORTED', `Device ${serial} runs API ${String(api)}; the bridge needs Android 12 (API 31) or later`);
+    }
+    if (await read('android-preflight-boot', ['getprop', 'sys.boot_completed']) !== '1') throw new DeviceReasonError('DEVICE_NOT_BOOTED', `Device ${serial} hasn't finished booting`);
+    if (appPackage === undefined) return;
+    const installed = await this.androidShell(owner, 'android-preflight-installed', serial, ['pm', 'path', appPackage], signal);
+    if (!/^package:/m.test(installed.stdout)) throw new DeviceReasonError('APP_NOT_INSTALLED', `${appPackage} isn't installed on ${serial}`);
+  }
+
+  private async prepareAndroidDevice(owner: Owner, appPackage: string | undefined, signal: AbortSignal): Promise<void> {
     if (owner.identity.category === 'ios-simulator') return;
     const serial = owner.identity.transport.serial;
+    await this.preflightAndroid(owner, serial, appPackage, signal);
     const values = await this.fenceRead(owner, fenceEffectSchema.parse({ kind: 'settings-read', serial }), signal);
     this.register(owner, appiumComponentSchema.parse({ id: randomUUID(), kind: 'appium-settings', serial, values }));
     const helpers = androidNativeHelpers({ serial, runner: this.nativeRunnerFor(owner), timeoutMs: Math.min(this.timeoutMs, 10_000) });
