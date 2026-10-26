@@ -21,7 +21,7 @@ const OLD_PID_STOPPED = ['2026-10-24 10:00:00.400  1000  1100 I am_kill : [0,410
   '2026-10-24 10:00:00.410  1000  1100 I am_proc_died: [0,4100,example.app,900,17]'];
 
 type Started = { args: string[]; output: LogcatOutput; pid: number; stops: number; feed(line: string): void; append(text: string): void };
-function fakeLogcat(options: { refuse?: (args: string[]) => boolean; unconfirmed?: boolean } = {}) {
+function fakeLogcat(options: { refuse?: (args: string[]) => boolean; unconfirmed?: boolean; noIncarnation?: boolean } = {}) {
   const started: Started[] = [];
   const starter: LogcatStarter = {
     async start(args, output) {
@@ -34,7 +34,7 @@ function fakeLogcat(options: { refuse?: (args: string[]) => boolean; unconfirmed
         feed: line => { if (typeof output === 'function') output(line); },
         append: text => { if (typeof output === 'string') appendFileSync(output, text); } };
       started.push(entry);
-      return { pid, process: { pid, incarnation: `logcat-${String(pid)}` }, exited,
+      return { pid, ...(options.noIncarnation ? {} : { process: { pid, incarnation: `logcat-${String(pid)}` } }), exited,
         async stop() { entry.stops++; if (options.unconfirmed) throw new Error(`logcat ${String(pid)} did not exit`); end(); } };
     },
     async isLeftover() { return false; },
@@ -171,4 +171,13 @@ test('a stream whose stop is unconfirmed fails the close, quarantines, and a rec
   const attempt = f.admission.readAttempt({ kind: 'legacy', id: 'run-1' })!;
   assert.deepEqual([attempt.terminal?.outcome, attempt.terminal?.disposition, f.admission.readGeneration(attempt.owner).recoveries.length,
     f.admission.inspect(ANDROID_DEVICE)!.state], ['inconclusive', 'quarantined', 1, 'available'], 'a recovery claim fenced the registered streams before release');
+});
+
+test('a stream whose process cannot be identified stops it and fails the prepare with a typed DEVICE_ERROR', async t => {
+  const logcat = fakeLogcat({ noIncarnation: true });
+  const f = phone(t, logcat);
+  await assert.rejects(f.driver.prepare({ app: { package: 'example.app', activity: '.Main' } }, live()),
+    (error: unknown) => error instanceof DeviceReasonError && error.code === 'DEVICE_ERROR' && error.vendorCode === 'STREAM_UNIDENTIFIED' && error.vendorSource === 'bridge');
+  assert.deepEqual(logcat.started.map(entry => entry.stops), [1]);
+  assert.equal(f.tools().includes('jev_start_activity'), false, 'the app is not launched');
 });

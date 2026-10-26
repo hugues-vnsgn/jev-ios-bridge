@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict';
 import { test } from 'node:test';
-import type { DeviceWindowOpener } from '../src/device/index.js';
+import { DeviceReasonError, type DeviceWindowOpener } from '../src/device/index.js';
 import { IOS_DEVICE, authorized, iosTarget } from './fixtures/appium-wire/matrix.js';
 import { UDID } from './fixtures/appium-wire/driver-fixture.js';
 import { iosScreen, world, worldFixture } from './fixtures/appium-wire/world.js';
@@ -28,4 +28,17 @@ test('a window that will not open is a prepare warning: the run goes on and the 
   assert.equal((await f.driver.observe(live())).elements.find(element => element.identifier === 'home')?.label, 'Home');
   await f.driver.close(live());
   assert.equal(f.admission.inspect(IOS_DEVICE)!.state, 'available');
+});
+
+test('a window open cut short by the run\'s cancellation is no warning: the prepare stops with the cancellation', async t => {
+  const controller = new AbortController();
+  const deviceWindow: DeviceWindowOpener = (_udid, signal) => new Promise((_done, reject) => {
+    signal.addEventListener('abort', () => { reject(new Error('open was killed')); }, { once: true });
+    controller.abort(new DeviceReasonError('TIMEOUT', 'The run was cancelled'));
+  });
+  const f = worldFixture(t, home, { ...iosTarget, deviceWindow });
+  await assert.rejects(f.driver.prepare({ app: { bundleId: 'example.app' } }, controller.signal),
+    (error: unknown) => error instanceof DeviceReasonError && error.code === 'TIMEOUT' && error.message === 'The run was cancelled');
+  assert.deepEqual(f.driver.prepareWarnings(), []);
+  assert.equal(f.native.calls.length, 0, 'nothing is launched');
 });
