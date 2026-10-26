@@ -2,13 +2,15 @@
 
 Version 1.4.0 adds experimental observed iOS actions. Code/package checks passed; the planned live simulator acceptance was not completed. See the [release notes](https://github.com/hugues-vnsgn/jev-ios-bridge/blob/v1.4.0/docs/releases/v1.4.0.md).
 
-Check an iOS or Android app the way a person reads its screen. You write a script of taps, typing, swipes and waits, with checkpoints such as "The order total reads $5". The bridge runs it on an iOS simulator through [MobileBuildMCP](https://github.com/getsentry/MobileBuildMCP), or on an Android emulator or phone through `adb` and its own copy of [mobilecli](https://github.com/mobile-next/mobilecli)'s device agent. At each checkpoint, TypeSafe's Jev model reads the screen's text and judges the claims. You get one verdict, passed, failed or inconclusive, with screenshots and a log behind it.
+Check an iOS or Android app the way a person reads its screen. You write a script of taps, typing, swipes and waits, with checkpoints such as "The order total reads $5". The bridge runs it through its own frozen copy of [Appium](https://appium.io): WebDriverAgent on an iOS simulator, UiAutomator2 and `adb` on an Android emulator or phone. At each checkpoint, TypeSafe's Jev model reads the screen's text and judges the claims. You get one verdict, passed, failed or inconclusive, with screenshots and a log behind it.
+
+The published release, v1.4.0, still drives devices through MobileBuildMCP on iOS and through `adb` and its own copy of [mobilecli](https://github.com/mobile-next/mobilecli)'s device agent on Android. The next release switches both platforms to the Appium stack.
 
 Jev is the point. It costs $0.042 per million input tokens, so judging a screen costs about a hundredth of a cent, and a saved script of taps reruns from the terminal with no Claude in the loop. Scripts live in your app's repository and work for SwiftUI, UIKit, Compose Multiplatform, Jetpack Compose and Android Views apps. Claude Code writes and runs them through the plugin's `/jev-ios-bridge:test-ios` and `/jev-ios-bridge:test-android` skills.
 
 ```text
-script ─► bridge ─► MobileBuildMCP ─► iOS simulator
-            ├─► adb + device agent ─► Android emulator or phone
+script ─► bridge ─► Appium ─► iOS simulator (WebDriverAgent)
+            │        └─────► Android emulator or phone (UiAutomator2, adb)
             │  at each checkpoint: screen text + claims ─► Jev ─► probabilities
             │  in a do step (experimental): screen text + step ─► Jev ─► next action
             └─► verdict · report.json · screenshots · run.jsonl · live log pane
@@ -56,9 +58,9 @@ To keep Claude's share down now:
 
 ## Requirements
 
-For **v1.4.0**, you need a Mac, Node 24 or later, a TypeSafe API key, and Claude Code for the plugin setup below.
+You need a Mac on Apple silicon, Node 24 or later, a TypeSafe API key, and Claude Code for the plugin setup below. Another Mac is refused before any device work.
 
-- **iOS:** Xcode and an iOS simulator runtime.
+- **iOS:** Xcode 27.0 and the iOS 26.5 simulator runtime, the pair the frozen WebDriverAgent is qualified on. Any other iOS or Xcode version warns and the run continues. The first run unpacks the frozen stack, about 375 MB, under `~/Library/Application Support/jev-ios-bridge/`.
 - **Android:** Android Studio, the SDK's `adb` and emulator on your `PATH`, and a device on Android 12 (API 31) or later. See [Android setup](docs/guide/12-android-setup.md).
 
 Pick [an existing project](#install-in-an-existing-project) or [a brand-new one](#start-a-brand-new-project). For the terminal only, follow the [CLI quickstart](docs/guide/01-quickstart.md#1-install-the-bridge-into-your-project); the package ships as a GitHub release tarball.
