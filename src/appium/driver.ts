@@ -1,5 +1,5 @@
 import { createHash, randomBytes, randomUUID } from 'node:crypto';
-import { mkdtemp, writeFile } from 'node:fs/promises';
+import { mkdtemp, rm, writeFile } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { isActOutcome, isIosApp, type Action, type ActionScenarioContext, type ActOutcome, type ActPath, type AppProblem, type DeviceDriver,
@@ -275,7 +275,7 @@ export class AppiumDriver implements DeviceDriver, IosPreparationDriver, Observe
       await this.stopCommand(live.command, undefined, signal);
       claim.stageFence(await this.fenceOwn(live.owner, signal));
       return claim.park(readinessEvidence, evidenceRefs);
-    } finally { this.phase = { kind: 'closed' }; }
+    } finally { this.phase = { kind: 'closed' }; await this.discardScreenshots(); }
   }
 
   revokeIssuance(): void {
@@ -802,6 +802,12 @@ export class AppiumDriver implements DeviceDriver, IosPreparationDriver, Observe
     return result;
   }
 
+  /** A folder the driver made holds only its own screenshots; the run's evidence copied each one as it was recorded. */
+  private async discardScreenshots(): Promise<void> {
+    if (this.options.screenshotFolder !== undefined || !this.screenshots) return;
+    await this.screenshots.then(folder => rm(folder, { recursive: true, force: true })).catch(() => undefined);
+  }
+
   private async guarded<T>(signal: AbortSignal, work: () => Promise<T>): Promise<T> {
     signal.throwIfAborted();
     if (this.issuanceClosed) throw new AdmissionError('DISPATCH_CLOSED', 'Device issuance is closed');
@@ -886,6 +892,11 @@ export class AppiumDriver implements DeviceDriver, IosPreparationDriver, Observe
    *  A clean close fences its own components after its last effect and releases the device; only real uncertainty
    *  quarantines it for a recovery claim. An observed claim stages its fence for the runtime's terminal. */
   private async finishClose(signal: AbortSignal, settle: boolean): Promise<void> {
+    try { await this.closeOwned(signal, settle); }
+    finally { await this.discardScreenshots(); }
+  }
+
+  private async closeOwned(signal: AbortSignal, settle: boolean): Promise<void> {
     let failure: unknown;
     try { if (settle) await this.operations.settle(signal); }
     catch (error) { failure = error; }
