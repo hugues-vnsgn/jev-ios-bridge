@@ -159,7 +159,7 @@ export function driverFixture(t: TestContext, recording: (root: string) => strin
   let port = 18100;
   const driver = new AppiumDriver({ stack: driverStack(t), admission, backend: 'fake', homeRoot: join(root, 'homes'), logFolder: join(root, 'logs'),
     screenshotFolder: join(root, 'shots'), lockRoot: join(root, 'locks'), fence: fence.run, nativeRunner: native.runner, freePort: async () => port++,
-    startLookup: pid => `host-${String(pid)}`, runMarker: () => '0123456789abcdef0123456789abcdef', runId: 'run-1', timeoutMs: 20_000, fenceClock: virtualClock(),
+    startLookup: pid => `host-${String(pid)}`, runMarker: () => '0123456789abcdef0123456789abcdef', runId: 'run-1', timeoutMs: 20_000, fenceClock: virtualClock(), presentation: async () => 'visible',
     child: { entrypoint: resolve('tests/fixtures/appium-wire/fake-mcp.ts'), args: [recording(root), fault, trace, join(root, 'environment.json')], nodeArgs: ['--import', import.meta.resolve('tsx')] },
     ...options });
   drivers.push(driver);

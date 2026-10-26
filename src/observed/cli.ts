@@ -79,12 +79,12 @@ export function productionObservedComposition(options: { enabled: boolean; runsD
   let admission: Admission;
   return createObservedComposition({ enabled: options.enabled,
     async create() {
-      const [{ Admission }, { ObservedAllocator }, { ObservedActionService }, { createObservedDriver, createPreparationDriver }, { deviceWindowOpener }, { BRIDGE_VERSION }] = await Promise.all([
-        import('../device/admission.js'), import('./allocation.js'), import('./service.js'), import('../device/factory.js'), import('../device/index.js'), import('../version.js')]);
+      const [{ Admission }, { ObservedAllocator }, { ObservedActionService }, { createObservedDriver, createPreparationDriver }, { BRIDGE_VERSION }] = await Promise.all([
+        import('../device/admission.js'), import('./allocation.js'), import('./service.js'), import('../device/factory.js'), import('../version.js')]);
       try { admission = Admission.open(); }
       catch { throw new ObservedOperationError('STORE_UNAVAILABLE', 'Existing admission authority is unavailable', { acceptance: 'unknown' }); }
       const runsDir = resolve(options.runsDir);
-      const drivers = { host: options.host, admission, presentation: deviceWindowOpener(false) ? 'visible' as const : 'headless' as const };
+      const drivers = { host: options.host, admission };
       const allocator = new ObservedAllocator({ admission, runsDir, createDriver: () => createPreparationDriver(drivers) });
       return new ObservedActionService({ admission, allocator, runsDir, bridgeVersion: BRIDGE_VERSION, backend: 'real', enabled: options.enabled,
         createDriver: () => createObservedDriver(drivers) });

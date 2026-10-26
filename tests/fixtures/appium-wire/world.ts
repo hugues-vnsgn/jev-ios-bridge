@@ -138,7 +138,7 @@ export function worldFixture(t: TestContext, first: World, options: Overrides, n
     writeFileSync(file, JSON.stringify(worldSchema.parse(state)));
     const driver = new AppiumDriver({ stack: driverStack(t), admission, backend: 'fake', homeRoot: join(root, 'homes'), logFolder: join(root, 'logs'),
       screenshotFolder: join(root, 'shots'), lockRoot: join(root, 'locks'), fence: (...args) => fence.run(...args), nativeRunner: native.runner, freePort: async () => port++,
-      startLookup: pid => `host-${String(pid)}`, runMarker: () => '0123456789abcdef0123456789abcdef', runId: `run-${String(index + 1)}`, timeoutMs: 20_000,
+      startLookup: pid => `host-${String(pid)}`, runMarker: () => '0123456789abcdef0123456789abcdef', runId: `run-${String(index + 1)}`, timeoutMs: 20_000, presentation: async () => 'visible',
       child: { entrypoint: resolve('tests/fixtures/appium-wire/world-mcp.ts'), args: [file, trace], nodeArgs: ['--import', import.meta.resolve('tsx')] },
       ...options, ...(sessionAdb ? { adb: sessionAdb } : {}), ...overrides });
     drivers.push(driver);

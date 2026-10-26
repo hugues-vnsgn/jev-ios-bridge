@@ -84,7 +84,7 @@ export async function appiumAllocator(t: Cleanups, options: Omit<HostWorld, 'gro
   });
   const w = observedHost(t, { ...world, admission: f.admission, root: f.root, ...(groupsSurviveTerm ? { groupsSurviveTerm: groups } : {}) });
   const allocator = new ObservedAllocator({ admission: f.admission, runsDir: f.runsDir, fakeBackend: { process: f.source, runner: f.runner, window: f.window, host: f.host },
-    createDriver: () => createPreparationDriver({ host: w.host, admission: f.admission, presentation: 'visible' }) });
+    createDriver: () => createPreparationDriver({ host: w.host, admission: f.admission }) });
   t.after(async () => { await allocator.close(); await f.cleanup(); });
   return { f, w, allocator };
 }

@@ -17,7 +17,7 @@ import { androidPreflightReply, type AndroidPreflight } from './world.js';
 export const SERIAL = 'PHONE123';
 export const IOS_DEVICE: DeviceIdentity = { category: 'ios-simulator', value: UDID };
 export const ANDROID_DEVICE: DeviceIdentity = { category: 'android-phone', value: SERIAL };
-export const iosTarget = { target: { platform: 'ios', device: UDID, presentation: 'visible' }, identityProbe: fakeSimulatorProbe(UDID) } satisfies Partial<AppiumDriverOptions>;
+export const iosTarget = { target: { platform: 'ios', device: UDID }, identityProbe: fakeSimulatorProbe(UDID) } satisfies Partial<AppiumDriverOptions>;
 
 const keyguard = (showing: boolean) => `WINDOW MANAGER POLICY STATE\n    KeyguardServiceDelegate\n      showing=${String(showing)}\n      interactiveState=INTERACTIVE_STATE_AWAKE\n`;
 const procStat = (pid: number) => `${String(pid)} (app_process) S ${'0 '.repeat(18)}424242 0 0`;

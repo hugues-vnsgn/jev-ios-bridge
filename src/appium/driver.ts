@@ -24,6 +24,7 @@ import { CLEANUP_BUDGET_MS, fenceAppium, type FenceClaim, type FenceEffect, type
 import { appiumComponentSchema, fenceEffectSchema, hostIdentitySchema, wdaInventorySchema, type AppiumComponent, type HostIdentity } from './fence/schema.js';
 import { androidNativeHelpers } from './native/android.js';
 import { launchIosConsole, observeIosLogs, observedIosPreparation } from './native/ios.js';
+import type { PresentationReader, SimulatorPresentation } from './native/presentation.js';
 import { NativeHelperError, type NativeCommand, type NativeRunner } from './native/process.js';
 import { AppiumObservation, type AppiumObservedScreen } from './observe/index.js';
 import { ObservationIncompleteError } from './observe/normalize.js';
@@ -35,7 +36,7 @@ import { AppiumError, CLIENT_SDK, EXTENSION_VERSION } from './wire-schemas.js';
 
 /** The device one driver instance serves. Chosen per command by the composition, never inside the driver. */
 export type AppiumTarget =
-  | { platform: 'ios'; device: string; deviceSet?: string; presentation: 'visible' | 'headless' }
+  | { platform: 'ios'; device: string; deviceSet?: string }
   | { platform: 'android'; device: string; category?: 'android-emulator' | 'android-phone'; androidSdkRoot?: string;
     serverInstallation: Extract<SessionProfileInput, { platform: 'android' }>['serverInstallation'] };
 
@@ -49,6 +50,8 @@ export interface AppiumDriverOptions {
   logFolder: string;
   screenshotFolder?: string;
   identityProbe: IdentityProbe;
+  /** The simulator's current presentation, read before each iOS session so `isHeadless` matches it. */
+  presentation: PresentationReader;
   fence: FenceRunner;
   nativeRunner: NativeRunner;
   adb?: AdbRunner;
@@ -430,7 +433,7 @@ export class AppiumDriver implements DeviceDriver, IosPreparationDriver, Observe
     const device = owner.identity.category === 'ios-simulator' ? owner.identity.value : owner.identity.transport.serial;
     const path = role;
     const input: SessionProfileInput = target.platform === 'ios'
-      ? { platform: 'ios', device, path, presentation: target.presentation, ...(target.deviceSet ? { simulatorSet: target.deviceSet } : {}),
+      ? { platform: 'ios', device, path, presentation: await this.readPresentation(signal), ...(target.deviceSet ? { simulatorSet: target.deviceSet } : {}),
         ...(ports.platform === 'ios' ? { ports: { wdaLocalPort: ports.wdaLocalPort, mjpegServerPort: ports.mjpegServerPort } } : {}) }
       : { platform: 'android', device, path, serverInstallation: target.serverInstallation, ...(ports.platform === 'android' ? { ports: { systemPort: ports.systemPort } } : {}) };
     const profile = createSessionProfile(this.options.stack, input);
@@ -454,6 +457,15 @@ export class AppiumDriver implements DeviceDriver, IosPreparationDriver, Observe
           { input: INPUTS.has(operation) }) });
       return { client, session, observation, operations, profile, ports, ...(helpers ? { helpers } : {}) };
     } catch (error) { await client.close(); throw error; }
+  }
+
+  /** Either guessed presentation could restart the simulator or quit Simulator.app, so an unreadable one refuses. */
+  private async readPresentation(signal: AbortSignal): Promise<SimulatorPresentation> {
+    try { return await this.options.presentation(AbortSignal.any([signal, AbortSignal.timeout(10_000)])); }
+    catch {
+      signal.throwIfAborted();
+      throw refusal('DEVICE_ERROR', 'The simulator window\'s state could not be read, so no Appium session was started.', 'PRESENTATION_UNKNOWN');
+    }
   }
 
   /** What automation runs on the device right now, read with recorded reads and no effect. */

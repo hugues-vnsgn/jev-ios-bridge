@@ -23,7 +23,7 @@ import { UDID, WDA_BUNDLE, driverFixture, fakeNativeRunner, hostRows, tapRecordi
 import { androidPreflightReply } from './fixtures/appium-wire/world.js';
 
 const live = () => new AbortController().signal;
-const ios = { target: { platform: 'ios', device: UDID, presentation: 'visible' }, identityProbe: fakeSimulatorProbe(UDID) } as const;
+const ios = { target: { platform: 'ios', device: UDID }, identityProbe: fakeSimulatorProbe(UDID) } as const;
 /** A clean close fences itself and finalizes available: no quarantine and no recovery claim are ever recorded. */
 function assertNeverQuarantined(admission: Admission, owner: OwnerIdentity): void {
   assert.deepEqual(admission.readAttempt(owner.attempt)?.terminal, { outcome: 'completed', disposition: 'available', payload: {}, evidenceRefs: [] });
@@ -108,7 +108,7 @@ test('two simulators run at once on distinct host ports, each recorded in its ow
   };
   const a = device(UDID); const b = device(other);
   const first = driverFixture(t, a.recording, { ...ios, identityProbe: probe, freePort: a.freePort });
-  const second = driverFixture(t, b.recording, { target: { platform: 'ios', device: other, presentation: 'visible' }, identityProbe: probe,
+  const second = driverFixture(t, b.recording, { target: { platform: 'ios', device: other }, identityProbe: probe,
     freePort: b.freePort, admission: first.admission, runId: 'run-2' });
   await Promise.all([first.driver.prepare({ app: { bundleId: 'example.app' } }, live()), second.driver.prepare({ app: { bundleId: 'example.app' } }, live())]);
   const ports = (f: typeof first) => {

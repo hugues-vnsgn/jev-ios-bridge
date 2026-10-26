@@ -26,13 +26,13 @@ export function createDriverFactory(options: DriverFactoryOptions): (scenario: S
     target: async () => scenario.platform === 'android'
       ? { platform: 'android', device: selectAndroidDeviceName(scenario.device, options.defaultDevice), serverInstallation: { kind: 'install' },
         ...(run?.deviceCategory === 'android-emulator' || run?.deviceCategory === 'android-phone' ? { category: run.deviceCategory } : {}) }
-      : { platform: 'ios', device: await selectDeviceId(options.projectDir, scenario.device?.udid, options.defaultUdid), presentation: deviceWindow ? 'visible' : 'headless' } });
+      : { platform: 'ios', device: await selectDeviceId(options.projectDir, scenario.device?.udid, options.defaultUdid) } });
 }
 
-export function createPreparationDriver(options: { host: AppiumHost; admission: Admission; presentation: 'visible' | 'headless' }): IosPreparationDriver {
+export function createPreparationDriver(options: { host: AppiumHost; admission: Admission }): IosPreparationDriver {
   return new ComposedAppiumDriver(options);
 }
-export function createObservedDriver(options: { host: AppiumHost; admission: Admission; presentation: 'visible' | 'headless' }): ObservedActionDriver {
+export function createObservedDriver(options: { host: AppiumHost; admission: Admission }): ObservedActionDriver {
   return new ComposedAppiumDriver(options);
 }
 

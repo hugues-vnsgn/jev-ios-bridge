@@ -15,6 +15,7 @@ import type { ProfileBinding } from '../profiles.js';
 import { AppiumDriver, type AppiumDriverOptions, type AppiumTarget } from './driver.js';
 import { CLEANUP_BUDGET_MS } from './fence/index.js';
 import { createFenceRunner } from './fence/runner.js';
+import { hostRun, simulatorPresentationReader } from './native/presentation.js';
 import { ownedNativeRunner, type NativeRunner } from './native/process.js';
 import { simctlRunner } from './native/simctl.js';
 import { FrozenStack, StackError } from './stack.js';
@@ -37,7 +38,7 @@ export function productionAppiumHost(options: { environment?: NodeJS.ProcessEnv;
     return { stack, admission: admission ?? openAdmission(), backend: 'real', homeRoot: join(support, 'homes'),
       target: target.platform === 'android' && sdkRoot && !target.androidSdkRoot ? { ...target, androidSdkRoot: sdkRoot } : deviceSet ? { ...target, deviceSet } : target,
       logFolder: await privateFolder(target.platform === 'android' ? LOG_FOLDER : join(tmpdir(), 'jev-ios-logs')),
-      identityProbe: identityProbe({ adb, environment }), adb: runAdb, nativeRunner,
+      identityProbe: identityProbe({ adb, environment }), adb: runAdb, nativeRunner, presentation: simulatorPresentationReader(hostRun),
       fence: createFenceRunner({ adb: runAdb, simctl: simctlRunner({ environment }) }),
       ...(target.platform === 'android' ? { logcat: logcatStarter({ adb, environment }), createExitWatch } : {}) };
   };
@@ -68,7 +69,6 @@ function stackRefusal(error: unknown): unknown {
 export type ComposedDriverOptions = {
   host: AppiumHost;
   target?: () => Promise<AppiumTarget>;
-  presentation?: 'visible' | 'headless';
   deviceWindow?: DeviceWindowOpener;
   admission?: Admission;
   runId?: string;
@@ -108,7 +108,7 @@ export class ComposedAppiumDriver implements DeviceDriver, IosPreparationDriver,
   }
 
   private claimed(claim: PreparationClaim | ObservedClaim): () => Promise<AppiumTarget> {
-    return async () => ({ platform: 'ios', device: claim.identity.device, presentation: this.options.presentation ?? 'visible' });
+    return async () => ({ platform: 'ios', device: claim.identity.device });
   }
 
   private live(): AppiumDriver {

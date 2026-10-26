@@ -95,8 +95,8 @@ test('the production host gives an Android driver the found adb\'s SDK, the lega
     store: parts.admission === store, wda: parts.stack.manifest.wda.version },
   { target: { platform: 'android', device: SERIAL, serverInstallation: { kind: 'install' }, androidSdkRoot: sdk }, backend: 'real', logFolder: LOG_FOLDER,
     homeRoot: join(userInfo().homedir, 'Library/Application Support/jev-ios-bridge/homes'), watch: true, store: true, wda: '16.14.2' });
-  const ios = await host({ target: { platform: 'ios', device: UDID, presentation: 'headless' } });
-  assert.deepEqual([ios.target, ios.logFolder, ios.logcat, ios.createExitWatch], [{ platform: 'ios', device: UDID, presentation: 'headless' }, join(tmpdir(), 'jev-ios-logs'), undefined, undefined]);
+  const ios = await host({ target: { platform: 'ios', device: UDID } });
+  assert.deepEqual([ios.target, ios.logFolder, ios.logcat, ios.createExitWatch], [{ platform: 'ios', device: UDID }, join(tmpdir(), 'jev-ios-logs'), undefined, undefined]);
 });
 
 test('the production host gives an iOS command the simulator set the environment names, so resolution can refuse another set', async t => {
@@ -107,11 +107,11 @@ test('the production host gives an iOS command the simulator set the environment
   const store = Admission.forTesting({ root: realpathSync(mkdtempSync(join(tmpdir(), 'jev-host-store-'))), backend: 'fake', durability: 'fast' });
   for (const name of ['SIMCTL_DEVICE_SET_PATH', 'SIMULATOR_DEVICE_SET_PATH']) {
     const host = productionAppiumHost({ environment: { [name]: set, PATH: '/nonexistent' }, stack: FrozenStack.forTesting(release), openAdmission: () => store });
-    assert.deepEqual((await host({ target: { platform: 'ios', device: UDID, presentation: 'visible' } })).target,
-      { platform: 'ios', device: UDID, presentation: 'visible', deviceSet: set }, name);
+    assert.deepEqual((await host({ target: { platform: 'ios', device: UDID } })).target,
+      { platform: 'ios', device: UDID, deviceSet: set }, name);
   }
   const plain = productionAppiumHost({ environment: { PATH: '/nonexistent' }, stack: FrozenStack.forTesting(release), openAdmission: () => store });
-  assert.equal('deviceSet' in (await plain({ target: { platform: 'ios', device: UDID, presentation: 'visible' } })).target, false);
+  assert.equal('deviceSet' in (await plain({ target: { platform: 'ios', device: UDID } })).target, false);
 });
 
 test('an Android command with no adb refuses ANDROID_TOOLS_UNAVAILABLE before the stack is checked', async t => {
@@ -122,13 +122,13 @@ test('an Android command with no adb refuses ANDROID_TOOLS_UNAVAILABLE before th
     openAdmission: () => assert.fail('no store') });
   await assert.rejects(host({ target: { platform: 'android', device: SERIAL, serverInstallation: { kind: 'install' } } }),
     (error: unknown) => error instanceof DeviceReasonError && error.code === 'ANDROID_TOOLS_UNAVAILABLE');
-  await assert.rejects(host({ target: { platform: 'ios', device: UDID, presentation: 'visible' } }), { code: 'UNSUPPORTED_HOST' }, 'iOS reaches the stack check');
+  await assert.rejects(host({ target: { platform: 'ios', device: UDID } }), { code: 'UNSUPPORTED_HOST' }, 'iOS reaches the stack check');
 });
 
 test('a composed driver revoked or closed before its first effect never builds its parts', async () => {
   let built = 0;
   const host: AppiumHost = async () => { built++; throw new Error('never built'); };
-  const target = async () => ({ platform: 'ios' as const, device: UDID, presentation: 'visible' as const });
+  const target = async () => ({ platform: 'ios' as const, device: UDID });
   const revoked = new ComposedAppiumDriver({ host, target });
   revoked.revokeIssuance();
   await assert.rejects(revoked.prepare({ app: { bundleId: 'example.app' } }, AbortSignal.timeout(1000)),

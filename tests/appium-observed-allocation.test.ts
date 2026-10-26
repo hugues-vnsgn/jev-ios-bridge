@@ -88,7 +88,7 @@ test('cancel of ready stock and retire both give retired_unused on the Appium co
   assert.deepEqual([cancelled.state, cancelled.outcome, cancelled.reason, cancelled.cancellationRequested], ['retained', 'retired_unused', 'RETAINED_UNUSED', true]);
   assert.deepEqual([retired.state, retired.outcome, retired.reason, retired.cancellationRequested], ['retained', 'retired_unused', 'RETAINED_UNUSED', false]);
   const service = new ObservedActionService({ admission: f.admission, allocator, runsDir: f.runsDir, bridgeVersion: 'fixture', backend: 'fake', enabled: true,
-    createDriver: () => createObservedDriver({ host: w.host, admission: f.admission, presentation: 'visible' }) });
+    createDriver: () => createObservedDriver({ host: w.host, admission: f.admission }) });
   t.after(() => service.close());
   for (const ready of [first, second]) {
     await assert.rejects(service.start({ version: 1, actionId: ready.actionId, allocationId: ready.allocationId, app: { bundleId: BUNDLE }, action: { kind: 'tap', selector: { identifier: 'go' } },

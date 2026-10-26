@@ -79,10 +79,10 @@ export function appiumObserved(root: string, enabled: boolean, mode: string, hoo
     };
     const allocator = new ObservedAllocator({ runsDir: context.runsDir, admission, fakeBackend: { process: source, runner: () => assert.fail('No MobileBuildMCP command on the Appium composition'),
       window: async () => { trace('window'); assert.fail('No window presentation'); }, host },
-    createDriver: () => createPreparationDriver({ host: appium, admission, presentation: 'visible' }) });
+    createDriver: () => createPreparationDriver({ host: appium, admission }) });
     return new ObservedActionService({ admission, allocator, runsDir: context.runsDir, bridgeVersion: 'fixture', backend: 'fake', enabled, ...(hooks.evidence ? { evidence: hooks.evidence } : {}),
       createDriver: () => {
-        const driver = createObservedDriver({ host: appium, admission, presentation: 'visible' });
+        const driver = createObservedDriver({ host: appium, admission });
         const tapOnce = driver.tapOnce.bind(driver);
         driver.tapOnce = (...args) => {
           const tapped = tapOnce(...args);
