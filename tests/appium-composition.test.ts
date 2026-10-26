@@ -99,6 +99,21 @@ test('the production host gives an Android driver the found adb\'s SDK, the lega
   assert.deepEqual([ios.target, ios.logFolder, ios.logcat, ios.createExitWatch], [{ platform: 'ios', device: UDID, presentation: 'headless' }, join(tmpdir(), 'jev-ios-logs'), undefined, undefined]);
 });
 
+test('the production host gives an iOS command the simulator set the environment names, so resolution can refuse another set', async t => {
+  const release = stackRelease();
+  t.after(() => rmSync(release.base, { recursive: true, force: true }));
+  const set = realpathSync(mkdtempSync(join(tmpdir(), 'jev-private-set-')));
+  t.after(() => rmSync(set, { recursive: true, force: true }));
+  const store = Admission.forTesting({ root: realpathSync(mkdtempSync(join(tmpdir(), 'jev-host-store-'))), backend: 'fake', durability: 'fast' });
+  for (const name of ['SIMCTL_DEVICE_SET_PATH', 'SIMULATOR_DEVICE_SET_PATH']) {
+    const host = productionAppiumHost({ environment: { [name]: set, PATH: '/nonexistent' }, stack: FrozenStack.forTesting(release), openAdmission: () => store });
+    assert.deepEqual((await host({ target: { platform: 'ios', device: UDID, presentation: 'visible' } })).target,
+      { platform: 'ios', device: UDID, presentation: 'visible', deviceSet: set }, name);
+  }
+  const plain = productionAppiumHost({ environment: { PATH: '/nonexistent' }, stack: FrozenStack.forTesting(release), openAdmission: () => store });
+  assert.equal('deviceSet' in (await plain({ target: { platform: 'ios', device: UDID, presentation: 'visible' } })).target, false);
+});
+
 test('an Android command with no adb refuses ANDROID_TOOLS_UNAVAILABLE before the stack is checked', async t => {
   const empty = realpathSync(mkdtempSync(join(tmpdir(), 'jev-no-sdk-')));
   t.after(() => rmSync(empty, { recursive: true, force: true }));
