@@ -3,7 +3,7 @@ import { mkdtemp, writeFile } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { isActOutcome, isIosApp, type Action, type ActionScenarioContext, type ActOutcome, type ActPath, type AppProblem, type DeviceDriver,
-  type DevicePreparation, type LogSources, type PrepareScenarioContext, type Snapshot, type StackProvenance } from '../contracts/index.js';
+  type DevicePreparation, type LogSources, type PrepareScenarioContext, type Snapshot, type StackProvenance, type VendorSource } from '../contracts/index.js';
 import { Admission, AdmissionError, type AdmissionClaim, type AdmittedSession, type CommandRequest, type FenceRequest } from '../device/admission.js';
 import type { AllocationCommit, ObservedClaim, PreparationClaim } from '../device/admission-allocation.js';
 import type { AdbRunner } from '../device/android/adb.js';
@@ -99,12 +99,20 @@ function readyTransport(identity: Exclude<ResolvedIdentity, { category: 'ios-sim
   if (identity.transport.state !== 'device') throw new DeviceReasonError('DEVICE_NOT_CONNECTED', `Device ${identity.transport.serial} is ${identity.transport.state}`);
 }
 
-/** Maps an operation's failure to the bridge's vocabulary with its source, so `error.vendorSource` is truthful.
- *  Every Android native helper runs adb. */
+/** Every Android native helper runs adb. An incomplete observation comes from whatever cut it short, else the bridge's own checks. */
+function sourceOf(error: unknown, platform: AppiumTarget['platform']): VendorSource {
+  if (error instanceof AppiumError) return vendorSourceOf(error.code);
+  if (error instanceof NativeHelperError) return platform === 'android' ? 'adb' : 'bridge';
+  if (error instanceof ObservationIncompleteError) return sourceOf(error.cause, platform);
+  return 'bridge';
+}
+
+/** Maps an operation's failure to the bridge's vocabulary with its source, so `error.vendorSource` is truthful. */
 export function appiumFailure(error: unknown, platform: AppiumTarget['platform']): unknown {
-  if (error instanceof AppiumError) return new DeviceReasonError('DEVICE_ERROR', 'The Appium layer refused the command.', { vendorCode: error.code, vendorSource: vendorSourceOf(error.code) });
-  if (error instanceof NativeHelperError) return new DeviceReasonError('DEVICE_ERROR', error.message, { vendorCode: error.code, vendorSource: platform === 'android' ? 'adb' : 'bridge' });
-  if (error instanceof ObservationIncompleteError) return new DeviceReasonError('DEVICE_ERROR', 'The screen could not be observed.', { vendorCode: `OBSERVATION_${error.reason.toUpperCase().replace(/-/g, '_')}`, vendorSource: 'appium' });
+  const vendorSource = sourceOf(error, platform);
+  if (error instanceof AppiumError) return new DeviceReasonError('DEVICE_ERROR', 'The Appium layer refused the command.', { vendorCode: error.code, vendorSource });
+  if (error instanceof NativeHelperError) return new DeviceReasonError('DEVICE_ERROR', error.message, { vendorCode: error.code, vendorSource });
+  if (error instanceof ObservationIncompleteError) return new DeviceReasonError('DEVICE_ERROR', 'The screen could not be observed.', { vendorCode: `OBSERVATION_${error.reason.toUpperCase().replace(/-/g, '_')}`, vendorSource });
   return error;
 }
 
