@@ -312,7 +312,7 @@ test('a stack whose private client SDK does not match the frozen manifest is ref
   const done = await b.finished((await b.service.start(iosScript)).runId);
   assert.deepEqual([done.report.verdict, done.report.reason], ['inconclusive', 'DEVICE_ERROR']);
   const events = await readRunEvents(b.service.baseDir, done.report.runId);
-  assert.deepEqual(events.filter(event => event.type === 'error').map(event => [event.data.code, event.data.vendorCode, event.data.vendorSource]), [['DEVICE_ERROR', 'SDK_IDENTITY_MISMATCH', 'appium']]);
+  assert.deepEqual(events.filter(event => event.type === 'error').map(event => [event.data.code, event.data.vendorCode, event.data.vendorSource]), [['DEVICE_ERROR', 'SDK_IDENTITY_MISMATCH', 'bridge']]);
   assert.deepEqual(refused.calls(), []);
   assert.equal(f.admission.inspect(IOS_DEVICE)!.state, 'available');
 });
