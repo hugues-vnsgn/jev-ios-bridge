@@ -104,7 +104,7 @@ _Avoid_: DeviceServer, server, mobilecli
 Appium automation on the device being admitted that this bridge did not start: UiAutomator2 instrumentation or server, a WDA runner, or an automation forward (a forward to a UiAutomator2 device port), whose identity is not owned in the admission store. The bridge recognizes it by owned inventory, not by process name, refuses with `DEVICE_BUSY`, and never stops it. Automation on another device, a forward to any other port, and the bridge's recorded components are never foreign. The user guide calls it a foreign agent.
 
 **Fence**:
-Stopping a native component and confirming it can no longer act, so that no command sent through it whose outcome was unknown can still take effect. This applies to device agents, adb commands, host streams, port forwards, MobileBuildMCP invocations and Appium sessions. Each component needs its own stop evidence.
+Stopping a native component and confirming it can no longer act, so that no command sent through it whose outcome was unknown can still take effect. This applies to device agents, adb commands, host streams, port forwards, native helper processes and Appium sessions. Each component needs its own stop evidence.
 
 **Fence receipt**:
 The admission authority's record that one owner generation's fence is proven: dispatch closed, every command it issued settled or fenced, and every native component it recorded unable to act. It releases that owner's device lease or covers its quarantine. A receipt for another generation, or one naming no generation, covers nothing.

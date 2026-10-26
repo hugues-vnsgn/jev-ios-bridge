@@ -519,7 +519,7 @@ export class AppiumDriver implements DeviceDriver, IosPreparationDriver, Observe
 
   /** UiAutomator2's device processes by /proc identity, read with a recorded command. */
   private uiautomator2Processes(owner: Owner, serial: string, signal: AbortSignal, options: { cleanup?: boolean } = {}): Promise<{ pid: number; startTime: string }[]> {
-    const adb = this.options.adb!;
+    const adb = this.adbRunner();
     return this.dispatch(owner, 'uiautomator2-identity', signal, this.timeoutMs, async issued => {
       const listed = await adb(shellCommand(serial, ['pidof', ...UIAUTOMATOR2_PACKAGES]), issued);
       const pids = listed.exitCode === 0 ? listed.stdout.trim().split(/\s+/).filter(Boolean).map(Number).filter(pid => Number.isSafeInteger(pid) && pid > 0) : [];
@@ -584,7 +584,8 @@ export class AppiumDriver implements DeviceDriver, IosPreparationDriver, Observe
   }
 
   private async startStreams(owner: Owner, command: Command, serial: string, appPackage: string, signal: AbortSignal): Promise<AppExitWatch | undefined> {
-    if (!this.options.logcat || !this.options.adb) return undefined;
+    const logcat = this.options.logcat;
+    if (!logcat || !this.options.adb) return undefined;
     const folder = await privateLogFolder(this.options.logFolder);
     if (folder === undefined) return undefined;
     await deleteOldLogs(folder);
@@ -595,19 +596,19 @@ export class AppiumDriver implements DeviceDriver, IosPreparationDriver, Observe
     if (time === undefined) return undefined;
     if (uid !== undefined) {
       const file = join(folder, `${this.runId}.log`);
-      if (await this.startStream(owner, helpers, 'logcat', ['-s', serial, 'logcat', '-v', 'threadtime,year,uid', `--uid=${uid}`, '-T', time.text], file, signal)) helpers.logFile = file;
+      if (await this.startStream(owner, logcat, helpers, 'logcat', ['-s', serial, 'logcat', '-v', 'threadtime,year,uid', `--uid=${uid}`, '-T', time.text], file, signal)) helpers.logFile = file;
     }
     const watch = this.options.createExitWatch?.({ package: appPackage, startTime: time.seconds, utcOffsetMinutes: time.utcOffsetMinutes });
-    const started = await this.startStream(owner, helpers, 'exit-watch', ['-s', serial, 'logcat', '-b', 'events', '-v', 'threadtime,year', '-T', time.text, ...EVENT_FILTER],
+    const started = await this.startStream(owner, logcat, helpers, 'exit-watch', ['-s', serial, 'logcat', '-b', 'events', '-v', 'threadtime,year', '-T', time.text, ...EVENT_FILTER],
       line => { watch?.feed(line); }, signal, () => { watch?.streamEnded(); });
     if (started && watch) helpers.watch = watch;
     return helpers.watch;
   }
 
-  private async startStream(owner: Owner, helpers: AndroidHelpers, role: 'logcat' | 'exit-watch', args: string[], output: LogcatOutput, signal: AbortSignal,
-    endedByItself?: () => void): Promise<boolean> {
+  private async startStream(owner: Owner, logcat: LogcatStarter, helpers: AndroidHelpers, role: 'logcat' | 'exit-watch', args: string[], output: LogcatOutput,
+    signal: AbortSignal, endedByItself?: () => void): Promise<boolean> {
     let stream: LogcatStream;
-    try { stream = await this.options.logcat!.start(args, output, signal); }
+    try { stream = await logcat.start(args, output, signal); }
     catch (error) {
       if (signal.aborted) throw error;
       return false;
@@ -627,8 +628,14 @@ export class AppiumDriver implements DeviceDriver, IosPreparationDriver, Observe
   }
 
   private androidShell(owner: Owner, operation: string, serial: string, words: string[], signal: AbortSignal) {
-    const adb = this.options.adb!;
+    const adb = this.adbRunner();
     return this.dispatch(owner, operation, signal, this.timeoutMs, issued => adb(shellCommand(serial, words), issued));
+  }
+
+  private adbRunner(): AdbRunner {
+    const adb = this.options.adb;
+    if (!adb) throw refusal('DEVICE_ERROR', 'This Android driver has no adb.', 'ADB_UNAVAILABLE');
+    return adb;
   }
 
   // `pm list packages <filter>` matches substrings, so the full listing is matched exactly.
@@ -645,16 +652,16 @@ export class AppiumDriver implements DeviceDriver, IosPreparationDriver, Observe
   // logcat's threadtime lines carry device-local time with no zone, so the UTC offset is read with the time.
   private async deviceTime(owner: Owner, serial: string, signal: AbortSignal): Promise<{ text: string; seconds: number; utcOffsetMinutes: number } | undefined> {
     const read = await this.androidShell(owner, 'android-device-time', serial, ['date', '+%s.%3N %z'], signal);
-    const match = /^(\d+\.\d{3}) ([+-])(\d{2})(\d{2})$/.exec(read.stdout.trim());
-    if (read.exitCode !== 0 || !match) return undefined;
-    const minutes = Number(match[3]) * 60 + Number(match[4]);
-    return { text: match[1]!, seconds: Number(match[1]), utcOffsetMinutes: match[2] === '-' ? -minutes : minutes };
+    const [text, zone, ...rest] = read.stdout.trim().split(' ');
+    if (read.exitCode !== 0 || text === undefined || zone === undefined || rest.length || !/^\d+\.\d{3}$/.test(text) || !/^[+-]\d{4}$/.test(zone)) return undefined;
+    const minutes = Number(zone.slice(1, 3)) * 60 + Number(zone.slice(3));
+    return { text, seconds: Number(text), utcOffsetMinutes: zone.startsWith('-') ? -minutes : minutes };
   }
 
   private async readPid(owner: Owner, serial: string, appPackage: string, watch: AppExitWatch, signal: AbortSignal): Promise<void> {
     const found = await this.androidShell(owner, 'android-app-pid', serial, ['pidof', appPackage], signal);
-    const pids = found.exitCode === 0 ? found.stdout.trim().split(/\s+/).filter(Boolean) : [];
-    watch.launched(pids.length === 1 && /^\d+$/.test(pids[0]!) ? Number(pids[0]) : undefined);
+    const [pid, ...others] = found.exitCode === 0 ? found.stdout.trim().split(/\s+/).filter(Boolean) : [];
+    watch.launched(pid !== undefined && !others.length && /^\d+$/.test(pid) ? Number(pid) : undefined);
   }
 
   private async launchIos(owner: Owner, app: AppIdentity, signal: AbortSignal): Promise<IosHelpers> {
@@ -748,8 +755,9 @@ export class AppiumDriver implements DeviceDriver, IosPreparationDriver, Observe
         case 'back': return ops.back(evidence, signal);
         case 'tapAt': return ops.tapAt(evidence, action.x, action.y, signal);
         case 'type': {
-          if (!Object.hasOwn(scenario.values, action.valueKey)) throw new DeviceReasonError('MISSING_VALUE', `Scenario value ${action.valueKey} is absent`);
-          return ops.replaceText(evidence, action.targetRef, scenario.values[action.valueKey]!, signal);
+          const value = Object.hasOwn(scenario.values, action.valueKey) ? scenario.values[action.valueKey] : undefined;
+          if (value === undefined) throw new DeviceReasonError('MISSING_VALUE', `Scenario value ${action.valueKey} is absent`);
+          return ops.replaceText(evidence, action.targetRef, value, signal);
         }
         default: { const exhaustive: never = action; throw new Error(String(exhaustive)); }
       }
