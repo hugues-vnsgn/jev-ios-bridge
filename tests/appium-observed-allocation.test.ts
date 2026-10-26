@@ -134,6 +134,13 @@ test('a simctl install whose result is lost (NATIVE_OUTCOME_UNKNOWN) stays PREPA
   assert.equal(f.admission.inspect(fixtureDevice)?.state, 'quarantined');
 });
 
+test('a damaged frozen stack during preparation is HOST_PREREQUISITE_MISSING, not ADMISSION_REFUSED, with no device effect and the device released', async t => {
+  const { f, w, allocator } = await appiumAllocator(t, { stackRefused: 'STACK_MANIFEST_MISMATCH' });
+  assert.deepEqual(terminal(await allocator.prepare(f.request())), refused('HOST_PREREQUISITE_MISSING'));
+  assert.deepEqual([w.native.calls, w.opened], [[], []]);
+  assert.equal(f.admission.inspect(fixtureDevice)?.state, 'available');
+});
+
 test('a session create the private Appium refuses at launch is LAUNCH_FAILED and releases through the staged fence', async t => {
   const { f, w, allocator } = await appiumAllocator(t, { worlds: [sessionRefused] });
   assert.deepEqual(terminal(await allocator.prepare(f.request())), refused('LAUNCH_FAILED'));

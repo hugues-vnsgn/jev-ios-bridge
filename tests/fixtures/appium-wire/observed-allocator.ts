@@ -3,6 +3,7 @@ import type { AppiumHost } from '../../../src/appium/composition.js';
 import type { FenceRunner } from '../../../src/appium/fence/index.js';
 import type { HostRow } from '../../../src/appium/fence/schema.js';
 import type { NativeCommand } from '../../../src/appium/native/process.js';
+import { StackError } from '../../../src/appium/stack.js';
 import type { Admission } from '../../../src/device/admission.js';
 import { createPreparationDriver } from '../../../src/device/factory.js';
 import { ObservedAllocator } from '../../../src/observed/allocation.js';
@@ -27,6 +28,8 @@ export type HostWorld = {
   nativeExit?: (command: NativeCommand) => number | undefined;
   nativeHeld?: (command: NativeCommand) => boolean;
   groupsSurviveTerm?: () => HostRow[];
+  /** The frozen stack fails its check with this code when a command builds its parts. */
+  stackRefused?: string;
 };
 
 export function observedHost(t: Cleanups, options: HostWorld & { admission: Admission; root: string }) {
@@ -55,6 +58,7 @@ export function observedHost(t: Cleanups, options: HostWorld & { admission: Admi
     return base.fence.run(effect, ...rest);
   };
   const host: AppiumHost = async request => {
+    if (options.stackRefused) throw new StackError(options.stackRefused, 'The frozen stack failed its check.');
     const parts = await base.host(request);
     return { ...parts, fence, ...(options.groupsSurviveTerm ? { fenceClock: { now: () => performance.now(), sleep: (ms: number, signal: AbortSignal) => delay(ms, undefined, { signal }) } } : {}),
       nativeRunner: async (command, output, signal) => {
