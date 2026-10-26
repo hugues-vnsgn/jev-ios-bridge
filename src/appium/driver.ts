@@ -126,6 +126,8 @@ export class AppiumDriver implements DeviceDriver, IosPreparationDriver, Observe
   private readonly timeoutMs: number;
   private readonly aborters = new Set<AbortController>();
   private readonly warnings: string[] = [];
+  /** The failure that first left a command uncertain, named in the close's CLEANUP_FAILED. */
+  private firstFailure: unknown;
 
   constructor(private readonly options: AppiumDriverOptions) {
     if (options.admission.mode === 'test' && options.backend !== 'fake') throw new AdmissionError('STATE_UNAVAILABLE', 'Test admission requires the fake backend');
@@ -761,7 +763,7 @@ export class AppiumDriver implements DeviceDriver, IosPreparationDriver, Observe
       const settled = await owner.dispatcher.dispatch(operation, async () => {
         try { return { kind: 'value' as const, value: await effect(controller.signal) }; }
         catch (error) {
-          if (controller.signal.aborted || outcomeUnknown(error) || (options.input && !refusedBeforeInput(error))) throw error;
+          if (controller.signal.aborted || outcomeUnknown(error) || (options.input && !refusedBeforeInput(error))) { this.firstFailure ??= error; throw error; }
           return { kind: 'error' as const, error };
         }
       });
@@ -860,7 +862,12 @@ export class AppiumDriver implements DeviceDriver, IosPreparationDriver, Observe
     } catch (error) {
       if (failure === undefined) throw error;
     } finally { this.phase = { kind: 'closed' }; }
-    if (failure !== undefined) throw failure;
+    if (failure !== undefined) throw this.namingFirstFailure(failure);
+  }
+
+  private namingFirstFailure(failure: unknown): unknown {
+    if (!(failure instanceof DeviceReasonError) || failure.code !== 'CLEANUP_FAILED' || this.firstFailure === undefined) return failure;
+    return new DeviceReasonError('CLEANUP_FAILED', `${failure.message} First failure: ${failureCode(this.firstFailure)}.`);
   }
 
   /** A lost COMMIT reply: the store is the authority on whether the release committed. */
@@ -912,9 +919,17 @@ const commandName = (role: Role, operation: OperationName) => role === 'observed
  *  Any other failure came back with an answer, so its command settles, as on the legacy Android path. */
 function outcomeUnknown(error: unknown): boolean {
   if (error instanceof UnconfirmedOperationError) return true;
+  // An observation that failed with an answer settles; one whose reply was lost keeps the transport's verdict.
+  if (error instanceof ObservationIncompleteError) return error.cause instanceof AppiumError && outcomeUnknown(error.cause);
   if (error instanceof AppiumError) return error.code === 'TIMEOUT' || error.code === 'ACKNOWLEDGEMENT_LOST' || error.code === 'CONNECTION_LOST';
   if (error instanceof NativeHelperError) return error.code === 'NATIVE_OUTCOME_UNKNOWN';
   return !(error instanceof DeviceReasonError || error instanceof AdmissionError || error instanceof StackError);
+}
+
+function failureCode(error: unknown): string {
+  if (error instanceof ObservationIncompleteError && error.cause !== undefined) return failureCode(error.cause);
+  if (error instanceof DeviceReasonError || error instanceof AppiumError || error instanceof AdmissionError || error instanceof NativeHelperError) return error.code;
+  return error instanceof Error ? error.name : 'UNKNOWN';
 }
 
 async function stopStreams(helpers: AndroidHelpers): Promise<DeviceReasonError | undefined> {

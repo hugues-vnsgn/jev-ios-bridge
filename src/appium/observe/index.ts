@@ -40,8 +40,8 @@ export class AppiumObservation {
   private incomplete(error: unknown, signal: AbortSignal): unknown {
     if (signal.aborted) return signal.reason;
     if (error instanceof ObservationIncompleteError) return error;
-    if (error instanceof SettleDeadlineError || (error instanceof AppiumError && error.code === 'TIMEOUT')) return new ObservationIncompleteError('timeout');
-    return new ObservationIncompleteError('driver-error');
+    if (error instanceof SettleDeadlineError || (error instanceof AppiumError && error.code === 'TIMEOUT')) return new ObservationIncompleteError('timeout', { cause: error });
+    return new ObservationIncompleteError('driver-error', { cause: error });
   }
   async observe(signal: AbortSignal): Promise<AppiumObservedScreen> {
     this.invalidate();
