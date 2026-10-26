@@ -939,9 +939,13 @@ export class AppiumDriver implements DeviceDriver, IosPreparationDriver, Observe
     if (failure !== undefined) throw this.namingFirstFailure(failure);
   }
 
+  /** After an uncertain command closed dispatch, a cleanup the closed claim refuses reports that command, not the refusal. */
   private namingFirstFailure(failure: unknown): unknown {
-    if (!(failure instanceof DeviceReasonError) || failure.code !== 'CLEANUP_FAILED' || this.firstFailure === undefined) return failure;
-    return new DeviceReasonError('CLEANUP_FAILED', `${failure.message} First failure: ${failureCode(this.firstFailure)}.`);
+    if (this.firstFailure === undefined) return failure;
+    const first = ` First failure: ${failureCode(this.firstFailure)}.`;
+    if (failure instanceof DeviceReasonError && failure.code === 'CLEANUP_FAILED') return new DeviceReasonError('CLEANUP_FAILED', `${failure.message}${first}`);
+    if (failure instanceof AdmissionError && failure.code === 'DISPATCH_CLOSED') return new DeviceReasonError('CLEANUP_FAILED', `Close met a closed claim.${first}`);
+    return failure;
   }
 
   /** A lost COMMIT reply: the store is the authority on whether the release committed. */
