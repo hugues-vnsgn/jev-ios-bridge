@@ -27,7 +27,7 @@ import { launchIosConsole, observeIosLogs, observedIosPreparation } from './nati
 import { NativeHelperError, type NativeCommand, type NativeRunner } from './native/process.js';
 import { AppiumObservation, type AppiumObservedScreen } from './observe/index.js';
 import { ObservationIncompleteError } from './observe/normalize.js';
-import { AppiumOperations, REFUSED_BEFORE_INPUT, UnconfirmedOperationError, type OperationName } from './operations/index.js';
+import { AppiumOperations, REFUSED_BEFORE_INPUT, UnconfirmedOperationError, vendorSourceOf, type OperationName } from './operations/index.js';
 import { allocateHostPorts, portComponents, type FreePort, type HostPorts } from './ports.js';
 import { AppiumCommandSession, createSessionProfile, type SessionProfile, type SessionProfileInput } from './session.js';
 import { StackError, type VerifiedStack } from './stack.js';
@@ -96,16 +96,11 @@ function readyTransport(identity: Exclude<ResolvedIdentity, { category: 'ios-sim
   if (identity.transport.state !== 'device') throw new DeviceReasonError('DEVICE_NOT_CONNECTED', `Device ${identity.transport.serial} is ${identity.transport.state}`);
 }
 
-/** An Android native helper runs adb, so its failure names adb as the vendor source. */
-function adbFailure(error: unknown): never {
-  if (error instanceof NativeHelperError) throw new DeviceReasonError('DEVICE_ERROR', error.message, { vendorCode: error.code, vendorSource: 'adb' });
-  throw error;
-}
-
-/** Maps an operation's failure to the bridge's vocabulary with its source, so `error.vendorSource` is truthful. */
-export function appiumFailure(error: unknown): unknown {
-  if (error instanceof AppiumError) return new DeviceReasonError('DEVICE_ERROR', 'The Appium layer refused the command.', { vendorCode: error.code, vendorSource: 'appium' });
-  if (error instanceof NativeHelperError) return new DeviceReasonError('DEVICE_ERROR', error.message, { vendorCode: error.code, vendorSource: 'bridge' });
+/** Maps an operation's failure to the bridge's vocabulary with its source, so `error.vendorSource` is truthful.
+ *  Every Android native helper runs adb. */
+export function appiumFailure(error: unknown, platform: AppiumTarget['platform']): unknown {
+  if (error instanceof AppiumError) return new DeviceReasonError('DEVICE_ERROR', 'The Appium layer refused the command.', { vendorCode: error.code, vendorSource: vendorSourceOf(error.code) });
+  if (error instanceof NativeHelperError) return new DeviceReasonError('DEVICE_ERROR', error.message, { vendorCode: error.code, vendorSource: platform === 'android' ? 'adb' : 'bridge' });
   if (error instanceof ObservationIncompleteError) return new DeviceReasonError('DEVICE_ERROR', 'The screen could not be observed.', { vendorCode: `OBSERVATION_${error.reason.toUpperCase().replace(/-/g, '_')}`, vendorSource: 'appium' });
   return error;
 }
@@ -338,7 +333,7 @@ export class AppiumDriver implements DeviceDriver, IosPreparationDriver, Observe
         this.closing = this.finishClose(AbortSignal.timeout(this.timeoutMs), false);
         await this.closing.catch(() => undefined);
       }
-      throw appiumFailure(error);
+      throw appiumFailure(error, this.options.target.platform);
     }
   }
 
@@ -364,7 +359,7 @@ export class AppiumDriver implements DeviceDriver, IosPreparationDriver, Observe
         this.closing = this.finishClose(AbortSignal.timeout(this.timeoutMs), false);
         await this.closing.catch(() => undefined);
       }
-      throw appiumFailure(error);
+      throw appiumFailure(error, this.options.target.platform);
     }
   }
 
@@ -546,7 +541,7 @@ export class AppiumDriver implements DeviceDriver, IosPreparationDriver, Observe
     const values = await this.fenceRead(owner, fenceEffectSchema.parse({ kind: 'settings-read', serial }), signal);
     this.register(owner, appiumComponentSchema.parse({ id: randomUUID(), kind: 'appium-settings', serial, values }));
     const helpers = androidNativeHelpers({ serial, runner: this.nativeRunnerFor(owner), timeoutMs: Math.min(this.timeoutMs, 10_000) });
-    await this.dispatch(owner, 'android-wake', signal, this.timeoutMs, issued => helpers.wake(issued)).catch(adbFailure);
+    await this.dispatch(owner, 'android-wake', signal, this.timeoutMs, issued => helpers.wake(issued));
   }
 
   private async startAndroidApp(owner: Owner, live: Extract<Phase, { kind: 'live' }>, app: AppIdentity, role: Role, signal: AbortSignal): Promise<void> {
@@ -554,14 +549,14 @@ export class AppiumDriver implements DeviceDriver, IosPreparationDriver, Observe
     const serial = owner.identity.transport.serial;
     const helpers = androidNativeHelpers({ serial, runner: this.nativeRunnerFor(owner), timeoutMs: Math.min(this.timeoutMs, 10_000) });
     if (role === 'attach') {
-      const front = await this.dispatch(owner, 'android-foreground', signal, this.timeoutMs, issued => helpers.foreground(issued)).catch(adbFailure);
+      const front = await this.dispatch(owner, 'android-foreground', signal, this.timeoutMs, issued => helpers.foreground(issued));
       if (front !== app.id) throw refusal('APP_NOT_IN_FOREGROUND', `App ${app.id} is not in front (${front ?? 'no resumed activity'})`);
       const watch = await this.startStreams(owner, live.command, serial, app.id, signal);
       if (watch) await this.readPid(owner, serial, app.id, watch, signal);
       return;
     }
     if (role !== 'run') return;
-    const activity = app.activity ?? await this.dispatch(owner, 'android-launcher', signal, this.timeoutMs, async issued => (await helpers.launcher(app.id, issued)).slice(app.id.length + 1)).catch(adbFailure);
+    const activity = app.activity ?? await this.dispatch(owner, 'android-launcher', signal, this.timeoutMs, async issued => (await helpers.launcher(app.id, issued)).slice(app.id.length + 1));
     // The force-stop comes before the streams' device time, so nothing the previous instance logged is read. No stop is
     // marked expected: the mark is sticky and would hide a later crash of the new pid.
     await this.guarded(signal, () => live.command.operations.terminate(app.id, signal));
@@ -777,7 +772,7 @@ export class AppiumDriver implements DeviceDriver, IosPreparationDriver, Observe
     signal.throwIfAborted();
     if (this.issuanceClosed) throw new AdmissionError('DISPATCH_CLOSED', 'Device issuance is closed');
     try { return await work(); }
-    catch (error) { throw appiumFailure(error); }
+    catch (error) { throw appiumFailure(error, this.options.target.platform); }
   }
 
   /** One recorded command in the owner's ledger, bounded by its own deadline and the caller's signal. */

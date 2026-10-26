@@ -1,9 +1,9 @@
-import type { ActOutcome, ActPath, Direction, Element, Snapshot } from '../../contracts/index.js';
+import type { ActOutcome, ActPath, Direction, Element, Snapshot, VendorSource } from '../../contracts/index.js';
 import { backButtonOf, DeviceReasonError, largestScrollable, screenPointOf, scrollFinger, StaleSnapshotError } from '../../device/index.js';
 import type { ScreenshotImage } from '../../device/image.js';
 import type { PrivateAppiumClient } from '../client.js';
 import type { AppiumObservedScreen } from '../observe/index.js';
-import { AppiumError, type AppiumPlatform, type AppiumSessionId } from '../wire-schemas.js';
+import { AppiumError, type AppiumErrorCode, type AppiumPlatform, type AppiumSessionId } from '../wire-schemas.js';
 import { textFieldOf, shownValueOf } from './field.js';
 import { DEFAULT_TAP_HOLD_MS, centreOf, edgeBack, screenMiddleScroll, scrollWithin, strokeSequence, swipeWithin, tapSequence,
   type PointerActions, type Stroke } from './geometry.js';
@@ -55,6 +55,9 @@ const MAX_HOLD_MS = 10_000;
 const TAP_AT_ASPECT_TOLERANCE = 0.01;
 /** Codes the extension answers before any input reaches the device. */
 export const REFUSED_BEFORE_INPUT: ReadonlySet<string> = new Set(['SESSION_MISMATCH', 'VERSION_MISMATCH', 'NOT_ALLOWED', 'NOT_UNIQUE']);
+/** Codes the bridge's own client or extension raises, never Appium's driver. */
+const BRIDGE_CODES: ReadonlySet<AppiumErrorCode> = new Set(['SESSION_MISMATCH', 'VERSION_MISMATCH', 'NOT_ALLOWED']);
+export const vendorSourceOf = (code: AppiumErrorCode): VendorSource => BRIDGE_CODES.has(code) ? 'bridge' : 'appium';
 const passThrough: OperationDispatcher = (_operation, send) => send();
 const unsupported = (message: string) => new DeviceReasonError('UNSUPPORTED_ACTION', message);
 
@@ -226,6 +229,6 @@ export class AppiumOperations {
   private refusal(error: unknown): DeviceReasonError {
     const code = error instanceof AppiumError ? error.code : undefined;
     if (code === 'NOT_UNIQUE') return new DeviceReasonError('TARGET_AMBIGUOUS', 'The target matched more than one element.');
-    return new DeviceReasonError('DEVICE_ERROR', 'The Appium layer refused the operation.', code === undefined ? {} : { vendorCode: code, vendorSource: 'appium' });
+    return new DeviceReasonError('DEVICE_ERROR', 'The Appium layer refused the operation.', code === undefined ? {} : { vendorCode: code, vendorSource: vendorSourceOf(code) });
   }
 }
