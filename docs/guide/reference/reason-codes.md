@@ -76,7 +76,7 @@ What to do about each: [troubleshooting](../08-troubleshooting.md).
 | `EMPTY_CAPTURE` | The device layer returned no usable elements. |
 | `UNSUPPORTED_ACTION` | The target does not support the requested action. |
 | `MISSING_VALUE` | A typing step named a value the script did not supply, or a value's environment variable is not set. |
-| `UNSUPPORTED_LEADING_DASH_TEXT` | A typed value starts with a hyphen, which the bridge's earlier iOS device layer could not type. |
+| `UNSUPPORTED_LEADING_DASH_TEXT` | A typed value started with a hyphen. No longer raised: both platforms now type such a value. |
 | `UI_ACTION_UNCONFIRMED` | A device operation was never acknowledged, so the device lock was kept. |
 | `CLEANUP_FAILED` | Device cleanup did not finish. |
 | `APP_EXITED` | The app under test exited during the run (a crash or a quit); check its crash report. |

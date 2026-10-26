@@ -40,7 +40,7 @@ What the bridge does not do, or does less well than you might expect.
 
 ## Input and devices
 
-- **Typing on iOS:** printable US-keyboard text only, and no value may start with a hyphen. Both rules come from the bridge's earlier iOS device layer, and the bridge keeps them for now.
+- **Typing on iOS:** any text except control characters. Keyboard layouts other than US English haven't been checked on a live device yet.
 - **Typing on Android:** any text except control characters ([how typed values reach a field](09-data-handling.md#how-typed-values-reach-a-field)).
 - **One run per device at a time.**
 

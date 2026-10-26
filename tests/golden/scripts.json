@@ -42,22 +42,10 @@
     ]
   },
   "leadingHyphenValue": {
-    "accepted": false,
-    "issues": [
-      {
-        "path": "values",
-        "message": "MobileBuildMCP 2.7.1 cannot type text starting with a leading hyphen"
-      }
-    ]
+    "accepted": true
   },
   "nonKeyboardValue": {
-    "accepted": false,
-    "issues": [
-      {
-        "path": "values.query",
-        "message": "Typed values must use printable US keyboard characters"
-      }
-    ]
+    "accepted": true
   },
   "tooManyValues": {
     "accepted": false,
@@ -265,10 +253,6 @@
         "message": "Invalid string: must match pattern /^[A-Za-z0-9-]+(?:\\.[A-Za-z0-9-]+)+$/"
       },
       {
-        "path": "values.query",
-        "message": "Typed values must use printable US keyboard characters"
-      },
-      {
         "path": "steps.1.id",
         "message": "Step IDs must be unique"
       }
@@ -341,10 +325,6 @@
     "accepted": false,
     "issues": [
       {
-        "path": "values.query",
-        "message": "Typed values must use printable US keyboard characters"
-      },
-      {
         "path": "steps.0.guard.present.0.role",
         "message": "role must be one of: application, window, button, keyboard-key, text-field, menu, text, image, switch, slider, cell, scroll-view, list, tab, other"
       }
@@ -356,10 +336,6 @@
       {
         "path": "version",
         "message": "Add \"version\": 1 to the script; this bridge reads script format version 1"
-      },
-      {
-        "path": "values",
-        "message": "MobileBuildMCP 2.7.1 cannot type text starting with a leading hyphen"
       }
     ]
   },

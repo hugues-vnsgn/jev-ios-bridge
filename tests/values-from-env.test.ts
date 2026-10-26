@@ -47,11 +47,10 @@ test('a fromEnv entry takes exactly one variable name, and the name has the shel
 });
 
 test('a literal value keeps its platform rules and their messages', () => {
-  const ios = safeParseScriptedScenario(iosScript({ query: 'Đà Nẵng' }));
+  const ios = safeParseScriptedScenario(iosScript({ query: 'a\u0007b' }));
   assert.equal(ios.success, false);
-  assert.match(z.prettifyError(ios.error!), /printable US keyboard characters/);
-  const hyphen = safeParseScriptedScenario(iosScript({ query: '-Berlin', other: { fromEnv: 'X' } }));
-  assert.match(z.prettifyError(hyphen.error!), /leading hyphen/);
+  assert.match(z.prettifyError(ios.error!), /control characters/);
+  assert.ok(safeParseScriptedScenario(iosScript({ query: '-Đà Nẵng', other: { fromEnv: 'X' } })).success);
   const android = safeParseScriptedScenario(androidScript({ query: 'a\u0007b' }));
   assert.match(z.prettifyError(android.error!), /control characters/);
 });
@@ -96,8 +95,7 @@ test('a missing or empty variable is MISSING_VALUE, naming the variable and the 
 
 test('platform value rules run on the resolved value, and the message never carries it', () => {
   const cases: Array<[unknown, string, RegExp]> = [
-    [iosScript({ p: { fromEnv: 'V' } }), 'Đà-synthetic', /printable US keyboard characters/],
-    [iosScript({ p: { fromEnv: 'V' } }), '-synthetic', /leading hyphen/],
+    [iosScript({ p: { fromEnv: 'V' } }), 'synthetic\u0007', /control characters/],
     [iosScript({ p: { fromEnv: 'V' } }), 'synthetic'.repeat(300), /2048/],
     [androidScript({ p: { fromEnv: 'V' } }), 'synthetic\u0007', /control characters/],
     [androidScript({ p: { fromEnv: 'V' } }), 'synthetic'.repeat(300), /2048/],
@@ -294,13 +292,13 @@ test('the CLI pre-check reports a resolved value that breaks the platform rule, 
   try {
     const path = join(root, 'script.json');
     await writeFile(path, JSON.stringify(iosScript({ password: { fromEnv: 'JEV_TEST_BAD_VALUE' } })));
-    const env: NodeJS.ProcessEnv = { ...process.env, JEV_TEST_BAD_VALUE: '-synthetic-hyphen' };
+    const env: NodeJS.ProcessEnv = { ...process.env, JEV_TEST_BAD_VALUE: 'synthetic\u0007bell' };
     delete env.TYPESAFE_API_KEY;
     const failure = await execute(process.execPath, ['--import', import.meta.resolve('tsx'), join(process.cwd(), 'src/cli.ts'), 'run', path],
       { cwd: root, env }).then(() => assert.fail('must exit 3'), (error: { code: number; stderr: string }) => error);
     assert.equal(failure.code, 3);
     assert.match(failure.stderr, /JEV_TEST_BAD_VALUE/);
-    assert.match(failure.stderr, /leading hyphen/);
+    assert.match(failure.stderr, /control characters/);
     assert.doesNotMatch(failure.stderr, /synthetic/);
   } finally { await rm(root, { recursive: true, force: true }); }
 });

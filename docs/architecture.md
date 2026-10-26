@@ -70,6 +70,6 @@ The run log stores decisive assertion observations and copied screenshots. Repor
 - At most 100 authored steps; default whole-run time 300 seconds, configurable up to one hour. Each wait is at most 60 seconds.
 - Fixed Noul yes/no bounds 0.9/0.1. Uncertainty is visible and never promoted to a pass.
 - Full observation cap 24,000 bytes; state plus longest question 28,000 bytes; total request 56,000 bytes. Overflow stops rather than silently removing evidence.
-- On iOS, printable US-keyboard literals, with no leading hyphen under the pinned typing limitation. On Android, any text except control characters; non-ASCII text goes through the device clipboard.
+- On both platforms, any text except control characters, a leading hyphen included. On Android, non-ASCII text goes through the device clipboard.
 
 See the [guide](guide/README.md) for setup and use, and the v0.1.0 [tracker](../.scratch/jev-ios-bridge/map.md) and [release plan](../.scratch/jev-ios-bridge/release-plan.md) for that release's evidence and verification. The v1.0.0 plan is the [release spec](../.scratch/v1-release/release-spec.md), and the v1.2.0 Android plan is its [own release spec](../.scratch/android-support/release-spec.md), with the [domain model](../.scratch/android-support/domain-model.md).

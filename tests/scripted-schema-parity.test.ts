@@ -1,5 +1,6 @@
 /**
- * Proves an iOS script reads exactly as in 1.1: the same parsed script, or the same issues (paths,
+ * Proves an iOS script reads exactly as in 1.1, apart from the typed-value rules Phase 3 relaxed (a leading
+ * hyphen and non-ASCII text, pinned in tests/script-v2.test.ts): the same parsed script, or the same issues (paths,
  * messages, order) and the same z.prettifyError text. Compares the public parse entry points against a
  * frozen copy of 1.1's schema on a generated set of scripts: the valid script, every single fault, and
  * every pair and triple of the faults below, each with no platform and with an explicit "platform": "ios".
@@ -47,8 +48,8 @@ const faults: Record<string, (script: Script) => Script> = {
     if (checkpoint) (checkpoint.guard as Script).present = [{ value: 'x' }];
     return script;
   },
-  leadingHyphenValue: script => { script.values = { query: '-Berlin' }; return script; },
-  nonAsciiValue: script => { script.values = { query: 'Đà Nẵng' }; return script; },
+  valueTooLong: script => { script.values = { query: 'x'.repeat(2049) }; return script; },
+  badValueKey: script => { script.values = { query: 'Berlin', '1bad': 'x' }; return script; },
   tooManyValues: script => {
     script.values = Object.fromEntries(Array.from({ length: 33 }, (_, index) => [`v${index}`, 'x']));
     return script;
