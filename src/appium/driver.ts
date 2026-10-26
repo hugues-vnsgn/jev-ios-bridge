@@ -676,6 +676,7 @@ export class AppiumDriver implements DeviceDriver, IosPreparationDriver, Observe
     if (owner.identity.category !== 'ios-simulator') throw new Error('Simulator identity required');
     const target = this.iosTarget(owner);
     const runner = this.nativeRunnerFor(owner);
+    await deleteOldLogs(this.options.logFolder);
     const sources: NativeLogSource[] = [];
     const source = async (name: string) => {
       const created = await createNativeLogSource({ path: join(this.options.logFolder, `${this.runId}-${name}.log`), values: {} });
