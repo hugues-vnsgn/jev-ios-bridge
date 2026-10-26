@@ -13,7 +13,7 @@ import { FakeFence, WDA_BUNDLE, driverStack, fakeNativeRunner, virtualClock } fr
 import { worldSchema, type World } from './world-schema.js';
 
 type Call = { method?: string; params?: { name?: string; arguments?: Record<string, unknown> } };
-export type HostOptions = Pick<AppiumDriverOptions, 'identityProbe'> & Partial<Pick<AppiumDriverOptions, 'adb' | 'freePort'>> & {
+export type HostOptions = Pick<AppiumDriverOptions, 'identityProbe'> & Partial<Pick<AppiumDriverOptions, 'adb' | 'freePort' | 'presentation'>> & {
   worlds: World[];
   nativeReply?: (command: NativeCommand) => string | undefined;
   admission?: Admission;
@@ -77,7 +77,8 @@ export function worldHost(t: Cleanups, options: HostOptions) {
     return { stack, admission: driver.admission, backend: 'fake', target, homeRoot: join(root, 'homes'), logFolder: join(root, 'logs'),
       screenshotFolder: join(root, 'shots'), lockRoot: join(root, 'locks'), fence: fenceRun, nativeRunner: native.runner,
       freePort: options.freePort ?? (async () => port++), startLookup: pid => `host-${String(pid)}`, runMarker: () => '0123456789abcdef0123456789abcdef',
-      timeoutMs: 20_000, fenceClock: virtualClock(), identityProbe: options.identityProbe, child: driver.child, ...(sessionAdb ? { adb: sessionAdb } : {}) };
+      timeoutMs: 20_000, fenceClock: virtualClock(), identityProbe: options.identityProbe, child: driver.child, ...(sessionAdb ? { adb: sessionAdb } : {}),
+      presentation: options.presentation ?? (async () => 'visible') };
   };
   return { root, admission, fence, native, opened, host };
 }
