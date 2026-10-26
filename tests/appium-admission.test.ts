@@ -1,12 +1,13 @@
 import assert from 'node:assert/strict';
 import { test } from 'node:test';
-import { mkdtempSync, mkdirSync, rmSync, readFileSync, writeFileSync, symlinkSync, realpathSync } from 'node:fs';
+import { mkdtempSync, mkdirSync, readFileSync, writeFileSync, symlinkSync, realpathSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { spawn, type ChildProcess } from 'node:child_process';
 import { once } from 'node:events';
 import { fileURLToPath } from 'node:url';
 import { Admission, admissionRoot } from '../src/device/admission.js';
+import { teardown } from './fixtures/teardown.js';
 
 const worker = fileURLToPath(new URL('./fixtures/appium-admission-worker.ts', import.meta.url));
 const provider = fileURLToPath(new URL('./fixtures/appium-protocol-provider.mjs', import.meta.url));
@@ -17,12 +18,12 @@ function command(child: ChildProcess, message: object): Promise<any> {
 
 test('competing Appium tracers share admission and only the winning process can reach the device provider', async t => {
   const directory = realpathSync(mkdtempSync(join(tmpdir(), 'appium-admission-')));
-  t.after(() => rmSync(directory, { recursive: true, force: true }));
+  const wires: string[] = [], children: ChildProcess[] = [];
+  teardown(t, directory, children);
   const authority = join(directory, 'authority');
   mkdirSync(authority, { mode: 0o700 });
   const admission = Admission.forTesting({ root: authority, backend: 'fake' });
   const alias = join(directory, 'authority-alias'); symlinkSync(authority, alias);
-  const wires: string[] = [], children: ChildProcess[] = [];
   for (let i = 0; i < 2; i++) {
     const working = join(directory, 'work-' + i); mkdirSync(working);
     const wire = join(working, 'wire.json'); wires.push(wire); writeFileSync(wire, '[]');
@@ -30,7 +31,6 @@ test('competing Appium tracers share admission and only the winning process can 
     writeFileSync(config, JSON.stringify({ platform: 'ios', provider: { command: process.execPath, args: [provider, 'none', 'ios', wire] } }));
     const child = spawn(process.execPath, ['--import', import.meta.resolve('tsx'), worker, i === 0 ? authority : alias, config], { cwd: working, env: { PATH: process.env.PATH!, HOME: working, TMPDIR: working }, stdio: ['ignore', 'ignore', 'pipe', 'ipc'] });
     children.push(child);
-    t.after(() => { if (child.exitCode === null && child.signalCode === null) child.kill('SIGKILL'); });
     let stderr = ''; child.stderr!.on('data', value => { stderr += value; });
     const ready = await Promise.race([once(child, 'message'), once(child, 'exit').then(() => { throw new Error(stderr); })]);
     assert.equal(ready[0].ready, true);

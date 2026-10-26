@@ -70,13 +70,21 @@ async function withService(jev: FakeStep[], run: (service: BridgeService, driver
   finally { await service.close(); await rm(root, { recursive: true, force: true }); }
 }
 
-/** Waits for the run to pause, and checks the wait returned at once rather than after waitMs. */
+/** Waits for the run to pause, and checks the wait ended on the gate's pause and not on its deadline.
+ *  The first call is timed from the pause opening, not from the call, so a run that takes seconds to
+ *  reach the pause can't fail it. A status that ignored the pause would sit out the full 45 s. */
 async function pausedStatus(service: BridgeService, runId: string) {
-  const started = performance.now();
+  const calledAt = Date.now();
   const status = await service.status(runId, 45_000);
-  assert.ok(performance.now() - started < 2_000, 'a pause ends the wait at once');
-  assert.equal(status.state, 'needs_claude');
-  return status.pause!;
+  assert.equal(status.state, 'needs_claude', 'the run paused within the report wait');
+  const pause = status.pause!;
+  const afterPauseMs = Date.now() - Math.max(calledAt, Date.parse(pause.pausedAt));
+  assert.ok(afterPauseMs < 10_000, `the pause ended the wait (${afterPauseMs} ms after it opened, not the 45 s deadline)`);
+  const started = performance.now();
+  const again = await service.status(runId, 45_000);
+  assert.ok(performance.now() - started < 2_000, 'an already-paused run returns at once');
+  assert.equal(again.pause?.pauseId, pause.pauseId);
+  return pause;
 }
 
 test('a Jev hand-back pauses the run: get_report returns at once with the package; a tap answer finishes it', async () => {

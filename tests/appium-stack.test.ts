@@ -7,6 +7,7 @@ import { tmpdir } from 'node:os';
 import { dirname, join, resolve } from 'node:path';
 import { pathToFileURL } from 'node:url';
 import type { StackIdentity } from '../src/appium/stack.js';
+import { killLater, teardown } from './fixtures/teardown.js';
 
 const digest = (bytes: string | Buffer) => createHash('sha256').update(bytes).digest('hex');
 const host = { platform: 'darwin', arch: 'arm64', node: '24.0.0' };
@@ -84,7 +85,7 @@ test('off-range iOS and Xcode warn and continue with the verified runner', async
   assert.deepEqual(supported.warnings, []);
 });
 test('two processes race first use and publish one complete extracted tree', async t => {
-  const f = fixture(); t.after(() => rmSync(f.base, { recursive: true, force: true }));
+  const f = fixture(); teardown(t, f.base);
   await open(f);
   const module = pathToFileURL(resolve('src/appium/stack.ts')).href;
   const script = `import { FrozenStack } from ${JSON.stringify(module)};
@@ -93,6 +94,7 @@ test('two processes race first use and publish one complete extracted tree', asy
     const result = await FrozenStack.forTesting(JSON.parse(process.argv[1])).prepare();
     process.stdout.write(JSON.stringify(result)+'\\n'); process.stdin.destroy();`;
   const children = [0, 1].map(() => spawn(process.execPath, ['--import', 'tsx', '--input-type=module', '-e', script, JSON.stringify(f)], { stdio: ['pipe', 'pipe', 'pipe'] }));
+  for (const child of children) killLater(t, child);
   const runs = children.map(child => {
     let stdout = ''; let stderr = '';
     const ready = new Promise<void>(done => child.stdout.on('data', chunk => { stdout += chunk; if (stdout.startsWith('ready\n')) done(); }));

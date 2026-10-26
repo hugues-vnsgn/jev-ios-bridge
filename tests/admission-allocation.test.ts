@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict';
 import { test, type TestContext } from 'node:test';
-import { mkdtempSync, realpathSync, rmSync, readFileSync, writeFileSync, existsSync } from 'node:fs';
+import { mkdtempSync, realpathSync, readFileSync, writeFileSync, existsSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { spawn } from 'node:child_process';
@@ -12,6 +12,7 @@ import * as admissionApi from '../src/device/admission.js';
 import type { AllocationReservationInput, AllocationRecord } from '../src/device/admission-allocation.js';
 
 import { messageSchema, requireResult, type Work, type WorkerResult } from './fixtures/allocation-worker-protocol.js';
+import { killLater, stopLater, teardown } from './fixtures/teardown.js';
 
 const uuid = 'ABCDEF00-0000-4000-8000-000000000001';
 const digest = 'a'.repeat(64);
@@ -32,7 +33,7 @@ function input(actionId = 'one'): AllocationReservationInput {
 }
 function fixture(t: TestContext, dependencies: Parameters<typeof Admission.forTesting>[0] extends infer T ? Partial<T> : never = {}) {
   const root = realpathSync(mkdtempSync(join(tmpdir(), 'allocation-store-')));
-  t.after(() => rmSync(root, { recursive: true, force: true }));
+  teardown(t, root);
   return { root, admission: Admission.forTesting({ ...dependencies, root, backend: 'fake' }) };
 }
 test('reservation globally binds identity; duplicates are pure retrieval and capacity refuses without consuming identity', t => {
@@ -272,7 +273,8 @@ function worker(t: TestContext) {
     child.on('error', reject);
   });
   const exit = new Promise<{ result: WorkerResult | undefined; code: number | null; signal: NodeJS.Signals | null; stdout: string; stderr: string; errors: string[]; pid: number }>(resolve => child.on('close', (code, signal) => resolve({ result, code, signal, stdout, stderr, errors, pid: child.pid! })));
-  const timeout = setTimeout(() => child.kill('SIGKILL'), 10000); t.after(() => { clearTimeout(timeout); if (child.exitCode === null && child.signalCode === null) child.kill('SIGKILL'); });
+  const timeout = setTimeout(() => child.kill('SIGKILL'), 10000); t.after(() => { clearTimeout(timeout); });
+  killLater(t, child);
   return { child, ready, exit: exit.finally(() => clearTimeout(timeout)) };
 }
 type WorkReceipt = { request: Work; result: WorkerResult };
@@ -297,7 +299,7 @@ async function waitFile(path: string) {
 test('controlled long lock reconciles typed uncertainty without replay', async t => {
   const { root, admission } = fixture(t);
   const entered = join(root, 'entered'); const release = join(root, 'release');
-  t.after(() => { if (existsSync(root)) writeFileSync(release, 'release'); });
+  stopLater(t, () => { if (existsSync(root)) writeFileSync(release, 'release'); });
   const holderWork: Work = { root, mode: 'reserve', input: input('holder'), control: { kind: 'hold', operation: 'reserveAllocation', point: 'beforeCommit', entered, release } };
   const waiterWork: Work = { root, mode: 'reserve', input: input('waiter') };
   const holder = worker(t); await holder.ready; holder.child.send(holderWork); await waitFile(entered);
