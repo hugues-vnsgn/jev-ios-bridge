@@ -10,12 +10,10 @@ import { UDID, driverFixture, rewriteRecording } from './fixtures/appium-wire/dr
 import { fakeSimulatorProbe } from './fixtures/android-device.js';
 
 const ios = { target: { platform: 'ios', device: UDID }, identityProbe: fakeSimulatorProbe(UDID) } as const;
-/** The production composition passes no screenshot folder, so the driver makes its own. */
 const ownScreenshotFolder = { screenshotFolder: undefined } as {};
 const observeRecording = (root: string) => rewriteRecording(root, 'tests/fixtures/appium-wire/ios/observe-2.jsonl', [['ios-test', UDID]]);
 const live = () => new AbortController().signal;
-/** Its settle deadline never fires, so the observe dispatch's own deadline is the one that cuts the lost reply short. */
-const unboundedSettle = { now: Date.now, sleep: (ms: number) => delay(ms), timeout: () => new AbortController().signal };
+const settleNeverExpires = { now: Date.now, sleep: (ms: number) => delay(ms), timeout: () => new AbortController().signal };
 function runsFolder(t: TestContext): string {
   const runs = realpathSync(mkdtempSync(join(tmpdir(), 'appium-followups-')));
   t.after(() => rmSync(runs, { recursive: true, force: true }));
@@ -56,7 +54,7 @@ test('an iOS launch sweeps log files older than three days from the log folder, 
 });
 
 test('close after a lost observe reply reports CLEANUP_FAILED naming the first failure, not the closed claim', async t => {
-  const f = driverFixture(t, observeRecording, { ...ios, timeoutMs: 5000, clock: unboundedSettle }, 'source-lost');
+  const f = driverFixture(t, observeRecording, { ...ios, timeoutMs: 5000, clock: settleNeverExpires }, 'source-lost');
   await f.driver.prepare({ app: { bundleId: 'example.app' } }, live());
   await assert.rejects(f.driver.observe(live()), (error: unknown) => error instanceof DeviceReasonError && error.code === 'TIMEOUT');
   const closed: unknown = await f.driver.close(live()).then(() => undefined, (error: unknown) => error);

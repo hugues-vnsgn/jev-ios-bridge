@@ -55,7 +55,6 @@ const MAX_HOLD_MS = 10_000;
 const TAP_AT_ASPECT_TOLERANCE = 0.01;
 /** Codes the extension answers before any input reaches the device. */
 export const REFUSED_BEFORE_INPUT: ReadonlySet<string> = new Set(['SESSION_MISMATCH', 'VERSION_MISMATCH', 'NOT_ALLOWED', 'NOT_UNIQUE']);
-/** Only `DRIVER_ERROR` is the Appium driver's own answer; the bridge's client, extension and checks raise every other code. */
 const SOURCES: Record<AppiumErrorCode, VendorSource> = {
   DRIVER_ERROR: 'appium', TIMEOUT: 'bridge', ACKNOWLEDGEMENT_LOST: 'bridge', CONNECTION_LOST: 'bridge', SESSION_MISMATCH: 'bridge',
   VERSION_MISMATCH: 'bridge', NOT_ALLOWED: 'bridge', NOT_UNIQUE: 'bridge', SDK_IDENTITY_MISMATCH: 'bridge', PROTOCOL_VERSION_MISMATCH: 'bridge',

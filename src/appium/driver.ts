@@ -99,7 +99,6 @@ function readyTransport(identity: Exclude<ResolvedIdentity, { category: 'ios-sim
   if (identity.transport.state !== 'device') throw new DeviceReasonError('DEVICE_NOT_CONNECTED', `Device ${identity.transport.serial} is ${identity.transport.state}`);
 }
 
-/** Every Android native helper runs adb. An incomplete observation comes from whatever cut it short, else the bridge's own checks. */
 function sourceOf(error: unknown, platform: AppiumTarget['platform']): VendorSource {
   if (error instanceof AppiumError) return vendorSourceOf(error.code);
   if (error instanceof NativeHelperError) return platform === 'android' ? 'adb' : 'bridge';
@@ -803,7 +802,6 @@ export class AppiumDriver implements DeviceDriver, IosPreparationDriver, Observe
     return result;
   }
 
-  /** A folder the driver made holds only its own screenshots; the run's evidence copied each one as it was recorded. */
   private async discardScreenshots(): Promise<void> {
     if (this.options.screenshotFolder !== undefined || !this.screenshots) return;
     await this.screenshots.then(folder => rm(folder, { recursive: true, force: true })).catch(() => undefined);
@@ -939,7 +937,6 @@ export class AppiumDriver implements DeviceDriver, IosPreparationDriver, Observe
     if (failure !== undefined) throw this.namingFirstFailure(failure);
   }
 
-  /** After an uncertain command closed dispatch, a cleanup the closed claim refuses reports that command, not the refusal. */
   private namingFirstFailure(failure: unknown): unknown {
     if (this.firstFailure === undefined) return failure;
     const first = ` First failure: ${failureCode(this.firstFailure)}.`;
