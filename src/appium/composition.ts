@@ -1,4 +1,4 @@
-import { mkdtemp } from 'node:fs/promises';
+import { mkdtemp, realpath } from 'node:fs/promises';
 import { tmpdir, userInfo } from 'node:os';
 import { basename, dirname, join } from 'node:path';
 import type { Action, ActionScenarioContext, ActOutcome, ActPath, AppProblem, DeviceDriver, DevicePreparation, LogSources, PrepareScenarioContext,
@@ -33,13 +33,20 @@ export function productionAppiumHost(options: { environment?: NodeJS.ProcessEnv;
     const owned = ownedNativeRunner({ environment, record: () => {} });
     const nativeRunner: NativeRunner = (command, output, signal) => owned(command.file === 'adb' ? { ...command, file: adb } : command, output, signal);
     const sdkRoot = basename(dirname(adb)) === 'platform-tools' ? dirname(dirname(adb)) : undefined;
+    const deviceSet = target.platform === 'ios' && !target.deviceSet ? await requestedDeviceSet(environment) : undefined;
     return { stack, admission: admission ?? openAdmission(), backend: 'real', homeRoot: join(support, 'homes'),
-      target: target.platform === 'android' && sdkRoot && !target.androidSdkRoot ? { ...target, androidSdkRoot: sdkRoot } : target,
+      target: target.platform === 'android' && sdkRoot && !target.androidSdkRoot ? { ...target, androidSdkRoot: sdkRoot } : deviceSet ? { ...target, deviceSet } : target,
       logFolder: await privateFolder(target.platform === 'android' ? LOG_FOLDER : join(tmpdir(), 'jev-ios-logs')),
       identityProbe: identityProbe({ adb, environment }), adb: runAdb, nativeRunner,
       fence: createFenceRunner({ adb: runAdb, simctl: simctlRunner({ environment }) }),
       ...(target.platform === 'android' ? { logcat: logcatStarter({ adb, environment }), createExitWatch } : {}) };
   };
+}
+
+/** The simulator set the environment names, as a real path like the probe's default; resolution refuses one that is not the default. */
+async function requestedDeviceSet(environment: NodeJS.ProcessEnv): Promise<string | undefined> {
+  const path = environment.SIMCTL_DEVICE_SET_PATH || environment.SIMULATOR_DEVICE_SET_PATH;
+  return path ? realpath(path).catch(() => path) : undefined;
 }
 
 async function privateFolder(folder: string): Promise<string> {

@@ -13,7 +13,7 @@ import { androidStartTime, processGone, shellCommand } from '../device/android/r
 import { DeviceReasonError, StaleSnapshotError, type AdmittedAppContext, type DeviceWindowOpener, type IosPreparationDriver, type ObservedActionDriver,
   type PreparationInventoryStatus } from '../device/index.js';
 import { executorOf, type StartLookup } from '../device/host-start.js';
-import { resolveIdentity, revalidateIdentity, type IdentityProbe, type ResolvedIdentity } from '../device/identity.js';
+import { IdentityResolutionError, resolveIdentity, revalidateIdentity, type IdentityProbe, type ResolvedIdentity } from '../device/identity.js';
 import { CompatibilityMarker, DeviceLeaseBusyError } from '../device/lease.js';
 import { createNativeLogSource, readLogTail, type NativeLogSource } from '../device/logs.js';
 import { OperationTracker } from '../device/operation-tracker.js';
@@ -368,7 +368,13 @@ export class AppiumDriver implements DeviceDriver, IosPreparationDriver, Observe
     const request = target.platform === 'ios'
       ? { category: 'ios-simulator' as const, name: target.device, ...(target.deviceSet ? { deviceSet: target.deviceSet } : {}) }
       : { category: target.category ?? 'android' as const, name: target.device };
-    return resolveIdentity({ request, probe: this.options.identityProbe, signal });
+    try { return await resolveIdentity({ request, probe: this.options.identityProbe, signal }); }
+    catch (error) {
+      if (error instanceof IdentityResolutionError && error.code !== 'PROFILE_CONFLICT') {
+        throw new DeviceReasonError(error.code, error.message, error.reason ? { vendorCode: error.reason, vendorSource: 'bridge' } : {});
+      }
+      throw error;
+    }
   }
 
   private async admit(identity: ResolvedIdentity, intent: unknown, signal: AbortSignal): Promise<Owner> {
