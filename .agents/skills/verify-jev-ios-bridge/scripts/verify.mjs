@@ -201,7 +201,7 @@ try {
   switch (mode) {
     case 'build': {
       const before = digest(['src', 'package.json', 'package-lock.json', 'tsconfig.json', 'tsconfig.build.json']);
-      command('npm', ['run', 'build'], { timeout: 120000 });
+      command('npm', ['run', 'build'], { timeout: 300000 });
       const receipt = identity();
       assert.equal(receipt.sourceSha256, before, 'Source changed during build. Rebuild before driving');
       save(stamp, receipt);
