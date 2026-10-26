@@ -70,12 +70,16 @@ async function withService(jev: FakeStep[], run: (service: BridgeService, driver
   finally { await service.close(); await rm(root, { recursive: true, force: true }); }
 }
 
-/** Waits for the run to pause, and checks the wait returned at once rather than after waitMs. */
+/** Waits for the run to pause, then checks that an already-paused status returns without waiting.
+ *  The first call ends on the gate's pause event, which can come after the run has spent seconds on
+ *  its own work; only the second call measures what "at once" means. */
 async function pausedStatus(service: BridgeService, runId: string) {
-  const started = performance.now();
   const status = await service.status(runId, 45_000);
+  assert.equal(status.state, 'needs_claude', 'the run paused within the report wait');
+  const started = performance.now();
+  const again = await service.status(runId, 45_000);
   assert.ok(performance.now() - started < 2_000, 'a pause ends the wait at once');
-  assert.equal(status.state, 'needs_claude');
+  assert.equal(again.pause?.pauseId, status.pause?.pauseId);
   return status.pause!;
 }
 
