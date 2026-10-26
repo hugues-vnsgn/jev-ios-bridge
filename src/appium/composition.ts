@@ -1,6 +1,6 @@
 import { mkdtemp, realpath } from 'node:fs/promises';
 import { tmpdir, userInfo } from 'node:os';
-import { basename, dirname, join } from 'node:path';
+import { basename, dirname, join, resolve } from 'node:path';
 import type { Action, ActionScenarioContext, ActOutcome, ActPath, AppProblem, DeviceDriver, DevicePreparation, LogSources, PrepareScenarioContext,
   Snapshot, StackProvenance } from '../contracts/index.js';
 import { Admission, AdmissionError } from '../device/admission.js';
@@ -15,26 +15,52 @@ import type { ProfileBinding } from '../profiles.js';
 import { AppiumDriver, type AppiumDriverOptions, type AppiumTarget } from './driver.js';
 import { CLEANUP_BUDGET_MS } from './fence/index.js';
 import { createFenceRunner } from './fence/runner.js';
-import { hostRun, simulatorPresentationReader } from './native/presentation.js';
+import { hostRun, simulatorPresentationReader, type HostRun } from './native/presentation.js';
 import { ownedNativeRunner, type NativeRunner } from './native/process.js';
 import { simctlRunner } from './native/simctl.js';
 import { FrozenStack, StackError } from './stack.js';
 
 export type AppiumDriverParts = Omit<AppiumDriverOptions, 'runId' | 'profile'>;
 export type AppiumHost = (request: { target: AppiumTarget; admission?: Admission }) => Promise<AppiumDriverParts>;
+/** The iOS runtime of one simulator and the active Xcode version, each left out when it cannot be read. */
+export type VersionReader = (simulator: { device: string; deviceSet: string }, signal: AbortSignal) => Promise<NonNullable<Parameters<FrozenStack['prepare']>[0]>>;
 
-export function productionAppiumHost(options: { environment?: NodeJS.ProcessEnv; home?: string; stack?: FrozenStack; openAdmission?: () => Admission } = {}): AppiumHost {
+const PLIST_BUDDY = '/usr/libexec/PlistBuddy';
+const VERSION_READ_MS = 10_000;
+
+/** Read-only: nothing is opened or booted. */
+export function hostVersions(run: HostRun): VersionReader {
+  return async ({ device, deviceSet }, signal) => {
+    const read = async (file: string, args: string[]) => {
+      const reply = await run(file, args, signal).catch(() => undefined);
+      return reply?.code === 0 ? reply.stdout.trim() || undefined : undefined;
+    };
+    const runtime = await read(PLIST_BUDDY, ['-c', 'print runtime', join(deviceSet, device, 'device.plist')]);
+    const iosVersion = /^com\.apple\.CoreSimulator\.SimRuntime\.iOS-(\d+(?:-\d+)+)$/.exec(runtime ?? '')?.[1]?.replaceAll('-', '.');
+    const developer = await read('/usr/bin/xcode-select', ['-p']);
+    const xcodeVersion = developer && await read(PLIST_BUDDY, ['-c', 'print CFBundleShortVersionString', resolve(developer, '..', 'Info.plist')]);
+    return { ...(iosVersion ? { iosVersion } : {}), ...(xcodeVersion ? { xcodeVersion } : {}) };
+  };
+}
+
+export function productionAppiumHost(options: { environment?: NodeJS.ProcessEnv; home?: string; stack?: FrozenStack; openAdmission?: () => Admission;
+  readVersions?: VersionReader } = {}): AppiumHost {
   const { TYPESAFE_API_KEY: _key, ...environment } = options.environment ?? process.env;
   const openAdmission = options.openAdmission ?? (() => Admission.open());
+  const readVersions = options.readVersions ?? hostVersions(hostRun);
   const support = join(userInfo().homedir, 'Library/Application Support/jev-ios-bridge');
   return async ({ target, admission }) => {
     const adb = target.platform === 'android' ? await findAdb({ environment, ...(options.home ? { home: options.home } : {}) }) : 'adb';
-    const stack = await (options.stack ?? FrozenStack.shipped()).prepare();
+    const deviceSet = target.platform === 'ios' && !target.deviceSet ? await requestedDeviceSet(environment) : undefined;
+    const selection = target.platform === 'ios'
+      ? await readVersions({ device: target.device, deviceSet: target.deviceSet ?? deviceSet ?? join(userInfo().homedir, 'Library/Developer/CoreSimulator/Devices') },
+        AbortSignal.timeout(VERSION_READ_MS))
+      : {};
+    const stack = await (options.stack ?? FrozenStack.shipped()).prepare(selection);
     const runAdb = adbRunner({ adb, environment });
     const owned = ownedNativeRunner({ environment, record: () => {} });
     const nativeRunner: NativeRunner = (command, output, signal) => owned(command.file === 'adb' ? { ...command, file: adb } : command, output, signal);
     const sdkRoot = basename(dirname(adb)) === 'platform-tools' ? dirname(dirname(adb)) : undefined;
-    const deviceSet = target.platform === 'ios' && !target.deviceSet ? await requestedDeviceSet(environment) : undefined;
     return { stack, admission: admission ?? openAdmission(), backend: 'real', homeRoot: join(support, 'homes'),
       target: target.platform === 'android' && sdkRoot && !target.androidSdkRoot ? { ...target, androidSdkRoot: sdkRoot } : deviceSet ? { ...target, deviceSet } : target,
       logFolder: await privateFolder(target.platform === 'android' ? LOG_FOLDER : join(tmpdir(), 'jev-ios-logs')),
@@ -80,6 +106,7 @@ export class ComposedAppiumDriver implements DeviceDriver, IosPreparationDriver,
   readonly cleanupBudgetMs = CLEANUP_BUDGET_MS;
   private opening: Promise<AppiumDriver> | undefined;
   private driver: AppiumDriver | undefined;
+  private stackWarnings: readonly string[] = [];
   private revoked = false;
   private closed = false;
 
@@ -94,6 +121,7 @@ export class ComposedAppiumDriver implements DeviceDriver, IosPreparationDriver,
       try { parts = await host({ target: await target(), ...(admission ? { admission } : {}) }); }
       catch (error) { throw stackRefusal(error); }
       const driver = new AppiumDriver({ ...parts, ...(runId ? { runId } : {}), ...(profile ? { profile } : {}), ...(deviceWindow ? { deviceWindow } : {}) });
+      this.stackWarnings = parts.stack.warnings;
       this.driver = driver;
       if (this.revoked) driver.revokeIssuance();
       return driver;
@@ -145,7 +173,9 @@ export class ComposedAppiumDriver implements DeviceDriver, IosPreparationDriver,
   appProblem(): AppProblem | undefined { return this.driver?.appProblem(); }
   logSources(): LogSources { return this.driver?.logSources() ?? {}; }
   preparation(): DevicePreparation | undefined { return this.driver?.preparation(); }
-  prepareWarnings(): string[] { return this.driver ? [...this.options.targetWarnings ?? [], ...this.driver.prepareWarnings()] : []; }
+  prepareWarnings(): string[] {
+    return this.driver ? [...this.options.targetWarnings ?? [], ...this.stackWarnings, ...this.driver.prepareWarnings()] : [];
+  }
   provenance(): StackProvenance { return this.live().provenance(); }
 
   revokeIssuance(): void { this.revoked = true; this.driver?.revokeIssuance(); }
