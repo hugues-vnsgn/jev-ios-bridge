@@ -1,5 +1,5 @@
 import assert from 'node:assert/strict';
-import { existsSync, mkdtempSync, readFileSync, realpathSync, rmSync } from 'node:fs';
+import { existsSync, mkdtempSync, readdirSync, readFileSync, realpathSync, rmSync, utimesSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { basename, dirname, join } from 'node:path';
 import { test, type TestContext } from 'node:test';
@@ -38,4 +38,15 @@ test('close keeps a screenshot folder the caller supplied', async t => {
   const snapshot = await f.driver.observe(live());
   await f.driver.close(live());
   assert.deepEqual([dirname(snapshot.screenshotPath!), existsSync(snapshot.screenshotPath!)], [join(f.root, 'shots'), true]);
+});
+
+test('an iOS launch sweeps log files older than three days from the log folder, as Android does', async t => {
+  const f = driverFixture(t, observeRecording, ios);
+  const logs = join(f.root, 'logs');
+  const fourDaysAgo = new Date(Date.now() - 4 * 24 * 60 * 60 * 1000);
+  writeFileSync(join(logs, 'old-console.log'), 'old');
+  utimesSync(join(logs, 'old-console.log'), fourDaysAgo, fourDaysAgo);
+  writeFileSync(join(logs, 'recent-console.log'), 'recent');
+  await f.driver.prepare({ app: { bundleId: 'example.app' } }, live());
+  assert.deepEqual(readdirSync(logs).sort(), ['recent-console.log', 'run-1-console.log', 'run-1-os.log']);
 });
