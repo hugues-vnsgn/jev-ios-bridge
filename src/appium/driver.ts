@@ -1,9 +1,9 @@
 import { createHash, randomBytes, randomUUID } from 'node:crypto';
-import { mkdtemp, writeFile } from 'node:fs/promises';
+import { mkdtemp, rm, writeFile } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { isActOutcome, isIosApp, type Action, type ActionScenarioContext, type ActOutcome, type ActPath, type AppProblem, type DeviceDriver,
-  type DevicePreparation, type LogSources, type PrepareScenarioContext, type Snapshot, type StackProvenance } from '../contracts/index.js';
+  type DevicePreparation, type LogSources, type PrepareScenarioContext, type Snapshot, type StackProvenance, type VendorSource } from '../contracts/index.js';
 import { Admission, AdmissionError, type AdmissionClaim, type AdmittedSession, type CommandRequest, type FenceRequest } from '../device/admission.js';
 import type { AllocationCommit, ObservedClaim, PreparationClaim } from '../device/admission-allocation.js';
 import type { AdbRunner } from '../device/android/adb.js';
@@ -99,12 +99,19 @@ function readyTransport(identity: Exclude<ResolvedIdentity, { category: 'ios-sim
   if (identity.transport.state !== 'device') throw new DeviceReasonError('DEVICE_NOT_CONNECTED', `Device ${identity.transport.serial} is ${identity.transport.state}`);
 }
 
-/** Maps an operation's failure to the bridge's vocabulary with its source, so `error.vendorSource` is truthful.
- *  Every Android native helper runs adb. */
+function sourceOf(error: unknown, platform: AppiumTarget['platform']): VendorSource {
+  if (error instanceof AppiumError) return vendorSourceOf(error.code);
+  if (error instanceof NativeHelperError) return platform === 'android' ? 'adb' : 'bridge';
+  if (error instanceof ObservationIncompleteError) return sourceOf(error.cause, platform);
+  return 'bridge';
+}
+
+/** Maps an operation's failure to the bridge's vocabulary with its source, so `error.vendorSource` is truthful. */
 export function appiumFailure(error: unknown, platform: AppiumTarget['platform']): unknown {
-  if (error instanceof AppiumError) return new DeviceReasonError('DEVICE_ERROR', 'The Appium layer refused the command.', { vendorCode: error.code, vendorSource: vendorSourceOf(error.code) });
-  if (error instanceof NativeHelperError) return new DeviceReasonError('DEVICE_ERROR', error.message, { vendorCode: error.code, vendorSource: platform === 'android' ? 'adb' : 'bridge' });
-  if (error instanceof ObservationIncompleteError) return new DeviceReasonError('DEVICE_ERROR', 'The screen could not be observed.', { vendorCode: `OBSERVATION_${error.reason.toUpperCase().replace(/-/g, '_')}`, vendorSource: 'appium' });
+  const vendorSource = sourceOf(error, platform);
+  if (error instanceof AppiumError) return new DeviceReasonError('DEVICE_ERROR', 'The Appium layer refused the command.', { vendorCode: error.code, vendorSource });
+  if (error instanceof NativeHelperError) return new DeviceReasonError('DEVICE_ERROR', error.message, { vendorCode: error.code, vendorSource });
+  if (error instanceof ObservationIncompleteError) return new DeviceReasonError('DEVICE_ERROR', 'The screen could not be observed.', { vendorCode: `OBSERVATION_${error.reason.toUpperCase().replace(/-/g, '_')}`, vendorSource });
   return error;
 }
 
@@ -267,7 +274,7 @@ export class AppiumDriver implements DeviceDriver, IosPreparationDriver, Observe
       await this.stopCommand(live.command, undefined, signal);
       claim.stageFence(await this.fenceOwn(live.owner, signal));
       return claim.park(readinessEvidence, evidenceRefs);
-    } finally { this.phase = { kind: 'closed' }; }
+    } finally { this.phase = { kind: 'closed' }; await this.discardScreenshots(); }
   }
 
   revokeIssuance(): void {
@@ -668,6 +675,7 @@ export class AppiumDriver implements DeviceDriver, IosPreparationDriver, Observe
     if (owner.identity.category !== 'ios-simulator') throw new Error('Simulator identity required');
     const target = this.iosTarget(owner);
     const runner = this.nativeRunnerFor(owner);
+    await deleteOldLogs(this.options.logFolder);
     const sources: NativeLogSource[] = [];
     const source = async (name: string) => {
       const created = await createNativeLogSource({ path: join(this.options.logFolder, `${this.runId}-${name}.log`), values: {} });
@@ -794,6 +802,11 @@ export class AppiumDriver implements DeviceDriver, IosPreparationDriver, Observe
     return result;
   }
 
+  private async discardScreenshots(): Promise<void> {
+    if (this.options.screenshotFolder !== undefined || !this.screenshots) return;
+    await this.screenshots.then(folder => rm(folder, { recursive: true, force: true })).catch(() => undefined);
+  }
+
   private async guarded<T>(signal: AbortSignal, work: () => Promise<T>): Promise<T> {
     signal.throwIfAborted();
     if (this.issuanceClosed) throw new AdmissionError('DISPATCH_CLOSED', 'Device issuance is closed');
@@ -878,6 +891,11 @@ export class AppiumDriver implements DeviceDriver, IosPreparationDriver, Observe
    *  A clean close fences its own components after its last effect and releases the device; only real uncertainty
    *  quarantines it for a recovery claim. An observed claim stages its fence for the runtime's terminal. */
   private async finishClose(signal: AbortSignal, settle: boolean): Promise<void> {
+    try { await this.closeOwned(signal, settle); }
+    finally { await this.discardScreenshots(); }
+  }
+
+  private async closeOwned(signal: AbortSignal, settle: boolean): Promise<void> {
     let failure: unknown;
     try { if (settle) await this.operations.settle(signal); }
     catch (error) { failure = error; }
@@ -920,8 +938,11 @@ export class AppiumDriver implements DeviceDriver, IosPreparationDriver, Observe
   }
 
   private namingFirstFailure(failure: unknown): unknown {
-    if (!(failure instanceof DeviceReasonError) || failure.code !== 'CLEANUP_FAILED' || this.firstFailure === undefined) return failure;
-    return new DeviceReasonError('CLEANUP_FAILED', `${failure.message} First failure: ${failureCode(this.firstFailure)}.`);
+    if (this.firstFailure === undefined) return failure;
+    const first = ` First failure: ${failureCode(this.firstFailure)}.`;
+    if (failure instanceof DeviceReasonError && failure.code === 'CLEANUP_FAILED') return new DeviceReasonError('CLEANUP_FAILED', `${failure.message}${first}`);
+    if (failure instanceof AdmissionError && failure.code === 'DISPATCH_CLOSED') return new DeviceReasonError('CLEANUP_FAILED', `Close met a closed claim.${first}`);
+    return failure;
   }
 
   /** A lost COMMIT reply: the store is the authority on whether the release committed. */

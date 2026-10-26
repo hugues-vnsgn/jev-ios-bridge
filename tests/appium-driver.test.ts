@@ -2,7 +2,7 @@ import assert from 'node:assert/strict';
 import { existsSync, mkdtempSync, readdirSync, readFileSync, realpathSync, rmSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { test, type TestContext } from 'node:test';
-import { join, resolve } from 'node:path';
+import { dirname, join, resolve } from 'node:path';
 import { setTimeout as delay } from 'node:timers/promises';
 import { freeHostPort } from '../src/appium/ports.js';
 import { fenceEffectSchema } from '../src/appium/fence/schema.js';
@@ -11,6 +11,7 @@ import { AppiumDriver, appiumFailure } from '../src/appium/driver.js';
 import { AppiumError } from '../src/appium/wire-schemas.js';
 import { Admission, type OwnerIdentity } from '../src/device/admission.js';
 import { NativeHelperError } from '../src/appium/native/process.js';
+import { ObservationIncompleteError } from '../src/appium/observe/xml.js';
 import { createRunLog } from '../src/log/index.js';
 import { runScriptedScenario } from '../src/scripted/run.js';
 import type { ScriptedJudge } from '../src/scripted/contracts.js';
@@ -249,6 +250,19 @@ test('observed preparation launches once without helpers, deletes its session an
     'the preparation session is created and deleted, and the app is never terminated');
   assert.deepEqual(f.fence.effects.filter(effect => effect.kind === 'wda-stop'), [{ kind: 'wda-stop', udid: UDID, bundleId: WDA_BUNDLE, pid: 777 }]);
   assert.deepEqual(await f.fence.run(fenceEffectSchema.parse({ kind: 'wda-inventory', udid: UDID }), live()), [], 'the runner is not running on that simulator at park');
+});
+
+test('park removes the screenshot folder the driver made, after the readiness screenshot was copied', async t => {
+  const f = driverFixture(t, observeRecording, { ...ios, ...({ screenshotFolder: undefined } as {}) }, 'none',
+    command => ['ios-boot', 'ios-install', 'ios-launch'].includes(command.kind) ? '' : undefined);
+  const p = await parkedAllocation(f.admission);
+  await f.driver.attachPreparation(p.claim, observedContext, live());
+  await f.driver.boot(live()); await f.driver.install('/isolated/Fixture.app', live()); await f.driver.launch(live());
+  const readiness = await f.driver.readiness(live());
+  const copy = join(f.root, 'readiness-1.jpg');
+  writeFileSync(copy, readFileSync(readiness.screenshotPath!));
+  assert.equal((await f.driver.park([copy], [], live())).authority, 'committed');
+  assert.deepEqual([existsSync(dirname(readiness.screenshotPath!)), existsSync(copy)], [false, true]);
 });
 
 test('the observed action opens a fresh session with no launch, and fences its components before the runtime terminal', async t => {
@@ -530,8 +544,27 @@ test('a failure names its true source: the bridge for its own client and extensi
     const mapped = appiumFailure(error, platform);
     return mapped instanceof DeviceReasonError ? [mapped.vendorCode, mapped.vendorSource] : mapped;
   };
-  assert.deepEqual(['SESSION_MISMATCH', 'VERSION_MISMATCH', 'NOT_ALLOWED', 'DRIVER_ERROR'].map(code => source(new AppiumError(code as never), 'ios')),
-    [['SESSION_MISMATCH', 'bridge'], ['VERSION_MISMATCH', 'bridge'], ['NOT_ALLOWED', 'bridge'], ['DRIVER_ERROR', 'appium']]);
+  const codes = ['TIMEOUT', 'ACKNOWLEDGEMENT_LOST', 'CONNECTION_LOST', 'SESSION_MISMATCH', 'VERSION_MISMATCH', 'NOT_ALLOWED', 'NOT_UNIQUE',
+    'SDK_IDENTITY_MISMATCH', 'PROTOCOL_VERSION_MISMATCH', 'SETTINGS_READBACK_MISMATCH', 'DRIVER_ERROR'] as const;
+  assert.deepEqual(codes.map(code => source(new AppiumError(code), 'ios')),
+    [['TIMEOUT', 'bridge'], ['ACKNOWLEDGEMENT_LOST', 'bridge'], ['CONNECTION_LOST', 'bridge'], ['SESSION_MISMATCH', 'bridge'], ['VERSION_MISMATCH', 'bridge'],
+      ['NOT_ALLOWED', 'bridge'], ['NOT_UNIQUE', 'bridge'], ['SDK_IDENTITY_MISMATCH', 'bridge'], ['PROTOCOL_VERSION_MISMATCH', 'bridge'],
+      ['SETTINGS_READBACK_MISMATCH', 'bridge'], ['DRIVER_ERROR', 'appium']]);
   assert.deepEqual([source(new NativeHelperError('NATIVE_FAILED', 'adb failed'), 'android'), source(new NativeHelperError('NATIVE_FAILED', 'simctl failed'), 'ios')],
     [['NATIVE_FAILED', 'adb'], ['NATIVE_FAILED', 'bridge']]);
+});
+
+test('an incomplete observation takes its source from its cause', () => {
+  const source = (error: unknown, platform: 'ios' | 'android') => {
+    const mapped = appiumFailure(error, platform);
+    return mapped instanceof DeviceReasonError ? [mapped.vendorCode, mapped.vendorSource] : mapped;
+  };
+  assert.deepEqual([
+    source(new ObservationIncompleteError('depth-limit'), 'ios'),
+    source(new ObservationIncompleteError('timeout', { cause: new AppiumError('TIMEOUT') }), 'ios'),
+    source(new ObservationIncompleteError('driver-error', { cause: new AppiumError('CONNECTION_LOST') }), 'ios'),
+    source(new ObservationIncompleteError('driver-error', { cause: new AppiumError('DRIVER_ERROR') }), 'android'),
+    source(new ObservationIncompleteError('driver-error', { cause: new NativeHelperError('NATIVE_FAILED', 'adb failed') }), 'android'),
+  ], [['OBSERVATION_DEPTH_LIMIT', 'bridge'], ['OBSERVATION_TIMEOUT', 'bridge'], ['OBSERVATION_DRIVER_ERROR', 'bridge'],
+    ['OBSERVATION_DRIVER_ERROR', 'appium'], ['OBSERVATION_DRIVER_ERROR', 'adb']]);
 });
