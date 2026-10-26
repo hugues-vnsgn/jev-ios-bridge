@@ -12,6 +12,7 @@ import { fakeProbeSpawn } from '../adb-spawn.js';
 import { fakeSimulatorProbe } from '../android-device.js';
 import { fakeDrivenJudge, type FakeStep } from '../driven-judge.js';
 import { UDID } from './driver-fixture.js';
+import { androidPreflightReply, type AndroidPreflight } from './world.js';
 
 export const SERIAL = 'PHONE123';
 export const IOS_DEVICE: DeviceIdentity = { category: 'ios-simulator', value: UDID };
@@ -21,11 +22,13 @@ export const iosTarget = { target: { platform: 'ios', device: UDID, presentation
 const keyguard = (showing: boolean) => `WINDOW MANAGER POLICY STATE\n    KeyguardServiceDelegate\n      showing=${String(showing)}\n      interactiveState=INTERACTIVE_STATE_AWAKE\n`;
 const procStat = (pid: number) => `${String(pid)} (app_process) S ${'0 '.repeat(18)}424242 0 0`;
 /** A USB phone whose transport the test can take away; the world fixture answers its UiAutomator2 `pidof`. */
-export function androidTarget(device = { state: 'device' }) {
+export function androidTarget(device: { state: string } & AndroidPreflight = { state: 'device' }) {
   const probe = identityProbe({ adb: '/fake/adb', environment: {}, host: { listener: async () => { throw new Error('no emulator'); }, directory: async () => { throw new Error('no emulator'); } } as never,
     spawn: fakeProbeSpawn((_file, args) => args[0] === 'devices' ? `List of devices attached\n${SERIAL} ${device.state}\n` : `${SERIAL}\n`).spawn });
   const adb: AdbRunner = async args => {
     const line = args.at(-1) ?? '';
+    const preflight = androidPreflightReply(line, device);
+    if (preflight) return preflight;
     const pid = /\/proc\/(\d+)\/stat/.exec(line)?.[1];
     return pid ? { stdout: procStat(Number(pid)), stderr: '', exitCode: 0 } : { stdout: '', stderr: 'unexpected', exitCode: 1 };
   };

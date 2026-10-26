@@ -61,6 +61,17 @@ export function androidScreen(views: AndroidView[], pkg = 'example.app'): string
     ...views.map(node), '</android.widget.FrameLayout>', '</hierarchy>'].join('\n');
 }
 
+/** A phone's preflight facts: API level, whether it finished booting, and which packages `pm path` finds (all, when unset). */
+export type AndroidPreflight = { api?: number; booted?: boolean; installed?: string[] };
+/** The fake phone's answer to the preflight's `getprop` and `pm path` reads, or undefined for any other shell line. */
+export function androidPreflightReply(line: string, phone: AndroidPreflight): { stdout: string; stderr: string; exitCode: number } | undefined {
+  if (line === "'getprop' 'ro.build.version.sdk'") return { stdout: `${String(phone.api ?? 36)}\n`, stderr: '', exitCode: 0 };
+  if (line === "'getprop' 'sys.boot_completed'") return { stdout: phone.booted === false ? '\n' : '1\n', stderr: '', exitCode: 0 };
+  const pkg = /^'pm' 'path' '([^']+)'$/.exec(line)?.[1];
+  if (pkg === undefined) return undefined;
+  return !phone.installed || phone.installed.includes(pkg) ? { stdout: `package:/data/app/${pkg}/base.apk\n`, stderr: '', exitCode: 0 } : { stdout: '', stderr: '', exitCode: 1 };
+}
+
 const UIAUTOMATOR2_PIDS = [5001, 5002];
 type Overrides = Partial<AppiumDriverOptions> & Pick<AppiumDriverOptions, 'target' | 'identityProbe'>;
 type Call = { method?: string; params?: { name?: string; arguments?: Record<string, unknown> } };

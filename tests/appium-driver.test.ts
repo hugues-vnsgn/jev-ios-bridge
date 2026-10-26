@@ -19,6 +19,7 @@ import type { AdbRunner } from '../src/device/android/adb.js';
 import { identityProbe } from '../src/device/android/probe.js';
 import { DeviceReasonError, StaleSnapshotError } from '../src/device/index.js';
 import { UDID, WDA_BUNDLE, driverFixture, fakeNativeRunner, hostRows, tapRecording, liveGroupRows, rewriteRecording, spliceRecordings } from './fixtures/appium-wire/driver-fixture.js';
+import { androidPreflightReply } from './fixtures/appium-wire/world.js';
 
 const live = () => new AbortController().signal;
 const ios = { target: { platform: 'ios', device: UDID, presentation: 'visible' }, identityProbe: fakeSimulatorProbe(UDID) } as const;
@@ -138,6 +139,8 @@ function androidWorld(t: TestContext, locked = false, pids = '5001 5002\n', keyg
     adbCalls.push([...args]);
     const line = args.at(-1) ?? '';
     if (line.includes('pidof')) return sessionStarted() && pids ? { stdout: pids, stderr: '', exitCode: 0 } : { stdout: '', stderr: '', exitCode: 1 };
+    const preflight = androidPreflightReply(line, {});
+    if (preflight) return preflight;
     const pid = /\/proc\/(\d+)\/stat/.exec(line)?.[1];
     return pid ? { stdout: stat(Number(pid)), stderr: '', exitCode: 0 } : { stdout: '', stderr: 'unexpected', exitCode: 1 };
   };
