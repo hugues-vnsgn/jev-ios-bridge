@@ -44,21 +44,22 @@ function fakeLogcat(options: { refuse?: (args: string[]) => boolean; unconfirmed
   return { starter, started, events, appLog: () => started.find(entry => entry.args.includes('threadtime,year,uid'))! };
 }
 
-function phoneShell(base: AdbRunner, sessionUp: () => boolean, onPidof: () => void): AdbRunner {
+function phoneShell(base: AdbRunner, sessionUp: () => boolean, onPidof: () => void, deviceTime: () => string): AdbRunner {
   return async (args, signal) => {
     const line = args.at(-1);
     if (line?.startsWith("'pidof' 'io.appium.uiautomator2.server'") && !sessionUp()) return { stdout: '', stderr: '', exitCode: 1 };
     if (line === "'pm' 'list' 'packages' '-U'") return { stdout: 'package:example.app.debug uid:10999\npackage:example.app uid:10123\n', stderr: '', exitCode: 0 };
-    if (line === "'date' '+%s.%3N %z'") return { stdout: `${DEVICE_TIME} +0000\n`, stderr: '', exitCode: 0 };
+    if (line === "'date' '+%s.%3N %z'") return { stdout: `${deviceTime()} +0000\n`, stderr: '', exitCode: 0 };
     if (line === "'pidof' 'example.app'") { onPidof(); return { stdout: '4242\n', stderr: '', exitCode: 0 }; }
     return base(args, signal);
   };
 }
 
-function phone(t: TestContext, logcat: ReturnType<typeof fakeLogcat>, rules: WorldRule[] = []) {
+/** `deviceTime` reads the phone's clock; `oldLines` are what the previous instance logged, delivered once the new pid is read. */
+function phone(t: TestContext, logcat: ReturnType<typeof fakeLogcat>, rules: WorldRule[] = [], deviceTime = () => DEVICE_TIME, oldLines = OLD_PID_STOPPED) {
   const target = androidTarget();
   let sessionUp = () => false;
-  const adb = phoneShell(target.options.adb, () => sessionUp(), () => { for (const line of OLD_PID_STOPPED) logcat.events()?.feed(line); });
+  const adb = phoneShell(target.options.adb, () => sessionUp(), () => { for (const line of oldLines) logcat.events()?.feed(line); }, deviceTime);
   const f = worldFixture(t, world('android', screens, rules), { ...target.options, adb, logcat: logcat.starter, createExitWatch },
     command => command.kind === 'android-foreground' ? resumed : target.nativeReply(command));
   sessionUp = () => f.tools().includes('appium_session_management');
@@ -69,7 +70,7 @@ function phone(t: TestContext, logcat: ReturnType<typeof fakeLogcat>, rules: Wor
 function androidReads(f: ReturnType<typeof phone>): string[] {
   const owner = f.admission.readAttempt({ kind: 'legacy', id: 'run-1' })!.owner;
   return f.admission.readGeneration(owner).commands.map(command => command.operation)
-    .filter(operation => ['android-app-uid', 'android-device-time', 'android-app-pid', 'appium-restart', 'android-foreground'].includes(operation));
+    .filter(operation => ['android-app-uid', 'android-device-time', 'android-app-pid', 'appium-terminate', 'appium-restart', 'android-foreground'].includes(operation));
 }
 
 test('a restart run streams the app log by uid to <logFolder>/<runId>.log, registers both streams, and close stops them', async t => {
@@ -79,7 +80,8 @@ test('a restart run streams the app log by uid to <logFolder>/<runId>.log, regis
   const file = join(f.root, 'logs', 'run-1.log');
   assert.deepEqual(logcat.started.map(entry => [entry.args, entry.output === file ? 'file' : typeof entry.output]), [[APP_LOG_ARGS, 'file'], [EVENTS_ARGS, 'function']]);
   assert.deepEqual(f.driver.logSources(), { logcat: file });
-  assert.deepEqual(androidReads(f), ['android-app-uid', 'android-device-time', 'appium-restart', 'android-app-pid'], 'the streams start from the device time before the restart');
+  assert.deepEqual(androidReads(f), ['appium-terminate', 'android-app-uid', 'android-device-time', 'appium-restart', 'android-app-pid'],
+    'the streams start from the device time between the force-stop and the launch');
   const owner = f.admission.inspect(ANDROID_DEVICE)!.owner!;
   const helpers = f.admission.readGeneration(owner).components.filter(component => component.kind === 'appium-native-helper')
     .map(component => { const { role, process } = component.declaration as { role: string; process: unknown }; return { role, process }; });
@@ -103,6 +105,16 @@ test('a crash of the launched pid is APP_EXITED, and the restart\'s own stop of 
   assert.deepEqual([f.driver.appRunning(), f.driver.appProblem()], [false, { code: 'APP_EXITED', note: 'crashed: RuntimeException at Main.kt:3' }]);
 });
 
+test('a native crash the previous instance logged before the force-stop is not this run\'s APP_EXITED', async t => {
+  const logcat = fakeLogcat();
+  let stopped = () => false;
+  const oldNativeCrash = '2026-10-24 10:00:00.500   680  1107 I am_crash: [680,0,example.app,547995206,Native crash,Segmentation fault,unknown,0,0]';
+  const f = phone(t, logcat, [], () => stopped() ? '1792836001.000' : DEVICE_TIME, [oldNativeCrash]);
+  stopped = () => f.tools().some(tool => tool === 'jev_terminate_app' || tool === 'jev_start_activity');
+  await f.driver.prepare({ app: { package: 'example.app', activity: '.Main' } }, live());
+  assert.deepEqual([f.driver.appRunning(), f.driver.appProblem()], [true, undefined]);
+});
+
 test('the restart marks no stop expected: a later death of the launched pid still reads APP_EXITED', async t => {
   const logcat = fakeLogcat();
   const f = phone(t, logcat);
@@ -113,7 +125,7 @@ test('the restart marks no stop expected: a later death of the launched pid stil
 
 test('the close\'s own terminate is expected: the stop it causes is no APP_EXITED', async t => {
   const logcat = fakeLogcat();
-  const f = phone(t, logcat, [{ tool: 'jev_terminate_app', fault: { kind: 'held' } }]);
+  const f = phone(t, logcat, [{ tool: 'jev_terminate_app', nth: 2, fault: { kind: 'held' } }]);
   await f.driver.prepare({ app: { package: 'example.app', activity: '.Main' } }, live());
   const closed = f.driver.close(live());
   for (let waited = 0; !f.tools().includes('jev_terminate_app') && waited < 10_000; waited += 10) await delay(10);
