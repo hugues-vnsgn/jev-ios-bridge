@@ -599,9 +599,15 @@ export class AppiumDriver implements DeviceDriver, IosPreparationDriver, Observe
       if (signal.aborted) throw error;
       return false;
     }
+    if (!stream.process) {
+      // Unregistered, so no recovery could stop it: stop it now. One that will not stop stays for close.
+      const entry: StreamEntry = { stream, stopping: true };
+      await stream.stop().catch(() => { helpers.streams.push(entry); });
+      throw new DeviceReasonError('DEVICE_ERROR', `The ${role} stream's process could not be identified.`, { vendorCode: 'STREAM_UNIDENTIFIED', vendorSource: 'bridge' });
+    }
     const entry: StreamEntry = { stream, stopping: false };
     helpers.streams.push(entry);
-    const process = hostIdentitySchema.parse({ pid: stream.process?.pid, startTime: stream.process?.incarnation });
+    const process = hostIdentitySchema.parse({ pid: stream.process.pid, startTime: stream.process.incarnation });
     this.register(owner, appiumComponentSchema.parse({ id: randomUUID(), kind: 'appium-native-helper', role, process }));
     void stream.exited.then(() => { if (!entry.stopping) endedByItself?.(); });
     return true;
@@ -658,7 +664,12 @@ export class AppiumDriver implements DeviceDriver, IosPreparationDriver, Observe
   private async openWindow(owner: Owner, signal: AbortSignal): Promise<void> {
     const open = this.options.deviceWindow;
     if (!open) return;
-    const opened = await this.dispatch(owner, 'window', signal, 10_000, issued => open(owner.identity.value, issued).then(() => true, () => false));
+    // Only a real open failure is a warning: one cut short by cancellation or closed issuance has an unknown outcome.
+    const opened = await this.dispatch(owner, 'window', signal, 10_000, issued => open(owner.identity.value, issued).then(() => true, () => {
+      if (issued.aborted) throw issued.reason;
+      if (this.issuanceClosed) throw new AdmissionError('DISPATCH_CLOSED', 'Device issuance is closed');
+      return false;
+    }));
     if (!opened) this.warnings.push('Simulator window not opened: Simulator could not be opened on the run\'s device.');
   }
 
