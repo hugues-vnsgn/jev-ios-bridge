@@ -50,7 +50,7 @@ export interface LogStream {
 const HISTORY_LIMIT = 5_000;
 
 /**
- * Follow the app's log files (the two MobileBuildMCP writes on iOS, or the app's logcat file on Android), mask
+ * Follow the app's log files (the simulator console and unified log on iOS, or the app's logcat file on Android), mask
  * the script's values, and serve the lines to panes over a Unix socket that only this user can open. Nothing
  * is written to disk. `appProblem` is the driver's answer to whether the app stopped; the pane notes it once.
  */

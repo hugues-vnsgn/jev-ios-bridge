@@ -111,8 +111,8 @@ export type Action =
   | { kind: 'scroll'; direction: 'up' | 'down'; targetRef?: never }
   /** Driven mode only, reachable through Claude's `resolve_step`: a tap at a point on the observation's
    *  screenshot, in the screenshot image's own pixels (it is shrunk to at most 800 px), which the driver scales to
-   *  the screen. Outside the screenshot is `UNSUPPORTED_ACTION`. Android only: MobileBuildMCP 2.7.1 has no tap at
-   *  a point, so the iOS driver refuses it with `UNSUPPORTED_ACTION`. */
+   *  the screen. Outside the screenshot is `UNSUPPORTED_ACTION`. Android only: iOS stays out of `TAP_AT_PLATFORMS`
+   *  until the evidence ADR-0007 lists exists, so an iOS pause refuses it with `UNSUPPORTED_ACTION`. */
   | { kind: 'tapAt'; x: number; y: number; targetRef?: never };
 
 /** An action on one element of the observation: the only kinds a version 1 script produces. */
@@ -128,7 +128,7 @@ export type ActPath =
   | { path: 'back-key' }
   /** Swiped inside the largest scrollable element (`targetRef`). */
   | { path: 'scroll-within'; targetRef: string }
-  /** No scrollable element: swiped in the middle of the screen (iOS: MobileBuildMCP's scroll preset). */
+  /** No scrollable element: swiped in the middle of the screen. */
   | { path: 'screen-middle' };
 
 
@@ -188,7 +188,8 @@ export type StackProvenance = {
 /** The launched app exited (crashed, was killed or quit) or froze. The note names the cause, for the log pane. */
 export interface AppProblem { code: 'APP_EXITED' | 'APP_NOT_RESPONDING'; note: string }
 
-/** The app's own log files: MobileBuildMCP's runtime and system logs on iOS, the app's logcat file on Android. */
+/** The app's own log files: on iOS the simulator console and unified log the bridge writes to
+ *  `$TMPDIR/jev-ios-logs/<runId>-{console,os}.log`, on Android the app's logcat file. */
 export interface LogSources { runtime?: string; os?: string; logcat?: string }
 
 /** What a device `prepare` did, recorded in the run log's `prepared` event. */

@@ -27,8 +27,7 @@ export const DEFAULT_HANDBACK_TIMEOUT_MS = 5 * 60_000;
 export const MIN_HANDBACK_TIMEOUT_MS = 1_000;
 export const MAX_HANDBACK_TIMEOUT_MS = 30 * 60_000;
 
-/** Platforms whose driver can tap a point. iOS can't yet: MobileBuildMCP 2.7.1 has no point tap and ADR-0002
- *  rules out driving AXe directly, pending the owner's decision. */
+/** Platforms whose pauses offer a point tap. iOS joins once the evidence ADR-0007 lists exists. */
 export const TAP_AT_PLATFORMS: ReadonlySet<Platform> = new Set(['android']);
 
 /** No answer came within the pause's time: the run ends INCONCLUSIVE and releases the device. */
@@ -215,8 +214,8 @@ export function createHandbackGate(options: HandbackGateOptions): HandbackGate {
         return parsed;
       case 'tapAt': {
         if (!TAP_AT_PLATFORMS.has(platform)) {
-          throw new HandbackAnswerError(`UNSUPPORTED_ACTION: tapAt isn't available on ${platform} in this build ` +
-            `(MobileBuildMCP 2.7.1 has no tap at a point); answer with one of: ${answers.join(', ')}`);
+          throw new HandbackAnswerError(`UNSUPPORTED_ACTION: tapAt isn't available on ${platform} in this build; ` +
+            `answer with one of: ${answers.join(', ')}`);
         }
         const size = view.screenshotSize;
         if (!size) throw new HandbackAnswerError('tapAt needs the paused screenshot, whose size is unknown; answer with another kind');

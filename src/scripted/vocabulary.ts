@@ -1,10 +1,10 @@
 /**
- * Bridge-owned vocabularies frozen by ADR-0005. A MobileBuildMCP release cannot change them:
- * the driver translates vendor roles, and unknown vendor error codes become DEVICE_ERROR.
+ * Bridge-owned vocabularies frozen by ADR-0005. A device-layer release cannot change them:
+ * the driver translates the device layer's roles, and unknown device-layer error codes become DEVICE_ERROR.
  * 1.x may add entries; renaming or removing one needs 2.0.
  */
 
-/** Selector roles. Today they equal MobileBuildMCP 2.7.1's rs/1 role strings. */
+/** Selector roles. The drivers map native element types onto them. */
 export const ROLES = [
   'application', 'window', 'button', 'keyboard-key', 'text-field', 'menu', 'text', 'image',
   'switch', 'slider', 'cell', 'scroll-view', 'list', 'tab', 'other',
@@ -133,9 +133,9 @@ export function isReasonCode(value: unknown): value is ReasonCode {
 }
 
 /**
- * MobileBuildMCP device-layer errors pass through only when their code is one of these: the codes
- * shipped in 1.1, frozen here rather than read off the live REASON_CODES. This keeps a later addition
- * to REASON_CODES (for example an Android-only code that happens to share a name with a MobileBuildMCP
- * code) from silently starting to pass through too. See ADR-0005.
+ * Device-layer errors pass through only when their code is one of these: the codes shipped in 1.1,
+ * frozen here rather than read off the live REASON_CODES. This keeps a later addition to REASON_CODES
+ * (for example an Android-only code that happens to share a name with a device-layer code) from silently
+ * starting to pass through too. See ADR-0005.
  */
 export const MOBILEBUILDMCP_PASSTHROUGH_CODES: ReadonlySet<string> = new Set(Object.keys(REASON_CODES_1_1));

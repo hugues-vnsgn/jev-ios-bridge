@@ -77,11 +77,7 @@ function limitValue(name: string, raw: string | undefined): number | undefined {
   return value;
 }
 
-/** The user's project. A Claude Code plugin starts the server in the plugin's folder, so it passes the project in. */
-const projectDir = resolve(process.env.JEV_PROJECT_DIR?.trim() || process.cwd());
-const runsDir = () => process.env.JEV_RUNS_DIR ?? join(projectDir, '.jev-runs');
-
-async function readScript(path: string): Promise<unknown> {
+async function readScript(projectDir: string, path: string): Promise<unknown> {
   let text: string;
   try { text = await readFile(resolve(projectDir, path), 'utf8'); }
   catch { throw new StartError(`Cannot read script file ${path}`); }
@@ -101,7 +97,9 @@ export type CliComposition = { observed?: ObservedComposition; legacy?: BridgeSe
   createJudge?: ServiceOptions['createJudge']; createDrivenJudge?: ServiceOptions['createDrivenJudge'] };
 type ServiceOptions = ConstructorParameters<typeof BridgeService>[0];
 async function dispatchCli(args: string[], composition: CliComposition): Promise<void> {
+  // A Claude Code plugin starts the server in the plugin's folder, so it passes the project in.
   const projectDir = composition.projectDir ?? resolve(process.env.JEV_PROJECT_DIR?.trim() || process.cwd());
+  const runsDir = process.env.JEV_RUNS_DIR ?? join(projectDir, '.jev-runs');
   let parsed;
   try {
     parsed = parseArgs({ args, allowPositionals: true, options: cliOptions });
@@ -111,7 +109,7 @@ async function dispatchCli(args: string[], composition: CliComposition): Promise
   if (parsed.values.help || !command) { console.log(USAGE); return; }
   const host = composition.host ?? productionAppiumHost();
   if (isObservedCommand(command)) {
-    const module = composition.observed ?? productionObservedComposition({ enabled: process.env.JEV_EXPERIMENTAL_OBSERVED === '1', runsDir: runsDir(), host });
+    const module = composition.observed ?? productionObservedComposition({ enabled: process.env.JEV_EXPERIMENTAL_OBSERVED === '1', runsDir: runsDir, host });
     const controller = new AbortController(); let signalExit: number | undefined; let signalStarted: number | undefined;
     let output = Promise.resolve();
     const stop = (code: number) => () => {
@@ -170,8 +168,8 @@ async function dispatchCli(args: string[], composition: CliComposition): Promise
   if (command === 'logs') {
     if (await attachLogPane(argument!)) return;
     let events;
-    try { events = await readRunEvents(runsDir(), argument!); }
-    catch { throw new StartError(`No live run ${argument}, and no recorded run with that ID in ${runsDir()}`); }
+    try { events = await readRunEvents(runsDir, argument!); }
+    catch { throw new StartError(`No live run ${argument}, and no recorded run with that ID in ${runsDir}`); }
     const sources = events.find(event => event.type === 'prepared')?.data.logSources as LogSources | undefined;
     console.log(`Run ${argument} is not running, so there is no live log to follow.` +
       (sources ? `\nThe app's own log files (not masked): ${[sources.runtime, sources.os, sources.logcat].filter(Boolean).join(', ')}` : ''));
@@ -181,7 +179,7 @@ async function dispatchCli(args: string[], composition: CliComposition): Promise
   let script;
   let selectedProfile: SelectedProfile | undefined;
   if (command === 'run') {
-    script = resolveScriptValues(parseScriptedScenarioSource(await readScript(argument!)), process.env);
+    script = resolveScriptValues(parseScriptedScenarioSource(await readScript(projectDir, argument!)), process.env);
     selectedProfile = await readProfile(projectDir, parsed.values.profile, script);
     const selectedScript = selectedProfile ? profileScenario(script, selectedProfile) : script;
     if (!process.env.TYPESAFE_API_KEY?.trim()) throw new StartError('TYPESAFE_API_KEY is not set; load your .env with node --env-file=/path/to/.env');
@@ -192,7 +190,7 @@ async function dispatchCli(args: string[], composition: CliComposition): Promise
   // Under MCP there is no flag: JEV_DEVICE_WINDOW=off in the server's environment turns the window off.
   const deviceWindow = deviceWindowOpener(parsed.values['no-device-window'] === true);
   const service = composition.legacy ?? new BridgeService({
-    baseDir: runsDir(),
+    baseDir: runsDir,
     agreeDevices: createDeviceAgreement(),
     env: { ...process.env, JEV_PROJECT_DIR: projectDir },
     createDriver: createDriverFactory({ host, projectDir, defaultUdid: process.env.JEV_DEVICE_UDID || undefined,
@@ -203,7 +201,7 @@ async function dispatchCli(args: string[], composition: CliComposition): Promise
       // MCP's stdout carries the protocol, so pane notices go to stderr in both modes.
       onNotice: (_runId, text) => { console.error(text); } },
   });
-  const observed = command === 'mcp' ? composition.observed ?? productionObservedComposition({ enabled: process.env.JEV_EXPERIMENTAL_OBSERVED === '1', runsDir: runsDir(), host }) : undefined;
+  const observed = command === 'mcp' ? composition.observed ?? productionObservedComposition({ enabled: process.env.JEV_EXPERIMENTAL_OBSERVED === '1', runsDir: runsDir, host }) : undefined;
   let closing = false;
   const close = async () => {
     if (closing) return;

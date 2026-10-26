@@ -35,6 +35,10 @@ export class StackError extends Error {
 const tar = promisify(execFile);
 const tarEnv = { PATH: '/usr/bin:/bin', LANG: 'C', COPYFILE_DISABLE: '1' };
 function refuse(code: string, detail: string): never { throw new StackError(code, detail); }
+function withHint<T>(hint: string, check: () => T): T {
+  try { return check(); }
+  catch (error) { throw error instanceof StackError ? new StackError(error.code, `${error.message} ${hint}`) : error; }
+}
 function checkHost(host: Host): void {
   const major = /^(\d+)\./.exec(host.node)?.[1];
   if (host.platform !== 'darwin' || host.arch !== 'arm64' || !major || Number(major) < 24)
@@ -126,16 +130,21 @@ export class FrozenStack {
   async prepare(selection: Selection = {}): Promise<VerifiedStack> {
     const inputs = await this.inputs(); checkHost(inputs.host);
     const identity = identitySchema.parse(inputs.identity);
-    const manifestBytes = archiveBytes(inputs.artifactRoot, 'manifest.json', identity.manifestSha256, 'STACK_MANIFEST_MISMATCH');
-    let manifest: Manifest;
-    try { manifest = manifestSchema.parse(JSON.parse(manifestBytes.toString('utf8'))); }
-    catch { return refuse('STACK_MANIFEST_MISMATCH', 'Invalid stack manifest.'); }
-    const archives = [
-      { name: 'stack.tar.gz', bytes: archiveBytes(inputs.artifactRoot, 'stack.tar.gz', identity.stackSha256, 'STACK_ARCHIVE_MISMATCH') },
-      { name: 'wda.tar.gz', bytes: archiveBytes(inputs.artifactRoot, 'wda.tar.gz', identity.wdaSha256, 'WDA_ARCHIVE_MISMATCH') },
-    ];
+    const { manifest, archives } = withHint('Reinstall jev-ios-bridge to restore its release files.', () => {
+      const manifestBytes = archiveBytes(inputs.artifactRoot, 'manifest.json', identity.manifestSha256, 'STACK_MANIFEST_MISMATCH');
+      let manifest: Manifest;
+      try { manifest = manifestSchema.parse(JSON.parse(manifestBytes.toString('utf8'))); }
+      catch { return refuse('STACK_MANIFEST_MISMATCH', 'Invalid stack manifest.'); }
+      return { manifest, archives: [
+        { name: 'stack.tar.gz', bytes: archiveBytes(inputs.artifactRoot, 'stack.tar.gz', identity.stackSha256, 'STACK_ARCHIVE_MISMATCH') },
+        { name: 'wda.tar.gz', bytes: archiveBytes(inputs.artifactRoot, 'wda.tar.gz', identity.wdaSha256, 'WDA_ARCHIVE_MISMATCH') },
+      ] };
+    });
     const id = sha256(JSON.stringify(identity)); const root = join(inputs.dataRoot, id);
     const expectedMarker = JSON.stringify({ version: 1, identity }) + '\n';
+    const extracted = () => withHint(`Delete ${root} and start again; the bridge extracts the stack again from its release.`, () => {
+      marker(root, expectedMarker); verifyTree(root, manifest, false);
+    });
     if (!existsSync(root)) {
       mkdirSync(inputs.dataRoot, { recursive: true, mode: 0o700 });
       const directory = lstatSync(inputs.dataRoot);
@@ -162,11 +171,11 @@ export class FrozenStack {
         try { renameSync(staging, root); }
         catch (error) {
           if (!(error instanceof Error && 'code' in error && ['EEXIST', 'ENOTEMPTY'].includes(String(error.code)))) throw error;
-          marker(root, expectedMarker); verifyTree(root, manifest, false);
+          extracted();
         }
       } finally { rmSync(staging, { recursive: true, force: true }); }
     }
-    marker(root, expectedMarker); verifyTree(root, manifest, false);
+    extracted();
     const warnings: string[] = [];
     if (selection.iosVersion !== undefined && selection.iosVersion !== '26.5') warnings.push(`Unsupported iOS ${selection.iosVersion}; qualified version is 26.5.`);
     if (selection.xcodeVersion !== undefined && selection.xcodeVersion !== '27.0') warnings.push(`Unsupported Xcode ${selection.xcodeVersion}; qualified version is 27.0.`);

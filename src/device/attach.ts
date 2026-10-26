@@ -1,6 +1,6 @@
 /**
  * What start mode "attach" reads off a device instead of relaunching the app (Issue 11): on Android which app is
- * resumed. iOS refuses attach (Issue 14): MobileBuildMCP 2.7.1 can't tell which app is in front.
+ * resumed. iOS refuses attach (Issue 14, ADR-0007): the bridge can't tell which app is in front there.
  */
 
 /**
