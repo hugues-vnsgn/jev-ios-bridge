@@ -128,7 +128,7 @@ test('the close\'s own terminate is expected: the stop it causes is no APP_EXITE
   const f = phone(t, logcat, [{ tool: 'jev_terminate_app', nth: 2, fault: { kind: 'held' } }]);
   await f.driver.prepare({ app: { package: 'example.app', activity: '.Main' } }, live());
   const closed = f.driver.close(live());
-  for (let waited = 0; !f.tools().includes('jev_terminate_app') && waited < 10_000; waited += 10) await delay(10);
+  for (let waited = 0; f.tools().filter(tool => tool === 'jev_terminate_app').length < 2 && waited < 10_000; waited += 10) await delay(10);
   logcat.events().feed('2026-10-24 10:00:07.000  1000  1100 I am_kill : [0,4242,example.app,900,stop example.app]');
   assert.deepEqual([f.driver.appRunning(), f.driver.appProblem()], [false, undefined]);
   f.release();

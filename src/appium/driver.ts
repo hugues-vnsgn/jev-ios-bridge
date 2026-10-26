@@ -562,7 +562,9 @@ export class AppiumDriver implements DeviceDriver, IosPreparationDriver, Observe
     }
     if (role !== 'run') return;
     const activity = app.activity ?? await this.dispatch(owner, 'android-launcher', signal, this.timeoutMs, async issued => (await helpers.launcher(app.id, issued)).slice(app.id.length + 1)).catch(adbFailure);
-    // No stop is marked expected before the restart: the mark is sticky and would hide a later crash of the new pid.
+    // The force-stop comes before the streams' device time, so nothing the previous instance logged is read. No stop is
+    // marked expected: the mark is sticky and would hide a later crash of the new pid.
+    await this.guarded(signal, () => live.command.operations.terminate(app.id, signal));
     const watch = await this.startStreams(owner, live.command, serial, app.id, signal);
     await this.guarded(signal, () => live.command.operations.restart({ package: app.id, activity, ...(app.intentExtras ? { intentExtras: app.intentExtras } : {}) }, signal));
     if (watch) await this.readPid(owner, serial, app.id, watch, signal);

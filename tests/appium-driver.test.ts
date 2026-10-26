@@ -146,6 +146,7 @@ function androidWorld(t: TestContext, locked = false, pids = '5001 5002\n', keyg
   };
   const recording = (root: string) => spliceRecordings(root, [
     { source: 'tests/fixtures/appium-wire/android/observe-2.jsonl', from: 0, to: 7 },
+    { source: 'tests/fixtures/appium-wire/android/extension.jsonl', from: 17, to: 19 },
     { source: 'tests/fixtures/appium-wire/android/extension.jsonl', from: 15, to: 17 },
     { source: 'tests/fixtures/appium-wire/android/observe-2.jsonl', from: 7 }], [['android-test', SERIAL]]);
   const f = driverFixture(t, record ?? recording, { target: { platform: 'android', device: SERIAL, category: 'android-phone', serverInstallation: { kind: 'install' } },
@@ -161,7 +162,7 @@ test('an Android run wakes natively, restarts through jev_start_activity, record
   await f.driver.prepare({ app: androidApp }, live());
   f.fence.forwards = [{ serial: SERIAL, local: 'tcp:18200', remote: 'tcp:6790' }];
   assert.deepEqual(f.native.calls.map(call => call.command.kind), ['android-keyguard']);
-  assert.deepEqual(f.tools(), ['appium_session_management', 'jev_settings', 'jev_start_activity']);
+  assert.deepEqual(f.tools(), ['appium_session_management', 'jev_settings', 'jev_terminate_app', 'jev_start_activity']);
   const capabilities = JSON.parse(f.calls().find(call => call.params?.name === 'appium_session_management')!.params!.arguments!.capabilities as unknown as string) as Record<string, unknown>;
   assert.equal(capabilities['appium:skipUnlock'], true);
   assert.equal(capabilities['appium:systemPort'], 18200);
