@@ -4,7 +4,7 @@ import { appendFileSync, readFileSync, existsSync, writeFileSync, renameSync } f
 import { join, resolve } from 'node:path';
 import { pathToFileURL } from 'node:url';
 import { Admission } from '../../src/device/admission.js';
-import { createObservedDriver } from '../../src/device/factory.js';
+import { createObservedDriver } from '../../src/device/legacy-factory.js';
 import type { CliRunner } from '../../src/device/index.js';
 import { ObservedAllocator } from '../../src/observed/allocation.js';
 import { ObservedActionService } from '../../src/observed/service.js';

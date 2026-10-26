@@ -4,11 +4,11 @@ Since 1.2, the bridge also drives Android emulators and phones. A script opts in
 
 ## What you need
 
-- **A Mac.** Android runs have been tried only on Apple silicon; see [limits](10-limits.md).
+- **A Mac with Apple silicon,** and Node 24 or later. The bridge refuses to run on any other host; see [limits](10-limits.md).
 - **The Android SDK's `adb`** (the platform tools). The bridge looks for it in `ANDROID_HOME`, then `ANDROID_SDK_ROOT`, then your `PATH`, then Android Studio's default, `~/Library/Android/sdk/platform-tools/adb`. If it isn't found, runs stop with `ANDROID_TOOLS_UNAVAILABLE`. If you use an adb server on another port, export `ANDROID_ADB_SERVER_PORT` and the bridge's `adb` commands use it too.
 - **Android 12 (API 31) or later** on the device. An older one is refused with `DEVICE_UNSUPPORTED`.
 - **On Apple silicon, an arm64 emulator image.** In Android Studio's Device Manager, create the virtual device from an `arm64-v8a` system image.
-- **Nothing else to install.** The bridge's npm package brings `mobilecli@1.0.14`. The bridge copies mobilecli's device agent out of it and checks it against a pinned SHA-256. It never runs mobilecli itself.
+- **Nothing else to install.** The bridge ships its own frozen Appium stack, with the UiAutomator2 driver and its server APKs, pinned by SHA-256. The first run on a device installs the two UiAutomator2 server APKs if they're missing, and they stay installed. It never installs Appium's Settings helper app.
 
 The bridge doesn't build or install apps on Android either. Install yours with `adb -s <serial> install -r app-debug.apk`; [prepare your app](02-prepare-your-app.md) has the rest.
 
@@ -85,6 +85,6 @@ The bridge wakes a screen that's only off. If the lock screen shows, even a swip
 
 ## One UI tool at a time
 
-The bridge runs its own copy of mobilecli's device agent on the device, never mobilecli itself. Only one UI-automation agent can hold a device at a time. When another tool holds it (mobile-mcp, mobilecli, Appium, or `uiautomator`), the run stops with `DEVICE_BUSY` before it touches the app. **Close that tool first,** then run again.
+The bridge drives the device through its own Appium server and the UiAutomator2 server it starts on the device. Only one UI-automation agent can hold a device at a time. When another tool holds it (another Appium session, mobile-mcp, mobilecli, or `uiautomator`), the run stops with `DEVICE_BUSY` before it touches the app. **Close that tool first,** then run again.
 
-The bridge leaves another tool's UI-automation agent (a foreign agent) running, and stops only its own. At the end of every run it stops its agent and removes the `adb forward` it made. After a crash, the next run clears what the crashed run left behind. [Troubleshooting](08-troubleshooting.md#clearing-a-leftover-device-agent-or-forward-by-hand) shows how to clear a leftover by hand. The design is in [ADR-0006](https://github.com/hugues-vnsgn/jev-ios-bridge/blob/v1.4.0/docs/adr/0006-mobilecli-device-agent-as-android-device-layer.md).
+The bridge leaves another tool's UI-automation agent (a foreign agent) running, and stops only its own. It tells them apart by the process identities it recorded when it started its own, not by name. At the end of every run it stops its UiAutomator2 server, puts back the device settings the session changed (`accessibility_enabled` and three hidden-API policy keys), and removes the `adb forward` it made. After a crash, the next run stops what the crashed run recorded before it uses the device; [troubleshooting](08-troubleshooting.md#a-leftover-from-a-crashed-run) has the details.

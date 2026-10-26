@@ -7,7 +7,8 @@ import { setTimeout as delay } from 'node:timers/promises';
 import { freeHostPort } from '../src/appium/ports.js';
 import { fenceEffectSchema } from '../src/appium/fence/schema.js';
 import type { DeviceDriver } from '../src/contracts/index.js';
-import { AppiumDriver } from '../src/appium/driver.js';
+import { AppiumDriver, appiumFailure } from '../src/appium/driver.js';
+import { AppiumError } from '../src/appium/wire-schemas.js';
 import { Admission, type OwnerIdentity } from '../src/device/admission.js';
 import { NativeHelperError } from '../src/appium/native/process.js';
 import { createRunLog } from '../src/log/index.js';
@@ -19,9 +20,10 @@ import type { AdbRunner } from '../src/device/android/adb.js';
 import { identityProbe } from '../src/device/android/probe.js';
 import { DeviceReasonError, StaleSnapshotError } from '../src/device/index.js';
 import { UDID, WDA_BUNDLE, driverFixture, fakeNativeRunner, hostRows, tapRecording, liveGroupRows, rewriteRecording, spliceRecordings } from './fixtures/appium-wire/driver-fixture.js';
+import { androidPreflightReply } from './fixtures/appium-wire/world.js';
 
 const live = () => new AbortController().signal;
-const ios = { target: { platform: 'ios', device: UDID, presentation: 'visible' }, identityProbe: fakeSimulatorProbe(UDID) } as const;
+const ios = { target: { platform: 'ios', device: UDID }, identityProbe: fakeSimulatorProbe(UDID) } as const;
 /** A clean close fences itself and finalizes available: no quarantine and no recovery claim are ever recorded. */
 function assertNeverQuarantined(admission: Admission, owner: OwnerIdentity): void {
   assert.deepEqual(admission.readAttempt(owner.attempt)?.terminal, { outcome: 'completed', disposition: 'available', payload: {}, evidenceRefs: [] });
@@ -106,7 +108,7 @@ test('two simulators run at once on distinct host ports, each recorded in its ow
   };
   const a = device(UDID); const b = device(other);
   const first = driverFixture(t, a.recording, { ...ios, identityProbe: probe, freePort: a.freePort });
-  const second = driverFixture(t, b.recording, { target: { platform: 'ios', device: other, presentation: 'visible' }, identityProbe: probe,
+  const second = driverFixture(t, b.recording, { target: { platform: 'ios', device: other }, identityProbe: probe,
     freePort: b.freePort, admission: first.admission, runId: 'run-2' });
   await Promise.all([first.driver.prepare({ app: { bundleId: 'example.app' } }, live()), second.driver.prepare({ app: { bundleId: 'example.app' } }, live())]);
   const ports = (f: typeof first) => {
@@ -138,11 +140,14 @@ function androidWorld(t: TestContext, locked = false, pids = '5001 5002\n', keyg
     adbCalls.push([...args]);
     const line = args.at(-1) ?? '';
     if (line.includes('pidof')) return sessionStarted() && pids ? { stdout: pids, stderr: '', exitCode: 0 } : { stdout: '', stderr: '', exitCode: 1 };
+    const preflight = androidPreflightReply(line, {});
+    if (preflight) return preflight;
     const pid = /\/proc\/(\d+)\/stat/.exec(line)?.[1];
     return pid ? { stdout: stat(Number(pid)), stderr: '', exitCode: 0 } : { stdout: '', stderr: 'unexpected', exitCode: 1 };
   };
   const recording = (root: string) => spliceRecordings(root, [
     { source: 'tests/fixtures/appium-wire/android/observe-2.jsonl', from: 0, to: 7 },
+    { source: 'tests/fixtures/appium-wire/android/extension.jsonl', from: 17, to: 19 },
     { source: 'tests/fixtures/appium-wire/android/extension.jsonl', from: 15, to: 17 },
     { source: 'tests/fixtures/appium-wire/android/observe-2.jsonl', from: 7 }], [['android-test', SERIAL]]);
   const f = driverFixture(t, record ?? recording, { target: { platform: 'android', device: SERIAL, category: 'android-phone', serverInstallation: { kind: 'install' } },
@@ -158,7 +163,7 @@ test('an Android run wakes natively, restarts through jev_start_activity, record
   await f.driver.prepare({ app: androidApp }, live());
   f.fence.forwards = [{ serial: SERIAL, local: 'tcp:18200', remote: 'tcp:6790' }];
   assert.deepEqual(f.native.calls.map(call => call.command.kind), ['android-keyguard']);
-  assert.deepEqual(f.tools(), ['appium_session_management', 'jev_settings', 'jev_start_activity']);
+  assert.deepEqual(f.tools(), ['appium_session_management', 'jev_settings', 'jev_terminate_app', 'jev_start_activity']);
   const capabilities = JSON.parse(f.calls().find(call => call.params?.name === 'appium_session_management')!.params!.arguments!.capabilities as unknown as string) as Record<string, unknown>;
   assert.equal(capabilities['appium:skipUnlock'], true);
   assert.equal(capabilities['appium:systemPort'], 18200);
@@ -518,4 +523,15 @@ test('D4: an automation forward the store does not own makes an Android command 
   await assert.rejects(f.driver.prepare({ app: androidApp }, live()), (error: unknown) => error instanceof DeviceReasonError && error.code === 'DEVICE_BUSY');
   assert.deepEqual([f.calls(), f.native.calls, f.fence.forwards], [[], [], [{ serial: SERIAL, local: 'tcp:18300', remote: 'tcp:6790' }]]);
   assert.equal(f.fence.effects.some(effect => effect.kind === 'settings-read' || effect.kind === 'forward-remove'), false);
+});
+
+test('a failure names its true source: the bridge for its own client and extension refusals, adb for an Android helper, Appium for the driver', () => {
+  const source = (error: unknown, platform: 'ios' | 'android') => {
+    const mapped = appiumFailure(error, platform);
+    return mapped instanceof DeviceReasonError ? [mapped.vendorCode, mapped.vendorSource] : mapped;
+  };
+  assert.deepEqual(['SESSION_MISMATCH', 'VERSION_MISMATCH', 'NOT_ALLOWED', 'DRIVER_ERROR'].map(code => source(new AppiumError(code as never), 'ios')),
+    [['SESSION_MISMATCH', 'bridge'], ['VERSION_MISMATCH', 'bridge'], ['NOT_ALLOWED', 'bridge'], ['DRIVER_ERROR', 'appium']]);
+  assert.deepEqual([source(new NativeHelperError('NATIVE_FAILED', 'adb failed'), 'android'), source(new NativeHelperError('NATIVE_FAILED', 'simctl failed'), 'ios')],
+    [['NATIVE_FAILED', 'adb'], ['NATIVE_FAILED', 'bridge']]);
 });

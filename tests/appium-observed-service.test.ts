@@ -31,7 +31,7 @@ async function ready(admission: Admission): Promise<string> {
 }
 
 test('through the real observed service, the Appium executor taps once, ends observed and available, and fences every component', async t => {
-  const f = driverFixture(t, tapRecording, { target: { platform: 'ios', device: UDID, presentation: 'visible' }, identityProbe: fakeSimulatorProbe(UDID) });
+  const f = driverFixture(t, tapRecording, { target: { platform: 'ios', device: UDID }, identityProbe: fakeSimulatorProbe(UDID) });
   const allocationId = await ready(f.admission);
   const service = new ObservedActionService({ admission: f.admission, runsDir: join(f.root, 'evidence'), bridgeVersion: 'fixture', backend: 'fake', enabled: true,
     createDriver: () => { const driver = new AppiumDriver({ ...f.driver['options'] }); f.drivers.push(driver); return driver; } });

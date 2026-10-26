@@ -157,7 +157,7 @@ Cancelling stops new work, waits for any device command already sent, then stops
 
 Only one run uses a device at a time. The device lease is a lock file, `$TMPDIR/jev-ios-bridge-device-locks/<UUID>.lock`, holding the owning bridge process's ID. On Android the file is named after the device identity in capitals (the AVD name for an emulator, the serial for a phone), and `capture` takes the same lease. On Android, the lease is released only once the bridge's device agent is confirmed stopped.
 
-- **A lease left by a process that has exited** is cleared by the next run. On Android, that run also stops the device agent, `adb forward` and `logcat` processes the crashed run left behind, and its `prepared` event records `sweptLeftovers: true`.
+- **A lease left by a process that has exited** is cleared by the next run. Before it uses the device, that run also stops the automation and helper processes the crashed run recorded, and on Android removes its `adb forward`. If it can't prove a stop, it refuses with `DEVICE_QUARANTINED` ([a leftover from a crashed run](08-troubleshooting.md#a-leftover-from-a-crashed-run)).
 - **A command that never answered:** if cleanup couldn't confirm a device command, the device lease stays until that command answers. Then the bridge finishes cleanup itself.
 - **`DEVICE_BUSY`** names the process holding the lock and the lock file. If it's a bridge you don't need, stop that process (for example, restart the MCP server), and the next run clears the lock.
 - **Never delete a lease file whose process is still running;** a device command may still be in flight.

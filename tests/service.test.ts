@@ -7,7 +7,7 @@ import { BridgeService } from '../src/service.js';
 import type { DeviceDriver } from '../src/contracts/index.js';
 import { appLabel, type AppIdentity } from '../src/contracts/index.js';
 import type { ScriptedJudge } from '../src/scripted/contracts.js';
-import { createDriverFactory } from '../src/device/factory.js';
+import { createLegacyDriverFactory } from '../src/device/legacy-factory.js';
 import { androidTools } from '../src/device/android/tools.js';
 import { attachLogPane } from '../src/logpane/attach.js';
 import { Capture } from './fixtures/capture.js';
@@ -275,7 +275,7 @@ test('an Android scenario reaches the Android driver through the real driver fac
   const judge: ScriptedJudge = { async judge() { return assert.fail('Jev is never asked when prepare fails'); } };
   // The real tools check, with ANDROID_HOME, ANDROID_SDK_ROOT, PATH and the home folder all empty.
   const tools = () => androidTools({ environment: { ANDROID_HOME: empty, ANDROID_SDK_ROOT: empty, PATH: empty }, home: empty });
-  const createDriver = createDriverFactory({ mobileBuildMcp: { cwd: root, lockRoot: root }, android: { leaseRoot: root, tools } });
+  const createDriver = createLegacyDriverFactory({ mobileBuildMcp: { cwd: root, lockRoot: root }, android: { leaseRoot: root, tools } });
   const service = new BridgeService({ baseDir: root, createDriver, createJudge: () => judge });
   try {
     const androidScript = { version: 1, platform: 'android', app: { package: 'com.example.app' },

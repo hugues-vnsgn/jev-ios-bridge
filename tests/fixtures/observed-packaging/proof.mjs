@@ -44,10 +44,10 @@ function record(command, args, cwd, result) {
   appendFileSync(commands, JSON.stringify({ id, command, args, cwd, node: process.version, exit: result.code,
     signal: result.signal, stdout, stderr }) + '\n');
 }
-async function run(command, args, cwd = snapshot, extra = {}) {
+async function run(command, args, cwd = snapshot, extra = {}, timeoutMs = 90000) {
   const child = launch(command, args, { cwd, env: { ...env, ...extra }, stdio: ['ignore', 'pipe', 'pipe'] });
   let stdout = ''; let stderr = ''; child.stdout.on('data', b => { stdout += b; }); child.stderr.on('data', b => { stderr += b; });
-  const timer = setTimeout(() => child.kill('SIGKILL'), 90000);
+  const timer = setTimeout(() => child.kill('SIGKILL'), timeoutMs);
   const result = await new Promise((done, fail) => {
     child.once('error', fail); child.once('close', (code, signal) => done({ code, signal, stdout, stderr }));
   }); clearTimeout(timer); record(command, args, cwd, result); return result;
@@ -138,13 +138,15 @@ async function offlineStack(root, dataRoot = join(evidence, 'Application Support
     import https from 'node:https';
     import { syncBuiltinESMExports } from 'node:module';
     import { promisify } from 'node:util';
-    import { join } from 'node:path';
+    import { cpSync, existsSync, mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
+    import { dirname, join } from 'node:path';
     import { pathToFileURL } from 'node:url';
     const refuse = () => { throw new Error('Offline extraction attempted a forbidden effect'); };
     globalThis.fetch = refuse; net.connect = net.createConnection = net.Socket.prototype.connect = refuse;
     http.request = http.get = https.request = https.get = refuse;
     const execFile = cp.execFile;
-    const validate = (command, args) => { assert.equal(command, '/usr/bin/tar'); assert.equal(['-tzf', '-xzf'].includes(args[0]), true); };
+    let tarCalls = 0;
+    const validate = (command, args) => { tarCalls++; assert.equal(command, '/usr/bin/tar'); assert.equal(['-tzf', '-xzf'].includes(args[0]), true); };
     const allowed = (...args) => { validate(...args); return execFile(...args); };
     allowed[promisify.custom] = (...args) => { validate(...args); return execFile[promisify.custom](...args); };
     cp.execFile = allowed;
@@ -153,8 +155,17 @@ async function offlineStack(root, dataRoot = join(evidence, 'Application Support
     const root = process.argv[1];
     const { FrozenStack } = await import(pathToFileURL(join(root, 'dist/appium/stack.js')));
     const { default: identity } = await import(pathToFileURL(join(root, 'dist/appium/stack-identity.js')));
-    const stack = FrozenStack.forTesting({ artifactRoot: join(root, 'stack/release'), dataRoot: process.argv[2], identity,
-      host: { platform: 'darwin', arch: 'arm64', node: process.versions.node } });
+    const host = { platform: 'darwin', arch: 'arm64', node: process.versions.node };
+    mkdirSync(dirname(process.argv[2]), { recursive: true, mode: 0o700 });
+    const tampered = mkdtempSync(join(dirname(process.argv[2]), 'tampered-'));
+    cpSync(join(root, 'stack/release'), join(tampered, 'release'), { recursive: true });
+    const archive = join(tampered, 'release/stack.tar.gz'); const bytes = readFileSync(archive); bytes[bytes.length >> 1] ^= 1; writeFileSync(archive, bytes);
+    await assert.rejects(FrozenStack.forTesting({ artifactRoot: join(tampered, 'release'), dataRoot: join(tampered, 'stacks'), identity, host }).prepare(),
+      { code: 'STACK_ARCHIVE_MISMATCH' });
+    assert.equal(existsSync(join(tampered, 'stacks')), false, 'a tampered archive must be refused before extraction');
+    assert.equal(tarCalls, 0, 'a tampered archive must be refused before tar runs');
+    rmSync(tampered, { recursive: true });
+    const stack = FrozenStack.forTesting({ artifactRoot: join(root, 'stack/release'), dataRoot: process.argv[2], identity, host });
     const first = await stack.prepare({ iosVersion: '26.5', xcodeVersion: '27.0' });
     const second = await stack.prepare();
     assert.equal(first.root, second.root);
@@ -166,9 +177,8 @@ async function offlineStack(root, dataRoot = join(evidence, 'Application Support
   return JSON.parse(ok(await run(process.execPath, ['--input-type=module', '-e', script, root, dataRoot])));
 }
 try {
-  ok(await run('npm', ['run', 'build'], snapshot));
-  ok(await run(process.execPath, ['scripts/build-stack-archive.mjs'], snapshot));
-  const packed = JSON.parse(ok(await run('npm', ['pack', '--json', '--pack-destination', evidence])))[0];
+  assert.ok(!existsSync(join(snapshot, 'dist')) && !existsSync(join(snapshot, 'stack/release')), 'npm pack must build the release inputs itself');
+  const packed = JSON.parse(ok(await run('npm', ['pack', '--json', '--pack-destination', evidence], snapshot, {}, 300000)))[0];
   const tarball = join(evidence, packed.filename);
   for (const file of required) assert.ok(packed.files.some(f => f.path === file), 'tarball missing ' + file);
   const clean = join(evidence, 'clean'); mkdirSync(clean, { mode: 0o700 });
@@ -181,7 +191,7 @@ try {
   assert.deepEqual(manifest(installed), manifest(snapshot));
   await smoke(installed, bin, clean, 'npm');
   const npmStack = await offlineStack(installed);
-  ok(await run('npm', ['run', 'build:plugin']));
+  ok(await run('npm', ['run', 'build:plugin'], snapshot, {}, 300000));
   const plugin = join(snapshot, 'build/plugin/jev-ios-bridge');
   for (const file of required) assert.ok(existsSync(join(plugin, file)), 'plugin missing ' + file);
   const pluginSkill = readFileSync(join(plugin, 'skills/test-ios/SKILL.md'), 'utf8');
@@ -208,7 +218,7 @@ try {
     skips: 0, cliOperationsPerInstallation: 7, mcpGateCasesPerInstallation: 3, installations: 2, mcpSchemaErrorCalls: 34, commandCount: sequence, plugin: true, forbiddenEffects: 0,
     tarball: { path: tarball, sha256: sha(tarball) }, pluginZip: { path: zip, sha256: sha(zip) },
     source: manifest(snapshot), installed: manifest(installed), pluginFiles: manifest(pluginInstall),
-    stack: { npm: npmStack, plugin: pluginFreshStack, sharedReuse: true, offlineExtractions: 2 } };
+    stack: { npm: npmStack, plugin: pluginFreshStack, sharedReuse: true, offlineExtractions: 2, tamperedArchivesRefused: 3 } };
   writeFileSync(join(evidence, 'summary.json'), JSON.stringify(summary, null, 2) + '\n');
   console.log(JSON.stringify(summary));
 } catch (error) {

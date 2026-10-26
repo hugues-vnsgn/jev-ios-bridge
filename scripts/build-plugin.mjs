@@ -39,7 +39,6 @@ function build() {
   rmSync(out, { recursive: true, force: true });
   mkdirSync(root, { recursive: true });
   execFileSync('npm', ['run', 'build'], { stdio: 'inherit' });
-  execFileSync(process.execPath, ['scripts/build-stack-archive.mjs'], { stdio: 'inherit' });
   for (const path of ['dist', 'docs/guide', 'README.md', 'LICENSE', 'CHANGELOG.md', 'stack/release', 'stack/wda/provenance.json', 'THIRD_PARTY_NOTICES.md']) {
     mkdirSync(join(root, path, '..'), { recursive: true });
     cpSync(path, join(root, path), { recursive: true });

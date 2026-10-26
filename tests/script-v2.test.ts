@@ -143,11 +143,18 @@ test('version 2 keeps version 1\'s step rules: unique IDs and a final checkpoint
 });
 
 test('version 2 keeps each platform\'s own field and value rules', () => {
-  assert.deepEqual(issuesOf({ ...clone(iosV2), values: { user: '-flag' } }),
-    [{ path: 'values', message: 'MobileBuildMCP 2.7.1 cannot type text starting with a leading hyphen' }]);
+  assert.deepEqual(issuesOf({ ...clone(iosV2), values: { user: 'a\u0007b' } }),
+    [{ path: 'values.user', message: 'Typed values must not contain control characters' }]);
   assert.deepEqual(issuesOf({ ...clone(androidV2), values: { user: '-Đà Nẵng' } }), []);
   assert.deepEqual(issuesOf({ ...clone(androidV2), app: { bundleId: 'com.example.app', package: 'com.example.app' } }),
     [{ path: 'app.bundleId', message: 'app.bundleId is not supported on Android; use app.package' }]);
+});
+
+test('iOS typed values accept a leading hyphen and Unicode, literal or read from the environment', () => {
+  const values = { city: '-Berlin', greeting: 'héllo 世界' };
+  assert.deepEqual([issuesOf({ ...clone(iosV2), values }), issuesOf({ ...clone(iosV2), version: 1, steps: [checkpoint], values })], [[], []]);
+  const resolved = resolveScriptValues(parseScriptedScenarioSource({ ...clone(iosV2), values: { city: { fromEnv: 'CITY' } } }), { CITY: '-héllo 世界' });
+  assert.deepEqual(resolved.values, { city: '-héllo 世界' });
 });
 
 test('a version 1 script with a do step, goal or start is told to use version 2', () => {

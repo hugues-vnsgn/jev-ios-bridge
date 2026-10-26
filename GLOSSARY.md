@@ -17,7 +17,14 @@ The external judgment model that answers the scenario's screen assertions with p
 _Avoid_: planner, agent
 
 **Device layer**:
-The external capability that operates the device and captures its screen. On Android it is the device agent together with Android's own debugging tools, both driven by the bridge.
+The external capability that operates the device and captures its screen: the bridge's frozen Appium stack, reached through the private MCP child, with WebDriverAgent on iOS and the device agent on Android. Android's own debugging tools and `simctl` work beside it, for the steps Appium doesn't own. Earlier releases used MobileBuildMCP on iOS and mobilecli's device agent on Android.
+
+**Private MCP child**:
+The bridge's own Appium MCP server process, one per command. The bridge starts it with a restricted environment and a private HOME under its per-account folder, and reaches it only through its private MCP client. When that client disconnects, the child deletes its sessions and ends.
+_Avoid_: MCP server (the bridge's public server)
+
+**Extension**:
+The bridge's small versioned extension to Appium's public core, loaded into the private MCP child. It offers only an allowlisted set of operations, and each one is bound to the session the bridge created and to that session's device. It exposes no arbitrary driver method or script.
 
 **Device driver**:
 The bridge's adapter to one device layer.
@@ -90,14 +97,14 @@ _Avoid_: lock
 A device lease recorded only as a lock file, by a bridge that did not use the admission authority, and named only by a device name. Its run's native work is never assumed settled: a leftover legacy lease becomes a quarantine.
 
 **Device agent**:
-The UI-automation program the bridge runs on an Android device to read its screen and act on it.
+The UI-automation program the bridge runs on an Android device to read its screen and act on it: the frozen stack's UiAutomator2 server. Earlier releases used mobilecli's device agent.
 _Avoid_: DeviceServer, server, mobilecli
 
-**Foreign agent**:
-UiAutomator2 instrumentation or server, a WDA runner, or an automation forward (a forward to a UiAutomator2 device port) on the device being admitted, whose identity is not owned in the admission store. It makes the device busy. Automation on another device, a forward to any other port, and the bridge's recorded components are never foreign.
+**Foreign automation**:
+Appium automation on the device being admitted that this bridge did not start: UiAutomator2 instrumentation or server, a WDA runner, or an automation forward (a forward to a UiAutomator2 device port), whose identity is not owned in the admission store. The bridge recognizes it by owned inventory, not by process name, refuses with `DEVICE_BUSY`, and never stops it. Automation on another device, a forward to any other port, and the bridge's recorded components are never foreign. The user guide calls it a foreign agent.
 
 **Fence**:
-Stopping a native component and confirming it can no longer act, so that no command sent through it whose outcome was unknown can still take effect. This applies to device agents, adb commands, host streams, port forwards, MobileBuildMCP invocations and Appium sessions. Each component needs its own stop evidence.
+Stopping a native component and confirming it can no longer act, so that no command sent through it whose outcome was unknown can still take effect. This applies to device agents, adb commands, host streams, port forwards, native helper processes and Appium sessions. Each component needs its own stop evidence.
 
 **Fence receipt**:
 The admission authority's record that one owner generation's fence is proven: dispatch closed, every command it issued settled or fenced, and every native component it recorded unable to act. It releases that owner's device lease or covers its quarantine. A receipt for another generation, or one naming no generation, covers nothing.
@@ -115,7 +122,7 @@ The current screen evidence presented to the assertion judge.
 _Avoid_: screen dump
 
 **Element reference**:
-A handle to one element in one snapshot, valid only for that snapshot rather than a durable identity. The device layer issues it on iOS; the device driver issues it on Android.
+A handle to one element in one snapshot, valid only for that snapshot rather than a durable identity. The device driver issues it, as `eN`, from its own normalized snapshot, bound to one Appium session; the device layer's own element IDs are never exposed.
 
 **Settled snapshot**:
 A snapshot taken once the screen stopped changing after an action.

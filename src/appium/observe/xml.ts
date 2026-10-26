@@ -1,8 +1,8 @@
 export class ObservationIncompleteError extends Error {
   readonly truncated = true;
   readonly code = 'TRUNCATED';
-  constructor(readonly reason: 'invalid-source' | 'source-limit' | 'node-limit' | 'depth-limit' | 'driver-error' | 'timeout') {
-    super('The page source is incomplete.');
+  constructor(readonly reason: 'invalid-source' | 'source-limit' | 'node-limit' | 'depth-limit' | 'driver-error' | 'timeout', options?: { cause: unknown }) {
+    super('The page source is incomplete.', options);
     this.name = 'ObservationIncompleteError';
   }
 }

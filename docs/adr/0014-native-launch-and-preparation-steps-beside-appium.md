@@ -1,7 +1,7 @@
 ---
 status: accepted
 date: 2026-10-23
-implementation: not-started
+implementation: in-progress
 ---
 
 # Native launch and preparation steps beside Appium

@@ -7,11 +7,11 @@ A script is one JSON object. Unknown fields are rejected, and so are scripts wit
 | Field | Required | Type | Notes |
 | --- | --- | --- | --- |
 | `version` | yes | `1` | The script format version. |
-| `platform` | no | `"ios"` or `"android"` | Which device this script targets. Absent, or `"ios"`, reads the script exactly as a 1.1 iOS script, and rejects every Android-only field below. |
+| `platform` | no | `"ios"` or `"android"` | Which device this script targets. Absent, or `"ios"`, reads the script as a 1.1 iOS script, with 1.1's typed-value limits lifted, and rejects every Android-only field below. |
 | `app` | yes | object | See below. Its allowed fields depend on `platform`. |
 | `device` | no | object | See below. Its allowed fields depend on `platform`. |
 | `preconditions` | no | array of strings | Up to 20, each 1–500 characters. Describes setup you arranged. It isn't executed. |
-| `values` | yes | object: key → string or `{ "fromEnv": NAME }` | What to type: a literal, or the name of an environment variable the bridge reads when the run starts ([values from the environment](#values-from-the-environment)). Up to 32; each value at most 2048 characters (UTF-16 code units, so on Android an emoji or other character outside the Basic Multilingual Plane counts as two). Keys start with a letter, then letters, digits, `_`, or `-` (up to 64 characters). Use `{}` when there's nothing to type. On iOS, values must be printable US-keyboard characters and none may start with `-`. On Android, values may be any Unicode text except control characters, and a leading `-` is allowed. See [how Android types values](#how-android-types-values). |
+| `values` | yes | object: key → string or `{ "fromEnv": NAME }` | What to type: a literal, or the name of an environment variable the bridge reads when the run starts ([values from the environment](#values-from-the-environment)). Up to 32; each value at most 2048 characters (UTF-16 code units, so on Android an emoji or other character outside the Basic Multilingual Plane counts as two). Keys start with a letter, then letters, digits, `_`, or `-` (up to 64 characters). Use `{}` when there's nothing to type. On both platforms, values may be any Unicode text except control characters, and a leading `-` is allowed. See [how Android types values](#how-android-types-values). |
 | `steps` | yes | array | 1–100 steps with unique `id`s. The last one must be a `checkpoint`. |
 
 ## `app`
@@ -63,10 +63,10 @@ Keep a password or other secret out of the script: write `{ "fromEnv": "NAME" }`
 
 ## How Android types values
 
-- **ASCII values** (plain English letters, digits, and punctuation) are typed directly. They never touch the device clipboard.
-- **Any other value** (`Tiếng Việt`, `café`, an emoji) is pasted: the bridge puts it on the device clipboard, pastes it into the field, then clears the clipboard. **The keyboard may keep it anyway.** Gboard, for one, still offers the pasted text as a clipboard suggestion after the clipboard is cleared, on Android 12 and 16. So a non-ASCII typed value can outlive the run on the device, and shouldn't be a real secret.
+- **Every value,** ASCII or not (`Tiếng Việt`, `café`, an emoji), goes to the field in one UiAutomator2 command, `mobile: replaceElementValue`, which replaces the field's text. The bridge doesn't put the value on the device clipboard.
+- **Releases before Appium** pasted non-ASCII values through the clipboard. Gboard, for one, kept the pasted text as a clipboard suggestion after the bridge cleared the clipboard, so a device used with those releases may still hold such a value.
 
-Either way, the field is tapped first, its text is replaced, and the next capture records what the field shows (`typedFields` in [`report.json`](report-json.md)).
+The next capture records what the field shows (`typedFields` in [`report.json`](report-json.md)).
 
 ## Steps
 

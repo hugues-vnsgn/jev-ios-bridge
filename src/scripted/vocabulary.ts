@@ -66,7 +66,7 @@ const REASON_CODES_1_1 = {
   EMPTY_CAPTURE: 'The device layer returned no usable elements.',
   UNSUPPORTED_ACTION: 'The target does not support the requested action.',
   MISSING_VALUE: 'A typing step named a value the script did not supply, or a value\'s environment variable is not set.',
-  UNSUPPORTED_LEADING_DASH_TEXT: 'The pinned device layer cannot type text that starts with a hyphen.',
+  UNSUPPORTED_LEADING_DASH_TEXT: 'A typed value started with a hyphen. No longer raised: both platforms now type such a value.',
   UI_ACTION_UNCONFIRMED: 'A device operation was never acknowledged, so the device lock was kept.',
   CLEANUP_FAILED: 'Device cleanup did not finish.',
   APP_EXITED: 'The app under test exited during the run (a crash or a quit); check its crash report.',
@@ -88,7 +88,7 @@ export const REASON_CODES = {
   APP_NOT_INSTALLED: 'The app\'s package isn\'t installed on the device.',
   APP_NOT_RESPONDING: 'The app froze (Android showed "App isn\'t responding") during the run.',
   DEVICE_UNSUPPORTED: 'The device is below Android 12 (API 31), which this bridge does not support.',
-  ANDROID_TOOLS_UNAVAILABLE: 'adb could not be found, the pinned mobilecli package is missing, or the device agent copied out of it does not match the pinned SHA-256.',
+  ANDROID_TOOLS_UNAVAILABLE: 'adb could not be found, or, before Appium, the device agent the bridge copied out of mobilecli was missing or did not match its pinned SHA-256.',
   // Driven mode (do steps), added in 1.3.
   DRIVEN_NOT_ENABLED: 'The script has a do step, but driven mode isn\'t turned on: it needs "drivenMode": true in .jev/config.json and JEV_EXPERIMENTAL_DRIVEN set to 1 or true.',
   HANDBACK_TIMEOUT: 'A do step waited longer than the hand-back timeout for Claude\'s answer.',

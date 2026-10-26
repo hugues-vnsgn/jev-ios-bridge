@@ -202,8 +202,6 @@ test('start_scenario rejects an invalid iOS script with the same validation text
   const prefix = 'Input validation error: Invalid arguments for tool start_scenario: ';
   // Each expected text is what the 1.1 server (commit 819ea10) returned for the same input.
   const cases: [string, object, string][] = [
-    ['a non-ASCII typed value', { ...script, values: { q: 'Đà Nẵng' } },
-      'scenario.values.q: Typed values must use printable US keyboard characters'],
     ['a missing bundle ID', { ...script, app: {} },
       'scenario.app.bundleId: Invalid input: expected string, received undefined'],
     ['a script ending at an action', { ...script, steps: [checkpoint, tap] },
@@ -212,10 +210,9 @@ test('start_scenario rejects an invalid iOS script with the same validation text
       'scenario.steps.1.id: Step IDs must be unique'],
     ['an Android app.package on an iOS script', { ...script, app: { bundleId: 'com.example.app', package: 'com.example.android' } },
       'scenario.app: Unrecognized key: "package"'],
-    ['a bad udid and a non-ASCII typed value', { ...script, device: { udid: 'not-a-udid' }, values: { q: 'Đà Nẵng' } },
+    ['a bad udid', { ...script, device: { udid: 'not-a-udid' } },
       'scenario.device.udid: Invalid string: must match pattern ' +
-      '/^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$/, ' +
-      'scenario.values.q: Typed values must use printable US keyboard characters'],
+      '/^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$/'],
   ];
   const session = await openMcpSession('ios-errors');
   try {

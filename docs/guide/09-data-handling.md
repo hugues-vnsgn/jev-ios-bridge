@@ -19,12 +19,12 @@ Nothing is sent for action or wait steps. Screenshots, logs, and your script's o
 
 **The TypeSafe API key** goes only to TypeSafe. The device-layer processes the bridge starts run without it, including `adb` on Android.
 
-**On Android, nothing goes anywhere else.** The bridge never runs mobilecli ([Android setup](12-android-setup.md#one-ui-tool-at-a-time)), so there's no mobilecli telemetry and no cloud call. About other connected devices it reads only the device list (`adb devices -l`), `adb`'s list of port forwards (`adb forward --list`, keeping only the run's device), and, when the device's name isn't a listed serial, each running emulator's AVD name (`ro.boot.qemu.avd_name`). It copies only mobilecli's device agent onto the one device the run uses. The agent listens only on the device's own local socket, which the bridge reaches through an `adb forward` on your Mac.
+**On Android, nothing goes anywhere else.** The bridge drives the device through its own Appium server ([Android setup](12-android-setup.md#one-ui-tool-at-a-time)). It starts that server with a fixed environment of its own, which leaves the server's opt-in tracing off. About other connected devices it reads only the device list (`adb devices -l`), `adb`'s list of port forwards (`adb forward --list`, keeping only the run's device), and, when the device's name isn't a listed serial, each running emulator's AVD name (`ro.boot.qemu.avd_name`). It installs the UiAutomator2 server only on the one device the run uses. The server listens on a port on the device, which the bridge reaches through an `adb forward` on your Mac.
 
 ## What stays on your Mac
 
 - **Evidence:** `.jev-runs/<run-id>/`: `report.json`, `run.jsonl`, and screenshots. It's readable only by you, and it's out of git (the evidence root gets a `.gitignore` containing `*`). It's kept until you delete it. Screenshots are **not** masked.
-- **The app's own logs:** MobileBuildMCP writes them under `~/Library/Developer/MobileBuildMCP/workspaces/<workspace>/logs/` (readable only by you) and deletes them after about three days. **Apps can log tokens or personal data.** A debug build that logs every network request will leave those requests in these files. The log pane masks only your script's values.
+- **The app's own logs:** on iOS, the bridge writes the app's console output and its `log stream` lines to two files of its own, readable only by you. **Apps can log tokens or personal data.** A debug build that logs every network request will leave those requests in these files. The log pane masks only your script's values.
 - **The app's own logs on Android:** the bridge writes the app's `logcat` output (its own uid only) to `$TMPDIR/jev-android-logs/<run-id>.log`. The file is readable only by you, and the next Android run deletes log files older than 3 days. As on iOS, the file isn't masked: whatever the app logs is in it.
 - **Intent extras** (`app.intentExtras`) are recorded as written in `run.jsonl` and `report.json`, like `launchArgs`. They aren't masked, except for a script value inside one, and the value of a key named exactly `authorization`, `apiKey`, `api_key`, `password` or `token` (case doesn't matter). A key such as `authToken` is kept in clear, so don't put secrets in them.
 - **The watch page** is served on `127.0.0.1`. Its token opens one run, only while the bridge process is alive. Anyone on your Mac with the URL can read that run's evidence during that time.
@@ -35,9 +35,9 @@ A value from the environment is still typed on screen. A password field shows do
 
 The bridge replaces your script's values, and the TypeSafe key, with `[REDACTED]` in `run.jsonl`, and with `[value:<key>]` in the log pane. Transformed copies aren't caught, such as a value shown in capitals. Very short values over-mask: a one-letter value masks that letter everywhere.
 
-## Non-ASCII typing on Android goes through the clipboard
+## How typed values reach a field
 
-On Android, a typed value that isn't plain ASCII is pasted through the device clipboard, which the bridge clears afterwards. The keyboard may keep its own copy as a clipboard suggestion anyway, so the value can stay on the device after the run. Don't type real secrets that way. ASCII values are typed directly and never touch the clipboard. [Script format](reference/script-format.md#how-android-types-values) has the details.
+The bridge sets a field's text with Appium commands: on iOS it clears the field, then sets the value; on Android it sends one UiAutomator2 replace command. The bridge doesn't put typed values on the device clipboard. Releases before Appium pasted non-ASCII values on Android through the clipboard, and the keyboard could keep a copy, so a device used with those releases may still offer one as a clipboard suggestion. The Appium server's own log output can contain typed values, so the bridge never keeps it. [Script format](reference/script-format.md#how-android-types-values) has the details.
 
 ## What TypeSafe says about your data
 

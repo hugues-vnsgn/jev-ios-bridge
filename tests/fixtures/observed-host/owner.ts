@@ -3,6 +3,7 @@ import { join } from 'node:path';
 import { runCli } from '../../../src/cli.js';
 import { FileObservedEvidence } from '../../../src/observed/evidence.js';
 import { fixtureObserved } from '../observed-cli-server.js';
+import { appiumObserved } from './appium-observed.js';
 import { Admission } from '../../../src/device/admission.js';
 import { Socket } from 'node:net';
 import { createObservedComposition } from '../../../src/observed/cli.js';
@@ -41,7 +42,7 @@ const evidence = {
     const path = await files.terminal(...args); milestone('evidence:exported'); return path;
   },
 };
-const fixture = fixtureObserved(root, process.env.JEV_EXPERIMENTAL_OBSERVED === '1', mode, {
+const hooks: Parameters<typeof fixtureObserved>[3] = {
   evidence,
   fault(point, operation) {
     milestone(`${point}:${operation}`);
@@ -63,7 +64,9 @@ const fixture = fixtureObserved(root, process.env.JEV_EXPERIMENTAL_OBSERVED === 
       milestone(`late:${operation}`);
     }
   },
-});
+};
+const fixture = process.env.HOST_COMPOSITION === 'appium' ? appiumObserved(root, process.env.JEV_EXPERIMENTAL_OBSERVED === '1', mode, hooks)
+  : fixtureObserved(root, process.env.JEV_EXPERIMENTAL_OBSERVED === '1', mode, hooks);
 // productionObservedComposition translates an unavailable startup store before
 // constructing real backends. Apply that factory boundary to the isolated fake
 // startup; all lifecycle/authority still delegates to the production classes.

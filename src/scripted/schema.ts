@@ -209,6 +209,10 @@ const envName = /^[A-Za-z_][A-Za-z0-9_]{0,127}$/;
 const fromEnvSchema = z.strictObject({ fromEnv: z.string().regex(envName,
   'fromEnv must name an environment variable: letters, digits and "_", not starting with a digit') });
 
+/** One typed value, on either platform: any text up to 2,048 characters except control characters. */
+const typedValue = z.string().max(2_048)
+  .refine(value => !controlCharacter.test(value), 'Typed values must not contain control characters');
+
 /** Typed values by key, at most 32 of them, each value read by `value`. */
 function typedValues(value: z.ZodType<ScriptValue>) {
   return z.record(z.string().regex(key), value)
@@ -217,11 +221,7 @@ function typedValues(value: z.ZodType<ScriptValue>) {
 
 // ---------- iOS: the 1.1 schema, plus an optional "platform": "ios" ----------
 
-const LEADING_HYPHEN_MESSAGE = 'MobileBuildMCP 2.7.1 cannot type text starting with a leading hyphen';
-const iosValue = z.string().max(2_048).regex(printableAscii, 'Typed values must use printable US keyboard characters');
-const iosValuesSchema = typedValues(z.union([iosValue, fromEnvSchema]))
-  .refine(values => Object.values(values).every(value => typeof value !== 'string' || !value.startsWith('-')),
-    LEADING_HYPHEN_MESSAGE);
+const iosValuesSchema = typedValues(z.union([typedValue, fromEnvSchema]));
 
 function iosSchema<Parts extends VersionParts>(parts: Parts) {
   return z.strictObject({
@@ -247,9 +247,7 @@ const drivenIosScriptedScenarioSchema = iosSchema(version2Parts);
 
 // ---------- Android: its own schema, not a refinement of the iOS one ----------
 
-const androidValue = z.string().max(2_048)
-  .refine(value => !controlCharacter.test(value), 'Typed values must not contain control characters');
-const androidValuesSchema = typedValues(z.union([androidValue, fromEnvSchema]));
+const androidValuesSchema = typedValues(z.union([typedValue, fromEnvSchema]));
 
 function androidSchema<Parts extends VersionParts>(parts: Parts) {
   return z.strictObject({
@@ -384,8 +382,6 @@ export class ScriptValueError extends Error {
   }
 }
 
-const iosResolvedValue = iosValue.refine(value => !value.startsWith('-'), LEADING_HYPHEN_MESSAGE);
-
 /**
  * Reads every `{ "fromEnv": NAME }` value from `env`, once, and checks it against the platform's typed
  * value rules. A variable that is unset or empty is MISSING_VALUE. Over MCP, `env` is the MCP server's
@@ -393,7 +389,6 @@ const iosResolvedValue = iosValue.refine(value => !value.startsWith('-'), LEADIN
  */
 export function resolveScriptValues(script: ScriptedScenarioSource,
   env: Readonly<Record<string, string | undefined>>): ScriptedScenario {
-  const rule = script.platform === 'android' ? androidValue : iosResolvedValue;
   const values: Record<string, string> = {};
   for (const [key, value] of Object.entries(script.values)) {
     if (typeof value === 'string') { values[key] = value; continue; }
@@ -402,7 +397,7 @@ export function resolveScriptValues(script: ScriptedScenarioSource,
       throw new ScriptValueError(`MISSING_VALUE: values.${key} reads environment variable ${value.fromEnv}, which ` +
         'is not set or is empty in the bridge\'s environment (over MCP, the MCP server\'s environment)', 'MISSING_VALUE');
     }
-    const checked = rule.safeParse(text);
+    const checked = typedValue.safeParse(text);
     if (!checked.success) {
       throw new ScriptValueError(`values.${key} (environment variable ${value.fromEnv}): ` +
         checked.error.issues.map(issue => issue.message).join('; '));

@@ -48,7 +48,7 @@ Going to the home screen isn't an exit, so it isn't detected.
 
 **`DEVICE_BUSY`**: another bridge process holds the device's lease. The message names it. See [cancelling and the device lease](06-running.md#cancelling-and-the-device-lease).
 
-On Android it also means that another tool's UI-automation agent (a foreign agent) holds the device: mobile-mcp, mobilecli, Appium, or `uiautomator`. Close that tool, then run again. The bridge never stops a foreign agent. If the tool has exited but its agent still runs, stop it by hand, as below.
+It also means that another tool's UI-automation agent (a foreign agent) holds the device. On iOS that's a WebDriverAgent runner the bridge didn't start. On Android it's a UiAutomator2 server, its instrumentation, or an automation `adb forward` that the bridge didn't start, from another Appium session, mobile-mcp, mobilecli, or `uiautomator`. Close that tool, then run again. The bridge never stops a foreign agent. If the tool has exited but its agent still runs, restart the simulator or the Android device.
 
 **`NO_DEVICE` or `INVALID_DEVICE`**: for iOS, set a simulator UUID (`JEV_DEVICE_UDID`, the script's `device.udid`, or `.mobilebuildmcp/config.yaml`). Aliases like `booted` aren't accepted. For Android, set the script's `device.avd` or `device.serial`, or `JEV_ANDROID_DEVICE` ([Android setup](12-android-setup.md#name-the-device)).
 
@@ -62,7 +62,7 @@ Or open it from Simulator (File → Open Simulator). The Android meaning is [bel
 
 **No simulator window during an iOS run**: the run brings its simulator's window to the front before the app launches. If it couldn't, the run carries on headless and its `prepared` event in `run.jsonl` has a `warnings` entry starting "Simulator window not opened". Open Simulator yourself to watch. The window stays closed when you turned it off ([`--no-device-window` or `JEV_DEVICE_WINDOW=off`](06-running.md#watching-a-run)).
 
-**`DEVICE_ERROR`**: MobileBuildMCP reported an error the bridge doesn't have its own code for. `report.json`'s `error.vendorCode` holds MobileBuildMCP's code. A common cause is that the app isn't installed on the simulator. On Android, `vendorCode` is `adb` or `agent`, naming the part that failed. The bridge never records that part's own message, because it can carry screen text. Check that the device is still connected, then run again.
+**`DEVICE_ERROR`**: a layer below the bridge reported an error the bridge doesn't have its own code for. `report.json`'s `error.vendorCode` holds that layer's code, and `error.vendorSource` names the layer: `appium`, `adb`, or `bridge` ([field reference](reference/report-json.md)). A common cause is that the app isn't installed on the simulator: `vendorCode` `APP_NOT_INSTALLED`, from `bridge`. On iOS, `PRESENTATION_UNKNOWN` from `bridge` means the bridge couldn't tell whether Simulator is showing the device, so it started no session rather than risk restarting the simulator. Check that `xcode-select -p` names your Xcode. The bridge never records the layer's own message, because it can carry screen text. Check that the device is still connected, then run again.
 
 **`UI_ACTION_UNCONFIRMED`**: a device command never answered, so the device lease was kept to protect the device. It's released when the command answers, or when that bridge process exits.
 
@@ -72,7 +72,7 @@ Or open it from Simulator (File → Open Simulator). The Android meaning is [bel
 
 These stop a run before the app starts, and `capture` exits 3 with them. [Android setup](12-android-setup.md) has the details.
 
-**`ANDROID_TOOLS_UNAVAILABLE`**: `adb` wasn't found, or the pinned mobilecli package is missing, or the device agent copied out of it doesn't match the pinned SHA-256. Install the Android SDK platform tools, or set `ANDROID_HOME`. For the package, install the bridge again, so its pinned dependency is back.
+**`ANDROID_TOOLS_UNAVAILABLE`**: `adb` wasn't found. Install the Android SDK platform tools, or set `ANDROID_HOME`.
 
 **`DEVICE_NOT_CONNECTED`**: `adb devices` doesn't list the named serial, or lists it offline, or no running emulator has the named AVD. Start the emulator, or reconnect the phone, and check `adb devices`. An AVD name is case-sensitive.
 
@@ -88,26 +88,11 @@ These stop a run before the app starts, and `capture` exits 3 with them. [Androi
 
 **`APP_NOT_INSTALLED`**: the script's `app.package` isn't installed on that device. Check the package name (`applicationId` in `build.gradle.kts`), then `adb -s <serial> install -r <apk>`.
 
-### Clearing a leftover device agent or forward by hand
+### A leftover from a crashed run
 
-After each run, the bridge stops its device agent and removes its `adb forward`. After a crash, **the next run clears the bridge's own leftovers,** so you don't need to. Clear them by hand only when you want the device for another tool before that.
+After each run, the bridge stops the UiAutomator2 server it started, puts back the device settings the session changed, and removes its `adb forward`. After a crash, **the next run that takes the device stops what the crashed run recorded,** matched by process identity, and uses the device only once every stop is proven. If it can't prove one, the run stops with `DEVICE_QUARANTINED` and the device stays excluded.
 
-1. Find the agent's process ID:
-
-   ```sh
-   adb -s <serial> shell ps -A -o PID,NAME,ARGS | grep com.mobilenext.mobilecli.DeviceServer
-   ```
-
-2. Check that it's the bridge's. The bridge's own agent has `CLASSPATH=/data/local/tmp/jev-ios-bridge-agent.dex`; any other is a foreign agent:
-
-   ```sh
-   adb -s <serial> shell cat /proc/<pid>/environ | tr '\0' '\n' | grep CLASSPATH
-   ```
-
-3. Stop it: `adb -s <serial> shell kill <pid>`.
-4. Find the forward: `adb forward --list` shows it as `<serial> tcp:<port> localabstract:mobilecli-server`. Another tool's forward looks the same, so remove only the one you know is the bridge's: `adb -s <serial> forward --remove tcp:<port>`.
-
-Don't use `pkill -f com.mobilenext.mobilecli.DeviceServer`: it also stops a foreign agent. A lock file for a process that has exited is cleared by the next run, so leave it.
+Don't stop UiAutomator2 by hand. The bridge's server and another tool's run the same package, so you can't tell them apart from `adb`, and stopping a foreign agent breaks the tool that owns it. A lock file for a process that has exited is cleared by the next run, so leave it.
 
 ## Driven steps (experimental)
 

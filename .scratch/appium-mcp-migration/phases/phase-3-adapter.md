@@ -609,14 +609,23 @@ UI or injects input as a fallback.
 - **iOS observed preparation.** Availability and `Booted` polling use the
   existing simctl probe. Boot and install use bounded, owned `simctl boot` and
   `simctl install`, for observed preparation only, beside ADR-0009's creation.
-  Launch follows the iOS rule above. The readiness capture goes through the Appium
-  session and this specification's normalizer. Ordinary runs keep their
+  Launch follows the observed launch ruling below. The readiness capture goes
+  through the Appium session and this specification's normalizer. Ordinary runs keep their
   preconditions, a booted device with the app installed, and never boot or
   install.
-- **Android restart.** Force-stop and start move to Appium as
-  `mobile: startActivity` with stop and wait, through the extension. The exit
-  watch marks that stop as expected and reads the PID after start. Logcat and
-  the exit watch stay unchanged.
+- **iOS observed launch** (root, 2026-10-24). Observed preparation launches
+  the app with one owned `simctl launch --terminate-running-process`, without
+  `--console-pty`, instead of the console helper, and starts no `log stream`.
+  A parked allocation has no live owner process for a console helper to
+  outlive the park. Ordinary runs keep the console rule above.
+- **Android restart.** Force-stop and start move to Appium through the
+  extension: the app is force-stopped first, then the device time is read and
+  logcat and the exit watch start, then `mobile: startActivity` starts it with
+  stop and wait, so nothing the previous instance logged is read. The exit
+  watch marks no stop as expected and reads the PID after start (root,
+  2026-10-26, P3.10 review): it ignores PID events until that read, and a
+  sticky expected mark would hide a crash of the new PID. Logcat and the exit
+  watch stay unchanged.
 - **Android wake and probes.** The adb wake keyevent and the read-only launcher
   lookup, foreground and keyguard probes stay native helpers. Every Appium
   session sets `skipUnlock`. A locked screen refuses with `DEVICE_LOCKED`, as

@@ -60,7 +60,8 @@ if (mode === 'crash') {
   let reason: string;
   if (mode === 'capture') {
     let stderr = '';
-    const code = await captureCommand({ serial: name }, { projectDir: root, driver: parts,
+    const code = await captureCommand({ serial: name }, { projectDir: root,
+      driver: selection => new AndroidDriver({ ...parts, device: selection.device, defaultDevice: selection.defaultDevice }),
       signal: AbortSignal.timeout(30000), write: { stdout() {}, stderr: text => { stderr += text; } } });
     reason = code === 0 ? 'passed' : stderr.split(':')[0]!;
   } else {

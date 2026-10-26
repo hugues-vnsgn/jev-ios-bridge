@@ -44,8 +44,7 @@ test('script ends at a checkpoint and rejects missing values, duplicate IDs, and
   assert.throws(() => parseScriptedScenario({ ...scenario, steps: [scenario.steps[0],
     { ...scenario.steps[1], id: 'enterQuery' }] }));
   assert.throws(() => parseScriptedScenario({ ...scenario, values: {} }));
-  assert.throws(() => parseScriptedScenario({ ...scenario, values: { query: '--Berlin' } }));
-  assert.throws(() => parseScriptedScenario({ ...scenario, values: { query: 'Đà Nẵng' } }));
+  assert.throws(() => parseScriptedScenario({ ...scenario, values: { query: 'Berlin\n' } }));
   assert.throws(() => parseScriptedScenario({ ...scenario, steps: [scenario.steps[0],
     { ...scenario.steps[1], assertions: [] }] }));
 });

@@ -9,7 +9,7 @@ import type { Snapshot } from '../src/contracts/index.js';
 import type { ObservedActionSnapshot } from '../src/observed/report.js';
 import { ObservedAllocator } from '../src/observed/allocation.js';
 import { ObservedActionService } from '../src/observed/service.js';
-import { createObservedDriver } from '../src/device/factory.js';
+import { createObservedDriver } from '../src/device/legacy-factory.js';
 import type { CliRunner } from '../src/device/index.js';
 import { allocationFixture } from './fixtures/observed-allocation-backend.js';
 

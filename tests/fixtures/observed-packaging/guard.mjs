@@ -29,6 +29,16 @@ registerHooks({
       // Driver construction also reaches subprocess guards; trap it at its first statement.
       source = source.replace(/constructor\(options[^)]*\) \{/, '$& globalThis.__jevPackagingForbidden("MobileBuildMcpDriver");');
     }
+    if (url.endsWith('/dist/appium/driver.js')) {
+      const pattern = /export class AppiumDriver \{[^]*?constructor\(options\) \{/;
+      if (!pattern.test(source)) throw new Error('Appium driver safety guard no longer matches installed module');
+      source = source.replace(pattern, '$& globalThis.__jevPackagingForbidden("AppiumDriver");');
+    }
+    if (url.endsWith('/dist/appium/stack.js')) {
+      const pattern = 'static shipped() {';
+      if (!source.includes(pattern)) throw new Error('Stack safety guard no longer matches installed module');
+      source = source.replace(pattern, pattern + ' globalThis.__jevPackagingForbidden("FrozenStack.shipped");');
+    }
     return { ...result, source };
   },
 });
