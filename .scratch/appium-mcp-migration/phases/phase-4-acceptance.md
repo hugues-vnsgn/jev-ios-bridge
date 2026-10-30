@@ -1,6 +1,6 @@
 # Phase 4 specification: corpus acceptance and Appium-only cutover
 
-Status: requirements specified; resources/correspondence pending; execution paused
+Status: agent-only kits started 2026-10-30; live runs and corpus judgments await owner steps ([ticket 06](../issues/06-acceptance-resource-readiness.md), [ticket 08](../issues/08-frozen-state-correspondence.md), activation of the real admission store, the Jev key). The text below is the specification as written on 2026-10-14
 Authority: [published spec](../spec.md), Decisions 27 through 30;
 Testing Decisions 20, 22 through 25
 Context: [master handoff](../handoff.md), [roadmap](../roadmap.md)
@@ -77,7 +77,8 @@ cases remain iOS-simulator-only. Physical iPhones are outside this release.
 | Repeated cleanup | At least 20 independent scenario/session cycles PER device category, no accumulated owned sessions/components, safe subsequent use |
 
 Map the five unfinished v1.4.0 simulator acceptance cases into this matrix or
-execute them explicitly; preserve a requirement-to-evidence row for each.
+execute them explicitly ([recovered cases and proposed mapping](../research/v1.4.0-live-cases.md));
+preserve a requirement-to-evidence row for each.
 Record app/toolchain/OS/model/stack versions, commands, source commits, results,
 command/component records and artifact paths. Mark unavailable hardware and
 capabilities untested. Simulator results do not qualify phone acceptance.
