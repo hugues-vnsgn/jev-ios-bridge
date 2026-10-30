@@ -5,6 +5,8 @@ date: 2026-10-08
 
 # A bounded fresh-simulator creation exception
 
+On cutover merge, [ADR-0010](0010-appium-mcp-as-the-shared-device-layer.md) replaces the pinned provider named below with Appium and its native helpers. The creation constraints here stay in force.
+
 Pinned MobileBuildMCP can prepare existing simulators but cannot create them. Autonomous observed-action testing will use a narrow host adapter for `xcrun simctl create`, with explicit device type/runtime and an argument array. This amends ADR-0002's operator-only provisioning responsibility; it adds no UI input transport or app instrumentation. Boot, install, launch, input and visible captures remain with the pinned provider. [Primary command evidence and alternatives](../../.scratch/observed-integration/evidence/inventory-decision.md).
 
 Reserve action identity and resource capacity before creation. Persist creation intent and its host-wide guard before dispatch; bind one valid returned UUID durably before preparation. An uncertain create retains capacity and blocks new updated iOS admissions when device identity is unknown. Never infer ownership from a name or retry automatically. Retain all allocated devices, including successes; this exception permits no clone, erase, deletion, shutdown or runtime download.

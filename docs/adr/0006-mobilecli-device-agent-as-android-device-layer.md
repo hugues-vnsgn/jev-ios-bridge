@@ -1,9 +1,11 @@
 ---
-status: accepted
+status: superseded
 date: 2026-09-29
 ---
 
 # mobilecli's device agent, driven directly, is the Android device layer
+
+Superseded on cutover merge by [ADR-0010](0010-appium-mcp-as-the-shared-device-layer.md). Appium and its UiAutomator2 server are the Android device layer, and the bridge no longer depends on mobilecli or pushes its agent. The original decision below is retained as history.
 
 On Android the bridge needs what MobileBuildMCP gives it on iOS: read the screen's accessibility elements, tap, type, swipe and take screenshots. We use the on-device agent from mobile-next's mobilecli, pinned at `mobilecli@1.0.14`, but we don't run mobilecli.
 
