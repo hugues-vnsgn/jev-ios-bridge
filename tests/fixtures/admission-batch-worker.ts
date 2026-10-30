@@ -1,4 +1,4 @@
-import { AndroidOwnership } from '../../src/device/android/ownership.js';
+import { admittedProbeRecorder } from './admitted-probe-recorder.js';
 import { hostIdentityFixture } from './identity-read-group.js';
 import { appendFileSync, writeFileSync } from 'node:fs';
 import { join } from 'node:path';
@@ -21,9 +21,9 @@ const acquired = admission.acquire({ category: 'android-phone', device: 'fake-ha
 if (acquired.kind !== 'acquired') throw new Error('Expected admission');
 const session = () => acquired.claim.bindDriver('fake');
 if (mode.startsWith('identity-')) {
-  const ownership = new AndroidOwnership(admission, acquired.claim, 'emulator-5554', 'fake');
+  const recorder = admittedProbeRecorder(admission, acquired.claim);
   const host = hostIdentityFixture(root, (file, args) => appendFileSync(join(root, 'probe-sent.jsonl'), JSON.stringify({ file, args }) + '\n'));
-  await host.probe.withRecorder!(ownership.probe).android(AbortSignal.timeout(5000), 'emulator-5554');
+  await host.probe.withRecorder!(recorder.probe).android(AbortSignal.timeout(5000), 'emulator-5554');
 } else if (mode === 'sequence') {
   await session().dispatchSequence(['first', 'second'].map((request, index) => ({ request,
     effect: async () => { writeFileSync(join(root, `sent-${index}`), request); return request; } })));
