@@ -2,8 +2,10 @@ import { existsSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { join, resolve } from 'node:path';
 import { pathToFileURL } from 'node:url';
 import { parseArgs } from 'node:util';
-import { extractAssets, recoverInventory, serializeInventory } from './inventory.js';
-import { KIT_DIR, KIT_FILES } from './sources.js';
+import { z } from 'zod';
+import { extractAssets, parseInventory, recoverInventory, serializeInventory, type Inventory } from './inventory.js';
+import { attachCapture, generateManifest, jsonText, parseManifest, verifyManifest, type Refusal } from './manifest.js';
+import { KIT_DIR, KIT_FILES, REPO_ROOT } from './sources.js';
 
 export interface CliDeps {
   cwd: string;
@@ -12,15 +14,36 @@ export interface CliDeps {
   createClient: () => unknown;
 }
 
-const USAGE = 'usage: cli.ts [--dir <corpus folder>] recover [--check] [--extract <dir>]';
+const USAGE = [
+  'usage: cli.ts [--dir <corpus folder>] <command>',
+  '  recover [--check] [--extract <dir>]',
+  '  manifest generate | manifest verify',
+  '  capture attach --screen <id> --xml <file> --screenshot <file> --kind live|stand-in --app-build <s> --device <s>',
+  '    --captured-at <s> --session-id <s>',
+].join('\n');
+
+const CaptureArgs = z.object({
+  screen: z.string().min(1), xml: z.string().min(1), screenshot: z.string().min(1), kind: z.enum(['live', 'stand-in']),
+  'app-build': z.string().min(1), device: z.string().min(1), 'captured-at': z.string().min(1), 'session-id': z.string().min(1),
+});
+
+const readJson = (path: string): unknown => JSON.parse(readFileSync(path, 'utf8'));
+const readInventory = (dir: string): Inventory => parseInventory(readJson(join(dir, KIT_FILES.inventory)));
+
+function report(refusals: Refusal[], out: CliDeps['out']): number {
+  for (const refusal of refusals) out(`refused ${refusal.code} at ${refusal.at}: ${refusal.detail}`);
+  return refusals.length ? 1 : 0;
+}
 
 export async function main(argv: string[], deps: CliDeps): Promise<number> {
   const { values, positionals } = parseArgs({ args: argv, allowPositionals: true, strict: true, options: {
     dir: { type: 'string' }, check: { type: 'boolean' }, extract: { type: 'string' },
+    screen: { type: 'string' }, xml: { type: 'string' }, screenshot: { type: 'string' }, kind: { type: 'string' },
+    'app-build': { type: 'string' }, device: { type: 'string' }, 'captured-at': { type: 'string' }, 'session-id': { type: 'string' },
   } });
   const dir = resolve(deps.cwd, values.dir ?? KIT_DIR);
-  const command = positionals.join(' ');
-  switch (command) {
+  const manifestPath = join(dir, KIT_FILES.manifest);
+  switch (positionals.join(' ')) {
     case 'recover': {
       const inventory = recoverInventory();
       const text = serializeInventory(inventory);
@@ -38,6 +61,33 @@ export async function main(argv: string[], deps: CliDeps): Promise<number> {
         const written = extractAssets(inventory, resolve(deps.cwd, values.extract));
         deps.out(`extracted ${written.length} assets, each matching its inventory hash`);
       }
+      return 0;
+    }
+    case 'manifest generate': {
+      const { manifest, sealedRequestIds } = generateManifest(readInventory(dir), REPO_ROOT);
+      writeFileSync(manifestPath, jsonText(manifest));
+      writeFileSync(join(dir, KIT_FILES.sealedRequestIds), jsonText(sealedRequestIds));
+      deps.out(`wrote ${manifestPath} and ${KIT_FILES.sealedRequestIds}`);
+      return 0;
+    }
+    case 'manifest verify': {
+      const code = report(verifyManifest(readJson(manifestPath), { inventory: readInventory(dir), repoRoot: REPO_ROOT, manifestDir: dir }),
+        deps.out);
+      if (code === 0) deps.out('manifest verifies');
+      return code;
+    }
+    case 'capture attach': {
+      const args = CaptureArgs.safeParse(values);
+      if (!args.success) {
+        deps.out(USAGE);
+        return 2;
+      }
+      const { screen, xml, screenshot, kind } = args.data;
+      const manifest = attachCapture(parseManifest(readJson(manifestPath)), { screenId: screen, xmlPath: resolve(deps.cwd, xml),
+        screenshotPath: resolve(deps.cwd, screenshot), kind, appBuild: args.data['app-build'], device: args.data.device,
+        capturedAt: args.data['captured-at'], sessionId: args.data['session-id'] }, dir);
+      writeFileSync(manifestPath, jsonText(manifest));
+      deps.out(`captured ${screen} as ${kind}`);
       return 0;
     }
     default:

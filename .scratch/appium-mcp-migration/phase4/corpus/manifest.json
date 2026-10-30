@@ -1,0 +1,2852 @@
+{
+  "version": 1,
+  "inventorySha256": "8c4ae54c05e94574b44fe27297d7c6c861b4ba8956cce07058717d04acadc05d",
+  "sealedRequestIdsSha256": "059f8adf13ba9d16bc04105f343bcb2f9f9c513d20c3a3ec6632a8a9911a75b4",
+  "pipeline": {
+    "normalizer": {
+      "files": [
+        {
+          "path": "src/appium/observe/normalize.ts",
+          "sha256": "93301f07fe896dc3b32a265eabc083800fc6ee9429d1fc58d0a20ce84dede7e7"
+        },
+        {
+          "path": "src/appium/observe/xml.ts",
+          "sha256": "7016951aa8b5778404cd468216ba0634bdd5aea9b46ecbb8652b51dea0ee2805"
+        },
+        {
+          "path": "src/device/android/mapping.ts",
+          "sha256": "57fdd34407b1abd0542946af72e56377264a66516517aa0642418064da6a8585"
+        }
+      ],
+      "values": {
+        "snapshotMaxDepth": {
+          "ios": 50,
+          "android": 70
+        },
+        "androidStatusBarIdPrefix": "com.android.systemui:"
+      }
+    },
+    "renderer": {
+      "files": [
+        {
+          "path": "src/scripted/observe.ts",
+          "sha256": "926734786ae1c64911788270cc8b4a562c848d0a6cd7cde4db537fd0f219eadf"
+        }
+      ]
+    },
+    "judge": {
+      "files": [
+        {
+          "path": "src/scripted/jev.ts",
+          "sha256": "b75b1004dd4bc68334a38a1ef775296168a9695f8822e087d88cb214695a29db"
+        }
+      ]
+    },
+    "projectionRules": {
+      "ios": "visible-full-text-v2",
+      "android": "android-full-text-v1"
+    },
+    "model": "jev-1.13.0",
+    "questionTemplate": "Does the visible evidence on this current screen support this specific claim?",
+    "budgets": {
+      "maxStateBytes": 24000,
+      "stateQuestionMaxBytes": 28000,
+      "requestMaxBytes": 56000
+    },
+    "bounds": {
+      "establishedAt": 0.9,
+      "rejectedAt": 0.1
+    },
+    "precedence": "false-wins",
+    "sdk": {
+      "name": "@typesafe-ai/sdk",
+      "version": "0.6.0"
+    },
+    "digestConvention": {
+      "pipelineFiles": "raw-sha256",
+      "captures": "raw-sha256",
+      "inventory": "canonical-json-sha256",
+      "sealedRequestIds": "canonical-json-sha256"
+    }
+  },
+  "exitRule": {
+    "ios": {
+      "screens": 24,
+      "claims": 48,
+      "maxConfidentlyWrong": 0,
+      "maxUncertain": 3
+    },
+    "android": {
+      "screens": 10,
+      "claims": 31,
+      "maxConfidentlyWrong": 0,
+      "maxUncertain": null
+    }
+  },
+  "stopRules": {
+    "judgmentsPerScreen": 1,
+    "onExistingResultRecord": "never-resend",
+    "onRequestedWithoutResult": "stop-needs-owner",
+    "onJudgeError": "stop-run",
+    "judgeErrorCodes": [
+      "AUTH",
+      "RATE_LIMIT",
+      "SERVICE",
+      "NETWORK",
+      "TIMEOUT",
+      "MALFORMED_RESPONSE",
+      "UNKNOWN",
+      "ABORTED"
+    ],
+    "onPipelineError": "record-failed-and-continue",
+    "pipelineErrorCodes": [
+      "OBSERVATION_INCOMPLETE",
+      "TRUNCATED",
+      "EMPTY_SCREEN",
+      "STATE_BUDGET",
+      "INVALID_INPUT",
+      "REQUEST_BUDGET"
+    ],
+    "substitution": "never retry, re-ask, or switch key, model or provider"
+  },
+  "screens": [
+    {
+      "platform": "ios",
+      "screenId": "s01-weather-ber-query",
+      "source": {
+        "labels": {
+          "commit": "88ad659f1e57baa44f4f65e89cae2d33bd96f2c2",
+          "path": "spikes/scripted/corpus/corpus.json",
+          "digestConvention": "canonical-json-sha256",
+          "sha256": "4d7e3853e79c7ffd3315ce9d908ebe9d4685ce28cff59674470ca0f861b43303"
+        },
+        "evidence": [
+          {
+            "role": "ios-full-capture",
+            "commit": "88ad659f1e57baa44f4f65e89cae2d33bd96f2c2",
+            "path": "spikes/scripted/corpus/raw/s01-weather-ber-query.full.json",
+            "sha256": "6761c582590de0f1c91acf79f7a70cb0c40d9bed4f2f1892e677231e6eec79a9"
+          },
+          {
+            "role": "ios-screenshot",
+            "commit": "88ad659f1e57baa44f4f65e89cae2d33bd96f2c2",
+            "path": "spikes/scripted/corpus/raw/s01-weather-ber-query.jpg",
+            "sha256": "aea3101d4be1e4efbfa00936e6c6be3fc850eda632398e604aefc49ba651121f"
+          },
+          {
+            "role": "ios-snapshot",
+            "commit": "88ad659f1e57baa44f4f65e89cae2d33bd96f2c2",
+            "path": "spikes/scripted/corpus/raw/s01-weather-ber-query.snapshot.json",
+            "sha256": "d0b4513fcd89c9507cd84b046c6f6a7c2eb840a8bb4b116cfd2fa22cef8b2834"
+          },
+          {
+            "role": "ios-meta",
+            "commit": "88ad659f1e57baa44f4f65e89cae2d33bd96f2c2",
+            "path": "spikes/scripted/corpus/raw/s01-weather-ber-query.meta.json",
+            "sha256": "4fc78fef41efc0bb527a946d91e4eede7c8893cb6154a9978bd0c3e8b59ae01d"
+          }
+        ]
+      },
+      "claims": [
+        {
+          "requestId": "a",
+          "text": "The location search field contains Ber.",
+          "truth": true,
+          "kind": null
+        },
+        {
+          "requestId": "b",
+          "text": "The location search field contains the complete word Berlin.",
+          "truth": false,
+          "kind": null
+        }
+      ],
+      "setup": {
+        "app": {
+          "id": "com.sentry.weather.Weather",
+          "idSource": "corpus.json app.bundleId at 88ad659f1",
+          "confirmed": true
+        },
+        "setupSteps": [
+          "Launch the Sentry Weather mock fixture.",
+          "Tap the San Francisco location button.",
+          "Type Ber into the location search field."
+        ],
+        "appBuild": null,
+        "device": null,
+        "stateSetupEvidence": null,
+        "correspondence": {
+          "status": "pending"
+        }
+      },
+      "capture": {
+        "status": "pending",
+        "kind": null,
+        "appiumXml": null,
+        "screenshot": null,
+        "appBuild": null,
+        "device": null,
+        "capturedAt": null,
+        "sessionId": null
+      },
+      "judgment": {
+        "allocation": 1,
+        "resultRecord": "results/ios/s01-weather-ber-query.json"
+      }
+    },
+    {
+      "platform": "ios",
+      "screenId": "s02-weather-berlin-results",
+      "source": {
+        "labels": {
+          "commit": "88ad659f1e57baa44f4f65e89cae2d33bd96f2c2",
+          "path": "spikes/scripted/corpus/corpus.json",
+          "digestConvention": "canonical-json-sha256",
+          "sha256": "4d7e3853e79c7ffd3315ce9d908ebe9d4685ce28cff59674470ca0f861b43303"
+        },
+        "evidence": [
+          {
+            "role": "ios-full-capture",
+            "commit": "88ad659f1e57baa44f4f65e89cae2d33bd96f2c2",
+            "path": "spikes/scripted/corpus/raw/s02-weather-berlin-results.full.json",
+            "sha256": "30c171de977e6785adf9330c83ad280353f987d702afbae9a6e882de04238efb"
+          },
+          {
+            "role": "ios-screenshot",
+            "commit": "88ad659f1e57baa44f4f65e89cae2d33bd96f2c2",
+            "path": "spikes/scripted/corpus/raw/s02-weather-berlin-results.jpg",
+            "sha256": "1009a45728963ffab500348a3c46a0aa5c46845b7aa8e47081e522e9d4a103b6"
+          },
+          {
+            "role": "ios-snapshot",
+            "commit": "88ad659f1e57baa44f4f65e89cae2d33bd96f2c2",
+            "path": "spikes/scripted/corpus/raw/s02-weather-berlin-results.snapshot.json",
+            "sha256": "31447c630c6fb3c2ae6f0c35f790e8534951dd382180077120a4cf55ef1fe130"
+          },
+          {
+            "role": "ios-meta",
+            "commit": "88ad659f1e57baa44f4f65e89cae2d33bd96f2c2",
+            "path": "spikes/scripted/corpus/raw/s02-weather-berlin-results.meta.json",
+            "sha256": "8ce7a34bf044990729608d06b0c2ee7bd54296304401acc068fe027a5cec7165"
+          }
+        ]
+      },
+      "claims": [
+        {
+          "requestId": "a",
+          "text": "The main Weather location button already reads Berlin.",
+          "truth": false,
+          "kind": null
+        },
+        {
+          "requestId": "b",
+          "text": "The location search results include Berlin, Germany.",
+          "truth": true,
+          "kind": null
+        }
+      ],
+      "setup": {
+        "app": {
+          "id": "com.sentry.weather.Weather",
+          "idSource": "corpus.json app.bundleId at 88ad659f1",
+          "confirmed": true
+        },
+        "setupSteps": [
+          "From the Ber search, replace the location search text with Berlin.",
+          "Wait for the Berlin, Germany result to settle."
+        ],
+        "appBuild": null,
+        "device": null,
+        "stateSetupEvidence": null,
+        "correspondence": {
+          "status": "pending"
+        }
+      },
+      "capture": {
+        "status": "pending",
+        "kind": null,
+        "appiumXml": null,
+        "screenshot": null,
+        "appBuild": null,
+        "device": null,
+        "capturedAt": null,
+        "sessionId": null
+      },
+      "judgment": {
+        "allocation": 1,
+        "resultRecord": "results/ios/s02-weather-berlin-results.json"
+      }
+    },
+    {
+      "platform": "ios",
+      "screenId": "s03-weather-berlin-main",
+      "source": {
+        "labels": {
+          "commit": "88ad659f1e57baa44f4f65e89cae2d33bd96f2c2",
+          "path": "spikes/scripted/corpus/corpus.json",
+          "digestConvention": "canonical-json-sha256",
+          "sha256": "4d7e3853e79c7ffd3315ce9d908ebe9d4685ce28cff59674470ca0f861b43303"
+        },
+        "evidence": [
+          {
+            "role": "ios-full-capture",
+            "commit": "88ad659f1e57baa44f4f65e89cae2d33bd96f2c2",
+            "path": "spikes/scripted/corpus/raw/s03-weather-berlin-main.full.json",
+            "sha256": "66287e16cdc41810fc651828d5d1b250f850945250ffea6cebbd5cd360ed63cb"
+          },
+          {
+            "role": "ios-screenshot",
+            "commit": "88ad659f1e57baa44f4f65e89cae2d33bd96f2c2",
+            "path": "spikes/scripted/corpus/raw/s03-weather-berlin-main.jpg",
+            "sha256": "948b0401b4489bad1fda43ec76a56e602d6cb9d617aa87be6f8dc9e40ce90668"
+          },
+          {
+            "role": "ios-snapshot",
+            "commit": "88ad659f1e57baa44f4f65e89cae2d33bd96f2c2",
+            "path": "spikes/scripted/corpus/raw/s03-weather-berlin-main.snapshot.json",
+            "sha256": "2f911de1830f410b5314199d89779a2959030c3d4395a62b8d0abfaaa8025d24"
+          },
+          {
+            "role": "ios-meta",
+            "commit": "88ad659f1e57baa44f4f65e89cae2d33bd96f2c2",
+            "path": "spikes/scripted/corpus/raw/s03-weather-berlin-main.meta.json",
+            "sha256": "9792115bb6eb68ab092c59c89cabd8def7583249d6f188b2a93ab37c9d73513e"
+          }
+        ]
+      },
+      "claims": [
+        {
+          "requestId": "b",
+          "text": "The main Weather location button reads Berlin.",
+          "truth": true,
+          "kind": null
+        },
+        {
+          "requestId": "a",
+          "text": "The main Weather location button reads Oslo.",
+          "truth": false,
+          "kind": null
+        }
+      ],
+      "setup": {
+        "app": {
+          "id": "com.sentry.weather.Weather",
+          "idSource": "corpus.json app.bundleId at 88ad659f1",
+          "confirmed": true
+        },
+        "setupSteps": [
+          "Tap the Berlin, Germany search result.",
+          "Tap Close on the locations sheet."
+        ],
+        "appBuild": null,
+        "device": null,
+        "stateSetupEvidence": null,
+        "correspondence": {
+          "status": "pending"
+        }
+      },
+      "capture": {
+        "status": "pending",
+        "kind": null,
+        "appiumXml": null,
+        "screenshot": null,
+        "appBuild": null,
+        "device": null,
+        "capturedAt": null,
+        "sessionId": null
+      },
+      "judgment": {
+        "allocation": 1,
+        "resultRecord": "results/ios/s03-weather-berlin-main.json"
+      }
+    },
+    {
+      "platform": "ios",
+      "screenId": "s04-weather-lisbon-main",
+      "source": {
+        "labels": {
+          "commit": "88ad659f1e57baa44f4f65e89cae2d33bd96f2c2",
+          "path": "spikes/scripted/corpus/corpus.json",
+          "digestConvention": "canonical-json-sha256",
+          "sha256": "4d7e3853e79c7ffd3315ce9d908ebe9d4685ce28cff59674470ca0f861b43303"
+        },
+        "evidence": [
+          {
+            "role": "ios-full-capture",
+            "commit": "88ad659f1e57baa44f4f65e89cae2d33bd96f2c2",
+            "path": "spikes/scripted/corpus/raw/s04-weather-lisbon-main.full.json",
+            "sha256": "c33a7f34474593a17eedf4c41352027bf57116d744a48339b8d174048c364e53"
+          },
+          {
+            "role": "ios-screenshot",
+            "commit": "88ad659f1e57baa44f4f65e89cae2d33bd96f2c2",
+            "path": "spikes/scripted/corpus/raw/s04-weather-lisbon-main.jpg",
+            "sha256": "e4b5a8ca73baf9f8130a0ae45a4cc028d8d0be7dba341dbe9b11765708899a58"
+          },
+          {
+            "role": "ios-snapshot",
+            "commit": "88ad659f1e57baa44f4f65e89cae2d33bd96f2c2",
+            "path": "spikes/scripted/corpus/raw/s04-weather-lisbon-main.snapshot.json",
+            "sha256": "9a0e036498cc8365e9ef5b1dc4e831856fd81f9fc05f1fda1c2723b7ff9e0c8e"
+          },
+          {
+            "role": "ios-meta",
+            "commit": "88ad659f1e57baa44f4f65e89cae2d33bd96f2c2",
+            "path": "spikes/scripted/corpus/raw/s04-weather-lisbon-main.meta.json",
+            "sha256": "dac742f7752d80b56e64513842fa0ab50a125e89527489cf713745c8c69372e0"
+          }
+        ]
+      },
+      "claims": [
+        {
+          "requestId": "b",
+          "text": "The main Weather location button reads Berlin.",
+          "truth": false,
+          "kind": null
+        },
+        {
+          "requestId": "a",
+          "text": "The main Weather location button reads Lisbon.",
+          "truth": true,
+          "kind": null
+        }
+      ],
+      "setup": {
+        "app": {
+          "id": "com.sentry.weather.Weather",
+          "idSource": "corpus.json app.bundleId at 88ad659f1",
+          "confirmed": true
+        },
+        "setupSteps": [
+          "From Berlin main, open the locations sheet.",
+          "Search for Lisbon.",
+          "Tap the Lisbon, Portugal result.",
+          "Close the locations sheet."
+        ],
+        "appBuild": null,
+        "device": null,
+        "stateSetupEvidence": null,
+        "correspondence": {
+          "status": "pending"
+        }
+      },
+      "capture": {
+        "status": "pending",
+        "kind": null,
+        "appiumXml": null,
+        "screenshot": null,
+        "appBuild": null,
+        "device": null,
+        "capturedAt": null,
+        "sessionId": null
+      },
+      "judgment": {
+        "allocation": 1,
+        "resultRecord": "results/ios/s04-weather-lisbon-main.json"
+      }
+    },
+    {
+      "platform": "ios",
+      "screenId": "s05-weather-lisbon-distance-mi",
+      "source": {
+        "labels": {
+          "commit": "88ad659f1e57baa44f4f65e89cae2d33bd96f2c2",
+          "path": "spikes/scripted/corpus/corpus.json",
+          "digestConvention": "canonical-json-sha256",
+          "sha256": "4d7e3853e79c7ffd3315ce9d908ebe9d4685ce28cff59674470ca0f861b43303"
+        },
+        "evidence": [
+          {
+            "role": "ios-full-capture",
+            "commit": "88ad659f1e57baa44f4f65e89cae2d33bd96f2c2",
+            "path": "spikes/scripted/corpus/raw/s05-weather-lisbon-distance-mi.full.json",
+            "sha256": "3680361d15440fe7d8413571f1479e44d5830c0db3512d48ffe52e138594028c"
+          },
+          {
+            "role": "ios-screenshot",
+            "commit": "88ad659f1e57baa44f4f65e89cae2d33bd96f2c2",
+            "path": "spikes/scripted/corpus/raw/s05-weather-lisbon-distance-mi.jpg",
+            "sha256": "ce9095994bd9570fbc7f26805d1f15fc7bdcd9cb725b2b0cda39c9289cfa1142"
+          },
+          {
+            "role": "ios-snapshot",
+            "commit": "88ad659f1e57baa44f4f65e89cae2d33bd96f2c2",
+            "path": "spikes/scripted/corpus/raw/s05-weather-lisbon-distance-mi.snapshot.json",
+            "sha256": "d6244f8e23f1f3e66ca3e8986edf9236fa63d2892934f9d670ee2d04d0baf7ff"
+          },
+          {
+            "role": "ios-meta",
+            "commit": "88ad659f1e57baa44f4f65e89cae2d33bd96f2c2",
+            "path": "spikes/scripted/corpus/raw/s05-weather-lisbon-distance-mi.meta.json",
+            "sha256": "56326a4cc96b610775a75342980337fb507ba56445c1833d2a6fcc9e5c23708d"
+          }
+        ]
+      },
+      "claims": [
+        {
+          "requestId": "a",
+          "text": "The Distance setting has mi selected.",
+          "truth": true,
+          "kind": null
+        },
+        {
+          "requestId": "b",
+          "text": "The Distance setting has km selected.",
+          "truth": false,
+          "kind": null
+        }
+      ],
+      "setup": {
+        "app": {
+          "id": "com.sentry.weather.Weather",
+          "idSource": "corpus.json app.bundleId at 88ad659f1",
+          "confirmed": true
+        },
+        "setupSteps": [
+          "From Lisbon main, tap Settings.",
+          "Leave Distance at its initial mi selection."
+        ],
+        "appBuild": null,
+        "device": null,
+        "stateSetupEvidence": null,
+        "correspondence": {
+          "status": "pending"
+        }
+      },
+      "capture": {
+        "status": "pending",
+        "kind": null,
+        "appiumXml": null,
+        "screenshot": null,
+        "appBuild": null,
+        "device": null,
+        "capturedAt": null,
+        "sessionId": null
+      },
+      "judgment": {
+        "allocation": 1,
+        "resultRecord": "results/ios/s05-weather-lisbon-distance-mi.json"
+      }
+    },
+    {
+      "platform": "ios",
+      "screenId": "s06-weather-lisbon-distance-km",
+      "source": {
+        "labels": {
+          "commit": "88ad659f1e57baa44f4f65e89cae2d33bd96f2c2",
+          "path": "spikes/scripted/corpus/corpus.json",
+          "digestConvention": "canonical-json-sha256",
+          "sha256": "4d7e3853e79c7ffd3315ce9d908ebe9d4685ce28cff59674470ca0f861b43303"
+        },
+        "evidence": [
+          {
+            "role": "ios-full-capture",
+            "commit": "88ad659f1e57baa44f4f65e89cae2d33bd96f2c2",
+            "path": "spikes/scripted/corpus/raw/s06-weather-lisbon-distance-km.full.json",
+            "sha256": "96cb2d1bc429615f3c5a2c686a4f2ffb4d54007a674a3b11e9301c5c579b6f6d"
+          },
+          {
+            "role": "ios-screenshot",
+            "commit": "88ad659f1e57baa44f4f65e89cae2d33bd96f2c2",
+            "path": "spikes/scripted/corpus/raw/s06-weather-lisbon-distance-km.jpg",
+            "sha256": "a604217863a57ea32fe8262efd79dcc2f3c25c5656317eddf3f5131fd5e456f0"
+          },
+          {
+            "role": "ios-snapshot",
+            "commit": "88ad659f1e57baa44f4f65e89cae2d33bd96f2c2",
+            "path": "spikes/scripted/corpus/raw/s06-weather-lisbon-distance-km.snapshot.json",
+            "sha256": "81b27234579a0c9ab7451241f093dd1c88ed4bbcd536926587f5dd080da3a30f"
+          },
+          {
+            "role": "ios-meta",
+            "commit": "88ad659f1e57baa44f4f65e89cae2d33bd96f2c2",
+            "path": "spikes/scripted/corpus/raw/s06-weather-lisbon-distance-km.meta.json",
+            "sha256": "3b4712314b55b9a75bdf87e47640a3c874355a4d7e1982cc596295aef9b09ddc"
+          }
+        ]
+      },
+      "claims": [
+        {
+          "requestId": "a",
+          "text": "The Distance setting has mi selected.",
+          "truth": false,
+          "kind": null
+        },
+        {
+          "requestId": "b",
+          "text": "The Distance setting has km selected.",
+          "truth": true,
+          "kind": null
+        }
+      ],
+      "setup": {
+        "app": {
+          "id": "com.sentry.weather.Weather",
+          "idSource": "corpus.json app.bundleId at 88ad659f1",
+          "confirmed": true
+        },
+        "setupSteps": [
+          "From Lisbon Settings with mi selected, tap the km Distance choice."
+        ],
+        "appBuild": null,
+        "device": null,
+        "stateSetupEvidence": null,
+        "correspondence": {
+          "status": "pending"
+        }
+      },
+      "capture": {
+        "status": "pending",
+        "kind": null,
+        "appiumXml": null,
+        "screenshot": null,
+        "appBuild": null,
+        "device": null,
+        "capturedAt": null,
+        "sessionId": null
+      },
+      "judgment": {
+        "allocation": 1,
+        "resultRecord": "results/ios/s06-weather-lisbon-distance-km.json"
+      }
+    },
+    {
+      "platform": "ios",
+      "screenId": "s07-contacts-tessa-duplicate-list",
+      "source": {
+        "labels": {
+          "commit": "88ad659f1e57baa44f4f65e89cae2d33bd96f2c2",
+          "path": "spikes/scripted/corpus/corpus.json",
+          "digestConvention": "canonical-json-sha256",
+          "sha256": "4d7e3853e79c7ffd3315ce9d908ebe9d4685ce28cff59674470ca0f861b43303"
+        },
+        "evidence": [
+          {
+            "role": "ios-full-capture",
+            "commit": "88ad659f1e57baa44f4f65e89cae2d33bd96f2c2",
+            "path": "spikes/scripted/corpus/raw/s07-contacts-tessa-duplicate-list.full.json",
+            "sha256": "90e4a19f4b3fa0c48ad3b4b5c6f163a356c9faa1604e9f4894fb891f54c518ad"
+          },
+          {
+            "role": "ios-screenshot",
+            "commit": "88ad659f1e57baa44f4f65e89cae2d33bd96f2c2",
+            "path": "spikes/scripted/corpus/raw/s07-contacts-tessa-duplicate-list.jpg",
+            "sha256": "e10fd266114d4fadd5b821f714c2a51cee0573df69a1469832b1dc14ac2d1f38"
+          },
+          {
+            "role": "ios-snapshot",
+            "commit": "88ad659f1e57baa44f4f65e89cae2d33bd96f2c2",
+            "path": "spikes/scripted/corpus/raw/s07-contacts-tessa-duplicate-list.snapshot.json",
+            "sha256": "39525d3fa702ed0bb9cda240a16f85597bbe8223f8c51cbda2152cca29217785"
+          },
+          {
+            "role": "ios-meta",
+            "commit": "88ad659f1e57baa44f4f65e89cae2d33bd96f2c2",
+            "path": "spikes/scripted/corpus/raw/s07-contacts-tessa-duplicate-list.meta.json",
+            "sha256": "6571c6c39dbf11d88b73ea4edb8e5d0f6841c140360e3478867cecaadedd1829"
+          }
+        ]
+      },
+      "claims": [
+        {
+          "requestId": "b",
+          "text": "Two separate Tessa Vale rows are visible in the Contacts list.",
+          "truth": true,
+          "kind": null
+        },
+        {
+          "requestId": "a",
+          "text": "A Tessa Vale contact card is open.",
+          "truth": false,
+          "kind": null
+        }
+      ],
+      "setup": {
+        "app": {
+          "id": "com.apple.MobileAddressBook",
+          "idSource": "corpus.json app.bundleId at 88ad659f1",
+          "confirmed": true
+        },
+        "setupSteps": [
+          "Create synthetic Northstar Lab Tessa Vale with six phone numbers and tessa.seed@example.test.",
+          "Create synthetic Harbor Lab Tessa Vale with tessa.harbor@example.test.",
+          "Return to the Contacts list and scroll until both Tessa Vale rows are above the Search overlay."
+        ],
+        "appBuild": null,
+        "device": null,
+        "stateSetupEvidence": null,
+        "correspondence": {
+          "status": "pending"
+        }
+      },
+      "capture": {
+        "status": "pending",
+        "kind": null,
+        "appiumXml": null,
+        "screenshot": null,
+        "appBuild": null,
+        "device": null,
+        "capturedAt": null,
+        "sessionId": null
+      },
+      "judgment": {
+        "allocation": 1,
+        "resultRecord": "results/ios/s07-contacts-tessa-duplicate-list.json"
+      }
+    },
+    {
+      "platform": "ios",
+      "screenId": "s08-contacts-tessa-email-offscreen",
+      "source": {
+        "labels": {
+          "commit": "88ad659f1e57baa44f4f65e89cae2d33bd96f2c2",
+          "path": "spikes/scripted/corpus/corpus.json",
+          "digestConvention": "canonical-json-sha256",
+          "sha256": "4d7e3853e79c7ffd3315ce9d908ebe9d4685ce28cff59674470ca0f861b43303"
+        },
+        "evidence": [
+          {
+            "role": "ios-full-capture",
+            "commit": "88ad659f1e57baa44f4f65e89cae2d33bd96f2c2",
+            "path": "spikes/scripted/corpus/raw/s08-contacts-tessa-email-offscreen.full.json",
+            "sha256": "ad3121d440c078575fee5ced275fc0e48b3bbed0dc2ce2800c8707ccab8588b2"
+          },
+          {
+            "role": "ios-screenshot",
+            "commit": "88ad659f1e57baa44f4f65e89cae2d33bd96f2c2",
+            "path": "spikes/scripted/corpus/raw/s08-contacts-tessa-email-offscreen.jpg",
+            "sha256": "71bb9e486cc1bcfe806dff603a94ba51892c7577c66a217a714d88466cf883c5"
+          },
+          {
+            "role": "ios-snapshot",
+            "commit": "88ad659f1e57baa44f4f65e89cae2d33bd96f2c2",
+            "path": "spikes/scripted/corpus/raw/s08-contacts-tessa-email-offscreen.snapshot.json",
+            "sha256": "44ea11eb7d0044c334787cb8bd4c4b64b9bac5b469ac40d9d5558ede3fc31580"
+          },
+          {
+            "role": "ios-meta",
+            "commit": "88ad659f1e57baa44f4f65e89cae2d33bd96f2c2",
+            "path": "spikes/scripted/corpus/raw/s08-contacts-tessa-email-offscreen.meta.json",
+            "sha256": "cbd7f1f9744cdce138cb6e93f9fd45a86dd5b40a6272c7d91a8f7324781a6d5b"
+          }
+        ]
+      },
+      "claims": [
+        {
+          "requestId": "b",
+          "text": "The tessa.seed@example.test email field is visible in the current viewport.",
+          "truth": false,
+          "kind": null
+        },
+        {
+          "requestId": "a",
+          "text": "The Tessa Vale Edit form shows six phone number fields.",
+          "truth": true,
+          "kind": null
+        }
+      ],
+      "setup": {
+        "app": {
+          "id": "com.apple.MobileAddressBook",
+          "idSource": "corpus.json app.bundleId at 88ad659f1",
+          "confirmed": true
+        },
+        "setupSteps": [
+          "From the visible duplicate rows, open the six-phone Northstar Lab Tessa Vale card.",
+          "Tap Edit without scrolling the form."
+        ],
+        "appBuild": null,
+        "device": null,
+        "stateSetupEvidence": null,
+        "correspondence": {
+          "status": "pending"
+        }
+      },
+      "capture": {
+        "status": "pending",
+        "kind": null,
+        "appiumXml": null,
+        "screenshot": null,
+        "appBuild": null,
+        "device": null,
+        "capturedAt": null,
+        "sessionId": null
+      },
+      "judgment": {
+        "allocation": 1,
+        "resultRecord": "results/ios/s08-contacts-tessa-email-offscreen.json"
+      }
+    },
+    {
+      "platform": "ios",
+      "screenId": "s09-contacts-tessa-old-email-visible",
+      "source": {
+        "labels": {
+          "commit": "88ad659f1e57baa44f4f65e89cae2d33bd96f2c2",
+          "path": "spikes/scripted/corpus/corpus.json",
+          "digestConvention": "canonical-json-sha256",
+          "sha256": "4d7e3853e79c7ffd3315ce9d908ebe9d4685ce28cff59674470ca0f861b43303"
+        },
+        "evidence": [
+          {
+            "role": "ios-full-capture",
+            "commit": "88ad659f1e57baa44f4f65e89cae2d33bd96f2c2",
+            "path": "spikes/scripted/corpus/raw/s09-contacts-tessa-old-email-visible.full.json",
+            "sha256": "91a80e6f434717b92c4dd40a7101779ed89b72ca1f323232d0a4f36beca6eaa4"
+          },
+          {
+            "role": "ios-screenshot",
+            "commit": "88ad659f1e57baa44f4f65e89cae2d33bd96f2c2",
+            "path": "spikes/scripted/corpus/raw/s09-contacts-tessa-old-email-visible.jpg",
+            "sha256": "0a26e33731a1d3c6f6b2bb080c4a3c70dbbb311ce00e943b6858750552ef05fa"
+          },
+          {
+            "role": "ios-snapshot",
+            "commit": "88ad659f1e57baa44f4f65e89cae2d33bd96f2c2",
+            "path": "spikes/scripted/corpus/raw/s09-contacts-tessa-old-email-visible.snapshot.json",
+            "sha256": "03c82ef95f5774385e345f026d2f3cc2243e520060bfad09b722d8decb2e73fc"
+          },
+          {
+            "role": "ios-meta",
+            "commit": "88ad659f1e57baa44f4f65e89cae2d33bd96f2c2",
+            "path": "spikes/scripted/corpus/raw/s09-contacts-tessa-old-email-visible.meta.json",
+            "sha256": "9216eb2d5aea82eb5921e58618471be95f692b5358fb348692df3b39fd8fadf4"
+          }
+        ]
+      },
+      "claims": [
+        {
+          "requestId": "a",
+          "text": "The visible Tessa Vale email field contains tessa.seed@example.test.",
+          "truth": true,
+          "kind": null
+        },
+        {
+          "requestId": "b",
+          "text": "The visible Tessa Vale email field contains tessa.final@example.test.",
+          "truth": false,
+          "kind": null
+        }
+      ],
+      "setup": {
+        "app": {
+          "id": "com.apple.MobileAddressBook",
+          "idSource": "corpus.json app.bundleId at 88ad659f1",
+          "confirmed": true
+        },
+        "setupSteps": [
+          "Open Edit on the six-phone Northstar Lab Tessa Vale card.",
+          "Swipe upward within the Edit form by distance 0.25."
+        ],
+        "appBuild": null,
+        "device": null,
+        "stateSetupEvidence": null,
+        "correspondence": {
+          "status": "pending"
+        }
+      },
+      "capture": {
+        "status": "pending",
+        "kind": null,
+        "appiumXml": null,
+        "screenshot": null,
+        "appBuild": null,
+        "device": null,
+        "capturedAt": null,
+        "sessionId": null
+      },
+      "judgment": {
+        "allocation": 1,
+        "resultRecord": "results/ios/s09-contacts-tessa-old-email-visible.json"
+      }
+    },
+    {
+      "platform": "ios",
+      "screenId": "s10-contacts-nolan-old-email-edit",
+      "source": {
+        "labels": {
+          "commit": "88ad659f1e57baa44f4f65e89cae2d33bd96f2c2",
+          "path": "spikes/scripted/corpus/corpus.json",
+          "digestConvention": "canonical-json-sha256",
+          "sha256": "4d7e3853e79c7ffd3315ce9d908ebe9d4685ce28cff59674470ca0f861b43303"
+        },
+        "evidence": [
+          {
+            "role": "ios-full-capture",
+            "commit": "88ad659f1e57baa44f4f65e89cae2d33bd96f2c2",
+            "path": "spikes/scripted/corpus/raw/s10-contacts-nolan-old-email-edit.full.json",
+            "sha256": "8569745f577a8566b144b54ddd581082d5a444beb0d7aa9addf4d33e1b94da4d"
+          },
+          {
+            "role": "ios-screenshot",
+            "commit": "88ad659f1e57baa44f4f65e89cae2d33bd96f2c2",
+            "path": "spikes/scripted/corpus/raw/s10-contacts-nolan-old-email-edit.jpg",
+            "sha256": "07faa3999541795dcfff3330533864ae98147dafe9df1d73995177bc26c9ad6a"
+          },
+          {
+            "role": "ios-snapshot",
+            "commit": "88ad659f1e57baa44f4f65e89cae2d33bd96f2c2",
+            "path": "spikes/scripted/corpus/raw/s10-contacts-nolan-old-email-edit.snapshot.json",
+            "sha256": "ba82db3d1aa16edba894b2d5c7f2abb7f09845e57f5b9c0b83c0e643e2c2396b"
+          },
+          {
+            "role": "ios-meta",
+            "commit": "88ad659f1e57baa44f4f65e89cae2d33bd96f2c2",
+            "path": "spikes/scripted/corpus/raw/s10-contacts-nolan-old-email-edit.meta.json",
+            "sha256": "df9cb63e1d93f3f822062071886b5c6b5c12026ef53203243bc4630add3e36cb"
+          }
+        ]
+      },
+      "claims": [
+        {
+          "requestId": "a",
+          "text": "The Nolan Ames Edit form email field contains nolan.final@example.test.",
+          "truth": false,
+          "kind": null
+        },
+        {
+          "requestId": "b",
+          "text": "The Nolan Ames Edit form email field contains nolan.seed@example.test.",
+          "truth": true,
+          "kind": null
+        }
+      ],
+      "setup": {
+        "app": {
+          "id": "com.apple.MobileAddressBook",
+          "idSource": "corpus.json app.bundleId at 88ad659f1",
+          "confirmed": true
+        },
+        "setupSteps": [
+          "Create synthetic Nolan Ames with nolan.seed@example.test and save the contact.",
+          "Open Nolan Ames Edit."
+        ],
+        "appBuild": null,
+        "device": null,
+        "stateSetupEvidence": null,
+        "correspondence": {
+          "status": "pending"
+        }
+      },
+      "capture": {
+        "status": "pending",
+        "kind": null,
+        "appiumXml": null,
+        "screenshot": null,
+        "appBuild": null,
+        "device": null,
+        "capturedAt": null,
+        "sessionId": null
+      },
+      "judgment": {
+        "allocation": 1,
+        "resultRecord": "results/ios/s10-contacts-nolan-old-email-edit.json"
+      }
+    },
+    {
+      "platform": "ios",
+      "screenId": "s11-contacts-nolan-new-email-unsaved",
+      "source": {
+        "labels": {
+          "commit": "88ad659f1e57baa44f4f65e89cae2d33bd96f2c2",
+          "path": "spikes/scripted/corpus/corpus.json",
+          "digestConvention": "canonical-json-sha256",
+          "sha256": "4d7e3853e79c7ffd3315ce9d908ebe9d4685ce28cff59674470ca0f861b43303"
+        },
+        "evidence": [
+          {
+            "role": "ios-full-capture",
+            "commit": "88ad659f1e57baa44f4f65e89cae2d33bd96f2c2",
+            "path": "spikes/scripted/corpus/raw/s11-contacts-nolan-new-email-unsaved.full.json",
+            "sha256": "eb6f29715f9bbfd2e8c0d0bdf7a06208d14c4b1730b7528c6374bedbe14c00b1"
+          },
+          {
+            "role": "ios-screenshot",
+            "commit": "88ad659f1e57baa44f4f65e89cae2d33bd96f2c2",
+            "path": "spikes/scripted/corpus/raw/s11-contacts-nolan-new-email-unsaved.jpg",
+            "sha256": "5f306e64768384db97bfff54bd8c6a2f89d6679d737eaeb6b5aa5d4eee90e3cd"
+          },
+          {
+            "role": "ios-snapshot",
+            "commit": "88ad659f1e57baa44f4f65e89cae2d33bd96f2c2",
+            "path": "spikes/scripted/corpus/raw/s11-contacts-nolan-new-email-unsaved.snapshot.json",
+            "sha256": "4691f357ce7efdffafbda41cfa0d1c22190cad1abb1dcf880da84e67c31ce93d"
+          },
+          {
+            "role": "ios-meta",
+            "commit": "88ad659f1e57baa44f4f65e89cae2d33bd96f2c2",
+            "path": "spikes/scripted/corpus/raw/s11-contacts-nolan-new-email-unsaved.meta.json",
+            "sha256": "16ecd9dd856b1dd8721291369677bea56ffd8b737efd8578cf6cb89ed52b49c4"
+          }
+        ]
+      },
+      "claims": [
+        {
+          "requestId": "b",
+          "text": "The Nolan Ames Edit form email field contains nolan.final@example.test.",
+          "truth": true,
+          "kind": null
+        },
+        {
+          "requestId": "a",
+          "text": "The foreground Nolan Ames screen is the saved contact card with an Edit button.",
+          "truth": false,
+          "kind": null
+        }
+      ],
+      "setup": {
+        "app": {
+          "id": "com.apple.MobileAddressBook",
+          "idSource": "corpus.json app.bundleId at 88ad659f1",
+          "confirmed": true
+        },
+        "setupSteps": [
+          "From Nolan Ames Edit, replace the seed email with nolan.final@example.test.",
+          "Leave the Edit form open with Done available."
+        ],
+        "appBuild": null,
+        "device": null,
+        "stateSetupEvidence": null,
+        "correspondence": {
+          "status": "pending"
+        }
+      },
+      "capture": {
+        "status": "pending",
+        "kind": null,
+        "appiumXml": null,
+        "screenshot": null,
+        "appBuild": null,
+        "device": null,
+        "capturedAt": null,
+        "sessionId": null
+      },
+      "judgment": {
+        "allocation": 1,
+        "resultRecord": "results/ios/s11-contacts-nolan-new-email-unsaved.json"
+      }
+    },
+    {
+      "platform": "ios",
+      "screenId": "s12-contacts-nolan-new-email-saved",
+      "source": {
+        "labels": {
+          "commit": "88ad659f1e57baa44f4f65e89cae2d33bd96f2c2",
+          "path": "spikes/scripted/corpus/corpus.json",
+          "digestConvention": "canonical-json-sha256",
+          "sha256": "4d7e3853e79c7ffd3315ce9d908ebe9d4685ce28cff59674470ca0f861b43303"
+        },
+        "evidence": [
+          {
+            "role": "ios-full-capture",
+            "commit": "88ad659f1e57baa44f4f65e89cae2d33bd96f2c2",
+            "path": "spikes/scripted/corpus/raw/s12-contacts-nolan-new-email-saved.full.json",
+            "sha256": "354b99ed34ed6ce054312a70f249d3aa205682f76c13f821f6d409e3a014e001"
+          },
+          {
+            "role": "ios-screenshot",
+            "commit": "88ad659f1e57baa44f4f65e89cae2d33bd96f2c2",
+            "path": "spikes/scripted/corpus/raw/s12-contacts-nolan-new-email-saved.jpg",
+            "sha256": "a80d8ec0f451c73339238ac6d76ea5133bab14c4bedfd2f3b2b0f0fdddd23f19"
+          },
+          {
+            "role": "ios-snapshot",
+            "commit": "88ad659f1e57baa44f4f65e89cae2d33bd96f2c2",
+            "path": "spikes/scripted/corpus/raw/s12-contacts-nolan-new-email-saved.snapshot.json",
+            "sha256": "7b97083ce2f6afaa761277ed88ba1f82b4c33ee7b91cfd4bc8416e7f5c8d4173"
+          },
+          {
+            "role": "ios-meta",
+            "commit": "88ad659f1e57baa44f4f65e89cae2d33bd96f2c2",
+            "path": "spikes/scripted/corpus/raw/s12-contacts-nolan-new-email-saved.meta.json",
+            "sha256": "a8ef55ae8a4458782727d0d0f9ea763527b4d909866be6e5b48847a6aa0f5349"
+          }
+        ]
+      },
+      "claims": [
+        {
+          "requestId": "b",
+          "text": "The saved Nolan Ames contact card shows nolan.seed@example.test.",
+          "truth": false,
+          "kind": null
+        },
+        {
+          "requestId": "a",
+          "text": "The saved Nolan Ames contact card shows nolan.final@example.test.",
+          "truth": true,
+          "kind": null
+        }
+      ],
+      "setup": {
+        "app": {
+          "id": "com.apple.MobileAddressBook",
+          "idSource": "corpus.json app.bundleId at 88ad659f1",
+          "confirmed": true
+        },
+        "setupSteps": [
+          "From Nolan Ames Edit with final email entered, tap Done."
+        ],
+        "appBuild": null,
+        "device": null,
+        "stateSetupEvidence": null,
+        "correspondence": {
+          "status": "pending"
+        }
+      },
+      "capture": {
+        "status": "pending",
+        "kind": null,
+        "appiumXml": null,
+        "screenshot": null,
+        "appBuild": null,
+        "device": null,
+        "capturedAt": null,
+        "sessionId": null
+      },
+      "judgment": {
+        "allocation": 1,
+        "resultRecord": "results/ios/s12-contacts-nolan-new-email-saved.json"
+      }
+    },
+    {
+      "platform": "ios",
+      "screenId": "s13-contacts-nina-query",
+      "source": {
+        "labels": {
+          "commit": "88ad659f1e57baa44f4f65e89cae2d33bd96f2c2",
+          "path": "spikes/scripted/corpus/corpus.json",
+          "digestConvention": "canonical-json-sha256",
+          "sha256": "4d7e3853e79c7ffd3315ce9d908ebe9d4685ce28cff59674470ca0f861b43303"
+        },
+        "evidence": [
+          {
+            "role": "ios-full-capture",
+            "commit": "88ad659f1e57baa44f4f65e89cae2d33bd96f2c2",
+            "path": "spikes/scripted/corpus/raw/s13-contacts-nina-query.full.json",
+            "sha256": "59622fc081ee78986aae1be357166f23b0ebb8211ffcb9b99b322e10fe1101fb"
+          },
+          {
+            "role": "ios-screenshot",
+            "commit": "88ad659f1e57baa44f4f65e89cae2d33bd96f2c2",
+            "path": "spikes/scripted/corpus/raw/s13-contacts-nina-query.jpg",
+            "sha256": "2e9464e029348620b877988558545c41ce7a7b782752b8de5f0022ff6309c7ee"
+          },
+          {
+            "role": "ios-snapshot",
+            "commit": "88ad659f1e57baa44f4f65e89cae2d33bd96f2c2",
+            "path": "spikes/scripted/corpus/raw/s13-contacts-nina-query.snapshot.json",
+            "sha256": "6b8f6bfff2d6c6cb6ffc01a6a58a3fdd365e357b544bd25cf6dc672423d147cb"
+          },
+          {
+            "role": "ios-meta",
+            "commit": "88ad659f1e57baa44f4f65e89cae2d33bd96f2c2",
+            "path": "spikes/scripted/corpus/raw/s13-contacts-nina-query.meta.json",
+            "sha256": "f1d4c99c8dedc1e41c4307fcdb011e06dd8a929b2dd3671fa497bd8d1432456c"
+          }
+        ]
+      },
+      "claims": [
+        {
+          "requestId": "a",
+          "text": "The Contacts search field contains Nina.",
+          "truth": true,
+          "kind": null
+        },
+        {
+          "requestId": "b",
+          "text": "The Contacts search field contains Nina Calder.",
+          "truth": false,
+          "kind": null
+        }
+      ],
+      "setup": {
+        "app": {
+          "id": "com.apple.MobileAddressBook",
+          "idSource": "corpus.json app.bundleId at 88ad659f1",
+          "confirmed": true
+        },
+        "setupSteps": [
+          "Return to the Contacts list.",
+          "Type Nina in Search and wait for the result area to settle."
+        ],
+        "appBuild": null,
+        "device": null,
+        "stateSetupEvidence": null,
+        "correspondence": {
+          "status": "pending"
+        }
+      },
+      "capture": {
+        "status": "pending",
+        "kind": null,
+        "appiumXml": null,
+        "screenshot": null,
+        "appBuild": null,
+        "device": null,
+        "capturedAt": null,
+        "sessionId": null
+      },
+      "judgment": {
+        "allocation": 1,
+        "resultRecord": "results/ios/s13-contacts-nina-query.json"
+      }
+    },
+    {
+      "platform": "ios",
+      "screenId": "s14-contacts-nina-calder-no-results",
+      "source": {
+        "labels": {
+          "commit": "88ad659f1e57baa44f4f65e89cae2d33bd96f2c2",
+          "path": "spikes/scripted/corpus/corpus.json",
+          "digestConvention": "canonical-json-sha256",
+          "sha256": "4d7e3853e79c7ffd3315ce9d908ebe9d4685ce28cff59674470ca0f861b43303"
+        },
+        "evidence": [
+          {
+            "role": "ios-full-capture",
+            "commit": "88ad659f1e57baa44f4f65e89cae2d33bd96f2c2",
+            "path": "spikes/scripted/corpus/raw/s14-contacts-nina-calder-no-results.full.json",
+            "sha256": "846f20667cbb5cc1aa1a98a2186dd344728b867dfb03c9d0d7b0f27d8c919687"
+          },
+          {
+            "role": "ios-screenshot",
+            "commit": "88ad659f1e57baa44f4f65e89cae2d33bd96f2c2",
+            "path": "spikes/scripted/corpus/raw/s14-contacts-nina-calder-no-results.jpg",
+            "sha256": "9f68e564ee22feedc8393679239c0a19588aed723f892bcdeac329ee885ed779"
+          },
+          {
+            "role": "ios-snapshot",
+            "commit": "88ad659f1e57baa44f4f65e89cae2d33bd96f2c2",
+            "path": "spikes/scripted/corpus/raw/s14-contacts-nina-calder-no-results.snapshot.json",
+            "sha256": "c0f769b265e07755a2019cf4b474cf32b117b1de1e5d092b31c64a7d3455f1eb"
+          },
+          {
+            "role": "ios-meta",
+            "commit": "88ad659f1e57baa44f4f65e89cae2d33bd96f2c2",
+            "path": "spikes/scripted/corpus/raw/s14-contacts-nina-calder-no-results.meta.json",
+            "sha256": "6d7b74aa46dfe917115d597d887bcff297b04da8cd87492c0aae29819413be04"
+          }
+        ]
+      },
+      "claims": [
+        {
+          "requestId": "a",
+          "text": "A Nina Calder contact card is open.",
+          "truth": false,
+          "kind": null
+        },
+        {
+          "requestId": "b",
+          "text": "Contacts shows No Results for Nina Calder.",
+          "truth": true,
+          "kind": null
+        }
+      ],
+      "setup": {
+        "app": {
+          "id": "com.apple.MobileAddressBook",
+          "idSource": "corpus.json app.bundleId at 88ad659f1",
+          "confirmed": true
+        },
+        "setupSteps": [
+          "Replace Nina in Contacts Search with Nina Calder.",
+          "Wait for explicit No Results text."
+        ],
+        "appBuild": null,
+        "device": null,
+        "stateSetupEvidence": null,
+        "correspondence": {
+          "status": "pending"
+        }
+      },
+      "capture": {
+        "status": "pending",
+        "kind": null,
+        "appiumXml": null,
+        "screenshot": null,
+        "appBuild": null,
+        "device": null,
+        "capturedAt": null,
+        "sessionId": null
+      },
+      "judgment": {
+        "allocation": 1,
+        "resultRecord": "results/ios/s14-contacts-nina-calder-no-results.json"
+      }
+    },
+    {
+      "platform": "ios",
+      "screenId": "s15-contacts-tessa-search-two-results",
+      "source": {
+        "labels": {
+          "commit": "88ad659f1e57baa44f4f65e89cae2d33bd96f2c2",
+          "path": "spikes/scripted/corpus/corpus.json",
+          "digestConvention": "canonical-json-sha256",
+          "sha256": "4d7e3853e79c7ffd3315ce9d908ebe9d4685ce28cff59674470ca0f861b43303"
+        },
+        "evidence": [
+          {
+            "role": "ios-full-capture",
+            "commit": "88ad659f1e57baa44f4f65e89cae2d33bd96f2c2",
+            "path": "spikes/scripted/corpus/raw/s15-contacts-tessa-search-two-results.full.json",
+            "sha256": "991a2df819aa3b932641e5ed8f6bd7656aeab26edb056470b6d26082ab0711df"
+          },
+          {
+            "role": "ios-screenshot",
+            "commit": "88ad659f1e57baa44f4f65e89cae2d33bd96f2c2",
+            "path": "spikes/scripted/corpus/raw/s15-contacts-tessa-search-two-results.jpg",
+            "sha256": "86bdc71035a1d33ca7e3f25a8361676d5e332437f18f0527fe3b3c640d695a15"
+          },
+          {
+            "role": "ios-snapshot",
+            "commit": "88ad659f1e57baa44f4f65e89cae2d33bd96f2c2",
+            "path": "spikes/scripted/corpus/raw/s15-contacts-tessa-search-two-results.snapshot.json",
+            "sha256": "d25bc0bad13eaaf40e5f6bbb596ae709105a650a50d8bbf2d1f301184b7f4b83"
+          },
+          {
+            "role": "ios-meta",
+            "commit": "88ad659f1e57baa44f4f65e89cae2d33bd96f2c2",
+            "path": "spikes/scripted/corpus/raw/s15-contacts-tessa-search-two-results.meta.json",
+            "sha256": "2b38c56424596dd122f19ad3d0bb84293d2cc048c4d5fae9504862d3c956d9ca"
+          }
+        ]
+      },
+      "claims": [
+        {
+          "requestId": "b",
+          "text": "The Contacts search results show two Tessa Vale rows.",
+          "truth": true,
+          "kind": null
+        },
+        {
+          "requestId": "a",
+          "text": "Contacts shows No Results for Tessa Vale.",
+          "truth": false,
+          "kind": null
+        }
+      ],
+      "setup": {
+        "app": {
+          "id": "com.apple.MobileAddressBook",
+          "idSource": "corpus.json app.bundleId at 88ad659f1",
+          "confirmed": true
+        },
+        "setupSteps": [
+          "Replace Nina Calder in Contacts Search with Tessa Vale.",
+          "Wait for both matching rows."
+        ],
+        "appBuild": null,
+        "device": null,
+        "stateSetupEvidence": null,
+        "correspondence": {
+          "status": "pending"
+        }
+      },
+      "capture": {
+        "status": "pending",
+        "kind": null,
+        "appiumXml": null,
+        "screenshot": null,
+        "appBuild": null,
+        "device": null,
+        "capturedAt": null,
+        "sessionId": null
+      },
+      "judgment": {
+        "allocation": 1,
+        "resultRecord": "results/ios/s15-contacts-tessa-search-two-results.json"
+      }
+    },
+    {
+      "platform": "ios",
+      "screenId": "s16-reminders-new-list-blank",
+      "source": {
+        "labels": {
+          "commit": "88ad659f1e57baa44f4f65e89cae2d33bd96f2c2",
+          "path": "spikes/scripted/corpus/corpus.json",
+          "digestConvention": "canonical-json-sha256",
+          "sha256": "4d7e3853e79c7ffd3315ce9d908ebe9d4685ce28cff59674470ca0f861b43303"
+        },
+        "evidence": [
+          {
+            "role": "ios-full-capture",
+            "commit": "88ad659f1e57baa44f4f65e89cae2d33bd96f2c2",
+            "path": "spikes/scripted/corpus/raw/s16-reminders-new-list-blank.full.json",
+            "sha256": "e2071d5d2bd2d2e2f51b341f5ecc8d55ef0719fa49aa0bf741629b9c1300b8b1"
+          },
+          {
+            "role": "ios-screenshot",
+            "commit": "88ad659f1e57baa44f4f65e89cae2d33bd96f2c2",
+            "path": "spikes/scripted/corpus/raw/s16-reminders-new-list-blank.jpg",
+            "sha256": "624ce2442e31c5615cb2395c18e5688c2850b59df5a258c0d9b5e8c21bcee1bd"
+          },
+          {
+            "role": "ios-snapshot",
+            "commit": "88ad659f1e57baa44f4f65e89cae2d33bd96f2c2",
+            "path": "spikes/scripted/corpus/raw/s16-reminders-new-list-blank.snapshot.json",
+            "sha256": "044b6f7986ec894dd5810d0c5bc1f85401cb0f8e96b6d192def8f1ff55e27932"
+          },
+          {
+            "role": "ios-meta",
+            "commit": "88ad659f1e57baa44f4f65e89cae2d33bd96f2c2",
+            "path": "spikes/scripted/corpus/raw/s16-reminders-new-list-blank.meta.json",
+            "sha256": "9048e0128167e95187b4bd9587e19f733cd39ca774ad53c8c5985b29f74f6e69"
+          }
+        ]
+      },
+      "claims": [
+        {
+          "requestId": "b",
+          "text": "The List Name field contains Signal Kit.",
+          "truth": false,
+          "kind": null
+        },
+        {
+          "requestId": "a",
+          "text": "The New List form shows an empty List Name field.",
+          "truth": true,
+          "kind": null
+        }
+      ],
+      "setup": {
+        "app": {
+          "id": "com.apple.reminders",
+          "idSource": "corpus.json app.bundleId at 88ad659f1",
+          "confirmed": true
+        },
+        "setupSteps": [
+          "Open Reminders My Lists.",
+          "Tap Add List and leave the New List name blank."
+        ],
+        "appBuild": null,
+        "device": null,
+        "stateSetupEvidence": null,
+        "correspondence": {
+          "status": "pending"
+        }
+      },
+      "capture": {
+        "status": "pending",
+        "kind": null,
+        "appiumXml": null,
+        "screenshot": null,
+        "appBuild": null,
+        "device": null,
+        "capturedAt": null,
+        "sessionId": null
+      },
+      "judgment": {
+        "allocation": 1,
+        "resultRecord": "results/ios/s16-reminders-new-list-blank.json"
+      }
+    },
+    {
+      "platform": "ios",
+      "screenId": "s17-reminders-signal-kit-unsaved",
+      "source": {
+        "labels": {
+          "commit": "88ad659f1e57baa44f4f65e89cae2d33bd96f2c2",
+          "path": "spikes/scripted/corpus/corpus.json",
+          "digestConvention": "canonical-json-sha256",
+          "sha256": "4d7e3853e79c7ffd3315ce9d908ebe9d4685ce28cff59674470ca0f861b43303"
+        },
+        "evidence": [
+          {
+            "role": "ios-full-capture",
+            "commit": "88ad659f1e57baa44f4f65e89cae2d33bd96f2c2",
+            "path": "spikes/scripted/corpus/raw/s17-reminders-signal-kit-unsaved.full.json",
+            "sha256": "71476ee4e990ca3b9669c1ebe0d882bdee7f7e4e47078a025f77c324b6089bf3"
+          },
+          {
+            "role": "ios-screenshot",
+            "commit": "88ad659f1e57baa44f4f65e89cae2d33bd96f2c2",
+            "path": "spikes/scripted/corpus/raw/s17-reminders-signal-kit-unsaved.jpg",
+            "sha256": "94805c723d77123a11d04a722f7918e20070ddd201dd94d6db70e7dc7d627955"
+          },
+          {
+            "role": "ios-snapshot",
+            "commit": "88ad659f1e57baa44f4f65e89cae2d33bd96f2c2",
+            "path": "spikes/scripted/corpus/raw/s17-reminders-signal-kit-unsaved.snapshot.json",
+            "sha256": "349751a6a455ed6d8f679768947ab57a9631e19f796096b3a0a3a32f212804af"
+          },
+          {
+            "role": "ios-meta",
+            "commit": "88ad659f1e57baa44f4f65e89cae2d33bd96f2c2",
+            "path": "spikes/scripted/corpus/raw/s17-reminders-signal-kit-unsaved.meta.json",
+            "sha256": "e4ab80b835fedfca5da0a04e6b4c51b7b00fd860065b0aa4803dd56a5856f3cb"
+          }
+        ]
+      },
+      "claims": [
+        {
+          "requestId": "a",
+          "text": "The New List form List Name field contains Signal Kit.",
+          "truth": true,
+          "kind": null
+        },
+        {
+          "requestId": "b",
+          "text": "A Signal Kit row is already visible under My Lists.",
+          "truth": false,
+          "kind": null
+        }
+      ],
+      "setup": {
+        "app": {
+          "id": "com.apple.reminders",
+          "idSource": "corpus.json app.bundleId at 88ad659f1",
+          "confirmed": true
+        },
+        "setupSteps": [
+          "From the blank New List form, type Signal Kit into List Name.",
+          "Leave the New List form open with Done available."
+        ],
+        "appBuild": null,
+        "device": null,
+        "stateSetupEvidence": null,
+        "correspondence": {
+          "status": "pending"
+        }
+      },
+      "capture": {
+        "status": "pending",
+        "kind": null,
+        "appiumXml": null,
+        "screenshot": null,
+        "appBuild": null,
+        "device": null,
+        "capturedAt": null,
+        "sessionId": null
+      },
+      "judgment": {
+        "allocation": 1,
+        "resultRecord": "results/ios/s17-reminders-signal-kit-unsaved.json"
+      }
+    },
+    {
+      "platform": "ios",
+      "screenId": "s18-reminders-signal-kit-saved",
+      "source": {
+        "labels": {
+          "commit": "88ad659f1e57baa44f4f65e89cae2d33bd96f2c2",
+          "path": "spikes/scripted/corpus/corpus.json",
+          "digestConvention": "canonical-json-sha256",
+          "sha256": "4d7e3853e79c7ffd3315ce9d908ebe9d4685ce28cff59674470ca0f861b43303"
+        },
+        "evidence": [
+          {
+            "role": "ios-full-capture",
+            "commit": "88ad659f1e57baa44f4f65e89cae2d33bd96f2c2",
+            "path": "spikes/scripted/corpus/raw/s18-reminders-signal-kit-saved.full.json",
+            "sha256": "fbedae595460310e76aeaaa3b35e1e56de1a49d358d66c194c00121ff9af45bf"
+          },
+          {
+            "role": "ios-screenshot",
+            "commit": "88ad659f1e57baa44f4f65e89cae2d33bd96f2c2",
+            "path": "spikes/scripted/corpus/raw/s18-reminders-signal-kit-saved.jpg",
+            "sha256": "cc67214a7f271507d8fc1a23ee9d893dc06b9c3698d0540649e909b4d075d001"
+          },
+          {
+            "role": "ios-snapshot",
+            "commit": "88ad659f1e57baa44f4f65e89cae2d33bd96f2c2",
+            "path": "spikes/scripted/corpus/raw/s18-reminders-signal-kit-saved.snapshot.json",
+            "sha256": "85e5af6fd5176f40130f832e4f04d787540434439c9145834d5ae89336fd3045"
+          },
+          {
+            "role": "ios-meta",
+            "commit": "88ad659f1e57baa44f4f65e89cae2d33bd96f2c2",
+            "path": "spikes/scripted/corpus/raw/s18-reminders-signal-kit-saved.meta.json",
+            "sha256": "a3c7e2c8ffffa0e723caeacbf1c55ad554284dede9faf7c4ccf7daa21c9b8846"
+          }
+        ]
+      },
+      "claims": [
+        {
+          "requestId": "a",
+          "text": "The Signal Kit row shows 2 reminders.",
+          "truth": false,
+          "kind": null
+        },
+        {
+          "requestId": "b",
+          "text": "My Lists shows a Signal Kit row with 0 reminders.",
+          "truth": true,
+          "kind": null
+        }
+      ],
+      "setup": {
+        "app": {
+          "id": "com.apple.reminders",
+          "idSource": "corpus.json app.bundleId at 88ad659f1",
+          "confirmed": true
+        },
+        "setupSteps": [
+          "From the typed Signal Kit New List form, tap Done.",
+          "Return to My Lists."
+        ],
+        "appBuild": null,
+        "device": null,
+        "stateSetupEvidence": null,
+        "correspondence": {
+          "status": "pending"
+        }
+      },
+      "capture": {
+        "status": "pending",
+        "kind": null,
+        "appiumXml": null,
+        "screenshot": null,
+        "appBuild": null,
+        "device": null,
+        "capturedAt": null,
+        "sessionId": null
+      },
+      "judgment": {
+        "allocation": 1,
+        "resultRecord": "results/ios/s18-reminders-signal-kit-saved.json"
+      }
+    },
+    {
+      "platform": "ios",
+      "screenId": "s19-reminders-charge-lantern-note-empty",
+      "source": {
+        "labels": {
+          "commit": "88ad659f1e57baa44f4f65e89cae2d33bd96f2c2",
+          "path": "spikes/scripted/corpus/corpus.json",
+          "digestConvention": "canonical-json-sha256",
+          "sha256": "4d7e3853e79c7ffd3315ce9d908ebe9d4685ce28cff59674470ca0f861b43303"
+        },
+        "evidence": [
+          {
+            "role": "ios-full-capture",
+            "commit": "88ad659f1e57baa44f4f65e89cae2d33bd96f2c2",
+            "path": "spikes/scripted/corpus/raw/s19-reminders-charge-lantern-note-empty.full.json",
+            "sha256": "1538f9f866022aea57742c2d8df3b7d177e0bc61509dfc9b57c0bc2043397bbc"
+          },
+          {
+            "role": "ios-screenshot",
+            "commit": "88ad659f1e57baa44f4f65e89cae2d33bd96f2c2",
+            "path": "spikes/scripted/corpus/raw/s19-reminders-charge-lantern-note-empty.jpg",
+            "sha256": "c774dbedba7f5bee6a0e7d669329bbb50e0b5522d0fef3ec55469ee77460df2c"
+          },
+          {
+            "role": "ios-snapshot",
+            "commit": "88ad659f1e57baa44f4f65e89cae2d33bd96f2c2",
+            "path": "spikes/scripted/corpus/raw/s19-reminders-charge-lantern-note-empty.snapshot.json",
+            "sha256": "073e69ffb264cf454ab7e91334faf46cde0fa2da66728a0d08be67f42a8db8e7"
+          },
+          {
+            "role": "ios-meta",
+            "commit": "88ad659f1e57baa44f4f65e89cae2d33bd96f2c2",
+            "path": "spikes/scripted/corpus/raw/s19-reminders-charge-lantern-note-empty.meta.json",
+            "sha256": "cc76653ece2bad0de715e218f65c47beb60c0d7023b51eb1a1c069ee596851cf"
+          }
+        ]
+      },
+      "claims": [
+        {
+          "requestId": "b",
+          "text": "The Charge lantern editor has an empty Notes field.",
+          "truth": true,
+          "kind": null
+        },
+        {
+          "requestId": "a",
+          "text": "The Charge lantern Notes field contains Use green cable.",
+          "truth": false,
+          "kind": null
+        }
+      ],
+      "setup": {
+        "app": {
+          "id": "com.apple.reminders",
+          "idSource": "corpus.json app.bundleId at 88ad659f1",
+          "confirmed": true
+        },
+        "setupSteps": [
+          "Open the Signal Kit list.",
+          "Tap New Reminder and type Charge lantern in Title.",
+          "Leave Notes empty."
+        ],
+        "appBuild": null,
+        "device": null,
+        "stateSetupEvidence": null,
+        "correspondence": {
+          "status": "pending"
+        }
+      },
+      "capture": {
+        "status": "pending",
+        "kind": null,
+        "appiumXml": null,
+        "screenshot": null,
+        "appBuild": null,
+        "device": null,
+        "capturedAt": null,
+        "sessionId": null
+      },
+      "judgment": {
+        "allocation": 1,
+        "resultRecord": "results/ios/s19-reminders-charge-lantern-note-empty.json"
+      }
+    },
+    {
+      "platform": "ios",
+      "screenId": "s20-reminders-charge-lantern-note-unsaved",
+      "source": {
+        "labels": {
+          "commit": "88ad659f1e57baa44f4f65e89cae2d33bd96f2c2",
+          "path": "spikes/scripted/corpus/corpus.json",
+          "digestConvention": "canonical-json-sha256",
+          "sha256": "4d7e3853e79c7ffd3315ce9d908ebe9d4685ce28cff59674470ca0f861b43303"
+        },
+        "evidence": [
+          {
+            "role": "ios-full-capture",
+            "commit": "88ad659f1e57baa44f4f65e89cae2d33bd96f2c2",
+            "path": "spikes/scripted/corpus/raw/s20-reminders-charge-lantern-note-unsaved.full.json",
+            "sha256": "2f9ed14fb3a0d81ac1f53389ddd0a94a20c293c0d61e5340cc2b011adda516cb"
+          },
+          {
+            "role": "ios-screenshot",
+            "commit": "88ad659f1e57baa44f4f65e89cae2d33bd96f2c2",
+            "path": "spikes/scripted/corpus/raw/s20-reminders-charge-lantern-note-unsaved.jpg",
+            "sha256": "04699491f56eb27ad5d10da128927e45e14b5c876950fceb1d1bf27e9a8008f7"
+          },
+          {
+            "role": "ios-snapshot",
+            "commit": "88ad659f1e57baa44f4f65e89cae2d33bd96f2c2",
+            "path": "spikes/scripted/corpus/raw/s20-reminders-charge-lantern-note-unsaved.snapshot.json",
+            "sha256": "269c30deebc785137e62c20f55f6bd97e6116d582124a5b78a2d36b89f9a2963"
+          },
+          {
+            "role": "ios-meta",
+            "commit": "88ad659f1e57baa44f4f65e89cae2d33bd96f2c2",
+            "path": "spikes/scripted/corpus/raw/s20-reminders-charge-lantern-note-unsaved.meta.json",
+            "sha256": "c1dbf6c12a759d2bab5527b9f1a1045f1ccd9183ee0ee6465b6f4c291e406d6c"
+          }
+        ]
+      },
+      "claims": [
+        {
+          "requestId": "b",
+          "text": "The Charge lantern Notes field is empty.",
+          "truth": false,
+          "kind": null
+        },
+        {
+          "requestId": "a",
+          "text": "The open Charge lantern editor shows Notes value Use green cable and a Done button.",
+          "truth": true,
+          "kind": null
+        }
+      ],
+      "setup": {
+        "app": {
+          "id": "com.apple.reminders",
+          "idSource": "corpus.json app.bundleId at 88ad659f1",
+          "confirmed": true
+        },
+        "setupSteps": [
+          "From the Charge lantern editor, type Use green cable in Notes.",
+          "Leave the editor open with Done available."
+        ],
+        "appBuild": null,
+        "device": null,
+        "stateSetupEvidence": null,
+        "correspondence": {
+          "status": "pending"
+        }
+      },
+      "capture": {
+        "status": "pending",
+        "kind": null,
+        "appiumXml": null,
+        "screenshot": null,
+        "appBuild": null,
+        "device": null,
+        "capturedAt": null,
+        "sessionId": null
+      },
+      "judgment": {
+        "allocation": 1,
+        "resultRecord": "results/ios/s20-reminders-charge-lantern-note-unsaved.json"
+      }
+    },
+    {
+      "platform": "ios",
+      "screenId": "s21-reminders-charge-lantern-note-saved",
+      "source": {
+        "labels": {
+          "commit": "88ad659f1e57baa44f4f65e89cae2d33bd96f2c2",
+          "path": "spikes/scripted/corpus/corpus.json",
+          "digestConvention": "canonical-json-sha256",
+          "sha256": "4d7e3853e79c7ffd3315ce9d908ebe9d4685ce28cff59674470ca0f861b43303"
+        },
+        "evidence": [
+          {
+            "role": "ios-full-capture",
+            "commit": "88ad659f1e57baa44f4f65e89cae2d33bd96f2c2",
+            "path": "spikes/scripted/corpus/raw/s21-reminders-charge-lantern-note-saved.full.json",
+            "sha256": "4f5be93b9f7434a257c8f426a7665d81b596124cbb5f0cc00840378559ad3c6a"
+          },
+          {
+            "role": "ios-screenshot",
+            "commit": "88ad659f1e57baa44f4f65e89cae2d33bd96f2c2",
+            "path": "spikes/scripted/corpus/raw/s21-reminders-charge-lantern-note-saved.jpg",
+            "sha256": "b439e4511b70833bd2121d6579ad4dddab97e81c9fc50ad6098a0609ca2d1983"
+          },
+          {
+            "role": "ios-snapshot",
+            "commit": "88ad659f1e57baa44f4f65e89cae2d33bd96f2c2",
+            "path": "spikes/scripted/corpus/raw/s21-reminders-charge-lantern-note-saved.snapshot.json",
+            "sha256": "6b34938d21dfe73200495b10dfafc166d6da36259abd1478c0b9371876105dbe"
+          },
+          {
+            "role": "ios-meta",
+            "commit": "88ad659f1e57baa44f4f65e89cae2d33bd96f2c2",
+            "path": "spikes/scripted/corpus/raw/s21-reminders-charge-lantern-note-saved.meta.json",
+            "sha256": "9752d3606e8c3ea209b5a51348e14e9a279c08a59c86daa92ffbc4b5d95536c6"
+          }
+        ]
+      },
+      "claims": [
+        {
+          "requestId": "a",
+          "text": "The Charge lantern list row includes the note Use green cable.",
+          "truth": true,
+          "kind": null
+        },
+        {
+          "requestId": "b",
+          "text": "The Charge lantern list row has no note text.",
+          "truth": false,
+          "kind": null
+        }
+      ],
+      "setup": {
+        "app": {
+          "id": "com.apple.reminders",
+          "idSource": "corpus.json app.bundleId at 88ad659f1",
+          "confirmed": true
+        },
+        "setupSteps": [
+          "From the Charge lantern editor with its note entered, tap Done."
+        ],
+        "appBuild": null,
+        "device": null,
+        "stateSetupEvidence": null,
+        "correspondence": {
+          "status": "pending"
+        }
+      },
+      "capture": {
+        "status": "pending",
+        "kind": null,
+        "appiumXml": null,
+        "screenshot": null,
+        "appBuild": null,
+        "device": null,
+        "capturedAt": null,
+        "sessionId": null
+      },
+      "judgment": {
+        "allocation": 1,
+        "resultRecord": "results/ios/s21-reminders-charge-lantern-note-saved.json"
+      }
+    },
+    {
+      "platform": "ios",
+      "screenId": "s22-diagnostic-bread-selected",
+      "source": {
+        "labels": {
+          "commit": "88ad659f1e57baa44f4f65e89cae2d33bd96f2c2",
+          "path": "spikes/scripted/corpus/corpus.json",
+          "digestConvention": "canonical-json-sha256",
+          "sha256": "4d7e3853e79c7ffd3315ce9d908ebe9d4685ce28cff59674470ca0f861b43303"
+        },
+        "evidence": [
+          {
+            "role": "ios-full-capture",
+            "commit": "88ad659f1e57baa44f4f65e89cae2d33bd96f2c2",
+            "path": "spikes/scripted/corpus/raw/s22-diagnostic-bread-selected.full.json",
+            "sha256": "3290e61b8e929a79cde964c427aa47bb1f7055f3f14595fa128676d81a8759a9"
+          },
+          {
+            "role": "ios-screenshot",
+            "commit": "88ad659f1e57baa44f4f65e89cae2d33bd96f2c2",
+            "path": "spikes/scripted/corpus/raw/s22-diagnostic-bread-selected.jpg",
+            "sha256": "a6f8635e3f41c78ad5634b1266d361fb5aebcc6004d42f30f09854b1fc955aa1"
+          },
+          {
+            "role": "ios-snapshot",
+            "commit": "88ad659f1e57baa44f4f65e89cae2d33bd96f2c2",
+            "path": "spikes/scripted/corpus/raw/s22-diagnostic-bread-selected.snapshot.json",
+            "sha256": "6437231a6d1f8b18bbf47065fc272d31dc1313b85e906d0e906339b389daac4e"
+          },
+          {
+            "role": "ios-meta",
+            "commit": "88ad659f1e57baa44f4f65e89cae2d33bd96f2c2",
+            "path": "spikes/scripted/corpus/raw/s22-diagnostic-bread-selected.meta.json",
+            "sha256": "4f6be6a428e43bc944680adeeed0680412fae7c1f6d084f43840603c37b544c7"
+          }
+        ]
+      },
+      "claims": [
+        {
+          "requestId": "a",
+          "text": "The Sample Shop selection summary reads Selected: Apple.",
+          "truth": false,
+          "kind": null
+        },
+        {
+          "requestId": "b",
+          "text": "The Sample Shop selection summary reads Selected: Bread.",
+          "truth": true,
+          "kind": null
+        }
+      ],
+      "setup": {
+        "app": {
+          "id": "dev.jevbridge.diagnostic",
+          "idSource": "corpus.json app.bundleId at 88ad659f1",
+          "confirmed": true
+        },
+        "setupSteps": [
+          "Stop and relaunch the Diagnostic App to clear its in-memory selection.",
+          "Tap Add Bread ($3)."
+        ],
+        "appBuild": null,
+        "device": null,
+        "stateSetupEvidence": null,
+        "correspondence": {
+          "status": "pending"
+        }
+      },
+      "capture": {
+        "status": "pending",
+        "kind": null,
+        "appiumXml": null,
+        "screenshot": null,
+        "appBuild": null,
+        "device": null,
+        "capturedAt": null,
+        "sessionId": null
+      },
+      "judgment": {
+        "allocation": 1,
+        "resultRecord": "results/ios/s22-diagnostic-bread-selected.json"
+      }
+    },
+    {
+      "platform": "ios",
+      "screenId": "s23-diagnostic-bread-apple-selected",
+      "source": {
+        "labels": {
+          "commit": "88ad659f1e57baa44f4f65e89cae2d33bd96f2c2",
+          "path": "spikes/scripted/corpus/corpus.json",
+          "digestConvention": "canonical-json-sha256",
+          "sha256": "4d7e3853e79c7ffd3315ce9d908ebe9d4685ce28cff59674470ca0f861b43303"
+        },
+        "evidence": [
+          {
+            "role": "ios-full-capture",
+            "commit": "88ad659f1e57baa44f4f65e89cae2d33bd96f2c2",
+            "path": "spikes/scripted/corpus/raw/s23-diagnostic-bread-apple-selected.full.json",
+            "sha256": "7ed6758618adf5595cb30ea6c8fe40c706b33e68f472d86570b612104c8f4635"
+          },
+          {
+            "role": "ios-screenshot",
+            "commit": "88ad659f1e57baa44f4f65e89cae2d33bd96f2c2",
+            "path": "spikes/scripted/corpus/raw/s23-diagnostic-bread-apple-selected.jpg",
+            "sha256": "1b1606238c77df5ed12115a371b3d77bb4df0e92172e078efb4896598fd56da6"
+          },
+          {
+            "role": "ios-snapshot",
+            "commit": "88ad659f1e57baa44f4f65e89cae2d33bd96f2c2",
+            "path": "spikes/scripted/corpus/raw/s23-diagnostic-bread-apple-selected.snapshot.json",
+            "sha256": "9626ef43a954148dd05b21b87a416f27eb628c9c26099f5d2e0d84acc71aa899"
+          },
+          {
+            "role": "ios-meta",
+            "commit": "88ad659f1e57baa44f4f65e89cae2d33bd96f2c2",
+            "path": "spikes/scripted/corpus/raw/s23-diagnostic-bread-apple-selected.meta.json",
+            "sha256": "512ca47c6d235fcd33393497c17d21f8dfc4e67f0929a0375a8550ea31f67f12"
+          }
+        ]
+      },
+      "claims": [
+        {
+          "requestId": "b",
+          "text": "The Sample Shop selection summary reads Selected: Bread, Apple.",
+          "truth": true,
+          "kind": null
+        },
+        {
+          "requestId": "a",
+          "text": "The Sample Shop selection summary reads Selected: Apple, Bread.",
+          "truth": false,
+          "kind": null
+        }
+      ],
+      "setup": {
+        "app": {
+          "id": "dev.jevbridge.diagnostic",
+          "idSource": "corpus.json app.bundleId at 88ad659f1",
+          "confirmed": true
+        },
+        "setupSteps": [
+          "From Bread selected, tap Add Apple ($2)."
+        ],
+        "appBuild": null,
+        "device": null,
+        "stateSetupEvidence": null,
+        "correspondence": {
+          "status": "pending"
+        }
+      },
+      "capture": {
+        "status": "pending",
+        "kind": null,
+        "appiumXml": null,
+        "screenshot": null,
+        "appBuild": null,
+        "device": null,
+        "capturedAt": null,
+        "sessionId": null
+      },
+      "judgment": {
+        "allocation": 1,
+        "resultRecord": "results/ios/s23-diagnostic-bread-apple-selected.json"
+      }
+    },
+    {
+      "platform": "ios",
+      "screenId": "s24-diagnostic-bread-first-total2",
+      "source": {
+        "labels": {
+          "commit": "88ad659f1e57baa44f4f65e89cae2d33bd96f2c2",
+          "path": "spikes/scripted/corpus/corpus.json",
+          "digestConvention": "canonical-json-sha256",
+          "sha256": "4d7e3853e79c7ffd3315ce9d908ebe9d4685ce28cff59674470ca0f861b43303"
+        },
+        "evidence": [
+          {
+            "role": "ios-full-capture",
+            "commit": "88ad659f1e57baa44f4f65e89cae2d33bd96f2c2",
+            "path": "spikes/scripted/corpus/raw/s24-diagnostic-bread-first-total2.full.json",
+            "sha256": "a29f74a3109ae65373192e25677695b0cb20dced1468e803bb16462aaba893b5"
+          },
+          {
+            "role": "ios-screenshot",
+            "commit": "88ad659f1e57baa44f4f65e89cae2d33bd96f2c2",
+            "path": "spikes/scripted/corpus/raw/s24-diagnostic-bread-first-total2.jpg",
+            "sha256": "fd8c08cf7182c0f10229aca4ed5ecbc2ebfe4570c743bfc1fd6d9d3f4541f4af"
+          },
+          {
+            "role": "ios-snapshot",
+            "commit": "88ad659f1e57baa44f4f65e89cae2d33bd96f2c2",
+            "path": "spikes/scripted/corpus/raw/s24-diagnostic-bread-first-total2.snapshot.json",
+            "sha256": "bb2fbf08220f79e97bbfa33f95607ef79f0f3c99148ee132d0359dc67678cd5e"
+          },
+          {
+            "role": "ios-meta",
+            "commit": "88ad659f1e57baa44f4f65e89cae2d33bd96f2c2",
+            "path": "spikes/scripted/corpus/raw/s24-diagnostic-bread-first-total2.meta.json",
+            "sha256": "4ee174cf36d89c101a0ed995a2b36910c43a561b706c3e7d3fe52827af357d4a"
+          }
+        ]
+      },
+      "claims": [
+        {
+          "requestId": "b",
+          "text": "The Order complete confirmation shows Total: $5.",
+          "truth": false,
+          "kind": null
+        },
+        {
+          "requestId": "a",
+          "text": "The Order complete confirmation shows Total: $2.",
+          "truth": true,
+          "kind": null
+        }
+      ],
+      "setup": {
+        "app": {
+          "id": "dev.jevbridge.diagnostic",
+          "idSource": "corpus.json app.bundleId at 88ad659f1",
+          "confirmed": true
+        },
+        "setupSteps": [
+          "With Bread then Apple selected, tap Complete order."
+        ],
+        "appBuild": null,
+        "device": null,
+        "stateSetupEvidence": null,
+        "correspondence": {
+          "status": "pending"
+        }
+      },
+      "capture": {
+        "status": "pending",
+        "kind": null,
+        "appiumXml": null,
+        "screenshot": null,
+        "appBuild": null,
+        "device": null,
+        "capturedAt": null,
+        "sessionId": null
+      },
+      "judgment": {
+        "allocation": 1,
+        "resultRecord": "results/ios/s24-diagnostic-bread-first-total2.json"
+      }
+    },
+    {
+      "platform": "android",
+      "screenId": "twin-1-choose",
+      "source": {
+        "labels": {
+          "commit": "755d0ff8ff40ea70f36fe888a1571e60cc64f08c",
+          "path": "spikes/android/jev-check/claims.json",
+          "digestConvention": "raw-sha256",
+          "sha256": "4458fc35a7ee732b7c03e765649fae90b260eddfe26b5f2d5cc4db36d7fe4179"
+        },
+        "evidence": [
+          {
+            "role": "android-capture",
+            "commit": "755d0ff8ff40ea70f36fe888a1571e60cc64f08c",
+            "path": "spikes/android/captures/twin-1-choose.json",
+            "sha256": "d874f25fd609864bb2a9024a55771875ad8fcb062a53b4673c0b91e57af758a9"
+          },
+          {
+            "role": "android-screenshot",
+            "commit": "755d0ff8ff40ea70f36fe888a1571e60cc64f08c",
+            "path": "spikes/android/captures/twin-1-choose.png",
+            "sha256": "830470dce728bb38f94d952342576efff98079116ed772d09b03879c69c5954b"
+          }
+        ]
+      },
+      "claims": [
+        {
+          "requestId": "cb21c2ead38",
+          "text": "The screen shows Selected: None.",
+          "truth": true,
+          "kind": "plain"
+        },
+        {
+          "requestId": "c9a886193fe",
+          "text": "The Complete order button is enabled.",
+          "truth": false,
+          "kind": "plain"
+        },
+        {
+          "requestId": "cf6921b9b9d",
+          "text": "Exactly one Add Apple ($2) button is visible.",
+          "truth": true,
+          "kind": "borderline"
+        }
+      ],
+      "setup": {
+        "app": {
+          "id": "dev.jevbridge.diagnostic",
+          "idSource": "research/corpus-provenance.md (Android diagnostic twin); examples/diagnostic-app-android applicationId",
+          "confirmed": true
+        },
+        "setupSteps": [],
+        "appBuild": null,
+        "device": null,
+        "stateSetupEvidence": null,
+        "correspondence": {
+          "status": "pending"
+        }
+      },
+      "capture": {
+        "status": "pending",
+        "kind": null,
+        "appiumXml": null,
+        "screenshot": null,
+        "appBuild": null,
+        "device": null,
+        "capturedAt": null,
+        "sessionId": null
+      },
+      "judgment": {
+        "allocation": 1,
+        "resultRecord": "results/android/twin-1-choose.json"
+      }
+    },
+    {
+      "platform": "android",
+      "screenId": "twin-2-apple-added",
+      "source": {
+        "labels": {
+          "commit": "755d0ff8ff40ea70f36fe888a1571e60cc64f08c",
+          "path": "spikes/android/jev-check/claims.json",
+          "digestConvention": "raw-sha256",
+          "sha256": "4458fc35a7ee732b7c03e765649fae90b260eddfe26b5f2d5cc4db36d7fe4179"
+        },
+        "evidence": [
+          {
+            "role": "android-capture",
+            "commit": "755d0ff8ff40ea70f36fe888a1571e60cc64f08c",
+            "path": "spikes/android/captures/twin-2-apple-added.json",
+            "sha256": "963ca6c92f6d1d401b9e260840594fbe96768ef49702f3807ec6051c7a1d7fb9"
+          },
+          {
+            "role": "android-screenshot",
+            "commit": "755d0ff8ff40ea70f36fe888a1571e60cc64f08c",
+            "path": "spikes/android/captures/twin-2-apple-added.png",
+            "sha256": "60b7f156fd81f0c97d7832ea164526298a0a0f00bbb82af8b2629d673e14d17b"
+          }
+        ]
+      },
+      "claims": [
+        {
+          "requestId": "c1c6f0441d0",
+          "text": "The Add Apple ($2) button is disabled.",
+          "truth": true,
+          "kind": "plain"
+        },
+        {
+          "requestId": "cbd16c63893",
+          "text": "The selection summary reads Selected: Apple, Bread.",
+          "truth": false,
+          "kind": "plain"
+        },
+        {
+          "requestId": "c76b2602453",
+          "text": "A check mark is shown in the Add Bread ($3) button.",
+          "truth": false,
+          "kind": "borderline"
+        }
+      ],
+      "setup": {
+        "app": {
+          "id": "dev.jevbridge.diagnostic",
+          "idSource": "research/corpus-provenance.md (Android diagnostic twin); examples/diagnostic-app-android applicationId",
+          "confirmed": true
+        },
+        "setupSteps": [],
+        "appBuild": null,
+        "device": null,
+        "stateSetupEvidence": null,
+        "correspondence": {
+          "status": "pending"
+        }
+      },
+      "capture": {
+        "status": "pending",
+        "kind": null,
+        "appiumXml": null,
+        "screenshot": null,
+        "appBuild": null,
+        "device": null,
+        "capturedAt": null,
+        "sessionId": null
+      },
+      "judgment": {
+        "allocation": 1,
+        "resultRecord": "results/android/twin-2-apple-added.json"
+      }
+    },
+    {
+      "platform": "android",
+      "screenId": "twin-3-confirmation",
+      "source": {
+        "labels": {
+          "commit": "755d0ff8ff40ea70f36fe888a1571e60cc64f08c",
+          "path": "spikes/android/jev-check/claims.json",
+          "digestConvention": "raw-sha256",
+          "sha256": "4458fc35a7ee732b7c03e765649fae90b260eddfe26b5f2d5cc4db36d7fe4179"
+        },
+        "evidence": [
+          {
+            "role": "android-capture",
+            "commit": "755d0ff8ff40ea70f36fe888a1571e60cc64f08c",
+            "path": "spikes/android/captures/twin-3-confirmation.json",
+            "sha256": "8ae6aa7e896a58960ad81141fac6f8e9aacf0cc60a9e97db855a6fbe2098349f"
+          },
+          {
+            "role": "android-screenshot",
+            "commit": "755d0ff8ff40ea70f36fe888a1571e60cc64f08c",
+            "path": "spikes/android/captures/twin-3-confirmation.png",
+            "sha256": "7822f9f8c0620455a2536897823d66c568a20432a890085061b04d883a0ff450"
+          }
+        ]
+      },
+      "claims": [
+        {
+          "requestId": "c34e7a581aa",
+          "text": "The confirmation total reads Total: $3.",
+          "truth": true,
+          "kind": "plain"
+        },
+        {
+          "requestId": "c9dc050800e",
+          "text": "The confirmation total reads Total: $5.",
+          "truth": false,
+          "kind": "plain"
+        },
+        {
+          "requestId": "c2ff77599b5",
+          "text": "The confirmation total equals the sum of the listed item prices.",
+          "truth": false,
+          "kind": "borderline"
+        }
+      ],
+      "setup": {
+        "app": {
+          "id": "dev.jevbridge.diagnostic",
+          "idSource": "research/corpus-provenance.md (Android diagnostic twin); examples/diagnostic-app-android applicationId",
+          "confirmed": true
+        },
+        "setupSteps": [],
+        "appBuild": null,
+        "device": null,
+        "stateSetupEvidence": null,
+        "correspondence": {
+          "status": "pending"
+        }
+      },
+      "capture": {
+        "status": "pending",
+        "kind": null,
+        "appiumXml": null,
+        "screenshot": null,
+        "appBuild": null,
+        "device": null,
+        "capturedAt": null,
+        "sessionId": null
+      },
+      "judgment": {
+        "allocation": 1,
+        "resultRecord": "results/android/twin-3-confirmation.json"
+      }
+    },
+    {
+      "platform": "android",
+      "screenId": "settings-1-main",
+      "source": {
+        "labels": {
+          "commit": "755d0ff8ff40ea70f36fe888a1571e60cc64f08c",
+          "path": "spikes/android/jev-check/claims.json",
+          "digestConvention": "raw-sha256",
+          "sha256": "4458fc35a7ee732b7c03e765649fae90b260eddfe26b5f2d5cc4db36d7fe4179"
+        },
+        "evidence": [
+          {
+            "role": "android-capture",
+            "commit": "755d0ff8ff40ea70f36fe888a1571e60cc64f08c",
+            "path": "spikes/android/captures/settings-1-main.json",
+            "sha256": "d69cbdd8f58d817855677b2d9ee8072254cc521df1f80d621d8a23cbccbe0cdf"
+          },
+          {
+            "role": "android-screenshot",
+            "commit": "755d0ff8ff40ea70f36fe888a1571e60cc64f08c",
+            "path": "spikes/android/captures/settings-1-main.png",
+            "sha256": "0d40f6f7092c0b7605f2351e4217552059d41e5b3d99a9f4118416b789a27135"
+          }
+        ]
+      },
+      "claims": [
+        {
+          "requestId": "ca3c6f5a0a6",
+          "text": "The Storage row shows 40% used - 19.15 GB free.",
+          "truth": true,
+          "kind": "plain"
+        },
+        {
+          "requestId": "cc164235410",
+          "text": "The Network & internet row's summary reads Bluetooth, pairing.",
+          "truth": false,
+          "kind": "plain"
+        },
+        {
+          "requestId": "c5ce61c752a",
+          "text": "No Battery row is visible on this screen.",
+          "truth": true,
+          "kind": "borderline"
+        }
+      ],
+      "setup": {
+        "app": {
+          "id": "com.android.settings",
+          "idSource": "frozen capture resource-ids com.android.settings:id/*",
+          "confirmed": true
+        },
+        "setupSteps": [],
+        "appBuild": null,
+        "device": null,
+        "stateSetupEvidence": null,
+        "correspondence": {
+          "status": "pending"
+        }
+      },
+      "capture": {
+        "status": "pending",
+        "kind": null,
+        "appiumXml": null,
+        "screenshot": null,
+        "appBuild": null,
+        "device": null,
+        "capturedAt": null,
+        "sessionId": null
+      },
+      "judgment": {
+        "allocation": 1,
+        "resultRecord": "results/android/settings-1-main.json"
+      }
+    },
+    {
+      "platform": "android",
+      "screenId": "settings-2-display",
+      "source": {
+        "labels": {
+          "commit": "755d0ff8ff40ea70f36fe888a1571e60cc64f08c",
+          "path": "spikes/android/jev-check/claims.json",
+          "digestConvention": "raw-sha256",
+          "sha256": "4458fc35a7ee732b7c03e765649fae90b260eddfe26b5f2d5cc4db36d7fe4179"
+        },
+        "evidence": [
+          {
+            "role": "android-capture",
+            "commit": "755d0ff8ff40ea70f36fe888a1571e60cc64f08c",
+            "path": "spikes/android/captures/settings-2-display.json",
+            "sha256": "841889f6cb026cbd098999d260ac8df9430b4b055e8a5a6bd6ef40f61a95b535"
+          },
+          {
+            "role": "android-screenshot",
+            "commit": "755d0ff8ff40ea70f36fe888a1571e60cc64f08c",
+            "path": "spikes/android/captures/settings-2-display.png",
+            "sha256": "ce9071a72d7d5a2a275a3a748f0f9f68ec9c457d59dab4b43c485a12cb782501"
+          }
+        ]
+      },
+      "claims": [
+        {
+          "requestId": "cf97a151040",
+          "text": "The Screen timeout row shows Not set.",
+          "truth": true,
+          "kind": "plain"
+        },
+        {
+          "requestId": "c765f8e05de",
+          "text": "The Dark theme switch is turned on.",
+          "truth": false,
+          "kind": "plain"
+        },
+        {
+          "requestId": "c4d0f227ad2",
+          "text": "Dark theme is turned off.",
+          "truth": true,
+          "kind": "borderline"
+        }
+      ],
+      "setup": {
+        "app": {
+          "id": "com.android.settings",
+          "idSource": "frozen capture resource-ids com.android.settings:id/*",
+          "confirmed": true
+        },
+        "setupSteps": [],
+        "appBuild": null,
+        "device": null,
+        "stateSetupEvidence": null,
+        "correspondence": {
+          "status": "pending"
+        }
+      },
+      "capture": {
+        "status": "pending",
+        "kind": null,
+        "appiumXml": null,
+        "screenshot": null,
+        "appBuild": null,
+        "device": null,
+        "capturedAt": null,
+        "sessionId": null
+      },
+      "judgment": {
+        "allocation": 1,
+        "resultRecord": "results/android/settings-2-display.json"
+      }
+    },
+    {
+      "platform": "android",
+      "screenId": "settings-3-search",
+      "source": {
+        "labels": {
+          "commit": "755d0ff8ff40ea70f36fe888a1571e60cc64f08c",
+          "path": "spikes/android/jev-check/claims.json",
+          "digestConvention": "raw-sha256",
+          "sha256": "4458fc35a7ee732b7c03e765649fae90b260eddfe26b5f2d5cc4db36d7fe4179"
+        },
+        "evidence": [
+          {
+            "role": "android-capture",
+            "commit": "755d0ff8ff40ea70f36fe888a1571e60cc64f08c",
+            "path": "spikes/android/captures/settings-3-search.json",
+            "sha256": "c0758b426e49a7d168716792ad92407ffddefa9ba727d23fefd6fa488f57b245"
+          },
+          {
+            "role": "android-screenshot",
+            "commit": "755d0ff8ff40ea70f36fe888a1571e60cc64f08c",
+            "path": "spikes/android/captures/settings-3-search.png",
+            "sha256": "facfce05097e87d48e2ef160b0ad81ff3ba5c475a7bd0d313ab20558e14b48f4"
+          }
+        ]
+      },
+      "claims": [
+        {
+          "requestId": "c8c9a378767",
+          "text": "The Search settings field contains bluetooth.",
+          "truth": true,
+          "kind": "plain"
+        },
+        {
+          "requestId": "c0e75d039db",
+          "text": "The Search settings field is empty.",
+          "truth": false,
+          "kind": "plain"
+        },
+        {
+          "requestId": "c63ec449622",
+          "text": "No search results are shown for bluetooth.",
+          "truth": true,
+          "kind": "borderline"
+        }
+      ],
+      "setup": {
+        "app": {
+          "id": "com.android.settings",
+          "idSource": "grouped with Settings in research/corpus-provenance.md; its frozen capture carries only com.google.android.settings.intelligence:id/* resource-ids (the Settings search screen)",
+          "confirmed": false
+        },
+        "setupSteps": [],
+        "appBuild": null,
+        "device": null,
+        "stateSetupEvidence": null,
+        "correspondence": {
+          "status": "pending"
+        }
+      },
+      "capture": {
+        "status": "pending",
+        "kind": null,
+        "appiumXml": null,
+        "screenshot": null,
+        "appBuild": null,
+        "device": null,
+        "capturedAt": null,
+        "sessionId": null
+      },
+      "judgment": {
+        "allocation": 1,
+        "resultRecord": "results/android/settings-3-search.json"
+      }
+    },
+    {
+      "platform": "android",
+      "screenId": "cmp-1-launch",
+      "source": {
+        "labels": {
+          "commit": "755d0ff8ff40ea70f36fe888a1571e60cc64f08c",
+          "path": "spikes/android/jev-check/claims.json",
+          "digestConvention": "raw-sha256",
+          "sha256": "4458fc35a7ee732b7c03e765649fae90b260eddfe26b5f2d5cc4db36d7fe4179"
+        },
+        "evidence": [
+          {
+            "role": "android-capture",
+            "commit": "755d0ff8ff40ea70f36fe888a1571e60cc64f08c",
+            "path": "spikes/android/captures/cmp-1-launch.json",
+            "sha256": "54c60ace76c27baa5b0a40daf9637bf7cff3100b8e8e29766cc46d9c8df0aafd"
+          },
+          {
+            "role": "android-screenshot",
+            "commit": "755d0ff8ff40ea70f36fe888a1571e60cc64f08c",
+            "path": "spikes/android/captures/cmp-1-launch.png",
+            "sha256": "aa678d063181adc0217da0e9c33dc6a41ca410fc26d1a962bfa92b9a29aa4574"
+          }
+        ]
+      },
+      "claims": [
+        {
+          "requestId": "c99f29e95aa",
+          "text": "A row labelled Row #999999 — payload string for realistic retained size is visible.",
+          "truth": true,
+          "kind": "plain"
+        },
+        {
+          "requestId": "c22631eedd2",
+          "text": "A row labelled Row #1 — payload string for realistic retained size is visible.",
+          "truth": false,
+          "kind": "plain"
+        },
+        {
+          "requestId": "ccda012bcc4",
+          "text": "The list is scrolled to its last row.",
+          "truth": true,
+          "kind": "borderline"
+        }
+      ],
+      "setup": {
+        "app": {
+          "id": "org.example.project",
+          "idSource": ".scratch/android-support/release-spec.md: package org.example.project, \"confirm it before writing scripts\"",
+          "confirmed": false
+        },
+        "setupSteps": [],
+        "appBuild": null,
+        "device": null,
+        "stateSetupEvidence": null,
+        "correspondence": {
+          "status": "pending"
+        }
+      },
+      "capture": {
+        "status": "pending",
+        "kind": null,
+        "appiumXml": null,
+        "screenshot": null,
+        "appBuild": null,
+        "device": null,
+        "capturedAt": null,
+        "sessionId": null
+      },
+      "judgment": {
+        "allocation": 1,
+        "resultRecord": "results/android/cmp-1-launch.json"
+      }
+    },
+    {
+      "platform": "android",
+      "screenId": "cmp-2-home",
+      "source": {
+        "labels": {
+          "commit": "755d0ff8ff40ea70f36fe888a1571e60cc64f08c",
+          "path": "spikes/android/jev-check/claims.json",
+          "digestConvention": "raw-sha256",
+          "sha256": "4458fc35a7ee732b7c03e765649fae90b260eddfe26b5f2d5cc4db36d7fe4179"
+        },
+        "evidence": [
+          {
+            "role": "android-capture",
+            "commit": "755d0ff8ff40ea70f36fe888a1571e60cc64f08c",
+            "path": "spikes/android/captures/cmp-2-home.json",
+            "sha256": "3ff8ca9e752eccf6df9ae639cd057f13d0fa552111540900d3599c12ed5c35a4"
+          },
+          {
+            "role": "android-screenshot",
+            "commit": "755d0ff8ff40ea70f36fe888a1571e60cc64f08c",
+            "path": "spikes/android/captures/cmp-2-home.png",
+            "sha256": "e333ce9036572e1bdfa423d85ea95b001d522ae67a08937a2ae8259e72ed4666"
+          }
+        ]
+      },
+      "claims": [
+        {
+          "requestId": "c95d11992b3",
+          "text": "The screen shows the title Modal perf harness — 1M rows.",
+          "truth": true,
+          "kind": "plain"
+        },
+        {
+          "requestId": "ca41fed5fd2",
+          "text": "The harness status reads finished.",
+          "truth": false,
+          "kind": "plain"
+        },
+        {
+          "requestId": "cc68a30ad0b",
+          "text": "The pass 2 results report the heap growing to 300MB.",
+          "truth": true,
+          "kind": "borderline"
+        }
+      ],
+      "setup": {
+        "app": {
+          "id": "org.example.project",
+          "idSource": ".scratch/android-support/release-spec.md: package org.example.project, \"confirm it before writing scripts\"",
+          "confirmed": false
+        },
+        "setupSteps": [],
+        "appBuild": null,
+        "device": null,
+        "stateSetupEvidence": null,
+        "correspondence": {
+          "status": "pending"
+        }
+      },
+      "capture": {
+        "status": "pending",
+        "kind": null,
+        "appiumXml": null,
+        "screenshot": null,
+        "appBuild": null,
+        "device": null,
+        "capturedAt": null,
+        "sessionId": null
+      },
+      "judgment": {
+        "allocation": 1,
+        "resultRecord": "results/android/cmp-2-home.json"
+      }
+    },
+    {
+      "platform": "android",
+      "screenId": "cmp-3-number-input",
+      "source": {
+        "labels": {
+          "commit": "755d0ff8ff40ea70f36fe888a1571e60cc64f08c",
+          "path": "spikes/android/jev-check/claims.json",
+          "digestConvention": "raw-sha256",
+          "sha256": "4458fc35a7ee732b7c03e765649fae90b260eddfe26b5f2d5cc4db36d7fe4179"
+        },
+        "evidence": [
+          {
+            "role": "android-capture",
+            "commit": "755d0ff8ff40ea70f36fe888a1571e60cc64f08c",
+            "path": "spikes/android/captures/cmp-3-number-input.json",
+            "sha256": "ba6c09a6aa034b4e2aaa95c259715eca61138cfeff4952998d28c29833ced158"
+          },
+          {
+            "role": "android-screenshot",
+            "commit": "755d0ff8ff40ea70f36fe888a1571e60cc64f08c",
+            "path": "spikes/android/captures/cmp-3-number-input.png",
+            "sha256": "2a582429bc073f61a4e876accc93cefa0e3617621f0fe4004c6f05ccf40f4719"
+          }
+        ]
+      },
+      "claims": [
+        {
+          "requestId": "cfd19cd1b34",
+          "text": "The en-US, sig=2 field shows 1,234.50.",
+          "truth": true,
+          "kind": "plain"
+        },
+        {
+          "requestId": "c9b8cd09c97",
+          "text": "The vi-VN field shows 2,500,000.",
+          "truth": false,
+          "kind": "plain"
+        },
+        {
+          "requestId": "c510209f964",
+          "text": "The de-DE, sig=2, built-in keypad field is empty.",
+          "truth": true,
+          "kind": "borderline"
+        },
+        {
+          "requestId": "ca20d02a545",
+          "text": "The de-DE, sig=2, built-in keypad field contains the text Betrag eingeben.",
+          "truth": false,
+          "kind": "borderline"
+        }
+      ],
+      "setup": {
+        "app": {
+          "id": "org.example.project",
+          "idSource": ".scratch/android-support/release-spec.md: package org.example.project, \"confirm it before writing scripts\"",
+          "confirmed": false
+        },
+        "setupSteps": [],
+        "appBuild": null,
+        "device": null,
+        "stateSetupEvidence": null,
+        "correspondence": {
+          "status": "pending"
+        }
+      },
+      "capture": {
+        "status": "pending",
+        "kind": null,
+        "appiumXml": null,
+        "screenshot": null,
+        "appBuild": null,
+        "device": null,
+        "capturedAt": null,
+        "sessionId": null
+      },
+      "judgment": {
+        "allocation": 1,
+        "resultRecord": "results/android/cmp-3-number-input.json"
+      }
+    },
+    {
+      "platform": "android",
+      "screenId": "cmp-4-fullscreen-modal",
+      "source": {
+        "labels": {
+          "commit": "755d0ff8ff40ea70f36fe888a1571e60cc64f08c",
+          "path": "spikes/android/jev-check/claims.json",
+          "digestConvention": "raw-sha256",
+          "sha256": "4458fc35a7ee732b7c03e765649fae90b260eddfe26b5f2d5cc4db36d7fe4179"
+        },
+        "evidence": [
+          {
+            "role": "android-capture",
+            "commit": "755d0ff8ff40ea70f36fe888a1571e60cc64f08c",
+            "path": "spikes/android/captures/cmp-4-fullscreen-modal.json",
+            "sha256": "597fe8e2b343ea3d8780ccb018b517fc288afbd5cc8a4e7f21c581b74624f6bd"
+          },
+          {
+            "role": "android-screenshot",
+            "commit": "755d0ff8ff40ea70f36fe888a1571e60cc64f08c",
+            "path": "spikes/android/captures/cmp-4-fullscreen-modal.png",
+            "sha256": "b3ca625724d74d1696836469fcb77066601a04e63b7aefb2176c4e1aa5dea095"
+          }
+        ]
+      },
+      "claims": [
+        {
+          "requestId": "c7a89d2c054",
+          "text": "An Open full-screen modal button is visible.",
+          "truth": true,
+          "kind": "plain"
+        },
+        {
+          "requestId": "cc92660b77f",
+          "text": "A full-screen modal is open over the tabs.",
+          "truth": false,
+          "kind": "plain"
+        },
+        {
+          "requestId": "c901e84e778",
+          "text": "The fullscreen-modal tab is the selected tab.",
+          "truth": true,
+          "kind": "borderline"
+        }
+      ],
+      "setup": {
+        "app": {
+          "id": "org.example.project",
+          "idSource": ".scratch/android-support/release-spec.md: package org.example.project, \"confirm it before writing scripts\"",
+          "confirmed": false
+        },
+        "setupSteps": [],
+        "appBuild": null,
+        "device": null,
+        "stateSetupEvidence": null,
+        "correspondence": {
+          "status": "pending"
+        }
+      },
+      "capture": {
+        "status": "pending",
+        "kind": null,
+        "appiumXml": null,
+        "screenshot": null,
+        "appBuild": null,
+        "device": null,
+        "capturedAt": null,
+        "sessionId": null
+      },
+      "judgment": {
+        "allocation": 1,
+        "resultRecord": "results/android/cmp-4-fullscreen-modal.json"
+      }
+    }
+  ]
+}
