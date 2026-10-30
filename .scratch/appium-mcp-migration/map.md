@@ -1,7 +1,7 @@
 # Appium migration handoff map
 
 Labels: wayfinder:map
-Status: charted
+Status: charted 2026-10-14; Phases 0 to 3 complete on main by 2026-10-30; tickets 06 and 08 still open
 
 ## Destination
 
@@ -22,8 +22,13 @@ then `unslop` for handoff text. Use the existing glossary's admission, lease,
 fence, run, snapshot, and observed-outcome terms. Record new meanings only
 through an actual discussion, not by silently changing the glossary.
 
-This map is planning-only. Code implementation, device experiments, migrations,
-Jev calls, and release actions remain paused. A decision ticket resolves a
+This map charts decisions; it builds nothing. As of 2026-10-30 the build it
+planned has run: Phase 1 is GO ([result](phase-1-result-20261018.md)), Phase 2
+is complete ([exit note](../appium-phase2/phase-2-exit.md)) and Phase 3 is merged
+to main (PRs #70 to #85; see the [roadmap](roadmap.md)). Phase 4 agent-only kits
+started on 2026-10-30. Device experiments, Jev calls and release actions in
+Phase 4 wait for owner steps: tickets 06 and 08 below, activation of the real
+admission store, and the Jev key. A decision ticket resolves a
 question, not a slice of the Appium build. Charting closes no human ticket.
 Research agents work on isolated `research/` branches and return sourced notes.
 
