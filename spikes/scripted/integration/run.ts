@@ -1,11 +1,8 @@
-#!/usr/bin/env node
 import { createHash, randomUUID } from 'node:crypto';
 import { execFileSync } from 'node:child_process';
 import { readFile, writeFile } from 'node:fs/promises';
 import { join, resolve } from 'node:path';
-import { fileURLToPath } from 'node:url';
 import type { DeviceDriver } from '../../../src/contracts/index.js';
-import { createMobileBuildMcpDriver } from '../../../src/device/index.js';
 import { createRunLog } from '../../../src/log/index.js';
 import type { ScriptedJudge, ScriptedScenario } from '../contracts.js';
 import { implementationDigest } from '../harness.js';
@@ -90,7 +87,7 @@ function gitHead(): string | undefined {
 }
 
 export interface IntegrationPorts {
-  createDriver?: (udid: string) => DeviceDriver;
+  createDriver: (udid: string) => DeviceDriver;
   createJudge?: () => ScriptedJudge;
   signal?: AbortSignal;
 }
@@ -105,18 +102,14 @@ export interface IntegrationOutcome {
 }
 
 /** One submitted script; no host decisions or Jev Choice calls within the run. */
-export async function runIntegration(args: IntegrationArgs, ports: IntegrationPorts = {}): Promise<IntegrationOutcome> {
+export async function runIntegration(args: IntegrationArgs, ports: IntegrationPorts): Promise<IntegrationOutcome> {
   const scenarioBytes = await readFile(args.scenarioPath);
   const parsed = parseScriptedScenario(JSON.parse(scenarioBytes.toString('utf8')));
   if (parsed.device?.udid && parsed.device.udid.toUpperCase() !== args.deviceUdid) throw new Error('DEVICE_MISMATCH');
   const scenario: ScriptedScenario = { ...parsed, device: { udid: args.deviceUdid } };
   // Constructing the default judge checks for a key before allocating a run or touching a device.
   const judge = ports.createJudge?.() ?? createAssertionJudge();
-  const tapAliasRule = ports.createDriver ? undefined : 'mobilebuildmcp-2.7.1' as const;
-  const driver = ports.createDriver?.(args.deviceUdid) ?? createMobileBuildMcpDriver({
-    cwd: process.cwd(), defaultUdid: args.deviceUdid,
-    capture: 'full', screenshots: true, stopAppOnClose: true,
-  });
+  const driver = ports.createDriver(args.deviceUdid);
   const runId = randomUUID();
   const log = await createRunLog(args.out, runId, { values: Object.values(scenario.values) });
   const runDirectory = join(args.out, runId);
@@ -129,7 +122,7 @@ export async function runIntegration(args: IntegrationArgs, ports: IntegrationPo
     scenarioPath: args.scenarioPath, scenarioSha256: sha256(scenarioBytes),
     bundleId: scenario.app.bundleId, deviceUdid: args.deviceUdid,
     model: SCRIPTED_JEV_MODEL, mobileBuildMcpVersion: '2.7.1',
-    tapAliasRule: tapAliasRule ?? 'strict',
+    tapAliasRule: 'strict',
     assertionImplementationSha256: implementationDigest(), scriptedRuntimeSha256: await runtimeDigest(),
     ...(head ? { gitHead: head } : {}),
     nodeVersion: process.version, maxSteps: args.maxSteps, timeoutMs: args.timeoutMs,
@@ -138,7 +131,6 @@ export async function runIntegration(args: IntegrationArgs, ports: IntegrationPo
   await writeFile(provenancePath, `${JSON.stringify(provenance, null, 2)}\n`, { flag: 'wx', mode: 0o600 });
   const report = await runScriptedScenario({ runId, scenario, driver, judge, log,
     ...(ports.signal ? { signal: ports.signal } : {}),
-    ...(tapAliasRule ? { tapAliasRule } : {}),
     limits: { maxSteps: args.maxSteps, wallTimeMs: args.timeoutMs } });
   const recorded = buildScriptedReport(await log.read());
   const verdictEvent = recorded.events.findLast(event => event.type === 'verdict');
@@ -161,24 +153,4 @@ export async function runIntegration(args: IntegrationArgs, ports: IntegrationPo
   await writeFile(reportPath, `${renderScriptedReport(recorded)}\n`, { flag: 'wx', mode: 0o600 });
   await writeFile(metricsPath, `${JSON.stringify(metrics, null, 2)}\n`, { flag: 'wx', mode: 0o600 });
   return { runId, verdict: report.verdict, runDirectory, reportPath, metricsPath, provenancePath };
-}
-
-async function main(): Promise<void> {
-  const args = parseIntegrationArgs(process.argv.slice(2));
-  const abort = new AbortController();
-  const cancel = () => abort.abort();
-  process.once('SIGINT', cancel);
-  process.once('SIGTERM', cancel);
-  try {
-    const outcome = await runIntegration(args, { signal: abort.signal });
-    process.stdout.write(`Run ${outcome.runId}: ${outcome.verdict}\nReport: ${outcome.reportPath}\nMetrics: ${outcome.metricsPath}\nProvenance: ${outcome.provenancePath}\n`);
-    process.exitCode = outcome.verdict === 'passed' ? 0 : outcome.verdict === 'failed' ? 1 : 2;
-  } finally {
-    process.removeListener('SIGINT', cancel);
-    process.removeListener('SIGTERM', cancel);
-  }
-}
-
-if (process.argv[1] && resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {
-  main().catch(() => { process.stderr.write('Scripted integration could not start. Check scenario, key, device, and output setup.\n'); process.exitCode = 2; });
 }

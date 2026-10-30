@@ -29,7 +29,7 @@
 import { readFileSync } from 'node:fs';
 import { join } from 'node:path';
 import type { Element, Platform } from '../../src/contracts/index.js';
-import { parseSnapshot } from '../../src/device/index.js';
+import { parseSnapshot } from '../scripted/mobilebuildmcp-capture.js';
 
 /** Jev's Choice takes at most 255 options. */
 export const MAX_OPTIONS = 255;

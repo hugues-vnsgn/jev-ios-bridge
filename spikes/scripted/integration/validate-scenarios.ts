@@ -1,7 +1,7 @@
 import { readFileSync } from 'node:fs';
 import { join } from 'node:path';
 import type { Snapshot } from '../../../src/contracts/index.js';
-import { parseSnapshot } from '../../../src/device/index.js';
+import { parseSnapshot } from '../mobilebuildmcp-capture.js';
 import { parseScriptedScenario } from '../schema.js';
 import { assertScreenGuard, resolveActionTarget, ScriptSelectionError } from '../select.js';
 
