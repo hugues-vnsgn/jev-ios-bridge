@@ -69,10 +69,10 @@ export class StaleSnapshotError extends Error {
   }
 }
 
-/** The environment for device-layer processes: the bridge's own, minus the Jev key, with vendor telemetry off. */
+/** The environment for device-layer processes: the bridge's own, minus the Jev key. */
 export function deviceEnvironment(source: NodeJS.ProcessEnv = process.env): NodeJS.ProcessEnv {
   const { TYPESAFE_API_KEY: _jevKey, ...environment } = source;
-  return { ...environment, MOBILEBUILDMCP_SENTRY_DISABLED: 'true' };
+  return environment;
 }
 
 async function configuredUdid(cwd: string): Promise<string | undefined> {

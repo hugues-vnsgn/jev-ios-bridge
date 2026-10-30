@@ -141,10 +141,8 @@ test('the evidence root carries a .gitignore that keeps every run out of git, an
   } finally { await rm(root, { recursive: true, force: true }); }
 });
 
-test('device-layer processes never receive the TypeSafe API key', async () => {
+test('device-layer processes never receive the TypeSafe API key and get no vendor setting added', async () => {
   const { deviceEnvironment } = await import('../src/device/index.js');
   const environment = deviceEnvironment({ TYPESAFE_API_KEY: 'secret-key', PATH: '/usr/bin', JEV_DEVICE_UDID: 'x' });
-  assert.equal(environment.TYPESAFE_API_KEY, undefined);
-  assert.equal(environment.PATH, '/usr/bin');
-  assert.equal(environment.MOBILEBUILDMCP_SENTRY_DISABLED, 'true');
+  assert.deepEqual(environment, { PATH: '/usr/bin', JEV_DEVICE_UDID: 'x' });
 });
