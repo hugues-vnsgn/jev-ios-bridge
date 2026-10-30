@@ -371,7 +371,7 @@ for (const winner of ['scripted', 'observed'] as const) {
       assert.equal(allocation(prepared.reply).state, 'ready');
       const bytes = await f.database(), before = f.calls();
       const loser = spawnSync(process.execPath, [...args, 'refuse'], { encoding: 'utf8', timeout: 10000, env: { PATH: process.env.PATH } });
-      assert.equal(loser.status, 0, loser.stderr); assert.equal(loser.stdout, 'DEVICE_BUSY; zero backend requests');
+      assert.equal(loser.status, 0, loser.stderr); assert.equal(loser.stdout, 'DEVICE_QUARANTINED; zero backend requests');
       assert.deepEqual(await f.database(), bytes); assert.deepEqual(f.calls(), before);
       assert.equal(f.admission().readAttempt({ kind: 'legacy', id: 'scripted-racer' }), undefined);
     }
