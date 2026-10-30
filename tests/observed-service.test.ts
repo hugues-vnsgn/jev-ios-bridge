@@ -7,12 +7,12 @@ import { createHash } from 'node:crypto';
 import { migrateAdmissionForTesting } from '../src/device/admission-migration.js';
 import { ObservedActionJournal } from '../src/experimental/observed-journal.js';
 import { runObservedExperiment } from '../src/experimental/observed-run.js';
-import { Admission, type AdmissionDependencies } from '../src/device/admission.js';
-import { ObservedActionService, observedDriverFactory } from '../src/observed/service.js';
-import { createObservedDriver } from '../src/device/legacy-factory.js';
+import { Admission, AdmissionError, type AdmissionDependencies, type AdmittedSession } from '../src/device/admission.js';
+import { ObservedActionService } from '../src/observed/service.js';
 import type { AllocationReservationInput } from '../src/device/admission-allocation.js';
 import { FileObservedEvidence, type ObservedEvidenceStore } from '../src/observed/evidence.js';
-import type { CliRunner } from '../src/device/index.js';
+import type { Snapshot } from '../src/contracts/index.js';
+import type { ObservedActionDriver } from '../src/device/index.js';
 import { renderObservedAction, observedActionExitCode, observedActionSummary } from '../src/observed/report.js';
 import { parseObservedAction, observedActionDigest } from '../src/observed/schema.js';
 import type { ObservedServiceOptions, ObservedAllocator } from '../src/observed/service.js';
@@ -42,21 +42,32 @@ function request(allocationId: string, actionId = 'one') {
   return { version: 1, actionId, allocationId, app: { bundleId: 'dev.fixture' }, action: { kind: 'tap', selector: { identifier: 'go' } },
     before: { present: [{ identifier: 'go' }] }, after: { present: [{ identifier: 'done' }] }, timeoutMs: 5000 };
 }
-function reply(done: boolean, touch = false) {
-  return { stdout: JSON.stringify({ schema: touch ? 'mobilebuildmcp.output.ui-action-result' : 'mobilebuildmcp.output.capture-result',
-    schemaVersion: '2', data: { artifacts: { simulatorId: device }, action: { type: 'tap' },
-      capture: { type: 'runtime-snapshot', protocol: 'rs/1', capturedAtMs: Date.now(), expiresAtMs: Date.now() + 60000,
-        count: 1, elements: [{ ref: 'button', role: 'button', identifier: done ? 'done' : 'go', label: done ? 'Done' : 'Go',
-          frame: { x: 0, y: 0, width: 100, height: 30 }, actions: ['tap', 'touch'], state: { visible: true, enabled: true } }] } } }), stderr: '', exitCode: 0 };
+function screen(done: boolean): Snapshot {
+  return { deviceId: device, sequence: 1, capturedAt: Date.now(), expiresAt: Date.now() + 60000, truncated: false,
+    elements: [{ ref: 'button', role: 'button', identifier: done ? 'done' : 'go', label: done ? 'Done' : 'Go',
+      frame: { x: 0, y: 0, width: 100, height: 30 }, actions: ['tap', 'touch'], state: { visible: true, enabled: true } }] };
 }
-function fixture(t: TestContext, runner: CliRunner, overrides: Partial<ObservedServiceOptions> = {}, dependencies: AdmissionDependencies = {}) {
+/** The device behind an executor: each observation and the one input, by name. */
+type Backend = (operation: 'snapshot-ui' | 'touch') => Promise<Snapshot>;
+/** An observed executor over its admitted session: every observation and the one tap are durable dispatches, as on a real driver. */
+function executor(backend: Backend): ObservedActionDriver {
+  let session: AdmittedSession | undefined; let revoked = false;
+  const open = () => { if (revoked || !session) throw new AdmissionError('DISPATCH_CLOSED', 'Device issuance is closed'); return session; };
+  return {
+    async attachObserved(claim) { session = claim.bindDriver('fake'); },
+    async observe() { return open().dispatch('observe', () => backend('snapshot-ui')); },
+    async tapOnce() { await open().dispatch('tap', () => backend('touch')); return undefined; },
+    revokeIssuance() { revoked = true; },
+    async close() {},
+  };
+}
+function fixture(t: TestContext, backend: Backend, overrides: Partial<ObservedServiceOptions> = {}, dependencies: AdmissionDependencies = {}) {
   const root = realpathSync(mkdtempSync(join(tmpdir(), 'observed-service-')));
   t.after(() => rmSync(root, { recursive: true, force: true }));
   mkdirSync(join(root, 'store'), { mode: 0o700 });
   const admission = Admission.forTesting({ root: join(root, 'store'), backend: 'fake', ...dependencies });
   const service = new ObservedActionService({ admission, runsDir: join(root, 'evidence'), bridgeVersion: 'fixture', backend: 'fake', enabled: true,
-    createDriver: () => createObservedDriver({ cwd: root, admission, lockRoot: join(root, 'leases'), capture: 'full', reuseActionCapture: false,
-      runner, deviceWindow: async () => assert.fail('No presentation'), fakeBackend: { runner, window: undefined } }), ...overrides });
+    createDriver: () => executor(backend), ...overrides });
   return { root, admission, service };
 }
 
@@ -78,15 +89,12 @@ test('a missing allocation refuses before attaching a driver', async t => {
 });
 
 test('begin-finalization failure still revokes and closes the attached driver locally', async t => {
-  let closes = 0; let revokes = 0; let driver!: ReturnType<typeof createObservedDriver>;
-  const { root, admission, service } = fixture(t, async () => reply(true), {
+  let closes = 0; let revokes = 0; const driver = executor(async () => screen(true));
+  const { admission, service } = fixture(t, async () => screen(true), {
     createDriver: () => ({ attachObserved: (...args) => driver.attachObserved(...args), observe: (...args) => driver.observe(...args),
       tapOnce: (...args) => driver.tapOnce(...args), revokeIssuance() { revokes++; driver.revokeIssuance(); },
       async close(signal) { closes++; await driver.close(signal); } }),
   }, { fault: (point, operation) => { if (point === 'beforeCommit' && operation === 'beginActionFinalization') throw new Error('Injected fault'); } });
-  const runner: CliRunner = async () => reply(true);
-  driver = createObservedDriver({ cwd: root, admission, lockRoot: join(root, 'leases'), runner,
-    deviceWindow: async () => assert.fail('No window'), fakeBackend: { runner, window: undefined } });
   await service.start(request(await ready(admission)));
   const result = await service.inspect('one', { waitMs: 5000 });
   assert.equal(result.state, 'unresolved'); assert.equal(result.outcome, null); assert.equal(result.reason, 'FINALIZATION_UNCONFIRMED');
@@ -97,7 +105,7 @@ test('begin-finalization failure still revokes and closes the attached driver lo
 });
 for (const point of ['beforeCommit', 'afterCommit'] as const) {
   test(`finalization ${point} never treats provisional success as authority`, async t => {
-    const { admission, service } = fixture(t, async () => reply(true), {}, {
+    const { admission, service } = fixture(t, async () => screen(true), {}, {
       fault: (seen, operation) => { if (seen === point && operation === 'finalize') throw new Error('Injected COMMIT uncertainty'); },
     });
     await service.start(request(await ready(admission)));
@@ -117,10 +125,10 @@ for (const point of ['beforeCommit', 'afterCommit'] as const) {
 }
 
 test('one input and fresh post-input observation, including concurrent identical starts', async t => {
-  const calls: string[][] = []; let snapshots = 0;
-  const { admission, service } = fixture(t, async args => {
-    calls.push(args); if (args[1] === 'touch') return reply(false, true);
-    return reply(++snapshots > 1);
+  const calls: string[] = []; let snapshots = 0;
+  const { admission, service } = fixture(t, async operation => {
+    calls.push(operation); if (operation === 'touch') return screen(false);
+    return screen(++snapshots > 1);
   });
   const raw = request(await ready(admission));
   const [first, second] = await Promise.all([service.start(raw), service.start(raw)]);
@@ -128,13 +136,12 @@ test('one input and fresh post-input observation, including concurrent identical
   const terminal = await service.inspect('one', { waitMs: 5000 });
   assert.equal(terminal.outcome, 'outcome_observed', JSON.stringify({terminal,calls})); assert.equal(terminal.actionAttempted, true);
   assert.equal(terminal.actionAcknowledged, true); assert.equal(terminal.observations, 2);
-  assert.deepEqual(calls.map(args => args[1]), ['snapshot-ui', 'touch', 'snapshot-ui']);
-  assert.deepEqual(JSON.parse(calls[1]![3]!), { simulatorId: device, elementRef: 'button', down: true, up: true, delay: 0.05 });
+  assert.deepEqual(calls, ['snapshot-ui', 'touch', 'snapshot-ui']);
   await service.close();
 });
 test('settled precondition failure refuses without an input and retains the prepared device', async t => {
   const calls: string[] = [];
-  const { admission, service } = fixture(t, async args => { calls.push(args[1]!); return reply(false); });
+  const { admission, service } = fixture(t, async operation => { calls.push(operation); return screen(false); });
   const raw = request(await ready(admission)); raw.before.present[0]!.identifier = 'other';
   await service.start(raw); const terminal = await service.inspect('one', { waitMs: 5000 });
   assert.equal(terminal.outcome, 'refused'); assert.equal(terminal.reason, 'PRECONDITION_NOT_MET');
@@ -144,8 +151,8 @@ test('settled precondition failure refuses without an input and retains the prep
 });
 test('lost input reply keeps durable null receipts, quarantines, and never replays after reconstruction', async t => {
   const calls: string[] = [];
-  const { root, admission, service } = fixture(t, async args => {
-    calls.push(args[1]!); if (args[1] === 'touch') throw new Error('secret vendor lost receipt'); return reply(false);
+  const { root, admission, service } = fixture(t, async operation => {
+    calls.push(operation); if (operation === 'touch') throw new Error('secret vendor lost receipt'); return screen(false);
   });
   const raw = request(await ready(admission)); await service.start(raw);
   const terminal = await service.inspect('one', { waitMs: 5000 });
@@ -182,7 +189,7 @@ test('dead-owner inspection and wait never mutate authority; recovery is explici
 
 test('already satisfied commits from the store without input and repeats retrieve without backend calls', async t => {
   const calls: string[] = [];
-  const { root, admission, service } = fixture(t, async args => { calls.push(args[1]!); return reply(true); });
+  const { root, admission, service } = fixture(t, async operation => { calls.push(operation); return screen(true); });
   const raw = request(await ready(admission));
   const started = await service.start(raw);
   assert.equal(started.disposition, 'started');
@@ -212,7 +219,7 @@ for (const stage of ['prepare', 'observation', 'provisional', 'terminal'] as con
       terminal: (directory, snapshot) => stage === 'terminal' ? Promise.reject(new Error('secret filesystem error')) : files.terminal(directory, snapshot),
     };
     const calls: string[] = [];
-    const { admission, service } = fixture(t, async args => { calls.push(args[1]!); return reply(true); }, { evidence });
+    const { admission, service } = fixture(t, async operation => { calls.push(operation); return screen(true); }, { evidence });
     await service.start(request(await ready(admission))); const terminal = await service.inspect('one', { waitMs: 5000 });
     assert.equal(terminal.authority, 'committed');
     assert.equal(terminal.outcome, stage === 'terminal' ? 'already_satisfied' : 'inconclusive');
@@ -229,7 +236,7 @@ for (const stage of ['prepare', 'observation', 'provisional', 'terminal'] as con
 }
 test('receipt persistence failure never converts a settled input into success', async t => {
   let capture = 0; const calls: string[] = [];
-  const { admission, service } = fixture(t, async args => { calls.push(args[1]!); return reply(++capture > 1, args[1] === 'touch'); }, {},
+  const { admission, service } = fixture(t, async operation => { calls.push(operation); return screen(++capture > 1); }, {},
     { fault: (point, operation) => { if (point === 'beforeCommit' && operation === 'recordActionReceipt') throw new Error('Injected fault'); } });
   await service.start(request(await ready(admission))); const result = await service.inspect('one', { waitMs: 5000 });
   assert.equal(result.outcome, 'inconclusive'); assert.equal(result.actionAttempted, null); assert.equal(result.actionAcknowledged, null);
@@ -256,10 +263,10 @@ function actionDeadline(t: TestContext) {
   return deadline;
 }
 for (const kind of ['cancel', 'external-cancel', 'deadline'] as const) {
-  test(`${kind} while input is pending keeps quarantine and the identical lease after a late receipt`, async t => {
-    const entered = deferred<void>(t, 'backend entry'); const pending = deferred<ReturnType<typeof reply>>(t, 'backend reply release'); const calls: string[] = [];
-    const { root, admission, service } = fixture(t, async args => {
-      calls.push(args[1]!); if (args[1] === 'touch') { entered.resolve(); return pending.promise; } return reply(false);
+  test(`${kind} while input is pending keeps quarantine and durable authority after a late receipt`, async t => {
+    const entered = deferred<void>(t, 'backend entry'); const pending = deferred<Snapshot>(t, 'backend reply release'); const calls: string[] = [];
+    const { root, admission, service } = fixture(t, async operation => {
+      calls.push(operation); if (operation === 'touch') { entered.resolve(); return pending.promise; } return screen(false);
     });
     const raw = request(await ready(admission)); raw.timeoutMs = kind === 'deadline' ? 2500 : 5000;
     await service.start(raw); await entered.promise;
@@ -272,24 +279,23 @@ for (const kind of ['cancel', 'external-cancel', 'deadline'] as const) {
     assert.equal(terminal.authority, 'committed'); assert.equal(terminal.outcome, 'inconclusive');
     assert.equal(terminal.reason, kind === 'deadline' ? 'DEADLINE_EXCEEDED' : 'CANCELLED');
     assert.equal(terminal.actionAttempted, null); assert.equal(terminal.actionAcknowledged, null); assert.equal(terminal.admission, 'quarantined');
-    const lock = join(root, 'leases', `${device}.lock`); const lease = readFileSync(lock, 'utf8');
-    const before = admission.readAction('one'); pending.resolve(reply(true, true)); await new Promise(resolve => setTimeout(resolve, 50));
-    assert.equal(readFileSync(lock, 'utf8'), lease); assert.deepEqual(admission.readAction('one'), before);
+    const before = admission.readAction('one'); pending.resolve(screen(true)); await new Promise(resolve => setTimeout(resolve, 50));
+    assert.deepEqual(admission.readAction('one'), before);
     assert.equal((await service.start(raw)).outcome, 'inconclusive'); assert.deepEqual(calls, ['snapshot-ui', 'touch']);
     await service.close();
   });
 }
 test('cancellation during an abort-ignoring observation never submits input or persists the late capture', async t => {
-  const entered = deferred<void>(t, 'backend entry'); const pending = deferred<ReturnType<typeof reply>>(t, 'backend reply release'); const calls: string[] = [];
-  const { admission, service } = fixture(t, async args => { calls.push(args[1]!); entered.resolve(); return pending.promise; });
+  const entered = deferred<void>(t, 'backend entry'); const pending = deferred<Snapshot>(t, 'backend reply release'); const calls: string[] = [];
+  const { admission, service } = fixture(t, async operation => { calls.push(operation); entered.resolve(); return pending.promise; });
   const raw = request(await ready(admission)); raw.timeoutMs = 5000; await service.start(raw); await entered.promise;
   const terminal = await service.cancel('one'); assert.equal(terminal.outcome, 'inconclusive'); assert.equal(terminal.reason, 'CANCELLED');
   assert.equal(terminal.actionAttempted, false); assert.equal(terminal.actionAcknowledged, false); assert.equal(terminal.observations, 0);
-  const before = admission.readAction('one'); pending.resolve(reply(false)); await new Promise(resolve => setTimeout(resolve, 50));
+  const before = admission.readAction('one'); pending.resolve(screen(false)); await new Promise(resolve => setTimeout(resolve, 50));
   assert.deepEqual(admission.readAction('one'), before); assert.deepEqual(calls, ['snapshot-ui']); await service.close();
 });
 test('disabled and shutting-down starts refuse without consuming, while existing reads and cancellation remain usable', async t => {
-  const { admission, service } = fixture(t, async () => reply(true), { enabled: false });
+  const { admission, service } = fixture(t, async () => screen(true), { enabled: false });
   const allocationId = await ready(admission); const raw = request(allocationId);
   await assert.rejects(service.start(raw), { code: 'OBSERVED_DISABLED' }); assert.equal(admission.readAllocation(allocationId)?.state, 'ready');
   await assert.rejects(service.inspect('one'), { code: 'ACTION_NOT_STARTED' });
@@ -309,13 +315,13 @@ test('full canonical payload comparison rejects a corrupted binding even if its 
 });
 
 test('cancellation write failure still closes local issuance before returning an honest store error', async t => {
-  const entered = deferred<void>(t, 'backend entry'); const pending = deferred<ReturnType<typeof reply>>(t, 'backend reply release'); const calls: string[] = [];
+  const entered = deferred<void>(t, 'backend entry'); const pending = deferred<Snapshot>(t, 'backend reply release'); const calls: string[] = [];
   let failing = false;
-  const { admission, service } = fixture(t, async args => { calls.push(args[1]!); entered.resolve(); return pending.promise; }, {},
+  const { admission, service } = fixture(t, async operation => { calls.push(operation); entered.resolve(); return pending.promise; }, {},
     { fault: (point, operation) => { if (failing && point === 'beforeCommit' && operation === 'cancel') throw new Error('Injected cancel failure'); } });
   const raw = request(await ready(admission)); raw.timeoutMs = 5000; await service.start(raw); await entered.promise; failing = true;
   await assert.rejects(service.cancel('one'), { code: 'STORE_UNAVAILABLE' });
-  pending.resolve(reply(false)); await new Promise(resolve => setTimeout(resolve, 100));
+  pending.resolve(screen(false)); await new Promise(resolve => setTimeout(resolve, 100));
   assert.deepEqual(calls, ['snapshot-ui']);
   const result = await service.inspect('one', { waitMs: 5000 }); assert.equal(result.outcome, 'inconclusive');
   assert.equal(result.reason, 'CANCELLED'); assert.equal(result.actionAttempted, false); await service.close();
@@ -335,7 +341,7 @@ test('allocator delegation preserves its renderer and full binding, with disable
       return admission.consumeAllocation(binding); },
     async close() { calls.push('close'); },
   };
-  const f = fixture(t, async () => reply(true), { allocator }); admission = f.admission;
+  const f = fixture(t, async () => screen(true), { allocator }); admission = f.admission;
   assert.equal(await f.service.prepareAllocation({ request: 'raw' }), projected);
   assert.equal(await f.service.getAllocation('identity', { waitMs: 2 }), projected);
   assert.equal(await f.service.cancelAllocation('identity'), projected); assert.equal(await f.service.retireAllocation('identity'), projected);
@@ -353,14 +359,14 @@ test('allocator delegation preserves its renderer and full binding, with disable
 for (const scenario of ['ambiguous-after', 'ambiguous-target', 'target-disabled', 'missing-touch', 'invalid-expiry', 'absent-condition'] as const) {
   test(`${scenario} refuses with settled capture and no input`, async t => {
     const calls: string[] = [];
-    const { admission, service } = fixture(t, async args => {
-      calls.push(args[1]!); const value = reply(false); const envelope = JSON.parse(value.stdout); const capture = envelope.data.capture;
-      if (scenario === 'ambiguous-after') { capture.elements[0].identifier = 'done'; capture.elements.push({ ...capture.elements[0], ref: 'other' }); capture.count = 2; }
-      if (scenario === 'ambiguous-target') { capture.elements.push({ ...capture.elements[0], ref: 'other' }, { ...capture.elements[0], identifier: 'Go-only', ref: 'precondition' }); capture.count = 3; }
-      if (scenario === 'target-disabled') capture.elements[0].state.enabled = false;
-      if (scenario === 'missing-touch') capture.elements[0].actions = ['tap'];
-      if (scenario === 'invalid-expiry') capture.expiresAtMs = 1;
-      value.stdout = JSON.stringify(envelope); return value;
+    const { admission, service } = fixture(t, async operation => {
+      calls.push(operation); const value = screen(false); const button = value.elements[0]!;
+      if (scenario === 'ambiguous-after') { button.identifier = 'done'; value.elements.push({ ...button, ref: 'other' }); }
+      if (scenario === 'ambiguous-target') value.elements.push({ ...button, ref: 'other' }, { ...button, identifier: 'Go-only', ref: 'precondition' });
+      if (scenario === 'target-disabled') button.state = { visible: true, enabled: false };
+      if (scenario === 'missing-touch') button.actions = ['tap'];
+      if (scenario === 'invalid-expiry') value.expiresAt = 1;
+      return value;
     });
     const raw = request(await ready(admission));
     // A separate unique precondition allows a duplicated target identifier to reach target selection.
@@ -382,7 +388,7 @@ test('external cancellation during provisional persistence commits inconclusive 
   const evidence: ObservedEvidenceStore = { prepare: (...args) => files.prepare(...args), observation: (...args) => files.observation(...args),
     async provisional(directory, result) { await files.provisional(directory, result); admission.cancel({ kind: 'observed', id: 'one' }); },
     terminal: (...args) => files.terminal(...args) };
-  const f = fixture(t, async () => reply(true), { evidence }); admission = f.admission;
+  const f = fixture(t, async () => screen(true), { evidence }); admission = f.admission;
   await f.service.start(request(await ready(admission))); const result = await f.service.inspect('one', { waitMs: 5000 });
   assert.equal(result.authority, 'committed'); assert.equal(result.outcome, 'inconclusive'); assert.equal(result.reason, 'CANCELLED');
   assert.equal(result.admission, 'quarantined'); assert.equal(result.actionAttempted, false); await f.service.close();
@@ -433,7 +439,7 @@ for (const uncertain of [false, true]) {
 }
 test('historical ready-allocation adapter uses the same resolver and refuses another device or identity', async t => {
   const calls: string[] = [];
-  const { root, admission, service } = fixture(t, async args => { calls.push(args[1]!); return reply(true); });
+  const { root, admission, service } = fixture(t, async operation => { calls.push(operation); return screen(true); });
   await ready(admission);
   const raw = { experimental: 'observed-tap-v1', actionId: 'one', deviceId: device.toLowerCase(), app: { bundleId: 'dev.fixture' },
     selector: { identifier: 'go' }, before: { present: [{ identifier: 'go' }] }, after: { present: [{ identifier: 'done' }] }, timeoutMs: 5000 };
@@ -449,7 +455,7 @@ test('historical ready-allocation adapter uses the same resolver and refuses ano
 
 test('a settled acknowledged input with no observed outcome expires inconclusive without a second tap', async t => {
   const calls: string[] = [];
-  const { admission, service } = fixture(t, async args => { calls.push(args[1]!); return reply(false, args[1] === 'touch'); });
+  const { admission, service } = fixture(t, async operation => { calls.push(operation); return screen(false); });
   const raw = request(await ready(admission)); raw.timeoutMs = 2500; await service.start(raw);
   const result = await service.inspect('one', { waitMs: 5000 });
   assert.equal(result.outcome, 'inconclusive'); assert.equal(result.reason, 'DEADLINE_EXCEEDED');
@@ -458,7 +464,7 @@ test('a settled acknowledged input with no observed outcome expires inconclusive
   assert.equal(result.admission, 'quarantined'); await service.close();
 });
 test('retained allocations exclude another action and global identity cannot be reassigned', async t => {
-  const calls: string[] = []; const { admission, service } = fixture(t, async args => { calls.push(args[1]!); return reply(true); });
+  const calls: string[] = []; const { admission, service } = fixture(t, async operation => { calls.push(operation); return screen(true); });
   const allocationId = await ready(admission); const raw = request(allocationId);
   await service.start(raw); await service.inspect('one', { waitMs: 5000 });
   await assert.rejects(service.start({ ...raw, actionId: 'other' }), { code: 'ACTION_ID_CONFLICT' });
@@ -475,7 +481,7 @@ test('retained allocations exclude another action and global identity cannot be 
   assert.deepEqual(calls, ['snapshot-ui']); await service.close();
 });
 test('store closure refuses reads/start safely and never reconstructs authority from terminal exports', async t => {
-  const calls: string[] = []; const { root, admission, service } = fixture(t, async args => { calls.push(args[1]!); return reply(true); });
+  const calls: string[] = []; const { root, admission, service } = fixture(t, async operation => { calls.push(operation); return screen(true); });
   const raw = request(await ready(admission)); await service.start(raw); const terminal = await service.inspect('one', { waitMs: 5000 });
   assert.equal(terminal.outcome, 'already_satisfied');
   rmSync(join(root, 'store', 'admission.sqlite'));
@@ -507,7 +513,7 @@ test('allocator configuration errors are typed preparation errors and shutdown n
 });
 
 test('shutdown synchronously closes owned action and allocator gates before awaiting either cleanup', async t => {
-  const entered = deferred<void>(t, 'backend entry'); const pending = deferred<ReturnType<typeof reply>>(t, 'backend reply release'); const allocatorDone = deferred<void>(t, 'allocator close release');
+  const entered = deferred<void>(t, 'backend entry'); const pending = deferred<Snapshot>(t, 'backend reply release'); const allocatorDone = deferred<void>(t, 'allocator close release');
   let allocatorClosed = false; let admission!: Admission;
   const allocator: ObservedAllocator = { async prepare() {}, async get() {}, async cancel() {}, async retire() {},
     consume(binding) { return admission.consumeAllocation(binding); },
@@ -517,12 +523,12 @@ test('shutdown synchronously closes owned action and allocator gates before awai
   const closing = f.service.close();
   assert.equal(allocatorClosed, true); const view = admission.readAction('one');
   assert.equal(view?.kind === 'allocation' && view.attempt?.cancellationRequested, true);
-  allocatorDone.resolve(); await closing; pending.resolve(reply(false));
+  allocatorDone.resolve(); await closing; pending.resolve(screen(false));
   assert.equal((await f.service.inspect('one')).outcome, 'inconclusive');
 });
 
 test('authoritative renderer validates binding consistency and absolute evidence before exposing success', async t => {
-  const { admission, service } = fixture(t, async () => reply(true));
+  const { admission, service } = fixture(t, async () => screen(true));
   await service.start(request(await ready(admission))); const snapshot = await service.inspect('one', { waitMs: 5000 });
   const view = admission.readAction('one')!; assert.equal(view.kind, 'allocation'); if (view.kind !== 'allocation') throw new Error('fixture');
   assert.deepEqual(renderObservedAction(view), snapshot); assert.equal(observedActionExitCode(snapshot), 0);
@@ -542,18 +548,15 @@ test('authoritative renderer validates binding consistency and absolute evidence
 
 for (const mode of ['error', 'pending'] as const) {
   test(`local close ${mode} cannot promote an observed success and finishes within the separate five-second budget`, async t => {
-    let driver!: ReturnType<typeof createObservedDriver>; const release = deferred<void>(t, 'local finalization release');
+    const driver = executor(async () => screen(true)); const release = deferred<void>(t, 'local finalization release');
     let finalizationBegan: number | undefined;
-    const { root, admission, service } = fixture(t, async () => reply(true), { createDriver: () => ({
+    const { admission, service } = fixture(t, async () => screen(true), { createDriver: () => ({
       attachObserved: (...args) => driver.attachObserved(...args), observe: (...args) => driver.observe(...args),
       tapOnce: (...args) => driver.tapOnce(...args), revokeIssuance: () => driver.revokeIssuance(),
       async close() { if (mode === 'error') throw new Error('Unknown local close'); await release.promise; },
     }) }, { fault(point, operation) {
       if (point === 'beforeCommit' && operation === 'beginActionFinalization') finalizationBegan = Date.now();
     } });
-    const runner: CliRunner = async () => reply(true);
-    driver = createObservedDriver({ cwd: root, admission, lockRoot: join(root, 'leases'), runner,
-      deviceWindow: async () => assert.fail('No window'), fakeBackend: { runner, window: undefined } });
     const raw = request(await ready(admission)); raw.timeoutMs = 6000; await service.start(raw);
     const result = await service.inspect('one', { waitMs: 7000 });
     assert.equal(result.authority, 'committed'); assert.equal(result.outcome, 'inconclusive'); assert.equal(result.reason, 'FINISH_UNCONFIRMED');
@@ -565,7 +568,7 @@ for (const mode of ['error', 'pending'] as const) {
   });
 }
 test('aborting the historical wait leaves admitted execution running to its authoritative result', async t => {
-  const calls: string[] = []; const { admission, service } = fixture(t, async args => { calls.push(args[1]!); return reply(true); });
+  const calls: string[] = []; const { admission, service } = fixture(t, async operation => { calls.push(operation); return screen(true); });
   await ready(admission);
   const raw = { experimental: 'observed-tap-v1', actionId: 'one', deviceId: device, app: { bundleId: 'dev.fixture' },
     selector: { identifier: 'go' }, before: { present: [{ identifier: 'go' }] }, after: { present: [{ identifier: 'done' }] }, timeoutMs: 5000 };
@@ -583,28 +586,6 @@ test('a fresh attachment failure is conservative preparation uncertainty with no
   assert.equal(result.outcome, 'inconclusive'); assert.equal(result.reason, 'PREPARATION_UNCONFIRMED');
   assert.equal(result.actionAttempted, false); assert.equal(result.actionAcknowledged, false); assert.equal(result.admission, 'quarantined');
   await service.close();
-});
-
-test('production capture composition forces full fresh captures and private screenshots with no reuse, verification probe or stop', async t => {
-  let factory!: () => ReturnType<typeof createObservedDriver>; let captures = 0; const calls: string[][] = [];
-  const { root, admission, service } = fixture(t, async () => assert.fail('Wrong factory'), { createDriver: () => factory() });
-  const source = join(root, 'vendor-shot.jpg'); writeFileSync(source, 'private fixture image', { mode: 0o600 });
-  const runner: CliRunner = async args => {
-    calls.push(args);
-    if (args[1] === 'screenshot') return { stdout: JSON.stringify({ schema: 'mobilebuildmcp.output.capture-result', schemaVersion: '2',
-      data: { artifacts: { simulatorId: device, screenshotPath: source }, capture: { path: source } } }), stderr: '', exitCode: 0 };
-    if (args[1] === 'touch') return reply(true, true); return reply(++captures > 1);
-  };
-  factory = observedDriverFactory({ cwd: root, admission, lockRoot: join(root, 'leases'), runner,
-    deviceWindow: async () => assert.fail('No window'), fakeBackend: { runner, window: undefined },
-    screenshots: false, capture: 'compact', reuseActionCapture: true, verifyScreenshotAgreement: true, stopAppOnClose: true });
-  const raw = request(await ready(admission)); raw.timeoutMs = 5000; await service.start(raw);
-  const result = await service.inspect('one', { waitMs: 6000 }); assert.equal(result.outcome, 'outcome_observed');
-  assert.deepEqual(calls.map(args => args[1]), ['snapshot-ui', 'screenshot', 'touch', 'snapshot-ui', 'screenshot']);
-  assert.equal(calls[0]!.includes('--verbose'), true); assert.equal(calls[2]!.includes('--verbose'), false);
-  assert.equal(result.observations, 2); assert.equal(result.evidence.observations.length, 4);
-  for (const path of result.evidence.observations.filter(path => path.endsWith('.jpg'))) assert.deepEqual(readFileSync(path), readFileSync(source));
-  await service.close(); assert.equal(calls.some(args => ['launch-app', 'stop', 'list', 'boot', 'install'].includes(args[1]!)), false);
 });
 
 for (const point of ['beforeCommit', 'afterCommit'] as const) {
@@ -656,7 +637,7 @@ test('a retired unused allocation refuses action consumption without binding act
 });
 for (const point of ['beforeCommit', 'afterCommit'] as const) {
   test(`export tracking ${point} failure cannot rewrite the committed outcome`, async t => {
-    const { admission, service } = fixture(t, async () => reply(true), {}, {
+    const { admission, service } = fixture(t, async () => screen(true), {}, {
       fault: (seen, operation) => { if (seen === point && operation === 'recordActionExport') throw new Error('Export status uncertainty'); },
     });
     await service.start(request(await ready(admission))); const result = await service.inspect('one', { waitMs: 5000 });
@@ -682,20 +663,19 @@ test('explicit startup recovery quarantines only the proven abandoned expected o
 });
 
 test('local cancel fences continuation even when initial authoritative read fails', async t => {
-  const entered = deferred<void>(t, 'backend entry'); const pending = deferred<ReturnType<typeof reply>>(t, 'backend reply release');
-  const calls: string[] = []; let driver!: ReturnType<typeof createObservedDriver>; let revocations = 0;
-  const runner: CliRunner = async args => {
-    calls.push(args[1]!);
+  const entered = deferred<void>(t, 'backend entry'); const pending = deferred<Snapshot>(t, 'backend reply release');
+  const calls: string[] = []; let revocations = 0;
+  const backend: Backend = async operation => {
+    calls.push(operation);
     if (calls.length === 1) { entered.resolve(); return pending.promise; }
-    return reply(true, args[1] === 'touch');
+    return screen(true);
   };
-  const { root, admission, service } = fixture(t, runner, { createDriver: () => ({
+  const driver = executor(backend);
+  const { root, admission, service } = fixture(t, backend, { createDriver: () => ({
     attachObserved: (...args) => driver.attachObserved(...args), observe: (...args) => driver.observe(...args),
     tapOnce: (...args) => driver.tapOnce(...args), revokeIssuance() { revocations++; driver.revokeIssuance(); },
     close: signal => driver.close(signal),
   }) });
-  driver = createObservedDriver({ cwd: root, admission, lockRoot: join(root, 'leases'), runner,
-    deviceWindow: async () => assert.fail('No window'), fakeBackend: { runner, window: undefined } });
   await service.start(request(await ready(admission))); await entered.promise;
   const db = join(root, 'store', 'admission.sqlite');
   renameSync(db, db + '.temporarily-unavailable');
@@ -705,7 +685,7 @@ test('local cancel fences continuation even when initial authoritative read fail
     await assert.rejects(cancellation, { code: 'STORE_UNAVAILABLE' });
   }
   finally { renameSync(db + '.temporarily-unavailable', db); }
-  pending.resolve(reply(false));
+  pending.resolve(screen(false));
   const terminal = await service.inspect('one', { waitMs: 3000 });
   await service.close();
   assert.deepEqual(calls, ['snapshot-ui'], 'Explicit local cancellation prevents follow-up input despite an unavailable initial read');
@@ -717,10 +697,11 @@ test('local cancel fences continuation even when initial authoritative read fail
 });
 
 test('settled close within finalization budget does not consume action observation budget', async t => {
-  let driver!: ReturnType<typeof createObservedDriver>; let deadline!: AbortController;
+  let deadline!: AbortController;
   const calls: string[] = [];
-  const runner: CliRunner = async args => { calls.push(args[1]!); return reply(true); };
-  const { root, admission, service } = fixture(t, runner, { createDriver: () => ({
+  const backend: Backend = async operation => { calls.push(operation); return screen(true); };
+  const driver = executor(backend);
+  const { admission, service } = fixture(t, backend, { createDriver: () => ({
     attachObserved: (...args) => driver.attachObserved(...args),
     observe: async (...args) => {
       const value = await driver.observe(...args);
@@ -734,8 +715,6 @@ test('settled close within finalization budget does not consume action observati
       assert.equal(signal.aborted, false, 'Local close settles inside the separate finalization budget after action expiry');
     },
   }) });
-  driver = createObservedDriver({ cwd: root, admission, lockRoot: join(root, 'leases'), runner,
-    deviceWindow: async () => assert.fail('No window'), fakeBackend: { runner, window: undefined } });
   const raw = request(await ready(admission)); raw.timeoutMs = 500;
   deadline = actionDeadline(t);
   await service.start(raw); const terminal = await service.inspect('one', { waitMs: 5000 });
@@ -750,10 +729,11 @@ test('settled close within finalization budget does not consume action observati
 
 for (const phase of ['close', 'provisional'] as const) {
   test(`local cancellation with a failed durable write during prolonged ${phase} cannot commit computed success`, async t => {
-    let driver!: ReturnType<typeof createObservedDriver>; let failing = false;
+    let failing = false;
     const entered = deferred<void>(t, `${phase} entry`); const release = deferred<void>(t, 'local finalization release'); const files = new FileObservedEvidence();
     const calls: string[] = [];
-    const runner: CliRunner = async args => { calls.push(args[1]!); return reply(true); };
+    const backend: Backend = async operation => { calls.push(operation); return screen(true); };
+    const driver = executor(backend);
     const evidence: ObservedEvidenceStore = {
       prepare: (...args) => files.prepare(...args), observation: (...args) => files.observation(...args),
       async provisional(directory, result) {
@@ -761,15 +741,13 @@ for (const phase of ['close', 'provisional'] as const) {
         await files.provisional(directory, result);
       }, terminal: (...args) => files.terminal(...args),
     };
-    const { root, admission, service } = fixture(t, runner, { evidence, createDriver: () => ({
+    const { admission, service } = fixture(t, backend, { evidence, createDriver: () => ({
       attachObserved: (...args) => driver.attachObserved(...args), observe: (...args) => driver.observe(...args),
       tapOnce: (...args) => driver.tapOnce(...args), revokeIssuance: () => driver.revokeIssuance(),
       async close(signal) { await driver.close(signal); if (phase === 'close') { entered.resolve(); await release.promise; } },
     }) }, { fault: (point, operation) => {
       if (failing && point === 'beforeCommit' && operation === 'cancel') throw new Error('Injected cancellation write failure');
     } });
-    driver = createObservedDriver({ cwd: root, admission, lockRoot: join(root, 'leases'), runner,
-      deviceWindow: async () => assert.fail('No window'), fakeBackend: { runner, window: undefined } });
     const raw = request(await ready(admission)); raw.timeoutMs = 500;
     const deadline = actionDeadline(t);
     await service.start(raw); await entered.promise;
