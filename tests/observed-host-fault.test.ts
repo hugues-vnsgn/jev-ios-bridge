@@ -1,4 +1,3 @@
-import { fakeSimulatorProbe } from './fixtures/android-device.js';
 import { z } from 'zod/v4';
 import { allocation as allocationReply, snapshot, actionSnapshot, operationError, errorCode, replyKind } from './fixtures/public-contention.js';
 import assert from 'node:assert/strict';
@@ -8,12 +7,13 @@ import { mkdir, writeFile, readFile, chmod, symlink, rm, readdir } from 'node:fs
 import { createHash } from 'node:crypto';
 import { DatabaseSync } from 'node:sqlite';
 import { Admission } from '../src/device/admission.js';
-import { MobileBuildMcpDriver } from '../src/device/index.js';
+import { ComposedAppiumDriver } from '../src/appium/composition.js';
 import { migrateAdmissionForTesting, type MigrationDeclaration } from '../src/device/admission-migration.js';
 import { runObservedExperiment } from '../src/experimental/observed-run.js';
 import { withH01CliFixture, type H01CliFixture, hostFixture, actionRequest } from './fixtures/observed-host/harness.js';
 import { allocatorPublic } from './fixtures/observed-host/allocator-public.js';
 import { fixtureDevice, runtimeProfilePath } from './fixtures/observed-allocation-backend.js';
+import { createdDevice } from './fixtures/appium-wire/observed-allocator.js';
 import { parsePrepareAllocation } from '../src/observed/allocation-schema.js';
 
 const unknownId = 'ABCDEF00-0000-4000-8000-000000000099';
@@ -145,7 +145,7 @@ for (const transport of ['cli', 'mcp'] as const) for (const [mode, outcome, exit
 });
 
 for (const transport of ['cli', 'mcp'] as const) test(`H07.03 ${transport} healthy active owner public reads preserve exact database and logical state`, { timeout: 15000 }, async t => {
-  const f = await hostFixture(t); const ready = await f.prepare(); const request = actionRequest(ready.allocationId); const gate = 'backend:snapshot-ui:1';
+  const f = await hostFixture(t); const ready = await f.prepare(); const request = actionRequest(ready.allocationId); const gate = 'backend:observe:1';
   const owner = f.spawnOwner('cli', 'observed-action', await f.requestFile(request), { gate }); await f.milestone(gate, owner.child.pid);
   const before = f.admission().readAction('one'); const bytes = await f.database(); const calls = f.calls(); const server = transport === 'mcp' ? await f.mcp() : undefined;
   for (let i = 0; i < 3; i++) {
@@ -197,7 +197,7 @@ for (const transport of ['cli', 'mcp'] as const) {
     const f = await allocatorPublic(t); const server = transport === 'mcp' ? await f.mcp() : undefined;
     const prepare = async (id: string) => server ? server.call('prepare_observed_allocation', f.request(id)) : f.cli('observed-allocate', f.request(id));
     for (let i = 1; i <= 8; i++) await step(`allocation ${i}`, async () => {
-      if (i === 8) f.setCommandResult('boot', { exitCode: 1, stdout: '', stderr: 'ignored-raw-vendor' });
+      if (i === 8) f.setEffectExit('boot', 'lost', 'ignored-raw-vendor');
       const value = (await prepare('allocation-' + i)).reply; assert.equal(value.reservation.capacityHeld, true);
       if (i <= 7) assert.equal(value.state, 'ready'); else assert.equal(value.state, 'quarantined');
       if (i === 1) {
@@ -230,8 +230,9 @@ for (const transport of ['cli', 'mcp'] as const) {
     assert.equal(deviceCalls(f.calls).filter(op => op === 'create').length, 2);
     const calls = deviceCalls(f.calls);
     assert.deepEqual(f.admission.acquire({ device: unknownId, attempt: { kind: 'legacy', id: 'legacy' }, digest: 'legacy', intent: {} }), { kind: 'refused', reason: 'HOST_CREATION_UNRESOLVED', blockingAllocationId: failed.allocationId });
-    const legacy = new MobileBuildMcpDriver({ identityProbe: fakeSimulatorProbe(fixtureDevice, unknownId), cwd: f.root, admission: f.admission, lockRoot: join(f.root, 'legacy-locks'), stopAppOnClose: false, fakeBackend: { runner: f.runner, window: undefined } });
-    await assert.rejects(legacy.prepare({ app: { bundleId: 'org.example.fixture' }, device: { udid: unknownId } }, new AbortController().signal), /HOST_CREATION_UNRESOLVED/);
+    const other = createdDevice(9); const run = new ComposedAppiumDriver({ host: f.appium, admission: f.admission, target: async () => ({ platform: 'ios', device: other }) });
+    await assert.rejects(run.prepare({ app: { bundleId: 'org.example.fixture' }, device: { udid: other } }, new AbortController().signal), { code: 'DEVICE_BUSY', message: /HOST_CREATION_UNRESOLVED/ });
+    await run.close(new AbortController().signal);
     f.configure({ inventory: f.inventory(unknownId) });
     const supplied = (await call('observed-allocate', 'prepare_observed_allocation', { ...f.request('supplied'), source: { kind: 'supplied', inventoryId: 'stock-one' } })).reply;
     assert.equal(supplied.code, 'HOST_CREATION_UNRESOLVED');
@@ -248,7 +249,7 @@ for (const volume of ['simulator', 'staging'] as const) for (const [name, offset
   const server = transport === 'mcp' ? await f.mcp() : undefined;
   const result = server ? await server.call('prepare_observed_allocation', f.request()) : await f.cli('observed-allocate', f.request());
   if (offset < 0) { assert.equal(errorCode(result.reply), 'STORAGE_UNAVAILABLE'); assert.equal(operationError(result.reply).acceptance, 'no'); assert.equal(f.admission.readAllocationForAction('allocate-one'), undefined); assert.deepEqual(deviceCalls(f.calls), []); assert.deepEqual(f.admission.readAllocationCapacity(), { heldAllocations: 0, reservedBytes: 0 }); }
-  else { assert.equal(snapshot(result.reply).state, 'ready'); assert.equal(snapshot(result.reply).outcome, 'prepared'); assert.equal(snapshot(result.reply).authority, 'committed'); assert.equal(f.admission.readAllocation(result.reply.allocationId)!.artifactBytes, artifactBytes); assert.deepEqual(f.admission.readAllocationCapacity(), { heldAllocations: 1, reservedBytes: 1000 }); assert.deepEqual(deviceCalls(f.calls), ['create', 'boot', 'list', 'install', 'launch-app', 'list', 'snapshot-ui', 'screenshot']); }
+  else { assert.equal(snapshot(result.reply).state, 'ready'); assert.equal(snapshot(result.reply).outcome, 'prepared'); assert.equal(snapshot(result.reply).authority, 'committed'); assert.equal(f.admission.readAllocation(result.reply.allocationId)!.artifactBytes, artifactBytes); assert.deepEqual(f.admission.readAllocationCapacity(), { heldAllocations: 1, reservedBytes: 1000 }); assert.deepEqual(deviceCalls(f.calls), ['create', 'boot', 'install', 'launch-app']); }
   if (server) await server.close();
 });
 
@@ -264,7 +265,7 @@ for (const stage of ['pre-create', 'pre-install'] as const) for (const volume of
   assert.deepEqual(allocationReply(result.reply).reservation, { bytes: 1000, capacityHeld: stage === 'pre-install' });
   const record = f.admission.readAllocation(result.reply.allocationId)!; assert.equal(record.reason, 'STORAGE_UNAVAILABLE'); assert.equal(record.actionDigest, null); assert.equal(record.artifactBytes, artifactBytes);
   assert.deepEqual(f.admission.readAllocationCapacity(), { heldAllocations: stage === 'pre-install' ? 1 : 0, reservedBytes: stage === 'pre-install' ? 1000 : 0 });
-  assert.deepEqual(deviceCalls(f.calls), stage === 'pre-install' ? ['create', 'boot', 'list'] : []);
+  assert.deepEqual(deviceCalls(f.calls), stage === 'pre-install' ? ['create', 'boot'] : []);
   if (server) await server.close();
 });
 
@@ -291,7 +292,7 @@ for (const failure of ['symlink', 'source-mutation', 'staged-mutation', 'oversiz
     assert.equal(errorCode(response.reply), failure === 'runtime' ? 'HOST_PREREQUISITE_MISSING' : 'ARTIFACT_INVALID'); assert.equal(operationError(response.reply).acceptance, 'no'); assert.equal(f.admission.readAllocationForAction('allocate-one'), undefined);
     assert.deepEqual(f.admission.readAllocationCapacity(), { heldAllocations: 0, reservedBytes: 0 });
   }
-  assert.deepEqual(deviceCalls(f.calls), failure === 'staged-mutation' ? ['create', 'boot', 'list'] : []);
+  assert.deepEqual(deviceCalls(f.calls), failure === 'staged-mutation' ? ['create', 'boot'] : []);
   assert.equal(deviceCalls(f.calls).filter(op => op === 'install').length, 0); assert.equal(deviceCalls(f.calls).filter(op => op === 'touch').length, 0);
   assert.ok(deviceCalls(f.calls).filter(op => op === 'create').length <= 1);
   if (server) await server.close();
@@ -382,9 +383,9 @@ test('H08.02 declaration/quiescence omissions refuse activation; experimental ra
 for (const ordering of ['legacy-first', 'observed-first'] as const) for (const transport of ['cli', 'mcp'] as const) test(`H03.04 ${transport} ${ordering} canonical supplied admission excludes the successor`, async t => {
   const f = await allocatorPublic(t); f.configure({ inventory: f.inventory(fixtureDevice.toLowerCase()) });
   const legacy = () => f.admission.acquire({ device: fixtureDevice.toLowerCase(), attempt: { kind: 'legacy', id: 'legacy' }, digest: 'legacy', intent: {} });
-  const driver = new MobileBuildMcpDriver({ identityProbe: fakeSimulatorProbe(fixtureDevice), cwd: f.root, admission: f.admission, lockRoot: join(f.root, 'legacy-locks'), stopAppOnClose: false, fakeBackend: { runner: f.runner, window: undefined } });
+  const driver = new ComposedAppiumDriver({ host: f.appium, admission: f.admission, target: async () => ({ platform: 'ios', device: fixtureDevice.toLowerCase() }) });
   const context = { app: { bundleId: 'org.example.fixture' }, device: { udid: fixtureDevice.toLowerCase() }, values: {} };
-  if (ordering === 'legacy-first') await driver.prepare(context, new AbortController().signal);
+  if (ordering === 'legacy-first') assert.equal(legacy().kind, 'acquired');
   const before = deviceCalls(f.calls);
   const request = { ...f.request(), source: { kind: 'supplied', inventoryId: 'stock-one' } };
   const server = transport === 'mcp' ? await f.mcp() : undefined;
@@ -393,7 +394,7 @@ for (const ordering of ['legacy-first', 'observed-first'] as const) for (const t
   else {
     assert.equal(snapshot(observed.reply).state, 'ready'); const record = f.admission.readAllocation(observed.reply.allocationId)!; const preparedCalls = deviceCalls(f.calls);
     assert.deepEqual(legacy(), { kind: 'refused', reason: 'DEVICE_QUARANTINED' }); assert.equal(f.calls.filter(op => op === 'create').length, 0);
-    await assert.rejects(driver.prepare(context, new AbortController().signal), { code: 'DEVICE_BUSY' });
+    await assert.rejects(driver.prepare(context, new AbortController().signal), { code: 'DEVICE_QUARANTINED' });
     assert.deepEqual(f.admission.readAllocation(observed.reply.allocationId), record); assert.deepEqual(deviceCalls(f.calls), preparedCalls);
   }
   await driver.close(new AbortController().signal);
@@ -546,7 +547,7 @@ for (const transport of ['cli', 'mcp'] as const) test(`H02.02 ${transport} exact
 });
 
 for (const transport of ['cli', 'mcp'] as const) test(`H02.03 ${transport} acknowledged preparation refusal has committed error-free snapshot semantics`, async t => {
-  const f = await allocatorPublic(t); f.setCommandResult('boot', { exitCode: 1, stderr: 'never-echo-vendor', stdout: JSON.stringify({ schema: 'mobilebuildmcp.output.simulator-action-result', schemaVersion: '2', didError: true, error: { code: 'VENDOR_PRIVATE', message: 'never-echo-vendor' }, data: { artifacts: { simulatorId: fixtureDevice } } }) });
+  const f = await allocatorPublic(t); f.setEffectExit('boot', 1, 'never-echo-vendor');
   const server = transport === 'mcp' ? await f.mcp() : undefined;
   const result = server ? await server.call('prepare_observed_allocation', f.request()) : await f.cli('observed-allocate', f.request());
   assert.equal(snapshot(result.reply).outcome, 'refused'); assert.equal(snapshot(result.reply).authority, 'committed'); assert.equal(snapshot(result.reply).reason, 'BOOT_FAILED');

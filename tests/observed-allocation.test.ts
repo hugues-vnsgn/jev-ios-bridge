@@ -9,7 +9,6 @@ import { fileURLToPath } from 'node:url';
 import { createHash } from 'node:crypto';
 import { ObservedAllocator } from '../src/observed/allocation.js';
 import { Admission } from '../src/device/admission.js';
-import { deviceWindowOpener } from '../src/device/index.js';
 import { allocationSourceProcess } from '../src/observed/allocation-config.js';
 import { allocationSnapshot, canonicalJson } from '../src/observed/allocation-schema.js';
 import { migrateAdmissionForTesting, type ImportedObservedAction } from '../src/device/admission-migration.js';
@@ -32,6 +31,7 @@ function hold() {
   return { reached, release, async pause() { reach(); await released; } };
 }
 const supplied = (f: Allocation['f'], actionId?: string) => ({ ...f.request(actionId), source: { kind: 'supplied', inventoryId: 'stock-one' } });
+const noDriver = () => assert.fail('This allocator never prepares');
 
 test('one fresh allocation reserves and stages before create, prepares once on the Appium driver and parks for a fresh action', async t => {
   const x = await appiumAllocator(t); const { f, allocator } = x;
@@ -239,7 +239,7 @@ for (const corruption of ['missing', 'corrupt'] as const) test(`${corruption} in
 
 const hostile = 'TYPESAFE_API_KEY=sk-private-fixture vendor stderr /private/supplied-fixture';
 for (const failure of ['config', 'metadata', 'artifact', 'create', 'boot'] as const) test(`public ${failure} errors discard credential-looking diagnostics and supplied values`, async t => {
-  const { f, allocator } = await appiumAllocator(t, failure === 'boot' ? { nativeExit: command => command.kind === 'ios-boot' ? 1 : undefined, nativeStderr: hostile } : {});
+  const { f, allocator } = await appiumAllocator(t, failure === 'boot' ? { nativeExit: command => command.kind === 'ios-boot' ? 1 : undefined, nativeStderr: () => hostile } : {});
   if (failure === 'config') f.configure({ unexpected: hostile });
   if (failure === 'create') f.setCreateResult({ exitCode: 1, stdout: hostile, stderr: hostile });
   f.setBefore(async (op, path) => {
@@ -261,21 +261,19 @@ test('borrowed admission survives memoized module close; closed module retrieves
   assert.deepEqual(effects(x), before);
 });
 
-test('production composition refuses a test store before any fake source, runner or opener can execute', async () => {
+test('production composition refuses a test store, and a fake backend refuses a missing test store, before any fake source can execute', async () => {
   const f = await allocationFixture();
-  try { assert.throws(() => new ObservedAllocator({ runsDir: f.runsDir, admission: f.admission }), /production|fake|test/i);
-    assert.throws(() => new ObservedAllocator({ runsDir: f.runsDir, admission: f.admission,
-      fakeBackend: { process: f.source, runner: f.runner, host: f.host } as never })); assert.deepEqual(f.calls, []);
+  try { assert.throws(() => new ObservedAllocator({ runsDir: f.runsDir, admission: f.admission, createDriver: noDriver }), /production|fake|test/i);
+    assert.throws(() => new ObservedAllocator({ runsDir: f.runsDir, fakeBackend: { process: f.source, host: f.host }, createDriver: noDriver }), { code: 'CONFIG_INVALID' });
+    assert.deepEqual(f.calls, []);
   } finally { await f.cleanup(); }
 });
 
-test('test authority rejects production window opener and production source composition at construction before any effects', async () => {
+test('test authority rejects production source composition at construction before any effects', async () => {
   const f = await allocationFixture();
   try {
     assert.throws(() => new ObservedAllocator({ admission: f.admission, runsDir: f.runsDir,
-      fakeBackend: { process: f.source, runner: f.runner, window: deviceWindowOpener(false, {}), host: f.host } }));
-    assert.throws(() => new ObservedAllocator({ admission: f.admission, runsDir: f.runsDir,
-      fakeBackend: { process: allocationSourceProcess(f.host), runner: f.runner, window: f.window, host: f.host } }));
+      fakeBackend: { process: allocationSourceProcess(f.host), host: f.host }, createDriver: noDriver }), { code: 'CONFIG_INVALID' });
     assert.deepEqual(f.calls, []);
   } finally { await f.cleanup(); }
 });
@@ -397,7 +395,7 @@ test('dead independent preparation process is unchanged by get, then explicit re
     import { allocationFixture } from './tests/fixtures/observed-allocation-backend.ts';
     import { ObservedAllocator } from './src/observed/allocation.ts';
     const f = await allocationFixture();
-    const allocator = new ObservedAllocator({admission:f.admission,runsDir:f.runsDir,fakeBackend:{process:f.source,runner:f.runner,window:f.window,host:f.host}});
+    const allocator = new ObservedAllocator({admission:f.admission,runsDir:f.runsDir,fakeBackend:{process:f.source,host:f.host},createDriver:()=>{throw new Error('No driver');}});
     f.setBefore(async op => { if(op==='create') { console.log(JSON.stringify({root:f.root,store:f.store,record:f.admission.readAllocationForAction('allocate-one')})); await new Promise(()=>{}); } });
     setInterval(()=>{},1000); void allocator.prepare(f.request());
   `], { cwd: fileURLToPath(new URL('..', import.meta.url)), env: { PATH: process.env.PATH, LANG: 'C', LC_ALL: 'C' }, stdio: ['ignore', 'pipe', 'pipe'] });
@@ -410,7 +408,7 @@ test('dead independent preparation process is unchanged by get, then explicit re
     const receipt = JSON.parse(raw) as {root:string;store:string;record:{allocationId:string;owner:{process:{pid:number}}}}; workerRoot = receipt.root;
     assert.equal(receipt.record.owner.process.pid, child.pid); child.kill('SIGTERM'); await exited;
     const admission = Admission.forTesting({ root: receipt.store, backend: 'fake', initialize: false });
-    reader = new ObservedAllocator({ admission, runsDir: f.runsDir, fakeBackend: { process: f.source, runner: f.runner, window: f.window, host: f.host } });
+    reader = new ObservedAllocator({ admission, runsDir: f.runsDir, fakeBackend: { process: f.source, host: f.host }, createDriver: noDriver });
     const stored = admission.readAllocation(receipt.record.allocationId)!; assert.equal(snapshot(await reader.get(stored.allocationId)).state, 'preparing');
     assert.deepEqual(admission.readAllocation(stored.allocationId), stored); assert.equal(reader.recoverAbandoned(), 1);
     const recovered = admission.readAllocation(stored.allocationId)!; assert.equal(recovered.state, 'quarantined'); assert.equal(recovered.capacityHeld, true);
@@ -432,7 +430,7 @@ test('reserved failure retains bounded private raw source diagnostics while publ
 
 for (const [kind, reason] of [['ios-boot', 'BOOT_FAILED'], ['ios-install', 'INSTALL_FAILED'], ['ios-launch', 'LAUNCH_FAILED']] as const) {
   test(`known acknowledged ${kind} failure is a stable stage refusal with no retry or follow-up`, async t => {
-    const x = await appiumAllocator(t, { nativeExit: command => command.kind === kind ? 1 : undefined, nativeStderr: hostile });
+    const x = await appiumAllocator(t, { nativeExit: command => command.kind === kind ? 1 : undefined, nativeStderr: () => hostile });
     const result = snapshot(await x.allocator.prepare(x.f.request())); assert.equal(result.reason, reason); assert.equal(result.state, 'retained');
     const { natives } = effects(x);
     assert.equal(result.outcome, 'refused'); assert.equal(natives.at(-1), kind); assert.equal(natives.filter(call => call === kind).length, 1);
@@ -522,7 +520,7 @@ test('unknown creator directory pointer survives a fresh process and changed cwd
     import { allocationFixture } from './tests/fixtures/observed-allocation-backend.ts';
     const [root,id] = process.argv.slice(1); const f=await allocationFixture();
     const admission=Admission.forTesting({root,backend:'fake',initialize:false});
-    const allocator=new ObservedAllocator({admission,runsDir:f.runsDir,fakeBackend:{process:f.source,runner:f.runner,window:f.window,host:f.host}});
+    const allocator=new ObservedAllocator({admission,runsDir:f.runsDir,fakeBackend:{process:f.source,host:f.host},createDriver:()=>{throw new Error('No driver');}});
     process.chdir(f.root); const before=admission.readAllocation(id); const result=await allocator.get(id.toLowerCase());
     console.log(JSON.stringify({result,unchanged:JSON.stringify(before)===JSON.stringify(admission.readAllocation(id)),calls:f.calls}));
     await allocator.close(); await f.cleanup();
@@ -651,7 +649,7 @@ for (const mode of ['valid', 'unavailable', 'missing', 'relative', 'wrong-identi
 
 test('required diagnostic publication failure quarantines a settled known install refusal', async t => {
   let blocked = false;
-  const x: Allocation = await appiumAllocator(t, { nativeStderr: hostile, nativeExit: command => {
+  const x: Allocation = await appiumAllocator(t, { nativeStderr: () => hostile, nativeExit: command => {
     if (command.kind !== 'ios-install') return undefined;
     if (!blocked) { blocked = true; mkdirSync(join(x.f.admission.readAllocationForAction('allocate-one')!.evidenceDirectory, 'source-diagnostics.json'), { mode: 0o700 }); }
     return 1;
@@ -686,7 +684,7 @@ async function historicalFixture(f: Awaited<ReturnType<typeof allocationFixture>
   const store = join(f.root, 'imported-store'); migrateAdmissionForTesting({ version: 1, writersStopped: true, historicalRootsDeclaredOrExcluded: true,
     additionalJournalRoots: [], additionalLeaseRoots: [], excludedDevices: excluded ? [device] : [] }, { root: store, backend: 'fake', defaultRoots: { journal, leases: join(f.root, 'historical-leases') } });
   const admission = Admission.forTesting({ root: store, backend: 'fake', initialize: false });
-  const allocator = new ObservedAllocator({ admission, runsDir: f.runsDir, fakeBackend: { process: f.source, runner: f.runner, window: f.window, host: f.host } });
+  const allocator = new ObservedAllocator({ admission, runsDir: f.runsDir, fakeBackend: { process: f.source, host: f.host }, createDriver: noDriver });
   return { admission, allocator, store, paths, imported: admission.readImportedAction(identity.actionId)! };
 }
 
@@ -749,7 +747,7 @@ test('historical allocation retrieval survives a fresh process and changed cwd w
       import assert from 'node:assert/strict';import {ObservedAllocator} from ${JSON.stringify(new URL('../src/observed/allocation.ts', import.meta.url).href)};
       import {Admission} from ${JSON.stringify(new URL('../src/device/admission.ts', import.meta.url).href)};
       import {allocationFixture} from ${JSON.stringify(new URL('./fixtures/observed-allocation-backend.ts', import.meta.url).href)};
-      const [root,id,cwd]=process.argv.slice(1);const f=await allocationFixture();process.chdir(cwd);const a=new ObservedAllocator({admission:Admission.forTesting({root,backend:'fake',initialize:false}),runsDir:f.runsDir,fakeBackend:{process:f.source,runner:f.runner,window:f.window,host:f.host}});
+      const [root,id,cwd]=process.argv.slice(1);const f=await allocationFixture();process.chdir(cwd);const a=new ObservedAllocator({admission:Admission.forTesting({root,backend:'fake',initialize:false}),runsDir:f.runsDir,fakeBackend:{process:f.source,host:f.host},createDriver:()=>{throw new Error('No driver');}});
       try{const result=await a.get(id);assert.deepEqual(await a.cancel(id),result);assert.deepEqual(await a.retire(id),result);assert.deepEqual(f.calls,[]);console.log(JSON.stringify(result));}finally{await a.close();await f.cleanup();}
     `, [h.store, h.imported.allocationId, f.root]);
     assert.equal(child.code, 0, child.stderr); assert.deepEqual(JSON.parse(child.stdout), result); assert.deepEqual(await fs.readFile(join(h.store, 'admission.sqlite')), bytes); assert.deepEqual(f.calls, []);

@@ -42,7 +42,7 @@ for (const transport of ['cli', 'mcp'] as const) {
     const started = actionSnapshot((first ? await first.call('start_observed_action', input) : await f.cli('observed-action', actionPath, { cwd })).reply); assert.equal(started.disposition, 'started');
     const terminal = first ? actionSnapshot((await first.call('get_observed_action', { actionId: 'one', waitMs: 5000 })).reply) : started; assert.equal(terminal.outcome, 'outcome_observed'); assert.equal(terminal.authority, 'committed');
     const repeated = actionSnapshot((second ? await second.call('start_observed_action', input) : await f.cli('observed-action', actionPath, { cwd: alias })).reply); assert.equal(repeated.disposition, 'retrieved'); assert.equal(repeated.outcome, 'outcome_observed');
-    assert.equal(f.calls().filter(op => op === 'touch').length, 1); assert.equal(f.calls().filter(op => op === 'snapshot-ui').length - 1, 2);
+    assert.deepEqual(f.calls().filter(op => !['plist', 'window'].includes(op)), ['create', 'boot', 'install', 'launch-app', 'touch']);
     const calls = f.calls(); const bytes = await f.database(); const binding = f.admission().readAllocation(prepared.allocationId); assert.equal(binding?.outcome, 'action_completed', 'Committed useful outcome before close'); assert.equal(f.admission().readAction('one')?.kind, 'allocation');
     const changed = { ...input, timeoutMs: 6000 }; const conflict = first ? await first.call('start_observed_action', changed) : await f.cli('observed-action', await f.requestFile(changed, 'conflict.json')); assert.equal(errorCode(conflict.reply), 'ACTION_ID_CONFLICT');
     const disabled = await f.mcp({ enabled: '0', cwd: alias }); assert.equal(actionSnapshot((await disabled.call('get_observed_action', { actionId: 'one' })).reply).outcome, 'outcome_observed');
@@ -92,12 +92,9 @@ for (const transport of ['cli', 'mcp'] as const) {
     ['afterCommit:recordCreation:1', []],
     ['afterCommit:attach:1', []],
     ['backend:boot:1', []],
-    ['backend:list:1', []],
     ['backend:install:1', []],
     ['backend:launch-app:1', []],
-    ['backend:list:2', []],
-    ['backend:snapshot-ui:1', []],
-    ['backend:screenshot:1', []],
+    ['backend:readiness:1', []],
   ] as const) test(`H05.01 ${transport} durable external preparation cancel at ${gate} fences successors`, { timeout: 15000 }, async t => {
     const f = await hostFixture(t); const request = f.request('one');
     const server = transport === 'mcp' ? await f.mcp({ gate }) : undefined;
@@ -147,7 +144,7 @@ for (const [signal, code] of [['SIGINT', 130], ['SIGTERM', 143]] as const) {
     const f = await hostFixture(t); const allocation = await f.prepare();
     const path = await f.requestFile({ ...actionRequest(allocation.allocationId), timeoutMs: 60000 });
     const owner = f.spawnOwner('cli', 'observed-action', path, { mode: 'pending-resource' });
-    await f.milestone('backend:snapshot-ui:1', owner.child.pid);
+    await f.milestone('backend:observe:1', owner.child.pid);
     const end = Date.now() + 5000; while (!f.calls().includes('resource-live')) { assert.ok(Date.now() < end); await new Promise(done => setTimeout(done, 10)); }
     const before = f.calls();
     const started = Date.now(); owner.child.kill(signal); const result = await owner.exited;
@@ -238,7 +235,7 @@ for (const [signal, code] of [['SIGINT', 130], ['SIGTERM', 143]] as const) test(
 });
 
 for (const [signal, code] of [['SIGINT', 130], ['SIGTERM', 143]] as const) test(`H05.07 public read-wait ${signal} leaves the active action untouched`, { timeout: 15000 }, async t => {
-  const f = await hostFixture(t); const allocation = await f.prepare(); const gate = 'backend:snapshot-ui:1';
+  const f = await hostFixture(t); const allocation = await f.prepare(); const gate = 'backend:observe:1';
   const owner = f.spawnOwner('cli', 'observed-action', await f.requestFile(actionRequest(allocation.allocationId)), { gate });
   await f.milestone(gate, owner.child.pid); const initial = (await f.cli('observed-report', 'one')).reply; const bytes = await f.database(); const calls = f.calls();
   const waiting = f.spawnOwner('cli', 'observed-report', 'one', { waitMs: 45000 }); await f.milestone('public:inspect:1', waiting.child.pid);
@@ -248,7 +245,7 @@ for (const [signal, code] of [['SIGINT', 130], ['SIGTERM', 143]] as const) test(
 });
 
 test('H05.08 MCP transport-cancelled action wait preserves durable cancellation and active owner', { timeout: 15000 }, async t => {
-  const f = await hostFixture(t); const allocation = await f.prepare(); const gate = 'backend:snapshot-ui:1';
+  const f = await hostFixture(t); const allocation = await f.prepare(); const gate = 'backend:observe:1';
   const owner = f.spawnOwner('cli', 'observed-action', await f.requestFile(actionRequest(allocation.allocationId)), { gate }); await f.milestone(gate, owner.child.pid);
   const server = await f.mcp(); const bytes = await f.database(); const initial = (await server.call('get_observed_action', { actionId: 'one' })).reply;
   const calls = f.calls(); const waiting = server.rpc('tools/call', { name: 'get_observed_action', arguments: { actionId: 'one', waitMs: 45000 } }); let received = false; void waiting.result.then(() => { received = true; }, () => {});
@@ -284,7 +281,7 @@ const preparingSchedules = [
   ['booting', 'backend:boot:1'],
   ['installing', 'backend:install:1'],
   ['launching', 'backend:launch-app:1'],
-  ['readiness', 'backend:snapshot-ui:1'],
+  ['readiness', 'backend:readiness:1'],
 ] as const;
 for (const [phase, gate] of preparingSchedules) test(`H03.01 legal preparing ${phase} reconciles CLI and MCP prefixes`, { timeout: 20000 }, async t => {
   const f = await hostFixture(t); const request = f.request('one'); const path = await f.requestFile(request);

@@ -6,8 +6,7 @@ import { NativeHelperError } from '../appium/native/process.js';
 import { AppiumError } from '../appium/wire-schemas.js';
 import { Admission, AdmissionError } from '../device/admission.js';
 import type { ActionBinding, AllocationRecord, AllocationReservation, AllocationReason, ConsumeAllocationResult } from '../device/admission-allocation.js';
-import { DeviceCliError, DeviceReasonError, deviceWindowOpener, type CliRunner, type DeviceWindowOpener, type IosPreparationDriver } from '../device/index.js';
-import { createPreparationDriver } from '../device/legacy-factory.js';
+import { DeviceCliError, DeviceReasonError, type IosPreparationDriver } from '../device/index.js';
 import { inspectArtifact, stageArtifact, verifyStagedArtifact, ArtifactError, type ArtifactRequest } from './artifact.js';
 import { createSimulator, type SourceProcess } from './create-source.js';
 import { selectSuppliedSource } from './supplied-source.js';
@@ -19,8 +18,8 @@ export type { AllocationSnapshotV1, AllocationOperationError, AllocationResult }
 
 export type AllocatorOptions = {
   runsDir: string; admission?: Admission;
-  createDriver?: () => IosPreparationDriver;
-  fakeBackend?: { process: SourceProcess; runner: CliRunner; window: DeviceWindowOpener | undefined; host: InstalledHost };
+  createDriver: () => IosPreparationDriver;
+  fakeBackend?: { process: SourceProcess; host: InstalledHost };
 };
 type Job = { actionId: string; digest: string; controller: AbortController; deadline: number;
   reservation?: AllocationReservation; reservationAttempted?: boolean; driver?: IosPreparationDriver; phase: AllocationRecord['phase']; evidence: string[]; diagnostics: string[]; diagnosticsClosed: boolean;
@@ -58,12 +57,11 @@ export class ObservedAllocator {
   private closing: Promise<void> | undefined;
   constructor(private readonly options: AllocatorOptions) {
     if (!isAbsolute(options.runsDir) || options.runsDir.includes('\0') || options.runsDir.length > 4096) throw new AllocationInputError('CONFIG_INVALID');
-    if (options.fakeBackend && (!options.admission || !Object.hasOwn(options.fakeBackend, 'window')
-      || typeof options.fakeBackend.process !== 'function' || typeof options.fakeBackend.runner !== 'function'
-      || isProductionSourceProcess(options.fakeBackend.process) || (options.fakeBackend.window !== undefined && options.fakeBackend.window === deviceWindowOpener(false, {})))) throw new AllocationInputError('CONFIG_INVALID');
+    if (options.fakeBackend && (!options.admission || typeof options.fakeBackend.process !== 'function'
+      || isProductionSourceProcess(options.fakeBackend.process))) throw new AllocationInputError('CONFIG_INVALID');
     this.admission = options.admission ?? Admission.open();
     this.admission.assertBackend(options.fakeBackend ? 'fake' : 'real');
-    if (!options.fakeBackend && !options.createDriver) throw new AllocationInputError('CONFIG_INVALID');
+    if (typeof options.createDriver !== 'function') throw new AllocationInputError('CONFIG_INVALID');
     this.host = options.fakeBackend?.host ?? installedHost();
   }
   private track<T>(promise: Promise<T>): Promise<T> {
@@ -219,9 +217,7 @@ export class ObservedAllocator {
       }
       this.check(job); job.phase = 'admitting'; const admitted = job.reservation.admit();
       if (admitted.kind !== 'admitted') throw new PreparationFailure(admitted.reason);
-      job.driver = this.options.createDriver?.() ?? createPreparationDriver({ cwd: evidenceDirectory, admission: this.admission, capture: 'full', screenshots: true,
-        ...(this.options.fakeBackend ? { runner: this.options.fakeBackend.runner, deviceWindow: this.options.fakeBackend.window ?? (async () => {}),
-          fakeBackend: { runner: this.options.fakeBackend.runner, window: this.options.fakeBackend.window }, lockRoot: join(this.options.runsDir, 'leases') } : {}) });
+      job.driver = this.options.createDriver();
       await job.driver.attachPreparation(admitted.claim, { app: { bundleId: request.app.bundleId } }, job.controller.signal);
       // Supplied availability is verified through the admitted driver capability, never a bare runner.
       if (source.kind === 'supplied') {
