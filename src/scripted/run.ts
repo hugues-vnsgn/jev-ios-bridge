@@ -7,7 +7,7 @@ import { SCRIPTED_JEV_MODEL, ScriptedJevError } from './jev.js';
 import { PROJECTION_RULES, renderAssertionState, ScriptedObservationError } from './observe.js';
 import { buildScriptedReport, type ScriptedReport } from './report.js';
 import { buildReportJson } from './report-json.js';
-import { MOBILEBUILDMCP_PASSTHROUGH_CODES } from './vocabulary.js';
+import { DEVICE_CLI_PASSTHROUGH_CODES } from './vocabulary.js';
 import { BRIDGE_VERSION } from '../version.js';
 import { maskSnapshot, maskValues, type DrivenJudge } from '../driven/decide.js';
 import { createSearchMemory, runDrivenStep, type Handback } from '../driven/step.js';
@@ -156,7 +156,7 @@ function failureOf(error: unknown, signal: AbortSignal): Failure {
     return { code: error.code, vendorCode, ...(error.vendorSource === undefined ? {} : { vendorSource: error.vendorSource }) };
   }
   if (error instanceof DeviceCliError) {
-    if (MOBILEBUILDMCP_PASSTHROUGH_CODES.has(error.code)) return { code: error.code };
+    if (DEVICE_CLI_PASSTHROUGH_CODES.has(error.code)) return { code: error.code };
     return { code: 'DEVICE_ERROR', ...(VENDOR_CODE.test(error.code) ? { vendorCode: error.code } : {}) };
   }
   return { code: 'EXECUTION_ERROR' };

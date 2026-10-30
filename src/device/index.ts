@@ -94,7 +94,7 @@ const SIMULATOR_UUID = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f
  */
 export async function selectDeviceId(cwd: string, scriptUdid?: string, defaultUdid?: string): Promise<string> {
   const selected = scriptUdid ?? defaultUdid ?? await configuredUdid(cwd);
-  if (!selected) throw new DeviceCliError('NO_DEVICE', 'Set a dedicated simulator UDID in the scenario or MobileBuildMCP config');
+  if (!selected) throw new DeviceCliError('NO_DEVICE', 'Set a dedicated simulator UDID in a profile, the scenario or JEV_DEVICE_UDID');
   if (/^(?:[a-f0-9]{40}|[a-f0-9]{8}-[a-f0-9]{16})$/i.test(selected)) throw new DeviceReasonError('CATEGORY_NOT_ENABLED', 'Physical iPhone identity is not enabled');
   if (!SIMULATOR_UUID.test(selected)) {
     throw new DeviceCliError('INVALID_DEVICE', 'Set a dedicated simulator UUID; device aliases are not supported');

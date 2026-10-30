@@ -37,7 +37,7 @@ type Axis = { start: number; length: number };
 const fraction = ({ start, length }: Axis, from: number, to: number): [number, number] =>
   [Math.round(start + length * from), Math.round(start + length * to)];
 
-/** The span MobileBuildMCP strokes inside an element: 15% insets of at least 24 points, never past a third. */
+/** The span a swipe strokes inside an element: 15% insets of at least 24 points, never past a third. */
 function iosSpan({ start, length }: Axis): [number, number] {
   const inset = Math.max(1, Math.min(Math.max(length * 0.15, 24), length / 3));
   return [Math.round(start + inset), Math.round(start + length - inset)];
@@ -60,7 +60,7 @@ export function swipeWithin(platform: AppiumPlatform, frame: Frame, direction: D
     durationMs: SWIPE_MS };
 }
 
-/** The scroll inside the largest scrollable: today's Android stroke, and the iOS stroke MobileBuildMCP made at distance 0.4. */
+/** The scroll inside the largest scrollable: today's Android stroke, and the iOS stroke at distance 0.4. */
 export function scrollWithin(platform: AppiumPlatform, frame: Frame, finger: 'up' | 'down'): Stroke {
   return swipeWithin(platform, frame, finger, platform === 'ios' ? IOS_SCROLL_DISTANCE : 1);
 }
@@ -77,7 +77,7 @@ export function screenMiddleScroll(platform: AppiumPlatform, screen: Size, direc
   return { from: { x, y: Math.round(from) }, to: { x, y: Math.round(to) }, durationMs: IOS_SCREEN_SCROLL_MS };
 }
 
-/** AXe's left-edge back stroke. */
+/** The left-edge back stroke. */
 export function edgeBack(screen: Size): Stroke {
   const y = Math.round(screen.height / 2);
   return { from: { x: IOS_EDGE_INSET, y }, to: { x: Math.round(screen.width - IOS_EDGE_INSET), y }, durationMs: IOS_EDGE_BACK_MS };

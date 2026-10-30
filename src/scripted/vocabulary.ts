@@ -12,7 +12,7 @@ export const ROLES = [
 export type Role = typeof ROLES[number];
 
 /**
- * The reason codes shipped through 1.1. Only this set of keys is frozen (see MOBILEBUILDMCP_PASSTHROUGH_CODES
+ * The reason codes shipped through 1.1. Only this set of keys is frozen (see DEVICE_CLI_PASSTHROUGH_CODES
  * below); their descriptions may still be reworded, as NO_DEVICE, INVALID_DEVICE and DEVICE_BUSY were
  * in 1.2, to serve both platforms without changing what each code means.
  */
@@ -138,4 +138,4 @@ export function isReasonCode(value: unknown): value is ReasonCode {
  * (for example an Android-only code that happens to share a name with a device-layer code) from silently
  * starting to pass through too. See ADR-0005.
  */
-export const MOBILEBUILDMCP_PASSTHROUGH_CODES: ReadonlySet<string> = new Set(Object.keys(REASON_CODES_1_1));
+export const DEVICE_CLI_PASSTHROUGH_CODES: ReadonlySet<string> = new Set(Object.keys(REASON_CODES_1_1));
