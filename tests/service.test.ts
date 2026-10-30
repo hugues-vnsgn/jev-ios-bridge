@@ -7,8 +7,8 @@ import { BridgeService } from '../src/service.js';
 import type { DeviceDriver } from '../src/contracts/index.js';
 import { appLabel, type AppIdentity } from '../src/contracts/index.js';
 import type { ScriptedJudge } from '../src/scripted/contracts.js';
-import { createLegacyDriverFactory } from '../src/device/legacy-factory.js';
-import { androidTools } from '../src/device/android/tools.js';
+import { productionAppiumHost } from '../src/appium/composition.js';
+import { createDriverFactory } from '../src/device/factory.js';
 import { attachLogPane } from '../src/logpane/attach.js';
 import { Capture } from './fixtures/capture.js';
 import { readRunEvents } from '../src/log/index.js';
@@ -268,15 +268,15 @@ test('an Android scenario gives its driver a package identity, never a bundle ID
   } finally { await service.close(); await rm(root, { recursive: true, force: true }); }
 });
 
-test('an Android scenario reaches the Android driver through the real driver factory, and ends at ANDROID_TOOLS_UNAVAILABLE without adb', async () => {
+test('an Android scenario reaches the Appium composition through the real driver factory, and ends at ANDROID_TOOLS_UNAVAILABLE without adb', async () => {
   const root = await mkdtemp(join(tmpdir(), 'jev-service-android-refused-'));
   const empty = join(root, 'empty');
   await mkdir(empty);
   const judge: ScriptedJudge = { async judge() { return assert.fail('Jev is never asked when prepare fails'); } };
   // The real tools check, with ANDROID_HOME, ANDROID_SDK_ROOT, PATH and the home folder all empty.
-  const tools = () => androidTools({ environment: { ANDROID_HOME: empty, ANDROID_SDK_ROOT: empty, PATH: empty }, home: empty });
-  const createDriver = createLegacyDriverFactory({ mobileBuildMcp: { cwd: root, lockRoot: root }, android: { leaseRoot: root, tools } });
-  const service = new BridgeService({ baseDir: root, createDriver, createJudge: () => judge });
+  const host = productionAppiumHost({ environment: { ANDROID_HOME: empty, ANDROID_SDK_ROOT: empty, PATH: empty }, home: empty,
+    openAdmission: () => assert.fail('No admission store is opened without adb') });
+  const service = new BridgeService({ baseDir: root, createDriver: createDriverFactory({ host, projectDir: root }), createJudge: () => judge });
   try {
     const androidScript = { version: 1, platform: 'android', app: { package: 'com.example.app' },
       device: { serial: 'emulator-5554' }, values: {}, steps: [checkpoint('verify')] };
@@ -285,7 +285,6 @@ test('an Android scenario reaches the Android driver through the real driver fac
     assert.equal(status.state, 'finished');
     assert.equal(status.report.verdict, 'inconclusive');
     assert.equal(status.report.reason, 'ANDROID_TOOLS_UNAVAILABLE');
-    assert.equal((await readdir(root)).some(name => name.endsWith('.lock')), false, 'no lease taken');
   } finally { await service.close(); await rm(root, { recursive: true, force: true }); }
 });
 
