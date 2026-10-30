@@ -9,7 +9,7 @@ import { mkdtemp, rm } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { test } from 'node:test';
-import type { AndroidNode } from '../src/device/android/agent-client.js';
+import type { AndroidNode } from '../src/device/android/tree.js';
 import { PINNED_AGENT_SHA256 } from '../src/device/android/agent-supply.js';
 import { AndroidDriver } from '../src/device/android/driver.js';
 import type { HandbackPacket } from '../src/driven/step.js';

@@ -1,6 +1,6 @@
 import type { Element } from '../../contracts/index.js';
 import type { Role } from '../../scripted/vocabulary.js';
-import { STATUS_BAR_ID_PREFIX, type AndroidNode, type AndroidTree } from './agent-client.js';
+import { STATUS_BAR_ID_PREFIX, type AndroidNode, type AndroidTree } from './tree.js';
 
 const TEXT_FIELD_CLASS = /EditText$|AutoCompleteTextView$/;
 const SCROLL_CLASS = /(RecyclerView|ListView|ScrollView|GridView|ViewPager2?|NestedScrollView)$/;

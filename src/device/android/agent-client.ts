@@ -1,6 +1,7 @@
 import { request } from 'node:http';
 import { DeviceReasonError } from '../index.js';
 import { OutcomeUnknownError } from './ledger.js';
+import type { AndroidNode } from './tree.js';
 
 /**
  * The device agent's client: the anti-corruption layer to mobilecli's agent (see the domain model). Only
@@ -17,35 +18,6 @@ const MAX_REPLY_BYTES = 32 * 1024 * 1024;
 /** An Android key event, as `device.io.keys` takes it: `KEYCODE_*` names. */
 export interface AgentKey { keycode: string; modifiers?: string[] }
 export interface AgentSwipe { x1: number; y1: number; x2: number; y2: number; duration: number }
-
-/**
- * One node of the device agent's `device.dump.ui` tree. mobilecli's `dump ui --format raw` has the same
- * shape without `scrollable` and `password`, so one mapping reads both.
- */
-export interface AndroidNode {
-  class?: string;
-  text?: string;
-  hint?: string;
-  'content-desc'?: string;
-  'resource-id'?: string;
-  checkable?: boolean;
-  checked?: boolean;
-  clickable?: boolean;
-  enabled?: boolean;
-  focused?: boolean;
-  selected?: boolean;
-  visible?: boolean;
-  scrollable?: boolean;
-  password?: boolean;
-  rect?: { x: number; y: number; width: number; height: number };
-  children?: AndroidNode[] | null;
-}
-
-/** A system bar node's resource-id prefix: the settle rule leaves it out, and the mapping drops it. */
-export const STATUS_BAR_ID_PREFIX = 'com.android.systemui:';
-
-/** What one `device.dump.ui` call returns: the settle rule compares it and the mapping reads it. */
-export interface AndroidTree { hierarchy: AndroidNode[] }
 
 /** The calls the Android driver makes, and nothing else. Every one takes the run's signal. */
 export interface DeviceAgentClient {

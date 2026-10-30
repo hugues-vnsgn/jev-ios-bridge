@@ -1,5 +1,5 @@
 import { createHash } from 'node:crypto';
-import { STATUS_BAR_ID_PREFIX, type AndroidNode, type AndroidTree } from './android/agent-client.js';
+import { STATUS_BAR_ID_PREFIX, type AndroidNode, type AndroidTree } from './android/tree.js';
 
 /** One `device.dump.ui` call. */
 export type Capture = (signal: AbortSignal) => Promise<AndroidTree>;

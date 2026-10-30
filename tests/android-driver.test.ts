@@ -9,7 +9,8 @@ import { isActOutcome, type AndroidAppIdentity, type DeviceDriver, type RunEvent
 import { type GenerationView } from '../src/device/admission.js';
 import { DeviceReasonError, StaleSnapshotError } from '../src/device/index.js';
 import { adbRunner, type AdbRunner } from '../src/device/android/adb.js';
-import { DeviceAgentError, type AndroidNode, type DeviceAgentClient } from '../src/device/android/agent-client.js';
+import { DeviceAgentError, type DeviceAgentClient } from '../src/device/android/agent-client.js';
+import type { AndroidNode } from '../src/device/android/tree.js';
 import { PINNED_AGENT_SHA256 } from '../src/device/android/agent-supply.js';
 import { AGENT_DEVICE_PATH, AGENT_START_COMMAND, APP_PROBLEM_POLL_MS, APP_PROBLEM_WAIT_MS, AndroidDriver, productionClock, type AndroidDriverOptions } from '../src/device/android/driver.js';
 import type { AppExitWatch } from '../src/device/android/exit-watch.js';
