@@ -405,6 +405,15 @@ test('a lost COMMIT reply on the clean close still releases the lease when the s
   assert.deepEqual(readdirSync(join(f.root, 'locks')).filter(name => !name.startsWith('.')), [], 'the lease is released');
 });
 
+test('a local log file failure before the iOS launch is reported as itself and leaves the simulator available', async t => {
+  const f = driverFixture(t, observeRecording, ios);
+  writeFileSync(join(f.root, 'logs', 'run-1-console.log'), 'an earlier run\n');
+  await assert.rejects(f.driver.prepare({ app: { bundleId: 'example.app' } }, live()), { code: 'EEXIST' });
+  assert.deepEqual(f.native.calls, [], 'nothing was launched');
+  assert.equal(f.admission.inspect({ category: 'ios-simulator', value: UDID })!.state, 'available');
+  assert.deepEqual(readdirSync(join(f.root, 'locks')).filter(name => !name.startsWith('.')), [], 'the lease is released');
+});
+
 test('real uncertainty quarantines the device and leaves it to a recovery claim', async t => {
   const inner = fakeNativeRunner();
   const f = driverFixture(t, observeRecording, { ...ios, nativeRunner: async (command, output, signal) => {
