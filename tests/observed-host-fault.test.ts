@@ -145,7 +145,7 @@ for (const transport of ['cli', 'mcp'] as const) for (const [mode, outcome, exit
 });
 
 for (const transport of ['cli', 'mcp'] as const) test(`H07.03 ${transport} healthy active owner public reads preserve exact database and logical state`, { timeout: 15000 }, async t => {
-  const f = await hostFixture(t); const ready = await f.prepare(); const request = actionRequest(ready.allocationId); const gate = 'backend:observe:1';
+  const f = await hostFixture(t); const ready = await f.prepare(); const request = { ...actionRequest(ready.allocationId), timeoutMs: 60000 }; const gate = 'backend:observe:1';
   const owner = f.spawnOwner('cli', 'observed-action', await f.requestFile(request), { gate }); await f.milestone(gate, owner.child.pid);
   const before = f.admission().readAction('one'); const bytes = await f.database(); const calls = f.calls(); const server = transport === 'mcp' ? await f.mcp() : undefined;
   for (let i = 0; i < 3; i++) {
