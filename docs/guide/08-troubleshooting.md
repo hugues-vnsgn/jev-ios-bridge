@@ -50,7 +50,7 @@ Going to the home screen isn't an exit, so it isn't detected.
 
 It also means that another tool's UI-automation agent (a foreign agent) holds the device. On iOS that's a WebDriverAgent runner the bridge didn't start. On Android it's a UiAutomator2 server, its instrumentation, or an automation `adb forward` that the bridge didn't start, from another Appium session, mobile-mcp, mobilecli, or `uiautomator`. Close that tool, then run again. The bridge never stops a foreign agent. If the tool has exited but its agent still runs, restart the simulator or the Android device.
 
-**`NO_DEVICE` or `INVALID_DEVICE`**: for iOS, set a simulator UUID (`JEV_DEVICE_UDID`, the script's `device.udid`, or `.mobilebuildmcp/config.yaml`). Aliases like `booted` aren't accepted. For Android, set the script's `device.avd` or `device.serial`, or `JEV_ANDROID_DEVICE` ([Android setup](12-android-setup.md#name-the-device)).
+**`NO_DEVICE` or `INVALID_DEVICE`**: for iOS, set a simulator UUID (`JEV_DEVICE_UDID`, the script's `device.udid`, or, in a project set up for an older release, `.mobilebuildmcp/config.yaml`, which the bridge still reads). Aliases like `booted` aren't accepted. For Android, set the script's `device.avd` or `device.serial`, or `JEV_ANDROID_DEVICE` ([Android setup](12-android-setup.md#name-the-device)).
 
 **`DEVICE_NOT_BOOTED`** (iOS): the run's simulator is shut down, or still booting. The bridge never boots a simulator itself. Boot it, then run again:
 
