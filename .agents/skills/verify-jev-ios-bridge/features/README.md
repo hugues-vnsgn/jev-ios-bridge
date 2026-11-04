@@ -23,7 +23,7 @@ Preconditions:
 
 - Complete the main skill's Launch and Doctor before any drive.
 - Use a fresh project, an absolute retained evidence directory, and the device assignment from the task.
-- Obtain the owner's go-ahead for real admission-store access before any live iOS scripted/driven drive or observed operation. Without that approval, record those branches as owner-gated and continue authorized Android or device-free checks.
+- Obtain the owner's go-ahead for real admission-store access before any live scripted, driven, capture or observed drive on either platform. Without that approval, record those branches as owner-gated and continue device-free checks.
 
 - **Select coverage.** Record the feature ID and entry point beside each command/request, stdout/response, stderr, and exit code. Separate CLI and MCP coverage.
 - **Drive.** Follow each selected recipe's initial state and literal guards. Capture the action and resulting state, then inspect its files and cleanup result.

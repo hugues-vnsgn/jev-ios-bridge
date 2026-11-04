@@ -16,9 +16,10 @@ const base = join(root, '.jev-runs/verification');
 const stamp = join(root, 'dist/.verification-build.json');
 const { positionals, values } = parseArgs({ allowPositionals: true, options: {
   evidence: { type: 'string' }, avd: { type: 'string' }, port: { type: 'string' }, serial: { type: 'string' },
+  record: { type: 'string' }, device: { type: 'string' },
 } });
 const [mode] = positionals;
-assert.equal(positionals.length, 1, 'Usage: verify.mjs build|doctor|smoke|android-start|cleanup [--evidence DIR] [--avd NAME] [--port N] [--serial ID]');
+assert.equal(positionals.length, 1, 'Usage: verify.mjs build|doctor|smoke|android-start|cleanup|assignment [--evidence DIR] [--avd NAME] [--port N] [--serial ID] [--record FILE --device ID]');
 assert(Number(process.versions.node.split('.')[0]) >= 24, 'Node 24 or newer required');
 const evidence = values.evidence && resolve(values.evidence);
 const cleanEnv = { PATH: process.env.PATH, HOME: process.env.HOME, TMPDIR: tmpdir(),
@@ -82,6 +83,27 @@ function owned() {
   assert(running.includes(`-avd ${state.avd} `) && running.includes(`-port ${state.serial.slice(9)} `),
     'PID no longer identifies the launched AVD and port');
   return state;
+}
+// One validator for the owner's record: the Phase 4 live runner's, so the skill and the runner cannot disagree.
+function checkAssignment(path, device) {
+  const result = spawnSync(process.execPath, ['--import', 'tsx', join(root, 'scripts/phase4/live/run.ts'), 'assignment', '--assignment', path, '--device', device],
+    { cwd: root, env: cleanEnv, encoding: 'utf8', timeout: 60000 });
+  assert(!result.error && result.status === 0, `Owner assignment record refused: ${(result.stderr || result.error?.message || '').trim()}`);
+  return JSON.parse(result.stdout);
+}
+function assigned(serial) {
+  const file = evidence && join(evidence, 'assignment.json');
+  assert(file && existsSync(file), `Device ${serial} needs the owner assignment record. Run verify.mjs assignment --record FILE --device ${serial} --evidence DIR first`);
+  const saved = JSON.parse(readFileSync(file));
+  const current = checkAssignment(saved.path, serial);
+  assert.equal(current.sha256, saved.sha256, 'Owner assignment record changed since it was saved. Run verify.mjs assignment again');
+  assert.equal(current.record.category, 'android-phone', 'The owner assignment record does not name an Android phone');
+  return current;
+}
+function phoneReady(serial) {
+  assert.equal(command('adb', ['-s', serial, 'get-state']), 'device');
+  assert.equal(command('adb', ['-s', serial, 'shell', 'getprop', 'sys.boot_completed']), '1');
+  assert.match(command('adb', ['-s', serial, 'shell', 'pm', 'path', 'android']), /^package:/m);
 }
 function ready(state) {
   assert.equal(command('adb', ['-s', state.serial, 'get-state']), 'device');
@@ -209,15 +231,15 @@ try {
       break;
     }
     case 'doctor': {
+      const phone = values.serial && !/^emulator-\d+$/.test(values.serial) ? assigned(values.serial) : undefined;
       const receipt = built();
       if (values.serial) {
-        assert(/^emulator-\d+$/.test(values.serial), 'Live doctor accepts only an owned emulator. Physical phones need a separate explicit assignment and recipe');
-        const state = owned();
-        assert.equal(values.serial, state.serial, 'Device differs from ownership receipt');
-        ready(state);
-        assert.match(command('adb', ['-s', state.serial, 'shell', 'pm', 'path', 'dev.jevbridge.diagnostic']), /^package:/m, 'Diagnostic APK is not installed');
+        const state = phone ? undefined : owned();
+        if (state) { assert.equal(values.serial, state.serial, 'Device differs from ownership receipt'); ready(state); } else phoneReady(values.serial);
+        assert.match(command('adb', ['-s', values.serial, 'shell', 'pm', 'path', 'dev.jevbridge.diagnostic']), /^package:/m, 'Diagnostic APK is not installed');
         assert(process.env.TYPESAFE_API_KEY?.trim(), 'Jev key absent. Use node --env-file with the original checkout path');
-        receipt.device = { serial: state.serial, avd: state.avd, pid: state.pid, ready: true, keyPresent: true };
+        receipt.device = state ? { serial: state.serial, avd: state.avd, pid: state.pid, ready: true, keyPresent: true }
+          : { serial: values.serial, assignmentSha256: phone.sha256, custody: phone.record.custody, ready: true, keyPresent: true };
       }
       console.log(JSON.stringify(receipt, null, 2));
       break;
@@ -225,6 +247,14 @@ try {
     case 'smoke': smoke(); break;
     case 'android-start': await androidStart(); break;
     case 'cleanup': await cleanup(); break;
-    default: throw new Error('Usage: verify.mjs build|doctor|smoke|android-start|cleanup');
+    case 'assignment': {
+      assert(evidence && values.record && values.device, 'assignment needs --record FILE --device ID --evidence DIR');
+      const checked = checkAssignment(resolve(values.record), values.device);
+      mkdirSync(evidence, { recursive: true, mode: 0o700 });
+      save(join(evidence, 'assignment.json'), checked);
+      console.log(JSON.stringify(checked, null, 2));
+      break;
+    }
+    default: throw new Error('Usage: verify.mjs build|doctor|smoke|android-start|cleanup|assignment');
   }
 } catch (error) { console.error(error.message); process.exitCode = 1; }
