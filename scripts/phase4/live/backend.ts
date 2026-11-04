@@ -75,11 +75,23 @@ export interface LiveCyclePartsOptions {
   signal?: AbortSignal;
 }
 
+/** The device an assignment names, resolved against the live probe, with the authority, host and fence a driver on it needs. */
+export interface LiveTarget {
+  device: DeviceIdentity;
+  resolved: ResolvedIdentity;
+  admission: Admission;
+  fence: FenceRunner;
+  host: AppiumHost;
+  target: AppiumTarget;
+  /** The adb the probe resolved the device with; `adb` when a simulator run never needs one. */
+  adb: string;
+}
+
 /**
- * The live parts: the assigned device resolved against the live identity probe, the production admission
- * authority, the real fence, and a driver that runs on the resolved device.
+ * The assigned device resolved against the live identity probe, with the production admission authority, the
+ * production host and the real fence. It opens no session.
  */
-export async function resolveLiveCycleParts(options: LiveCyclePartsOptions): Promise<CycleBackendParts> {
+export async function resolveLiveTarget(options: LiveCyclePartsOptions): Promise<LiveTarget> {
   const environment = options.environment ?? process.env;
   const signal = options.signal ?? new AbortController().signal;
   const admission = options.admission ?? Admission.open();
@@ -96,9 +108,14 @@ export async function resolveLiveCycleParts(options: LiveCyclePartsOptions): Pro
   const host = options.host ?? productionAppiumHost({ environment, openAdmission: () => admission });
   const fence = createFenceRunner({ adb: adbRunner({ adb, environment }), simctl: simctlRunner({ environment }) });
   const androidSdkRoot = android && basename(dirname(adb)) === 'platform-tools' ? dirname(dirname(adb)) : undefined;
-  const target = targetOf(resolved, androidSdkRoot);
+  return { device: { category: resolved.category, value: resolved.value }, resolved, admission, fence, host, target: targetOf(resolved, androidSdkRoot), adb };
+}
+
+/** The live parts: the resolved device, the production admission authority, the real fence, and a driver that runs on it. */
+export async function resolveLiveCycleParts(options: LiveCyclePartsOptions): Promise<CycleBackendParts> {
+  const { device, admission, fence, host, target } = await resolveLiveTarget(options);
   return {
-    device: { category: resolved.category, value: resolved.value },
+    device,
     admission,
     fence,
     driver: ({ runId }) => new ComposedAppiumDriver({ host, admission, runId, target: async () => target }),

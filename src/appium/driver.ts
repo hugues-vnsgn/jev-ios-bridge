@@ -32,13 +32,16 @@ import { AppiumOperations, REFUSED_BEFORE_INPUT, UnconfirmedOperationError, vend
 import { allocateHostPorts, portComponents, type FreePort, type HostPorts } from './ports.js';
 import { AppiumCommandSession, createSessionProfile, type SessionProfile, type SessionProfileInput } from './session.js';
 import { StackError, type VerifiedStack } from './stack.js';
-import { AppiumError, CLIENT_SDK, EXTENSION_VERSION } from './wire-schemas.js';
+import { AppiumError, CLIENT_SDK, EXTENSION_VERSION, type AppiumSessionId } from './wire-schemas.js';
 
 /** The device one driver instance serves. Chosen per command by the composition, never inside the driver. */
 export type AppiumTarget =
   | { platform: 'ios'; device: string; deviceSet?: string }
   | { platform: 'android'; device: string; category?: 'android-emulator' | 'android-phone'; androidSdkRoot?: string;
     serverInstallation: Extract<SessionProfileInput, { platform: 'android' }>['serverInstallation'] };
+
+/** One page source and the screenshot taken straight after it: the raw bytes, never normalized or re-encoded. */
+export interface RawScreenPair { xml: string; png: Buffer; sessionId: AppiumSessionId }
 
 export interface AppiumDriverOptions {
   stack: VerifiedStack;
@@ -160,7 +163,14 @@ export class AppiumDriver implements DeviceDriver, IosPreparationDriver, Observe
   /** Android capture, as AndroidDriver.capture: the current screen settled under admission from page source alone,
    *  with no launch, reset, stop, screenshot or Jev request. The caller closes the driver after it. */
   capture(signal: AbortSignal): Promise<Snapshot> {
-    return this.operations.track(() => this.captureIssued(signal));
+    return this.operations.track(() => this.captureSession(signal, 'android', 'appium-capture', (command, issued) => command.observation.capture(issued)));
+  }
+
+  /** The current screen on either platform as one raw page source and screenshot pair from a single call pair, with no
+   *  launch, reset, stop, settling or Jev request. The caller closes the driver after it. */
+  capturePair(signal: AbortSignal): Promise<RawScreenPair> {
+    return this.operations.track(() => this.captureSession(signal, 'any', 'appium-capture-pair', command =>
+      command.client.capturePair(async ({ xml, screen }) => ({ xml, png: Buffer.from(screen.pngBase64, 'base64'), sessionId: command.session.sessionId }))));
   }
 
   act(action: Action, snapshot: Snapshot, scenario: ActionScenarioContext, signal: AbortSignal): Promise<Snapshot | ActOutcome> {
@@ -347,13 +357,17 @@ export class AppiumDriver implements DeviceDriver, IosPreparationDriver, Observe
     }
   }
 
-  private async captureIssued(signal: AbortSignal): Promise<Snapshot> {
+  private async captureSession<T>(signal: AbortSignal, scope: 'android' | 'any', operation: string,
+    read: (command: Omit<Command, 'launched'>, issued: AbortSignal) => Promise<T>): Promise<T> {
     if (this.phase.kind !== 'idle') throw new Error('Driver is already prepared');
-    if (this.options.target.platform !== 'android') throw refusal('UNSUPPORTED_ACTION', 'Capture is Android-only, as today.');
+    const androidOnly = () => refusal('UNSUPPORTED_ACTION', 'Capture is Android-only, as today.');
+    if (scope === 'android' && this.options.target.platform !== 'android') throw androidOnly();
     signal.throwIfAborted();
     const identity = await this.resolve(signal);
-    if (identity.category === 'ios-simulator') throw refusal('UNSUPPORTED_ACTION', 'Capture is Android-only, as today.');
-    readyTransport(identity);
+    if (identity.category === 'ios-simulator') {
+      if (scope === 'android') throw androidOnly();
+      if (identity.state !== 'Booted') throw new DeviceReasonError('DEVICE_NOT_BOOTED', `Simulator ${identity.value} is not booted (state: ${identity.state}).`);
+    } else readyTransport(identity);
     const app: AppIdentity = { id: '' };
     const owner = await this.admit(identity, { capture: true }, signal);
     this.phase = { kind: 'admitted', owner, role: 'capture', app };
@@ -363,7 +377,7 @@ export class AppiumDriver implements DeviceDriver, IosPreparationDriver, Observe
       const command = await this.openSession(owner, 'capture', signal);
       this.phase = { kind: 'live', owner, role: 'capture', app, command: { ...command, launched: false } };
       if (this.closing) throw new AdmissionError('DISPATCH_CLOSED', 'The driver is closing');
-      return await this.guarded(signal, () => this.dispatch(owner, 'appium-capture', signal, this.timeoutMs, issued => command.observation.capture(issued)));
+      return await this.guarded(signal, () => this.dispatch(owner, operation, signal, this.timeoutMs, issued => read(command, issued)));
     } catch (error) {
       if (!this.closing && (this.phase.kind === 'admitted' || this.phase.kind === 'live')) {
         this.closing = this.finishClose(AbortSignal.timeout(this.timeoutMs), false);
