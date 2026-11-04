@@ -3,9 +3,9 @@
 Source: [published spec](spec.md)
 Selected base: `0d3e54a9d1d80c1a9188c8c5e5717254e9a95994` (`v1.4.0`)
 Branch: `feat/appium-mcp-migration`
-Status: Phases 0 to 3 complete on main; Phase 4 agent-only kits started 2026-10-30; live runs and corpus judgments await owner steps
+Status: Phases 0 to 3 complete on main; Phase 4 kits merged, live runs and corpus judgments await owner steps
 
-Status updated on 2026-10-30: use the [current roadmap and phase execution
+Status updated on 2026-11-04: use the [current roadmap and phase execution
 plan](roadmap.md) for work-package order and exit criteria. The owner paused
 implementation on 2026-10-13 and later resumed it; Phase 1 reached GO, Phase 2
 completed and Phase 3 merged to main (evidence in the table). The confirmed
@@ -17,7 +17,7 @@ plan and published spec retain their decision and acceptance history.
 | 1. Protocol feasibility | GO, 12 of 12 cases, 2026-10-19: [result](phase-1-result-20261018.md). The earlier [matrix and evidence gap](phase-1.md) is the 2026-10-14 checkpoint |
 | 2. Configuration and ownership | Complete, 12 MET and 0 open bullets, main `4465e93e9`, PRs #56 to #67: [exit note](../appium-phase2/phase-2-exit.md) |
 | 3. Adapter and mode compatibility | Merged to main, PRs #70 to #85, 2026-10-24 to 2026-10-26 (main `f9ce07854`, `git log --first-parent`): [map](../appium-phase3/map.md) |
-| 4. Live acceptance and cutover | Agent-only kits started 2026-10-30. Live runs and corpus judgments wait for owner steps: [ticket 06](issues/06-acceptance-resource-readiness.md), [ticket 08](issues/08-frozen-state-correspondence.md), activation of the real admission store, the Jev key |
+| 4. Live acceptance and cutover | The corpus kit (PR #87), the live matrix kit (PR #88) and the documentation cleanup (PR #86) are merged to main; the cutover (PR #89) is a draft that waits for the gates. Live runs and corpus judgments wait for owner steps: [ticket 06](issues/06-acceptance-resource-readiness.md), [ticket 08](issues/08-frozen-state-correspondence.md), activation of the real admission store, the Jev key |
 
 The owner separately requested implementation on 2026-10-12. That instruction
 supersedes the spec's earlier documentation-only authorization context; its

@@ -9,6 +9,7 @@ import { runCycles, type CycleBackend, type CycleRecord } from './cycles.js';
 import { cycleScenario } from './cycles.js';
 import type { ScriptedScenario } from '../../../src/scripted/contracts.js';
 import { Refusal, readActivation, readAssignment, writeEvidenceAttempt, type ActivationRecord, type AssignmentRecord, type OwnerFile } from './records.js';
+import { createLiveCycleBackend, resolveLiveCycleParts } from './backend.js';
 import { liveMatrixSchema, type LiveMatrix, type LiveRow } from './row.js';
 
 /** What the runner needs from the world around it. Everything live is injected, so a test never touches a device. */
@@ -22,8 +23,8 @@ export interface RunnerDeps {
   err: (line: string) => void;
   /** The versions recorded beside an attempt. */
   versions: () => Promise<unknown>;
-  /** The backend the cycles run on. */
-  cycleBackend: (input: { scenario: ScriptedScenario; logRoot: string }) => Promise<CycleBackend>;
+  /** The backend the cycles run on: it gets the scenario, the log folder and the owner's assignment. */
+  cycleBackend: (input: { scenario: ScriptedScenario; logRoot: string; assignment: AssignmentRecord }) => Promise<CycleBackend>;
   signal: AbortSignal;
 }
 
@@ -416,7 +417,7 @@ async function runCyclesRow(row: LiveRow, options: Options, deps: RunnerDeps, ev
   });
   const count = options.cycles === undefined ? 20 : Number(options.cycles);
   const logRoot = join(attempt.path, 'cycles');
-  const backend = await deps.cycleBackend({ scenario, logRoot });
+  const backend = await deps.cycleBackend({ scenario, logRoot, assignment: assignment.record });
   const lines: string[] = [];
   const result = await runCycles(count, backend, {
     signal: deps.signal,
@@ -513,7 +514,10 @@ function liveDeps(): RunnerDeps {
     out: line => process.stdout.write(`${line}\n`),
     err: line => process.stderr.write(`${line}\n`),
     versions: async () => await readVersions(process.cwd()),
-    cycleBackend: async () => { throw new Refusal('scenario-refused', 'No cycle backend is available in this build.'); },
+    cycleBackend: async ({ scenario, logRoot, assignment }) => {
+      const parts = await resolveLiveCycleParts({ category: assignment.category, device: assignment.device });
+      return createLiveCycleBackend(parts)({ scenario, logRoot });
+    },
     signal: new AbortController().signal,
   };
 }
