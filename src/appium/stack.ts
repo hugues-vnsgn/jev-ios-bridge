@@ -24,6 +24,7 @@ const manifestSchema = z.strictObject({ version: z.literal(1), lockSha256: hash,
   wda: z.strictObject({ version: z.literal('16.14.2'), path: pathSchema, treeSha256: hash }),
 });
 export type StackIdentity = z.infer<typeof identitySchema>;
+export const parseStackIdentity = (value: unknown): StackIdentity => identitySchema.parse(value);
 type Manifest = z.infer<typeof manifestSchema>;
 type Host = { platform: string; arch: string; node: string };
 type Inputs = { artifactRoot: string; dataRoot: string; identity: StackIdentity; host: Host };

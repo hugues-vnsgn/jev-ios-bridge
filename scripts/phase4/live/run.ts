@@ -10,6 +10,7 @@ import { cycleScenario } from './cycles.js';
 import type { ScriptedScenario } from '../../../src/scripted/contracts.js';
 import { Refusal, readActivation, readAssignment, writeEvidenceAttempt, type ActivationRecord, type AssignmentRecord, type OwnerFile } from './records.js';
 import { createLiveCycleBackend, resolveLiveCycleParts } from './backend.js';
+import { collectVersions, liveVersionSources, type VersionTarget } from './versions.js';
 import { liveMatrixSchema, type LiveMatrix, type LiveRow } from './row.js';
 
 /** What the runner needs from the world around it. Everything live is injected, so a test never touches a device. */
@@ -21,8 +22,8 @@ export interface RunnerDeps {
   now: () => Date;
   out: (line: string) => void;
   err: (line: string) => void;
-  /** The versions recorded beside an attempt. */
-  versions: () => Promise<unknown>;
+  /** The versions recorded beside an attempt: the runtime and source, and the tools of the assigned device's category. */
+  versions: (target: VersionTarget) => Promise<unknown>;
   /** The backend the cycles run on: it gets the scenario, the log folder and the owner's assignment. */
   cycleBackend: (input: { scenario: ScriptedScenario; logRoot: string; assignment: AssignmentRecord }) => Promise<CycleBackend>;
   signal: AbortSignal;
@@ -68,7 +69,7 @@ const USAGE = `Usage:
   run --assignment FILE --device ID --evidence DIR --matrix FILE --rows IDS [--activation FILE] [--scenario FILE] [--cycles N]
   assignment --assignment FILE --device ID
   record --assignment FILE --device ID --evidence DIR --matrix FILE --row ID -- ARGV...
-  verdict --assignment FILE --device ID --evidence DIR --matrix FILE --row ID --verdict VERDICT --reason TEXT [--artifact PATH...]`;
+  verdict --assignment FILE --device ID --evidence DIR --matrix FILE --row ID --verdict VERDICT --reason TEXT [--artifact PATH...]  (passed needs at least one --artifact)`;
 
 class UsageError extends Error {}
 
@@ -310,6 +311,9 @@ async function commandVerdict(options: Options, deps: RunnerDeps): Promise<numbe
   const parsedVerdict = z.enum(['passed', 'failed', 'refused']).safeParse(verdictName);
   if (!parsedVerdict.success) throw new UsageError(`--verdict must be passed, failed or refused.`);
   const reason = required(options.reason, 'reason');
+  if (parsedVerdict.data === 'passed' && options.artifact.length === 0) {
+    throw new Refusal('artifact-required', 'A passed row must point at evidence: give at least one existing --artifact PATH (artifact-required).');
+  }
   const attempt = await openAttempt(evidence, rowId);
   if (!attempt) throw new Refusal('no-attempt', `The row ${rowId} has no attempt.`);
   const current = JSON.parse(await readFile(join(attempt.path, 'verdict.json'), 'utf8')) as { verdict?: string };
@@ -328,6 +332,11 @@ async function commandVerdict(options: Options, deps: RunnerDeps): Promise<numbe
   await chmod(join(attempt.path, 'artifacts.json'), 0o600);
   await writeVerdict(join(attempt.path, 'verdict.json'), parsedVerdict.data, reason, deps.now());
   return EXIT.ok;
+}
+
+/** The device the assignment names, which decides the tools whose versions an attempt records. */
+function versionTarget(assignment: OwnerFile<AssignmentRecord>): VersionTarget {
+  return { category: assignment.record.category, device: assignment.record.device };
 }
 
 /** Why a row is refused before it runs. */
@@ -359,7 +368,7 @@ async function commandRun(options: Options, deps: RunnerDeps): Promise<number> {
       if (outcome !== EXIT.ok) failed = true;
       continue;
     }
-    await writeEvidenceAttempt({ evidence, row, assignment, ...(activation ? { activation } : {}), versions: await deps.versions(), now: deps.now() });
+    await writeEvidenceAttempt({ evidence, row, assignment, ...(activation ? { activation } : {}), versions: await deps.versions(versionTarget(assignment)), now: deps.now() });
   }
   return failed ? EXIT.failed : EXIT.ok;
 }
@@ -401,7 +410,7 @@ async function refusalOf(row: LiveRow, assignment: OwnerFile<AssignmentRecord>, 
 async function refuseRow(row: LiveRow, reason: string, evidence: string, assignment: OwnerFile<AssignmentRecord>,
   activation: OwnerFile<ActivationRecord> | undefined, deps: RunnerDeps): Promise<void> {
   const attempt = await writeEvidenceAttempt({
-    evidence, row, assignment, ...(activation ? { activation } : {}), versions: await deps.versions(), now: deps.now(),
+    evidence, row, assignment, ...(activation ? { activation } : {}), versions: await deps.versions(versionTarget(assignment)), now: deps.now(),
   });
   await writeVerdict(join(attempt.path, 'verdict.json'), 'refused', reason, deps.now(), row.steps);
 }
@@ -413,7 +422,7 @@ async function runCyclesRow(row: LiveRow, options: Options, deps: RunnerDeps, ev
   const raw = JSON.parse(await readFile(resolve(deps.cwd, scenarioPath), 'utf8')) as unknown;
   const scenario = cycleScenario(raw, { category: assignment.record.category, device: assignment.record.device });
   const attempt = await writeEvidenceAttempt({
-    evidence, row, assignment, ...(activation ? { activation } : {}), versions: await deps.versions(), now: deps.now(),
+    evidence, row, assignment, ...(activation ? { activation } : {}), versions: await deps.versions(versionTarget(assignment)), now: deps.now(),
   });
   const count = options.cycles === undefined ? 20 : Number(options.cycles);
   const logRoot = join(attempt.path, 'cycles');
@@ -477,34 +486,6 @@ export async function main(argv: string[], deps: RunnerDeps): Promise<number> {
   }
 }
 
-/** The versions an attempt records: the runtime, the source it was built from, and the tools it found. */
-async function readVersions(cwd: string): Promise<unknown> {
-  const { execFileSync } = await import('node:child_process');
-  const { readFile } = await import('node:fs/promises');
-  const os = await import('node:os');
-  const git = (args: string[]): string | undefined => {
-    try {
-      return execFileSync('git', args, { cwd, encoding: 'utf8', stdio: ['ignore', 'pipe', 'ignore'] }).trim();
-    } catch {
-      return undefined;
-    }
-  };
-  const revision = git(['rev-parse', 'HEAD']);
-  const dirty = git(['status', '--porcelain']) ? true : false;
-  let packageVersion: string | undefined;
-  try {
-    packageVersion = (JSON.parse(await readFile(join(cwd, 'package.json'), 'utf8')) as { version?: string }).version;
-  } catch { /* an attempt still records what it knows */ }
-  return {
-    node: process.version,
-    platform: os.platform(),
-    osRelease: os.release(),
-    ...(revision ? { git: { revision, dirty } } : {}),
-    ...(packageVersion ? { package: packageVersion } : {}),
-    tools: {},
-  };
-}
-
 /** The runner's own dependencies, when it runs as a command. */
 function liveDeps(): RunnerDeps {
   return {
@@ -513,7 +494,7 @@ function liveDeps(): RunnerDeps {
     now: () => new Date(),
     out: line => process.stdout.write(`${line}\n`),
     err: line => process.stderr.write(`${line}\n`),
-    versions: async () => await readVersions(process.cwd()),
+    versions: async target => await collectVersions(liveVersionSources({ cwd: process.cwd(), environment: process.env }), target),
     cycleBackend: async ({ scenario, logRoot, assignment }) => {
       const parts = await resolveLiveCycleParts({ category: assignment.category, device: assignment.device });
       return createLiveCycleBackend(parts)({ scenario, logRoot });
