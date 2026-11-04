@@ -1,6 +1,6 @@
 # Phase 4 specification: corpus acceptance and Appium-only cutover
 
-Status: agent-only kits started 2026-10-30; live runs and corpus judgments await owner steps ([ticket 06](../issues/06-acceptance-resource-readiness.md), [ticket 08](../issues/08-frozen-state-correspondence.md), activation of the real admission store, the Jev key). The text below is the specification as written on 2026-10-14
+Status: the agent-only kits are merged to main (PRs #86, #87, #88); the cutover is a draft PR (#89). Live runs and corpus judgments await owner steps ([ticket 06](../issues/06-acceptance-resource-readiness.md), [ticket 08](../issues/08-frozen-state-correspondence.md), activation of the real admission store, the Jev key). The text below is the specification as written on 2026-10-14
 Authority: [published spec](../spec.md), Decisions 27 through 30;
 Testing Decisions 20, 22 through 25
 Context: [master handoff](../handoff.md), [roadmap](../roadmap.md)

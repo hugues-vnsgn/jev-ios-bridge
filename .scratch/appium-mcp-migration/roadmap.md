@@ -1,19 +1,20 @@
 ---
-updated: 2026-10-30
-status: phases-0-to-3-complete-phase-4-started
-implementation: phase-4-agent-only-kits-approved
+updated: 2026-11-04
+status: phases-0-to-3-complete-phase-4-kits-merged
+implementation: phase-4-kits-merged-cutover-draft
 evidence-checkpoint: 7426f249121db87ba8b8151581f79187be80d8ee
 ---
 
 # Appium migration roadmap and execution plan
 
-As of 2026-10-30, Phases 0 through 3 are complete: Phase 1 is GO, Phase 2 is
+As of 2026-11-04, Phases 0 through 3 are complete: Phase 1 is GO, Phase 2 is
 complete and Phase 3 is merged to main. The production Appium adapter is built
-and the public composition runs through it. Phase 4 has started for agent-only
-work. Its live runs and corpus judgments wait for owner steps listed in the
-table below. The evidence for each phase is in the table. The 2026-10-14
-planning update that paused implementation is superseded by the owner's resume
-instructions; its text below stays as history.
+and the public composition runs through it. Phase 4's agent-only kits are
+merged to main (PRs #86, #87 and #88); the cutover itself is a draft PR (#89)
+that waits for the live and corpus gates. The live runs and corpus judgments
+wait for the owner steps listed in the table below. The evidence for each phase
+is in the table. The 2026-10-14 planning update that paused implementation is
+superseded by the owner's resume instructions; its text below stays as history.
 
 This document makes the [confirmed plan](plan.md) executable without changing
 the [published spec](spec.md), accepted architecture, or release requirements.
@@ -43,7 +44,7 @@ current status and makes unresolved decisions explicit.
 | 1 | GO, 12 of 12 cases (Android 6/6, iOS 6/6), 2026-10-19: [result](phase-1-result-20261018.md) | None |
 | 2 | Complete, 12 MET and 0 open bullets, main `4465e93e9`, PRs #56 to #67: [exit note](../appium-phase2/phase-2-exit.md) | None |
 | 3 | Merged to main, PRs #70 to #85, 2026-10-24 to 2026-10-26 (main `f9ce07854`, `git log --first-parent`): [map](../appium-phase3/map.md) | None |
-| 4 | Agent-only kits started 2026-10-30. Live runs and corpus judgments not done | Owner steps: [ticket 06](issues/06-acceptance-resource-readiness.md), [ticket 08](issues/08-frozen-state-correspondence.md), activation of the real admission store, the Jev key. Then both corpora and all three device categories pass before old backends are removed |
+| 4 | Agent-only kits merged to main 2026-11-04 (PRs #86, #87, #88); the cutover is a draft PR (#89). Live runs and corpus judgments not done | Owner steps: [ticket 06](issues/06-acceptance-resource-readiness.md), [ticket 08](issues/08-frozen-state-correspondence.md), activation of the real admission store, the Jev key. Then both corpora and all three device categories pass before old backends are removed |
 | 5 through 7 | Later milestones outside this replacement-release spec | Separate implementation scope and evidence |
 
 The 35 recorded experiments are history, not a progress denominator. Every

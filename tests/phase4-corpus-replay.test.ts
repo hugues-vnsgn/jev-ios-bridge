@@ -9,6 +9,7 @@ import { parseInventory } from '../scripts/phase4/corpus/inventory.js';
 import { attachCapture, jsonText, parseManifest, type PreregistrationManifest } from '../scripts/phase4/corpus/manifest.js';
 import { readResultRecord, replayCorpus, type JudgeClient, type ReplayOutcome } from '../scripts/phase4/corpus/replay.js';
 import { main } from '../scripts/phase4/corpus/cli.js';
+import { createLiveJudgeClient } from '../scripts/phase4/corpus/cli.js';
 
 const repoRoot = join(import.meta.dirname, '..');
 const kitDir = join(repoRoot, '.scratch', 'appium-mcp-migration', 'phase4', 'corpus');
@@ -243,4 +244,11 @@ test('live mode with captures marked live still refuses without TYPESAFE_API_KEY
   assert.equal(code, 1);
   assert.match(lines.join('\n'), /TYPESAFE_API_KEY is not set/);
   assert.ok(!existsSync(join(dir, 'results')));
+});
+
+test('the live judge client refuses without a key, and pins the scripted model', () => {
+  assert.throws(() => createLiveJudgeClient({}), /TYPESAFE_API_KEY is not set/);
+  assert.throws(() => createLiveJudgeClient({ TYPESAFE_API_KEY: '   ' }), /TYPESAFE_API_KEY is not set/);
+  const client = createLiveJudgeClient({ TYPESAFE_API_KEY: 'fake-jev-key-9f3e' });
+  assert.equal(typeof client.systemOne, 'function');
 });
