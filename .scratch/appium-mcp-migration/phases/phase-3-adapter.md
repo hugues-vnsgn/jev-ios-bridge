@@ -301,6 +301,25 @@ an unreviewed product limitation.
   comparison uses the source hash. A pair counts only when both halves have
   returned. So an observation always has a screenshot that matches its
   tree, as reports, evidence and Android `tapAt` need.
+- **Proposed change, awaiting the owner's sign-off** (worker S, 2026-11-05,
+  draft PR on `fix/p4-settle-inflight`). It changes one sentence of the
+  2026-10-23 rule above, "If no capture completed before the cap, the
+  observation refuses as incomplete." Instead, observe would wait for the
+  capture already in flight, still bounded by its own 10 s page-source
+  deadline, and return it with `settled: false`. Every other rule stays.
+  Measured on simulator 7B4D26E1 with the Weather fixture, iOS 26.5:
+  - One WDA page source takes 2.4-2.5 s at the median on the main screen
+    and about 3.0-3.2 s on the Settings sheet. WDA's per-element `visible`
+    query accounts for almost all of it (worker Q, 2026-11-04).
+  - The B2 Weather steps (open locations, focus search, replace text with
+    `Ber`, swipe, wait for the Berlin row) never refused in 10 runs on the
+    current build, 5 from San Francisco (sunny) and 5 from Portland (rain).
+    The main screen always returned `settled: false` at 2.8-3.1 s, with the
+    first pair done 0.2-0.5 s before the cap. The sheets settled. Ten more
+    runs with the change gave the same results.
+  - The Settings sheet over Portland refused 10/10 with
+    OBSERVATION_TIMEOUT at 3.04 s on the current build. With the change it
+    returned 10/10, `settled: false`, at 3.35-3.60 s.
 
 ## Operation contract
 
