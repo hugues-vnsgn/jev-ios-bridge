@@ -351,8 +351,14 @@ export class AppiumDriver implements DeviceDriver, IosPreparationDriver, Observe
       let helpers: IosHelpers | undefined;
       if (identity.category !== 'ios-simulator') await this.prepareAndroidDevice(owner, app.id, signal);
       else if (role === 'run') {
-        await this.openWindow(owner, signal);
-        helpers = await this.dispatch(owner, 'launch', signal, this.timeoutMs, issued => this.launchIos(owner, app, issued));
+        const sources = await this.iosLogSources();
+        try {
+          await this.openWindow(owner, signal);
+          helpers = await this.dispatch(owner, 'launch', signal, this.timeoutMs, issued => this.launchIos(owner, app, sources, issued));
+        } catch (error) {
+          for (const source of sources) await source.finish().catch(() => undefined);
+          throw error;
+        }
       }
       const command = await this.openSession(owner, role, signal, helpers);
       this.phase = { kind: 'live', owner, role, app, command: { ...command, launched: role === 'run' } };
@@ -698,19 +704,21 @@ export class AppiumDriver implements DeviceDriver, IosPreparationDriver, Observe
     watch.launched(pid !== undefined && !others.length && /^\d+$/.test(pid) ? Number(pid) : undefined);
   }
 
-  private async launchIos(owner: Owner, app: AppIdentity, signal: AbortSignal): Promise<IosHelpers> {
+  private async iosLogSources(): Promise<[NativeLogSource, NativeLogSource]> {
+    await deleteOldLogs(this.options.logFolder);
+    const open = (name: string) => createNativeLogSource({ path: join(this.options.logFolder, `${this.runId}-${name}.log`), values: {} });
+    const console = await open('console');
+    try { return [console, await open('os')]; }
+    catch (error) { await console.finish().catch(() => undefined); throw error; }
+  }
+
+  private async launchIos(owner: Owner, app: AppIdentity, sources: [NativeLogSource, NativeLogSource], signal: AbortSignal): Promise<IosHelpers> {
     if (owner.identity.category !== 'ios-simulator') throw new Error('Simulator identity required');
     const target = this.iosTarget(owner);
     const runner = this.nativeRunnerFor(owner);
-    await deleteOldLogs(this.options.logFolder);
-    const sources: NativeLogSource[] = [];
-    const source = async (name: string) => {
-      const created = await createNativeLogSource({ path: join(this.options.logFolder, `${this.runId}-${name}.log`), values: {} });
-      sources.push(created); return created;
-    };
-    const console = await launchIosConsole({ ...target, bundleId: app.id, runner, source: await source('console'), signal, ...(app.launchArgs ? { args: app.launchArgs } : {}) });
+    const [runtime, os] = sources;
+    const console = await launchIosConsole({ ...target, bundleId: app.id, runner, source: runtime, signal, ...(app.launchArgs ? { args: app.launchArgs } : {}) });
     let logs: IosHelpers['logs'];
-    const os = await source('os');
     try { logs = await observeIosLogs({ ...target, bundleId: app.id, runner, source: os, signal }); }
     catch { os.unavailable('SOURCE_LOST'); logs = undefined; }
     return { platform: 'ios', console, ...(logs ? { logs } : {}), sources };

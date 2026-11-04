@@ -2,6 +2,7 @@ import assert from 'node:assert/strict';
 import { test } from 'node:test';
 import { createExtensionHandler } from '../src/appium/extension/operations.js';
 import { SOURCE_SETTINGS } from '../src/appium/wire-schemas.js';
+import { readFileSync } from 'node:fs';
 
 const png = 'iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/x8AAwMCAO+jG1sAAAAASUVORK5CYII=';
 const base = { extensionVersion: 1, sessionId: 'session-1' };
@@ -88,6 +89,19 @@ for (const platform of ['ios', 'android'] as const) {
     assert.deepEqual(f.calls, [['updateSettings', SOURCE_SETTINGS[platform]], ['getSettings']]);
     assert.deepEqual(await f.handler.call('jev_settings', { ...base, settings: { arbitrary: true } }), error('NOT_ALLOWED'));
     assert.equal(f.calls.length, 2);
+  });
+}
+const recordedIosSettings = JSON.parse(readFileSync(new URL('./fixtures/appium-wire/ios/xcuitest-get-settings.json', import.meta.url), 'utf8')).reply as Record<string, unknown>;
+test('iOS settings accept the recorded XCUITest readback, whose unset keys are null, and return only the keys the bridge set', async () => {
+  const f = fixture('ios'); f.driver.getSettings = async () => recordedIosSettings;
+  assert.deepEqual(await f.handler.call('jev_settings', { ...base, settings: SOURCE_SETTINGS.ios }), {
+    isError: false, content: [{ type: 'text', text: 'Settings read back.' }], structuredContent: { ...base, settings: SOURCE_SETTINGS.ios } });
+});
+for (const [name, readback] of [['missing', { ...recordedIosSettings, snapshotMaxDepth: undefined }], ['null', { ...recordedIosSettings, snapshotMaxDepth: null }],
+  ['a string', { ...recordedIosSettings, snapshotMaxDepth: '50' }]] as const) {
+  test(`an iOS setting the bridge set that reads back ${name} is a driver error`, async () => {
+    const f = fixture('ios'); f.driver.getSettings = async () => readback;
+    assert.deepEqual(await f.handler.call('jev_settings', { ...base, settings: SOURCE_SETTINGS.ios }), error('DRIVER_ERROR'));
   });
 }
 test('start activity forces stop and wait and preserves string extras in one command', async () => {
