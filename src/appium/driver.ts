@@ -704,7 +704,6 @@ export class AppiumDriver implements DeviceDriver, IosPreparationDriver, Observe
     watch.launched(pid !== undefined && !others.length && /^\d+$/.test(pid) ? Number(pid) : undefined);
   }
 
-  /** Local files only, made outside the launch command: a failure here has sent nothing to the simulator. */
   private async iosLogSources(): Promise<[NativeLogSource, NativeLogSource]> {
     await deleteOldLogs(this.options.logFolder);
     const open = (name: string) => createNativeLogSource({ path: join(this.options.logFolder, `${this.runId}-${name}.log`), values: {} });

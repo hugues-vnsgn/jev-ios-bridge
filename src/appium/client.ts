@@ -134,7 +134,6 @@ class PrivateStdioTransport implements Transport {
       if (running()) { child.kill('SIGTERM'); await wait(); }
       if (running()) { child.kill('SIGKILL'); await wait(); }
     }
-    // A child that may still run keeps its HOME; the fence stops it later.
     if (!running()) await rm(this.home, { recursive: true, force: true }).catch(() => undefined);
   }
 }
