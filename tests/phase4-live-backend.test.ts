@@ -3,7 +3,9 @@ import { mkdtempSync, rmSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { test, type TestContext } from 'node:test';
-import { existsSync, mkdirSync, writeFileSync } from 'node:fs';
+import { copyFileSync, existsSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs';
+import { spawnSync } from 'node:child_process';
+import { pathToFileURL } from 'node:url';
 import { BUILT_PRODUCT_ENTRIES, BUILT_PRODUCT_ROOT, createLiveCycleBackend, loadBuiltProduct, resolveLiveCycleParts } from '../scripts/phase4/live/backend.js';
 import { runCycles, scriptedCycle } from '../scripts/phase4/live/cycles.js';
 import { resolveIdentity, type IdentityProbe } from '../src/device/identity.js';
@@ -23,7 +25,7 @@ function logRoot(t: TestContext) {
 test('the live backend runs a cycle on the assigned device, and the cycle releases it with nothing owned left', { timeout: 120_000 }, async t => {
   const { f } = worldCycles(t, { platform: 'ios' });
   const live = createLiveCycleBackend({ device: { category: 'ios-simulator', value: UDID }, target: { platform: 'ios', device: UDID }, admission: f.admission,
-    fence: f.fence.run, driver: ({ runId }) => f.open(cycleWorld('ios'), { runId }).driver });
+    fence: f.fence.run, runtime: sourceProduct, driver: ({ runId }) => f.open(cycleWorld('ios'), { runId }).driver });
   const result = await runCycles(2, live({ scenario: iosScenario(), logRoot: logRoot(t) }));
   assert.equal(result.passed, true, JSON.stringify(result.failure));
   for (const record of result.cycles) {
@@ -42,6 +44,8 @@ test('the live parts resolve the assigned simulator and refuse an assignment tha
     probe: fakeSimulatorProbe(UDID), adbPath: '/fake/adb', environment: {}, product: sourceProduct });
   assert.deepEqual(parts.device, { category: 'ios-simulator', value: UDID });
   assert.equal(parts.admission, admission, 'the caller\'s authority is the one the cycles record on');
+  assert.equal(parts.runtime.runScriptedScenario, sourceProduct.runScriptedScenario, 'the runner comes from the same product as the driver');
+  assert.equal(parts.runtime.createRunLog, sourceProduct.createRunLog);
   await assert.rejects(() => resolveLiveCycleParts({ category: 'android-emulator', device: SERIAL, admission,
     probe: androidTarget().options.identityProbe, adbPath: '/fake/adb', environment: {}, product: sourceProduct }),
   /The assignment names android-emulator .*, but the live device is android-phone/);
@@ -77,7 +81,7 @@ test('an emulator assigned by its AVD name gets a driver target the driver can r
 test('two attempts at the same cycle number get different run ids, so their kept log files do not collide', { timeout: 120_000 }, async t => {
   const { f } = worldCycles(t, { platform: 'ios' });
   const runIds: string[] = [];
-  const attemptOf = () => scriptedCycle({ scenario: iosScenario(), logRoot: logRoot(t),
+  const attemptOf = () => scriptedCycle({ scenario: iosScenario(), logRoot: logRoot(t), runtime: sourceProduct,
     driver: ({ runId }) => { runIds.push(runId); return f.open(cycleWorld('ios'), { runId }).driver; } });
   await attemptOf()(1, new AbortController().signal);
   await attemptOf()(1, new AbortController().signal);
@@ -95,6 +99,7 @@ function stubProduct(root: string, omit: string[] = []) {
     'device/admission.js': ['Admission'], 'device/android/probe.js': ['identityProbe'], 'device/android/adb.js': ['adbRunner'],
     'device/android/tools.js': ['adbEnvironment', 'findAdb'], 'device/identity.js': ['resolveIdentity'],
     'appium/composition.js': ['ComposedAppiumDriver', 'productionAppiumHost'], 'appium/fence/runner.js': ['createFenceRunner'], 'appium/native/simctl.js': ['simctlRunner'],
+    'scripted/run.js': ['runScriptedScenario'], 'log/index.js': ['createRunLog'],
     'appium/stack-identity.js': ['default'], 'appium/extension/entry.js': [],
   };
   for (const [file, names] of Object.entries(exports)) {
@@ -125,4 +130,60 @@ test('the live kit loads the built product: it names the dist modules and the tw
   t.after(() => rmSync(noIdentity, { recursive: true, force: true }));
   stubProduct(noIdentity, ['appium/stack-identity.js']);
   await assert.rejects(loadBuiltProduct(noIdentity), /appium\/stack-identity\.js.*npm run build/);
+});
+
+/** A compiled second copy of the product, the way `dist` is: its classes are not the ones `src` defines. */
+function compiledCopy(t: TestContext): string {
+  const repo = join(import.meta.dirname, '..');
+  mkdirSync(join(repo, 'node_modules', '.cache'), { recursive: true });
+  const home = mkdtempSync(join(repo, 'node_modules', '.cache', 'p4-built-copy-'));
+  t.after(() => rmSync(home, { recursive: true, force: true }));
+  copyFileSync(join(repo, 'package.json'), join(home, 'package.json'));
+  const root = join(home, 'dist');
+  const built = spawnSync(process.execPath, [join(repo, 'node_modules', 'typescript', 'bin', 'tsc'), '-p', join(repo, 'tsconfig.build.json'), '--outDir', root], { encoding: 'utf8' });
+  assert.equal(built.status, 0, built.stdout + built.stderr);
+  writeFileSync(join(root, 'appium', 'stack-identity.js'), 'export default {};\n');
+  return root;
+}
+
+test('a cycle on the built product records the driver\'s own reason and vendor code, not EXECUTION_ERROR', { timeout: 120_000 }, async t => {
+  const root = compiledCopy(t);
+  const product = await loadBuiltProduct(root);
+  const { DeviceReasonError } = await import(pathToFileURL(join(root, 'device', 'index.js')).href) as typeof import('../src/device/index.js');
+  assert.notEqual(DeviceReasonError, (await import('../src/device/index.js')).DeviceReasonError, 'the built copy has its own classes');
+  const { f } = worldCycles(t, { platform: 'ios' });
+  const failing = (runId: string) => {
+    const driver = f.open(cycleWorld('ios'), { runId }).driver;
+    return Object.create(driver, { prepare: { value: async () => { throw new DeviceReasonError('DEVICE_ERROR', 'The Appium layer refused the command.', { vendorCode: 'DRIVER_ERROR', vendorSource: 'appium' }); } } }) as typeof driver;
+  };
+  const logs = logRoot(t);
+  const backend = createLiveCycleBackend({ device: { category: 'ios-simulator', value: UDID }, target: { platform: 'ios', device: UDID }, admission: f.admission,
+    fence: f.fence.run, runtime: product, driver: ({ runId }) => failing(runId) });
+  const run = await backend({ scenario: iosScenario(), logRoot: logs }).cycle(1, new AbortController().signal);
+  assert.equal(run.scenario.verdict, 'inconclusive');
+  const events = readFileSync(join(logs, run.scenario.runId, 'run.jsonl'), 'utf8').trim().split('\n').map(line => JSON.parse(line) as Record<string, unknown>);
+  const failed = events.find(event => event.type === 'error')?.data as Record<string, unknown> | undefined;
+  assert.deepEqual([failed?.phase, failed?.code, failed?.vendorCode, failed?.vendorSource], ['prepare', 'DEVICE_ERROR', 'DRIVER_ERROR', 'appium'], JSON.stringify(failed));
+  assert.equal(run.scenario.reason, 'DEVICE_ERROR');
+});
+
+test('a cycle on the built product retries a stale snapshot, because the runner knows the driver\'s StaleSnapshotError', { timeout: 120_000 }, async t => {
+  const root = compiledCopy(t);
+  const product = await loadBuiltProduct(root);
+  const { StaleSnapshotError } = await import(pathToFileURL(join(root, 'device', 'index.js')).href) as typeof import('../src/device/index.js');
+  const { f } = worldCycles(t, { platform: 'ios' });
+  const stale = (runId: string) => {
+    const driver = f.open(cycleWorld('ios'), { runId }).driver;
+    const act = driver.act;
+    let first = true;
+    return Object.create(driver, { act: { value: async function (this: typeof driver, ...args: Parameters<typeof driver.act>) {
+      if (first) { first = false; throw new StaleSnapshotError(); }
+      return await act.apply(this, args);
+    } } }) as typeof driver;
+  };
+  const backend = createLiveCycleBackend({ device: { category: 'ios-simulator', value: UDID }, target: { platform: 'ios', device: UDID }, admission: f.admission,
+    fence: f.fence.run, runtime: product, driver: ({ runId }) => stale(runId) });
+  const logs = logRoot(t);
+  const run = await backend({ scenario: iosScenario(), logRoot: logs }).cycle(1, new AbortController().signal);
+  assert.equal(run.scenario.reachedCheckpoint, true, `${run.scenario.verdict}: ${run.scenario.reason}`);
 });

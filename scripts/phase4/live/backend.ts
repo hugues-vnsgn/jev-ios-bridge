@@ -11,12 +11,14 @@ import type { IdentityProbe, ResolvedIdentity } from '../../../src/device/identi
 import type * as compositionModule from '../../../src/appium/composition.js';
 import type { AppiumHost } from '../../../src/appium/composition.js';
 import type * as fenceRunnerModule from '../../../src/appium/fence/runner.js';
+import type * as runModule from '../../../src/scripted/run.js';
+import type * as logModule from '../../../src/log/index.js';
 import type * as simctlModule from '../../../src/appium/native/simctl.js';
 import type { FenceRunner } from '../../../src/appium/fence/index.js';
 import type { AppiumTarget } from '../../../src/appium/driver.js';
 import type { DeviceDriver } from '../../../src/contracts/index.js';
 import type { ScriptedScenario } from '../../../src/scripted/contracts.js';
-import { scriptedCycle, type CycleBackend } from './cycles.js';
+import { scriptedCycle, type CycleBackend, type CycleRuntime } from './cycles.js';
 import type { DeviceScope } from './row.js';
 
 /**
@@ -34,12 +36,14 @@ export interface BuiltProduct {
   productionAppiumHost: typeof compositionModule.productionAppiumHost;
   createFenceRunner: typeof fenceRunnerModule.createFenceRunner;
   simctlRunner: typeof simctlModule.simctlRunner;
+  runScriptedScenario: typeof runModule.runScriptedScenario;
+  createRunLog: typeof logModule.createRunLog;
 }
 
 /** The modules each product piece comes from, relative to `dist`, and the build outputs the source tree lacks. */
 export const BUILT_PRODUCT_ENTRIES = {
   modules: ['device/admission.js', 'device/android/probe.js', 'device/android/adb.js', 'device/android/tools.js', 'device/identity.js',
-    'appium/composition.js', 'appium/fence/runner.js', 'appium/native/simctl.js'],
+    'appium/composition.js', 'appium/fence/runner.js', 'appium/native/simctl.js', 'scripted/run.js', 'log/index.js'],
   files: ['appium/stack-identity.js', 'appium/extension/entry.js'],
 } as const;
 
@@ -52,7 +56,7 @@ export async function loadBuiltProduct(root: string = BUILT_PRODUCT_ROOT): Promi
     if (!existsSync(join(root, file))) throw new Error(`The built product is missing ${file} under ${root}; run npm run build first.`);
   }
   const load = async (file: string): Promise<Record<string, unknown>> => await import(pathToFileURL(join(root, file)).href) as Record<string, unknown>;
-  const [admission, probe, adb, tools, identity, composition, fence, simctl] = await Promise.all(BUILT_PRODUCT_ENTRIES.modules.map(load));
+  const [admission, probe, adb, tools, identity, composition, fence, simctl, scripted, log] = await Promise.all(BUILT_PRODUCT_ENTRIES.modules.map(load));
   const piece = <T>(module: Record<string, unknown> | undefined, name: string): T => {
     if (module === undefined || !(name in module)) throw new Error(`The built product does not export ${name}; run npm run build first.`);
     return module[name] as T;
@@ -68,6 +72,8 @@ export async function loadBuiltProduct(root: string = BUILT_PRODUCT_ROOT): Promi
     productionAppiumHost: piece(composition, 'productionAppiumHost'),
     createFenceRunner: piece(fence, 'createFenceRunner'),
     simctlRunner: piece(simctl, 'simctlRunner'),
+    runScriptedScenario: piece(scripted, 'runScriptedScenario'),
+    createRunLog: piece(log, 'createRunLog'),
   };
 }
 
@@ -80,6 +86,8 @@ export interface CycleBackendParts {
   admission: Admission;
   /** The bridge's own fence. The harness only ever sends read effects through it. */
   fence: FenceRunner;
+  /** The scripted runner and run log of the build the driver comes from. */
+  runtime: CycleRuntime;
   /** The driver for one cycle; it gets the cycle's run id, which is also its admission attempt id. */
   driver: (input: { runId: string; index: number }) => DeviceDriver;
 }
@@ -87,7 +95,7 @@ export interface CycleBackendParts {
 /** The cycle backend over the parts: one scripted run per cycle, each on its own admission attempt. */
 export function createLiveCycleBackend(parts: CycleBackendParts): (input: { scenario: ScriptedScenario; logRoot: string }) => CycleBackend {
   return ({ scenario, logRoot }) => {
-    const cycle = scriptedCycle({ scenario, logRoot, driver: parts.driver });
+    const cycle = scriptedCycle({ scenario, logRoot, runtime: parts.runtime, driver: parts.driver });
     return {
       device: parts.device,
       fence: parts.fence,
@@ -164,6 +172,7 @@ export async function resolveLiveCycleParts(options: LiveCyclePartsOptions): Pro
     target,
     admission,
     fence,
+    runtime: product,
     driver: ({ runId }) => new product.ComposedAppiumDriver({ host, admission, runId, target: async () => target }),
   };
 }
