@@ -34,7 +34,26 @@ export class StackError extends Error {
 }
 const tar = promisify(execFile);
 const tarEnv = { PATH: '/usr/bin:/bin', LANG: 'C', COPYFILE_DISABLE: '1' };
+// Listing takes under a second. Extracting the 86 MB stack took 6.5 s at load 16 and 39.5 s at load 36, so 60 s left no
+// room on a busy host; five minutes is about eight times the worst measured and still ends a hung tar.
+const LIST_TIMEOUT_MS = 60_000;
+const EXTRACT_TIMEOUT_MS = 300_000;
 function refuse(code: string, detail: string): never { throw new StackError(code, detail); }
+const failureField = (error: unknown, field: string): unknown =>
+  typeof error === 'object' && error !== null && field in error ? Reflect.get(error, field) : undefined;
+/** Runs the system tar; a failure or a timeout surfaces as a StackError that says which, never as a bare command error. */
+export async function runTar(args: string[], timeoutMs: number, what: string, maxBuffer?: number): Promise<string> {
+  try {
+    return (await tar('/usr/bin/tar', args, { env: tarEnv, timeout: timeoutMs, ...(maxBuffer === undefined ? {} : { maxBuffer }) })).stdout;
+  } catch (error) {
+    if (failureField(error, 'killed') === true && failureField(error, 'signal') === 'SIGTERM')
+      return refuse('STACK_EXTRACT_TIMEOUT', `tar ${what} timed out after ${timeoutMs / 1000} s. The machine may be busy; run the command again.`);
+    const exit = failureField(error, 'code'); const stderr = failureField(error, 'stderr');
+    const reason = [typeof exit === 'number' ? `exit ${exit}` : typeof exit === 'string' ? exit : undefined,
+      typeof stderr === 'string' && stderr.trim() ? stderr.trim().slice(0, 300) : undefined].filter(Boolean).join(': ');
+    return refuse('STACK_EXTRACT_FAILED', `tar ${what} failed${reason ? ` (${reason})` : ''}. Reinstall jev-ios-bridge to restore its release files.`);
+  }
+}
 function withHint<T>(hint: string, check: () => T): T {
   try { return check(); }
   catch (error) { throw error instanceof StackError ? new StackError(error.code, `${error.message} ${hint}`) : error; }
@@ -157,16 +176,16 @@ export class FrozenStack {
         for (const { name, bytes } of archives) {
           const archive = resolve(staging, `.${name}`);
           writeFileSync(archive, bytes, { flag: 'wx', mode: 0o600 });
-          const { stdout } = await tar('/usr/bin/tar', ['-tzf', archive], { env: tarEnv, maxBuffer: 32 * 1024 * 1024, timeout: 60000 });
+          const stdout = await runTar(['-tzf', archive], LIST_TIMEOUT_MS, `listing ${name}`, 32 * 1024 * 1024);
           for (const item of stdout.trim().split('\n')) {
             const path = item.replace(/\/$/, '');
             if (!pathSchema.safeParse(path).success || !allowed.has(path))
               refuse('STACK_MANIFEST_MISMATCH', `Unexpected archive path: ${item}.`);
           }
-          await tar('/usr/bin/tar', ['-xzf', archive, '-C', staging], { env: tarEnv, timeout: 60000 });
+          await runTar(['-xzpf', archive, '-C', staging], EXTRACT_TIMEOUT_MS, `extracting ${name}`);
           rmSync(archive);
         }
-        verifyTree(staging, manifest, true);
+        withHint('Reinstall jev-ios-bridge to restore its release files.', () => verifyTree(staging, manifest, true));
         writeFileSync(join(staging, '.verified.json'), expectedMarker, { flag: 'wx', mode: 0o600 });
         try { renameSync(staging, root); }
         catch (error) {
