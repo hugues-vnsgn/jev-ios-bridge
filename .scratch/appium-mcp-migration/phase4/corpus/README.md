@@ -8,4 +8,6 @@
 
 Rerun with `npx tsx scripts/phase4/corpus/cli.ts recover --check`, then `manifest generate` and `manifest verify`. Attach a capture with `capture attach --screen <id> --xml <file> --screenshot <file> --kind live ...`. `replay --live-jev` is the only path that calls Jev.
 
+A replay writes one result record per screen under `results/<platform>/<screenId>.json`, plus `results/report.json` scoring the run against the frozen exit rule. A screen is judged once and never re-asked, so a second replay over the same records sends nothing.
+
 The test that reads history skips in shallow CI clones, where the frozen commits are absent. The committed files are checked anyway.
