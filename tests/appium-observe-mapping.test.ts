@@ -166,3 +166,8 @@ test('iOS keeps a typed value on input controls even when it equals the label', 
   const capture = normalizeSource('ios', iosSource(ios('TextField', 'label="Name" value="Name"') + ios('StaticText', 'label="Name" value="Name"')));
   assert.deepEqual(capture.elements.slice(1).map(e => e.value ?? null), ['Name', null]);
 });
+
+test('an iOS element type the bridge does not know maps to other, and a known one keeps its role', () => {
+  const roles = normalizeSource('ios', iosSource(ios('Button', 'label="Go"') + ios('FutureVendorWidget', 'label="New"'))).elements.map(element => element.role);
+  assert.deepEqual(roles, ['application', 'button', 'other']);
+});

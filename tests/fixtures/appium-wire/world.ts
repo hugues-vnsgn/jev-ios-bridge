@@ -136,16 +136,17 @@ export function worldFixture(t: TestContext, first: World, options: Overrides, n
     traces.push(trace);
     const file = join(root, `world-${String(index)}.json`);
     writeFileSync(file, JSON.stringify(worldSchema.parse(state)));
-    const driver = new AppiumDriver({ stack: driverStack(t), admission, backend: 'fake', homeRoot: join(root, 'homes'), logFolder: join(root, 'logs'),
+    const parts: AppiumDriverOptions = { stack: driverStack(t), admission, backend: 'fake', homeRoot: join(root, 'homes'), logFolder: join(root, 'logs'),
       screenshotFolder: join(root, 'shots'), lockRoot: join(root, 'locks'), fence: (...args) => fence.run(...args), nativeRunner: native.runner, freePort: async () => port++,
       startLookup: pid => `host-${String(pid)}`, runMarker: () => '0123456789abcdef0123456789abcdef', runId: `run-${String(index + 1)}`, timeoutMs: 20_000, presentation: async () => 'visible',
       child: { entrypoint: resolve('tests/fixtures/appium-wire/world-mcp.ts'), args: [file, trace], nodeArgs: ['--import', import.meta.resolve('tsx')] },
-      ...options, ...(sessionAdb ? { adb: sessionAdb } : {}), ...overrides });
+      ...options, ...(sessionAdb ? { adb: sessionAdb } : {}), ...overrides };
+    const driver = new AppiumDriver(parts);
     drivers.push(driver);
     const calls = (): Call[] => { try { return readFileSync(trace, 'utf8').trim().split('\n').map(line => JSON.parse(line) as Call); } catch { return []; } };
     const toolCalls = () => calls().filter(call => call.method === 'tools/call');
     const environment = (): string[] => JSON.parse(readFileSync(trace + '.env', 'utf8')) as string[];
-    return { driver, trace, calls, toolCalls, environment, tools: () => toolCalls().map(call => call.params!.name!),
+    return { driver, parts, trace, calls, toolCalls, environment, tools: () => toolCalls().map(call => call.params!.name!),
       goto: (screen: string) => writeFileSync(trace + '.goto', screen), release: () => writeFileSync(trace + '.release', '') };
   };
   return { root, admission, fence, native, drivers, open, ...open(first) };

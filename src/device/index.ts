@@ -6,9 +6,6 @@ import { androidAvd, androidSerial } from '../scripted/schema.js';
 import type { ReasonCode } from '../scripted/vocabulary.js';
 import type { PreparationClaim, ObservedClaim, AllocationCommit } from './admission-allocation.js';
 
-export type CliResult = { stdout: string; stderr: string; exitCode: number };
-export type CliRunner = (args: string[], signal: AbortSignal) => Promise<CliResult>;
-
 /** Brings a simulator's window to the front. Rejects when it couldn't; the run carries on either way. */
 export type DeviceWindowOpener = (udid: string, signal: AbortSignal) => Promise<void>;
 
