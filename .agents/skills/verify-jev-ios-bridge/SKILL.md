@@ -127,6 +127,9 @@ node --env-file="$key_file" "$bridge_root/.agents/skills/verify-jev-ios-bridge/s
 
 The Phase 4 live matrix runs through `scripts/phase4/live/run.ts`, which applies
 the same record and adds the owner activation record for store rows.
+Cycles rows drive the built product from `dist`, as the shipped CLI does, so run
+`npm run build` first; the runner refuses a `dist` that lacks the stack identity or
+the Appium child entry.
 Each attempt's `versions.json` records Node, the package version, the git commit,
 the Appium stack identity (build first so `dist/appium/stack-identity.js` exists),
 and the tools of the assigned category: Xcode and the simulator runtime, or adb,
