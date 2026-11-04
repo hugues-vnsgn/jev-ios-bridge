@@ -1,0 +1,11 @@
+{
+  "version": 1,
+  "app": { "bundleId": "example.app" },
+  "device": { "udid": "ABCDEF00-0000-4000-8000-000000000001" },
+  "values": {},
+  "steps": [
+    { "id": "go", "kind": "action", "guard": { "present": [{ "identifier": "home" }] }, "action": { "kind": "tap", "selector": { "identifier": "go" } } },
+    { "id": "settle", "kind": "wait", "guard": { "present": [{ "label": "Header" }] }, "until": { "present": [{ "identifier": "done" }] }, "timeoutMs": 5000 },
+    { "id": "shown", "kind": "checkpoint", "guard": { "present": [{ "identifier": "done" }] }, "assertions": [{ "id": "done", "claim": "Done is shown." }] }
+  ]
+}

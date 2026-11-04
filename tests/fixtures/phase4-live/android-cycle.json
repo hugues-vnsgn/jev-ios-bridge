@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "platform": "android",
+  "app": { "package": "example.app", "activity": ".Main" },
+  "device": { "serial": "PHONE123" },
+  "values": {},
+  "steps": [
+    { "id": "go", "kind": "action", "guard": { "present": [{ "identifier": "example.app:id/home" }] }, "action": { "kind": "tap", "selector": { "identifier": "example.app:id/go" } } },
+    { "id": "settle", "kind": "wait", "guard": { "present": [{ "label": "Header" }] }, "until": { "present": [{ "identifier": "example.app:id/done" }] }, "timeoutMs": 5000 },
+    { "id": "shown", "kind": "checkpoint", "guard": { "present": [{ "identifier": "example.app:id/done" }] }, "assertions": [{ "id": "done", "claim": "Done is shown." }] }
+  ]
+}
