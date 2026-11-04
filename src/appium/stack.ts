@@ -182,7 +182,7 @@ export class FrozenStack {
             if (!pathSchema.safeParse(path).success || !allowed.has(path))
               refuse('STACK_MANIFEST_MISMATCH', `Unexpected archive path: ${item}.`);
           }
-          await runTar(['-xzpf', archive, '-C', staging], EXTRACT_TIMEOUT_MS, `extracting ${name}`);
+          await runTar(['-xzf', archive, '-p', '-C', staging], EXTRACT_TIMEOUT_MS, `extracting ${name}`);
           rmSync(archive);
         }
         withHint('Reinstall jev-ios-bridge to restore its release files.', () => verifyTree(staging, manifest, true));

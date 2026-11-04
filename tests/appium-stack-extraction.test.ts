@@ -66,10 +66,12 @@ test('an archive tar cannot read refuses with a stack code and tar\'s own words,
 test('a tar that outlives its bound is killed and reported as a timeout, naming the bound', async t => {
   const release = stackRelease();
   t.after(() => rmSync(release.base, { recursive: true, force: true }));
-  await assert.rejects(runTar(['-tzf', join(release.artifactRoot, 'stack.tar.gz')], 1, 'listing stack.tar.gz'), (error: unknown) => {
+  const never = join(release.base, 'never.tar.gz');
+  execFileSync('mkfifo', [never]);
+  await assert.rejects(runTar(['-tzf', never], 200, 'listing never.tar.gz'), (error: unknown) => {
     assert.ok(error instanceof StackError);
     assert.equal(error.code, 'STACK_EXTRACT_TIMEOUT');
-    assert.match(error.message, /^tar listing stack\.tar\.gz timed out after 0\.001 s/);
+    assert.match(error.message, /^tar listing never\.tar\.gz timed out after 0\.2 s/);
     return true;
   });
 });
