@@ -309,7 +309,7 @@ test('simulator UUIDs resolve only through the default inventory and reserved iP
   assert.deepEqual(fake.calls, []);
 });
 
-import { chmodSync, mkdirSync, mkdtempSync, writeFileSync, rmSync, realpathSync } from 'node:fs';
+import { chmodSync, mkdirSync, utimesSync, mkdtempSync, writeFileSync, rmSync, realpathSync } from 'node:fs';
 import { tmpdir, userInfo } from 'node:os';
 import { join } from 'node:path';
 
@@ -323,7 +323,7 @@ test('production host parsing binds loopback PID, process start and fresh SDK bi
     mkdirSync(avd);
     writeFileSync(launcher, 'fake launcher'); writeFileSync(executable, 'fake executable');
     chmodSync(launcher, 0o700); chmodSync(executable, 0o700);
-    const startedAt = new Date(Date.now() + 1).toISOString();
+    const startedAt = new Date(Date.now() + 60_000).toISOString();
     const fake = fakeProbeSpawn((file, args) => {
       if (file === '/usr/sbin/lsof' && args.includes('-d')) return `p123\nn${executable}\n`;
       if (file === '/usr/sbin/lsof') return `p123\nu${userInfo().uid}\nn127.0.0.1:5554\n`;
@@ -341,6 +341,8 @@ test('production host parsing binds loopback PID, process start and fresh SDK bi
     assert.deepEqual(fake.calls.filter(call => call.file === launcher).map(call => call.args), [['-version']]);
     assert.equal(fake.calls.find(call => call.file === '/bin/ps')?.options.env.LC_ALL, 'C', 'ps -o lstart= is parsed in English');
     writeFileSync(launcher, 'replaced installation');
+    const afterStart = new Date(Date.parse(startedAt) + 1000);
+    utimesSync(launcher, afterStart, afterStart);
     await assert.rejects(resolveIdentity({ request: { category: 'android', name: 'emulator-5554' }, probe, signal: identitySignal() }),
       refusal('DEVICE_IDENTITY_UNAVAILABLE', 'PROVENANCE_INACCESSIBLE'));
   } finally { rmSync(root, { recursive: true, force: true }); }
