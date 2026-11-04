@@ -1,14 +1,22 @@
 import assert from 'node:assert/strict';
-import { mkdtempSync, rmSync } from 'node:fs';
+import { mkdirSync, mkdtempSync, realpathSync, rmSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { test, type TestContext } from 'node:test';
 import { createLiveCycleBackend, resolveLiveCycleParts } from '../scripts/phase4/live/backend.js';
 import { runCycles } from '../scripts/phase4/live/cycles.js';
-import { fakeAndroidAdmission, fakeSimulatorProbe } from './fixtures/android-device.js';
+import { Admission } from '../src/device/admission.js';
+import { fakeSimulatorProbe } from './fixtures/android-device.js';
 import { UDID } from './fixtures/appium-wire/driver-fixture.js';
 import { SERIAL, androidTarget } from './fixtures/appium-wire/matrix.js';
 import { IOS_SCENARIO, cycleWorld, iosScenario, worldCycles } from './fixtures/phase4-live/world-cycles.js';
+
+/** A private admission store for the test: the real authority over a fake backend. */
+function testAdmission(root: string): Admission {
+  const directory = join(root, 'admission');
+  mkdirSync(directory, { recursive: true, mode: 0o700 });
+  return Admission.forTesting({ root: realpathSync(directory), backend: 'fake', durability: 'fast', componentLiveness: () => 'exited' });
+}
 
 function logRoot(t: TestContext) {
   const root = mkdtempSync(join(tmpdir(), 'p4-backend-'));
@@ -33,7 +41,7 @@ test('the live backend runs a cycle on the assigned device, and the cycle releas
 test('the live parts resolve the assigned simulator and refuse an assignment that names another category', async t => {
   const root = mkdtempSync(join(tmpdir(), 'p4-parts-'));
   t.after(() => rmSync(root, { recursive: true, force: true }));
-  const admission = fakeAndroidAdmission(root);
+  const admission = testAdmission(root);
   const parts = await resolveLiveCycleParts({ category: 'ios-simulator', device: UDID, admission,
     probe: fakeSimulatorProbe(UDID), adbPath: '/fake/adb', environment: {} });
   assert.deepEqual(parts.device, { category: 'ios-simulator', value: UDID });
