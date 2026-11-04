@@ -68,22 +68,65 @@ and initial capture, then return here for Doctor and smoke before its Run Androi
 step. Use the hStack native-execution helper for Gradle. Run every ADB operation with
 `-s "$assigned_serial"`. Require installation success and package
 `dev.jevbridge.diagnostic` to exist before doctor. Keep one driver per device.
-A connected physical phone is not an assignment. Phone `2985e9c` is unassigned
-and must not be driven. The helper accepts only its recorded emulator.
+A connected physical phone is not an assignment. Never drive phone `2985e9c`, or
+any other phone, without an owner assignment record that names it (see
+[Assigned devices](#assigned-devices)). Otherwise the helper accepts only its recorded emulator.
 
-Every live iOS scripted or driven run opens and writes the real per-user admission
-store at `~/Library/Application Support/jev-ios-bridge/admission` during
-`src/device/index.ts` preparation through `Admission.open()`. Obtain the owner's
-explicit go-ahead for that store before any live iOS drive. Separate project and
-runs directories do not isolate it. Without that authorization, report iOS as
-unverified and owner-gated. Observed prepare/start and admission migration or
-maintenance against that store have the same gate. Use [observed actions](features/observed.md)
-for that branch. Android scripted runs do not open iOS admission.
+Every live run on any platform opens and writes the real per-user admission
+store at `~/Library/Application Support/jev-ios-bridge/admission`. The Appium
+composition calls `Admission.open()` in `src/appium/composition.ts` for iOS and
+Android alike. Obtain the owner's explicit go-ahead for that store, an owner
+activation record, before any live drive. Separate project and runs directories
+do not isolate it. Without that authorization, report the drive as unverified and
+owner-gated. Observed prepare/start and admission migration or maintenance
+against that store have the same gate. Use [observed actions](features/observed.md)
+for that branch.
 
 For MCP, launch this checkout's `node dist/cli.js mcp` through a stdio MCP client.
 Initialize and list tools before calls. Keep stdout for protocol traffic, record
 the server PID, and retain the same connection for the run's lifetime. Follow
 [the MCP recipe](features/mcp.md) for environment and lifecycle details.
+
+## Assigned devices
+
+An iOS simulator or an Android phone is driven only under an owner assignment
+record. The owner writes it, mode 600, outside the checkout:
+
+```json
+{"version":1,"kind":"device-assignment","assignedBy":"owner","device":"<UDID or serial>",
+ "category":"ios-simulator","custody":{"from":"<ISO-8601>","until":"<ISO-8601>"}}
+```
+
+`category` is `ios-simulator`, `android-emulator` or `android-phone`. The
+`assignment` helper refuses a missing record, a record writable by others,
+another device, and a time outside the custody window. It saves the record and
+its SHA-256 as `assignment.json` in the evidence folder. Stop when custody ends.
+
+For an iOS simulator, check the record, then run Doctor and smoke without
+`--serial`. Put the assigned UDID in every script's `device.udid`. Never boot,
+erase, shut down or reuse another simulator, and never use a private device set.
+
+```sh
+umask 077
+proof_evidence="$(mktemp -d "$bridge_root/.jev-runs/verification/ios-XXXXXXXX")"
+node "$bridge_root/.agents/skills/verify-jev-ios-bridge/scripts/verify.mjs" assignment \
+  --record "$assignment_file" --device "$assigned_udid" --evidence "$proof_evidence"
+```
+
+For an Android phone, check the record, then run Doctor with the phone serial.
+Doctor refuses a non-emulator serial unless the saved record names that phone
+and is still valid. Skip `android-start` and `cleanup`: the helpers never start
+or stop a phone. Run every ADB operation with `-s "$assigned_serial"`.
+
+```sh
+node "$bridge_root/.agents/skills/verify-jev-ios-bridge/scripts/verify.mjs" assignment \
+  --record "$assignment_file" --device "$assigned_serial" --evidence "$proof_evidence"
+node --env-file="$key_file" "$bridge_root/.agents/skills/verify-jev-ios-bridge/scripts/verify.mjs" doctor \
+  --serial "$assigned_serial" --evidence "$proof_evidence" > "$proof_evidence/doctor.json"
+```
+
+The Phase 4 live matrix runs through `scripts/phase4/live/run.ts`, which applies
+the same record and adds the owner activation record for store rows.
 
 ## Doctor
 
@@ -191,7 +234,8 @@ nonexistent run artifacts. Keep the evidence path in the final receipt.
 `scripts/verify.mjs` is executable. Every mode is invoked above. `build` creates
 the build receipt. `doctor` reads readiness. `smoke` records host refusal checks.
 `android-start` launches only the assigned AVD. `cleanup` stops only its recorded
-PID. Helpers never load a key or select a physical device.
+PID. `assignment` checks the owner's record. Helpers never load a key or select
+a physical device.
 
 Finish with revision, passed/failed/not-run cases, run ID, evidence path, cleanup
 status, and every deviation. Name iOS live and observed as unverified when gated.

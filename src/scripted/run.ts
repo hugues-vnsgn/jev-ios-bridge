@@ -63,6 +63,10 @@ class ScriptRunError extends Error {
  *  see an in-flight command finish. */
 export const DEFAULT_CLEANUP_MS = 45_000;
 
+/** ADR-0004: a claim is established at 0.9 or above and rejected at 0.1 or below. */
+export const CLAIM_ESTABLISHED_AT = 0.9;
+export const CLAIM_REJECTED_AT = 0.1;
+
 function bounded(value: number | undefined, fallback: number, minimum: number, maximum: number): number {
   const selected = value ?? fallback;
   if (!Number.isSafeInteger(selected) || selected < minimum || selected > maximum) throw new RangeError('Invalid script run limit');
@@ -498,8 +502,8 @@ export async function runScriptedScenario(options: ScriptedRunOptions): Promise<
       requireActive();
       const answers = step.assertions.map(assertion => judgment.probabilities[assertion.id]!);
       // ADR-0004: a confidently false claim fails the checkpoint even beside uncertain claims.
-      const status = answers.some(value => value <= 0.1) ? 'failed' :
-        answers.some(value => value < 0.9) ? 'inconclusive' : 'passed';
+      const status = answers.some(value => value <= CLAIM_REJECTED_AT) ? 'failed' :
+        answers.some(value => value < CLAIM_ESTABLISHED_AT) ? 'inconclusive' : 'passed';
       await options.log.append('checkpoint', { step: steps, stepId: step.id, status,
         stepDurationMs: Math.max(0, performance.now() - activeStepStarted),
         assertions: step.assertions.map(assertion => ({ id: assertion.id, claim: assertion.claim,

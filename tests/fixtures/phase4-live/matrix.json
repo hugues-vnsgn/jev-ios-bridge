@@ -1,0 +1,71 @@
+{
+  "version": 1,
+  "spec": ".scratch/appium-mcp-migration/phases/phase-4-acceptance.md:61-86",
+  "rows": [
+    {
+      "id": "cleanup-cycles",
+      "group": "category",
+      "title": "Repeated cleanup: independent scenario/session cycles leave nothing owned",
+      "source": ".scratch/appium-mcp-migration/phases/phase-4-acceptance.md:77",
+      "devices": ["ios-simulator", "android-emulator", "android-phone"],
+      "steps": ["Run the cycle scenario N times on the assigned device"],
+      "expected": "At least 20 cycles, each released with no owned component left",
+      "evidence": ["cycles.jsonl", "verdict.json"],
+      "needs": { "storeActivation": true, "phone": false, "jevKey": false },
+      "executor": "cycles",
+      "status": "untested"
+    },
+    {
+      "id": "logs-plain",
+      "group": "category",
+      "title": "Logs: app prints reach the log pane",
+      "source": ".scratch/appium-mcp-migration/phases/phase-4-acceptance.md:74",
+      "devices": ["ios-simulator", "android-emulator", "android-phone"],
+      "steps": ["Open the log pane", "Print from the app"],
+      "expected": "The print appears in the pane",
+      "evidence": ["outputs/1.stdout"],
+      "needs": { "storeActivation": false, "phone": false, "jevKey": false },
+      "executor": "operator",
+      "status": "untested"
+    },
+    {
+      "id": "ownership-store",
+      "group": "category",
+      "title": "Ownership: a competing entry point is refused",
+      "source": ".scratch/appium-mcp-migration/phases/phase-4-acceptance.md:76",
+      "devices": ["ios-simulator", "android-emulator", "android-phone"],
+      "steps": ["Start a run", "Start a second run on the same device"],
+      "expected": "The second run is refused as busy",
+      "evidence": ["commands.jsonl"],
+      "needs": { "storeActivation": true, "phone": false, "jevKey": false },
+      "executor": "operator",
+      "status": "untested"
+    },
+    {
+      "id": "phone-only",
+      "group": "category",
+      "title": "Physical phone: coordinate scaling on the assigned phone",
+      "source": ".scratch/appium-mcp-migration/phases/phase-4-acceptance.md:73",
+      "devices": ["android-phone"],
+      "steps": ["Drive a tap at a scaled coordinate"],
+      "expected": "The tap lands on the scaled target",
+      "evidence": ["commands.jsonl"],
+      "needs": { "storeActivation": false, "phone": true, "jevKey": false },
+      "executor": "operator",
+      "status": "untested"
+    },
+    {
+      "id": "driven-jev",
+      "group": "category",
+      "title": "Driven interaction: pause ownership and hand-back",
+      "source": ".scratch/appium-mcp-migration/phases/phase-4-acceptance.md:73",
+      "devices": ["ios-simulator", "android-emulator", "android-phone"],
+      "steps": ["Run a driven scenario that pauses for a hand-back"],
+      "expected": "The pause is owned and the hand-back resolves",
+      "evidence": ["commands.jsonl"],
+      "needs": { "storeActivation": false, "phone": false, "jevKey": true },
+      "executor": "operator",
+      "status": "untested"
+    }
+  ]
+}
