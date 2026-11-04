@@ -98,7 +98,7 @@ node --env-file="$key_file" "$bridge_root/dist/cli.js" run \
 
 ## Gotchas
 
-- Worktrees and `JEV_PROJECT_DIR` or `JEV_RUNS_DIR` do not isolate the real admission store at `~/Library/Application Support/jev-ios-bridge/admission`. Every live iOS scripted drive is owner-gated. Android scripted runs use their device lease instead.
+- Worktrees and `JEV_PROJECT_DIR` or `JEV_RUNS_DIR` do not isolate the real admission store at `~/Library/Application Support/jev-ios-bridge/admission`. Every live scripted drive, iOS or Android, is owner-gated.
 - The bridge builds and installs neither diagnostic app. Missing SDK/JDK, unbuilt APK, unassigned emulator, locked device, foreign automation owner, or absent key is an unmet precondition. Record it without weakening the guards or checkpoint.
 - The APK's minimum SDK is 24, but the bridge requires API 31 or newer. An API 24 emulator cannot prove this journey.
 - `install -r` preserves app data. This fixture resets its selection on a new process, but other apps may need their own explicit test reset.

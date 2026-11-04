@@ -50,4 +50,4 @@ node "$bridge_root/dist/cli.js" logs "$run_id"
 - The watch URL is token-scoped to one run and stops working when its process exits. A finished CLI process cannot provide later watch-page proof.
 - App log files and screenshots can contain unmasked text. `--no-log-pane` suppresses the window, not evidence or log collection. `--no-log-pane` on `report` is invalid and exits 3.
 - Missing prior live evidence blocks successful retrieval proof. A fabricated report or unknown-ID refusal cannot replace it.
-- Starting a new live iOS run for logs or watch writes real admission authority and needs owner approval. Retrieving an existing scripted report does not grant that approval.
+- Starting a new live run for logs or watch, on either platform, writes real admission authority and needs owner approval. Retrieving an existing scripted report does not grant that approval.

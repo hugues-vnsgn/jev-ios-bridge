@@ -19,7 +19,7 @@ Preconditions:
 
 - Complete the main skill's Launch and Doctor. Use an available MCP client that can initialize, call `tools/list`, call tools, and close its owned server.
 - Complete the Android installation and initial-state checks in [scripted checks](scripted.md). Use the same `bridge_root`, `key_file`, `proof_project`, `proof_runs`, and `assigned_serial`.
-- Every live iOS scenario is owner-gated because it writes the real admission store. Use the authorized Android fixture for this job.
+- Every live scenario, iOS or Android, is owner-gated because it writes the real admission store.
 
 - **Launch and discover.** Spawn the command below through the client, record its PID, initialize MCP, then call `tools/list`. Keep stdout reserved for protocol messages. Require `start_scenario`, `get_report`, and `cancel_run`. Additional observed tools are valid.
 

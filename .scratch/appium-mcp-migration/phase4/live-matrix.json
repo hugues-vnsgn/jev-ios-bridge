@@ -1,0 +1,1491 @@
+{
+  "version": 1,
+  "spec": ".scratch/appium-mcp-migration/phases/phase-4-acceptance.md:61-86",
+  "rows": [
+    {
+      "id": "B1-launch-options-ios-simulator",
+      "group": "category",
+      "title": "Launch and options on the iOS simulator",
+      "source": ".scratch/appium-mcp-migration/phases/phase-4-acceptance.md:69",
+      "devices": [
+        "ios-simulator"
+      ],
+      "steps": [
+        "Build and install examples/diagnostic-app on the assigned iOS simulator.",
+        "Run a copy of examples/diagnostic-app/scenario.json with `app.launchArgs` and `preconditions` added, through CLI `run` and through MCP `start_scenario`.",
+        "Run a version 2 copy with `start: \"attach\"` while the app is in front."
+      ],
+      "expected": "The app launches fresh with the authored launch args, and the report keeps the preconditions as written. The attach run ends INCONCLUSIVE with UNSUPPORTED_ACTION before the simulator is touched.",
+      "evidence": [
+        "Commands with stdout, stderr and exit codes",
+        "report.json and run.jsonl",
+        "Step screenshots",
+        "Versions: app build, OS, toolchain, Node and stack",
+        "Admission generation: components, commands and fence proofs",
+        "Artifact paths"
+      ],
+      "needs": {
+        "storeActivation": true,
+        "phone": false,
+        "jevKey": true
+      },
+      "executor": "operator",
+      "status": "untested"
+    },
+    {
+      "id": "B1-launch-options-android-emulator",
+      "group": "category",
+      "title": "Launch and options on the Android emulator",
+      "source": ".scratch/appium-mcp-migration/phases/phase-4-acceptance.md:69",
+      "devices": [
+        "android-emulator"
+      ],
+      "steps": [
+        "Build and install examples/diagnostic-app-android on the assigned Android emulator.",
+        "Run a copy of examples/diagnostic-app-android/scenario.json with `app.activity`, `app.intentExtras` and `preconditions` added, through CLI `run` and through MCP `start_scenario`.",
+        "With the diagnostic app in front, run a version 2 copy with `start: \"attach\"`.",
+        "Repeat the attach with the launcher in front."
+      ],
+      "expected": "The app starts at the authored activity with its intent extras, and the report keeps the preconditions as written. Attach starts from the screen already showing, without a relaunch, and leaves the app running. With the launcher in front, attach ends INCONCLUSIVE with APP_NOT_IN_FOREGROUND.",
+      "evidence": [
+        "Commands with stdout, stderr and exit codes",
+        "report.json and run.jsonl",
+        "Step screenshots",
+        "Versions: app build, OS, toolchain, Node and stack",
+        "Admission generation: components, commands and fence proofs",
+        "Artifact paths"
+      ],
+      "needs": {
+        "storeActivation": true,
+        "phone": false,
+        "jevKey": true
+      },
+      "executor": "operator",
+      "status": "untested"
+    },
+    {
+      "id": "B1-launch-options-android-phone",
+      "group": "category",
+      "title": "Launch and options on the Android phone",
+      "source": ".scratch/appium-mcp-migration/phases/phase-4-acceptance.md:69",
+      "devices": [
+        "android-phone"
+      ],
+      "steps": [
+        "Build and install examples/diagnostic-app-android on the assigned Android phone.",
+        "Run a copy of examples/diagnostic-app-android/scenario.json with `app.activity`, `app.intentExtras` and `preconditions` added, through CLI `run` and through MCP `start_scenario`.",
+        "With the diagnostic app in front, run a version 2 copy with `start: \"attach\"`.",
+        "Repeat the attach with the launcher in front."
+      ],
+      "expected": "The app starts at the authored activity with its intent extras, and the report keeps the preconditions as written. Attach starts from the screen already showing, without a relaunch, and leaves the app running. With the launcher in front, attach ends INCONCLUSIVE with APP_NOT_IN_FOREGROUND.",
+      "evidence": [
+        "Commands with stdout, stderr and exit codes",
+        "report.json and run.jsonl",
+        "Step screenshots",
+        "Versions: app build, OS, toolchain, Node and stack",
+        "Admission generation: components, commands and fence proofs",
+        "Artifact paths"
+      ],
+      "needs": {
+        "storeActivation": true,
+        "phone": true,
+        "jevKey": true
+      },
+      "executor": "operator",
+      "status": "untested"
+    },
+    {
+      "id": "B2-observation-actions-ios-simulator",
+      "group": "category",
+      "title": "Observation and actions on the iOS simulator",
+      "source": ".scratch/appium-mcp-migration/phases/phase-4-acceptance.md:70",
+      "devices": [
+        "ios-simulator"
+      ],
+      "steps": [
+        "Build and install examples/diagnostic-app on the assigned iOS simulator.",
+        "Run examples/diagnostic-app/scenario.json through CLI `run`.",
+        "Install spikes/benchmarks/vendor/weather and run a script that replaces the location search text, swipes the results and waits for a result row before its checkpoint.",
+        "Turn driven mode on (\"drivenMode\": true in .jev/config.json and JEV_EXPERIMENTAL_DRIVEN=1).",
+        "Run a `do` step that needs a scroll and a back through MCP `start_scenario`."
+      ],
+      "expected": "Each step reads a fresh capture and taps only its unique target. The diagnostic run fails with ASSERTION_FALSE on the planted $3 total. The search field reports its own shown value. Swipe, scroll and back move the screen, each wait ends on its until-guard, and each checkpoint is judged once.",
+      "evidence": [
+        "Commands with stdout, stderr and exit codes",
+        "report.json and run.jsonl",
+        "Step screenshots",
+        "Versions: app build, OS, toolchain, Node and stack",
+        "Admission generation: components, commands and fence proofs",
+        "Artifact paths"
+      ],
+      "needs": {
+        "storeActivation": true,
+        "phone": false,
+        "jevKey": true
+      },
+      "executor": "operator",
+      "status": "untested"
+    },
+    {
+      "id": "B2-observation-actions-android-emulator",
+      "group": "category",
+      "title": "Observation and actions on the Android emulator",
+      "source": ".scratch/appium-mcp-migration/phases/phase-4-acceptance.md:70",
+      "devices": [
+        "android-emulator"
+      ],
+      "steps": [
+        "Build and install examples/diagnostic-app-android on the assigned Android emulator.",
+        "Run examples/diagnostic-app-android/scenario.json through CLI `run`.",
+        "Install .scratch/android-support/findings/05-assets/probe-app and run a script that replaces the text of its phone field, which filters what it shows, swipes a list and waits for the scroll echo before its checkpoint.",
+        "Turn driven mode on (\"drivenMode\": true in .jev/config.json and JEV_EXPERIMENTAL_DRIVEN=1).",
+        "Run a `do` step that needs a scroll and a back through MCP `start_scenario`."
+      ],
+      "expected": "Each step reads a fresh capture and taps only its unique target. The diagnostic run fails with ASSERTION_FALSE on the planted $3 total. The phone field reports its transformed shown value with masked evidence, and the mismatch does not fail the run. Swipe, scroll and back move the screen, each wait ends on its until-guard, and each checkpoint is judged once.",
+      "evidence": [
+        "Commands with stdout, stderr and exit codes",
+        "report.json and run.jsonl",
+        "Step screenshots",
+        "Versions: app build, OS, toolchain, Node and stack",
+        "Admission generation: components, commands and fence proofs",
+        "Artifact paths"
+      ],
+      "needs": {
+        "storeActivation": true,
+        "phone": false,
+        "jevKey": true
+      },
+      "executor": "operator",
+      "status": "untested"
+    },
+    {
+      "id": "B2-observation-actions-android-phone",
+      "group": "category",
+      "title": "Observation and actions on the Android phone",
+      "source": ".scratch/appium-mcp-migration/phases/phase-4-acceptance.md:70",
+      "devices": [
+        "android-phone"
+      ],
+      "steps": [
+        "Build and install examples/diagnostic-app-android on the assigned Android phone.",
+        "Run examples/diagnostic-app-android/scenario.json through CLI `run`.",
+        "Install .scratch/android-support/findings/05-assets/probe-app and run a script that replaces the text of its phone field, which filters what it shows, swipes a list and waits for the scroll echo before its checkpoint.",
+        "Turn driven mode on (\"drivenMode\": true in .jev/config.json and JEV_EXPERIMENTAL_DRIVEN=1).",
+        "Run a `do` step that needs a scroll and a back through MCP `start_scenario`."
+      ],
+      "expected": "Each step reads a fresh capture and taps only its unique target. The diagnostic run fails with ASSERTION_FALSE on the planted $3 total. The phone field reports its transformed shown value with masked evidence, and the mismatch does not fail the run. Swipe, scroll and back move the screen, each wait ends on its until-guard, and each checkpoint is judged once.",
+      "evidence": [
+        "Commands with stdout, stderr and exit codes",
+        "report.json and run.jsonl",
+        "Step screenshots",
+        "Versions: app build, OS, toolchain, Node and stack",
+        "Admission generation: components, commands and fence proofs",
+        "Artifact paths"
+      ],
+      "needs": {
+        "storeActivation": true,
+        "phone": true,
+        "jevKey": true
+      },
+      "executor": "operator",
+      "status": "untested"
+    },
+    {
+      "id": "B3-unsafe-targeting-ios-simulator",
+      "group": "category",
+      "title": "Unsafe targeting on the iOS simulator",
+      "source": ".scratch/appium-mcp-migration/phases/phase-4-acceptance.md:71",
+      "devices": [
+        "ios-simulator"
+      ],
+      "steps": [
+        "Build and install examples/diagnostic-app on the assigned iOS simulator.",
+        "Through CLI `run`, tap with a selector of role button alone, with a selector that matches nothing, and on Complete order before any item is chosen.",
+        "Run a script whose guard no longer holds when its step starts.",
+        "On spikes/benchmarks/vendor/weather, tap a target hidden behind the open keyboard, and act while the results list is still changing."
+      ],
+      "expected": "Each refused step sends no input. The run ends with TARGET_AMBIGUOUS, TARGET_MISSING, TARGET_UNAVAILABLE, GUARD_MISSING or SCREEN_CHANGED as fits. No tap reaches a stale reference.",
+      "evidence": [
+        "Commands with stdout, stderr and exit codes",
+        "report.json and run.jsonl",
+        "Step screenshots",
+        "Versions: app build, OS, toolchain, Node and stack",
+        "Admission generation: components, commands and fence proofs",
+        "Artifact paths"
+      ],
+      "needs": {
+        "storeActivation": true,
+        "phone": false,
+        "jevKey": true
+      },
+      "executor": "operator",
+      "status": "untested"
+    },
+    {
+      "id": "B3-unsafe-targeting-android-emulator",
+      "group": "category",
+      "title": "Unsafe targeting on the Android emulator",
+      "source": ".scratch/appium-mcp-migration/phases/phase-4-acceptance.md:71",
+      "devices": [
+        "android-emulator"
+      ],
+      "steps": [
+        "Build and install examples/diagnostic-app-android on the assigned Android emulator.",
+        "Through CLI `run`, tap with a selector of role button alone, with a selector that matches nothing, and on Complete order before any item is chosen.",
+        "Run a script whose guard no longer holds when its step starts.",
+        "On .scratch/android-support/findings/05-assets/probe-app, tap a target hidden behind the open keyboard, and act during the animation screen's slide-in panel."
+      ],
+      "expected": "Each refused step sends no input. The run ends with TARGET_AMBIGUOUS, TARGET_MISSING, TARGET_UNAVAILABLE, GUARD_MISSING or SCREEN_CHANGED as fits. No tap reaches a stale reference.",
+      "evidence": [
+        "Commands with stdout, stderr and exit codes",
+        "report.json and run.jsonl",
+        "Step screenshots",
+        "Versions: app build, OS, toolchain, Node and stack",
+        "Admission generation: components, commands and fence proofs",
+        "Artifact paths"
+      ],
+      "needs": {
+        "storeActivation": true,
+        "phone": false,
+        "jevKey": true
+      },
+      "executor": "operator",
+      "status": "untested"
+    },
+    {
+      "id": "B3-unsafe-targeting-android-phone",
+      "group": "category",
+      "title": "Unsafe targeting on the Android phone",
+      "source": ".scratch/appium-mcp-migration/phases/phase-4-acceptance.md:71",
+      "devices": [
+        "android-phone"
+      ],
+      "steps": [
+        "Build and install examples/diagnostic-app-android on the assigned Android phone.",
+        "Through CLI `run`, tap with a selector of role button alone, with a selector that matches nothing, and on Complete order before any item is chosen.",
+        "Run a script whose guard no longer holds when its step starts.",
+        "On .scratch/android-support/findings/05-assets/probe-app, tap a target hidden behind the open keyboard, and act during the animation screen's slide-in panel."
+      ],
+      "expected": "Each refused step sends no input. The run ends with TARGET_AMBIGUOUS, TARGET_MISSING, TARGET_UNAVAILABLE, GUARD_MISSING or SCREEN_CHANGED as fits. No tap reaches a stale reference.",
+      "evidence": [
+        "Commands with stdout, stderr and exit codes",
+        "report.json and run.jsonl",
+        "Step screenshots",
+        "Versions: app build, OS, toolchain, Node and stack",
+        "Admission generation: components, commands and fence proofs",
+        "Artifact paths"
+      ],
+      "needs": {
+        "storeActivation": true,
+        "phone": true,
+        "jevKey": true
+      },
+      "executor": "operator",
+      "status": "untested"
+    },
+    {
+      "id": "B4-driven-interaction-ios-simulator",
+      "group": "category",
+      "title": "Driven interaction on the iOS simulator",
+      "source": ".scratch/appium-mcp-migration/phases/phase-4-acceptance.md:72",
+      "devices": [
+        "ios-simulator"
+      ],
+      "steps": [
+        "Build and install examples/diagnostic-app on the assigned iOS simulator.",
+        "Turn driven mode on (\"drivenMode\": true in .jev/config.json and JEV_EXPERIMENTAL_DRIVEN=1).",
+        "Start a version 2 script whose `do` step hands back, through MCP `start_scenario`.",
+        "Answer the pause with MCP `resolve_step` from a second MCP server, then from the owning one.",
+        "Change the screen during a pause, then answer.",
+        "Answer one pause with `tapAt`."
+      ],
+      "expected": "Only the owning server's first answer is accepted. After a screen change the late answer does nothing, and the step pauses again with SCREEN_CHANGED. An accepted answer acts on a fresh capture. iOS refuses `tapAt` with UNSUPPORTED_ACTION before any input, and the pause stays open.",
+      "evidence": [
+        "Commands with stdout, stderr and exit codes",
+        "report.json and run.jsonl",
+        "Step screenshots",
+        "Versions: app build, OS, toolchain, Node and stack",
+        "Admission generation: components, commands and fence proofs",
+        "Artifact paths",
+        "MCP requests and replies"
+      ],
+      "needs": {
+        "storeActivation": true,
+        "phone": false,
+        "jevKey": true
+      },
+      "executor": "operator",
+      "status": "untested"
+    },
+    {
+      "id": "B4-driven-interaction-android-emulator",
+      "group": "category",
+      "title": "Driven interaction on the Android emulator",
+      "source": ".scratch/appium-mcp-migration/phases/phase-4-acceptance.md:72",
+      "devices": [
+        "android-emulator"
+      ],
+      "steps": [
+        "Build and install examples/diagnostic-app-android on the assigned Android emulator.",
+        "Turn driven mode on (\"drivenMode\": true in .jev/config.json and JEV_EXPERIMENTAL_DRIVEN=1).",
+        "Start a version 2 script whose `do` step hands back, through MCP `start_scenario`.",
+        "Answer the pause with MCP `resolve_step` from a second MCP server, then from the owning one.",
+        "Change the screen during a pause, then answer.",
+        "Answer pauses with `tapAt` on two emulator screen sizes.",
+        "Answer `tapAt` with a point outside the screenshot, after rotating the device, and for a screenshot whose frame the screen cannot explain."
+      ],
+      "expected": "Only the owning server's first answer is accepted. After a screen change the late answer does nothing, and the step pauses again with SCREEN_CHANGED. An accepted answer acts on a fresh capture. Coordinate scaling lands each `tapAt` on its target on both screen sizes. An invalid point, a rotated device and an unknown geometry send no input.",
+      "evidence": [
+        "Commands with stdout, stderr and exit codes",
+        "report.json and run.jsonl",
+        "Step screenshots",
+        "Versions: app build, OS, toolchain, Node and stack",
+        "Admission generation: components, commands and fence proofs",
+        "Artifact paths",
+        "MCP requests and replies"
+      ],
+      "needs": {
+        "storeActivation": true,
+        "phone": false,
+        "jevKey": true
+      },
+      "executor": "operator",
+      "status": "untested"
+    },
+    {
+      "id": "B4-driven-interaction-android-phone",
+      "group": "category",
+      "title": "Driven interaction on the Android phone",
+      "source": ".scratch/appium-mcp-migration/phases/phase-4-acceptance.md:72",
+      "devices": [
+        "android-phone"
+      ],
+      "steps": [
+        "Build and install examples/diagnostic-app-android on the assigned Android phone.",
+        "Turn driven mode on (\"drivenMode\": true in .jev/config.json and JEV_EXPERIMENTAL_DRIVEN=1).",
+        "Start a version 2 script whose `do` step hands back, through MCP `start_scenario`.",
+        "Answer the pause with MCP `resolve_step` from a second MCP server, then from the owning one.",
+        "Change the screen during a pause, then answer.",
+        "Answer pauses with `tapAt` on the phone, whose screen size differs from the emulator's.",
+        "Answer `tapAt` with a point outside the screenshot, after rotating the phone, and for a screenshot whose frame the screen cannot explain."
+      ],
+      "expected": "Only the owning server's first answer is accepted. After a screen change the late answer does nothing, and the step pauses again with SCREEN_CHANGED. An accepted answer acts on a fresh capture. Coordinate scaling lands each `tapAt` on its target at the phone's screen size. An invalid point, a rotated phone and an unknown geometry send no input.",
+      "evidence": [
+        "Commands with stdout, stderr and exit codes",
+        "report.json and run.jsonl",
+        "Step screenshots",
+        "Versions: app build, OS, toolchain, Node and stack",
+        "Admission generation: components, commands and fence proofs",
+        "Artifact paths",
+        "MCP requests and replies"
+      ],
+      "needs": {
+        "storeActivation": true,
+        "phone": true,
+        "jevKey": true
+      },
+      "executor": "operator",
+      "status": "untested"
+    },
+    {
+      "id": "B5-logs-health-ios-simulator",
+      "group": "category",
+      "title": "Logs and health on the iOS simulator",
+      "source": ".scratch/appium-mcp-migration/phases/phase-4-acceptance.md:73",
+      "devices": [
+        "ios-simulator"
+      ],
+      "steps": [
+        "Build and install examples/diagnostic-app on the assigned iOS simulator.",
+        "Run spikes/benchmarks/vendor/weather, whose Logger lines carry its bundle ID, with a supplied value through CLI `run`, once with the log pane and once with `--no-log-pane`, then follow it with CLI `logs`.",
+        "Kill the app process with SIGSEGV partway through one run.",
+        "Kill the run's owned `log stream` process partway through another run."
+      ],
+      "expected": "The app's prints and Logger lines reach the log pane, `logs` and step tails, with supplied values masked as [value:<key>]. A run with no app output reads empty, and a lost source reads unavailable. The killed app ends the run APP_EXITED. The normal stop at the end of a run and the lost log stream produce no app diagnosis.",
+      "evidence": [
+        "Commands with stdout, stderr and exit codes",
+        "report.json and run.jsonl",
+        "Step screenshots",
+        "Versions: app build, OS, toolchain, Node and stack",
+        "Admission generation: components, commands and fence proofs",
+        "Artifact paths",
+        "Log pane text, `logs` output and the app log files"
+      ],
+      "needs": {
+        "storeActivation": true,
+        "phone": false,
+        "jevKey": true
+      },
+      "executor": "operator",
+      "status": "untested"
+    },
+    {
+      "id": "B5-logs-health-android-emulator",
+      "group": "category",
+      "title": "Logs and health on the Android emulator",
+      "source": ".scratch/appium-mcp-migration/phases/phase-4-acceptance.md:73",
+      "devices": [
+        "android-emulator"
+      ],
+      "steps": [
+        "Build and install examples/diagnostic-app-android on the assigned Android emulator.",
+        "Run .scratch/android-support/findings/06-assets/logprobe with a supplied value through CLI `run`, once with the log pane and once with `--no-log-pane`, then follow it with CLI `logs`.",
+        "Send `adb shell am crash dev.jevbridge.diagnostic` partway through a run of examples/diagnostic-app-android.",
+        "Run .scratch/android-support/findings/06-assets/logprobe with intent extra `mode` set to `anr`.",
+        "Kill the run's owned logcat process partway through another run."
+      ],
+      "expected": "System.out, System.err and logcat lines for the app's uid reach the log pane, `logs` and step tails, with supplied values masked as [value:<key>]. Empty output differs from an unavailable source. The crash ends the run APP_EXITED and the ANR ends it APP_NOT_RESPONDING, each named in the pane. The normal stop at the end of a run and the lost logcat stream produce no app diagnosis.",
+      "evidence": [
+        "Commands with stdout, stderr and exit codes",
+        "report.json and run.jsonl",
+        "Step screenshots",
+        "Versions: app build, OS, toolchain, Node and stack",
+        "Admission generation: components, commands and fence proofs",
+        "Artifact paths",
+        "Log pane text, `logs` output and the app log files"
+      ],
+      "needs": {
+        "storeActivation": true,
+        "phone": false,
+        "jevKey": true
+      },
+      "executor": "operator",
+      "status": "untested"
+    },
+    {
+      "id": "B5-logs-health-android-phone",
+      "group": "category",
+      "title": "Logs and health on the Android phone",
+      "source": ".scratch/appium-mcp-migration/phases/phase-4-acceptance.md:73",
+      "devices": [
+        "android-phone"
+      ],
+      "steps": [
+        "Build and install examples/diagnostic-app-android on the assigned Android phone.",
+        "Run .scratch/android-support/findings/06-assets/logprobe with a supplied value through CLI `run`, once with the log pane and once with `--no-log-pane`, then follow it with CLI `logs`.",
+        "Send `adb shell am crash dev.jevbridge.diagnostic` partway through a run of examples/diagnostic-app-android.",
+        "Run .scratch/android-support/findings/06-assets/logprobe with intent extra `mode` set to `anr`.",
+        "Kill the run's owned logcat process partway through another run."
+      ],
+      "expected": "System.out, System.err and logcat lines for the app's uid reach the log pane, `logs` and step tails, with supplied values masked as [value:<key>]. Empty output differs from an unavailable source. The crash ends the run APP_EXITED and the ANR ends it APP_NOT_RESPONDING, each named in the pane. The normal stop at the end of a run and the lost logcat stream produce no app diagnosis.",
+      "evidence": [
+        "Commands with stdout, stderr and exit codes",
+        "report.json and run.jsonl",
+        "Step screenshots",
+        "Versions: app build, OS, toolchain, Node and stack",
+        "Admission generation: components, commands and fence proofs",
+        "Artifact paths",
+        "Log pane text, `logs` output and the app log files"
+      ],
+      "needs": {
+        "storeActivation": true,
+        "phone": true,
+        "jevKey": true
+      },
+      "executor": "operator",
+      "status": "untested"
+    },
+    {
+      "id": "B6-capture-ios-simulator",
+      "group": "category",
+      "title": "Capture on the iOS simulator",
+      "source": ".scratch/appium-mcp-migration/phases/phase-4-acceptance.md:74",
+      "devices": [
+        "ios-simulator"
+      ],
+      "steps": [
+        "Build and install examples/diagnostic-app on the assigned iOS simulator.",
+        "With the diagnostic app open, run CLI `capture --profile <iOS profile>`, then CLI `capture` with no Android device configured."
+      ],
+      "expected": "Capture stays Android-only. It refuses the iOS profile with PROFILE_CONFLICT and the missing device with NO_DEVICE, both with exit 3, before any device work. The simulator and its app do not change.",
+      "evidence": [
+        "Commands with stdout, stderr and exit codes",
+        "Simulator screenshots before and after"
+      ],
+      "needs": {
+        "storeActivation": false,
+        "phone": false,
+        "jevKey": false
+      },
+      "executor": "operator",
+      "status": "untested"
+    },
+    {
+      "id": "B6-capture-android-emulator",
+      "group": "category",
+      "title": "Capture on the Android emulator",
+      "source": ".scratch/appium-mcp-migration/phases/phase-4-acceptance.md:74",
+      "devices": [
+        "android-emulator"
+      ],
+      "steps": [
+        "Build and install examples/diagnostic-app-android on the assigned Android emulator.",
+        "Open the diagnostic app on its confirmation screen.",
+        "Without TYPESAFE_API_KEY in the environment, run CLI `capture`, then CLI `capture --jev`.",
+        "Start a second CLI `capture` while one holds the device."
+      ],
+      "expected": "Capture prints the current screen's elements, or Jev's text from the production renderer, and exits 0. It never launches, resets or stops the app, takes no screenshot, sends no Jev request and needs no key. The app stays on the same screen. The second capture refuses with DEVICE_BUSY and exit 3.",
+      "evidence": [
+        "Commands with stdout, stderr and exit codes",
+        "Versions: app build, OS, toolchain, Node and stack",
+        "Admission generation: components, commands and fence proofs",
+        "Device screenshots before and after"
+      ],
+      "needs": {
+        "storeActivation": true,
+        "phone": false,
+        "jevKey": false
+      },
+      "executor": "operator",
+      "status": "untested"
+    },
+    {
+      "id": "B6-capture-android-phone",
+      "group": "category",
+      "title": "Capture on the Android phone",
+      "source": ".scratch/appium-mcp-migration/phases/phase-4-acceptance.md:74",
+      "devices": [
+        "android-phone"
+      ],
+      "steps": [
+        "Build and install examples/diagnostic-app-android on the assigned Android phone.",
+        "Open the diagnostic app on its confirmation screen.",
+        "Without TYPESAFE_API_KEY in the environment, run CLI `capture`, then CLI `capture --jev`.",
+        "Start a second CLI `capture` while one holds the device."
+      ],
+      "expected": "Capture prints the current screen's elements, or Jev's text from the production renderer, and exits 0. It never launches, resets or stops the app, takes no screenshot, sends no Jev request and needs no key. The app stays on the same screen. The second capture refuses with DEVICE_BUSY and exit 3.",
+      "evidence": [
+        "Commands with stdout, stderr and exit codes",
+        "Versions: app build, OS, toolchain, Node and stack",
+        "Admission generation: components, commands and fence proofs",
+        "Device screenshots before and after"
+      ],
+      "needs": {
+        "storeActivation": true,
+        "phone": true,
+        "jevKey": false
+      },
+      "executor": "operator",
+      "status": "untested"
+    },
+    {
+      "id": "B7-ownership-faults-ios-simulator",
+      "group": "category",
+      "title": "Ownership and faults on the iOS simulator",
+      "source": ".scratch/appium-mcp-migration/phases/phase-4-acceptance.md:75",
+      "devices": [
+        "ios-simulator"
+      ],
+      "steps": [
+        "Build and install examples/diagnostic-app on the assigned iOS simulator.",
+        "While CLI `run` holds the simulator, start MCP `start_scenario` on it.",
+        "Cancel runs with MCP `cancel_run`, with SIGINT on CLI `run`, and by closing the MCP server.",
+        "Repeat the Phase 1 fault experiments: a lost session-create reply, a lost action reply and a late action reply (.scratch/appium-mcp-migration/phase-1-live.md:46-52).",
+        "Kill the bridge process with SIGKILL mid-action, and shut the simulator down mid-run.",
+        "Start a new run after each fault."
+      ],
+      "expected": "The competing start refuses with DEVICE_BUSY. A cancelled run ends CANCELLED after cleanup. No fault replays a mutation, and no late reply revises a recorded outcome. A device that cannot be proven clean is quarantined with readable records. Recovery stops every owned component before the next run acquires the device.",
+      "evidence": [
+        "Commands with stdout, stderr and exit codes",
+        "report.json and run.jsonl",
+        "Step screenshots",
+        "Versions: app build, OS, toolchain, Node and stack",
+        "Admission generation: components, commands and fence proofs",
+        "Artifact paths",
+        "MCP requests and replies"
+      ],
+      "needs": {
+        "storeActivation": true,
+        "phone": false,
+        "jevKey": true
+      },
+      "executor": "operator",
+      "status": "untested"
+    },
+    {
+      "id": "B7-ownership-faults-android-emulator",
+      "group": "category",
+      "title": "Ownership and faults on the Android emulator",
+      "source": ".scratch/appium-mcp-migration/phases/phase-4-acceptance.md:75",
+      "devices": [
+        "android-emulator"
+      ],
+      "steps": [
+        "Build and install examples/diagnostic-app-android on the assigned Android emulator.",
+        "While CLI `run` holds the device, start MCP `start_scenario` and CLI `capture` on it.",
+        "Cancel runs with MCP `cancel_run`, with SIGINT on CLI `run`, and by closing the MCP server.",
+        "Repeat the Phase 1 fault experiments: a lost session-create reply, a lost action reply and a late action reply (.scratch/appium-mcp-migration/phase-1-live.md:46-52).",
+        "Kill the bridge process with SIGKILL mid-action, and close the emulator mid-run.",
+        "Start a new run after each fault."
+      ],
+      "expected": "The competing start and capture refuse with DEVICE_BUSY. A cancelled run ends CANCELLED after cleanup. No fault replays a mutation, and no late reply revises a recorded outcome. A device that cannot be proven clean is quarantined with readable records. Recovery stops every owned component before the next run acquires the device.",
+      "evidence": [
+        "Commands with stdout, stderr and exit codes",
+        "report.json and run.jsonl",
+        "Step screenshots",
+        "Versions: app build, OS, toolchain, Node and stack",
+        "Admission generation: components, commands and fence proofs",
+        "Artifact paths",
+        "MCP requests and replies"
+      ],
+      "needs": {
+        "storeActivation": true,
+        "phone": false,
+        "jevKey": true
+      },
+      "executor": "operator",
+      "status": "untested"
+    },
+    {
+      "id": "B7-ownership-faults-android-phone",
+      "group": "category",
+      "title": "Ownership and faults on the Android phone",
+      "source": ".scratch/appium-mcp-migration/phases/phase-4-acceptance.md:75",
+      "devices": [
+        "android-phone"
+      ],
+      "steps": [
+        "Build and install examples/diagnostic-app-android on the assigned Android phone.",
+        "While CLI `run` holds the phone, start MCP `start_scenario` and CLI `capture` on it.",
+        "Cancel runs with MCP `cancel_run`, with SIGINT on CLI `run`, and by closing the MCP server.",
+        "Repeat the Phase 1 fault experiments: a lost session-create reply, a lost action reply and a late action reply (.scratch/appium-mcp-migration/phase-1-live.md:46-52).",
+        "Kill the bridge process with SIGKILL mid-action, and unplug the phone's USB cable mid-run.",
+        "Start a new run after each fault."
+      ],
+      "expected": "The competing start and capture refuse with DEVICE_BUSY. A cancelled run ends CANCELLED after cleanup. No fault replays a mutation, and no late reply revises a recorded outcome. A phone that cannot be proven clean is quarantined with readable records. Recovery stops every owned component before the next run acquires the phone.",
+      "evidence": [
+        "Commands with stdout, stderr and exit codes",
+        "report.json and run.jsonl",
+        "Step screenshots",
+        "Versions: app build, OS, toolchain, Node and stack",
+        "Admission generation: components, commands and fence proofs",
+        "Artifact paths",
+        "MCP requests and replies"
+      ],
+      "needs": {
+        "storeActivation": true,
+        "phone": true,
+        "jevKey": true
+      },
+      "executor": "operator",
+      "status": "untested"
+    },
+    {
+      "id": "B8-public-evidence-ios-simulator",
+      "group": "category",
+      "title": "Public evidence on the iOS simulator",
+      "source": ".scratch/appium-mcp-migration/phases/phase-4-acceptance.md:76",
+      "devices": [
+        "ios-simulator"
+      ],
+      "steps": [
+        "Build and install examples/diagnostic-app on the assigned iOS simulator.",
+        "Run examples/diagnostic-app/scenario.json through CLI `run`, CLI `run --json` and MCP `start_scenario`, then read each with CLI `report` and MCP `get_report`.",
+        "Open the watch URL with its token, with another run's token, and after the bridge exits.",
+        "Compare the diagnostic failure with an automation fault, an unsupported attach and an unconfirmed action."
+      ],
+      "expected": "Reports, report.json fields, run.jsonl events, evidence file names and exit codes match the frozen goldens. The planted bug fails the run with exit 1. The automation fault, unsupported action and unknown outcome end INCONCLUSIVE with exit 2 and their own reasons, never as an app failure. The watch page opens only its own run, and only while the bridge runs. Evidence files stay private to the user.",
+      "evidence": [
+        "Commands with stdout, stderr and exit codes",
+        "report.json and run.jsonl",
+        "Step screenshots",
+        "Versions: app build, OS, toolchain, Node and stack",
+        "Admission generation: components, commands and fence proofs",
+        "Artifact paths",
+        "MCP requests and replies"
+      ],
+      "needs": {
+        "storeActivation": true,
+        "phone": false,
+        "jevKey": true
+      },
+      "executor": "operator",
+      "status": "untested"
+    },
+    {
+      "id": "B8-public-evidence-android-emulator",
+      "group": "category",
+      "title": "Public evidence on the Android emulator",
+      "source": ".scratch/appium-mcp-migration/phases/phase-4-acceptance.md:76",
+      "devices": [
+        "android-emulator"
+      ],
+      "steps": [
+        "Build and install examples/diagnostic-app-android on the assigned Android emulator.",
+        "Run examples/diagnostic-app-android/scenario.json through CLI `run`, CLI `run --json` and MCP `start_scenario`, then read each with CLI `report` and MCP `get_report`.",
+        "Open the watch URL with its token, with another run's token, and after the bridge exits.",
+        "Compare the diagnostic failure with an automation fault, an attach with another app in front and an unconfirmed action."
+      ],
+      "expected": "Reports, report.json fields, run.jsonl events, evidence file names and exit codes match the frozen goldens. The planted bug fails the run with exit 1. The automation fault, refused attach and unknown outcome end INCONCLUSIVE with exit 2 and their own reasons, never as an app failure. The watch page opens only its own run, and only while the bridge runs. Evidence files stay private to the user.",
+      "evidence": [
+        "Commands with stdout, stderr and exit codes",
+        "report.json and run.jsonl",
+        "Step screenshots",
+        "Versions: app build, OS, toolchain, Node and stack",
+        "Admission generation: components, commands and fence proofs",
+        "Artifact paths",
+        "MCP requests and replies"
+      ],
+      "needs": {
+        "storeActivation": true,
+        "phone": false,
+        "jevKey": true
+      },
+      "executor": "operator",
+      "status": "untested"
+    },
+    {
+      "id": "B8-public-evidence-android-phone",
+      "group": "category",
+      "title": "Public evidence on the Android phone",
+      "source": ".scratch/appium-mcp-migration/phases/phase-4-acceptance.md:76",
+      "devices": [
+        "android-phone"
+      ],
+      "steps": [
+        "Build and install examples/diagnostic-app-android on the assigned Android phone.",
+        "Run examples/diagnostic-app-android/scenario.json through CLI `run`, CLI `run --json` and MCP `start_scenario`, then read each with CLI `report` and MCP `get_report`.",
+        "Open the watch URL with its token, with another run's token, and after the bridge exits.",
+        "Compare the diagnostic failure with an automation fault, an attach with another app in front and an unconfirmed action."
+      ],
+      "expected": "Reports, report.json fields, run.jsonl events, evidence file names and exit codes match the frozen goldens. The planted bug fails the run with exit 1. The automation fault, refused attach and unknown outcome end INCONCLUSIVE with exit 2 and their own reasons, never as an app failure. The watch page opens only its own run, and only while the bridge runs. Evidence files stay private to the user.",
+      "evidence": [
+        "Commands with stdout, stderr and exit codes",
+        "report.json and run.jsonl",
+        "Step screenshots",
+        "Versions: app build, OS, toolchain, Node and stack",
+        "Admission generation: components, commands and fence proofs",
+        "Artifact paths",
+        "MCP requests and replies"
+      ],
+      "needs": {
+        "storeActivation": true,
+        "phone": true,
+        "jevKey": true
+      },
+      "executor": "operator",
+      "status": "untested"
+    },
+    {
+      "id": "B9-repeated-cleanup-ios-simulator",
+      "group": "category",
+      "title": "Repeated cleanup on the iOS simulator",
+      "source": ".scratch/appium-mcp-migration/phases/phase-4-acceptance.md:77",
+      "devices": [
+        "ios-simulator"
+      ],
+      "steps": [
+        "Build and install examples/diagnostic-app on the assigned iOS simulator.",
+        "Run at least 20 independent scenario cycles through scripts/phase4/live/run.ts. Each cycle is one scripted run with no `do` step that ends at its only checkpoint.",
+        "Read the fence inventory after every cycle."
+      ],
+      "expected": "After every cycle the simulator is available with no owner and the attempt is released. The fence's read inventory holds no owned WDA runner, Appium process group or native helper. Each next run starts normally.",
+      "evidence": [
+        "Per-cycle records from the cycles harness",
+        "Commands with stdout, stderr and exit codes",
+        "Versions: app build, OS, toolchain, Node and stack",
+        "Admission generation: components, commands and fence proofs",
+        "Artifact paths"
+      ],
+      "needs": {
+        "storeActivation": true,
+        "phone": false,
+        "jevKey": true
+      },
+      "executor": "cycles",
+      "status": "untested"
+    },
+    {
+      "id": "B9-repeated-cleanup-android-emulator",
+      "group": "category",
+      "title": "Repeated cleanup on the Android emulator",
+      "source": ".scratch/appium-mcp-migration/phases/phase-4-acceptance.md:77",
+      "devices": [
+        "android-emulator"
+      ],
+      "steps": [
+        "Build and install examples/diagnostic-app-android on the assigned Android emulator.",
+        "Run at least 20 independent scenario cycles through scripts/phase4/live/run.ts. Each cycle is one scripted run with no `do` step that ends at its only checkpoint.",
+        "Read the fence inventory after every cycle."
+      ],
+      "expected": "After every cycle the device is available with no owner and the attempt is released. The fence's read inventory holds no owned UiAutomator2 processes, forward, changed settings, Appium process group or native helper. Each next run starts normally.",
+      "evidence": [
+        "Per-cycle records from the cycles harness",
+        "Commands with stdout, stderr and exit codes",
+        "Versions: app build, OS, toolchain, Node and stack",
+        "Admission generation: components, commands and fence proofs",
+        "Artifact paths"
+      ],
+      "needs": {
+        "storeActivation": true,
+        "phone": false,
+        "jevKey": true
+      },
+      "executor": "cycles",
+      "status": "untested"
+    },
+    {
+      "id": "B9-repeated-cleanup-android-phone",
+      "group": "category",
+      "title": "Repeated cleanup on the Android phone",
+      "source": ".scratch/appium-mcp-migration/phases/phase-4-acceptance.md:77",
+      "devices": [
+        "android-phone"
+      ],
+      "steps": [
+        "Build and install examples/diagnostic-app-android on the assigned Android phone.",
+        "Run at least 20 independent scenario cycles through scripts/phase4/live/run.ts. Each cycle is one scripted run with no `do` step that ends at its only checkpoint.",
+        "Read the fence inventory after every cycle."
+      ],
+      "expected": "After every cycle the device is available with no owner and the attempt is released. The fence's read inventory holds no owned UiAutomator2 processes, forward, changed settings, Appium process group or native helper. Each next run starts normally.",
+      "evidence": [
+        "Per-cycle records from the cycles harness",
+        "Commands with stdout, stderr and exit codes",
+        "Versions: app build, OS, toolchain, Node and stack",
+        "Admission generation: components, commands and fence proofs",
+        "Artifact paths"
+      ],
+      "needs": {
+        "storeActivation": true,
+        "phone": true,
+        "jevKey": true
+      },
+      "executor": "cycles",
+      "status": "untested"
+    },
+    {
+      "id": "B10-observed-single-tap-preparation-ios-simulator",
+      "group": "observed",
+      "title": "Observed single-tap and preparation on the iOS simulator",
+      "source": ".scratch/appium-mcp-migration/phases/phase-4-acceptance.md:64-65",
+      "devices": [
+        "ios-simulator"
+      ],
+      "steps": [
+        "Complete the offline migration in docs/guide/admission-activation.md, then set JEV_EXPERIMENTAL_OBSERVED=1.",
+        "Prepare an allocation with CLI `observed-allocate` and MCP `prepare_observed_allocation`, and read it with `observed-allocation` and `get_observed_allocation`.",
+        "Start one authored tap with CLI `observed-action` and MCP `start_observed_action`, and read it with `observed-report` and `get_observed_action`.",
+        "Repeat an identical request, send a changed request under the same identity, then cancel and retire through the CLI and MCP equivalents."
+      ],
+      "expected": "Preparation reserves, readies and parks one dedicated simulator. The tap returns its observed outcome with before and after predicates and sends no Jev request. An identical request returns the same result with no new device work. A changed request conflicts without touching the device. Allocations stay retained within the limit of eight.",
+      "evidence": [
+        "Commands with stdout, stderr and exit codes",
+        "Observed replies with allocation and action records",
+        "MCP requests and replies",
+        "Step screenshots",
+        "Versions: app build, OS, toolchain, Node and stack",
+        "Admission generation: components, commands and fence proofs",
+        "Artifact paths"
+      ],
+      "needs": {
+        "storeActivation": true,
+        "phone": false,
+        "jevKey": false
+      },
+      "executor": "operator",
+      "status": "untested"
+    },
+    {
+      "id": "P3-two-screen-sizes",
+      "group": "carry-over",
+      "title": "Two screen sizes",
+      "source": "~/.codex/reports/jev-ios-bridge/phase3-build/RESUME.md:14",
+      "devices": [
+        "android-emulator",
+        "android-phone"
+      ],
+      "steps": [
+        "Covered by B4-driven-interaction-android-emulator, B4-driven-interaction-android-phone.",
+        "Record both screen sizes and the scaled tap points beside those rows."
+      ],
+      "expected": "A `tapAt` answer lands on its target on two different screen sizes, scaled from screenshot pixels.",
+      "evidence": [
+        "Results of the covering rows",
+        "Step screenshots",
+        "Versions: app build, OS, toolchain, Node and stack"
+      ],
+      "needs": {
+        "storeActivation": true,
+        "phone": false,
+        "jevKey": true
+      },
+      "executor": "operator",
+      "status": "untested"
+    },
+    {
+      "id": "P3-live-console-logcat-exit-watch",
+      "group": "carry-over",
+      "title": "iOS console and Android logcat and exit watch live",
+      "source": "~/.codex/reports/jev-ios-bridge/phase3-build/RESUME.md:14",
+      "devices": [
+        "ios-simulator",
+        "android-emulator",
+        "android-phone"
+      ],
+      "steps": [
+        "Covered by B5-logs-health-ios-simulator, B5-logs-health-android-emulator, B5-logs-health-android-phone."
+      ],
+      "expected": "The iOS console and log stream, and the Android logcat stream and exit watch, deliver app output and exits live during real runs.",
+      "evidence": [
+        "Results of the covering rows",
+        "Log pane text, `logs` output and the app log files"
+      ],
+      "needs": {
+        "storeActivation": true,
+        "phone": false,
+        "jevKey": true
+      },
+      "executor": "operator",
+      "status": "untested"
+    },
+    {
+      "id": "P3-twenty-cycles",
+      "group": "carry-over",
+      "title": "20 cycles",
+      "source": "~/.codex/reports/jev-ios-bridge/phase3-build/RESUME.md:14",
+      "devices": [
+        "ios-simulator",
+        "android-emulator",
+        "android-phone"
+      ],
+      "steps": [
+        "Covered by B9-repeated-cleanup-ios-simulator, B9-repeated-cleanup-android-emulator, B9-repeated-cleanup-android-phone."
+      ],
+      "expected": "At least 20 independent cycles pass on each device category with no owned component left behind.",
+      "evidence": [
+        "Results of the covering rows",
+        "Per-cycle records from the cycles harness"
+      ],
+      "needs": {
+        "storeActivation": true,
+        "phone": false,
+        "jevKey": true
+      },
+      "executor": "operator",
+      "status": "untested"
+    },
+    {
+      "id": "P3-the-phone",
+      "group": "carry-over",
+      "title": "The phone",
+      "source": "~/.codex/reports/jev-ios-bridge/phase3-build/RESUME.md:14",
+      "devices": [
+        "android-phone"
+      ],
+      "steps": [
+        "Covered by B1-launch-options-android-phone, B2-observation-actions-android-phone, B3-unsafe-targeting-android-phone, B4-driven-interaction-android-phone, B5-logs-health-android-phone, B6-capture-android-phone, B7-ownership-faults-android-phone, B8-public-evidence-android-phone, B9-repeated-cleanup-android-phone.",
+        "Use only the exclusively assigned phone. Never borrow a connected phone."
+      ],
+      "expected": "Every category passes on the assigned physical phone. Emulator results do not stand in for it.",
+      "evidence": [
+        "Results of the covering rows",
+        "Versions: app build, OS, toolchain, Node and stack"
+      ],
+      "needs": {
+        "storeActivation": true,
+        "phone": true,
+        "jevKey": true
+      },
+      "executor": "operator",
+      "status": "untested"
+    },
+    {
+      "id": "P3-node-24",
+      "group": "carry-over",
+      "title": "Node 24",
+      "source": "~/.codex/reports/jev-ios-bridge/phase3-build/RESUME.md:14",
+      "devices": [
+        "ios-simulator",
+        "android-emulator"
+      ],
+      "steps": [
+        "Install Node 24.0.0, the minimum that package.json engines allow.",
+        "Run each diagnostic scenario through CLI `run` and MCP `start_scenario` under Node 24.0.0."
+      ],
+      "expected": "Runs, reports and cleanup under Node 24.0.0 behave as under the current Node.",
+      "evidence": [
+        "Commands with stdout, stderr and exit codes",
+        "report.json and run.jsonl",
+        "Step screenshots",
+        "Versions: app build, OS, toolchain, Node and stack",
+        "Admission generation: components, commands and fence proofs",
+        "Artifact paths",
+        "MCP requests and replies"
+      ],
+      "needs": {
+        "storeActivation": true,
+        "phone": false,
+        "jevKey": true
+      },
+      "executor": "operator",
+      "status": "untested"
+    },
+    {
+      "id": "P3-real-home-fresh-keyboard",
+      "group": "carry-over",
+      "title": "Real-HOME and fresh-keyboard effects",
+      "source": "~/.codex/reports/jev-ios-bridge/phase3-build/RESUME.md:14",
+      "devices": [
+        "ios-simulator"
+      ],
+      "steps": [
+        "Read the user's Simulator and DeviceHub preferences under the real ~/Library.",
+        "Run spikes/benchmarks/vendor/weather through CLI `run` on a freshly created simulator, typing into its search field.",
+        "Read the real preferences and the fresh simulator's keyboard settings again."
+      ],
+      "expected": "The Appium child writes Simulator and DeviceHub preferences only under the bridge's private HOME. The real ~/Library preferences are unchanged. The fresh simulator keeps the hardware keyboard off, and typing works.",
+      "evidence": [
+        "Commands with stdout, stderr and exit codes",
+        "report.json and run.jsonl",
+        "Step screenshots",
+        "Versions: app build, OS, toolchain, Node and stack",
+        "Admission generation: components, commands and fence proofs",
+        "Artifact paths",
+        "Preference reads before and after"
+      ],
+      "needs": {
+        "storeActivation": true,
+        "phone": false,
+        "jevKey": true
+      },
+      "executor": "operator",
+      "status": "untested"
+    },
+    {
+      "id": "P3-simulator-presentation",
+      "group": "carry-over",
+      "title": "Simulator window presentation and the presentation read",
+      "source": "~/.codex/reports/jev-ios-bridge/phase3-build/FOLLOW-UPS.md:97",
+      "devices": [
+        "ios-simulator"
+      ],
+      "steps": [
+        "Run examples/diagnostic-app/scenario.json through CLI `run` with the simulator shown in Simulator.app, then with it headless.",
+        "Toggle the window once while a run starts."
+      ],
+      "expected": "A shown simulator's window comes to the front, and a headless one stays headless. The presentation read and the stack's own check agree, or the run records the mismatch. No run restarts the simulator or quits Simulator.app.",
+      "evidence": [
+        "Commands with stdout, stderr and exit codes",
+        "report.json and run.jsonl",
+        "Step screenshots",
+        "Versions: app build, OS, toolchain, Node and stack",
+        "Admission generation: components, commands and fence proofs",
+        "Artifact paths",
+        "Window state before and after"
+      ],
+      "needs": {
+        "storeActivation": true,
+        "phone": false,
+        "jevKey": true
+      },
+      "executor": "operator",
+      "status": "untested"
+    },
+    {
+      "id": "P3-terminate-before-android-restart",
+      "group": "carry-over",
+      "title": "`jev_terminate_app` before an Android restart",
+      "source": "~/.codex/reports/jev-ios-bridge/phase3-build/FOLLOW-UPS.md:96",
+      "devices": [
+        "android-emulator",
+        "android-phone"
+      ],
+      "steps": [
+        "Leave the diagnostic app running in front.",
+        "Run examples/diagnostic-app-android/scenario.json through CLI `run` with the default restart, several times in a row."
+      ],
+      "expected": "Each restart stops the old app process before the relaunch. No run quarantines the device because the old pid outlived force-stop.",
+      "evidence": [
+        "Commands with stdout, stderr and exit codes",
+        "report.json and run.jsonl",
+        "Step screenshots",
+        "Versions: app build, OS, toolchain, Node and stack",
+        "Admission generation: components, commands and fence proofs",
+        "Artifact paths"
+      ],
+      "needs": {
+        "storeActivation": true,
+        "phone": false,
+        "jevKey": true
+      },
+      "executor": "operator",
+      "status": "untested"
+    },
+    {
+      "id": "P3-plugin-install-real-release",
+      "group": "carry-over",
+      "title": "Plugin install from a real release",
+      "source": "~/.codex/reports/jev-ios-bridge/phase3-build/RESUME.md:14",
+      "devices": [
+        "ios-simulator",
+        "android-emulator"
+      ],
+      "steps": [
+        "Install the Claude Code plugin from a published release, not from this checkout.",
+        "Run each diagnostic scenario through the plugin's MCP `start_scenario`."
+      ],
+      "expected": "The released plugin installs cleanly and its MCP server starts. Each diagnostic run fails on the planted $3 total.",
+      "evidence": [
+        "Commands with stdout, stderr and exit codes",
+        "report.json and run.jsonl",
+        "Step screenshots",
+        "Versions: app build, OS, toolchain, Node and stack",
+        "Admission generation: components, commands and fence proofs",
+        "Artifact paths",
+        "MCP requests and replies",
+        "Release tag and plugin version"
+      ],
+      "needs": {
+        "storeActivation": true,
+        "phone": false,
+        "jevKey": true
+      },
+      "executor": "operator",
+      "status": "untested"
+    },
+    {
+      "id": "P3-non-us-keyboard-layouts",
+      "group": "carry-over",
+      "title": "Non-US keyboard layouts",
+      "source": "~/.codex/reports/jev-ios-bridge/phase3-build/RESUME.md:14",
+      "devices": [
+        "ios-simulator"
+      ],
+      "steps": [
+        "Add a non-US keyboard layout, such as German or Japanese, to the simulator.",
+        "On spikes/benchmarks/vendor/weather, type a supplied value with that layout's characters and a leading hyphen through CLI `run`."
+      ],
+      "expected": "The field shows the typed value exactly. The run neither refuses it nor raises UNSUPPORTED_LEADING_DASH_TEXT.",
+      "evidence": [
+        "Commands with stdout, stderr and exit codes",
+        "report.json and run.jsonl",
+        "Step screenshots",
+        "Versions: app build, OS, toolchain, Node and stack",
+        "Admission generation: components, commands and fence proofs",
+        "Artifact paths"
+      ],
+      "needs": {
+        "storeActivation": true,
+        "phone": false,
+        "jevKey": true
+      },
+      "executor": "operator",
+      "status": "untested"
+    },
+    {
+      "id": "P3-ios-xcode-warning-doctor",
+      "group": "carry-over",
+      "title": "Unsupported iOS runtime or Xcode warning and `doctor`",
+      "source": "~/.codex/reports/jev-ios-bridge/phase3-build/FOLLOW-UPS.md:89",
+      "devices": [
+        "ios-simulator"
+      ],
+      "steps": [
+        "Run examples/diagnostic-app/scenario.json through CLI `run` on a simulator runtime and Xcode pair outside the stack's supported list.",
+        "Run the `doctor` command the Phase 3 spec names."
+      ],
+      "expected": "The run warns and continues, and the report names the unsupported pair. `doctor` reports the same pair. Phase 3 left both unwired.",
+      "evidence": [
+        "Commands with stdout, stderr and exit codes",
+        "report.json and run.jsonl",
+        "Step screenshots",
+        "Versions: app build, OS, toolchain, Node and stack",
+        "Admission generation: components, commands and fence proofs",
+        "Artifact paths"
+      ],
+      "needs": {
+        "storeActivation": true,
+        "phone": false,
+        "jevKey": true
+      },
+      "executor": "operator",
+      "status": "untested"
+    },
+    {
+      "id": "P3-private-simulator-set",
+      "group": "carry-over",
+      "title": "Private simulator set support",
+      "source": "~/.codex/reports/jev-ios-bridge/phase3-build/FOLLOW-UPS.md:94",
+      "devices": [
+        "ios-simulator"
+      ],
+      "steps": [
+        "Create a simulator in a non-default device set and point SIMCTL_DEVICE_SET_PATH at it.",
+        "Run examples/diagnostic-app/scenario.json on it through CLI `run`."
+      ],
+      "expected": "Unless Phase 4 decides to support private sets, the run refuses with DEVICE_IDENTITY_UNAVAILABLE and NONDEFAULT_DEVICE_SET before any device effect. The decision is recorded beside the result.",
+      "evidence": [
+        "Commands with stdout, stderr and exit codes",
+        "report.json and run.jsonl",
+        "Versions: app build, OS, toolchain, Node and stack",
+        "Admission generation: components, commands and fence proofs"
+      ],
+      "needs": {
+        "storeActivation": true,
+        "phone": false,
+        "jevKey": true
+      },
+      "executor": "operator",
+      "status": "untested"
+    },
+    {
+      "id": "P3-two-devices-at-once",
+      "group": "carry-over",
+      "title": "Two devices at once",
+      "source": "~/.codex/reports/jev-ios-bridge/phase3-build/FOLLOW-UPS.md:15",
+      "devices": [
+        "ios-simulator",
+        "android-emulator"
+      ],
+      "steps": [
+        "Start the diagnostic scenario on the iOS simulator and on the Android emulator at the same time, each through its own CLI `run`.",
+        "Repeat with two assigned simulators at once."
+      ],
+      "expected": "Every run reaches its verdict. Each session gets its own host ports, and no session create fails on a port collision.",
+      "evidence": [
+        "Commands with stdout, stderr and exit codes",
+        "report.json and run.jsonl",
+        "Step screenshots",
+        "Versions: app build, OS, toolchain, Node and stack",
+        "Admission generation: components, commands and fence proofs",
+        "Artifact paths"
+      ],
+      "needs": {
+        "storeActivation": true,
+        "phone": false,
+        "jevKey": true
+      },
+      "executor": "operator",
+      "status": "untested"
+    },
+    {
+      "id": "P3-replace-text-locator",
+      "group": "carry-over",
+      "title": "Replace-text locator without identifiers",
+      "source": "~/.codex/reports/jev-ios-bridge/phase3-build/FOLLOW-UPS.md:29",
+      "devices": [
+        "ios-simulator",
+        "android-emulator"
+      ],
+      "steps": [
+        "On spikes/benchmarks/vendor/weather, replace the text of a field found by label alone through CLI `run`, then of a field that has neither identifier nor label.",
+        "On Android, replace the text of a Compose field with no resource id, and of a classic EditText in .scratch/android-support/findings/05-assets/probe-app."
+      ],
+      "expected": "A field with a unique identifier or label is replaced and its shown value read back. An iOS field with neither, or one that shares its name with another text field, is refused before input. The Android fields without a resource id are found by their bounds and replaced.",
+      "evidence": [
+        "Commands with stdout, stderr and exit codes",
+        "report.json and run.jsonl",
+        "Step screenshots",
+        "Versions: app build, OS, toolchain, Node and stack",
+        "Admission generation: components, commands and fence proofs",
+        "Artifact paths"
+      ],
+      "needs": {
+        "storeActivation": true,
+        "phone": false,
+        "jevKey": true
+      },
+      "executor": "operator",
+      "status": "untested"
+    },
+    {
+      "id": "P3-settle-deadline-close",
+      "group": "carry-over",
+      "title": "Close after an observe that hits the settle deadline",
+      "source": "~/.codex/reports/jev-ios-bridge/phase3-build/FOLLOW-UPS.md:102",
+      "devices": [
+        "ios-simulator",
+        "android-emulator"
+      ],
+      "steps": [
+        "Through CLI `run`, observe a screen that keeps changing past the settle deadline while its page source is pending, such as the infinite spinner in .scratch/android-support/findings/05-assets/probe-app.",
+        "Read the device state after close, then start a new run."
+      ],
+      "expected": "If close throws UI_ACTION_UNCONFIRMED, the device is quarantined with readable records, and recovery leaves no owned component. The device end state is recorded, and the next run either acquires the device or refuses truthfully.",
+      "evidence": [
+        "Commands with stdout, stderr and exit codes",
+        "report.json and run.jsonl",
+        "Step screenshots",
+        "Versions: app build, OS, toolchain, Node and stack",
+        "Admission generation: components, commands and fence proofs",
+        "Artifact paths"
+      ],
+      "needs": {
+        "storeActivation": true,
+        "phone": false,
+        "jevKey": true
+      },
+      "executor": "operator",
+      "status": "untested"
+    },
+    {
+      "id": "L01",
+      "group": "baseline",
+      "title": "L01 CLI prepare, CLI action and MCP get",
+      "source": "21fce4965:.scratch/observed-action-rollout/next-work.md:118",
+      "devices": [
+        "ios-simulator"
+      ],
+      "steps": [
+        "Before allocation, verify store authority, capacity and storage, and build the unchanged fixture app in isolated DerivedData.",
+        "Prepare with CLI `observed-allocate`.",
+        "Act with CLI `observed-action`.",
+        "Read the action with MCP `get_observed_action`.",
+        "Each preparation uses exactly one create, boot, install and launch, with fresh unique declared IDs. Count every listing, readiness and action capture and every backend call.",
+        "Retain the device, refusal and quarantine included, within eight held allocations. Stop on uncertainty, unknown creation, exhausted capacity or unexplained effects. Never replay, replace, erase, delete, shut down or reset."
+      ],
+      "expected": "The fixture moves from Home to Details. The outcome is outcome_observed with attempted and acknowledged true, one touch, no relaunch and at least two captures.",
+      "evidence": [
+        "Commands with stdout, stderr and exit codes",
+        "Observed replies with allocation and action records",
+        "MCP requests and replies",
+        "Backend call and capture counts",
+        "Versions: app build, OS, toolchain, Node and stack",
+        "Admission generation: components, commands and fence proofs",
+        "Artifact paths"
+      ],
+      "needs": {
+        "storeActivation": true,
+        "phone": false,
+        "jevKey": false
+      },
+      "executor": "operator",
+      "status": "untested"
+    },
+    {
+      "id": "L02",
+      "group": "baseline",
+      "title": "L02 MCP prepare and start, CLI report",
+      "source": "21fce4965:.scratch/observed-action-rollout/next-work.md:119",
+      "devices": [
+        "ios-simulator"
+      ],
+      "steps": [
+        "Before allocation, verify store authority, capacity and storage, and build the unchanged fixture app in isolated DerivedData.",
+        "Prepare with MCP `prepare_observed_allocation`.",
+        "Start with MCP `start_observed_action`.",
+        "Read the action with CLI `observed-report`.",
+        "Each preparation uses exactly one create, boot, install and launch, with fresh unique declared IDs. Count every listing, readiness and action capture and every backend call.",
+        "Retain the device, refusal and quarantine included, within eight held allocations. Stop on uncertainty, unknown creation, exhausted capacity or unexplained effects. Never replay, replace, erase, delete, shut down or reset."
+      ],
+      "expected": "Home is already satisfied. Attempted and acknowledged are false, with no input and one capture.",
+      "evidence": [
+        "Commands with stdout, stderr and exit codes",
+        "Observed replies with allocation and action records",
+        "MCP requests and replies",
+        "Backend call and capture counts",
+        "Versions: app build, OS, toolchain, Node and stack",
+        "Admission generation: components, commands and fence proofs",
+        "Artifact paths"
+      ],
+      "needs": {
+        "storeActivation": true,
+        "phone": false,
+        "jevKey": false
+      },
+      "executor": "operator",
+      "status": "untested"
+    },
+    {
+      "id": "L03",
+      "group": "baseline",
+      "title": "L03 CLI prepare, MCP start and CLI report",
+      "source": "21fce4965:.scratch/observed-action-rollout/next-work.md:120",
+      "devices": [
+        "ios-simulator"
+      ],
+      "steps": [
+        "Before allocation, verify store authority, capacity and storage, and build the unchanged fixture app in isolated DerivedData.",
+        "Prepare with CLI `observed-allocate`.",
+        "Start with MCP `start_observed_action`.",
+        "Read the action with CLI `observed-report`.",
+        "Each preparation uses exactly one create, boot, install and launch, with fresh unique declared IDs. Count every listing, readiness and action capture and every backend call.",
+        "Retain the device, refusal and quarantine included, within eight held allocations. Stop on uncertainty, unknown creation, exhausted capacity or unexplained effects. Never replay, replace, erase, delete, shut down or reset."
+      ],
+      "expected": "The Details precondition is absent. The action ends PRECONDITION_NOT_MET with attempted and acknowledged false, no input and one capture, and the allocation is retained.",
+      "evidence": [
+        "Commands with stdout, stderr and exit codes",
+        "Observed replies with allocation and action records",
+        "MCP requests and replies",
+        "Backend call and capture counts",
+        "Versions: app build, OS, toolchain, Node and stack",
+        "Admission generation: components, commands and fence proofs",
+        "Artifact paths"
+      ],
+      "needs": {
+        "storeActivation": true,
+        "phone": false,
+        "jevKey": false
+      },
+      "executor": "operator",
+      "status": "untested"
+    },
+    {
+      "id": "L04",
+      "group": "baseline",
+      "title": "L04 Recording MCP harness prepare and start, fresh CLI retrieval, conflict and legacy successor",
+      "source": "21fce4965:.scratch/observed-action-rollout/next-work.md:121",
+      "devices": [
+        "ios-simulator"
+      ],
+      "steps": [
+        "Before allocation, verify store authority, capacity and storage, and build the unchanged fixture app in isolated DerivedData.",
+        "Prepare and start through the recording MCP harness, withholding one successful real touch reply before acknowledgement.",
+        "Retrieve with a fresh CLI `observed-report`, send a conflicting request, and run the legacy successor.",
+        "Each preparation uses exactly one create, boot, install and launch, with fresh unique declared IDs. Count every listing, readiness and action capture and every backend call.",
+        "Retain the device, refusal and quarantine included, within eight held allocations. Stop on uncertainty, unknown creation, exhausted capacity or unexplained effects. Never replay, replace, erase, delete, shut down or reset."
+      ],
+      "expected": "The action ends UI_ACTION_UNCONFIRMED with attempted and acknowledged persisted as null, and the device is quarantined. The raw success is retained. The successors, the retrieval and the conflict make no backend calls. The synthetic loss covers only that scope.",
+      "evidence": [
+        "Commands with stdout, stderr and exit codes",
+        "Observed replies with allocation and action records",
+        "MCP requests and replies",
+        "Backend call and capture counts",
+        "Versions: app build, OS, toolchain, Node and stack",
+        "Admission generation: components, commands and fence proofs",
+        "Artifact paths"
+      ],
+      "needs": {
+        "storeActivation": true,
+        "phone": false,
+        "jevKey": false
+      },
+      "executor": "operator",
+      "status": "untested"
+    },
+    {
+      "id": "L05",
+      "group": "baseline",
+      "title": "L05 MCP prepare, separate CLI action and MCP get",
+      "source": "21fce4965:.scratch/observed-action-rollout/next-work.md:122",
+      "devices": [
+        "ios-simulator"
+      ],
+      "steps": [
+        "Before allocation, verify store authority, capacity and storage, and build the unchanged fixture app in isolated DerivedData.",
+        "Prepare with MCP `prepare_observed_allocation`.",
+        "Act with a separate CLI `observed-action`.",
+        "Read the action with MCP `get_observed_action`.",
+        "Each preparation uses exactly one create, boot, install and launch, with fresh unique declared IDs. Count every listing, readiness and action capture and every backend call.",
+        "Retain the device, refusal and quarantine included, within eight held allocations. Stop on uncertainty, unknown creation, exhausted capacity or unexplained effects. Never replay, replace, erase, delete, shut down or reset."
+      ],
+      "expected": "The Weather Settings sheet is unchanged. The outcome is outcome_observed with one touch, no relaunch and at least two captures, and the snapshot and JPEG agree.",
+      "evidence": [
+        "Commands with stdout, stderr and exit codes",
+        "Observed replies with allocation and action records",
+        "MCP requests and replies",
+        "Backend call and capture counts",
+        "Versions: app build, OS, toolchain, Node and stack",
+        "Admission generation: components, commands and fence proofs",
+        "Artifact paths"
+      ],
+      "needs": {
+        "storeActivation": true,
+        "phone": false,
+        "jevKey": false
+      },
+      "executor": "operator",
+      "status": "untested"
+    }
+  ]
+}
