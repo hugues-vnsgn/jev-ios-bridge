@@ -80,6 +80,21 @@ test('private child receives only the restricted environment and a mode-700 HOME
   assert.equal(f.calls()[0].params.protocolVersion, '2025-11-25');
 });
 
+test('each command HOME is removed once its child has exited, after a clean close, a dead child or a refused start', async t => {
+  const f = fixture(t); const homes = () => readdirSync(join(f.root, 'homes'));
+  const clean = await f.open();
+  assert.equal(homes().length, 1);
+  await clean.close();
+  assert.deepEqual(homes(), []);
+  const dead = await f.open('dead-child');
+  const session = AppiumCommandSession.start({ client: dead, profile: f.profile });
+  await assert.rejects(session);
+  await dead.close();
+  assert.deepEqual(homes(), []);
+  await assert.rejects(f.open('protocol'), { code: 'PROTOCOL_VERSION_MISMATCH' });
+  assert.deepEqual(homes(), []);
+});
+
 test('a recorded older protocol can negotiate through the plain initialize handshake', async t => {
   const f = fixture(t); const path = join(f.root, 'older-protocol.jsonl');
   const lines = readFileSync(f.recording, 'utf8').trim().split('\n').map(line => JSON.parse(line));
