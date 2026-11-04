@@ -67,7 +67,6 @@ export function ownedNativeRunner(options: {
     for (const [stream, write] of [[child.stdout, output.stdout], [child.stderr, output.stderr]] as const) {
       stream.setEncoding('utf8').on('data', (text: string) => { if (!ended) write(text); });
       stream.on('error', () => { if (!ended) output.lost(); });
-      stream.on('close', () => { setImmediate(() => { if (!ended) output.lost(); }); });
     }
     const pid = child.pid;
     if (pid === undefined) {

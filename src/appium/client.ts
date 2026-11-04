@@ -4,6 +4,7 @@ import { lstatSync, mkdirSync, mkdtempSync, readFileSync, readdirSync, writeFile
 import { dirname, isAbsolute, join, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { once } from 'node:events';
+import { rm } from 'node:fs/promises';
 import { z } from 'zod/v4';
 import { Client } from '@modelcontextprotocol/sdk/client/index.js';
 import { JSONRPCMessageSchema, McpError, ErrorCode, type JSONRPCMessage } from '@modelcontextprotocol/sdk/types.js';
@@ -120,17 +121,20 @@ class PrivateStdioTransport implements Transport {
   private async closeOnce(): Promise<void> {
     this.end(); this.pending = Buffer.alloc(0); this.stderrTail.fill(0); this.stderrTail = Buffer.alloc(0);
     const child = this.child;
-    if (!child || child.exitCode !== null || child.signalCode !== null) return;
-    child.stdin.end();
-    const exited = new Promise<void>(done => child.once('exit', () => done()));
-    const wait = async () => {
-      let timer: ReturnType<typeof setTimeout> | undefined;
-      try { await Promise.race([exited, new Promise<void>(done => { timer = setTimeout(done, 2000); })]); }
-      finally { clearTimeout(timer); }
-    };
-    await wait();
-    if (child.exitCode === null && child.signalCode === null) { child.kill('SIGTERM'); await wait(); }
-    if (child.exitCode === null && child.signalCode === null) { child.kill('SIGKILL'); await wait(); }
+    const running = () => child?.pid !== undefined && child.exitCode === null && child.signalCode === null;
+    if (child && running()) {
+      child.stdin.end();
+      const exited = new Promise<void>(done => child.once('exit', () => done()));
+      const wait = async () => {
+        let timer: ReturnType<typeof setTimeout> | undefined;
+        try { await Promise.race([exited, new Promise<void>(done => { timer = setTimeout(done, 2000); })]); }
+        finally { clearTimeout(timer); }
+      };
+      await wait();
+      if (running()) { child.kill('SIGTERM'); await wait(); }
+      if (running()) { child.kill('SIGKILL'); await wait(); }
+    }
+    if (!running()) await rm(this.home, { recursive: true, force: true }).catch(() => undefined);
   }
 }
 

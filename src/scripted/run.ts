@@ -7,7 +7,8 @@ import { SCRIPTED_JEV_MODEL, ScriptedJevError } from './jev.js';
 import { PROJECTION_RULES, renderAssertionState, ScriptedObservationError } from './observe.js';
 import { buildScriptedReport, type ScriptedReport } from './report.js';
 import { buildReportJson } from './report-json.js';
-import { DEVICE_CLI_PASSTHROUGH_CODES } from './vocabulary.js';
+import { DEVICE_CLI_PASSTHROUGH_CODES, isReasonCode } from './vocabulary.js';
+import { AdmissionError } from '../device/admission-sqlite.js';
 import { BRIDGE_VERSION } from '../version.js';
 import { maskSnapshot, maskValues, type DrivenJudge } from '../driven/decide.js';
 import { createSearchMemory, runDrivenStep, type Handback } from '../driven/step.js';
@@ -159,6 +160,7 @@ function failureOf(error: unknown, signal: AbortSignal): Failure {
     if (vendorCode === undefined || !VENDOR_CODE.test(vendorCode)) return { code: error.code };
     return { code: error.code, vendorCode, ...(error.vendorSource === undefined ? {} : { vendorSource: error.vendorSource }) };
   }
+  if (error instanceof AdmissionError && isReasonCode(error.code)) return { code: error.code };
   if (error instanceof DeviceCliError) {
     if (DEVICE_CLI_PASSTHROUGH_CODES.has(error.code)) return { code: error.code };
     return { code: 'DEVICE_ERROR', ...(VENDOR_CODE.test(error.code) ? { vendorCode: error.code } : {}) };

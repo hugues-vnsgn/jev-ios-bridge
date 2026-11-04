@@ -1,9 +1,10 @@
 import type { Element, Snapshot } from './contracts/index.js';
 import { DeviceReasonError, selectAndroidDeviceName } from './device/index.js';
+import { AdmissionError } from './device/admission-sqlite.js';
 import { ComposedAppiumDriver, type AppiumHost } from './appium/composition.js';
 import { ScriptedObservationError, renderAssertionState } from './scripted/observe.js';
 import { androidAvd, androidSerial } from './scripted/schema.js';
-import { REASON_CODES } from './scripted/vocabulary.js';
+import { isReasonCode, REASON_CODES } from './scripted/vocabulary.js';
 import { DEFAULT_CLEANUP_MS } from './scripted/run.js';
 // capture exits with the CLI's own codes (release spec open point 12): "passed" when it printed, "could not start" when not.
 import { EXIT } from './exit-codes.js';
@@ -90,10 +91,12 @@ function printable(snapshot: Snapshot, jev: boolean): string {
 
 /**
  * The reason code and a plain message. A `DeviceReasonError`'s message is the bridge's own and never quotes
- * the device; any other error's might, so only the code's description is printed for it.
+ * the device; any other error's might, so only the code's description is printed for it. An admission store's
+ * refusal is the bridge's own too, so its public reason code and message are kept; its other codes stay generic.
  */
 function refusalOf(error: unknown): { code: string; message: string } {
   if (error instanceof DeviceReasonError || error instanceof CaptureRefusal || error instanceof ProfileError) return { code: error.code, message: error.message };
+  if (error instanceof AdmissionError && isReasonCode(error.code)) return { code: error.code, message: error.message };
   return { code: 'EXECUTION_ERROR', message: 'capture stopped on an unexpected error.' };
 }
 
