@@ -11,6 +11,7 @@ import { ONE_PIXEL_PNG, androidScreen, iosScreen, world } from './fixtures/appiu
 import { worldHost } from './fixtures/appium-wire/world-host.js';
 import { NOW, custody, scratch, writeActivation, writeAssignment } from './fixtures/phase4-live/records.js';
 import { UDID } from './fixtures/appium-wire/driver-fixture.js';
+import { sourceProduct } from './fixtures/phase4-live/source-product.js';
 
 const IOS_SCREEN = 's01-weather-ber-query';
 const ANDROID_SCREEN = 'twin-1-choose';
@@ -35,7 +36,7 @@ function rig(t: TestContext, platform: 'ios' | 'android', screens?: Record<strin
   const assignment = (fields: Record<string, unknown> = {}) => writeAssignment(root, platform === 'ios' ? fields : { device: SERIAL, category: 'android-phone', ...fields });
   const cli = (fields: Record<string, unknown> = {}): CliDeps => ({ cwd: root, env: {}, out: line => lines.push(line), createClient: () => { throw new Error('no judge'); },
     takeCapture: input => takeCapture(input, { cwd: root, now: () => NOW, signal: AbortSignal.timeout(60_000), readOs: async () => 'fake OS 1.0',
-      live: { admission: w.admission, host: w.host, probe, adbPath: '/fake/adb', environment: {} }, ...fields }) });
+      live: { admission: w.admission, host: w.host, probe, adbPath: '/fake/adb', environment: {}, product: sourceProduct }, ...fields }) });
   const base = (screen: string) => ['--dir', kit, 'capture', 'take', '--screen', screen, '--platform', platform, '--out', out, '--app-build', 'fixture build 1',
     '--device', platform === 'ios' ? UDID : SERIAL];
   return { root, w, kit, out, lines, assignment, cli, base, platform };
