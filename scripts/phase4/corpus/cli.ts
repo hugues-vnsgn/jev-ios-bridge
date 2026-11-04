@@ -108,9 +108,15 @@ export async function main(argv: string[], deps: CliDeps): Promise<number> {
         deps.out('refused: TYPESAFE_API_KEY is not set');
         return 1;
       }
+      const inventory = readInventory(dir);
+      const verified = verifyManifest(manifest, { inventory, repoRoot: REPO_ROOT, manifestDir: dir });
+      if (verified.length) {
+        for (const refusal of verified) deps.out(`refused ${refusal.code} at ${refusal.at}: ${refusal.detail}`);
+        return 1;
+      }
       const client = deps.createClient() as JudgeClient;
       const outcome = await replayCorpus({ mode: 'live', manifest, manifestDir: dir, client,
-        signal: new AbortController().signal, inventory: readInventory(dir), repoRoot: REPO_ROOT });
+        signal: new AbortController().signal, inventory, repoRoot: REPO_ROOT });
       if (outcome.status === 'refused') {
         for (const refusal of outcome.refusals) deps.out(`refused ${refusal.code}: ${refusal.detail}`);
         return 1;
