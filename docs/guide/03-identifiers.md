@@ -13,11 +13,7 @@ On Android, an element can also carry a `placeholder` (an empty field's grey hin
 
 ## See what the bridge sees
 
-On iOS, MobileBuildMCP, which installs with the bridge, prints the screen's accessibility tree. The bridge reads the screen through Appium instead, so treat this as a close guide rather than the bridge's own capture:
-
-```sh
-npx mobilebuildmcp ui-automation snapshot-ui --simulator-id <UUID> --verbose --output json
-```
+On iOS, the bridge has no capture command of its own yet: `capture` reads Android screens only. Write selectors from the identifiers in your app's source, then check them against the simulator with Xcode's Accessibility Inspector (Xcode, Open Developer Tool, Accessibility Inspector), which lists each element's identifier, label and value. The bridge reads the screen through Appium, so treat the Inspector as a close guide rather than the bridge's own capture. A run that stops at a guard leaves the screenshot of the screen it saw (`screen-N`, see [reports and evidence](07-reports-and-evidence.md)).
 
 On Android, use the bridge's own `capture`, which prints one line per element as a run reads it ([details](06-running.md#capture-an-android-screen)):
 
