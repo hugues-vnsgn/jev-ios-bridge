@@ -2,6 +2,12 @@ import assert from 'node:assert/strict';
 import { test } from 'node:test';
 import { EventEmitter } from 'node:events';
 import { PassThrough } from 'node:stream';
+import { spawn } from 'node:child_process';
+import { mkdtemp, rm } from 'node:fs/promises';
+import { tmpdir } from 'node:os';
+import { join } from 'node:path';
+import { createNativeLogSource } from '../src/device/logs.js';
+import { launchIosConsole } from '../src/appium/native/ios.js';
 import { ownedNativeRunner, runNativeCommand, type NativeChild, type NativeSpawn } from '../src/appium/native/process.js';
 
 class Child extends EventEmitter implements NativeChild {
@@ -108,4 +114,32 @@ test('synchronous spawn failure clears the one-shot deadline without dispatching
   const runner = ownedNativeRunner({ environment: {}, record: () => {}, spawn: () => { starts++; throw new Error('spawn refused'); } });
   await assert.rejects(runNativeCommand({ command, runner, signal: new AbortController().signal, timeoutMs: 5 }), /spawn refused/);
   assert.equal(starts, 1);
+});
+
+const realRunner = (spawnAs?: NativeSpawn) => ownedNativeRunner({ environment: { PATH: '/usr/bin:/bin' }, record: () => {}, ...(spawnAs ? { spawn: spawnAs } : {}) });
+const runReal = (file: string, args: string[]) => runNativeCommand({ command: { kind: 'android-keyguard', file, args }, runner: realRunner(),
+  signal: new AbortController().signal, timeoutMs: 10_000 });
+
+test('real short commands that exit on their own report their exit, every time', async () => {
+  for (let i = 0; i < 40; i++) {
+    assert.deepEqual(await runReal('/bin/echo', ['hi']), { exitCode: 0, stdout: 'hi\n', stderr: '' });
+    await assert.rejects(runReal('/bin/sh', ['-c', 'echo out; echo err >&2; exit 3']), { code: 'NATIVE_FAILED' });
+  }
+});
+
+test('a real command killed by a signal has an unknown outcome', async () => {
+  await assert.rejects(runReal('/bin/sh', ['-c', 'kill -9 $$']), { code: 'NATIVE_OUTCOME_UNKNOWN' });
+});
+
+test('a real iOS console that ends on its own is an app exit, not a lost source', async t => {
+  for (let i = 0; i < 10; i++) {
+    const root = await mkdtemp(join(tmpdir(), 'native-console-'));
+    t.after(() => rm(root, { recursive: true, force: true }));
+    const source = await createNativeLogSource({ path: join(root, 'console.log'), values: {} });
+    const runner = realRunner((_file, _args, settings) => spawn('/bin/sh', ['-c', 'echo hello'], settings));
+    const console = await launchIosConsole({ udid: 'udid', bundleId: 'com.example.app', runner, source, signal: new AbortController().signal });
+    await console.exited;
+    assert.deepEqual(console.problem()?.code, 'APP_EXITED');
+    assert.equal(await source.readTail(), '[unavailable: SOURCE_ENDED]');
+  }
 });
