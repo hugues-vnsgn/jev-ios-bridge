@@ -1,7 +1,7 @@
 # Appium migration master handoff
 
-Status: Phases 0 to 3 complete on main; Phase 4 agent-only kits started, live runs await owner steps
-Updated: 2026-10-30
+Status: Phases 0 to 3 complete on main; Phase 4 kits merged, live runs await owner steps
+Updated: 2026-11-04
 Worktree: `/Users/hugues_mini/Codes/AgentTools/jev-ios-bridge/.worktrees/feat/appium-mcp-migration`
 Branch: `feat/appium-mcp-migration`
 Evidence checkpoint: `7426f249121db87ba8b8151581f79187be80d8ee`
@@ -44,7 +44,16 @@ Status on 2026-10-30, each claim with its evidence:
   code stays unused until Phase 4 removes it.
 - Phase 4 is started for agent-only work: owner-approved kits for the corpus,
   the live matrix, the cutover and this documentation cleanup, begun on 2026-10-30
-  off main `f9ce07854`. No release has been made since v1.4.0.
+  off main `f9ce07854`. The corpus kit (PR #87), the live matrix kit (PR #88) and
+  the documentation cleanup (PR #86) are merged to main. The cutover itself
+  (PR #89) is a draft: it removes the old device layer, but it can only merge
+  once the corpus and the live gates below pass. No release has been made since
+  v1.4.0.
+- The corpus kit judges the frozen screens through the pinned live judge, and the
+  live kit runs the repeated-cleanup cycles on the assigned device through the
+  production Appium composition. Both entry points are wired: the corpus CLI
+  creates its live judge client, and the live runner opens a real cycle backend
+  over the owner's assignment.
 - Phase 4 live runs and corpus judgments are not done. They wait for owner steps:
   [ticket 06](issues/06-acceptance-resource-readiness.md) (device assignment and
   an offline writer window), [ticket 08](issues/08-frozen-state-correspondence.md)

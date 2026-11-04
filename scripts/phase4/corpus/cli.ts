@@ -3,16 +3,28 @@ import { join, resolve } from 'node:path';
 import { pathToFileURL } from 'node:url';
 import { parseArgs } from 'node:util';
 import { z } from 'zod';
+import { TypeSafeClient } from '@typesafe-ai/sdk';
 import { extractAssets, parseInventory, recoverInventory, serializeInventory, type Inventory } from './inventory.js';
 import { attachCapture, generateManifest, jsonText, parseManifest, verifyManifest, type Refusal } from './manifest.js';
 import { captureRefusals, replayCorpus, type JudgeClient } from './replay.js';
 import { KIT_DIR, KIT_FILES, REPO_ROOT } from './sources.js';
+import { SCRIPTED_JEV_MODEL } from '../../../src/scripted/jev.js';
 
 export interface CliDeps {
   cwd: string;
   env: Readonly<Record<string, string | undefined>>;
   out: (line: string) => void;
   createClient: () => unknown;
+}
+
+/** The live judge the replay asks: the pinned model, with the key the environment already carries. */
+export function createLiveJudgeClient(env: Readonly<Record<string, string | undefined>> = process.env): JudgeClient {
+  const key = env.TYPESAFE_API_KEY?.trim();
+  if (!key) throw new Error('TYPESAFE_API_KEY is not set');
+  let client: TypeSafeClient;
+  try { client = new TypeSafeClient({ apiKey: key, defaultModel: SCRIPTED_JEV_MODEL, logLevel: 'warn' }); }
+  catch (error) { throw new Error(error instanceof Error ? error.message : 'The judge client could not be created'); }
+  return { systemOne: (request, options) => client.systemOne(request, options) as Promise<unknown> };
 }
 
 const USAGE = [
@@ -134,5 +146,5 @@ export async function main(argv: string[], deps: CliDeps): Promise<number> {
 if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) {
   process.exitCode = await main(process.argv.slice(2), { cwd: process.cwd(), env: process.env,
     out: line => process.stdout.write(`${line}\n`),
-    createClient: () => { throw new Error('no judge client in this build of the CLI'); } });
+    createClient: () => createLiveJudgeClient(process.env) });
 }
