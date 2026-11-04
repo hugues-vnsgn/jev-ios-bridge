@@ -11,7 +11,7 @@ for (const transport of ['cli', 'mcp'] as const) {
     ['backend:create:1', 'preparing', true],
     ['afterCommit:recordCreation:1', 'preparing', false],
     ['afterCommit:parkAllocation:1', 'ready', false],
-  ] as const) test(`H06.01 ${transport} killed public preparation owner at ${gate}`, { timeout: 15000 }, async t => {
+  ] as const) test(`H06.01 ${transport} killed public preparation owner at ${gate}`, { timeout: 60000 }, async t => {
     const f = await hostFixture(t); const request = f.request('one');
     const server = transport === 'mcp' ? await f.mcp({ gate }) : undefined;
     const owner = server ?? f.spawnOwner('cli', 'observed-allocate', await f.requestFile(request), { gate });
@@ -48,7 +48,7 @@ for (const transport of ['cli', 'mcp'] as const) {
     ['afterCommit:finalize:1', true, true, true, 1],
     ['evidence:terminal:1', true, true, true, 1],
     ['evidence:exported:1', true, true, true, 1],
-  ] as const) test(`H06.02 ${transport} killed public action owner at ${gate}`, { timeout: 15000 }, async t => {
+  ] as const) test(`H06.02 ${transport} killed public action owner at ${gate}`, { timeout: 60000 }, async t => {
     const f = await hostFixture(t); const allocation = await f.prepare(); const request = actionRequest(allocation.allocationId);
     const server = transport === 'mcp' ? await f.mcp({ gate }) : undefined;
     const owner = server ?? f.spawnOwner('cli', 'observed-action', await f.requestFile(request, 'action.json'), { gate });

@@ -64,8 +64,7 @@ for (const changed of [false, true]) {
   });
 }
 
-test('an imported legacy marker with its recorded bytes refuses with its historical quarantine, not as an unimported lease',
-  { todo: 'src/appium/driver.ts admit() calls assertKnown without the MarkerSource, so the store never matches the imported marker' }, async t => {
+test('an imported legacy marker with its recorded bytes refuses with its historical quarantine, not as an unimported lease', async t => {
     const { error } = await importedPrepare(t, false);
     assert.ok(error instanceof DeviceReasonError);
     assert.equal(error.code, 'DEVICE_QUARANTINED');

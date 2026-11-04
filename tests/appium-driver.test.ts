@@ -7,7 +7,7 @@ import { setTimeout as delay } from 'node:timers/promises';
 import { freeHostPort } from '../src/appium/ports.js';
 import { fenceEffectSchema } from '../src/appium/fence/schema.js';
 import type { DeviceDriver } from '../src/contracts/index.js';
-import { AppiumDriver, appiumFailure } from '../src/appium/driver.js';
+import { AppiumDriver, APP_PROBLEM_WAIT_MS, appiumFailure } from '../src/appium/driver.js';
 import { AppiumError } from '../src/appium/wire-schemas.js';
 import { Admission, type OwnerIdentity } from '../src/device/admission.js';
 import { NativeHelperError } from '../src/appium/native/process.js';
@@ -565,6 +565,36 @@ test('an incomplete observation takes its source from its cause', () => {
     source(new ObservationIncompleteError('driver-error', { cause: new AppiumError('CONNECTION_LOST') }), 'ios'),
     source(new ObservationIncompleteError('driver-error', { cause: new AppiumError('DRIVER_ERROR') }), 'android'),
     source(new ObservationIncompleteError('driver-error', { cause: new NativeHelperError('NATIVE_FAILED', 'adb failed') }), 'android'),
-  ], [['OBSERVATION_DEPTH_LIMIT', 'bridge'], ['OBSERVATION_TIMEOUT', 'bridge'], ['OBSERVATION_DRIVER_ERROR', 'bridge'],
+  ], [    ['OBSERVATION_DEPTH_LIMIT', 'bridge'], ['OBSERVATION_TIMEOUT', 'bridge'], ['OBSERVATION_DRIVER_ERROR', 'bridge'],
     ['OBSERVATION_DRIVER_ERROR', 'appium'], ['OBSERVATION_DRIVER_ERROR', 'adb']]);
+});
+
+test('a failed step waits for the app\'s own crash report, so a crash right after the failure is APP_EXITED', async t => {
+  const f = driverFixture(t, observeRecording, ios);
+  await f.driver.prepare({ app: { bundleId: 'example.app' } }, live());
+  assert.equal(f.driver.appProblem(), undefined, 'the app is still running when the step failed');
+  // The console stream ends a moment later, as a crash reports itself after the failing step.
+  setTimeout(() => f.native.calls[0]!.exit({ kind: 'exited', code: 1 }), 60);
+  const problem = await f.driver.appProblemAfterFailure(live());
+  assert.equal(problem?.code, 'APP_EXITED');
+  assert.equal(f.driver.appProblem()?.code, 'APP_EXITED', 'the report stays');
+});
+
+test('a failed step gives up on the app\'s report after the bounded wait, and never waits longer', async t => {
+  const f = driverFixture(t, observeRecording, ios);
+  await f.driver.prepare({ app: { bundleId: 'example.app' } }, live());
+  const started = Date.now();
+  assert.equal(await f.driver.appProblemAfterFailure(live()), undefined);
+  const elapsed = Date.now() - started;
+  assert.ok(elapsed >= APP_PROBLEM_WAIT_MS, `waited ${String(elapsed)} ms, under the ${String(APP_PROBLEM_WAIT_MS)} ms bound`);
+  assert.ok(elapsed < APP_PROBLEM_WAIT_MS + 2_000, `waited ${String(elapsed)} ms, well past the bound`);
+});
+
+test('a failed step stops waiting as soon as the run is cancelled', async t => {
+  const f = driverFixture(t, observeRecording, ios);
+  await f.driver.prepare({ app: { bundleId: 'example.app' } }, live());
+  const cancelled = AbortSignal.timeout(60);
+  const started = Date.now();
+  assert.equal(await f.driver.appProblemAfterFailure(cancelled), undefined);
+  assert.ok(Date.now() - started < APP_PROBLEM_WAIT_MS, 'the cancellation ended the wait');
 });
