@@ -5,6 +5,7 @@ import { parseArgs } from 'node:util';
 import { z } from 'zod';
 import { extractAssets, parseInventory, recoverInventory, serializeInventory, type Inventory } from './inventory.js';
 import { attachCapture, generateManifest, jsonText, parseManifest, verifyManifest, type Refusal } from './manifest.js';
+import { captureRefusals, replayCorpus, type JudgeClient } from './replay.js';
 import { KIT_DIR, KIT_FILES, REPO_ROOT } from './sources.js';
 
 export interface CliDeps {
@@ -20,6 +21,7 @@ const USAGE = [
   '  manifest generate | manifest verify',
   '  capture attach --screen <id> --xml <file> --screenshot <file> --kind live|stand-in --app-build <s> --device <s>',
   '    --captured-at <s> --session-id <s>',
+  '  replay --live-jev',
 ].join('\n');
 
 const CaptureArgs = z.object({
@@ -40,6 +42,7 @@ export async function main(argv: string[], deps: CliDeps): Promise<number> {
     dir: { type: 'string' }, check: { type: 'boolean' }, extract: { type: 'string' },
     screen: { type: 'string' }, xml: { type: 'string' }, screenshot: { type: 'string' }, kind: { type: 'string' },
     'app-build': { type: 'string' }, device: { type: 'string' }, 'captured-at': { type: 'string' }, 'session-id': { type: 'string' },
+    'live-jev': { type: 'boolean' },
   } });
   const dir = resolve(deps.cwd, values.dir ?? KIT_DIR);
   const manifestPath = join(dir, KIT_FILES.manifest);
@@ -89,6 +92,32 @@ export async function main(argv: string[], deps: CliDeps): Promise<number> {
       writeFileSync(manifestPath, jsonText(manifest));
       deps.out(`captured ${screen} as ${kind}`);
       return 0;
+    }
+    case 'replay': {
+      if (!values['live-jev']) {
+        deps.out(USAGE);
+        return 2;
+      }
+      const manifest = parseManifest(readJson(manifestPath));
+      const refusals = captureRefusals(manifest);
+      if (refusals.length) {
+        for (const refusal of refusals) deps.out(`refused ${refusal.code} at ${refusal.screenId}: ${refusal.detail}`);
+        return 1;
+      }
+      if (!deps.env.TYPESAFE_API_KEY?.trim()) {
+        deps.out('refused: TYPESAFE_API_KEY is not set');
+        return 1;
+      }
+      const client = deps.createClient() as JudgeClient;
+      const outcome = await replayCorpus({ mode: 'live', manifest, manifestDir: dir, client,
+        signal: new AbortController().signal, inventory: readInventory(dir), repoRoot: REPO_ROOT });
+      if (outcome.status === 'refused') {
+        for (const refusal of outcome.refusals) deps.out(`refused ${refusal.code}: ${refusal.detail}`);
+        return 1;
+      }
+      deps.out(`replay ${outcome.status}: ${outcome.calls} judgments, ${outcome.alreadyRecorded.length} already recorded`);
+      for (const reason of outcome.report.reasons) deps.out(reason);
+      return outcome.report.platforms.ios.exit === 'pass' && outcome.report.platforms.android.exit === 'pass' ? 0 : 1;
     }
     default:
       deps.out(USAGE);
