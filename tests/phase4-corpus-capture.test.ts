@@ -1,17 +1,22 @@
 import assert from 'node:assert/strict';
 import { createHash } from 'node:crypto';
-import { copyFileSync, mkdirSync, readFileSync, readdirSync, statSync } from 'node:fs';
+import { copyFileSync, mkdirSync, readFileSync, readdirSync, realpathSync, rmSync, statSync, writeFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { test, type TestContext } from 'node:test';
+import { pathToFileURL } from 'node:url';
 import { main, type CliDeps } from '../scripts/phase4/corpus/cli.js';
 import { takeCapture, type CaptureIdentity } from '../scripts/phase4/corpus/capture-screen.js';
 import { KIT_DIR, KIT_FILES, REPO_ROOT } from '../scripts/phase4/corpus/sources.js';
+import { parseInventory } from '../scripts/phase4/corpus/inventory.js';
+import { loadBuiltProduct } from '../scripts/phase4/live/backend.js';
 import { SERIAL, androidTarget, iosTarget } from './fixtures/appium-wire/matrix.js';
 import { ONE_PIXEL_PNG, androidScreen, iosScreen, world } from './fixtures/appium-wire/world.js';
 import { worldHost } from './fixtures/appium-wire/world-host.js';
 import { NOW, custody, scratch, writeActivation, writeAssignment } from './fixtures/phase4-live/records.js';
 import { UDID } from './fixtures/appium-wire/driver-fixture.js';
 import { sourceProduct } from './fixtures/phase4-live/source-product.js';
+import { compiledCopy } from './fixtures/phase4-live/built-copy.js';
+import { stackRelease } from './fixtures/stack-release.js';
 
 const IOS_SCREEN = 's01-weather-ber-query';
 const ANDROID_SCREEN = 'twin-1-choose';
@@ -159,4 +164,25 @@ test('a capture without the required flags prints the usage and exits 2', async 
   const r = rig(t, 'ios');
   assert.equal(await main(['--dir', r.kit, 'capture', 'take', '--screen', IOS_SCREEN], r.cli()), 2);
   assert.match(r.lines.join('\n'), /capture take/);
+});
+
+test('a capture on the built product refuses that build\'s broken stack as a stack refusal, because its driver comes from the same build', { timeout: 180_000 }, async t => {
+  const root = compiledCopy(t);
+  const product = await loadBuiltProduct(root);
+  const { FrozenStack } = await import(pathToFileURL(join(root, 'appium', 'stack.js')).href) as typeof import('../src/appium/stack.js');
+  const release = stackRelease();
+  t.after(() => rmSync(release.base, { recursive: true, force: true }));
+  writeFileSync(join(release.artifactRoot, 'wda.tar.gz'), 'tampered');
+  const r = rig(t, 'ios');
+  const store = join(realpathSync(r.root), 'built-admission');
+  mkdirSync(store, { mode: 0o700 });
+  const admission = product.Admission.forTesting({ root: store, backend: 'fake', durability: 'fast' });
+  const host = product.productionAppiumHost({ environment: {}, stack: FrozenStack.forTesting(release), readVersions: async () => ({}), openAdmission: () => admission });
+  const inventory = parseInventory(JSON.parse(readFileSync(join(r.kit, KIT_FILES.inventory), 'utf8')));
+  await assert.rejects(takeCapture({ assignment: r.assignment(), activation: writeActivation(r.root), device: UDID, platform: 'ios', screen: IOS_SCREEN,
+    out: r.out, appBuild: 'fixture build 1', inventory },
+  { cwd: r.root, now: () => NOW, signal: AbortSignal.timeout(60_000), readOs: async () => 'fake OS 1.0',
+    live: { product, admission, host, probe: iosTarget.identityProbe, adbPath: '/fake/adb', environment: {} } }),
+  { name: 'StackRefusalError', code: 'DEVICE_ERROR', vendorCode: 'WDA_ARCHIVE_MISMATCH', vendorSource: 'bridge' });
+  assert.deepEqual(files(r), [], 'nothing was kept');
 });

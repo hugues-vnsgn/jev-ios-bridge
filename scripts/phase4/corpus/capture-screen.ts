@@ -2,12 +2,11 @@ import { randomUUID } from 'node:crypto';
 import { existsSync, mkdirSync } from 'node:fs';
 import { chmod, unlink, writeFile } from 'node:fs/promises';
 import { join, resolve } from 'node:path';
-import { ComposedAppiumDriver, hostVersions } from '../../../src/appium/composition.js';
+import { hostVersions } from '../../../src/appium/composition.js';
+import type { RawScreenPair } from '../../../src/appium/driver.js';
 import { normalizeSource } from '../../../src/appium/observe/normalize.js';
 import { hostRun } from '../../../src/appium/native/presentation.js';
 import type { StackProvenance } from '../../../src/contracts/index.js';
-import { adbRunner } from '../../../src/device/android/adb.js';
-import { adbEnvironment } from '../../../src/device/android/tools.js';
 import { shellCommand } from '../../../src/device/android/recovery.js';
 import { resolveLiveTarget, type LiveCyclePartsOptions, type LiveTarget } from '../live/backend.js';
 import { readActivation, readAssignment } from '../live/records.js';
@@ -70,7 +69,7 @@ export interface TakeCaptureDeps {
   cwd: string;
   now: () => Date;
   signal: AbortSignal;
-  /** The probe, host, admission and adb of the live run; the production ones unless a test injects its own. */
+  /** The product, probe, host, admission and adb of the live run; the built and production ones unless a test injects its own. */
   live?: Omit<LiveCyclePartsOptions, 'category' | 'device' | 'signal'>;
   readOs?: OsReader;
 }
@@ -84,7 +83,7 @@ const hostOs: OsReader = async (live, signal) => {
     const versions = await hostVersions(hostRun)({ device: resolved.value, deviceSet: resolved.deviceSet }, signal);
     return `iOS ${versions.iosVersion ?? 'unknown'}; Xcode ${versions.xcodeVersion ?? 'unknown'}`;
   }
-  const run = adbRunner({ adb: live.adb, environment: adbEnvironment(process.env) });
+  const run = live.product.adbRunner({ adb: live.adb, environment: live.product.adbEnvironment(process.env) });
   const read = async (property: string) => {
     const reply = await run(shellCommand(resolved.transport.serial, ['getprop', property]), signal);
     return reply.exitCode === 0 ? reply.stdout.trim() || 'unknown' : 'unknown';
@@ -127,8 +126,8 @@ export async function takeCapture(input: TakeCaptureInput, deps: TakeCaptureDeps
 
   const live = await resolveLiveTarget({ ...deps.live, category, device: assignment.record.device, signal: deps.signal });
   const os = await (deps.readOs ?? hostOs)(live, deps.signal);
-  const driver = new ComposedAppiumDriver({ host: live.host, admission: live.admission, runId: `corpus-${randomUUID()}`, target: async () => live.target });
-  let pair: Awaited<ReturnType<ComposedAppiumDriver['capturePair']>> | undefined;
+  const driver = new live.product.ComposedAppiumDriver({ host: live.host, admission: live.admission, runId: `corpus-${randomUUID()}`, target: async () => live.target });
+  let pair: RawScreenPair | undefined;
   let failure: unknown;
   try { pair = await driver.capturePair(deps.signal); } catch (error) { failure = error; }
   const capturedAt = deps.now();
