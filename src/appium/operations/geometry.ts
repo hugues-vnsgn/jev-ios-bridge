@@ -60,7 +60,7 @@ export function swipeWithin(platform: AppiumPlatform, frame: Frame, direction: D
     durationMs: SWIPE_MS };
 }
 
-/** The scroll inside the largest scrollable: today's Android stroke, and the iOS stroke at distance 0.4. */
+/** The scroll inside the largest scrollable: the Android stroke, and the iOS stroke at distance 0.4. */
 export function scrollWithin(platform: AppiumPlatform, frame: Frame, finger: 'up' | 'down'): Stroke {
   return swipeWithin(platform, frame, finger, platform === 'ios' ? IOS_SCROLL_DISTANCE : 1);
 }

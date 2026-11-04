@@ -101,7 +101,8 @@ export type ComposedDriverOptions = {
 } & ({ target: () => Promise<AppiumTarget>; admission?: Admission; targetWarnings?: readonly string[] }
   | { target?: never; admission: Admission; targetWarnings?: never });
 
-export class ComposedAppiumDriver implements DeviceDriver, IosPreparationDriver, ObservedActionDriver {
+/** Every optional `DeviceDriver` member must be forwarded, so a new one fails to compile here; the Appium driver reports no `metrics`. */
+export class ComposedAppiumDriver implements Required<Omit<DeviceDriver, 'metrics'>>, IosPreparationDriver, ObservedActionDriver {
   readonly tapAliasRule = 'same-frame-buttons-v1' as const;
   readonly cleanupBudgetMs = CLEANUP_BUDGET_MS;
   private opening: Promise<AppiumDriver> | undefined;
@@ -171,6 +172,7 @@ export class ComposedAppiumDriver implements DeviceDriver, IosPreparationDriver,
   actPath(): ActPath | undefined { return this.driver?.actPath(); }
   appRunning(): boolean | undefined { return this.driver?.appRunning(); }
   appProblem(): AppProblem | undefined { return this.driver?.appProblem(); }
+  async appProblemAfterFailure(signal: AbortSignal): Promise<AppProblem | undefined> { return this.driver?.appProblemAfterFailure(signal); }
   logSources(): LogSources { return this.driver?.logSources() ?? {}; }
   preparation(): DevicePreparation | undefined { return this.driver?.preparation(); }
   prepareWarnings(): string[] {

@@ -1,7 +1,7 @@
 import { createHash } from 'node:crypto';
 import { STATUS_BAR_ID_PREFIX, type AndroidNode, type AndroidTree } from './android/tree.js';
 
-/** One `device.dump.ui` call. */
+/** One screen capture. */
 export type Capture = (signal: AbortSignal) => Promise<AndroidTree>;
 export interface Clock {
   now(): number;

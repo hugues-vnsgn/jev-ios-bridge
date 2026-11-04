@@ -8,7 +8,7 @@ import { normalizeSource, ObservationIncompleteError } from './normalize.js';
 import { ObservationReferences } from './references.js';
 export { ObservationReferences } from './references.js';
 
-const wallClock: Clock = { now: () => performance.now(), sleep: ms => new Promise(done => setTimeout(done, ms)),
+export const wallClock: Clock = { now: () => performance.now(), sleep: ms => new Promise(done => setTimeout(done, ms)),
   timeout: ms => AbortSignal.timeout(Math.ceil(ms)) };
 export interface AppiumObservedScreen { snapshot: Snapshot; screenshot: ScreenshotImage }
 export class AppiumObservation {

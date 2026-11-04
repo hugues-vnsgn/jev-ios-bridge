@@ -26,7 +26,7 @@ import { androidNativeHelpers } from './native/android.js';
 import { launchIosConsole, observeIosLogs, observedIosPreparation } from './native/ios.js';
 import type { PresentationReader, SimulatorPresentation } from './native/presentation.js';
 import { NativeHelperError, type NativeCommand, type NativeRunner } from './native/process.js';
-import { AppiumObservation, type AppiumObservedScreen } from './observe/index.js';
+import { AppiumObservation, wallClock, type AppiumObservedScreen } from './observe/index.js';
 import { ObservationIncompleteError } from './observe/normalize.js';
 import { AppiumOperations, REFUSED_BEFORE_INPUT, UnconfirmedOperationError, vendorSourceOf, type OperationName } from './operations/index.js';
 import { allocateHostPorts, portComponents, type FreePort, type HostPorts } from './ports.js';
@@ -196,13 +196,12 @@ export class AppiumDriver implements DeviceDriver, IosPreparationDriver, Observe
    * would keep its own reason.
    */
   async appProblemAfterFailure(signal: AbortSignal): Promise<AppProblem | undefined> {
-    const clock = this.options.clock;
-    const until = (clock ? clock.now() : Date.now()) + APP_PROBLEM_WAIT_MS;
+    const clock = this.options.clock ?? wallClock;
+    const until = clock.now() + APP_PROBLEM_WAIT_MS;
     for (;;) {
       const found = this.appProblem();
-      if (found || signal.aborted) return found;
-      if ((clock ? clock.now() : Date.now()) >= until) return found;
-      await (clock ? clock.sleep(APP_PROBLEM_POLL_MS) : new Promise(resolve => setTimeout(resolve, APP_PROBLEM_POLL_MS)));
+      if (found || signal.aborted || clock.now() >= until) return found;
+      await clock.sleep(APP_PROBLEM_POLL_MS);
     }
   }
 

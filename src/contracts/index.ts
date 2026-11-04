@@ -157,14 +157,13 @@ export interface DeviceDriver {
   logSources?(): LogSources;
   /** Set only by a driver integration whose pinned tap semantics were verified. The run reads it. */
   readonly tapAliasRule?: TapAliasRule;
-  /** What `prepare` set up on the device, for the run log's `prepared` event. Only a driver that prepares a
-   *  device (Android) implements this; the iOS driver doesn't, and the Appium driver returns none on iOS. */
+  /** What `prepare` set up on the device, for the run log's `prepared` event. The Appium driver returns none on iOS. */
   preparation?(): DevicePreparation | undefined;
   /** What `prepare` worked around without failing (the iOS simulator window not opening), for the run log's
    *  `prepared` event. Messages are the driver's own wording, never a vendor's output. */
   prepareWarnings?(): string[];
   /** The frozen automation stack this run drove the device with, for the `prepared` event's `stack` field.
-   *  Only the Appium driver implements it; the legacy drivers record none. */
+   *  Only the Appium driver implements it. */
   provenance?(): StackProvenance;
 }
 
