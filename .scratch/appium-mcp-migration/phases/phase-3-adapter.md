@@ -1,6 +1,6 @@
 # Phase 3 specification: Appium driver and preserved modes
 
-Status: behavior specified; capability research refines wire fixtures; execution paused
+Status: complete; merged to main 2026-10-26 (PRs #70 to #85, `git log --first-parent`; see the [Phase 3 map](../../appium-phase3/map.md)). The text below is the specification as written on 2026-10-14
 Authority: [published spec](../spec.md), Decisions 4 through 17, 23 through 29;
 Testing Decisions 2 through 16, 20
 Context: [master handoff](../handoff.md), `src/contracts/index.ts`

@@ -1,7 +1,7 @@
 # Appium migration master handoff
 
-Status: specified requirements; execution paused
-Updated: 2026-10-14
+Status: Phases 0 to 3 complete on main; Phase 4 agent-only kits started, live runs await owner steps
+Updated: 2026-10-30
 Worktree: `/Users/hugues_mini/Codes/AgentTools/jev-ios-bridge/.worktrees/feat/appium-mcp-migration`
 Branch: `feat/appium-mcp-migration`
 Evidence checkpoint: `7426f249121db87ba8b8151581f79187be80d8ee`
@@ -32,11 +32,24 @@ Bridge CLI/MCP -> existing scenario/observed services -> Appium device driver
                                                          -> XCUITest/WDA or UiAutomator2
 ```
 
-Baseline repairs are complete. Phase 1 has real round-trip controls but no GO;
-escaped-descendant coverage remains open and Android creation-loss reconciliation
-failed in the corrected matrix. Phases 2 through 4 have not started. Production
-still uses the selected v1.4.0 providers. Read [the checkpoint](phase-1.md)
-for case results; 35 historical experiments are not 35 acceptance passes.
+Status on 2026-10-30, each claim with its evidence:
+
+- Baseline repairs are complete ([baseline](baseline.md)).
+- Phase 1 is GO, 12 of 12 cases ([result](phase-1-result-20261018.md)).
+- Phase 2 is complete, 12 MET and 0 open bullets, on main `4465e93e9`, PRs #56 to
+  #67 ([exit note](../appium-phase2/phase-2-exit.md)).
+- Phase 3 is merged to main, PRs #70 to #85, from 2026-10-24 to 2026-10-26 (main
+  `f9ce07854`, `git log --first-parent`). The CLI, MCP, capture and observed
+  composition now run through Appium ([map](../appium-phase3/map.md)). Old backend
+  code stays unused until Phase 4 removes it.
+- Phase 4 is started for agent-only work: owner-approved kits for the corpus,
+  the live matrix, the cutover and this documentation cleanup, begun on 2026-10-30
+  off main `f9ce07854`. No release has been made since v1.4.0.
+- Phase 4 live runs and corpus judgments are not done. They wait for owner steps:
+  [ticket 06](issues/06-acceptance-resource-readiness.md) (device assignment and
+  an offline writer window), [ticket 08](issues/08-frozen-state-correspondence.md)
+  (frozen-state correspondence), activation of the real admission store, and the
+  Jev key. The 35 historical experiments are not 35 acceptance passes.
 
 ## Phase dispatch
 

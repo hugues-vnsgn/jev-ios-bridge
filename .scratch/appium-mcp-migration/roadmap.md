@@ -1,16 +1,19 @@
 ---
-updated: 2026-10-14
-status: planning-update
-implementation: paused-by-owner
+updated: 2026-10-30
+status: phases-0-to-3-complete-phase-4-started
+implementation: phase-4-agent-only-kits-approved
 evidence-checkpoint: 7426f249121db87ba8b8151581f79187be80d8ee
 ---
 
 # Appium migration roadmap and execution plan
 
-We are in Phase 1, protocol feasibility. Baseline repairs are complete; the
-production Appium adapter has not been built. Most product integration remains
-in Phases 2 through 4. The owner requested this planning update on 2026-10-14;
-implementation and device experiments remain paused.
+As of 2026-10-30, Phases 0 through 3 are complete: Phase 1 is GO, Phase 2 is
+complete and Phase 3 is merged to main. The production Appium adapter is built
+and the public composition runs through it. Phase 4 has started for agent-only
+work. Its live runs and corpus judgments wait for owner steps listed in the
+table below. The evidence for each phase is in the table. The 2026-10-14
+planning update that paused implementation is superseded by the owner's resume
+instructions; its text below stays as history.
 
 This document makes the [confirmed plan](plan.md) executable without changing
 the [published spec](spec.md), accepted architecture, or release requirements.
@@ -29,18 +32,18 @@ Later, separate scopes: 5 Reclamation | 6 Physical iPhone | 7 Measurements
 ```
 
 Coding-agent follow-up: read the [Wayfinder decision map](map.md), then the
-[master handoff and phase specifications](handoff.md). This handoff keeps
-implementation paused and makes unresolved decisions explicit.
+[master handoff and phase specifications](handoff.md). The handoff holds the
+current status and makes unresolved decisions explicit.
 
 ## Current position
 
 | Phase | Evidence-backed status | Required next result |
 |---|---|---|
 | 0 | Complete in `f95f4bec8`; baseline release checks passed | Retain the repaired baseline |
-| 1 | Real normal round trips on both private platforms; some fault controls passed; no GO | Complete descendant verification, reconcile Android creation loss, and finish the reviewed matrix |
-| 2 | Not started | Validated profiles and one authoritative ownership/recovery path |
-| 3 | Not started | All preserved modes run through the Appium adapter |
-| 4 | Not started | Both corpora and all three device categories pass before old backends are removed |
+| 1 | GO, 12 of 12 cases (Android 6/6, iOS 6/6), 2026-10-19: [result](phase-1-result-20261018.md) | None |
+| 2 | Complete, 12 MET and 0 open bullets, main `4465e93e9`, PRs #56 to #67: [exit note](../appium-phase2/phase-2-exit.md) | None |
+| 3 | Merged to main, PRs #70 to #85, 2026-10-24 to 2026-10-26 (main `f9ce07854`, `git log --first-parent`): [map](../appium-phase3/map.md) | None |
+| 4 | Agent-only kits started 2026-10-30. Live runs and corpus judgments not done | Owner steps: [ticket 06](issues/06-acceptance-resource-readiness.md), [ticket 08](issues/08-frozen-state-correspondence.md), activation of the real admission store, the Jev key. Then both corpora and all three device categories pass before old backends are removed |
 | 5 through 7 | Later milestones outside this replacement-release spec | Separate implementation scope and evidence |
 
 The 35 recorded experiments are history, not a progress denominator. Every
@@ -226,6 +229,7 @@ and full checks at meaningful phase exits; any intervening change needs its
 affected checks again. Report work-package progress without treating it as a
 phase GO. Do not advance the phase on unresolved required findings.
 
-**Next implementation package:** 1A, descendant verification, after an explicit
-resume instruction. This planning update starts no code work, device case,
-migration, corpus judgment, or release action.
+**Next package (2026-10-30):** the Phase 4 agent-only kits. The 2026-10-14
+planning update that stopped at package 1A, descendant verification, is
+superseded: Phase 1 later reached GO. The kits run no device case, corpus
+judgment or release action; those wait for the owner steps in the table above.
