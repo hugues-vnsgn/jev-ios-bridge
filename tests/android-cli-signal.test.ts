@@ -42,7 +42,12 @@ for (const [signal, exitCode] of [['SIGINT', 130], ['SIGTERM', 143]] as const) {
     const errors = (await readRunEvents(join(root, 'runs'), runId!)).filter(event => event.type === 'error').map(event => [event.data.phase, event.data.code]);
     assert.deepEqual(errors[0], ['observe', 'CANCELLED']);
     const admission = Admission.forTesting({ root: join(root, 'host', 'admission'), backend: 'fake', initialize: false });
-    assert.equal(admission.readAttempt({ kind: 'legacy', id: runId! })?.terminal?.outcome, 'inconclusive', 'the run closed its admission before the CLI exited');
+    const attempt = admission.readAttempt({ kind: 'legacy', id: runId! });
+    assert.equal(attempt?.terminal?.outcome, 'inconclusive', 'the run closed its admission before the CLI exited');
     assert.equal(admission.inspect(ANDROID_DEVICE)?.state, 'available', 'the screen read cut by its deadline is fenced with the whole Appium stack');
+    const generation = admission.readGeneration(attempt!.owner);
+    assert.deepEqual(generation.recoveries.map(recovery => recovery.closure), ['accepted'], 'one recovery claim covers the cut read');
+    assert.deepEqual(generation.commands.filter(command => command.state !== 'settled').map(command => [command.operation, command.state]),
+      [['appium-observe', 'uncertain']], 'the cut read is fenced, never reported settled');
   });
 }
