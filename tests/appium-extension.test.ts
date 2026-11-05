@@ -58,10 +58,10 @@ test('a lost clear acknowledgement stops setValue and closes subsequent dispatch
   assert.deepEqual(await f.handler.call('jev_terminate_app', { ...base, appId: 'example.app' }), error('NOT_ALLOWED'));
   assert.deepEqual(f.calls, [['findElements', 'accessibility id', 'username'], ['clear', 'field-1']]);
 });
-for (const matches of [[], [{ ELEMENT: 'first' }, { ELEMENT: 'second' }]]) {
-  test(`replacement refuses ${matches.length} locator matches before input`, async () => {
+for (const [matches, code] of [[[], 'NOT_FOUND'], [[{ ELEMENT: 'first' }, { ELEMENT: 'second' }], 'NOT_UNIQUE']] as const) {
+  test(`replacement refuses ${matches.length} locator matches before input as ${code}`, async () => {
     const f = fixture(); f.driver.findElements = async (...args) => { f.calls.push(['findElements', ...args]); return matches; };
-    assert.deepEqual(await f.handler.call('jev_replace_text', { ...base, locator, text: 'new' }), error('NOT_UNIQUE'));
+    assert.deepEqual(await f.handler.call('jev_replace_text', { ...base, locator, text: 'new' }), error(code));
     assert.deepEqual(f.calls, [['findElements', 'accessibility id', 'username']]);
     assert.deepEqual(await f.handler.call('jev_terminate_app', { ...base, appId: 'example.app' }), success);
     assert.deepEqual(f.calls[1], ['terminateApp', 'example.app']);

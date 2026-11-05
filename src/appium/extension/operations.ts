@@ -78,6 +78,7 @@ export function createExtensionHandler(options: ExtensionOptions) {
         case 'jev_replace_text': {
           const { locator, text } = request.arguments;
           const elements = z.array(elementSchema).parse(await invoke('findElements', locator.using, locator.value));
+          if (elements.length === 0) return extensionFailure('NOT_FOUND');
           if (elements.length !== 1) return extensionFailure('NOT_UNIQUE');
           const element = elements[0];
           const id = z.string().min(1).parse(element?.ELEMENT ?? element?.['element-6066-11e4-a52e-4f735466cecf']);

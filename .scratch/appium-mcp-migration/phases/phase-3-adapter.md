@@ -135,7 +135,7 @@ client in the same re-freeze, with legacy negotiation pinned explicitly, never
 - **Results.** Every result, public or extension, is parsed by a bridge-side
   schema before use. An unparsable result counts as a lost acknowledgement.
   Errors are one closed set (`SESSION_MISMATCH`, `VERSION_MISMATCH`,
-  `NOT_ALLOWED`, `NOT_UNIQUE`, `DRIVER_ERROR`, `TIMEOUT`), with redacted
+  `NOT_ALLOWED`, `NOT_UNIQUE`, `NOT_FOUND`, `DRIVER_ERROR`, `TIMEOUT`), with redacted
   messages.
 - **Never.** No arbitrary driver methods or scripts, no remote attachment, no
   private upstream imports.
