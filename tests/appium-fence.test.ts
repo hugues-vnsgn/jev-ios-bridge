@@ -528,6 +528,19 @@ test('the store refuses a fenced-read proof for a cut tap, even when the sweep i
   assert.equal(state(tap.admission, tap.claim.identity), 'quarantined');
 });
 
+test('a cut tap sent through a component declared as a screen read is never covered', async t => {
+  const f = fixture(t, androidTargets);
+  for (const target of androidTargets) f.claim.registerComponent(JSON.parse(JSON.stringify(target)));
+  f.claim.registerComponent({ id: 'declared-read', kind: 'one-shot', operation: 'appium-observe' });
+  await assert.rejects(f.claim.bindDriver('fake').dispatch({ requestId: 'tap', componentId: 'declared-read', operation: 'appium-tap', payload: {} }, async () => { throw new Error('cut by its deadline'); }));
+  f.claim.closeDispatch({ outcome: 'inconclusive', disposition: 'quarantined', payload: {}, evidenceRefs: [] });
+  const runner = new FakeRunner();
+  const next = await f.admission.acquireWithAppiumRecovery({ device: f.claim.identity.device, category: f.claim.identity.category, attempt: { kind: 'legacy', id: 'next' }, digest: 'next', intent: {} },
+    { runner: runner.run, revalidate: runner.revalidate, clock: runner.clock });
+  assert.deepEqual(next, { kind: 'refused', reason: 'DEVICE_QUARANTINED' });
+  assert.equal(f.admission.readGeneration(f.claim.identity).commands.find(command => command.operation === 'appium-tap')?.state, 'uncertain');
+});
+
 test('owned automation inventory is available while each foreign automation kind is DEVICE_BUSY exit 3', async () => {
   const { inspectForeignAutomation } = await fenceModule();
   const owned = targets.map(target => ({ id: target.id, kind: target.kind, declaration: target }));
