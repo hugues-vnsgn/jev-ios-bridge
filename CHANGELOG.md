@@ -15,6 +15,7 @@ Both platforms now run on one Appium stack that ships inside the package. Script
 - **Profiles.** `.jev/profiles.json` names a device, and `run`, `capture` and `start_scenario` accept `--profile` or `profile`. A `.mobilebuildmcp/config.yaml` from an older setup is still read for the simulator UUID, with a warning that suggests a profile.
 - **Crashed runs.** The next run stops what the crashed run recorded, matched by process identity, and refuses with `DEVICE_QUARANTINED` when it can't prove a stop.
 - **Admission.** One per-user admission store is the device authority for every entry point, Android included. The upgrade from the 1.4.0 store is offline; see the [admission activation runbook](docs/guide/admission-activation.md). A compatibility marker file still tells an older binary that a device is busy.
+- **Slow iOS screens.** When no screen capture finishes within the 3 s settle limit, as on screens whose page source is slow to build, the bridge now waits for the capture already in progress (up to its own 10 s limit) and returns it marked unsettled, instead of refusing with `OBSERVATION_TIMEOUT`.
 - **Store refusals.** A `capture` or `run` stopped by the admission store now reports the store's own reason code, such as `STATE_UNAVAILABLE`, instead of `EXECUTION_ERROR`, and `capture` prints the store's message.
 - **Docs.** The guide no longer sends you to MobileBuildMCP. On iOS the bridge has no capture command of its own yet, so the guide points to Xcode's Accessibility Inspector for seeing identifiers.
 
