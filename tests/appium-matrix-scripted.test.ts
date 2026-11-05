@@ -178,7 +178,7 @@ async function cancelOn(t: TestContext, tool: string) {
   return { f, done: await b.finished(runId), events: await readRunEvents(b.service.baseDir, runId) };
 }
 
-test('a run cancelled while it observes, before any input: no input is sent, and the device is held as on the legacy path', async t => {
+test('a run cancelled while an observation that never answers is in flight, before any input: no input is sent, and the device is held', async t => {
   const { f, done, events } = await cancelOn(t, 'appium_get_page_source');
   assert.deepEqual([done.report.verdict, done.report.reason], ['inconclusive', 'CLEANUP_FAILED']);
   assert.equal(f.tools().includes('appium_perform_actions'), false);
@@ -186,13 +186,29 @@ test('a run cancelled while it observes, before any input: no input is sent, and
   assertHeld(f);
 });
 
-test('a run cancelled after its tap was dispatched: the tap is sent once, never resent, and the device is held', async t => {
+test('a run cancelled while a dispatched tap never answers: the tap is sent once, never resent, and the device is held', async t => {
   const { f, done, events } = await cancelOn(t, 'appium_perform_actions');
   assert.deepEqual([done.report.verdict, done.report.reason], ['inconclusive', 'CLEANUP_FAILED']);
   assert.equal(f.tools().filter(name => name === 'appium_perform_actions').length, 1);
   assert.deepEqual(authorized(f.admission, 'run-1')['appium-tap'], 1);
   assert.deepEqual(errors(events), [['act', 'CANCELLED', null], ['cleanup', 'CLEANUP_FAILED', null]]);
   assertHeld(f);
+});
+
+const holdScript = { ...iosScript, steps: [{ id: 'hold', kind: 'wait', guard: { present: [{ label: 'Header' }] }, until: { present: [{ identifier: 'never' }] }, timeoutMs: 60_000 }, iosScript.steps[4]] };
+test('a run cancelled mid-wait, while an observation it then answers is in flight: CANCELLED, the device is released, and the next run starts', async t => {
+  const f = ios(t, [{ tool: 'appium_get_page_source', nth: 3, fault: { kind: 'late', ms: 400 } }]);
+  const second = f.open(iosWorld());
+  const b = await bridge(t, [f.driver]);
+  const { runId } = await b.service.start(holdScript);
+  for (let waited = 0; f.tools().filter(tool => tool === 'appium_get_page_source').length < 3 && waited < 10_000; waited += 20) await delay(20);
+  await b.service.cancel(runId);
+  const { report } = await b.finished(runId);
+  assert.deepEqual([report.verdict, report.reason], ['inconclusive', 'CANCELLED']);
+  assert.deepEqual(errors(await readRunEvents(b.service.baseDir, runId)), [['wait', 'CANCELLED', null], ['cleanup', 'CANCELLED', null]]);
+  assertReleased(f);
+  const next = await withRunLog('next', log => runScriptedScenario({ runId: 'next', scenario: iosScript as never, driver: second.driver, judge: passingJudge, log }));
+  assert.deepEqual([next.verdict, next.reason], ['passed', 'ALL_CHECKPOINTS_PASSED']);
 });
 
 test('the extension refusing a replacement before input (NOT_UNIQUE) is TARGET_AMBIGUOUS, and the answered command releases the device', async t => {
