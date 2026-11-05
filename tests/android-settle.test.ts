@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict';
 import { test } from 'node:test';
-import type { AndroidNode, AndroidTree } from '../src/device/android/agent-client.js';
-import { screenHash, settle, type Clock } from '../src/device/android/settle.js';
+import type { AndroidNode, AndroidTree } from '../src/device/android/tree.js';
+import { screenHash, settle, type Clock } from '../src/device/settle.js';
 
 function node(fields: Partial<AndroidNode> & { children?: AndroidNode[] | null } = {}): AndroidNode {
   return { class: 'android.view.View', text: '', 'content-desc': '', 'resource-id': '',

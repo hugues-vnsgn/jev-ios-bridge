@@ -26,7 +26,7 @@ import { androidNativeHelpers } from './native/android.js';
 import { launchIosConsole, observeIosLogs, observedIosPreparation } from './native/ios.js';
 import type { PresentationReader, SimulatorPresentation } from './native/presentation.js';
 import { NativeHelperError, type NativeCommand, type NativeRunner } from './native/process.js';
-import { AppiumObservation, type AppiumObservedScreen } from './observe/index.js';
+import { AppiumObservation, wallClock, type AppiumObservedScreen } from './observe/index.js';
 import { ObservationIncompleteError } from './observe/normalize.js';
 import { AppiumOperations, REFUSED_BEFORE_INPUT, UnconfirmedOperationError, vendorSourceOf, type OperationName } from './operations/index.js';
 import { allocateHostPorts, portComponents, type FreePort, type HostPorts } from './ports.js';
@@ -92,6 +92,10 @@ type Phase =
 type AppIdentity = { id: string; launchArgs?: string[]; activity?: string; intentExtras?: Record<string, string> };
 
 const DEFAULT_TIMEOUT_MS = 120_000;
+/** How long a failed step waits for the app's own crash or freeze report before giving up on it. */
+export const APP_PROBLEM_WAIT_MS = 1_000;
+/** How often that wait rechecks the app's report. */
+export const APP_PROBLEM_POLL_MS = 50;
 const MIN_ANDROID_API = 31;
 const UIAUTOMATOR2_PACKAGES = ['io.appium.uiautomator2.server', 'io.appium.uiautomator2.server.test'];
 const refusal = (code: DeviceReasonError['code'], message: string, vendorCode?: string) =>
@@ -194,6 +198,21 @@ export class AppiumDriver implements DeviceDriver, IosPreparationDriver, Observe
   appProblem(): AppProblem | undefined {
     const helpers = this.helpers();
     return helpers?.platform === 'ios' ? helpers.console.problem() : helpers?.watch?.problem();
+  }
+
+  /**
+   * `appProblem`, waiting up to `APP_PROBLEM_WAIT_MS` for the app's own report to arrive. A crash or a
+   * freeze is usually reported after the step that failed, so a single check would miss it and the step
+   * would keep its own reason.
+   */
+  async appProblemAfterFailure(signal: AbortSignal): Promise<AppProblem | undefined> {
+    const clock = this.options.clock ?? wallClock;
+    const until = clock.now() + APP_PROBLEM_WAIT_MS;
+    for (;;) {
+      const found = this.appProblem();
+      if (found || signal.aborted || clock.now() >= until) return found;
+      await clock.sleep(APP_PROBLEM_POLL_MS);
+    }
   }
 
   logSources(): LogSources {
@@ -330,7 +349,9 @@ export class AppiumDriver implements DeviceDriver, IosPreparationDriver, Observe
     const identity = await this.resolve(signal);
     if (identity.category === 'ios-simulator') {
       if (identity.state !== 'Booted') throw new DeviceReasonError('DEVICE_NOT_BOOTED', `Simulator ${identity.value} is not booted (state: ${identity.state}).`);
-      const installed = await this.options.identityProbe.simulatorApp({ deviceSet: identity.deviceSet, udid: identity.value, bundleId: app.id, signal });
+      let installed: Awaited<ReturnType<IdentityProbe['simulatorApp']>>;
+      try { installed = await this.options.identityProbe.simulatorApp({ deviceSet: identity.deviceSet, udid: identity.value, bundleId: app.id, signal }); }
+      catch (error) { throw this.identityFailure(error); }
       if (installed.kind === 'missing') throw refusal('DEVICE_ERROR', `App ${app.id} is not installed on simulator ${identity.value}`, 'APP_NOT_INSTALLED');
     } else readyTransport(identity);
     const owner = await this.admit(identity, { app, start: scenario.start ?? 'restart', ...(this.options.profile ? { profile: this.options.profile } : {}) }, signal);
@@ -340,8 +361,14 @@ export class AppiumDriver implements DeviceDriver, IosPreparationDriver, Observe
       let helpers: IosHelpers | undefined;
       if (identity.category !== 'ios-simulator') await this.prepareAndroidDevice(owner, app.id, signal);
       else if (role === 'run') {
-        await this.openWindow(owner, signal);
-        helpers = await this.dispatch(owner, 'launch', signal, this.timeoutMs, issued => this.launchIos(owner, app, issued));
+        const sources = await this.iosLogSources();
+        try {
+          await this.openWindow(owner, signal);
+          helpers = await this.dispatch(owner, 'launch', signal, this.timeoutMs, issued => this.launchIos(owner, app, sources, issued));
+        } catch (error) {
+          for (const source of sources) await source.finish().catch(() => undefined);
+          throw error;
+        }
       }
       const command = await this.openSession(owner, role, signal, helpers);
       this.phase = { kind: 'live', owner, role, app, command: { ...command, launched: role === 'run' } };
@@ -393,18 +420,24 @@ export class AppiumDriver implements DeviceDriver, IosPreparationDriver, Observe
       ? { category: 'ios-simulator' as const, name: target.device, ...(target.deviceSet ? { deviceSet: target.deviceSet } : {}) }
       : { category: target.category ?? 'android' as const, name: target.device };
     try { return await resolveIdentity({ request, probe: this.options.identityProbe, signal }); }
-    catch (error) {
-      if (error instanceof IdentityResolutionError && error.code !== 'PROFILE_CONFLICT') {
-        throw new DeviceReasonError(error.code, error.message, error.reason ? { vendorCode: error.reason, vendorSource: 'bridge' } : {});
-      }
-      throw error;
+    catch (error) { throw this.identityFailure(error); }
+  }
+
+  /**
+   * An identity failure as the bridge's own reason code, so a device that cannot be identified is
+   * `DEVICE_IDENTITY_UNAVAILABLE` and not an inconclusive execution error.
+   */
+  private identityFailure(error: unknown): unknown {
+    if (error instanceof IdentityResolutionError && error.code !== 'PROFILE_CONFLICT') {
+      return new DeviceReasonError(error.code, error.message, error.reason ? { vendorCode: error.reason, vendorSource: 'bridge' } : {});
     }
+    return error;
   }
 
   private async admit(identity: ResolvedIdentity, intent: unknown, signal: AbortSignal): Promise<Owner> {
     const admission = this.options.admission;
     const deviceIdentity = identity.category === 'android-emulator' ? identity.provenance.avdName : identity.value;
-    try { this.lease.assertKnown(deviceIdentity, token => admission.markerRecorded({ category: identity.category, value: identity.value }, token)); }
+    try { this.lease.assertKnown(deviceIdentity, (token, source) => admission.markerRecorded({ category: identity.category, value: identity.value }, token, source)); }
     catch (error) {
       if (error instanceof DeviceLeaseBusyError) throw new DeviceReasonError('DEVICE_BUSY', error.message);
       throw error;
@@ -685,19 +718,21 @@ export class AppiumDriver implements DeviceDriver, IosPreparationDriver, Observe
     watch.launched(pid !== undefined && !others.length && /^\d+$/.test(pid) ? Number(pid) : undefined);
   }
 
-  private async launchIos(owner: Owner, app: AppIdentity, signal: AbortSignal): Promise<IosHelpers> {
+  private async iosLogSources(): Promise<[NativeLogSource, NativeLogSource]> {
+    await deleteOldLogs(this.options.logFolder);
+    const open = (name: string) => createNativeLogSource({ path: join(this.options.logFolder, `${this.runId}-${name}.log`), values: {} });
+    const console = await open('console');
+    try { return [console, await open('os')]; }
+    catch (error) { await console.finish().catch(() => undefined); throw error; }
+  }
+
+  private async launchIos(owner: Owner, app: AppIdentity, sources: [NativeLogSource, NativeLogSource], signal: AbortSignal): Promise<IosHelpers> {
     if (owner.identity.category !== 'ios-simulator') throw new Error('Simulator identity required');
     const target = this.iosTarget(owner);
     const runner = this.nativeRunnerFor(owner);
-    await deleteOldLogs(this.options.logFolder);
-    const sources: NativeLogSource[] = [];
-    const source = async (name: string) => {
-      const created = await createNativeLogSource({ path: join(this.options.logFolder, `${this.runId}-${name}.log`), values: {} });
-      sources.push(created); return created;
-    };
-    const console = await launchIosConsole({ ...target, bundleId: app.id, runner, source: await source('console'), signal, ...(app.launchArgs ? { args: app.launchArgs } : {}) });
+    const [runtime, os] = sources;
+    const console = await launchIosConsole({ ...target, bundleId: app.id, runner, source: runtime, signal, ...(app.launchArgs ? { args: app.launchArgs } : {}) });
     let logs: IosHelpers['logs'];
-    const os = await source('os');
     try { logs = await observeIosLogs({ ...target, bundleId: app.id, runner, source: os, signal }); }
     catch { os.unavailable('SOURCE_LOST'); logs = undefined; }
     return { platform: 'ios', console, ...(logs ? { logs } : {}), sources };

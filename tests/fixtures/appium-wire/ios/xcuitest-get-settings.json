@@ -1,0 +1,21 @@
+{
+  "provenance": "getSettings reply from XCUITest 12.17.1 on an iOS 26.5 simulator, recorded by the 2026-11-04 rehearsal's direct driver probe before updateSettings. The four keys the bridge sets read back with these same values after the update.",
+  "reply": {
+    "nativeWebTap": false,
+    "nativeWebTapStrict": false,
+    "useJSONSource": false,
+    "webScreenshotMode": "native",
+    "shouldUseCompactResponses": true,
+    "elementResponseAttributes": "type,label",
+    "mjpegServerScreenshotQuality": 25,
+    "mjpegServerFramerate": 10,
+    "screenshotQuality": 1,
+    "mjpegScalingFactor": 100,
+    "reduceMotion": null,
+    "pageSourceExcludedAttributes": "",
+    "currentDisplayId": null,
+    "snapshotMaxDepth": 50,
+    "waitForIdleTimeout": 1,
+    "animationCoolOffTimeout": 2
+  }
+}

@@ -1,20 +1,27 @@
 import assert from 'node:assert/strict';
-import { mkdtempSync, rmSync } from 'node:fs';
+import { existsSync, mkdirSync, mkdtempSync, readFileSync, realpathSync, rmSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { test, type TestContext } from 'node:test';
-import { existsSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { pathToFileURL } from 'node:url';
 import { BUILT_PRODUCT_ENTRIES, BUILT_PRODUCT_ROOT, createLiveCycleBackend, loadBuiltProduct, resolveLiveCycleParts } from '../scripts/phase4/live/backend.js';
 import { runCycles, scriptedCycle } from '../scripts/phase4/live/cycles.js';
+import { Admission } from '../src/device/admission.js';
 import { resolveIdentity, type IdentityProbe } from '../src/device/identity.js';
 import { validateRunId } from '../src/log/index.js';
 import { sourceProduct } from './fixtures/phase4-live/source-product.js';
 import { compiledCopy } from './fixtures/phase4-live/built-copy.js';
-import { fakeAndroidAdmission, fakeSimulatorProbe } from './fixtures/android-device.js';
+import { fakeSimulatorProbe } from './fixtures/android-device.js';
 import { UDID } from './fixtures/appium-wire/driver-fixture.js';
 import { SERIAL, androidTarget } from './fixtures/appium-wire/matrix.js';
 import { IOS_SCENARIO, cycleWorld, iosScenario, worldCycles } from './fixtures/phase4-live/world-cycles.js';
+
+/** A private admission store for the test: the real authority over a fake backend. */
+function testAdmission(root: string): Admission {
+  const directory = join(root, 'admission');
+  mkdirSync(directory, { recursive: true, mode: 0o700 });
+  return Admission.forTesting({ root: realpathSync(directory), backend: 'fake', durability: 'fast', componentLiveness: () => 'exited' });
+}
 
 function logRoot(t: TestContext) {
   const root = mkdtempSync(join(tmpdir(), 'p4-backend-'));
@@ -39,7 +46,7 @@ test('the live backend runs a cycle on the assigned device, and the cycle releas
 test('the live parts resolve the assigned simulator and refuse an assignment that names another category', async t => {
   const root = mkdtempSync(join(tmpdir(), 'p4-parts-'));
   t.after(() => rmSync(root, { recursive: true, force: true }));
-  const admission = fakeAndroidAdmission(root);
+  const admission = testAdmission(root);
   const parts = await resolveLiveCycleParts({ category: 'ios-simulator', device: UDID, admission,
     probe: fakeSimulatorProbe(UDID), adbPath: '/fake/adb', environment: {}, product: sourceProduct });
   assert.deepEqual(parts.device, { category: 'ios-simulator', value: UDID });
@@ -69,7 +76,7 @@ test('an emulator assigned by its AVD name gets a driver target the driver can r
   const root = mkdtempSync(join(tmpdir(), 'p4-emulator-'));
   t.after(() => rmSync(root, { recursive: true, force: true }));
   const probe = emulatorProbe();
-  const parts = await resolveLiveCycleParts({ category: 'android-emulator', device: AVD, admission: fakeAndroidAdmission(root), probe,
+  const parts = await resolveLiveCycleParts({ category: 'android-emulator', device: AVD, admission: testAdmission(root), probe,
     adbPath: '/fake/adb', environment: {}, product: sourceProduct });
   assert.equal(parts.target.platform, 'android');
   assert.equal(parts.target.device, 'emulator-5554', 'the running serial, resolved from the AVD');

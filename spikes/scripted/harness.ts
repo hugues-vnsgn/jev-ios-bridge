@@ -3,7 +3,7 @@ import { readFileSync } from 'node:fs';
 import { readFile, realpath } from 'node:fs/promises';
 import { dirname, isAbsolute, relative, resolve } from 'node:path';
 import type { Assertion, Snapshot } from '../../src/contracts/index.js';
-import { parseSnapshot } from '../../src/device/index.js';
+import { parseSnapshot } from './mobilebuildmcp-capture.js';
 import type { AssertionApproval, AssertionCase, AssertionManifest, ScriptedCorpus, ScriptedJudge } from './contracts.js';
 import { buildAssertionRequest, ASSERTION_QUESTION, REQUEST_MAX_BYTES, SCRIPTED_JEV_MODEL,
   ScriptedJevError, STATE_QUESTION_MAX_BYTES } from './jev.js';

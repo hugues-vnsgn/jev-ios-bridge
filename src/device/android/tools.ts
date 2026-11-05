@@ -3,21 +3,12 @@ import { access, stat } from 'node:fs/promises';
 import { homedir } from 'node:os';
 import { delimiter, isAbsolute, join } from 'node:path';
 import { DeviceReasonError, deviceEnvironment } from '../index.js';
-import { pinnedAgent, type PinnedAgent, type PinnedAgentOptions } from './agent-supply.js';
 
 export interface AdbLookupOptions {
   /** Defaults to `process.env`. */
   environment?: NodeJS.ProcessEnv;
   /** Defaults to the user's home folder. */
   home?: string;
-}
-
-export interface AndroidToolsOptions extends AdbLookupOptions, PinnedAgentOptions {}
-
-/** What an Android run needs on the Mac: the `adb` to run, and the checked device agent to push. */
-export interface AndroidTools {
-  adb: string;
-  agent: PinnedAgent;
 }
 
 async function isExecutableFile(path: string): Promise<boolean> {
@@ -55,14 +46,4 @@ export async function findAdb(options: AdbLookupOptions = {}): Promise<string> {
  */
 export function adbEnvironment(source: NodeJS.ProcessEnv = process.env): NodeJS.ProcessEnv {
   return deviceEnvironment(source);
-}
-
-/**
- * The tools check the Android driver runs before looking up the device, so a missing tool is reported first:
- * `adb`, then the pinned device agent. Either missing is `ANDROID_TOOLS_UNAVAILABLE`.
- */
-export async function androidTools(options: AndroidToolsOptions = {}): Promise<AndroidTools> {
-  const adb = await findAdb(options);
-  const agent = await pinnedAgent(options);
-  return { adb, agent };
 }

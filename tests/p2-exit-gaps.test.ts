@@ -26,11 +26,10 @@ function fixture(t: TestContext) {
 const messageSchema = z.discriminatedUnion('kind', [
   z.strictObject({ kind: z.literal('ready') }),
   z.strictObject({ kind: z.literal('backend') }),
-  z.strictObject({ kind: z.literal('result'), reason: z.string(), calls: z.number(), agentCalls: z.number() }),
 ]);
-async function owner(t: TestContext, root: string, mode: string, name = '', components = '') {
+async function owner(t: TestContext, root: string, mode: string, components: string) {
   const child = spawn(process.execPath, ['--import', import.meta.resolve('tsx'),
-    new URL('./fixtures/p2-gap-owner.ts', import.meta.url).pathname, root, mode, name, components],
+    new URL('./fixtures/p2-gap-owner.ts', import.meta.url).pathname, root, mode, components],
   { stdio: ['ignore', 'ignore', 'pipe', 'ipc'], env: { PATH: process.env.PATH, NODE_NO_WARNINGS: '1' } });
   let stderr = '';
   child.stderr!.on('data', data => { stderr += data; });
@@ -56,39 +55,8 @@ async function owner(t: TestContext, root: string, mode: string, name = '', comp
     } finally { waiting.delete(wake); }
   }
   await next('ready');
-  return { child, closed, next, start: () => child.send('start'), release: () => child.send('release'),
-    async exit() { assert.deepEqual(await bounded(`${mode} owner exit`, closed), { code: 0, signal: null }, stderr); } };
+  return { child, closed, next, start: () => child.send('start') };
 }
-
-test('E3 cross-process Android scripted and capture owners exclude AVD/serial aliases without losing effects', { timeout: 60000 }, async t => {
-  for (const winner of ['scripted', 'capture'] as const) await t.test(`${winner} wins`, async t => {
-    const { root, admission, database } = fixture(t);
-    const scripted = await owner(t, root, 'scripted', 'Pixel');
-    const capture = await owner(t, root, 'capture', 'emulator-5554');
-    const first = winner === 'scripted' ? scripted : capture;
-    const second = winner === 'scripted' ? capture : scripted;
-    first.start();
-    await first.next('backend');
-    const before = database();
-    const state = admission.inspect({ category: 'android-emulator', value: '/fake/avds/Pixel.avd' });
-    assert.equal(state?.state, 'active');
-    assert.equal(state.owner?.process.pid, first.child.pid);
-    second.start();
-    const refused = await second.next('result');
-    assert.deepEqual(refused, { kind: 'result', reason: 'DEVICE_BUSY', calls: 0, agentCalls: 0 });
-    await second.exit();
-    assert.deepEqual(database(), before, 'loser leaves the complete admission database unchanged');
-    assert.deepEqual(admission.inspect({ category: 'android-emulator', value: '/fake/avds/Pixel.avd' }), state);
-    first.release();
-    const completed = await first.next('result');
-    assert.equal(completed.kind, 'result');
-    if (completed.kind !== 'result') throw new Error('Expected winner result');
-    assert.equal(completed.reason, 'passed');
-    assert.ok(completed.calls > 0);
-    await first.exit();
-    assert.equal(admission.inspect({ category: 'android-emulator', value: '/fake/avds/Pixel.avd' })?.state, 'available');
-  });
-});
 
 async function hostProcess(t: TestContext, label: string) {
   const child = spawn(process.execPath, ['-e', "process.on('message', () => {}); process.send('ready');"],
@@ -115,7 +83,7 @@ test('E10 killed Android owner with outstanding adb, live agent and stream requi
     const { root, admission, database } = fixture(t);
     const adbHost = await hostProcess(t, 'outstanding adb');
     const stream = await hostProcess(t, 'live stream');
-    const old = await owner(t, root, 'crash', '', JSON.stringify([
+    const old = await owner(t, root, 'crash', JSON.stringify([
       { kind: 'host-start', process: adbHost.process },
       { kind: 'agent-start', pid: 4675, startTime: '12345' },
       { kind: 'host-start', process: stream.process },

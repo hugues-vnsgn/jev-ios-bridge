@@ -1,56 +1,34 @@
-import { fakeSimulatorProbe } from './fixtures/android-device.js';
-import { mkdirSync, realpathSync } from 'node:fs';
-import { Admission } from '../src/device/admission.js';
 import assert from 'node:assert/strict';
-import { mkdtemp, readFile, readdir, rm, writeFile } from 'node:fs/promises';
-import { tmpdir } from 'node:os';
+import { existsSync, readFileSync, writeFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { test } from 'node:test';
-import { MobileBuildMcpDriver, type CliRunner } from '../src/device/index.js';
+import { UDID } from './fixtures/appium-wire/driver-fixture.js';
+import { IOS_DEVICE, iosTarget } from './fixtures/appium-wire/matrix.js';
+import { iosScreen, world, worldFixture } from './fixtures/appium-wire/world.js';
 
-const udid = 'ABCDEF00-0000-4000-8000-000000000001';
-const scenario = { app: { bundleId: 'com.example.app' }, device: { udid } };
+const live = () => AbortSignal.timeout(20_000);
+const home = world('ios', { home: iosScreen([{ type: 'StaticText', name: 'home', label: 'Home', frame: [16, 100, 200, 40] }]) });
+const app = { app: { bundleId: 'example.app' } };
 
-function reply(args: string[]): string {
-  const schema = args.includes('launch-app') ? 'mobilebuildmcp.output.launch-result' : 'mobilebuildmcp.output.stop-result';
-  return JSON.stringify({ schema, schemaVersion: '2', didError: false, error: null,
-    data: { summary: { status: 'SUCCEEDED' }, artifacts: { simulatorId: udid }, diagnostics: {} } });
-}
-const runner: CliRunner = async (args) => ({ stdout: reply(args), stderr: '', exitCode: 0 });
-
-test('the iOS driver writes the lease file a 1.1 bridge reads: exactly pid, token, deviceId, createdAt', async () => {
-  const root = await mkdtemp(join(tmpdir(), 'jev-device-lease-shape-'));
-  const driver = fakeDriver({ cwd: root, lockRoot: root, runner });
-  try {
-    await driver.prepare(scenario, new AbortController().signal);
-    const written = JSON.parse(await readFile(join(root, `${udid}.lock`), 'utf8')) as Record<string, unknown>;
-    assert.deepEqual(Object.keys(written), ['pid', 'token', 'deviceId', 'createdAt']);
-    assert.equal(written.pid, process.pid);
-    assert.equal(written.deviceId, udid);
-  } finally {
-    await driver.close(new AbortController().signal);
-    await rm(root, { recursive: true, force: true });
-  }
+test('an iOS run writes the lease file a 1.1 bridge reads, exactly pid, token, deviceId and createdAt, and removes it at release', async t => {
+  const f = worldFixture(t, home, iosTarget);
+  const path = join(f.root, 'locks', `${UDID}.lock`);
+  await f.driver.prepare(app, live());
+  const written = JSON.parse(readFileSync(path, 'utf8')) as Record<string, unknown>;
+  assert.deepEqual(Object.keys(written), ['pid', 'token', 'deviceId', 'createdAt']);
+  assert.deepEqual([written.pid, written.deviceId, written.token], [process.pid, UDID, f.admission.inspect(IOS_DEVICE)?.owner?.token]);
+  await f.driver.close(live());
+  assert.equal(existsSync(path), false);
 });
 
-test('a lease file that can no longer be read at release makes close fail and stays in place', async () => {
-  const root = await mkdtemp(join(tmpdir(), 'jev-device-lease-corrupt-'));
-  const driver = fakeDriver({ cwd: root, lockRoot: root, runner });
-  try {
-    await driver.prepare(scenario, new AbortController().signal);
-    const path = join(root, `${udid}.lock`);
-    await writeFile(path, '{not json');
-    await assert.rejects(driver.close(new AbortController().signal), { code: 'UI_ACTION_UNCONFIRMED' });
-    assert.deepEqual((await readdir(root)).sort(), [`${udid}.lock`, 'admission'].sort());
-    assert.equal(await readFile(path, 'utf8'), '{not json');
-  } finally { await rm(root, { recursive: true, force: true }); }
+test('a lease file that can no longer be read at release makes close fail and stays in place, so the next run is refused', async t => {
+  const f = worldFixture(t, home, iosTarget);
+  const path = join(f.root, 'locks', `${UDID}.lock`);
+  await f.driver.prepare(app, live());
+  writeFileSync(path, '{not json');
+  await assert.rejects(f.driver.close(live()), { code: 'CLEANUP_FAILED' });
+  assert.equal(readFileSync(path, 'utf8'), '{not json');
+  const next = f.open(home);
+  await assert.rejects(next.driver.prepare(app, live()), { code: 'DEVICE_BUSY' });
+  assert.deepEqual(next.tools(), []);
 });
-
-function fakeDriver(options: import('../src/device/index.js').MobileBuildMcpDriverOptions): MobileBuildMcpDriver {
-  const storeRoot = join(options.cwd, 'admission');
-  mkdirSync(storeRoot, { recursive: true, mode: 0o700 });
-  const admission = Admission.forTesting({ root: realpathSync(storeRoot), backend: 'fake', durability: 'fast' });
-  return new MobileBuildMcpDriver({ identityProbe: fakeSimulatorProbe(udid), ...options, admission,
-    deviceWindow: options.deviceWindow ?? (async () => {}),
-    fakeBackend: { runner: options.runner!, window: options.deviceWindow } });
-}

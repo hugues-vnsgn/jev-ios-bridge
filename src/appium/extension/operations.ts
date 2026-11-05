@@ -1,7 +1,7 @@
 import { isDeepStrictEqual } from 'node:util';
 import { z } from 'zod/v4';
 import { AppiumError, EXTENSION_VERSION, SOURCE_SETTINGS, checkedToolReply, extensionFailure, extensionRequestSchema,
-  capabilitiesSchema, inventoryResultSchema, pngSchema, rectSchema, type AppiumPlatform, type ToolReply } from '../wire-schemas.js';
+  inventoryResultSchema, pngSchema, rectSchema, type AppiumPlatform, type ToolReply } from '../wire-schemas.js';
 
 export type ExtensionSession = { ownership: string; platform: string; device: string; driver: unknown };
 export type ExtensionOptions = { platform: AppiumPlatform; device: string; getSession: (id: string) => ExtensionSession | null; timeoutMs?: number };
@@ -98,10 +98,9 @@ export function createExtensionHandler(options: ExtensionOptions) {
         case 'jev_settings': {
           const settings = SOURCE_SETTINGS[options.platform];
           await invoke('updateSettings', settings);
-          const readback = capabilitiesSchema.parse(await invoke('getSettings'));
-          if (!Object.entries(settings).every(([key, value]) => readback[key] === value)) throw new AppiumError('DRIVER_ERROR');
+          const readback = z.object(Object.fromEntries(Object.entries(settings).map(([key, value]) => [key, z.literal(value)]))).parse(await invoke('getSettings'));
           reply = { isError: false, content: [{ type: 'text', text: 'Settings read back.' }],
-            structuredContent: { extensionVersion: EXTENSION_VERSION, sessionId: args.sessionId, settings: Object.fromEntries(Object.entries(readback).filter(([key]) => key in settings)) } };
+            structuredContent: { extensionVersion: EXTENSION_VERSION, sessionId: args.sessionId, settings: readback } };
           break;
         }
         case 'jev_screen': {

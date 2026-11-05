@@ -1,11 +1,13 @@
 ---
-status: accepted
+status: superseded
 date: 2026-09-21
 revised: 2026-09-25
 amended: 2026-10-08 (ADR-0007, ADR-0009)
 ---
 
 # MobileBuildMCP is the device layer
+
+Superseded on cutover merge by [ADR-0010](0010-appium-mcp-as-the-shared-device-layer.md). Appium is the iOS device layer, and the bridge no longer depends on MobileBuildMCP or its bundled AXe. The bridge still reads a `simulatorId` from an older `.mobilebuildmcp/config.yaml` to select a device. The original decision below is retained as history.
 
 The bridge needs to boot simulators, install and launch apps, read the screen's accessibility elements, and tap, type, and swipe. The first plan was to write that ourselves over `xcrun simctl` and Meta's `idb`. We use getsentry/MobileBuildMCP instead, renamed from XcodeBuildMCP on 2026-09-23 (MIT). It already ships all of it: simulator management, build and run, a semantic UI snapshot whose elements carry references, and actions addressed by those references, through a bundled automation backend (AXe 1.8.0) that supports Xcode 26 ([research](../research/mobilebuildmcp-simulator-and-device.md)). The bridge's device driver is a thin adapter over it, and the bridge contains no independent UI automation backend. [ADR-0009](0009-bounded-simulator-creation.md) adds a bounded simulator-creation adapter for observed allocation. [ADR-0007](0007-simulator-presentation-and-a-bounded-ios-point-tap-exception.md) makes two exceptions: opening the Simulator window, and Claude's iOS point tap through MobileBuildMCP's bundled AXe. Its own value is the loop, the Jev judgments, the policy, and the report.
 

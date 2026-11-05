@@ -3,8 +3,7 @@ import { setTimeout as delay } from 'node:timers/promises';
 import { CLEANUP_BUDGET_MS } from '../appium/fence/index.js';
 import { Admission, AdmissionError, type OwnerProcess } from '../device/admission.js';
 import type { ActionBinding, ConsumeAllocationResult, ObservedClaim, AllocationRecord, ActionRecordView } from '../device/admission-allocation.js';
-import { createObservedDriver } from '../device/legacy-factory.js';
-import type { ObservedActionDriver, MobileBuildMcpDriverOptions } from '../device/index.js';
+import type { ObservedActionDriver } from '../device/index.js';
 import { runObservedTap, boundedObserved, type ObservedTapResult } from '../experimental/observed-tap.js';
 import { FileObservedEvidence, type ObservedEvidenceStore } from './evidence.js';
 import { renderObservedAction, type ObservedActionSnapshot } from './report.js';
@@ -30,10 +29,6 @@ interface ActionJob { claim: ObservedClaim; controller: AbortController; driver:
 function ownerLiveness(owner: OwnerProcess): 'alive' | 'dead' | 'unknown' {
   try { process.kill(owner.pid, 0); return 'alive'; }
   catch (error) { return (error as NodeJS.ErrnoException).code === 'ESRCH' ? 'dead' : 'unknown'; }
-}
-export function observedDriverFactory(options: MobileBuildMcpDriverOptions): () => ObservedActionDriver {
-  return () => createObservedDriver({ ...options, capture: 'full', screenshots: true, stopAppOnClose: false,
-    reuseActionCapture: false, verifyScreenshotAgreement: false });
 }
 /** One lifecycle and authoritative resolver, shared by public and historical adapters. */
 export class ObservedActionService<Result = unknown> {

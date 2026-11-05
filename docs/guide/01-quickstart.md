@@ -17,12 +17,12 @@ jev-ios-bridge ships as a GitHub release, not on npm. Download the tarball and i
 
 ```sh
 cd /path/to/your-project
-gh release download v1.2.0 -R hugues-vnsgn/jev-ios-bridge -p 'jev-ios-bridge-1.2.0.tgz'
-npm install ./jev-ios-bridge-1.2.0.tgz
-npx jev-ios-bridge --version     # 1.2.0
+gh release download -R hugues-vnsgn/jev-ios-bridge -p 'jev-ios-bridge-*.tgz'
+npm install ./jev-ios-bridge-*.tgz
+npx jev-ios-bridge --version     # the release you downloaded
 ```
 
-The package carries the frozen Appium stack the bridge drives both platforms with, as release archives. On first use the bridge checks their hashes and unpacks them under `~/Library/Application Support/jev-ios-bridge/`, with no network access. It also installs MobileBuildMCP, which this guide uses to build apps.
+The package carries the frozen Appium stack the bridge drives both platforms with, as release archives. On first use the bridge checks their hashes and unpacks them under `~/Library/Application Support/jev-ios-bridge/`, with no network access. To build apps, this guide uses Xcode's own `xcodebuild` and `xcrun simctl`.
 
 ## 2. Keep your TypeSafe key private
 
@@ -43,26 +43,24 @@ xcrun simctl create jev-bridge "iPhone 17 Pro"     # prints its UUID
 xcrun simctl boot <UUID>
 ```
 
-Tell the bridge about it, in `.mobilebuildmcp/config.yaml`:
+Tell the bridge about it:
 
-```yaml
-schemaVersion: 1
-sentryDisabled: true
-sessionDefaults:
-  simulatorId: <UUID>
+```sh
+export JEV_DEVICE_UDID=<UUID>
 ```
 
-You can also set `JEV_DEVICE_UDID=<UUID>`, or put `device.udid` in a script. The bridge refuses aliases like `booted`.
+You can also name it in a [profile](06-running.md#profiles), or put `device.udid` in a script. The bridge refuses aliases like `booted`.
 
 ## 4. Build and install the diagnostic app
 
-The diagnostic app's source isn't in the package. Get it from the release tag, then build and install it with MobileBuildMCP:
+The diagnostic app's source isn't in the package. Get it from the tag of the release you installed, build it for the simulator, then install it:
 
 ```sh
-git clone --depth 1 --branch v1.2.0 https://github.com/hugues-vnsgn/jev-ios-bridge.git jev-ios-bridge-src
-npx mobilebuildmcp simulator build-and-run \
-  --project-path jev-ios-bridge-src/examples/diagnostic-app/DiagnosticApp.xcodeproj \
-  --scheme DiagnosticApp --simulator-id <UUID>
+git clone --depth 1 --branch "v$(npx jev-ios-bridge --version)" https://github.com/hugues-vnsgn/jev-ios-bridge.git jev-ios-bridge-src
+xcodebuild -project jev-ios-bridge-src/examples/diagnostic-app/DiagnosticApp.xcodeproj \
+  -scheme DiagnosticApp -configuration Debug -destination 'generic/platform=iOS Simulator' \
+  -derivedDataPath build/diagnostic-app CODE_SIGNING_ALLOWED=NO build
+xcrun simctl install <UUID> build/diagnostic-app/Build/Products/Debug-iphonesimulator/DiagnosticApp.app
 ```
 
 The bridge never builds or installs apps. You do that, and the bridge restarts the installed app at the start of each run.

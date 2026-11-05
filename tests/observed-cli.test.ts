@@ -120,7 +120,7 @@ for(const [signal,code] of [['SIGINT',130],['SIGTERM',143]] as const) {
     const f=await prepare(t);const path=join(f.root,'action.json');await writeFile(path,JSON.stringify({...actionRequest(f.allocationId),timeoutMs:60000}));
     const before=fixtureCalls(f.root).length;
     const worker=f.command({ command: 'observed-action', argument: path, mode: 'pending', enabled: '1', signalExit: true });
-    await untilCall(f.root,'snapshot-ui',before);
+    await untilCall(f.root,'observe',before);
     const started=Date.now();worker.child.kill(signal);const stopped=await worker.result;
     assert.equal(stopped.code,code);assert.ok(Date.now()-started<6500);
     const current=await f.command({ command: 'observed-report', argument: 'one', mode: 'observed', wait: 0, enabled: '0' }).result;
@@ -134,7 +134,7 @@ for(const [signal,code] of [['SIGINT',130],['SIGTERM',143]] as const) {
     const f=await prepare(t);const path=join(f.root,'action.json');await writeFile(path,JSON.stringify({...actionRequest(f.allocationId),timeoutMs:60000}));
     const before=fixtureCalls(f.root).length;const worker=f.command({ command: 'observed-action', argument: path, mode: 'pending', enabled: '1', signalExit: true });
     t.after(async()=>{if(worker.child.exitCode===null){worker.child.kill('SIGTERM');await worker.result;}});
-    await untilCall(f.root,'snapshot-ui',before);
+    await untilCall(f.root,'observe',before);
     const initial=(await f.command({ command: 'observed-report', argument: 'one', mode: 'observed', wait: 0, enabled: '0' }).result).reply;
     const waiting=f.command({ command: 'observed-report', argument: 'one', mode: 'observed', wait: 45000, enabled: '0', signalExit: true });
     await untilReadWait(f.root, waiting.child.pid!);waiting.child.kill(signal);const stopped=await waiting.result;
@@ -198,7 +198,7 @@ test('ordered independent CLI duplicates retain useful preparation and one actio
   const request = actionRequest(f.allocationId); const path = join(f.root, 'action.json'); await writeFile(path, JSON.stringify(request));
   const first = await f.command({ command: 'observed-action', argument: path }).result; assert.equal(first.code, 0); assert.equal(actionSnapshot(first.reply).outcome, 'outcome_observed'); assert.equal(actionSnapshot(first.reply).disposition, 'started');
   const repeated = await f.command({ command: 'observed-action', argument: path }).result; assert.equal(repeated.code, 0); assert.equal(actionSnapshot(repeated.reply).disposition, 'retrieved'); assert.equal(actionSnapshot(repeated.reply).outcome, 'outcome_observed');
-  const after = fixtureCalls(f.root).filter(op => op !== 'open').slice(calls.length); assert.equal(after.filter(op => op === 'touch').length, 1); assert.equal(after.filter(op => op === 'snapshot-ui').length, 2); assert.ok(after.every(op => !['create','boot','install','launch-app','window'].includes(op)));
+  const after = fixtureCalls(f.root).filter(op => op !== 'open').slice(calls.length); assert.deepEqual(after, ['touch']);
   const terminal = admission.readAction('one'); const beforeRead = fixtureCalls(f.root).filter(op => op !== 'open'); const disabled = await f.command({ command: 'observed-report', argument: 'one', mode: 'observed', wait: 0, enabled: '0' }).result; assert.equal(actionSnapshot(disabled.reply).outcome, 'outcome_observed'); assert.deepEqual(admission.readAction('one'), terminal); assert.deepEqual(fixtureCalls(f.root).filter(op => op !== 'open'), beforeRead);
   const events = fixtureEvents(f.root); traceOracle({ events, actors: [...new Set(events.map(e => e.actor))] }); publicAuthority({ admission, requests: [f.request('one')], baseline, action: request, observations: f.observations, events, requireOutcome: 'action_completed' });
 });

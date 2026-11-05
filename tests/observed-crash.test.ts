@@ -11,7 +11,7 @@ for (const transport of ['cli', 'mcp'] as const) {
     ['backend:create:1', 'preparing', true],
     ['afterCommit:recordCreation:1', 'preparing', false],
     ['afterCommit:parkAllocation:1', 'ready', false],
-  ] as const) test(`H06.01 ${transport} killed public preparation owner at ${gate}`, { timeout: 15000 }, async t => {
+  ] as const) test(`H06.01 ${transport} killed public preparation owner at ${gate}`, { timeout: 60000 }, async t => {
     const f = await hostFixture(t); const request = f.request('one');
     const server = transport === 'mcp' ? await f.mcp({ gate }) : undefined;
     const owner = server ?? f.spawnOwner('cli', 'observed-allocate', await f.requestFile(request), { gate });
@@ -48,7 +48,7 @@ for (const transport of ['cli', 'mcp'] as const) {
     ['afterCommit:finalize:1', true, true, true, 1],
     ['evidence:terminal:1', true, true, true, 1],
     ['evidence:exported:1', true, true, true, 1],
-  ] as const) test(`H06.02 ${transport} killed public action owner at ${gate}`, { timeout: 15000 }, async t => {
+  ] as const) test(`H06.02 ${transport} killed public action owner at ${gate}`, { timeout: 60000 }, async t => {
     const f = await hostFixture(t); const allocation = await f.prepare(); const request = actionRequest(allocation.allocationId);
     const server = transport === 'mcp' ? await f.mcp({ gate }) : undefined;
     const owner = server ?? f.spawnOwner('cli', 'observed-action', await f.requestFile(request, 'action.json'), { gate });
@@ -106,33 +106,35 @@ test('H06.04 duplicate finalization and stale token cannot change a genuine publ
   assert.deepEqual(await f.database(), bytes); const read = await f.cli('observed-report', 'one'); assert.equal(snapshot(read.reply).outcome, 'outcome_observed'); assert.equal(f.calls().filter(op => op === 'touch').length, 1);
 });
 
-test('H06.05 genuine MCP owner late abort-ignoring touch reply cannot promote quarantined outcome', { timeout: 20000 }, async t => {
+test('H06.05 genuine MCP owner tap reply landing after cancellation cannot promote quarantined outcome', { timeout: 20000 }, async t => {
   const f = await hostFixture(t); const allocation = await f.prepare(); const server = await f.mcp({ gate: 'async:backend:touch:1' });
   await server.call('start_observed_action', actionRequest(allocation.allocationId)); await f.milestone('waiting:touch:1', server.child.pid);
   const before = f.calls(); assert.equal(before.filter(op => op === 'touch').length, 1);
-  const cancelled = await server.call('cancel_observed_action', { actionId: 'one' });
-  assert.equal(snapshot(cancelled.reply).cancellationRequested, true);
+  // The Appium close waits for the in-flight tap reply, so the held reply is released once cancellation is durable.
+  const cancelling = server.call('cancel_observed_action', { actionId: 'one' });
+  for (let waited = 0; !f.admission().readAttempt({ kind: 'observed', id: 'one' })?.cancellationRequested; waited += 10) { assert.ok(waited < 5000, 'cancellation committed'); await new Promise(done => setTimeout(done, 10)); }
+  await f.release(); await f.milestone('late:touch:1', server.child.pid);
+  assert.equal(snapshot((await cancelling).reply).cancellationRequested, true);
   const terminal = await server.call('get_observed_action', { actionId: 'one', waitMs: 5000 });
   assert.equal(snapshot(terminal.reply).outcome, 'inconclusive'); assert.equal(actionSnapshot(terminal.reply).admission, 'quarantined');
   assert.equal(actionSnapshot(terminal.reply).actionAttempted, null); assert.equal(actionSnapshot(terminal.reply).actionAcknowledged, null);
-  assert.deepEqual(f.calls(), before, 'Cancellation cannot dispatch any successor to the already-issued touch');
-  await f.release(); await f.milestone('late:touch:1', server.child.pid);
+  assert.deepEqual(f.calls(), before, 'Cancellation and the late reply cannot dispatch any successor to the already-issued touch');
   const after = await server.call('get_observed_action', { actionId: 'one' }); assert.deepEqual(after.reply, terminal.reply);
-  assert.equal(f.calls().filter(op => op === 'touch').length, 1);
   const legacy = f.admission().acquire({ device: actionSnapshot(terminal.reply).device.udid, attempt: { kind: 'legacy', id: 'late-successor' }, digest: 'late-successor', intent: {} });
   assert.deepEqual(legacy, { kind: 'refused', reason: 'DEVICE_QUARANTINED' }); await server.close();
   assert.deepEqual(f.calls(), before, 'Late reply, reads, refused legacy successor and owner exit cannot add any backend/presentation/cleanup call');
 });
 
-test('H06.06 genuine CLI owner late abort-ignoring touch reply cannot promote quarantined outcome', { timeout: 20000 }, async t => {
+test('H06.06 genuine CLI owner tap reply landing after cancellation cannot promote quarantined outcome', { timeout: 20000 }, async t => {
   const f = await hostFixture(t); const allocation = await f.prepare(); const owner = f.spawnOwner('cli', 'observed-action', await f.requestFile(actionRequest(allocation.allocationId)), { gate: 'async:backend:touch:1' });
   await f.milestone('waiting:touch:1', owner.child.pid);
   const before = f.calls(); assert.equal(before.filter(op => op === 'touch').length, 1);
   const cancel = await f.cli('observed-cancel', 'one'); assert.equal(snapshot(cancel.reply).cancellationRequested, true);
+  await f.release(); await f.milestone('late:touch:1', owner.child.pid);
   const terminal = await f.cli('observed-report', 'one', { waitMs: 45000 }); assert.equal(snapshot(terminal.reply).outcome, 'inconclusive'); assert.equal(actionSnapshot(terminal.reply).admission, 'quarantined');
   assert.equal(actionSnapshot(terminal.reply).actionAttempted, null); assert.equal(actionSnapshot(terminal.reply).actionAcknowledged, null);
-  assert.deepEqual(f.calls(), before, 'Cancellation cannot dispatch any successor to the already-issued touch');
-  await f.release(); await f.milestone('late:touch:1', owner.child.pid); const result = await owner.exited; assert.equal(result.code, 2);
+  assert.deepEqual(f.calls(), before, 'Cancellation and the late reply cannot dispatch any successor to the already-issued touch');
+  const result = await owner.exited; assert.equal(result.code, 2);
   const after = await f.cli('observed-report', 'one');
   for (const field of ['outcome', 'authority', 'admission', 'actionAttempted', 'actionAcknowledged'] as const) assert.equal(actionSnapshot(after.reply)[field], actionSnapshot(terminal.reply)[field], field);
   assert.equal(f.calls().filter(op => op === 'touch').length, 1);

@@ -43,7 +43,7 @@ Usage:
   jev-ios-bridge observed-cancel <action-id> [--json]
   jev-ios-bridge --version | --help
 Set TYPESAFE_API_KEY and, for an iOS script, a dedicated simulator (JEV_DEVICE_UDID, the script's
-device.udid, or .mobilebuildmcp/config.yaml); for an Android script, a device (JEV_ANDROID_DEVICE,
+device.udid, or the simulatorId in an older .mobilebuildmcp/config.yaml); for an Android script, a device (JEV_ANDROID_DEVICE,
 or the script's device.serial or device.avd). JEV_RUNS_DIR selects the evidence directory (default ./.jev-runs).
 JEV_PROJECT_DIR, when set, stands in for the working directory (a plugin sets it to your project).
 A run opens a live log pane of the app's own output in a new terminal window; turn it off with

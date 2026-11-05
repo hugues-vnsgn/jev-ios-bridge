@@ -1,7 +1,7 @@
 import { createHash } from 'node:crypto';
 import type { Element, Platform } from '../../contracts/index.js';
 import type { Role } from '../../scripted/vocabulary.js';
-import type { AndroidNode } from '../../device/android/agent-client.js';
+import type { AndroidNode } from '../../device/android/tree.js';
 import { mapAndroidTree } from '../../device/android/mapping.js';
 import { SOURCE_SETTINGS } from '../wire-schemas.js';
 import { parseSource, ObservationIncompleteError, type SourceNode } from './xml.js';

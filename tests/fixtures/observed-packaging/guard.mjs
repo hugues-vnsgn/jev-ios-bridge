@@ -23,12 +23,6 @@ registerHooks({
       source = source.replace(pattern, pattern + ' globalThis.__jevPackagingForbidden("Admission.open");');
     }
     source = source.replaceAll('new TypeSafeClient(', 'new (class { constructor() { globalThis.__jevPackagingForbidden("TypeSafeClient"); } })(');
-    if (url.endsWith('/device/index.js')) {
-      const pattern = 'constructor(options';
-      if (!source.includes(pattern)) throw new Error('Driver safety guard no longer matches installed module');
-      // Driver construction also reaches subprocess guards; trap it at its first statement.
-      source = source.replace(/constructor\(options[^)]*\) \{/, '$& globalThis.__jevPackagingForbidden("MobileBuildMcpDriver");');
-    }
     if (url.endsWith('/dist/appium/driver.js')) {
       const pattern = /export class AppiumDriver \{[^]*?constructor\(options\) \{/;
       if (!pattern.test(source)) throw new Error('Appium driver safety guard no longer matches installed module');

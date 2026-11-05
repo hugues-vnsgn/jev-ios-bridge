@@ -539,7 +539,7 @@ test('tracked adapter retains production brand through nested composition and al
     for (const process of [direct, once, twice]) {
       assert.equal(process.length, 3); assert.equal(isProductionSourceProcess(process), true);
       assert.throws(() => new ObservedAllocator({ admission: f.admission, runsDir: f.runsDir,
-        fakeBackend: { process, runner: f.runner, window: f.window, host: f.host } }), { code: 'CONFIG_INVALID' });
+        fakeBackend: { process, host: f.host }, createDriver: () => assert.fail('No driver') }), { code: 'CONFIG_INVALID' });
     }
     assert.deepEqual(f.calls, []);
   } finally { await f.cleanup(); }

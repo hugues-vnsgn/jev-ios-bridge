@@ -482,15 +482,6 @@ test('contract: CLI exit codes for every outcome and start failure', { timeout: 
   } finally { await rm(root, { recursive: true, force: true }); }
 });
 
-test('contract: the driver translates unknown vendor roles to other and keeps known ones', async () => {
-  const { parseSnapshot } = await import('../src/device/index.js');
-  const snapshot = parseSnapshot({ capture: { type: 'runtime-snapshot', protocol: 'rs/1', elements: [
-    { ref: 'e1', role: 'button', actions: ['tap'] },
-    { ref: 'e2', role: 'future-vendor-role', actions: [] },
-  ] } }, 'sim');
-  assert.deepEqual(snapshot.elements.map(element => element.role), ['button', 'other']);
-});
-
 test('contract: the CLI prints the release version', { timeout: 20_000 }, async () => {
   const { stdout } = await execute(process.execPath, ['--import', import.meta.resolve('tsx'), join(process.cwd(), 'src/cli.ts'), '--version']);
   const { version } = JSON.parse(await readFile('package.json', 'utf8'));

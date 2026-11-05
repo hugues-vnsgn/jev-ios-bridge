@@ -1,161 +1,59 @@
-import { fakeSimulatorProbe } from './fixtures/android-device.js';
-import { mkdirSync, realpathSync } from 'node:fs';
-import { Admission } from '../src/device/admission.js';
 import assert from 'node:assert/strict';
-import { mkdtemp, rm } from 'node:fs/promises';
-import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { test } from 'node:test';
 import type { DeviceDriver, RunEvent, RunLog, Snapshot } from '../src/contracts/index.js';
 import type { ScriptedScenario } from '../src/scripted/contracts.js';
-import { DeviceCliError, DeviceReasonError, MobileBuildMcpDriver, deviceWindowOpener, simulatorWindowCommand,
-  type CliRunner, type DeviceWindowOpener } from '../src/device/index.js';
+import { DeviceReasonError, deviceWindowOpener, simulatorWindowCommand } from '../src/device/index.js';
 import { runScriptedScenario } from '../src/scripted/run.js';
 import { SCRIPTED_JEV_MODEL } from '../src/scripted/jev.js';
+import { fakeSimulatorProbe } from './fixtures/android-device.js';
+import { UDID } from './fixtures/appium-wire/driver-fixture.js';
+import { IOS_DEVICE, authorized, iosTarget } from './fixtures/appium-wire/matrix.js';
+import { iosScreen, world, worldFixture } from './fixtures/appium-wire/world.js';
 
-const udid = 'ABCDEF00-0000-4000-8000-000000000001';
-const scenario = { app: { bundleId: 'com.apple.Preferences' }, device: { udid } };
+const live = () => AbortSignal.timeout(20_000);
+const shown = world('ios', { home: iosScreen([{ type: 'StaticText', name: 'home', label: 'Home', frame: [16, 100, 200, 40] }]) });
+const app = { app: { bundleId: 'example.app' } };
 
-function launched(): string {
-  return JSON.stringify({ schema: 'mobilebuildmcp.output.launch-result', schemaVersion: '2', didError: false, error: null,
-    data: { summary: { status: 'SUCCEEDED' }, artifacts: { simulatorId: udid }, diagnostics: {} } });
+function listedAs(state: string) {
+  const listing = fakeSimulatorProbe(UDID);
+  return { ...listing, simulatorSet: async (signal: AbortSignal) => {
+    const inventory = await listing.simulatorSet(signal);
+    return { ...inventory, reply: inventory.reply.replaceAll('Booted', state) };
+  } };
 }
 
-/** MobileBuildMCP's answer for a shut-down simulator: the app container check fails, so it says "not installed". */
-function launchFailed(): string {
-  return JSON.stringify({ schema: 'mobilebuildmcp.output.launch-result', schemaVersion: '2', didError: true,
-    error: 'App is not installed on the simulator.',
-    data: { summary: { status: 'FAILED' }, artifacts: { simulatorId: udid }, diagnostics: {} } });
-}
+const notBooted = (state: string) => (error: unknown) => error instanceof DeviceReasonError && error.code === 'DEVICE_NOT_BOOTED' &&
+  error.message.includes(UDID) && error.message.includes(state);
 
-function listed(state: string, simulatorId = udid.toLowerCase()): string {
-  return JSON.stringify({ schema: 'mobilebuildmcp.output.simulator-list', schemaVersion: '2', didError: false, error: null,
-    data: { simulators: [
-      { name: 'Other', simulatorId: 'AD6669D1-7E29-4430-8F8A-4C70B2AB1D24', state: 'Booted', isAvailable: true, runtime: 'iOS 18.6' },
-      { name: 'Test iPhone', simulatorId, state, isAvailable: true, runtime: 'iOS 18.6' },
-    ] } });
-}
-
-function stopped(): string {
-  return JSON.stringify({ schema: 'mobilebuildmcp.output.stop-result', schemaVersion: '2', didError: false, error: null,
-    data: { summary: { status: 'SUCCEEDED' }, artifacts: { simulatorId: udid }, diagnostics: {} } });
-}
-
-/** A fake MobileBuildMCP: `list` answers `simulator list`, `launch` answers `simulator launch-app`. Records every call. */
-function fakeRunner(answers: { list?: () => string; launch?: () => string }, calls: string[]): CliRunner {
-  return async args => {
-    const command = args.slice(0, 2).join(' ');
-    calls.push(command);
-    if (command === 'simulator list') {
-      if (!answers.list) throw new Error('unexpected simulator list');
-      return { stdout: answers.list(), stderr: '', exitCode: 0 };
-    }
-    if (command === 'simulator launch-app') {
-      const stdout = (answers.launch ?? launched)();
-      return { stdout, stderr: '', exitCode: JSON.parse(stdout).didError ? 1 : 0 };
-    }
-    if (command === 'simulator stop') return { stdout: stopped(), stderr: '', exitCode: 0 };
-    throw new Error(`unexpected command ${command}`);
-  };
-}
-
-async function withDriver(options: { list?: () => string; launch?: () => string; window?: DeviceWindowOpener; calls?: string[] },
-  body: (driver: MobileBuildMcpDriver, calls: string[], root: string) => Promise<void>): Promise<void> {
-  const root = await mkdtemp(join(tmpdir(), 'jev-sim-window-'));
-  const calls = options.calls ?? [];
-  const driver = fakeDriver({ cwd: root, lockRoot: root, runner: fakeRunner(options, calls),
-    ...(options.window ? { deviceWindow: options.window } : {}) });
-  try { await body(driver, calls, root); }
-  finally {
-    await driver.close(new AbortController().signal).catch(() => {});
-    await rm(root, { recursive: true, force: true });
-  }
-}
-
-const notBooted = (error: unknown) => error instanceof DeviceReasonError && error.code === 'DEVICE_NOT_BOOTED' &&
-  error.message.includes(udid) && error.message.includes(`xcrun simctl boot ${udid}`);
-
-test('with the window on, prepare checks the simulator is booted, brings its window forward, then launches', async () => {
-  const calls: string[] = [];
-  await withDriver({ calls, list: () => listed('Booted'),
-    window: async (id) => { calls.push(`window ${id}`); } }, async driver => {
-    await driver.prepare(scenario, new AbortController().signal);
-    assert.deepEqual(calls, ['simulator list', `window ${udid}`, 'simulator launch-app']);
-    assert.deepEqual(driver.prepareWarnings(), []);
-  });
-});
-
-test('a window that fails to open is a warning, never a failure', async () => {
-  await withDriver({ list: () => listed('Booted'), window: async () => { throw new DeviceCliError('WINDOW_FAILED', 'open exited 1: secret detail', true); } },
-    async (driver, calls) => {
-      await driver.prepare(scenario, new AbortController().signal);
-      assert.deepEqual(calls, ['simulator list', 'simulator launch-app']);
-      const warnings = driver.prepareWarnings();
-      assert.equal(warnings.length, 1);
-      assert.match(warnings[0]!, /Simulator window not opened/);
-      // The opener's own message isn't recorded.
-      assert.ok(!warnings[0]!.includes('secret detail'));
-    });
-});
-
-test('with the window on, a shut-down simulator is refused as DEVICE_NOT_BOOTED before the window opens or the app launches', async () => {
+test('with the window on, a shut-down simulator is refused as DEVICE_NOT_BOOTED before the window opens, the app launches or the device is admitted', async t => {
   let opened = 0;
-  await withDriver({ list: () => listed('Shutdown'), window: async () => { opened++; } }, async (driver, calls, root) => {
-    await assert.rejects(driver.prepare(scenario, new AbortController().signal), notBooted);
-    assert.equal(opened, 0, 'opening Simulator on a shut-down device would boot it');
-    assert.deepEqual(calls, ['simulator list']);
-    // The lease is released, so another driver can take the device.
-    const next = fakeDriver({ cwd: root, lockRoot: root, runner: fakeRunner({}, []) });
-    await next.prepare(scenario, new AbortController().signal);
-    await next.close(new AbortController().signal);
-  });
+  const f = worldFixture(t, shown, { ...iosTarget, identityProbe: listedAs('Shutdown'), deviceWindow: async () => { opened++; } });
+  await assert.rejects(f.driver.prepare(app, live()), notBooted('Shutdown'));
+  assert.equal(opened, 0, 'opening Simulator on a shut-down device would boot it');
+  assert.deepEqual([f.native.calls.length, f.tools(), f.admission.inspect(IOS_DEVICE)], [0, [], undefined]);
+  const next = f.open(shown, { identityProbe: fakeSimulatorProbe(UDID) });
+  await next.driver.prepare(app, live());
+  await next.driver.close(live());
+  assert.equal(f.admission.inspect(IOS_DEVICE)?.state, 'available');
 });
 
-test('a simulator still booting is DEVICE_NOT_BOOTED too', async () => {
-  await withDriver({ list: () => listed('Booting'), window: async () => {} }, async driver => {
-    await assert.rejects(driver.prepare(scenario, new AbortController().signal), notBooted);
-  });
+test('a simulator still booting is DEVICE_NOT_BOOTED too', async t => {
+  const f = worldFixture(t, shown, { ...iosTarget, identityProbe: listedAs('Booting'), deviceWindow: async () => assert.fail('No window on a booting device') });
+  await assert.rejects(f.driver.prepare(app, live()), notBooted('Booting'));
+  assert.deepEqual([f.native.calls.length, f.tools()], [0, []]);
 });
 
-test('with the window on and the state unreadable, the window stays closed with a warning and the app still launches', async () => {
-  let opened = 0;
-  for (const list of [() => listed('Booted', 'AD6669D1-0000-0000-0000-000000000000')]) {
-    await withDriver({ list, window: async () => { opened++; } }, async (driver, calls) => {
-      await driver.prepare(scenario, new AbortController().signal);
-      assert.deepEqual(calls, ['simulator list', 'simulator launch-app']);
-      assert.equal(driver.prepareWarnings().length, 1);
-      assert.match(driver.prepareWarnings()[0]!, /Simulator window not opened/);
-    });
-  }
-  assert.equal(opened, 0);
-});
-
-test('with the window off, a successful launch sends no extra command and records no warning', async () => {
-  await withDriver({}, async (driver, calls) => {
-    await driver.prepare(scenario, new AbortController().signal);
-    assert.deepEqual(calls, ['simulator launch-app']);
-    assert.deepEqual(driver.prepareWarnings(), []);
-  });
-});
-
-test('with the window off, a launch that fails on a shut-down simulator becomes DEVICE_NOT_BOOTED', async () => {
-  await withDriver({ list: () => listed('Shutdown'), launch: launchFailed }, async (driver, calls) => {
-    await assert.rejects(driver.prepare(scenario, new AbortController().signal), notBooted);
-    assert.deepEqual(calls, ['simulator launch-app', 'simulator list']);
-  });
-});
-
-test('a launch failure on a booted simulator, or with the state unreadable, keeps its own error', async () => {
-  for (const list of [() => listed('Booted'), () => 'not json', () => { throw new Error('list crashed'); }]) {
-    await withDriver({ list, launch: launchFailed }, async driver => {
-      await assert.rejects(driver.prepare(scenario, new AbortController().signal),
-        (error: unknown) => error instanceof DeviceCliError && error.code === 'DEVICE_ERROR');
-    });
-  }
+test('with the window off, a run opens no window and records no warning', async t => {
+  const f = worldFixture(t, shown, iosTarget);
+  await f.driver.prepare(app, live());
+  assert.deepEqual(f.driver.prepareWarnings(), []);
+  await f.driver.close(live());
+  assert.equal(authorized(f.admission, 'run-1').window, undefined);
 });
 
 test('the window command opens Simulator on the run\'s device', () => {
-  assert.deepEqual(simulatorWindowCommand(udid), ['open', ['-a', 'Simulator', '--args', '-CurrentDeviceUDID', udid]]);
+  assert.deepEqual(simulatorWindowCommand(UDID), ['open', ['-a', 'Simulator', '--args', '-CurrentDeviceUDID', UDID]]);
 });
 
 test('the window is on by default, off with --no-device-window or JEV_DEVICE_WINDOW=off', () => {
@@ -173,7 +71,7 @@ function memoryLog(): RunLog & { events: RunEvent[] } {
     async read() { return events; } };
 }
 
-const script: ScriptedScenario = { version: 1, app: { bundleId: 'com.example.app' }, values: {}, steps: [
+const script: ScriptedScenario = { version: 1, app: { bundleId: 'example.app' }, values: {}, steps: [
   { id: 'home', kind: 'checkpoint', guard: { present: [{ label: 'Home' }] }, assertions: [{ id: 'home', claim: 'Home is shown' }] },
 ] };
 const home: Snapshot = { deviceId: 'sim', capturedAt: Date.now(), expiresAt: Date.now() + 60_000, sequence: 1, truncated: false,
@@ -196,17 +94,13 @@ test('a run records prepare warnings on its prepared event, and nothing when the
   assert.deepEqual(Object.keys(await preparedOf(driver())), ['prepareDurationMs']);
 });
 
-test('a run on a shut-down simulator ends inconclusive with DEVICE_NOT_BOOTED, not DEVICE_ERROR', async () => {
-  const root = await mkdtemp(join(tmpdir(), 'jev-sim-window-run-'));
-  try {
-    const driver = fakeDriver({ cwd: root, lockRoot: root, defaultUdid: udid,
-      runner: fakeRunner({ list: () => listed('Shutdown'), launch: launchFailed }, []) });
-    const log = memoryLog();
-    const report = await runScriptedScenario({ runId: 'window-1', scenario: script, driver, judge, log });
-    assert.equal(report.verdict, 'inconclusive');
-    assert.equal(report.reason, 'DEVICE_NOT_BOOTED');
-    assert.equal(log.events.find(event => event.type === 'error')?.data.code, 'DEVICE_NOT_BOOTED');
-  } finally { await rm(root, { recursive: true, force: true }); }
+test('a run on a shut-down simulator ends inconclusive with DEVICE_NOT_BOOTED, not DEVICE_ERROR', async t => {
+  const f = worldFixture(t, shown, { ...iosTarget, identityProbe: listedAs('Shutdown') });
+  const log = memoryLog();
+  const report = await runScriptedScenario({ runId: 'window-1', scenario: script, driver: f.driver, judge, log });
+  assert.equal(report.verdict, 'inconclusive');
+  assert.equal(report.reason, 'DEVICE_NOT_BOOTED');
+  assert.equal(log.events.find(event => event.type === 'error')?.data.code, 'DEVICE_NOT_BOOTED');
 });
 
 test('the CLI takes --no-device-window on run only, and its help names it', { timeout: 20_000 }, async () => {
@@ -223,79 +117,4 @@ test('the CLI takes --no-device-window on run only, and its help names it', { ti
   const report = await execute(['report', 'some-run', '--no-device-window']);
   assert.equal(report.code, 3);
   assert.match(report.stderr, /--no-device-window applies only to run/);
-});
-
-function fakeDriver(options: import('../src/device/index.js').MobileBuildMcpDriverOptions): MobileBuildMcpDriver {
-  const storeRoot = join(options.cwd, 'admission');
-  mkdirSync(storeRoot, { recursive: true, mode: 0o700 });
-  const admission = Admission.forTesting({ root: realpathSync(storeRoot), backend: 'fake', durability: 'fast' });
-  return new MobileBuildMcpDriver({ identityProbe: fakeSimulatorProbe(udid), ...options, admission,
-    deviceWindow: options.deviceWindow ?? (async () => {}),
-    fakeBackend: { runner: options.runner!, window: options.deviceWindow } });
-}
-
-test('malformed selected-device listing revokes dispatch before window or launch', async () => {
-  await withDriver({ list: () => 'not json', window: async () => assert.fail('No window after uncertainty') }, async (driver, calls) => {
-    await assert.rejects(driver.prepare(scenario, new AbortController().signal), /invalid JSON/);
-    assert.deepEqual(calls, ['simulator list']);
-    await assert.rejects(driver.observe(new AbortController().signal));
-    assert.deepEqual(calls, ['simulator list']);
-  });
-});
-
-for (const [name, entries] of [
-  ['selected state is numeric', [{ simulatorId: udid, state: 123 }]],
-  ['selected state is missing', [{ simulatorId: udid }]],
-  ['selected state is null', [{ simulatorId: udid, state: null }]],
-  ['selected state is empty', [{ simulatorId: udid, state: '' }]],
-  ['selected state is blank', [{ simulatorId: udid, state: '   ' }]],
-  ['identity is numeric', [{ simulatorId: 123, state: 'Booted' }]],
-  ['identity is missing', [{ state: 'Booted' }]],
-  ['identity is malformed', [{ simulatorId: 'not-a-uuid', state: 'Booted' }]],
-  ['list is missing', undefined],
-  ['list is null', null],
-  ['list is not an array', {}],
-  ['entry is null', [null]],
-  ['entry is an array', [[]]],
-  ['entry is a string', ['Booted']],
-  ['unselected entry is malformed', [{ simulatorId: udid, state: 'Booted' },
-    { simulatorId: 'AD6669D1-0000-0000-0000-000000000000', state: 123 }]],
-] as const) {
-  test(`malformed simulator entry (${name}) fences launch, presentation and cleanup`, async () => {
-    const list = () => JSON.stringify({ schema: 'mobilebuildmcp.output.simulator-list', schemaVersion: '2',
-      didError: false, data: { simulators: entries } });
-    await withDriver({ list, window: async () => assert.fail('No presentation after malformed listing') }, async (driver, calls, root) => {
-      await assert.rejects(driver.prepare(scenario, new AbortController().signal),
-        (error: unknown) => error instanceof DeviceCliError && !error.terminalAcknowledged);
-      await assert.rejects(driver.observe(new AbortController().signal));
-      await assert.rejects(driver.close(new AbortController().signal), /unknown/);
-      assert.deepEqual(calls, ['simulator list']);
-      const admission = Admission.forTesting({ root: realpathSync(join(root, 'admission')), backend: 'fake', initialize: false });
-      assert.equal(admission.inspect(udid)?.state, 'quarantined');
-    });
-  });
-}
-
-test('a valid empty simulator list keeps missing-identity warning and acknowledged launch behavior', async () => {
-  const list = () => JSON.stringify({ schema: 'mobilebuildmcp.output.simulator-list', schemaVersion: '2',
-    didError: false, data: { simulators: [] } });
-  await withDriver({ list, window: async () => assert.fail('No selected identity to present') }, async (driver, calls) => {
-    await driver.prepare(scenario, new AbortController().signal);
-    assert.deepEqual(calls, ['simulator list', 'simulator launch-app']);
-    assert.equal(driver.prepareWarnings().length, 1);
-    await driver.close(new AbortController().signal);
-    assert.deepEqual(calls, ['simulator list', 'simulator launch-app', 'simulator stop']);
-  });
-});
-
-
-test('a malformed simulator-list error receipt cannot acknowledge settlement or authorize cleanup', async () => {
-  const list = () => JSON.stringify({ schema: 'mobilebuildmcp.output.simulator-list', schemaVersion: '2',
-    didError: true, error: 'List failed', data: { simulators: [{ simulatorId: udid, state: 123 }] } });
-  await withDriver({ list, window: async () => assert.fail('No window after unconfirmed list error') }, async (driver, calls) => {
-    await assert.rejects(driver.prepare(scenario, new AbortController().signal),
-      (error: unknown) => error instanceof DeviceCliError && !error.terminalAcknowledged);
-    await assert.rejects(driver.close(new AbortController().signal), /unknown/);
-    assert.deepEqual(calls, ['simulator list']);
-  });
 });

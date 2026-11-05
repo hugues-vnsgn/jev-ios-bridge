@@ -50,3 +50,22 @@ test('the installed smoke guard refuses Appium driver construction and the shipp
     'Installed smoke attempted forbidden effect: FrozenStack.shipped', 'test']);
   assert.equal(readFileSync(log, 'utf8'), '{"forbidden":"AppiumDriver"}\n{"forbidden":"FrozenStack.shipped"}\n');
 });
+test('the installed smoke guard loads a device module with no driver class and still refuses subprocesses', async () => {
+  const root = mkdtempSync(join(tmpdir(), 'jev-packaging-guard-device-')); const device = join(root, 'dist/device');
+  mkdirSync(device, { recursive: true }); writeFileSync(join(root, 'package.json'), '{"type":"module"}');
+  writeFileSync(join(device, 'index.js'), 'export class DeviceReasonError extends Error {\n    constructor(code, message) {\n        super(message);\n        this.code = code;\n    }\n}\n');
+  const log = join(root, 'forbidden.jsonl'); writeFileSync(log, '');
+  const script = `
+    const { pathToFileURL } = await import('node:url'); const { execFile } = await import('node:child_process');
+    const { DeviceReasonError } = await import(pathToFileURL(process.argv[1] + '/dist/device/index.js').href);
+    const attempt = effect => { try { return effect(); } catch (error) { return error.message; } };
+    console.log(JSON.stringify([new DeviceReasonError('NO_DEVICE', 'none').code, attempt(() => execFile('xcrun', ['simctl', 'list']))]));`;
+  const child = spawn(process.execPath, ['--import', resolve('tests/fixtures/observed-packaging/guard.mjs'), '--input-type=module', '-e', script, root],
+    { env: { ...process.env, JEV_PACKAGING_GUARD_LOG: log }, stdio: ['ignore', 'pipe', 'pipe'] });
+  let stdout = ''; let stderr = '';
+  child.stdout.on('data', bytes => { stdout += bytes; }); child.stderr.on('data', bytes => { stderr += bytes; });
+  const code = await new Promise<number | null>(done => child.once('exit', done));
+  assert.equal(code, 0, stderr);
+  assert.deepEqual(JSON.parse(stdout), ['NO_DEVICE', 'Installed smoke attempted forbidden effect: child_process.execFile']);
+  assert.equal(readFileSync(log, 'utf8'), '{"forbidden":"child_process.execFile"}\n');
+});

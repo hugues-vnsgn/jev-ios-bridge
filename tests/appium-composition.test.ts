@@ -1,8 +1,8 @@
 import assert from 'node:assert/strict';
-import { execFile } from 'node:child_process';
+import { execFile, execFileSync } from 'node:child_process';
 import { chmodSync, mkdirSync, mkdtempSync, readFileSync, realpathSync, rmSync, writeFileSync } from 'node:fs';
 import { tmpdir, userInfo } from 'node:os';
-import { join } from 'node:path';
+import { dirname, join } from 'node:path';
 import { test, type TestContext } from 'node:test';
 import { ComposedAppiumDriver, productionAppiumHost, type AppiumHost } from '../src/appium/composition.js';
 import { FrozenStack } from '../src/appium/stack.js';
@@ -16,12 +16,26 @@ import { androidScreen, iosScreen, world } from './fixtures/appium-wire/world.js
 import { openMcpSession } from './fixtures/mcp-session.js';
 import { stackRelease } from './fixtures/stack-release.js';
 
-const ENTRY_MODULES = ['src/cli.ts', 'src/mcp/index.ts', 'src/mcp/observed.ts', 'src/capture.ts', 'src/observed/cli.ts', 'src/device/factory.ts', 'src/appium/composition.ts'];
-
-test('no entry composition module names a pre-Appium driver or the module that builds them', () => {
-  const legacy = /legacy-factory|android\/driver\.js|MobileBuildMcpDriver|createMobileBuildMcpDriver|\bAndroidDriver\b|observedDriverFactory/;
-  assert.deepEqual(ENTRY_MODULES.filter(path => legacy.test(readFileSync(path, 'utf8'))), []);
-  assert.ok(legacy.test(readFileSync('src/device/legacy-factory.ts', 'utf8')), 'the pattern finds the legacy factory itself');
+test('the built bridge reaches neither MobileBuildMCP nor mobilecli from its entry point', t => {
+  const dist = realpathSync(mkdtempSync(join(tmpdir(), 'appium-dist-graph-')));
+  t.after(() => rmSync(dist, { recursive: true, force: true }));
+  execFileSync(process.execPath, ['node_modules/typescript/bin/tsc', '-p', 'tsconfig.build.json', '--outDir', dist]);
+  const specifier = /(?:\bfrom\s*|\bimport\s*\(?\s*|\brequire\s*\(\s*|\.resolve\s*\(\s*)['"]([^'"]+)['"]/g;
+  const reached = new Set<string>(); const packages = new Set<string>();
+  const visit = (file: string) => {
+    if (reached.has(file)) return;
+    reached.add(file);
+    for (const [, name] of readFileSync(file, 'utf8').matchAll(specifier)) {
+      if (name!.startsWith('.')) visit(join(dirname(file), name!));
+      else packages.add(name!.startsWith('@') ? name!.split('/').slice(0, 2).join('/') : name!.split('/')[0]!);
+    }
+  };
+  visit(join(dist, 'cli.js'));
+  for (const module of ['appium/composition.js', 'device/factory.js', 'observed/allocation.js', 'observed/service.js', 'mcp/index.js', 'capture.js']) {
+    assert.ok(reached.has(join(dist, module)), `the walk reaches ${module}`);
+  }
+  assert.ok(packages.has('@modelcontextprotocol/sdk'), 'the walk sees bare package imports');
+  assert.deepEqual([...packages].filter(name => /^(?:mobilebuildmcp|mobilecli)$/i.test(name)), []);
 });
 
 async function recorded(t: TestContext, platform: 'ios' | 'android', args: string[], scripts: Record<string, object> = {}) {

@@ -3,9 +3,10 @@
 A real check from the project's benchmarks (excerpts abridged; see the full script): change four unit settings and three switches in a SwiftUI weather app, search for London, and verify what its screens show. The script is [`weather-scripted.json`](https://github.com/hugues-vnsgn/jev-ios-bridge/blob/v1.4.0/spikes/benchmarks/scenarios/weather-scripted.json). The app is MobileBuildMCP's MIT-licensed example, vendored at [`spikes/benchmarks/vendor/weather`](https://github.com/hugues-vnsgn/jev-ios-bridge/tree/v1.4.0/spikes/benchmarks/vendor/weather), and you can build it from the repository:
 
 ```sh
-npx mobilebuildmcp simulator build-and-run \
-  --project-path jev-ios-bridge-src/spikes/benchmarks/vendor/weather/Weather.xcodeproj \
-  --scheme Weather --simulator-id <UUID>
+xcodebuild -project jev-ios-bridge-src/spikes/benchmarks/vendor/weather/Weather.xcodeproj \
+  -scheme Weather -configuration Debug -destination 'generic/platform=iOS Simulator' \
+  -derivedDataPath build/weather CODE_SIGNING_ALLOWED=NO build
+xcrun simctl install <UUID> build/weather/Build/Products/Debug-iphonesimulator/Weather.app
 ```
 
 ## Anchoring the start

@@ -6,7 +6,7 @@ import { join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { test, type TestContext } from 'node:test';
 import { Admission } from '../src/device/admission.js';
-import { AndroidOwnership } from '../src/device/android/ownership.js';
+import { admittedProbeRecorder } from './fixtures/admitted-probe-recorder.js';
 import { hostIdentityFixture } from './fixtures/identity-read-group.js';
 
 function fixture(t: TestContext) {
@@ -22,32 +22,31 @@ for (const recovery of [false, true]) test(`default host identity groups precomm
     fault: (point, operation) => { if (point === 'afterCommit') commits.push(operation); } });
   const acquired = admission.acquire({ category: 'android-phone', device: 'hardware', attempt: { kind: 'legacy', id: 'identity' }, digest: 'identity', intent: {} });
   if (acquired.kind !== 'acquired') assert.fail('Expected admission');
-  const ownership = new AndroidOwnership(admission, acquired.claim, 'emulator-5554', 'fake');
-  if (recovery) ownership.beginCleanup(true);
+  const recorder = admittedProbeRecorder(admission, acquired.claim, { recovery });
   const outstanding: number[] = [];
   const host = hostIdentityFixture(root, (file, args) => {
-    const pending = ownership.view().commands.filter(command => command.state === 'outstanding');
+    const pending = recorder.view().commands.filter(command => command.state === 'outstanding');
     assert.ok(pending.some(command => command.operation === JSON.stringify({ kind: 'identity-probe', file, args })), 'every send already has its own committed row');
     outstanding.push(pending.length);
   });
   commits.length = 0;
-  const rows = await host.probe.withRecorder!(ownership.probe).android(AbortSignal.timeout(5000), 'emulator-5554');
+  const rows = await host.probe.withRecorder!(recorder.probe).android(AbortSignal.timeout(5000), 'emulator-5554');
   assert.equal(rows[0]?.value, host.avd);
   assert.deepEqual(outstanding, [1, 1, 3, 3, 3, 1, 3, 3, 3, 3, 3, 3]);
   assert.equal(commits.filter(operation => operation === 'authorizeReads').length, 3);
   assert.equal(commits.filter(operation => operation === 'settleReads').length, 3);
   assert.equal(commits.length, 12);
-  assert.equal(ownership.view().commands.length, 12);
-  assert.ok(ownership.view().commands.every(command => command.state === 'settled'));
+  assert.equal(recorder.view().commands.length, 12);
+  assert.ok(recorder.view().commands.every(command => command.state === 'settled'));
 });
 
 test('the final grouped host read refuses a changed console PID without querying that replacement', async t => {
   const { root, admission } = fixture(t);
   const acquired = admission.acquire({ category: 'android-phone', device: 'hardware', attempt: { kind: 'legacy', id: 'changed' }, digest: 'changed', intent: {} });
   if (acquired.kind !== 'acquired') assert.fail('Expected admission');
-  const ownership = new AndroidOwnership(admission, acquired.claim, 'emulator-5554', 'fake');
+  const recorder = admittedProbeRecorder(admission, acquired.claim);
   const host = hostIdentityFixture(root, undefined, true);
-  await assert.rejects(host.probe.withRecorder!(ownership.probe).android(AbortSignal.timeout(5000), 'emulator-5554'),
+  await assert.rejects(host.probe.withRecorder!(recorder.probe).android(AbortSignal.timeout(5000), 'emulator-5554'),
     { code: 'DEVICE_IDENTITY_CONFLICT', reason: 'TRANSPORT_CHANGED' });
   assert.ok(host.calls.filter(call => call.file === '/bin/ps').every(call => call.args.at(-1) === '123'));
 });
@@ -80,11 +79,11 @@ test('injected host metadata allows all four independent console reads in one gr
     fault: (point, operation) => { if (point === 'afterCommit') commits.push(operation); } });
   const acquired = admission.acquire({ category: 'android-phone', device: 'hardware', attempt: { kind: 'legacy', id: 'injected' }, digest: 'injected', intent: {} });
   if (acquired.kind !== 'acquired') assert.fail('Expected admission');
-  const ownership = new AndroidOwnership(admission, acquired.claim, 'emulator-5554', 'fake');
+  const recorder = admittedProbeRecorder(admission, acquired.claim);
   const adb = new FakeAdb({ serial: 'emulator-5554', avd: 'Pixel' });
   commits.length = 0;
-  await adb.identityProbe.withRecorder!(ownership.probe).android(AbortSignal.timeout(5000), 'emulator-5554');
-  assert.equal(ownership.view().commands.length, 6);
+  await adb.identityProbe.withRecorder!(recorder.probe).android(AbortSignal.timeout(5000), 'emulator-5554');
+  assert.equal(recorder.view().commands.length, 6);
   assert.equal(commits.filter(operation => operation === 'authorizeReads').length, 1);
   assert.equal(commits.length, 6);
 });
@@ -96,19 +95,22 @@ test('adjacent adb property reads precommit together and retain both individual 
     fault: (point, operation) => { if (point === 'afterCommit') commits.push(operation); } });
   const acquired = admission.acquire({ category: 'android-phone', device: 'hardware', attempt: { kind: 'legacy', id: 'properties' }, digest: 'properties', intent: {} });
   if (acquired.kind !== 'acquired') assert.fail('Expected admission');
-  const ownership = new AndroidOwnership(admission, acquired.claim, 'emulator-5554', 'fake');
+  const session = acquired.claim.bindDriver('fake');
+  const view = () => admission.readGeneration(acquired.claim.identity);
   const replies = ['34\n', '1\n'].map(stdout => ({ exitCode: 0, stdout, stderr: '' }));
   let sent = 0;
   commits.length = 0;
-  const returned = await ownership.adbReads([['shell', 'sdk'], ['shell', 'boot']], async () => {
-    assert.deepEqual(ownership.view().commands.map(command => command.state), ['outstanding', 'outstanding']);
-    return replies[sent++]!;
-  }, AbortSignal.timeout(5000));
+  const returned = await session.dispatchReads([['shell', 'sdk'], ['shell', 'boot']].map((args, index) => ({
+    operation: { requestId: `read-${String(index)}`, componentId: `read-${String(index)}`, operation: 'adb', payload: {}, recordResult: true,
+      components: [{ id: `read-${String(index)}`, kind: 'adb-command' as const, serial: 'emulator-5554', args }] },
+    read: async () => {
+      assert.deepEqual(view().commands.map(command => command.state), ['outstanding', 'outstanding']);
+      return replies[sent++]!;
+    } })));
   assert.deepEqual(returned, replies);
   assert.deepEqual(commits, ['authorizeReads', 'settleReads']);
-  const view = ownership.view();
-  assert.deepEqual(view.componentObservations.map(observation => observation.payload),
-    view.commands.map((command, index) => ({ commandId: command.id, result: replies[index] })));
+  assert.deepEqual(view().componentObservations.map(observation => observation.payload),
+    view().commands.map((command, index) => ({ commandId: command.id, result: replies[index] })));
 });
 
 test('a repeated structured read group cannot resend a retrieved command', async t => {

@@ -1,7 +1,9 @@
 import { dirname, resolve } from 'node:path';
 import { Admission } from '../../src/device/admission.js';
 import { readObservedExperiment, runObservedExperiment, parseObservedExperiment } from '../../src/experimental/observed-run.js';
-import { ObservedActionService, observedDriverFactory } from '../../src/observed/service.js';
+import { productionAppiumHost } from '../../src/appium/composition.js';
+import { createObservedDriver } from '../../src/device/factory.js';
+import { ObservedActionService } from '../../src/observed/service.js';
 import { ObservedOperationError } from '../../src/observed/schema.js';
 import { observedActionExitCode } from '../../src/observed/report.js';
 
@@ -19,7 +21,7 @@ if (args.length !== 2) {
     const raw = parseObservedExperiment(await readObservedExperiment(resolve(args[0]!)));
     const admission = Admission.open();
     service = new ObservedActionService({ admission, runsDir: dirname(resolve(args[1]!)), bridgeVersion: 'experimental', backend: 'real',
-      enabled: true, createDriver: observedDriverFactory({ cwd: process.cwd(), admission }) });
+      enabled: true, createDriver: () => createObservedDriver({ host: productionAppiumHost(), admission }) });
     const result = await runObservedExperiment(raw, resolve(args[1]!), { cwd: process.cwd(), signal: abort.signal, service });
     console.log(JSON.stringify(result)); process.exitCode = observedActionExitCode(result);
   } catch (error) {

@@ -1,7 +1,7 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { readFile } from 'node:fs/promises';
-import { parseSnapshot } from '../src/device/index.js';
+import { normalizeSource } from '../src/appium/observe/normalize.js';
+import { androidScreen } from './fixtures/appium-wire/world.js';
 import { parseScriptedScenario } from '../src/scripted/schema.js';
 import { resolveActionTarget } from '../src/scripted/select.js';
 
@@ -121,14 +121,14 @@ test('an Android script accepts an optional activity and intent extras', () => {
     intentExtras: { screen: 'gallery' } });
 });
 
-test('an empty value filter is rejected, because a real empty field carries no value to match', async () => {
+test('an empty value filter is rejected, because a real empty field carries no value to match', () => {
   const withEmpty = (selector: object) => ({ ...scenario, steps: [{ ...scenario.steps[0],
     action: { ...scenario.steps[0].action, selector } }, scenario.steps[1]] });
   assert.throws(() => parseScriptedScenario(withEmpty({ identifier: 'search.field', value: '' })),
     /A selector value cannot be empty/);
-  // The owner's Compose app (docs/research/compose-cmp-capture.md): its empty OutlinedTextField has no value key.
-  const capture = JSON.parse(await readFile('docs/research/assets/compose-cmp/03-fullscreen-modal-outer-open-full.json', 'utf8'));
-  const snapshot = parseSnapshot(capture.data, 'sim');
+  // An empty field's page source carries no text, so the captured field has no value key to match.
+  const capture = normalizeSource('android', androidScreen([{ className: 'android.widget.EditText', id: 'imeField', bounds: [16, 100, 304, 156], clickable: true }]));
+  const snapshot = { ...capture, deviceId: 'sim', sequence: 1, capturedAt: 0, expiresAt: 60_000 };
   const field = snapshot.elements.find(element => element.identifier === 'imeField')!;
   assert.equal(field.role, 'text-field');
   assert.ok(!Object.hasOwn(field, 'value'));

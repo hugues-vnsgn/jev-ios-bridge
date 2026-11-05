@@ -6,7 +6,6 @@ import { fileURLToPath } from 'node:url';
 import { Admission } from '../../src/device/admission.js';
 import type { InstalledHost } from '../../src/observed/allocation-config.js';
 import type { SourceProcess } from '../../src/observed/create-source.js';
-import type { CliRunner } from '../../src/device/index.js';
 
 export const typeId = 'com.apple.CoreSimulator.SimDeviceType.iPhone-17';
 export const runtimeId = 'com.apple.CoreSimulator.SimRuntime.iOS-27-0';
@@ -62,8 +61,6 @@ export async function allocationFixture(options: { now?: () => number; fault?: N
   const calls: string[] = []; let serial = 0; let currentDevice = fixtureDevice;
   let before: ((operation: string, path?: string) => Promise<void>) | undefined;
   let createResult: { exitCode: number | null; stdout: string; stderr: string } | undefined;
-  let state = 'Booted'; let available = true; let screenshotPath: string | undefined;
-  const commandResults = new Map<string, Awaited<ReturnType<CliRunner>>>();
   const source: SourceProcess = async (executable, args, options) => {
     if (options.shell !== false || options.signal.aborted || options.timeoutMs <= 0 || options.maxOutputBytes >
       (executable === '/usr/bin/plutil' && args.length === 6 && args.slice(0, 5).join('\0') === '-convert\0json\0-o\0-\0--'
@@ -80,27 +77,15 @@ export async function allocationFixture(options: { now?: () => number; fault?: N
     currentDevice = `ABCDEF00-0000-4000-8000-${String(serial).padStart(12, '0')}`;
     return createResult ?? { stdout: currentDevice + '\n', stderr: '', exitCode: 0 };
   };
-  const runner: CliRunner = async args => {
-    const op = args[1]!; calls.push(op); await before?.(op);
-    const override = commandResults.get(op); if (override) return override;
-    if (op === 'list') return { stdout: JSON.stringify({ schema: 'mobilebuildmcp.output.simulator-list', schemaVersion: '2', didError: false,
-      data: { simulators: [{ simulatorId: currentDevice, state, isAvailable: available }] } }), stderr: '', exitCode: 0 };
-    const schema = op === 'boot' ? 'simulator-action-result' : op === 'install' ? 'install-result' : op === 'launch-app' ? 'launch-result' : 'capture-result';
-    if (!['boot', 'install', 'launch-app', 'snapshot-ui', 'screenshot'].includes(op)) assertNever('No cleanup/retry source command');
-    return { stdout: JSON.stringify({ schema: 'mobilebuildmcp.output.' + schema, schemaVersion: '2', didError: false,
-      data: { artifacts: { simulatorId: currentDevice, ...(op === 'screenshot' && screenshotPath ? { screenshotPath } : {}) }, capture: { type: 'runtime-snapshot', rs: '1', count: 0, targets: [] } } }), stderr: '', exitCode: 0 };
-  };
-  const window = async () => { calls.push('window'); assertNever('Preparation attachment must not present'); };
   const request = (actionId = 'allocate-one') => ({ version: 1, actionId, source: { kind: 'create', deviceTypeId: typeId, runtimeId },
     app: { artifactPath: app, bundleId: 'org.example.fixture', build: { id: 'fixture', origin: 'host' } } });
   const inventory = (udid = fixtureDevice, inventoryId = 'stock-one') => [{ inventoryId, udid, deviceTypeId: typeId, runtimeId,
     creation: { createdAt: '2026-10-08T00:00:00Z', origin: 'fixture', evidenceRef: join(root, 'creation.json') }, attestation: { freshUnused: true as const, exclusive: true as const } }];
-  return { root, home, runsDir, store, admission, host, source, runner, window, app, calls, map, write, configPath, configure, request, inventory,
+  return { root, home, runsDir, store, admission, host, source, app, calls, map, write, configPath, configure, request, inventory,
     setBefore(fn: typeof before) { before = fn; }, setCreateResult(result: typeof createResult) { createResult = result; },
     setStorage(simulator: number, staging = simulator) { simulatorFreeBytes = simulator; stagingFreeBytes = staging; },
-    setCommandResult(op: string, result: Awaited<ReturnType<CliRunner>>) { commandResults.set(op, result); },
-    setScreenshotPath(path: string) { screenshotPath = path; },
-    setState(value: string) { state = value; }, setAvailable(value: boolean) { available = value; },
+    /** Records a device effect by name, after the setBefore hook. */
+    async effect(operation: string) { calls.push(operation); await before?.(operation); },
     async cleanup() {
       async function writable(path: string): Promise<void> { const s = await fs.lstat(path); if (!s.isDirectory() || s.isSymbolicLink()) return;
         await fs.chmod(path, 0o700); for (const name of await fs.readdir(path)) await writable(join(path, name)); }

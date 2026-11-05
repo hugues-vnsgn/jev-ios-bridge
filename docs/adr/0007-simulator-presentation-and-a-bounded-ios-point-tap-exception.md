@@ -5,6 +5,8 @@ date: 2026-10-02
 
 # Simulator presentation and a bounded iOS point-tap exception
 
+Amended on cutover merge by [ADR-0010](0010-appium-mcp-as-the-shared-device-layer.md). The AXe point-tap half is retired. The bridge no longer ships AXe, and iOS `tapAt` was never switched on. The presentation half stays. An iOS run still opens the simulator's window with `open -a Simulator`, now beside the Appium driver instead of inside `MobileBuildMcpDriver`. The text below is the original record.
+
 [ADR-0002](0002-mobilebuildmcp-as-device-layer.md) says the bridge drives an iOS simulator only through pinned MobileBuildMCP, with no direct `simctl`, AXe or other device automation. Version 1.3 needs two things MobileBuildMCP 2.7.1 can't do. They aren't the same kind of thing, so this record treats them separately. Showing the simulator's window is presentation and never changes the app's screen. Claude's point tap changes the app's screen, and it's the only direct UI input the bridge may run outside MobileBuildMCP. [ADR-0009](0009-bounded-simulator-creation.md) separately governs bounded simulator creation and does not extend this UI input permission. Both stay behind the existing `MobileBuildMcpDriver`: the window in `prepare`, the tap in `act`.
 
 ```

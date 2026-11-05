@@ -10,7 +10,6 @@ import { pathToFileURL } from 'node:url';
 const skillRewrites = {
   'test-ios': [
     ['node_modules/jev-ios-bridge/docs/guide/', '${CLAUDE_PLUGIN_ROOT}/docs/guide/'],
-    ['npx mobilebuildmcp', 'node "${CLAUDE_PLUGIN_ROOT}/node_modules/mobilebuildmcp/build/cli.js"'],
   ],
   'test-android': [
     ['node_modules/jev-ios-bridge/docs/guide/', '${CLAUDE_PLUGIN_ROOT}/docs/guide/'],

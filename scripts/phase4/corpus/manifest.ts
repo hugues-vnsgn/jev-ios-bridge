@@ -3,7 +3,7 @@ import { join, relative, resolve } from 'node:path';
 import { isDeepStrictEqual } from 'node:util';
 import { z } from 'zod';
 import { SOURCE_SETTINGS } from '../../../src/appium/wire-schemas.js';
-import { STATUS_BAR_ID_PREFIX } from '../../../src/device/android/agent-client.js';
+import { STATUS_BAR_ID_PREFIX } from '../../../src/device/android/tree.js';
 import { ASSERTION_QUESTION, REQUEST_MAX_BYTES, SCRIPTED_JEV_MODEL, STATE_QUESTION_MAX_BYTES,
   type ScriptedJevError } from '../../../src/scripted/jev.js';
 import { MAX_STATE_BYTES, PROJECTION_RULES } from '../../../src/scripted/observe.js';

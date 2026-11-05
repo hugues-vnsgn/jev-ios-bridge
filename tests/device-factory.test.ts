@@ -1,22 +1,18 @@
 import { FakeAdb, fakeSimulatorProbe } from './fixtures/android-device.js';
-import { mkdirSync, realpathSync } from 'node:fs';
-import { Admission } from '../src/device/admission.js';
 import assert from 'node:assert/strict';
-import { mkdir, mkdtemp, readdir, rm, writeFile } from 'node:fs/promises';
-import { tmpdir } from 'node:os';
-import { join } from 'node:path';
 import { test } from 'node:test';
 import type { ScriptedScenario } from '../src/scripted/contracts.js';
-import { createDeviceAgreement } from '../src/device/factory.js';
-import { createLegacyDriverFactory } from '../src/device/legacy-factory.js';
-import { DeviceReasonError, type CliRunner } from '../src/device/index.js';
+import { createDeviceAgreement, createDriverFactory } from '../src/device/factory.js';
+import { DeviceReasonError } from '../src/device/index.js';
 import type { AdbRunner } from '../src/device/android/adb.js';
-import { AndroidDriver } from '../src/device/android/driver.js';
-import { androidTools } from '../src/device/android/tools.js';
 import { agreeProfileDevice, profileScenario } from '../src/profiles.js';
+import { UDID } from './fixtures/appium-wire/driver-fixture.js';
+import { worldHost } from './fixtures/appium-wire/world-host.js';
+import { androidScreen, world } from './fixtures/appium-wire/world.js';
 
-const udid = 'ABCDEF00-0000-4000-8000-000000000001';
 const iosScript: ScriptedScenario = { version: 1, app: { bundleId: 'com.example.app' }, values: {}, steps: [] };
+const live = () => AbortSignal.timeout(20_000);
+const android = world('android', { home: androidScreen([{ className: 'android.widget.TextView', text: 'Home', bounds: [0, 0, 100, 40] }]) });
 
 const pixelProfile = { profile: { platform: 'android', deviceCategory: 'android-emulator', device: 'Pixel_API_35' },
   binding: { name: 'pixel', digest: 'a'.repeat(64) } } as const;
@@ -49,126 +45,45 @@ test('an AVD name against a serial agrees only when both resolve live to one emu
   assert.deepEqual(adb.calls, []);
 });
 
-test('the factory passes a run\'s profile device category to the Android driver', async () => {
-  const root = await mkdtemp(join(tmpdir(), 'jev-device-factory-category-'));
+test('the factory passes a run\'s profile device category to the Android driver, so an emulator is not found as a phone', async t => {
+  const adb = new FakeAdb({ serial: 'emulator-5554', avd: 'Pixel_API_35' });
+  const w = worldHost(t, { identityProbe: adb.identityProbe, adb: adb.run, worlds: [android] });
+  const createDriver = createDriverFactory({ host: w.host, projectDir: w.root });
+  const script: ScriptedScenario = { version: 1, platform: 'android', app: { package: 'com.example.app' }, device: { serial: 'emulator-5554' }, values: {}, steps: [] };
+  const driver = createDriver(script, { runId: 'phone-profile', deviceCategory: 'android-phone' });
   try {
-    const adb = new FakeAdb({ serial: 'emulator-5554', avd: 'Pixel_API_35' });
-    const createDriver = createLegacyDriverFactory({ mobileBuildMcp: { cwd: root, lockRoot: root },
-      android: { leaseRoot: root, runner: adb.run, identityProbe: adb.identityProbe,
-        tools: async () => ({ adb: '/sdk/platform-tools/adb', agent: { path: '/cache/agent.dex', sha256: 'a'.repeat(64) } }) } });
-    const script: ScriptedScenario = { version: 1, platform: 'android', app: { package: 'com.example.app' }, device: { serial: 'emulator-5554' }, values: {}, steps: [] };
-    await assert.rejects(createDriver(script, { runId: 'phone-profile', deviceCategory: 'android-phone' }).prepare({ app: { package: 'com.example.app' } }, new AbortController().signal),
+    await assert.rejects(driver.prepare({ app: { package: 'com.example.app' } }, live()),
       (error: unknown) => error instanceof DeviceReasonError && error.code === 'DEVICE_NOT_FOUND');
-    assert.deepEqual(adb.calls, []);
-  } finally { await rm(root, { recursive: true, force: true }); }
+  } finally { await driver.close(live()); }
+  assert.deepEqual([adb.calls, w.opened[0]?.tools()], [[], []]);
 });
 
-test('the factory records a selected profile binding in the admission intent', async () => {
-  const root = await mkdtemp(join(tmpdir(), 'jev-profile-intent-'));
-  const profile = { name: 'ios', digest: 'b'.repeat(64) };
-  const runner: CliRunner = async args => ({ stdout: args.includes('launch-app') ? launched : stopped, stderr: '', exitCode: 0 });
-  const options = fakeOptions({ cwd: root, lockRoot: root, defaultUdid: udid, runner });
-  const driver = createLegacyDriverFactory({ mobileBuildMcp: options })(iosScript, { runId: 'profile-intent', profile });
-  try {
-    await driver.prepare({ app: iosScript.app }, new AbortController().signal);
-    const attempt = options.admission.readAttempt({ kind: 'legacy', id: 'profile-intent' });
-    assert.deepEqual((attempt?.intent as { profile: unknown }).profile, profile);
-  } finally { await driver.close(new AbortController().signal); await rm(root, { recursive: true, force: true }); }
+test('an iOS driver from the factory carries the pinned tap alias rule, and each scenario gets its own driver', async t => {
+  const w = worldHost(t, { identityProbe: fakeSimulatorProbe(UDID), worlds: [android] });
+  const createDriver = createDriverFactory({ host: w.host, projectDir: w.root, defaultUdid: UDID });
+  assert.equal(createDriver(iosScript).tapAliasRule, 'same-frame-buttons-v1');
+  assert.notEqual(createDriver(iosScript), createDriver(iosScript));
+  assert.equal(w.opened.length, 0, 'building a driver opens nothing');
 });
 
-test('the vendor simulatorId fallback keeps selecting the device and suggests a profile', async () => {
-  const root = await mkdtemp(join(tmpdir(), 'jev-vendor-profile-'));
-  await mkdir(join(root, '.mobilebuildmcp'));
-  await writeFile(join(root, '.mobilebuildmcp/config.yaml'), `simulatorId: ${udid}\n`);
-  const runner: CliRunner = async args => ({ stdout: args.includes('launch-app') ? launched : stopped, stderr: '', exitCode: 0 });
-  const driver = createLegacyDriverFactory({ mobileBuildMcp: fakeOptions({ cwd: root, lockRoot: root, runner }) })(iosScript);
-  try {
-    await driver.prepare({ app: iosScript.app }, new AbortController().signal);
-    assert.ok(driver.prepareWarnings?.().includes('Using .mobilebuildmcp/config.yaml simulatorId; consider a profile in .jev/profiles.json.'));
-  } finally { await driver.close(new AbortController().signal); await rm(root, { recursive: true, force: true }); }
-});
-
-const launched = JSON.stringify({ schema: 'mobilebuildmcp.output.launch-result', schemaVersion: '2', didError: false, error: null,
-  data: { summary: { status: 'SUCCEEDED' }, artifacts: { simulatorId: udid }, diagnostics: {} } });
-const stopped = JSON.stringify({ schema: 'mobilebuildmcp.output.stop-result', schemaVersion: '2', didError: false, error: null,
-  data: { summary: { status: 'SUCCEEDED' }, artifacts: { simulatorId: udid }, diagnostics: {} } });
-
-test('for an iOS script the factory builds the MobileBuildMCP driver from its options, carrying the pinned tap alias rule', async () => {
-  const root = await mkdtemp(join(tmpdir(), 'jev-device-factory-'));
-  const calls: string[][] = [];
-  const runner: CliRunner = async (args) => {
-    calls.push(args);
-    return { stdout: args.includes('launch-app') ? launched : stopped, stderr: '', exitCode: 0 };
-  };
-  try {
-    const createDriver = createLegacyDriverFactory({ mobileBuildMcp: fakeOptions({ cwd: root, lockRoot: root, defaultUdid: udid, runner }) });
-    const driver = createDriver(iosScript);
-    assert.equal(driver.tapAliasRule, 'same-frame-buttons-v1');
-    await driver.prepare({ app: iosScript.app }, new AbortController().signal);
-    await driver.close(new AbortController().signal);
-    const launch = calls.find(args => args.slice(0, 2).join(' ') === 'simulator launch-app');
-    assert.ok(launch, 'the app is launched through the injected MobileBuildMCP runner');
-    assert.deepEqual(launch.slice(2, 6), ['--simulator-id', udid, '--bundle-id', 'com.example.app']);
-  } finally { await rm(root, { recursive: true, force: true }); }
-});
-
-test('the driver is built per scenario, never shared across the process', async () => {
-  const root = await mkdtemp(join(tmpdir(), 'jev-device-factory-scoped-'));
-  try {
-    const runner: CliRunner = async () => ({ stdout: '{}', stderr: '', exitCode: 0 });
-    const createDriver = createLegacyDriverFactory({ mobileBuildMcp: fakeOptions({ cwd: root, lockRoot: root, runner }) });
-    assert.notEqual(createDriver(iosScript), createDriver(iosScript));
-  } finally { await rm(root, { recursive: true, force: true }); }
-});
-
-test('for an Android script the factory builds the Android driver, which ends at ANDROID_TOOLS_UNAVAILABLE without adb', async () => {
-  const androidScript: ScriptedScenario = { version: 1, platform: 'android', app: { package: 'com.hugues.test_cmp' },
-    device: { serial: 'emulator-5554' }, values: {}, steps: [] };
-  const root = await mkdtemp(join(tmpdir(), 'jev-device-factory-android-'));
-  const empty = join(root, 'empty');
-  await mkdir(empty);
-  try {
-    const runner: CliRunner = async () => assert.fail('an Android script never reaches the iOS driver');
-    // The real tools check, with ANDROID_HOME, ANDROID_SDK_ROOT, PATH and the home folder all empty.
-    const tools = () => androidTools({ environment: { ANDROID_HOME: empty, ANDROID_SDK_ROOT: empty, PATH: empty }, home: empty });
-    const createDriver = createLegacyDriverFactory({ mobileBuildMcp: { cwd: root, lockRoot: root, runner }, android: { leaseRoot: root, tools } });
-    const driver = createDriver(androidScript);
-    assert.ok(driver instanceof AndroidDriver);
-    await assert.rejects(driver.prepare({ app: { package: 'com.hugues.test_cmp' } }, new AbortController().signal),
-      (error: unknown) => error instanceof DeviceReasonError && error.code === 'ANDROID_TOOLS_UNAVAILABLE');
-    await driver.close(new AbortController().signal);
-    assert.deepEqual(await readdir(root), ['empty'], 'no lease taken');
-  } finally { await rm(root, { recursive: true, force: true }); }
-});
-
-test('the Android driver gets the script\'s device, else JEV_ANDROID_DEVICE, from the factory', async () => {
-  const root = await mkdtemp(join(tmpdir(), 'jev-device-factory-android-device-'));
-  try {
-    const adbCalls: string[] = [];
-    const probeNames: (string | undefined)[] = [];
-    const runner: AdbRunner = async (args) => {
-      adbCalls.push(args.join(' '));
-      return { stdout: 'List of devices attached\n\n', stderr: '', exitCode: 0 };
-    };
-    const createDriver = createLegacyDriverFactory({ mobileBuildMcp: { cwd: root, lockRoot: root },
-      android: { leaseRoot: root, runner, defaultDevice: 'Default_AVD',
-        identityProbe: { android: async (_signal, name) => { probeNames.push(name); return []; },
-          simulatorApp: async () => assert.fail('Android uses no simulator app read'),
-          simulatorSet: async () => assert.fail('Android uses no simulator inventory') },
-        tools: async () => ({ adb: '/sdk/platform-tools/adb', agent: { path: '/cache/agent.dex', sha256: 'a'.repeat(64) } }) } });
-    const script = (device?: { avd: string }): ScriptedScenario =>
-      ({ version: 1, platform: 'android', app: { package: 'com.hugues.test_cmp' }, ...(device ? { device } : {}), values: {}, steps: [] });
-    for (const [device, named] of [[{ avd: 'Script_AVD' }, 'Script_AVD'], [undefined, 'Default_AVD']] as const) {
-      await assert.rejects(createDriver(script(device)).prepare({ app: { package: 'com.hugues.test_cmp' } }, new AbortController().signal),
+test('the Android driver gets the script\'s device, else JEV_ANDROID_DEVICE, from the factory', async t => {
+  const adbCalls: string[] = [];
+  const probeNames: (string | undefined)[] = [];
+  const adb: AdbRunner = async args => { adbCalls.push(args.join(' ')); return { stdout: '', stderr: '', exitCode: 0 }; };
+  const w = worldHost(t, { adb, worlds: [android],
+    identityProbe: { android: async (_signal, name) => { probeNames.push(name); return []; },
+      simulatorApp: async () => assert.fail('Android uses no simulator app read'),
+      simulatorSet: async () => assert.fail('Android uses no simulator inventory') } });
+  const createDriver = createDriverFactory({ host: w.host, projectDir: w.root, defaultDevice: 'Default_AVD' });
+  const script = (device?: { avd: string }): ScriptedScenario =>
+    ({ version: 1, platform: 'android', app: { package: 'com.hugues.test_cmp' }, ...(device ? { device } : {}), values: {}, steps: [] });
+  for (const [device, named] of [[{ avd: 'Script_AVD' }, 'Script_AVD'], [undefined, 'Default_AVD']] as const) {
+    const driver = createDriver(script(device));
+    try {
+      await assert.rejects(driver.prepare({ app: { package: 'com.hugues.test_cmp' } }, live()),
         (error: unknown) => error instanceof DeviceReasonError && error.code === 'DEVICE_NOT_FOUND' && probeNames.at(-1) === named);
-    }
-    assert.deepEqual(adbCalls, []);
-    assert.deepEqual(probeNames, ['Script_AVD', 'Default_AVD']);
-  } finally { await rm(root, { recursive: true, force: true }); }
+    } finally { await driver.close(live()); }
+  }
+  assert.deepEqual(adbCalls, []);
+  assert.deepEqual(probeNames, ['Script_AVD', 'Default_AVD']);
 });
-
-function fakeOptions(options: import('../src/device/index.js').MobileBuildMcpDriverOptions) {
-  const storeRoot = join(options.cwd, 'admission'); mkdirSync(storeRoot, { recursive: true, mode: 0o700 });
-  return { identityProbe: fakeSimulatorProbe(udid), ...options, admission: Admission.forTesting({ root: realpathSync(storeRoot), backend: 'fake', durability: 'fast' }),
-    deviceWindow: async () => {}, fakeBackend: { runner: options.runner!, window: undefined } };
-}

@@ -6,7 +6,7 @@ import { mkdtemp, mkdir, readFile, rm, writeFile } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { parseSnapshot } from '../src/device/index.js';
+import type { Element } from '../src/contracts/index.js';
 import type { AssertionApproval, AssertionManifest, ScriptedCorpus, ScriptedJudge } from '../spikes/scripted/contracts.js';
 import { ScriptedJevError } from '../spikes/scripted/jev.js';
 import { digest, evaluateCase, evaluateCorpus, makeDraftManifest, preflightCorpus, renderLabelReview, validateCorpus,
@@ -20,13 +20,13 @@ async function fixture(root: string): Promise<{ corpus: ScriptedCorpus; corpusPa
   for (let index = 0; index < 24; index++) {
     const id = `case${String(index + 1).padStart(2, '0')}`;
     const fullPath = `raw/${id}.full.json`, screenshotPath = `raw/${id}.jpg`;
+    const element = { ref: 'e1', role: 'text', label: `Case ${index + 1} Ready`,
+      frame: { x: 1, y: 2, width: 100, height: 30 }, state: { enabled: true, visible: true }, actions: [] } satisfies Element;
     const raw = { schema: 'mobilebuildmcp.output.capture-result', schemaVersion: '2', didError: false,
       data: { summary: { status: 'SUCCEEDED' }, artifacts: { simulatorId: 'sim' }, capture: {
         type: 'runtime-snapshot', protocol: 'rs/1', simulatorId: 'sim',
         seq: index + 1, screenHash: `hash-${index}`, capturedAtMs: 1_700_000_000_000 + index,
-        expiresAtMs: 1_700_000_060_000 + index, count: 1,
-        elements: [{ ref: 'e1', role: 'text', label: `Case ${index + 1} Ready`,
-          frame: { x: 1, y: 2, width: 100, height: 30 }, state: { enabled: true, visible: true }, actions: [] }],
+        expiresAtMs: 1_700_000_060_000 + index, count: 1, elements: [element],
       } } };
     const full = `${JSON.stringify(raw, null, 2)}\n`;
     const screenshot = Buffer.from([0xff, 0xd8, index, 0xff, 0xd9]);
@@ -38,7 +38,8 @@ async function fixture(root: string): Promise<{ corpus: ScriptedCorpus; corpusPa
       claim: `Case ${index + 1} shows Broken`, expected: false, rationale: 'Broken is absent' };
     cases.push({ id, workflowGroup: `group${Math.floor(index / 3) + 1}`,
       app: { bundleId: `dev.example.App${index % 3}` }, setupSteps: ['Open synthetic screen'],
-      snapshot: { ...parseSnapshot(raw.data, 'sim'), screenshotPath },
+      snapshot: { deviceId: 'sim', capturedAt: raw.data.capture.capturedAtMs, expiresAt: raw.data.capture.expiresAtMs, sequence: raw.data.capture.seq,
+        elements: [element], truncated: false, screenHash: raw.data.capture.screenHash, screenshotPath },
       claims: index < 12 ? [trueClaim, falseClaim] : [falseClaim, trueClaim],
       assets: { fullPath, screenshotPath, sha256: { full: sha(full), screenshot: sha(screenshot) } } });
   }

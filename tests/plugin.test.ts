@@ -23,11 +23,11 @@ test('the plugin build refuses an Android skill that no longer mentions a path i
   }
 });
 
-test('the plugin copy of /test-ios keeps its MobileBuildMCP and guide rewrites', () => {
+test('the plugin copy of /test-ios points its guide at the plugin and nothing at a bundled MobileBuildMCP', () => {
   const skill = rewriteSkill('test-ios', readFileSync('skills/test-ios/SKILL.md', 'utf8'));
-  assert.ok(skill.includes('node "${CLAUDE_PLUGIN_ROOT}/node_modules/mobilebuildmcp/build/cli.js"'));
   assert.ok(skill.includes('${CLAUDE_PLUGIN_ROOT}/docs/guide/'));
-  assert.ok(!skill.includes('npx mobilebuildmcp'));
+  assert.ok(!skill.includes('node_modules/jev-ios-bridge/docs/guide/'));
+  assert.ok(!skill.includes('node_modules/mobilebuildmcp'));
 });
 
 test('the plugin asks for an optional simulator and an optional Android device', () => {

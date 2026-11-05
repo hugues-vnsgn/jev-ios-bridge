@@ -6,7 +6,6 @@ import { ObservedAllocator } from '../../../src/observed/allocation.js';
 import { ObservedActionService } from '../../../src/observed/service.js';
 import { createObservedComposition } from '../../../src/observed/cli.js';
 import { runCli } from '../../../src/cli.js';
-import type { CliRunner, DeviceWindowOpener } from '../../../src/device/index.js';
 import type { SourceProcess } from '../../../src/observed/create-source.js';
 
 process.umask(0o022); delete process.env.TYPESAFE_API_KEY;
@@ -28,16 +27,6 @@ const source: SourceProcess = async (executable, args, options) => {
   try { const result = await f.source(executable, args, options); trace({ kind: 'result', sequence: id, result }); return result; }
   catch (error) { trace({ kind: 'error', sequence: id, name: error instanceof Error ? error.name : 'Unknown', message: error instanceof Error ? error.message : 'Unknown' }); throw error; }
 };
-const runner: CliRunner = async (args, signal) => {
-  const id = ++sequence; trace({ kind: 'attempt', sequence: id, backend: 'runner', operation: args[1], args, signalAborted: signal.aborted });
-  try { const result = await f.runner(args, signal); trace({ kind: 'result', sequence: id, result }); return result; }
-  catch (error) { trace({ kind: 'error', sequence: id, name: error instanceof Error ? error.name : 'Unknown', message: error instanceof Error ? error.message : 'Unknown' }); throw error; }
-};
-const window: DeviceWindowOpener = async (udid, signal) => {
-  const id = ++sequence; trace({ kind: 'attempt', sequence: id, backend: 'window', operation: 'window', args: [udid], signalAborted: signal.aborted });
-  try { await f.window(); trace({ kind: 'result', sequence: id }); }
-  catch (error) { trace({ kind: 'error', sequence: id, name: error instanceof Error ? error.name : 'Unknown', message: error instanceof Error ? error.message : 'Unknown' }); throw error; }
-};
 async function barrier() {
   appendFileSync(join(root!, 'milestone.jsonl'), JSON.stringify({ phase, pid: process.pid }) + '\n', { mode: 0o600 });
   await new Promise<void>(done => { const timer = setInterval(() => { if (existsSync(join(root!, 'release'))) { clearInterval(timer); done(); } }, 10); });
@@ -52,7 +41,11 @@ if (phase === 'configuration') {
     if ((phase === 'host-proof' && first && operation === 'plist') || (phase === 'artifact-inspection' && appPlists === 1) || (phase === 'artifact-staging' && appPlists === 2)) { first = false; await barrier(); }
   });
 }
-const allocator = new ObservedAllocator({ admission: f.admission, runsDir: f.runsDir, fakeBackend: { process: source, runner, window, host: f.host } });
+const createDriver = (): never => {
+  trace({ kind: 'attempt', sequence: ++sequence, backend: 'driver', operation: 'create-driver', signalAborted: false });
+  throw new Error('No device driver before the held phase ends');
+};
+const allocator = new ObservedAllocator({ admission: f.admission, runsDir: f.runsDir, fakeBackend: { process: source, host: f.host }, createDriver });
 const service = new ObservedActionService({ admission: f.admission, allocator, runsDir: f.runsDir, enabled: true, backend: 'fake', bridgeVersion: 'early-fixture', createDriver: () => assert.fail('No action driver') });
 const observed = createObservedComposition({ enabled: true, create: () => service });
 const request = join(root, 'request.json'); writeFileSync(request, JSON.stringify(f.request()), { mode: 0o600 });

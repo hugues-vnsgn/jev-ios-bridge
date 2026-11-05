@@ -8,8 +8,9 @@ import { BridgeService } from '../../../src/service.js';
 import { ObservedAllocator } from '../../../src/observed/allocation.js';
 import { ObservedActionService } from '../../../src/observed/service.js';
 import { createObservedComposition } from '../../../src/observed/cli.js';
+import { createPreparationDriver } from '../../../src/device/factory.js';
 import { allocationFixture } from '../observed-allocation-backend.js';
-import type { CliRunner } from '../../../src/device/index.js';
+import { aroundEffects, effectNames, observedHost } from '../appium-wire/observed-allocator.js';
 import type { SourceProcess } from '../../../src/observed/create-source.js';
 
 export async function allocatorPublic(t: TestContext, options: Parameters<typeof allocationFixture>[0] = {}) {
@@ -25,17 +26,20 @@ export async function allocatorPublic(t: TestContext, options: Parameters<typeof
   async function record(transport: string, command: string, input: object | string, result: object) {
     await appendFile(join(f.root, 'public-commands.jsonl'), JSON.stringify({ transport, command, input, result, backendCalls: [...f.calls] }) + '\n', { mode: 0o600 });
   }
-  const runner: CliRunner = async (args, signal) => {
-    await appendFile(join(f.root, 'raw-backends.jsonl'), JSON.stringify({ kind: 'runner', args, aborted: signal.aborted }) + '\n', { mode: 0o600 });
-    return f.runner(args, signal);
-  };
+  const exits = new Map<string, { exit: number | 'lost'; stderr?: string }>();
+  const w = observedHost(t, { admission: f.admission, root: f.root, nativeExit: command => exits.get(effectNames[command.kind] ?? '')?.exit,
+    nativeStderr: command => exits.get(effectNames[command.kind] ?? '')?.stderr });
+  const appium = aroundEffects(w.host, async (name, run) => {
+    await appendFile(join(f.root, 'raw-backends.jsonl'), JSON.stringify({ kind: 'effect', operation: name }) + '\n', { mode: 0o600 });
+    await f.effect(name); return run();
+  });
   const source: SourceProcess = async (executable, args, options) => {
     await appendFile(join(f.root, 'raw-backends.jsonl'), JSON.stringify({ kind: 'source', executable, args, timeoutMs: options.timeoutMs, maxOutputBytes: options.maxOutputBytes, shell: options.shell, aborted: options.signal.aborted }) + '\n', { mode: 0o600 });
     return f.source(executable, args, options);
   };
   const make = () => {
     const allocator = new ObservedAllocator({ admission: f.admission, runsDir: f.runsDir,
-      fakeBackend: { process: source, runner, window: f.window, host: f.host } });
+      fakeBackend: { process: source, host: f.host }, createDriver: () => createPreparationDriver({ host: appium, admission: f.admission }) });
     const service = new ObservedActionService({ admission: f.admission, allocator, runsDir: f.runsDir,
       bridgeVersion: 'host-fixture', backend: 'fake', enabled: true, createDriver: () => assert.fail('No action driver in allocator-only proofs') });
     return createObservedComposition({ enabled: true, create: () => service });
@@ -74,5 +78,7 @@ export async function allocatorPublic(t: TestContext, options: Parameters<typeof
       await record('mcp', name, args, result); return result;
     }, async close() { await module.close(); await server.close(); } };
   }
-  return { ...f, cli, mcp };
+  /** Ends the named device effect (boot, install or launch-app) with this exit code and stderr, or loses its outcome. */
+  const setEffectExit = (operation: string, exit: number | 'lost', stderr?: string) => { exits.set(operation, { exit, ...(stderr ? { stderr } : {}) }); };
+  return { ...f, appium, cli, mcp, setEffectExit };
 }

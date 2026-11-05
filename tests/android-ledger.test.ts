@@ -95,23 +95,20 @@ test('L3 kill-agent requires stop evidence for agent, stream and forward compone
 
 test('post-admission identity queries each authorize before spawn and settle on completion', { timeout: 5000 }, async t => {
   const { FakeAdb } = await import('./fixtures/android-device.js');
-  const { AndroidOwnership } = await import('../src/device/android/ownership.js');
+  const { admittedProbeRecorder } = await import('./fixtures/admitted-probe-recorder.js');
   const { admission } = fixture(t);
   const acquired = admission.acquire({ ...request('probe-commands'), category: 'android-phone', device: 'hardware' });
   if (acquired.kind !== 'acquired') assert.fail('Expected owner');
-  const ownership = new AndroidOwnership(admission, acquired.claim, 'emulator-5554', 'fake');
+  const recorder = admittedProbeRecorder(admission, acquired.claim);
   const adb = new FakeAdb({ serial: 'emulator-5554', avd: 'jev-actions-api31' });
-  const probe = adb.identityProbe.withRecorder!(async (file, args, effect) => {
-    return ownership.probe(file, args, async () => {
-      const commands = ownership.view().commands;
-      assert.equal(commands.at(-1)?.state, 'outstanding');
-      return effect();
-    });
-  });
+  const probe = adb.identityProbe.withRecorder!(async (file, args, effect) => recorder.probe(file, args, async () => {
+    assert.equal(recorder.view().commands.at(-1)?.state, 'outstanding');
+    return effect();
+  }));
   await probe.android(AbortSignal.timeout(3000), 'emulator-5554');
-  assert.ok(ownership.view().commands.length >= 6);
-  assert.ok(ownership.view().commands.every(command => command.state === 'settled'));
-  ownership.finish();
+  assert.ok(recorder.view().commands.length >= 6);
+  assert.ok(recorder.view().commands.every(command => command.state === 'settled'));
+  assert.equal(acquired.claim.finalize({ outcome: 'completed', disposition: 'available', payload: {}, evidenceRefs: [] }).authority, 'committed');
   assert.equal(admission.inspect({ category: 'android-phone', value: 'hardware' })?.state, 'available');
 });
 

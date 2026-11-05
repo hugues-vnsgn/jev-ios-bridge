@@ -5,7 +5,7 @@ import { OutcomeUnknownError } from './ledger.js';
 
 export type AdbResult = { stdout: string; stderr: string; exitCode: number };
 /**
- * Runs one `adb` command, as `CliRunner` does for MobileBuildMCP. It resolves with the exit code whenever
+ * Runs one `adb` command. It resolves with the exit code whenever
  * the child exited with a status (non-zero included), and throws `OutcomeUnknownError` when it didn't.
  */
 export type AdbRunner = (args: string[], signal: AbortSignal, started?: (host: import('../admission.js').OwnerProcess) => void) => Promise<AdbResult>;

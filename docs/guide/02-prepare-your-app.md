@@ -4,7 +4,7 @@
 
 The bridge doesn't build, install, seed, or reset apps. Before a run:
 
-- **Build and install** the app on the bridge's simulator, for example with `npx mobilebuildmcp simulator build-and-run`. On Android, build it (`./gradlew :app:assembleDebug`, or your app module's name) and install it on the one device with `adb -s <serial> install -r <apk>`. First [set up Android](12-android-setup.md).
+- **Build and install** the app on the bridge's simulator, for example with `xcodebuild` for the iOS Simulator and then `xcrun simctl install <UUID> <path-to-app>` ([quickstart, step 4](01-quickstart.md#4-build-and-install-the-diagnostic-app)). On Android, build it (`./gradlew :app:assembleDebug`, or your app module's name) and install it on the one device with `adb -s <serial> install -r <apk>`. First [set up Android](12-android-setup.md).
 - **Arrange its data.** Sign in a test account, seed records, clear state: whatever your script expects. You can describe this in the script's `preconditions` so readers know, but the bridge doesn't execute them.
 
 At the start of each run the bridge **restarts the app**. The app's stored data stays, and whatever screen it opens on after launch is where your script begins. Write the first step's guard to match that screen.
