@@ -7,6 +7,8 @@ import { TypeSafeClient } from '@typesafe-ai/sdk';
 import { extractAssets, parseInventory, recoverInventory, serializeInventory, type Inventory } from './inventory.js';
 import { attachCapture, generateManifest, jsonText, parseManifest, verifyManifest, type Refusal } from './manifest.js';
 import { captureRefusals, replayCorpus, type JudgeClient } from './replay.js';
+import { Refusal as KitRefusal } from '../live/records.js';
+import { CaptureRefusal, takeCapture, type CaptureIdentity, type TakeCaptureInput } from './capture-screen.js';
 import { KIT_DIR, KIT_FILES, REPO_ROOT } from './sources.js';
 import { SCRIPTED_JEV_MODEL } from '../../../src/scripted/jev.js';
 
@@ -15,6 +17,8 @@ export interface CliDeps {
   env: Readonly<Record<string, string | undefined>>;
   out: (line: string) => void;
   createClient: () => unknown;
+  /** Takes one capture from the assigned device; the live one, which opens the owner's store, unless a test injects its own. */
+  takeCapture?: (input: TakeCaptureInput) => Promise<CaptureIdentity>;
 }
 
 /** The live judge the replay asks: the pinned model, with the key the environment already carries. */
@@ -33,12 +37,21 @@ const USAGE = [
   '  manifest generate | manifest verify',
   '  capture attach --screen <id> --xml <file> --screenshot <file> --kind live|stand-in --app-build <s> --device <s>',
   '    --captured-at <s> --session-id <s>',
+  '  capture take --screen <id> --platform ios|android --device <id> --assignment <file> --activation <file> --out <dir>',
+  '    --app-build <s>',
   '  replay --live-jev',
 ].join('\n');
 
 const CaptureArgs = z.object({
   screen: z.string().min(1), xml: z.string().min(1), screenshot: z.string().min(1), kind: z.enum(['live', 'stand-in']),
   'app-build': z.string().min(1), device: z.string().min(1), 'captured-at': z.string().min(1), 'session-id': z.string().min(1),
+});
+
+const CAPTURE_MS = 300_000;
+
+const TakeArgs = z.object({
+  screen: z.string().min(1), platform: z.enum(['ios', 'android']), device: z.string().min(1), assignment: z.string().min(1),
+  activation: z.string().min(1), out: z.string().min(1), 'app-build': z.string().min(1),
 });
 
 const readJson = (path: string): unknown => JSON.parse(readFileSync(path, 'utf8'));
@@ -54,7 +67,7 @@ export async function main(argv: string[], deps: CliDeps): Promise<number> {
     dir: { type: 'string' }, check: { type: 'boolean' }, extract: { type: 'string' },
     screen: { type: 'string' }, xml: { type: 'string' }, screenshot: { type: 'string' }, kind: { type: 'string' },
     'app-build': { type: 'string' }, device: { type: 'string' }, 'captured-at': { type: 'string' }, 'session-id': { type: 'string' },
-    'live-jev': { type: 'boolean' },
+    'live-jev': { type: 'boolean' }, platform: { type: 'string' }, assignment: { type: 'string' }, activation: { type: 'string' }, out: { type: 'string' },
   } });
   const dir = resolve(deps.cwd, values.dir ?? KIT_DIR);
   const manifestPath = join(dir, KIT_FILES.manifest);
@@ -104,6 +117,27 @@ export async function main(argv: string[], deps: CliDeps): Promise<number> {
       writeFileSync(manifestPath, jsonText(manifest));
       deps.out(`captured ${screen} as ${kind}`);
       return 0;
+    }
+    case 'capture take': {
+      const args = TakeArgs.safeParse(values);
+      if (!args.success) {
+        deps.out(USAGE);
+        return 2;
+      }
+      const take = deps.takeCapture ?? ((input: TakeCaptureInput) => takeCapture(input, { cwd: deps.cwd, now: () => new Date(), signal: AbortSignal.timeout(CAPTURE_MS) }));
+      try {
+        const { 'app-build': appBuild, ...rest } = args.data;
+        const identity = await take({ ...rest, appBuild, inventory: readInventory(dir) });
+        deps.out(`captured ${identity.screenId} on ${identity.resolvedDevice} (${identity.os}) into ${resolve(deps.cwd, args.data.out)}`);
+        if (identity.appId.observed !== identity.appId.expected) {
+          deps.out(`note: the app in front is ${identity.appId.observed ?? 'not named in the page source'}; the corpus expects ${identity.appId.expected}`);
+        }
+        return 0;
+      } catch (error) {
+        if (error instanceof CaptureRefusal || error instanceof KitRefusal) deps.out(`refused ${error.code}: ${error.message}`);
+        else deps.out(`failed ${error instanceof Error ? error.name : 'Error'}: ${error instanceof Error ? error.message : String(error)}`);
+        return 1;
+      }
     }
     case 'replay': {
       if (!values['live-jev']) {

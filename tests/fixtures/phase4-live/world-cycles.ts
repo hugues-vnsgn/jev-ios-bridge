@@ -4,6 +4,7 @@ import type { TestContext } from 'node:test';
 import type { FenceEffect } from '../../../src/appium/fence/schema.js';
 import type { ScriptedScenario } from '../../../src/scripted/contracts.js';
 import { scriptedCycle, cycleScenario, type CycleBackend, type CycleRun } from '../../../scripts/phase4/live/cycles.js';
+import { sourceProduct } from './source-product.js';
 import { UDID } from '../appium-wire/driver-fixture.js';
 import { ANDROID_DEVICE, IOS_DEVICE, SERIAL, androidTarget, iosTarget } from '../appium-wire/matrix.js';
 import { androidScreen, iosScreen, world, worldFixture, type IosNode, type World, type WorldRule } from '../appium-wire/world.js';
@@ -45,7 +46,7 @@ export function worldCycles(t: TestContext, options: WorldCycleOptions) {
   const reads: FenceEffect[] = [];
   const worldFor = options.worldFor ?? (() => cycleWorld(options.platform));
   const backend = (scenario: ScriptedScenario, logRoot: string): CycleBackend => {
-    const cycle = scriptedCycle({ scenario, logRoot, driver: ({ runId, index }) => f.open(worldFor(index), { runId }).driver });
+    const cycle = scriptedCycle({ scenario, logRoot, runtime: sourceProduct, driver: ({ runId, index }) => f.open(worldFor(index), { runId }).driver });
     return { admission: f.admission, device: options.platform === 'ios' ? IOS_DEVICE : ANDROID_DEVICE,
       fence: (effect, signal) => { reads.push(structuredClone(effect)); return f.fence.run(effect, signal); },
       cycle: async (index, signal) => {
