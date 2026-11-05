@@ -21,7 +21,7 @@ import type { Clock } from '../device/settle.js';
 import type { ProfileBinding } from '../profiles.js';
 import { PrivateAppiumClient, type AppiumComponentRecord } from './client.js';
 import { CLEANUP_BUDGET_MS, fenceAppium, type FenceClaim, type FenceEffect, type FenceOptions, type FenceRunner } from './fence/index.js';
-import { appiumComponentSchema, fenceEffectSchema, hostIdentitySchema, wdaInventorySchema, type AppiumComponent, type HostIdentity } from './fence/schema.js';
+import { appiumComponentSchema, fenceEffectSchema, hostIdentitySchema, wdaInventorySchema, type AppiumComponent, type AppiumRead, type HostIdentity } from './fence/schema.js';
 import { androidNativeHelpers } from './native/android.js';
 import { launchIosConsole, observeIosLogs, observedIosPreparation } from './native/ios.js';
 import type { PresentationReader, SimulatorPresentation } from './native/presentation.js';
@@ -384,7 +384,7 @@ export class AppiumDriver implements DeviceDriver, IosPreparationDriver, Observe
     }
   }
 
-  private async captureSession<T>(signal: AbortSignal, scope: 'android' | 'any', operation: string,
+  private async captureSession<T>(signal: AbortSignal, scope: 'android' | 'any', operation: AppiumRead,
     read: (command: Omit<Command, 'launched'>, issued: AbortSignal) => Promise<T>): Promise<T> {
     if (this.phase.kind !== 'idle') throw new Error('Driver is already prepared');
     const androidOnly = () => refusal('UNSUPPORTED_ACTION', 'Capture is Android-only, as today.');
@@ -920,10 +920,13 @@ export class AppiumDriver implements DeviceDriver, IosPreparationDriver, Observe
     else helpers?.watch?.expectStop();
     let terminated: unknown;
     let streams: DeviceReasonError | undefined;
-    if (terminate !== undefined && command.launched && command.session.state !== 'lost' && command.client.dispatchOpen) {
+    const answering = command.client.dispatchOpen;
+    if (terminate !== undefined && command.launched && command.session.state !== 'lost' && answering) {
       terminated = await command.operations.terminate(terminate, signal).then(() => undefined, (error: unknown) => error ?? new Error('Terminate failed'));
     }
-    try { await command.operations.close(); }
+    // A session that had already stopped answering, such as one retired by a page-source timeout, cannot confirm its
+    // delete. A delete is only a hint either way: the fence that follows is the stop evidence (ADR-0011).
+    try { await command.operations.close().catch((error: unknown) => { if (answering) throw error; }); }
     finally {
       await command.client.close();
       if (helpers?.platform === 'ios') {
@@ -956,9 +959,12 @@ export class AppiumDriver implements DeviceDriver, IosPreparationDriver, Observe
     catch (error) { failure = error; }
     this.issuanceClosed = true;
     this.latest = undefined;
+    // Uncertain work revoked the owner's dispatch, so it can't be finalized available: the attempt closes quarantined and a
+    // recovery claim, which stops only recorded identities, fences it. The next admission checks for foreign automation.
+    const uncertain = owner.owned && this.firstFailure !== undefined;
     // Before any stop: automation the store does not own beside ours holds the device, and nothing is stopped.
     let foreign = false;
-    if (failure === undefined && this.ownsAutomation(owner)) {
+    if (failure === undefined && !uncertain && this.ownsAutomation(owner)) {
       try { await this.refuseForeign(owner, signal, { cleanup: true }); }
       catch (error) {
         foreign = error instanceof DeviceReasonError && error.code === 'DEVICE_BUSY';
@@ -966,7 +972,7 @@ export class AppiumDriver implements DeviceDriver, IosPreparationDriver, Observe
       }
     }
     try {
-      if (failure === undefined) {
+      if (failure === undefined && !uncertain) {
         try {
           owner.claim.stageFence(await this.fenceOwn(owner, signal));
           if (!owner.owned) return;
@@ -981,7 +987,7 @@ export class AppiumDriver implements DeviceDriver, IosPreparationDriver, Observe
       if (foreign) { if (owner.owned) owner.claim.closeDispatch({ outcome: 'inconclusive', disposition: 'quarantined', payload: {}, evidenceRefs: [] }); }
       else if (owner.owned) await this.quarantineAndFence(owner, signal);
     } catch (error) {
-      if (failure === undefined) throw error;
+      if (failure === undefined) throw this.namingFirstFailure(error);
     } finally { this.phase = { kind: 'closed' }; }
     if (failure !== undefined) throw this.namingFirstFailure(failure);
   }
