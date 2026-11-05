@@ -4,6 +4,7 @@ import { SCRIPTED_JEV_MODEL } from '../../../src/scripted/jev.js';
 import type { AssertionJudgment, ScriptedJudge, ScriptedScenario } from '../../../src/scripted/contracts.js';
 import { runScriptedScenario } from '../../../src/scripted/run.js';
 import { parseScriptedScenario } from '../../../src/scripted/schema.js';
+import { randomUUID } from 'node:crypto';
 import { createRunLog } from '../../../src/log/index.js';
 import type { DeviceDriver } from '../../../src/contracts/index.js';
 import type { AttemptIdentity, AttemptView, DeviceIdentity, DeviceView, GenerationView, OwnerIdentity } from '../../../src/device/admission.js';
@@ -137,10 +138,15 @@ export interface ScriptedCycleOptions {
   judge?: ScriptedJudge;
 }
 
-/** The cycle runner: one scripted run per cycle, each on its own admission attempt. */
+/**
+ * The cycle runner: one scripted run per cycle, each on its own admission attempt. The run id carries a token
+ * of this attempt, because the product keeps each run's log files for days and creates them exclusively, so a
+ * second attempt reusing `cycle-1` would fail on the first attempt's files.
+ */
 export function scriptedCycle(options: ScriptedCycleOptions): (index: number, signal: AbortSignal) => Promise<CycleRun> {
+  const token = randomUUID().slice(0, 8);
   return async (index, signal) => {
-    const runId = `cycle-${String(index)}`;
+    const runId = `cycle-${token}-${String(index)}`;
     const log = await createRunLog(options.logRoot, runId);
     const driver = options.driver({ runId, index });
     const report = await runScriptedScenario({
