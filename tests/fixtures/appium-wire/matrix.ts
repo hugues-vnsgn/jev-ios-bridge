@@ -29,6 +29,7 @@ export function androidTarget(device: { state: string } & AndroidPreflight = { s
     const line = args.at(-1) ?? '';
     const preflight = androidPreflightReply(line, device);
     if (preflight) return preflight;
+    if (line === "'dumpsys' 'window' 'InputMethod'") return { stdout: 'WINDOW MANAGER WINDOWS (dumpsys window windows)\n', stderr: '', exitCode: 0 };
     const pid = /\/proc\/(\d+)\/stat/.exec(line)?.[1];
     return pid ? { stdout: procStat(Number(pid)), stderr: '', exitCode: 0 } : { stdout: '', stderr: 'unexpected', exitCode: 1 };
   };
