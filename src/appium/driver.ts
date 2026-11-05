@@ -9,6 +9,7 @@ import type { AllocationCommit, ObservedClaim, PreparationClaim } from '../devic
 import type { AdbRunner } from '../device/android/adb.js';
 import { EVENT_FILTER, type AppExitWatch, type createExitWatch } from '../device/android/exit-watch.js';
 import { deleteOldLogs, privateLogFolder, type LogcatOutput, type LogcatStarter, type LogcatStream } from '../device/android/logcat.js';
+import { keyboardAreas } from '../device/android/keyboard.js';
 import { androidStartTime, processGone, shellCommand } from '../device/android/recovery.js';
 import { DeviceReasonError, StaleSnapshotError, type AdmittedAppContext, type DeviceWindowOpener, type IosPreparationDriver, type ObservedActionDriver,
   type PreparationInventoryStatus } from '../device/index.js';
@@ -28,6 +29,7 @@ import type { PresentationReader, SimulatorPresentation } from './native/present
 import { NativeHelperError, type NativeCommand, type NativeRunner } from './native/process.js';
 import { AppiumObservation, wallClock, type AppiumObservedScreen } from './observe/index.js';
 import { ObservationIncompleteError } from './observe/normalize.js';
+import type { Frame } from './operations/geometry.js';
 import { AppiumOperations, REFUSED_BEFORE_INPUT, UnconfirmedOperationError, vendorSourceOf, type OperationName } from './operations/index.js';
 import { allocateHostPorts, portComponents, type FreePort, type HostPorts } from './ports.js';
 import { AppiumCommandSession, createSessionProfile, type SessionProfile, type SessionProfileInput } from './session.js';
@@ -506,9 +508,11 @@ export class AppiumDriver implements DeviceDriver, IosPreparationDriver, Observe
       const session = await this.dispatch(owner, 'appium-session-create', signal, this.timeoutMs, () => AppiumCommandSession.start({ client, profile, timeoutMs: this.timeoutMs }));
       await this.recordAutomation(owner, device, before, signal);
       const observation = new AppiumObservation(session, this.options.stack, { ...(this.options.clock ? { clock: this.options.clock } : {}) });
+      const serial = owner.identity.category === 'ios-simulator' ? undefined : owner.identity.transport.serial;
       const operations = new AppiumOperations(session, observation, { timeoutMs: this.timeoutMs,
         dispatch: (operation: OperationName, send: () => Promise<void>) => this.dispatch(owner, commandName(role, operation), signal, this.timeoutMs, send,
-          { input: INPUTS.has(operation) }) });
+          { input: INPUTS.has(operation) }),
+        ...(serial === undefined ? {} : { keyboard: (issued: AbortSignal) => this.keyboard(owner, serial, issued) }) });
       return { client, session, observation, operations, profile, ports, ...(helpers ? { helpers } : {}) };
     } catch (error) { await client.close(); throw error; }
   }
@@ -684,6 +688,14 @@ export class AppiumDriver implements DeviceDriver, IosPreparationDriver, Observe
   private androidShell(owner: Owner, operation: string, serial: string, words: string[], signal: AbortSignal) {
     const adb = this.adbRunner();
     return this.dispatch(owner, operation, signal, this.timeoutMs, issued => adb(shellCommand(serial, words), issued));
+  }
+
+  /** Where the soft keyboard takes touches, as the window manager dispatches them. An unreadable state refuses the tap before input. */
+  private async keyboard(owner: Owner, serial: string, signal: AbortSignal): Promise<readonly Frame[]> {
+    const read = await this.androidShell(owner, 'android-keyboard', serial, ['dumpsys', 'window', 'InputMethod'], signal);
+    const areas = read.exitCode === 0 ? keyboardAreas(read.stdout) : undefined;
+    if (!areas) throw refusal('DEVICE_ERROR', 'The soft keyboard\'s state could not be read, so the tap was not sent.', 'KEYBOARD_UNKNOWN');
+    return areas;
   }
 
   private adbRunner(): AdbRunner {
