@@ -5,7 +5,7 @@ import type { Admission, AdmissionClaim, AdmittedSession, FenceRequest, NativeCo
 import { z } from 'zod/v4';
 import { active, groupHeld, ownedGroup, readbackOf, recordedRows, sameIdentity, settles, sharedService, verifyAppiumProof } from './proof.js';
 import { androidProcessSchema, appiumComponentSchema, automationForward, fenceCommandSchema, fenceExecutorsSchema, forwardInventorySchema, hostInventorySchema,
-  parseEffectResult, readOnly, sameForward, settingKeySchema, settingsSchema, wdaInventorySchema, type AppiumComponent, type AppiumProof,
+  isAppiumRead, parseEffectResult, readOnly, sameForward, settingKeySchema, settingsSchema, wdaInventorySchema, type AppiumComponent, type AppiumProof,
   androidIdentitySchema, type Executor, type FenceEffect, type HostIdentity, type HostRow, type Transcript } from './schema.js';
 export type { FenceEffect } from './schema.js';
 export type FenceRunner = (effect: FenceEffect, signal: AbortSignal, started?: (host: Executor) => void) => Promise<unknown>;
@@ -204,6 +204,7 @@ export async function fenceAppium(input: FenceOptions & { admission: Admission; 
       const commands = view.commands.filter(command => command.componentId === component.id);
       const completed = commands.find(command => command.state === 'settled');
       if (['one-shot', 'adb-command', 'appium-fence-command'].includes(component.kind) && completed && commands.every(command => command.state === 'settled')) { proofs.push({ componentId: component.id, proof: { kind: 'completed-command', commandId: completed.id } }); continue; }
+      if (isAppiumRead(component.declaration) && targets.some(target => target.kind === 'appium-process-group')) { proofs.push({ componentId: component.id, proof: { kind: 'appium-read-fenced' } }); continue; }
       throw new Error(`Unproven component ${component.id}`);
     }
     check();

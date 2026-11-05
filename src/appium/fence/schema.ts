@@ -63,6 +63,12 @@ type WriteKind = { [K in FenceEffect['kind']]: (typeof effectAccess)[K] extends 
 export type WriteEffect = Extract<FenceEffect, { kind: WriteKind }>;
 export type ReadEffect = Exclude<FenceEffect, WriteEffect>;
 export const readOnly = (effect: FenceEffect): effect is ReadEffect => effectAccess[effect.kind] === 'read';
+/** The bridge's own one-shot screen reads through its Appium session. A read cut by its deadline changes nothing, so it
+ *  can no longer take effect once every Appium component it could reach is proven stopped. Inputs are never listed. */
+export const APPIUM_READS = ['appium-observe', 'appium-capture', 'appium-capture-pair'] as const;
+export type AppiumRead = typeof APPIUM_READS[number];
+export const isAppiumRead = (declaration: unknown): boolean =>
+  z.object({ kind: z.literal('one-shot'), operation: z.enum(APPIUM_READS) }).safeParse(declaration).success;
 export const fenceCommandSchema = z.strictObject({ id: text, kind: z.literal('appium-fence-command'), effect: fenceEffectSchema });
 export const executorSchema = z.strictObject({ pid: z.number().int().positive(), incarnation: z.string().min(1).max(500).refine(value => !!value.trim() && !value.includes('\0')) });
 export type Executor = z.infer<typeof executorSchema>;
