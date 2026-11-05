@@ -10,7 +10,7 @@ import type { StagedArtifact } from '../observed/artifact.js';
 import type { CreationResult } from '../observed/create-source.js';
 import { recoveryViewSchema, componentSchema, componentObservationSchema, type ComponentObservation, commandRequestSchema, fenceRequestSchema } from './admission.js';
 import type { DeviceCategory, AdmissionDependencies, AdmissionRequest, AdmissionResult, AttemptIdentity, AttemptView, DeviceView, OwnerIdentity, OwnerProcess, TerminalCandidate, GenerationView, CommandRecord, ComponentInput, NativeComponent, CommandRequest, IssueResult, FenceRequest, FenceReceipt, RecoveryIdentity } from './admission.js';
-import { appiumComponentSchema, appiumProofSchema, fenceCommandSchema, isAppiumRead, parseEffectResult, readOnly, type Transcript } from '../appium/fence/schema.js';
+import { APPIUM_READS, appiumComponentSchema, appiumProofSchema, fenceCommandSchema, isAppiumRead, parseEffectResult, readOnly, type Transcript } from '../appium/fence/schema.js';
 import { settles, verifyAppiumProof } from '../appium/fence/proof.js';
 import type { MarkerSource } from './admission.js';
 import { BRIDGE_VERSION } from '../version.js';
@@ -1552,7 +1552,8 @@ export class AdmissionSqlite {
       } else if (evidence.kind==='appium-read-fenced') {
         // This receipt proves every component stopped, so a recorded Appium stack is the one the read went through.
         const stack=components.some(item=>appiumComponentSchema.safeParse(JSON.parse(String(item.declaration))).data?.kind==='appium-process-group');
-        if (!isAppiumRead(JSON.parse(String(component.declaration))) || !stack) throw new AdmissionError('COVERAGE_INCOMPLETE','Only a read through a recorded Appium stack is fenced by stopping it');
+        const onlyReads=commands.filter(command=>command.component_id===component.id).every(command=>z.enum(APPIUM_READS).safeParse(command.operation).success);
+        if (!isAppiumRead(JSON.parse(String(component.declaration))) || !onlyReads || !stack) throw new AdmissionError('COVERAGE_INCOMPLETE','Only a read through a recorded Appium stack is fenced by stopping it');
       } else if (evidence.kind==='fenced-write') {
         const answer=transcripts.find(transcript=>transcript.id===evidence.commandId);
         let proven=false;
