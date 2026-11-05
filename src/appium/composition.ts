@@ -12,7 +12,7 @@ import { identityProbe } from '../device/android/probe.js';
 import { findAdb } from '../device/android/tools.js';
 import { DeviceReasonError, type AdmittedAppContext, type DeviceWindowOpener, type IosPreparationDriver, type ObservedActionDriver, type PreparationInventoryStatus } from '../device/index.js';
 import type { ProfileBinding } from '../profiles.js';
-import { AppiumDriver, type AppiumDriverOptions, type AppiumTarget } from './driver.js';
+import { AppiumDriver, type AppiumDriverOptions, type AppiumTarget, type RawScreenPair } from './driver.js';
 import { CLEANUP_BUDGET_MS } from './fence/index.js';
 import { createFenceRunner } from './fence/runner.js';
 import { hostRun, simulatorPresentationReader, type HostRun } from './native/presentation.js';
@@ -146,6 +146,7 @@ export class ComposedAppiumDriver implements DeviceDriver, IosPreparationDriver,
 
   async prepare(scenario: PrepareScenarioContext, signal: AbortSignal): Promise<void> { await (await this.open(this.named())).prepare(scenario, signal); }
   async capture(signal: AbortSignal): Promise<Snapshot> { return (await this.open(this.named())).capture(signal); }
+  async capturePair(signal: AbortSignal): Promise<RawScreenPair> { return (await this.open(this.named())).capturePair(signal); }
   async attachPreparation(claim: PreparationClaim, context: AdmittedAppContext, signal: AbortSignal): Promise<void> {
     await (await this.open(this.claimed(claim))).attachPreparation(claim, context, signal);
   }

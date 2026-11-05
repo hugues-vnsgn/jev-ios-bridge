@@ -3,14 +3,14 @@ import { mkdtempSync, rmSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { test, type TestContext } from 'node:test';
-import { copyFileSync, existsSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs';
-import { spawnSync } from 'node:child_process';
+import { existsSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { pathToFileURL } from 'node:url';
 import { BUILT_PRODUCT_ENTRIES, BUILT_PRODUCT_ROOT, createLiveCycleBackend, loadBuiltProduct, resolveLiveCycleParts } from '../scripts/phase4/live/backend.js';
 import { runCycles, scriptedCycle } from '../scripts/phase4/live/cycles.js';
 import { resolveIdentity, type IdentityProbe } from '../src/device/identity.js';
 import { validateRunId } from '../src/log/index.js';
 import { sourceProduct } from './fixtures/phase4-live/source-product.js';
+import { compiledCopy } from './fixtures/phase4-live/built-copy.js';
 import { fakeAndroidAdmission, fakeSimulatorProbe } from './fixtures/android-device.js';
 import { UDID } from './fixtures/appium-wire/driver-fixture.js';
 import { SERIAL, androidTarget } from './fixtures/appium-wire/matrix.js';
@@ -131,20 +131,6 @@ test('the live kit loads the built product: it names the dist modules and the tw
   stubProduct(noIdentity, ['appium/stack-identity.js']);
   await assert.rejects(loadBuiltProduct(noIdentity), /appium\/stack-identity\.js.*npm run build/);
 });
-
-/** A compiled second copy of the product, the way `dist` is: its classes are not the ones `src` defines. */
-function compiledCopy(t: TestContext): string {
-  const repo = join(import.meta.dirname, '..');
-  mkdirSync(join(repo, 'node_modules', '.cache'), { recursive: true });
-  const home = mkdtempSync(join(repo, 'node_modules', '.cache', 'p4-built-copy-'));
-  t.after(() => rmSync(home, { recursive: true, force: true }));
-  copyFileSync(join(repo, 'package.json'), join(home, 'package.json'));
-  const root = join(home, 'dist');
-  const built = spawnSync(process.execPath, [join(repo, 'node_modules', 'typescript', 'bin', 'tsc'), '-p', join(repo, 'tsconfig.build.json'), '--outDir', root], { encoding: 'utf8' });
-  assert.equal(built.status, 0, built.stdout + built.stderr);
-  writeFileSync(join(root, 'appium', 'stack-identity.js'), 'export default {};\n');
-  return root;
-}
 
 test('a cycle on the built product records the driver\'s own reason and vendor code, not EXECUTION_ERROR', { timeout: 120_000 }, async t => {
   const root = compiledCopy(t);
