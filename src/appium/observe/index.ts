@@ -1,6 +1,6 @@
 import type { Snapshot } from '../../contracts/index.js';
 import { createScreenshotEncoder, type ScreenshotImage } from '../../device/image.js';
-import { settleCaptures, SettleDeadlineError, type Clock } from '../../device/settle.js';
+import { settleCaptures, type Clock } from '../../device/settle.js';
 import type { AppiumCommandSession } from '../session.js';
 import type { VerifiedStack } from '../stack.js';
 import { AppiumError, type AppiumSessionId } from '../wire-schemas.js';
@@ -40,7 +40,7 @@ export class AppiumObservation {
   private incomplete(error: unknown, signal: AbortSignal): unknown {
     if (signal.aborted) return signal.reason;
     if (error instanceof ObservationIncompleteError) return error;
-    if (error instanceof SettleDeadlineError || (error instanceof AppiumError && error.code === 'TIMEOUT')) return new ObservationIncompleteError('timeout', { cause: error });
+    if (error instanceof AppiumError && error.code === 'TIMEOUT') return new ObservationIncompleteError('timeout', { cause: error });
     return new ObservationIncompleteError('driver-error', { cause: error });
   }
   async observe(signal: AbortSignal): Promise<AppiumObservedScreen> {
