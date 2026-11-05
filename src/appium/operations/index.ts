@@ -5,8 +5,8 @@ import type { PrivateAppiumClient } from '../client.js';
 import type { AppiumObservedScreen } from '../observe/index.js';
 import { AppiumError, type AppiumErrorCode, type AppiumPlatform, type AppiumSessionId } from '../wire-schemas.js';
 import { textFieldOf, shownValueOf } from './field.js';
-import { DEFAULT_TAP_HOLD_MS, centreOf, edgeBack, screenMiddleScroll, scrollWithin, strokeSequence, swipeWithin, tapSequence,
-  type PointerActions, type Stroke } from './geometry.js';
+import { DEFAULT_TAP_HOLD_MS, centreOf, contains, edgeBack, screenMiddleScroll, scrollWithin, strokeSequence, swipeWithin, tapSequence,
+  type Frame, type PointerActions, type Stroke } from './geometry.js';
 
 export type OperationName = 'tap' | 'swipe' | 'scroll' | 'back' | 'tap-at' | 'replace-text' | 'restart' | 'terminate';
 
@@ -34,6 +34,9 @@ export interface AppiumOperationsOptions {
   dispatch?: OperationDispatcher;
   now?: () => number;
   timeoutMs?: number;
+  /** Android: the screen areas the soft keyboard takes touches in right now, empty when none is shown. Read just before a tap,
+   *  because the snapshot can predate a keyboard that opened since. */
+  keyboard?: (signal: AbortSignal) => Promise<readonly Frame[]>;
 }
 export interface Performed {
   result: Snapshot | ActOutcome;
@@ -195,7 +198,10 @@ export class AppiumOperations {
     actPath?: ActPath): Promise<Performed> {
     if (!Number.isInteger(holdMs) || holdMs < 0 || holdMs > MAX_HOLD_MS) throw unsupported('The hold is out of range.');
     const target = this.target(evidence, ref, 'tap');
-    return { ...await this.pointed(operation, tapSequence(centreOf(target.frame), holdMs), signal, actPath), holdMs };
+    const point = centreOf(target.frame);
+    if (this.options.keyboard && (await this.options.keyboard(signal)).some(area => contains(area, point)))
+      throw new DeviceReasonError('TARGET_UNAVAILABLE', 'The target is behind the soft keyboard.');
+    return { ...await this.pointed(operation, tapSequence(point, holdMs), signal, actPath), holdMs };
   }
 
   private stroked(operation: 'swipe' | 'scroll' | 'back', stroke: Stroke, signal: AbortSignal, actPath?: ActPath): Promise<Performed> {
