@@ -469,6 +469,65 @@ test('dead-owner sweep acquires only after all Appium receipts and preserves the
   assert.equal(f.admission.readGeneration(f.claim.identity).recoveries[0]?.closure, 'accepted');
 });
 
+/** A dead owner whose one command through its Appium stack was cut by its deadline: the frozen-app case (BUG-L3a-2). */
+async function cutCommand(t: TestContext, operation: string, selected: readonly unknown[] = androidTargets) {
+  const f = fixture(t, androidTargets);
+  for (const target of selected) f.claim.registerComponent(JSON.parse(JSON.stringify(target)));
+  await assert.rejects(f.claim.bindDriver('fake').dispatch(operation, async () => { throw new Error('cut by its deadline'); }));
+  f.claim.closeDispatch({ outcome: 'inconclusive', disposition: 'quarantined', payload: {}, evidenceRefs: [] });
+  const runner = new FakeRunner();
+  const next = () => f.admission.acquireWithAppiumRecovery({ device: f.claim.identity.device, category: f.claim.identity.category, attempt: { kind: 'legacy', id: 'next' }, digest: 'next', intent: {} },
+    { runner: runner.run, revalidate: runner.revalidate, clock: runner.clock });
+  const cut = () => f.admission.readGeneration(f.claim.identity).commands.find(command => command.operation === operation)!;
+  return { ...f, runner, next, cut };
+}
+
+for (const operation of ['appium-observe', 'appium-capture', 'appium-capture-pair']) {
+  test(`a dead owner's ${operation} cut by its deadline is covered once its whole Appium stack is proven stopped, and the next run acquires`, async t => {
+    const f = await cutCommand(t, operation);
+    assert.equal((await f.next()).kind, 'acquired');
+    assert.equal(f.cut().state, 'uncertain', 'the cut read is fenced, never reported settled');
+    assert.equal(f.admission.readAttempt(f.claim.identity.attempt)?.terminal?.outcome, 'inconclusive');
+    const [recovery] = f.admission.readGeneration(f.claim.identity).recoveries;
+    assert.equal(recovery?.closure, 'accepted');
+  });
+}
+
+test('a cut tap is never covered: the device stays quarantined though every Appium component is proven stopped', async t => {
+  const f = await cutCommand(t, 'appium-tap');
+  assert.deepEqual(await f.next(), { kind: 'refused', reason: 'DEVICE_QUARANTINED' });
+  assert.equal(f.runner.processes.size + f.runner.forwards.filter(row => row.serial === 'serial-one').length, 0, 'the sweep still stopped the stack');
+  assert.equal(f.cut().state, 'uncertain');
+});
+
+test('a cut read with no recorded Appium stack to stop is not covered', async t => {
+  const f = await cutCommand(t, 'appium-observe', androidTargets.filter(target => target.kind !== 'appium-process-group'));
+  assert.deepEqual(await f.next(), { kind: 'refused', reason: 'DEVICE_QUARANTINED' });
+});
+
+test('a cut read stays quarantined while any Appium component is unproven', async t => {
+  const f = await cutCommand(t, 'appium-observe');
+  f.runner.failing = 'android-stop';
+  assert.deepEqual(await f.next(), { kind: 'refused', reason: 'DEVICE_QUARANTINED' });
+});
+
+test('the store refuses a fenced-read proof for a cut tap, even when the sweep is told the tap was a read', async t => {
+  const tap = await cutCommand(t, 'appium-tap');
+  const asRead = (view: ReturnType<Admission['readGeneration']>) => ({ ...view, components: view.components.map(component =>
+    component.kind === 'one-shot' ? { ...component, declaration: { ...(component.declaration as object), operation: 'appium-observe' } } : component) });
+  const lying = new Proxy(tap.admission, { get(target, key) {
+    if (key === 'readGeneration') return (owner: OwnerIdentity) => asRead(target.readGeneration(owner));
+    const value: unknown = Reflect.get(target, key);
+    return typeof value === 'function' ? value.bind(target) : value;
+  } });
+  const recovery = tap.admission.claimRecovery(tap.claim.identity, 'forged'); if (recovery.kind === 'refused') assert.fail();
+  const { fenceAppium } = await fenceModule();
+  const forged = await fenceAppium({ admission: lying, claim: recovery.claim, runner: tap.runner.run, revalidate: tap.runner.revalidate, clock: tap.runner.clock });
+  assert.ok(forged.commands.includes(tap.cut().id), 'the forged proof lists the cut tap');
+  assert.throws(() => recovery.claim.submitFence(forged), { code: 'COVERAGE_INCOMPLETE' });
+  assert.equal(state(tap.admission, tap.claim.identity), 'quarantined');
+});
+
 test('owned automation inventory is available while each foreign automation kind is DEVICE_BUSY exit 3', async () => {
   const { inspectForeignAutomation } = await fenceModule();
   const owned = targets.map(target => ({ id: target.id, kind: target.kind, declaration: target }));

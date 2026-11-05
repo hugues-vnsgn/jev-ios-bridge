@@ -14,7 +14,7 @@ import { androidScreen, world } from './fixtures/appium-wire/world.js';
 const screens = { home: androidScreen([{ className: 'android.widget.TextView', text: 'Marker', bounds: [16, 100, 216, 140] }]) };
 
 for (const [signal, exitCode] of [['SIGINT', 130], ['SIGTERM', 143]] as const) {
-  test(`${signal} during an Android run closes the service: the run ends inconclusive, its admission is closed and held, and the CLI exits ${String(exitCode)}`, { timeout: 60_000 }, async t => {
+  test(`${signal} during an Android run closes the service: the run ends inconclusive, its cut screen read is fenced, the phone is released, and the CLI exits ${String(exitCode)}`, { timeout: 60_000 }, async t => {
     const root = realpathSync(mkdtempSync(join(tmpdir(), 'jev-android-cli-signal-')));
     t.after(() => rmSync(root, { recursive: true, force: true, maxRetries: 5, retryDelay: 50 }));
     mkdirSync(join(root, 'project'), { recursive: true });
@@ -43,6 +43,6 @@ for (const [signal, exitCode] of [['SIGINT', 130], ['SIGTERM', 143]] as const) {
     assert.deepEqual(errors[0], ['observe', 'CANCELLED']);
     const admission = Admission.forTesting({ root: join(root, 'host', 'admission'), backend: 'fake', initialize: false });
     assert.equal(admission.readAttempt({ kind: 'legacy', id: runId! })?.terminal?.outcome, 'inconclusive', 'the run closed its admission before the CLI exited');
-    assert.equal(admission.inspect(ANDROID_DEVICE)?.state, 'quarantined', 'the interrupted screen read keeps the phone held, as a cancelled run does');
+    assert.equal(admission.inspect(ANDROID_DEVICE)?.state, 'available', 'the screen read cut by its deadline is fenced with the whole Appium stack');
   });
 }
