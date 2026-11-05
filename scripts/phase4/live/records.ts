@@ -7,7 +7,7 @@ import { DEVICE_SCOPES, type DeviceScope, type LiveRow } from './row.js';
 /** Why the kit refuses to go on. The code names the reason; the message says it in words. */
 export type RefusalCode =
   | 'assignment-missing' | 'assignment-invalid' | 'assignment-permissions' | 'custody-ended' | 'custody-not-begun'
-  | 'device-mismatch' | 'unknown-row' | 'no-attempt' | 'missing-artifact' | 'activation-invalid' | 'matrix-invalid'
+  | 'device-mismatch' | 'unknown-row' | 'no-attempt' | 'missing-artifact' | 'artifact-required' | 'activation-invalid' | 'matrix-invalid'
   | 'scenario-refused';
 
 /** A refusal: the run must not proceed as asked. */

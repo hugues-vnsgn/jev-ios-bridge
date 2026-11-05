@@ -188,3 +188,33 @@ test('a cycles row fails with too few cycles under 20, and with the failing cycl
   assert.equal(failed.verdict, 'failed');
   assert.match(String(failed.reason), /cycle 2\b.*quarantined/);
 });
+
+test('every attempt asks for versions of the assigned device, so the record names the tools of that category', async t => {
+  const root = scratch(t);
+  const evidence = join(root, 'evidence');
+  const asked: unknown[] = [];
+  const { deps } = fakeDeps(root, { versions: async target => { asked.push(target); return { ...FAKE_VERSIONS, tools: { for: target } }; } });
+  const phone = writeAssignment(root, { device: '2985e9c', category: 'android-phone' }, 0o600, 'phone.json');
+  assert.equal(await main(['run', ...guards(phone, evidence, '2985e9c'), '--rows', 'phone-only,logs-plain'], deps), 0);
+  assert.deepEqual(asked, Array(2).fill({ category: 'android-phone', device: '2985e9c' }));
+  assert.deepEqual((readJson(join(attempt(evidence, 'phone-only'), 'versions.json')) as { tools: unknown }).tools, { for: { category: 'android-phone', device: '2985e9c' } });
+});
+
+test('a passed verdict needs at least one existing artifact, and failed and refused verdicts do not', async t => {
+  const root = scratch(t);
+  const evidence = join(root, 'evidence');
+  const assignment = writeAssignment(root);
+  const { deps, err } = fakeDeps(root);
+  assert.equal(await main(run(assignment, evidence, 'logs-plain'), deps), 0);
+  const verdict = (name: string, ...extra: string[]) => ['verdict', ...guards(assignment, evidence), '--row', 'logs-plain', '--verdict', name, '--reason', 'why', ...extra];
+  assert.equal(await main(verdict('passed'), deps), 3, 'a pass with no artifact is refused');
+  assert.match(err.join('\n'), /artifact-required/);
+  assert.match(err.join('\n'), /--artifact/);
+  assert.equal(verdictOf(evidence, 'logs-plain').verdict, 'untested', 'the attempt stays open');
+  assert.deepEqual(readJson(join(attempt(evidence, 'logs-plain'), 'artifacts.json')), []);
+  assert.equal(await main(verdict('failed'), deps), 0, 'a failure needs no artifact');
+  assert.equal(verdictOf(evidence, 'logs-plain').verdict, 'failed');
+  assert.equal(await main(run(assignment, evidence, 'logs-plain'), deps), 0);
+  assert.equal(await main(verdict('refused'), deps), 0, 'a refusal needs no artifact');
+  assert.equal(verdictOf(evidence, 'logs-plain', 2).verdict, 'refused');
+});

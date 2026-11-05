@@ -63,7 +63,7 @@ test('a late second pair returns the completed first pair at the cap and drains 
   assert.equal(result.snapshot.sequence, 1);
   await session.finish();
 });
-test('no completed pair refuses as incomplete, while the late first pair drains before later input', async t => {
+test('with no pair completed by the cap, observe waits for the late first pair and returns it unsettled', async t => {
   const f = clientFixture(t); const { stack } = imageStack(t);
   const client = await f.open('source-late-first-held', resolve('tests/fixtures/appium-wire/ios/observe-1.jsonl'));
   const session = await AppiumCommandSession.start({ client, profile: f.profile });
@@ -72,13 +72,19 @@ test('no completed pair refuses as incomplete, while the late first pair drains 
   const pending = observation.observe(live());
   await waitForCall(f, 'appium_get_page_source', 1);
   manual.expire();
-  await assert.rejects(pending, { code: 'TRUNCATED', truncated: true, reason: 'timeout' });
-  assert.equal(client.observationPending, true);
+  assert.equal(await Promise.race([pending.then(() => 'returned', () => 'refused'), delay(50).then(() => 'waiting')]), 'waiting');
   writeFileSync(f.trace + '.release', 'release');
+  const result = await pending;
+  assert.equal(result.snapshot.settled, false);
+  assert.equal(result.snapshot.sequence, 1);
+  assert.deepEqual(result.screenshot.size, { width: 1, height: 1 });
+  assert.equal(client.observationPending, false);
   assert.equal((await client.callExtension({ name: 'jev_terminate_app', arguments: { appId: 'example.app' } })).acknowledged, true);
+  assert.deepEqual(f.calls().filter(c => c.method === 'tools/call').map(c => c.params.name),
+    ['appium_session_management', 'jev_settings', 'appium_get_page_source', 'jev_screen', 'jev_terminate_app']);
   await session.finish();
 });
-test('a pending source that reaches its own timeout retires the session and its late reply cannot enable input', async t => {
+test('a source still running at the cap that reaches its own timeout refuses the observation, retires the session, and its late reply cannot enable input', async t => {
   const f = clientFixture(t); const { stack } = imageStack(t);
   const client = await f.open('source-late-first-held', resolve('tests/fixtures/appium-wire/ios/observe-1.jsonl'));
   const session = await AppiumCommandSession.start({ client, profile: f.profile });
@@ -87,9 +93,9 @@ test('a pending source that reaches its own timeout retires the session and its 
   const pending = observation.observe(live());
   await waitForCall(f, 'appium_get_page_source', 1);
   manual.expire();
-  await assert.rejects(pending, { code: 'TRUNCATED', truncated: true });
-  await assert.rejects(client.callExtension({ name: 'jev_terminate_app', arguments: { appId: 'example.app' } }), { code: 'TIMEOUT' });
+  await assert.rejects(pending, { code: 'TRUNCATED', truncated: true, reason: 'timeout' });
   assert.equal(client.dispatchOpen, false);
+  await assert.rejects(client.callExtension({ name: 'jev_terminate_app', arguments: { appId: 'example.app' } }), { code: 'CONNECTION_LOST' });
   await client.manageSession({ action: 'delete', sessionId: session.sessionId }, f.profile);
   writeFileSync(f.trace + '.release', 'release');
   await delay(20);

@@ -2,9 +2,10 @@ import { appiumComponentSchema, fenceEffectSchema, forwardInventorySchema, hostI
 import type { FenceRunner } from '../../../src/appium/fence/index.js';
 import { SCRIPTED_JEV_MODEL } from '../../../src/scripted/jev.js';
 import type { AssertionJudgment, ScriptedJudge, ScriptedScenario } from '../../../src/scripted/contracts.js';
-import { runScriptedScenario } from '../../../src/scripted/run.js';
+import type { runScriptedScenario } from '../../../src/scripted/run.js';
 import { parseScriptedScenario } from '../../../src/scripted/schema.js';
-import { createRunLog } from '../../../src/log/index.js';
+import { randomUUID } from 'node:crypto';
+import type { createRunLog } from '../../../src/log/index.js';
 import type { DeviceDriver } from '../../../src/contracts/index.js';
 import type { AttemptIdentity, AttemptView, DeviceIdentity, DeviceView, GenerationView, OwnerIdentity } from '../../../src/device/admission.js';
 import { Refusal } from './records.js';
@@ -128,8 +129,19 @@ const cycleJudge: ScriptedJudge = {
   },
 };
 
+/**
+ * The scripted runner and the run log, from the same product build as the driver. The runner tells a device failure
+ * apart with `instanceof` on the driver's error classes, so a runner from another copy of the product sees every
+ * one of them as an unknown error.
+ */
+export interface CycleRuntime {
+  runScriptedScenario: typeof runScriptedScenario;
+  createRunLog: typeof createRunLog;
+}
+
 export interface ScriptedCycleOptions {
   scenario: ScriptedScenario;
+  runtime: CycleRuntime;
   /** The folder the cycle's run logs go under. */
   logRoot: string;
   /** The driver for one cycle; it gets the cycle's run id, which is also its admission attempt id. */
@@ -137,13 +149,18 @@ export interface ScriptedCycleOptions {
   judge?: ScriptedJudge;
 }
 
-/** The cycle runner: one scripted run per cycle, each on its own admission attempt. */
+/**
+ * The cycle runner: one scripted run per cycle, each on its own admission attempt. The run id carries a token
+ * of this attempt, because the product keeps each run's log files for days and creates them exclusively, so a
+ * second attempt reusing `cycle-1` would fail on the first attempt's files.
+ */
 export function scriptedCycle(options: ScriptedCycleOptions): (index: number, signal: AbortSignal) => Promise<CycleRun> {
+  const token = randomUUID().slice(0, 8);
   return async (index, signal) => {
-    const runId = `cycle-${String(index)}`;
-    const log = await createRunLog(options.logRoot, runId);
+    const runId = `cycle-${token}-${String(index)}`;
+    const log = await options.runtime.createRunLog(options.logRoot, runId);
     const driver = options.driver({ runId, index });
-    const report = await runScriptedScenario({
+    const report = await options.runtime.runScriptedScenario({
       runId, scenario: options.scenario, driver, judge: options.judge ?? cycleJudge, log, signal,
     });
     const checkpoints = report.checkpoints;
