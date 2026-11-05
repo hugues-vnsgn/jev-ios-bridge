@@ -28,7 +28,7 @@ export const publicToolRequestSchema = z.discriminatedUnion('name', [
 ]);
 export const toolResultSchema = z.object({ content: z.array(z.json()), isError: z.boolean().optional(),
   structuredContent: z.record(z.string(), z.json()).optional() });
-export const extensionErrorCodeSchema = z.enum(['SESSION_MISMATCH', 'VERSION_MISMATCH', 'NOT_ALLOWED', 'NOT_UNIQUE', 'DRIVER_ERROR', 'TIMEOUT']);
+export const extensionErrorCodeSchema = z.enum(['SESSION_MISMATCH', 'VERSION_MISMATCH', 'NOT_ALLOWED', 'NOT_UNIQUE', 'NOT_FOUND', 'DRIVER_ERROR', 'TIMEOUT']);
 export const extensionErrorSchema = z.strictObject({ error: z.strictObject({ code: extensionErrorCodeSchema, message: extensionErrorCodeSchema }) });
 export const ownedSessionSchema = z.strictObject({ sessionId: sessionIdSchema, ownership: z.literal('owned'), platform: platformSchema, device: z.string().min(1) });
 export const creationResultSchema = z.strictObject({ extensionVersion: z.literal(EXTENSION_VERSION), sessions: z.tuple([ownedSessionSchema]) });

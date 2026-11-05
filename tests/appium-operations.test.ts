@@ -282,9 +282,23 @@ test('replace text is one jev_replace_text call and the shown value is the field
     element('e2', 'text-field', { x: 50, y: 500, width: 980, height: 120 }, { identifier: 'com.app:id/email', actions: ['tap', 'typeText'], value: '123-456-789' }),
     element('e4', 'text', { x: 0, y: 700, width: 100, height: 40 }, { label: '123456789', actions: [] })]);
   const done = await r.operations.replaceText(evidence, 'e2', '123456789', live());
-  assert.deepEqual(r.calls, [{ tool: 'jev_replace_text', arguments: { locator: { using: 'id', value: 'com.app:id/email' }, text: '123456789' } }]);
+  assert.deepEqual(r.calls, [{ tool: 'jev_replace_text', arguments: { locator: { using: 'xpath', value: '//*[@resource-id="com.app:id/email"]' }, text: '123456789' } }]);
   assert.equal('screen' in done.result && done.result.shownValue, '123-456-789');
 });
+for (const [identifier, value] of [
+  ['field.plain', '//*[@resource-id="field.plain"]'],
+  [`say "hi"`, `//*[@resource-id='say "hi"']`],
+  [`it's "x"`, `//*[@resource-id=concat("it's ", '"', "x", '"', "")]`],
+] as const) {
+  test(`an Android field whose resource-id is ${identifier} is found by that exact resource-id, with no package added`, async () => {
+    const r = rig('android');
+    r.queue.push([...androidElements().filter(e => e.ref !== 'e2'),
+      element('e2', 'text-field', { x: 50, y: 500, width: 980, height: 120 }, { identifier, actions: ['tap', 'typeText'] })]);
+    const evidence = await r.observe();
+    await r.operations.replaceText(evidence, 'e2', 'abc', live());
+    assert.deepEqual(r.calls, [{ tool: 'jev_replace_text', arguments: { locator: { using: 'xpath', value }, text: 'abc' } }]);
+  });
+}
 test('iOS replace text accepts a leading hyphen and Unicode, and a hint-only field shows an empty value', async () => {
   const r = rig('ios');
   const evidence = await r.observe();
@@ -353,16 +367,20 @@ for (const [name, platform, run, operation] of mutations) {
     });
   }
 }
-test('an extension refusal before input is not a lost acknowledgement', async () => {
-  const r = rig('ios'); const evidence = await r.observe();
-  r.behaviour.failure = new AppiumError('NOT_UNIQUE');
-  await assert.rejects(r.operations.replaceText(evidence, 'e3', 'x', live()), { code: 'TARGET_AMBIGUOUS' });
-  assert.equal(r.operations.unconfirmed, undefined);
-});
+for (const [platform, ref] of [['ios', 'e3'], ['android', 'e2']] as const) {
+  for (const [refusal, reason] of [['NOT_UNIQUE', 'TARGET_AMBIGUOUS'], ['NOT_FOUND', 'TARGET_UNAVAILABLE']] as const) {
+    test(`on ${platform}, the extension refusing a replacement before input with ${refusal} is ${reason}, not a lost acknowledgement`, async () => {
+      const r = rig(platform); const evidence = await r.observe();
+      r.behaviour.failure = new AppiumError(refusal);
+      await assert.rejects(r.operations.replaceText(evidence, ref, 'x', live()), { code: reason });
+      assert.equal(r.operations.unconfirmed, undefined);
+    });
+  }
+}
 
 test('a typed value never appears in an error, whatever the client throws', async () => {
   const secret = 'S3cr3t-value-9f2';
-  for (const failure of [new Error(`typed ${secret}`), new AppiumError('ACKNOWLEDGEMENT_LOST'), new AppiumError('NOT_ALLOWED'), new AppiumError('NOT_UNIQUE')]) {
+  for (const failure of [new Error(`typed ${secret}`), new AppiumError('ACKNOWLEDGEMENT_LOST'), new AppiumError('NOT_ALLOWED'), new AppiumError('NOT_UNIQUE'), new AppiumError('NOT_FOUND')]) {
     const r = rig('ios'); const evidence = await r.observe();
     r.behaviour.failure = failure;
     const error = await r.operations.replaceText(evidence, 'e3', secret, live()).then(() => undefined, (caught: unknown) => caught);
