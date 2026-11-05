@@ -37,7 +37,7 @@ Android (`"platform": "android"`):
 
 | Field | Required | Type | Notes |
 | --- | --- | --- | --- |
-| `udid` | no | string | iOS only. Overrides `JEV_DEVICE_UDID` and `.mobilebuildmcp/config.yaml`. Must be an 8-4-4-4-12 UUID. Rejected on Android; use `serial` or `avd`. |
+| `udid` | no | string | iOS only. Overrides `JEV_DEVICE_UDID` and an older project's `.mobilebuildmcp/config.yaml`, which the bridge still reads. Must be an 8-4-4-4-12 UUID. Rejected on Android; use `serial` or `avd`. |
 | `serial` | no | string | Android only. The adb serial exactly as `adb devices` prints it, matching `^[A-Za-z0-9._:-]{1,100}$`. At most one of `serial` or `avd`. |
 | `avd` | no | string | Android only. An emulator's AVD name, matching `^[A-Za-z0-9._-]{1,100}$`. At most one of `serial` or `avd`. |
 

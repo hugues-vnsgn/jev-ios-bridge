@@ -1,6 +1,6 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { existsSync, readFileSync } from 'node:fs';
+import { existsSync, readdirSync, readFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { rewriteSkill } from '../scripts/build-plugin.mjs';
 
@@ -28,6 +28,32 @@ test('the plugin copy of /test-ios points its guide at the plugin and nothing at
   assert.ok(skill.includes('${CLAUDE_PLUGIN_ROOT}/docs/guide/'));
   assert.ok(!skill.includes('node_modules/jev-ios-bridge/docs/guide/'));
   assert.ok(!skill.includes('node_modules/mobilebuildmcp'));
+});
+
+function shippedText(): string[] {
+  const files = ['README.md', 'skills/test-ios/SKILL.md', 'skills/test-android/SKILL.md'];
+  const walk = (dir: string): void => {
+    for (const entry of readdirSync(dir, { withFileTypes: true })) {
+      if (entry.isDirectory()) walk(join(dir, entry.name));
+      else if (entry.name.endsWith('.md')) files.push(join(dir, entry.name));
+    }
+  };
+  walk('docs/guide');
+  return files;
+}
+
+test('no shipped skill, guide page or README tells anyone to install or run MobileBuildMCP or mobilecli', () => {
+  for (const file of shippedText()) {
+    const text = readFileSync(file, 'utf8');
+    assert.ok(!/\bnpx\s+(?:-y\s+)?(?:mobilebuildmcp|mobilecli)\b|\b(?:mobilebuildmcp|mobilecli)@|ui-automation\s+snapshot-ui|installs with the bridge/i.test(text),
+      `${file} still gives MobileBuildMCP or mobilecli install or usage advice`);
+    for (const [, context] of text.matchAll(/(.{0,12})mobilebuildmcp/g)) {
+      assert.ok(context!.endsWith('.'), `${file} names mobilebuildmcp outside the .mobilebuildmcp/config.yaml reader`);
+    }
+    for (const [match] of text.matchAll(/\.mobilebuildmcp[^\s`]*/g)) {
+      assert.equal(match, '.mobilebuildmcp/config.yaml', `${file} names an unexpected MobileBuildMCP path`);
+    }
+  }
 });
 
 test('the plugin asks for an optional simulator and an optional Android device', () => {

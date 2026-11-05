@@ -45,7 +45,7 @@ Keep the shortcut out of Release builds. One real example is a freight app that 
 
 ## A simulator of its own
 
-One bridge run at a time uses a simulator, and the bridge enforces this with a lock file. Don't point Xcode, other agents, or other test runs at the same simulator while a run is going. Pick it with `JEV_DEVICE_UDID`, `device.udid` in the script, or `sessionDefaults.simulatorId` in `.mobilebuildmcp/config.yaml`. The script's value wins, then the environment variable, then the config file.
+One bridge run at a time uses a simulator, and the bridge enforces this with a lock file. Don't point Xcode, other agents, or other test runs at the same simulator while a run is going. Pick it with `JEV_DEVICE_UDID`, `device.udid` in the script, or, in a project set up for an older release, the `sessionDefaults.simulatorId` in `.mobilebuildmcp/config.yaml`. The bridge no longer uses MobileBuildMCP and only reads that file for compatibility (it warns and suggests a [profile](06-running.md)). The script's value wins, then the environment variable, then the config file.
 
 ## An Android device of its own
 

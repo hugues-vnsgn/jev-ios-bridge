@@ -1,12 +1,29 @@
 # Changelog
 
-## Unreleased
+## 1.5.0 — unreleased
 
-- Both platforms move to one frozen Appium stack, replacing MobileBuildMCP on iOS and mobilecli's device agent on Android. WebDriverAgent drives iOS, and UiAutomator2 with `adb` drives Android.
-- The stack ships as release archives and is checked by hash and unpacked offline on first use. iOS is qualified on iOS 26.5 with Xcode 27.0; other versions warn and continue.
-- The admission store becomes the device authority for every entry point. A compatibility marker file still tells an older binary that a device is busy.
-- First use of the stack now works under any umask, a stuck or failing unpack names its reason and has five minutes on a busy machine, and a `capture` or `run` stopped by the admission store reports the store's own reason (such as `STATE_UNAVAILABLE`) instead of a generic execution error.
-- Not released. Live iOS and Android acceptance, and the cutover, are still to come. The published release, v1.4.0, drives devices through MobileBuildMCP and mobilecli's device agent.
+Both platforms now run on one Appium stack that ships inside the package. Scripts, verdicts, reports, reason codes, exit codes and the evidence folder are as in 1.4.0. Live acceptance on real devices is pending, and the release notes will say what was checked live. See the [release notes](https://github.com/hugues-vnsgn/jev-ios-bridge/blob/v1.5.0/docs/releases/v1.5.0.md).
+
+### For users
+
+- **MobileBuildMCP, mobilecli and AXe are gone.** The package no longer installs or runs them, and you don't need them. WebDriverAgent drives iOS simulators, and UiAutomator2 with `adb` drives Android emulators and phones.
+- **The Appium stack travels in the package and the plugin.** On first use the bridge checks the archives' hashes and unpacks them under `~/Library/Application Support/jev-ios-bridge/`, with no network access. Nothing is installed, built or downloaded when a run starts.
+- **Apple silicon Macs and Node 24 or later only.** On any other host the bridge refuses before it touches a device.
+- **iOS 26.5 with Xcode 27.0 is the qualified pair.** Other iOS or Xcode versions print a warning and the run continues.
+- **Tested device categories only.** iOS simulators and Android emulators are the supported targets. Android phones are supported in code but untested. Real iPhones are not supported.
+- **Typing.** A value that starts with a hyphen now types on both platforms, and non-ASCII values on Android no longer go through the device clipboard.
+- **Profiles.** `.jev/profiles.json` names a device, and `run`, `capture` and `start_scenario` accept `--profile` or `profile`. A `.mobilebuildmcp/config.yaml` from an older setup is still read for the simulator UUID, with a warning that suggests a profile.
+- **Crashed runs.** The next run stops what the crashed run recorded, matched by process identity, and refuses with `DEVICE_QUARANTINED` when it can't prove a stop.
+- **Admission.** One per-user admission store is the device authority for every entry point, Android included. The upgrade from the 1.4.0 store is offline; see the [admission activation runbook](docs/guide/admission-activation.md). A compatibility marker file still tells an older binary that a device is busy.
+- **Slow iOS screens.** When no screen capture finishes within the 3 s settle limit, as on screens whose page source is slow to build, the bridge now waits for the capture already in progress (up to its own 10 s limit) and returns it marked unsettled, instead of refusing with `OBSERVATION_TIMEOUT`.
+- **Store refusals.** A `capture` or `run` stopped by the admission store now reports the store's own reason code, such as `STATE_UNAVAILABLE`, instead of `EXECUTION_ERROR`, and `capture` prints the store's message.
+- **Docs.** The guide no longer sends you to MobileBuildMCP. On iOS the bridge has no capture command of its own yet, so the guide points to Xcode's Accessibility Inspector for seeing identifiers.
+
+### For maintainers
+
+- The decisions are ADR-0010 (Appium as the shared device layer), ADR-0011 (shared admission and native fencing), ADR-0012 (forward-only store upgrades), ADR-0013 (the stack ships as release archives) and ADR-0014 (native launch steps beside Appium).
+- The stack is frozen. Changing it is an owner-triggered re-freeze: a new lock, a new runner, new hashes and the six iOS cases again.
+- The release checklist is `.scratch/appium-mcp-migration/release-1.5.0.md`.
 
 ## 1.4.0 — 2026-10-11
 

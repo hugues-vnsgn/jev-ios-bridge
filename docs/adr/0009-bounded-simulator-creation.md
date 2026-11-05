@@ -5,7 +5,7 @@ date: 2026-10-08
 
 # A bounded fresh-simulator creation exception
 
-On cutover merge, [ADR-0010](0010-appium-mcp-as-the-shared-device-layer.md) replaces the pinned provider named below with Appium and its native helpers. The creation constraints here stay in force.
+On cutover merge, [ADR-0010](0010-appium-mcp-as-the-shared-device-layer.md) replaces the pinned provider named below with Appium and its native helpers. Input and screen capture go through Appium, and [ADR-0014](0014-native-launch-and-preparation-steps-beside-appium.md) keeps launch and preparation steps native beside it. The AXe point tap named below is retired (see [ADR-0007](0007-simulator-presentation-and-a-bounded-ios-point-tap-exception.md)). The creation constraints here stay in force. The text below is the 2026-10-08 decision as written.
 
 Pinned MobileBuildMCP can prepare existing simulators but cannot create them. Autonomous observed-action testing will use a narrow host adapter for `xcrun simctl create`, with explicit device type/runtime and an argument array. This amends ADR-0002's operator-only provisioning responsibility; it adds no UI input transport or app instrumentation. Boot, install, launch, input and visible captures remain with the pinned provider. [Primary command evidence and alternatives](../../.scratch/observed-integration/evidence/inventory-decision.md).
 
