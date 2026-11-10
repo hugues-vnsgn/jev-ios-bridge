@@ -12,8 +12,8 @@ State key: **done here** (finished in this PR), **waits on live gates** (needs a
 | Plugin manifest version | done here | `scripts/build-plugin.mjs` writes `.claude-plugin/plugin.json` from `package.json`, so there is no second source to edit. |
 | Package/tag consistency check | done here | `tests/docs.test.ts` requires every blob/tree link in the README and guide to use `v<package version>` and the linked path to exist. All links now read `v1.5.0`; `docs/releases/v1.5.0.md` exists for them to resolve. |
 | `.claude-plugin/marketplace.json` | owner publishes | Left on the published v1.4.0 zip on purpose: the 1.5.0 zip has no release URL or final hash yet, and pointing main at a missing asset breaks installs. Past releases changed it in a separate "point plugin marketplace at vX" commit after publishing (for example dadd63a65). Do that after upload, with the hash of the uploaded zip. |
-| CHANGELOG 1.5.0 entry | done here | Heading reads `## 1.5.0 — unreleased`. Replace "unreleased" with the publish date. |
-| Release notes `docs/releases/v1.5.0.md` | done here, edit at release | The "Validation and limits" section lists four rows as pending. Replace each with the recorded result once its gate has run. Do not claim a row that did not pass. |
+| CHANGELOG 1.5.0 entry | done here, date at release | Heading reads `## 1.5.0 - UNRELEASED`. Replace `UNRELEASED` with the publish date. The entry names what users see from the fix PRs #101 to #108. |
+| Release notes `docs/releases/v1.5.0.md` | filled 2026-11-11, edit at release | "Validation and limits" states what passed, failed and was not tested, from `phase4/evidence-results.md`. "Known limits" lists the owner's accepted limits. Each line that waits on an open gate carries `PENDING-GATE:`; fill or remove each before tagging. |
 | README header | done here | Evergreen wording; the release notes carry the live results. |
 
 ## Docs
@@ -48,20 +48,20 @@ Node 26.8.1, `PATH=/opt/homebrew/bin:$PATH`. Logs are in `/Users/hugues_mini/.co
 | `jev-ios-bridge-1.5.0.tgz` | 95,861,003 | `62ab24bde86c23ba4fd63fea290e81a43a836fa1c82093a2f6cc5c5bf185c50a` |
 | `jev-ios-bridge-plugin-1.5.0.zip` | 95,973,391 | `c1e3f46215a5ebefef96acc3e75fb2bb16833fc88e00d6f299c0aa4f6ee3def1` |
 
-Paths: `C-logs/packaging-proof/` (tarball) and `C-logs/packaging-proof/build-source/build/plugin/` (zip, `marketplace.json`). An earlier build on 592cd0947 produced different hashes (`old-proof/`, `artifact-sha256.txt` holds the current pair). Any later change to a packaged file, the merge of other branches, or a rebuild changes the hashes, so rebuild on the exact release commit and record those pairs instead. The marketplace entry takes the hash of the zip that is actually uploaded.
+These hashes are stale, because every fix PR since then changed the packaged files. Paths: `C-logs/packaging-proof/` (tarball) and `C-logs/packaging-proof/build-source/build/plugin/` (zip, `marketplace.json`). An earlier build on 592cd0947 produced different hashes (`old-proof/`, `artifact-sha256.txt` holds the current pair). Any later change to a packaged file, the merge of other branches, or a rebuild changes the hashes, so rebuild on the exact release commit and record those pairs instead. The marketplace entry takes the hash of the zip that is actually uploaded.
 
 ## Remaining steps in order
 
 | # | Step | State |
 | --- | --- | --- |
 | 1 | Merge #89 (cutover) once the live gates and the evidence index close; keep it a draft until then | waits on live gates |
-| 2 | Corpus gate through the Appium path: iOS 24 screens and 48 claims with zero confidently wrong and at most 3 uncertain; Android 10 screens and 31 claims with zero confidently wrong (needs the Jev key and the owner's corpus records) | waits on live gates |
-| 3 | Live matrix: iOS simulator, Android emulator, assigned Android phone; 20 independent cleanup cycles per device category; the five unfinished v1.4.0 simulator cases; activation of the real admission store | waits on live gates |
-| 4 | Fill `.scratch/appium-mcp-migration/phase4/evidence-index.md` and the release notes' "Validation and limits" with the recorded results | waits on live gates |
+| 2 | Corpus gate through the Appium path: iOS 24 screens and 48 claims with zero confidently wrong and at most 3 uncertain; Android 10 screens and 31 claims with zero confidently wrong (needs the Jev key and the owner's corpus records) | correspondence decided 2026-11-10 (35 approve, 3 recapture); recaptures and the judging pass wait on an owner assignment for `Medium_Phone_API_36.1` |
+| 3 | Live matrix: iOS simulator, Android emulator, assigned Android phone; 20 independent cleanup cycles per device category; the five unfinished v1.4.0 simulator cases; activation of the real admission store | 37 passed, 2 failed, 9 untested of 48 rows; store activated 2026-11-05 |
+| 4 | Record each requirement's state and evidence, and fill the release notes' "Validation and limits" | done 2026-11-11 in `phase4/evidence-results.md`; `evidence-index.md` stays generated, so its Status column keeps reading `untested` |
 | 5 | Review the iOS identifier docs choice above; confirm 1.5.0 or pick another number | owner call |
 | 6 | Merge #91 into the cutover branch (or retarget after #89 lands), pull the final head | owner |
 | 7 | Rebuild on the release commit: `npm run check`, then `npm run build:plugin`, then the packaging proof; record tarball and zip hashes | owner (about 15 minutes) |
-| 8 | Date the CHANGELOG heading, finish the release notes | owner |
+| 8 | Date the CHANGELOG heading; resolve every `PENDING-GATE:` line in the release notes, the CHANGELOG and `evidence-results.md` | owner |
 | 9 | Tag `v1.5.0`, create the GitHub release, upload the tarball and the zip | owner publishes |
 | 10 | Commit "release: point plugin marketplace at v1.5.0" with the uploaded zip's URL and sha256 | owner publishes |
 | 11 | After publishing: `gh release download` the tarball and repeat the 4b to 4f install steps once; update the v1.5.0 records | owner |
