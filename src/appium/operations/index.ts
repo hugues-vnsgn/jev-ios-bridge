@@ -6,7 +6,7 @@ import type { AppiumObservedScreen } from '../observe/index.js';
 import { AppiumError, type AppiumErrorCode, type AppiumPlatform, type AppiumSessionId } from '../wire-schemas.js';
 import { textFieldOf, shownValueOf } from './field.js';
 import { DEFAULT_TAP_HOLD_MS, centreOf, contains, edgeBack, screenMiddleScroll, scrollWithin, strokeSequence, swipeWithin, tapSequence,
-  type Frame, type PointerActions, type Stroke } from './geometry.js';
+  type Frame, type Point, type PointerActions, type Stroke } from './geometry.js';
 
 export type OperationName = 'tap' | 'swipe' | 'scroll' | 'back' | 'tap-at' | 'replace-text' | 'restart' | 'terminate';
 
@@ -34,8 +34,8 @@ export interface AppiumOperationsOptions {
   dispatch?: OperationDispatcher;
   now?: () => number;
   timeoutMs?: number;
-  /** Android: the screen areas the soft keyboard takes touches in right now, empty when none is shown. Read just before a tap,
-   *  because the snapshot can predate a keyboard that opened since. */
+  /** Android: the screen areas the soft keyboard takes touches in right now, empty when none is shown. Read just before a tap or
+   *  stroke, because the snapshot can predate a keyboard that opened since. */
   keyboard?: (signal: AbortSignal) => Promise<readonly Frame[]>;
 }
 export interface Performed {
@@ -199,13 +199,19 @@ export class AppiumOperations {
     if (!Number.isInteger(holdMs) || holdMs < 0 || holdMs > MAX_HOLD_MS) throw unsupported('The hold is out of range.');
     const target = this.target(evidence, ref, 'tap');
     const point = centreOf(target.frame);
-    if (this.options.keyboard && (await this.options.keyboard(signal)).some(area => contains(area, point)))
-      throw new DeviceReasonError('TARGET_UNAVAILABLE', 'The target is behind the soft keyboard.');
+    await this.clearOfKeyboard(point, signal);
     return { ...await this.pointed(operation, tapSequence(point, holdMs), signal, actPath), holdMs };
   }
 
-  private stroked(operation: 'swipe' | 'scroll' | 'back', stroke: Stroke, signal: AbortSignal, actPath?: ActPath): Promise<Performed> {
+  private async stroked(operation: 'swipe' | 'scroll' | 'back', stroke: Stroke, signal: AbortSignal, actPath?: ActPath): Promise<Performed> {
+    await this.clearOfKeyboard(stroke.from, signal);
     return this.pointed(operation, strokeSequence(stroke), signal, actPath);
+  }
+
+  /** A touch that lands on the soft keyboard would type, so it is refused before input. */
+  private async clearOfKeyboard(point: Point, signal: AbortSignal): Promise<void> {
+    if (this.options.keyboard && (await this.options.keyboard(signal)).some(area => contains(area, point)))
+      throw new DeviceReasonError('TARGET_UNAVAILABLE', 'The touch would land on the soft keyboard.');
   }
 
   private async pointed(operation: OperationName, actions: PointerActions, signal: AbortSignal, actPath?: ActPath): Promise<Performed> {

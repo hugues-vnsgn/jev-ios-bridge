@@ -134,6 +134,7 @@ export class AppiumDriver implements DeviceDriver, IosPreparationDriver, Observe
   private sequence = 0;
   private tapOnceIssued = false;
   private issuanceClosed = false;
+  private inputStopped = false;
   private screenshots: Promise<string> | undefined;
   private preparationClaim: PreparationClaim | undefined;
   private handback: Snapshot | undefined;
@@ -182,6 +183,9 @@ export class AppiumDriver implements DeviceDriver, IosPreparationDriver, Observe
   act(action: Action, snapshot: Snapshot, scenario: ActionScenarioContext, signal: AbortSignal): Promise<Snapshot | ActOutcome> {
     return this.operations.track(() => this.actIssued(action, snapshot, scenario, signal));
   }
+
+  /** The run stopped: no input is sent from now on, while commands already in flight, reads included, finish. */
+  stopInput(): void { this.inputStopped = true; }
 
   close(signal: AbortSignal): Promise<void> {
     if (this.closing) return this.closing;
@@ -579,17 +583,17 @@ export class AppiumDriver implements DeviceDriver, IosPreparationDriver, Observe
   private uiautomator2Processes(owner: Owner, serial: string, signal: AbortSignal, options: { cleanup?: boolean } = {}): Promise<{ pid: number; startTime: string }[]> {
     const adb = this.adbRunner();
     return this.dispatch(owner, 'uiautomator2-identity', signal, this.timeoutMs, async issued => {
-      const listed = await adb(shellCommand(serial, ['pidof', ...UIAUTOMATOR2_PACKAGES]), issued);
+      const listed = await adb(shellCommand(serial, ['pidof', ...UIAUTOMATOR2_PACKAGES]), issued, undefined, 'read');
       const pids = listed.exitCode === 0 ? listed.stdout.trim().split(/\s+/).filter(Boolean).map(Number).filter(pid => Number.isSafeInteger(pid) && pid > 0) : [];
       const found: { pid: number; startTime: string }[] = [];
       for (const pid of pids) {
-        const stat = await adb(shellCommand(serial, ['cat', `/proc/${String(pid)}/stat`]), issued);
+        const stat = await adb(shellCommand(serial, ['cat', `/proc/${String(pid)}/stat`]), issued, undefined, 'read');
         if (processGone(stat)) continue;
         const startTime = androidStartTime(stat.stdout);
         if (startTime) found.push({ pid, startTime });
       }
       return found;
-    }, options);
+    }, { ...options, read: true });
   }
 
   /** The legacy device checks, in their order, as recorded reads before any effect: API level, boot, then the app installed.
@@ -687,7 +691,7 @@ export class AppiumDriver implements DeviceDriver, IosPreparationDriver, Observe
 
   private androidShell(owner: Owner, operation: string, serial: string, words: string[], signal: AbortSignal) {
     const adb = this.adbRunner();
-    return this.dispatch(owner, operation, signal, this.timeoutMs, issued => adb(shellCommand(serial, words), issued));
+    return this.dispatch(owner, operation, signal, this.timeoutMs, issued => adb(shellCommand(serial, words), issued, undefined, 'read'), { read: true });
   }
 
   /** Where the soft keyboard takes touches, as the window manager dispatches them. An unreadable state refuses the tap before input. */
@@ -877,11 +881,14 @@ export class AppiumDriver implements DeviceDriver, IosPreparationDriver, Observe
 
   /** One recorded command in the owner's ledger, bounded by its own deadline and the caller's signal. */
   /** `input`: a device input whose failure after send is never an answer, unless the extension refused it before input.
-   *  `cleanup`: a read close makes after issuance has closed. */
+   *  `cleanup`: a read close makes after issuance has closed.
+   *  `read`: adb reads, which end only once their processes have exited, so any failure, a cut included, is an answer: nothing they
+   *  started can act on the device. */
   private async dispatch<T>(owner: Owner, operation: string, signal: AbortSignal, timeoutMs: number, effect: (signal: AbortSignal) => Promise<T>,
-    options: { input?: boolean; cleanup?: boolean } = {}): Promise<T> {
+    options: { input?: boolean; cleanup?: boolean; read?: boolean } = {}): Promise<T> {
     signal.throwIfAborted();
     if (this.issuanceClosed && !options.cleanup) throw new AdmissionError('DISPATCH_CLOSED', 'Device issuance is closed');
+    if (this.inputStopped && options.input) throw new AdmissionError('DISPATCH_CLOSED', 'The run has stopped, so no new input is sent');
     const controller = new AbortController();
     this.aborters.add(controller);
     const cancel = () => controller.abort(signal.reason);
@@ -891,7 +898,7 @@ export class AppiumDriver implements DeviceDriver, IosPreparationDriver, Observe
       const settled = await owner.dispatcher.dispatch(operation, async () => {
         try { return { kind: 'value' as const, value: await effect(controller.signal) }; }
         catch (error) {
-          if (controller.signal.aborted || outcomeUnknown(error) || (options.input && !refusedBeforeInput(error))) { this.firstFailure ??= error; throw error; }
+          if (!options.read && (controller.signal.aborted || outcomeUnknown(error) || (options.input && !refusedBeforeInput(error)))) { this.firstFailure ??= error; throw error; }
           return { kind: 'error' as const, error };
         }
       });
