@@ -113,18 +113,20 @@ export function worldFixture(t: TestContext, first: World, options: Overrides, n
       runners = created();
       fence.wda.push({ udid: options.target.device, bundleId: WDA_BUNDLE, pid: 7000 + runners });
     }
+    if (effect.kind === 'uiautomator2-inventory' && created() > uiautomatorStoppedAt) startUiautomator2();
     const result = await run(effect, ...rest);
     if (effect.kind === 'android-stop' && !UIAUTOMATOR2_PIDS.some(pid => fence.processes.has(pid))) uiautomatorStoppedAt = created();
     return result;
   };
   // A created Android session starts UiAutomator2, which `pidof` lists until the fence stops both processes.
   let uiautomatorStoppedAt = 0;
+  const startUiautomator2 = () => { for (const pid of UIAUTOMATOR2_PIDS) if (!fence.processes.has(pid)) fence.processes.set(pid, '424242'); };
   const adb = options.adb;
   const sessionAdb: AdbRunner | undefined = adb && (async (args, ...rest) => {
     syncForward();
     if (!(args.at(-1) ?? '').includes('pidof') || !(args.at(-1) ?? '').includes('io.appium.uiautomator2')) return adb(args, ...rest);
     if (created() <= uiautomatorStoppedAt) return { stdout: '', stderr: '', exitCode: 1 };
-    for (const pid of UIAUTOMATOR2_PIDS) if (!fence.processes.has(pid)) fence.processes.set(pid, '424242');
+    startUiautomator2();
     return { stdout: UIAUTOMATOR2_PIDS.join(' ') + '\n', stderr: '', exitCode: 0 };
   });
   const native = fakeNativeRunner(nativeReply);

@@ -118,6 +118,7 @@ export class FakeFence {
         return { ok: true };
       case 'android-process': { const startTime = this.processes.get(effect.pid); return startTime ? { kind: 'running', startTime } : { kind: 'absent' }; }
       case 'android-stop': this.processes.delete(effect.process.pid); return { ok: true };
+      case 'uiautomator2-inventory': return [...this.processes].map(([pid, startTime]) => ({ pid, startTime }));
       case 'forward-inventory': return structuredClone(this.forwards);
       case 'forward-remove': this.forwards = this.forwards.filter(row => row.serial !== effect.serial || row.local !== effect.local); return { ok: true };
       case 'settings-read': return structuredClone(this.values);
