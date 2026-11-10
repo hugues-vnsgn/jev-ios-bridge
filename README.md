@@ -60,7 +60,7 @@ To keep Claude's share down now:
 
 You need a Mac on Apple silicon, Node 24 or later, a TypeSafe API key, and Claude Code for the plugin setup below. Another Mac is refused before any device work.
 
-- **iOS:** Xcode 27.0 and the iOS 26.5 simulator runtime, the pair the frozen WebDriverAgent is qualified on. Any other iOS or Xcode version warns and the run continues. The first run unpacks the frozen stack, about 375 MB, under `~/Library/Application Support/jev-ios-bridge/`.
+- **iOS:** Xcode 27.0 or 27.1 with the iOS 26.5 simulator runtime, the pairs the frozen WebDriverAgent is qualified on. Any other iOS or Xcode version warns and the run continues. The first run unpacks the frozen stack, about 375 MB, under `~/Library/Application Support/jev-ios-bridge/`.
 - **Android:** Android Studio, the SDK's `adb` and emulator on your `PATH`, and a device on Android 12 (API 31) or later. See [Android setup](docs/guide/12-android-setup.md).
 
 Pick [an existing project](#install-in-an-existing-project) or [a brand-new one](#start-a-brand-new-project). For the terminal only, follow the [CLI quickstart](docs/guide/01-quickstart.md#1-install-the-bridge-into-your-project); the package ships as a GitHub release tarball.

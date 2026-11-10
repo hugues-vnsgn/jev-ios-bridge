@@ -79,10 +79,12 @@ for (const facts of [{ ...host, arch: 'x64' }, { ...host, node: '22.22.2' }, { .
 test('off-range iOS and Xcode warn and continue with the verified runner', async t => {
   const f = fixture(); t.after(() => rmSync(f.base, { recursive: true, force: true }));
   const result = await (await open(f)).prepare({ iosVersion: '26.4', xcodeVersion: '26.3' });
-  assert.deepEqual(result.warnings, ['Unsupported iOS 26.4; qualified version is 26.5.', 'Unsupported Xcode 26.3; qualified version is 27.0.']);
+  assert.deepEqual(result.warnings, ['Unsupported iOS 26.4; qualified version is 26.5.', 'Unsupported Xcode 26.3; qualified versions are 27.0 and 27.1.']);
   assert.equal(readFileSync(join(result.root, runner), 'utf8'), 'qualified runner\n');
-  const supported = await (await open(f)).prepare({ iosVersion: '26.5', xcodeVersion: '27.0' });
-  assert.deepEqual(supported.warnings, []);
+  for (const xcodeVersion of ['27.0', '27.1'])
+    assert.deepEqual((await (await open(f)).prepare({ iosVersion: '26.5', xcodeVersion })).warnings, [], `Xcode ${xcodeVersion} is qualified`);
+  assert.deepEqual((await (await open(f)).prepare({ iosVersion: '26.5', xcodeVersion: '27.2' })).warnings,
+    ['Unsupported Xcode 27.2; qualified versions are 27.0 and 27.1.']);
 });
 test('two processes race first use and publish one complete extracted tree', async t => {
   const f = fixture(); teardown(t, f.base);

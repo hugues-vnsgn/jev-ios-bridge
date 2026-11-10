@@ -198,7 +198,7 @@ export class FrozenStack {
     extracted();
     const warnings: string[] = [];
     if (selection.iosVersion !== undefined && selection.iosVersion !== '26.5') warnings.push(`Unsupported iOS ${selection.iosVersion}; qualified version is 26.5.`);
-    if (selection.xcodeVersion !== undefined && selection.xcodeVersion !== '27.0') warnings.push(`Unsupported Xcode ${selection.xcodeVersion}; qualified version is 27.0.`);
+    if (selection.xcodeVersion !== undefined && !['27.0', '27.1'].includes(selection.xcodeVersion)) warnings.push(`Unsupported Xcode ${selection.xcodeVersion}; qualified versions are 27.0 and 27.1.`);
     return { root, nodeModules: join(root, 'node_modules'), wdaRunner: join(root, manifest.wda.path), identity, manifest, warnings };
   }
 }
