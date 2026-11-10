@@ -431,7 +431,7 @@
         "Build and install examples/diagnostic-app-android on the assigned Android emulator.",
         "Run .scratch/android-support/findings/06-assets/logprobe with a supplied value through CLI `run`, once with the log pane and once with `--no-log-pane`, then follow it with CLI `logs`.",
         "Send `adb shell am crash dev.jevbridge.diagnostic` partway through a run of examples/diagnostic-app-android.",
-        "Run .scratch/android-support/findings/06-assets/logprobe with intent extra `mode` set to `anr`.",
+        "Run .scratch/android-support/findings/06-assets/logprobe with intent extra `mode` set to `anr`, and send one key event (`adb shell input keyevent KEYCODE_DPAD_DOWN`) during the freeze. Android declares an ANR only while input waits, so expect APP_NOT_RESPONDING.",
         "Kill the run's owned logcat process partway through another run."
       ],
       "expected": "System.out, System.err and logcat lines for the app's uid reach the log pane, `logs` and step tails, with supplied values masked as [value:<key>]. Empty output differs from an unavailable source. The crash ends the run APP_EXITED and the ANR ends it APP_NOT_RESPONDING, each named in the pane. The normal stop at the end of a run and the lost logcat stream produce no app diagnosis.",
@@ -464,7 +464,7 @@
         "Build and install examples/diagnostic-app-android on the assigned Android phone.",
         "Run .scratch/android-support/findings/06-assets/logprobe with a supplied value through CLI `run`, once with the log pane and once with `--no-log-pane`, then follow it with CLI `logs`.",
         "Send `adb shell am crash dev.jevbridge.diagnostic` partway through a run of examples/diagnostic-app-android.",
-        "Run .scratch/android-support/findings/06-assets/logprobe with intent extra `mode` set to `anr`.",
+        "Run .scratch/android-support/findings/06-assets/logprobe with intent extra `mode` set to `anr`, and send one key event (`adb shell input keyevent KEYCODE_DPAD_DOWN`) during the freeze. Android declares an ANR only while input waits, so expect APP_NOT_RESPONDING.",
         "Kill the run's owned logcat process partway through another run."
       ],
       "expected": "System.out, System.err and logcat lines for the app's uid reach the log pane, `logs` and step tails, with supplied values masked as [value:<key>]. Empty output differs from an unavailable source. The crash ends the run APP_EXITED and the ANR ends it APP_NOT_RESPONDING, each named in the pane. The normal stop at the end of a run and the lost logcat stream produce no app diagnosis.",
@@ -1268,8 +1268,8 @@
         "android-emulator"
       ],
       "steps": [
-        "On spikes/benchmarks/vendor/weather, replace the text of a field found by label alone through CLI `run`, then of a field that has neither identifier nor label.",
-        "On Android, replace the text of a Compose field with no resource id, and of a classic EditText in .scratch/android-support/findings/05-assets/probe-app."
+        "On the Text fields screen of examples/diagnostic-app (`launchArgs` `[\"-screen\", \"fields\"]`), replace through CLI `run` the text of the field found by label alone, then of the field that has neither identifier nor label, then of one of the two fields that share a label.",
+        "On Android, replace the text of the Compose field with no resource id on the noid screen of .scratch/android-support/findings/05-assets/probe-app (intent extra `screen` set to `noid`), and of a classic EditText on its fields screen."
       ],
       "expected": "A field with a unique identifier or label is replaced and its shown value read back. An iOS field with neither, or one that shares its name with another text field, is refused before input. The Android fields without a resource id are found by their bounds and replaced.",
       "evidence": [
@@ -1298,7 +1298,7 @@
         "android-emulator"
       ],
       "steps": [
-        "Through CLI `run`, observe a screen that keeps changing past the settle deadline while its page source is pending, such as the infinite spinner in .scratch/android-support/findings/05-assets/probe-app.",
+        "Through CLI `run`, observe a screen that keeps changing past the settle deadline while its page source is pending: on Android the slow screen of .scratch/android-support/findings/05-assets/probe-app (intent extra `screen` set to `slow`), on iOS the main screen of spikes/benchmarks/vendor/weather.",
         "Read the device state after close, then start a new run."
       ],
       "expected": "If close throws UI_ACTION_UNCONFIRMED, the device is quarantined with readable records, and recovery leaves no owned component. The device end state is recorded, and the next run either acquires the device or refuses truthfully.",

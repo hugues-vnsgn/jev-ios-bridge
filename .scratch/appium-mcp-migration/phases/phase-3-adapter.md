@@ -75,9 +75,10 @@ built or downloaded when the bridge runs:
 - The supported host is macOS on Apple silicon with Node 24 or later. Any other
   host refuses before effects. Live evidence covers Node 26.8.1; Phase 4 adds
   one live case on Node 24.
-- The supported iOS claim is iOS 26.5 with Xcode 27.0, the only pair the runner
-  is proven on. Another iOS runtime or Xcode version warns and continues: the
-  report and `doctor` name it as unsupported. The claim widens only with new
+- The supported iOS claim is iOS 26.5 with Xcode 27.0 or 27.1 (27.1 added on
+  2026-11-10 from the Phase 4 live runs), the only pairs the runner is proven
+  on. Another iOS runtime or Xcode version warns and continues: the report and
+  `doctor` name it as unsupported. The claim widens only with new
   live proof.
 - The release carries a third-party notices file for the stack and the runner:
   libvips (LGPL) shipped unmodified with its licence and source link, CC-BY

@@ -14,7 +14,7 @@ import { worldHost } from './fixtures/appium-wire/world-host.js';
 import { iosScreen, world } from './fixtures/appium-wire/world.js';
 import { stackRelease } from './fixtures/stack-release.js';
 
-const OFF_RANGE = ['Unsupported iOS 26.4; qualified version is 26.5.', 'Unsupported Xcode 26.3; qualified version is 27.0.'];
+const OFF_RANGE = ['Unsupported iOS 26.4; qualified version is 26.5.', 'Unsupported Xcode 26.3; qualified versions are 27.0 and 27.1.'];
 
 test('the production host checks the stack against the selected simulator\'s iOS runtime and the active Xcode', async t => {
   const release = stackRelease();

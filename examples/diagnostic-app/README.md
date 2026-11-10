@@ -6,6 +6,8 @@ This two-screen SwiftUI app gives the bridge a known failure to report. On **Sam
 
 The first screen also exposes `Selected: Apple` and `Selected: Apple, Bread` as accessibility text after each tap. This makes the intermediate state visible in a screen capture.
 
+Launched with the arguments `-screen fields` (script `"launchArgs": ["-screen", "fields"]`), the app opens a **Text fields** screen instead. It holds four text fields with no accessibility identifier: one labelled `Nickname`, one with neither identifier nor label, and two that share the label `Note`. The text `fields.echo` shows all four values. The Phase 4 replace-text locator row uses it. Without that argument the app is unchanged.
+
 The Xcode project is checked in. To regenerate it, run `xcodegen generate` in this directory. Build without launching a simulator UI:
 
 ```sh

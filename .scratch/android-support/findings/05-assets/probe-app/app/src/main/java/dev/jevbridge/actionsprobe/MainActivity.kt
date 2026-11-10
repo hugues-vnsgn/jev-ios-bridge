@@ -2,6 +2,7 @@ package dev.jevbridge.actionsprobe
 
 // Throwaway probe app for ticket 05 (actions across Android versions). Not shipped.
 import android.os.Bundle
+import android.os.SystemClock
 import android.text.InputType
 import android.widget.EditText
 import androidx.activity.ComponentActivity
@@ -33,7 +34,9 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -50,22 +53,25 @@ import androidx.compose.ui.text.input.TransformedText
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
+import kotlinx.coroutines.delay
 
 class MainActivity : ComponentActivity() {
     @OptIn(ExperimentalComposeUiApi::class)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        val start = intent.getStringExtra("screen") ?: "fields"
+        val busyMs = intent.getStringExtra("busyMs")?.toLongOrNull()?.coerceIn(0L, 4_500L) ?: 2_500L
         setContent {
             MaterialTheme {
-                Surface(Modifier.fillMaxSize().semantics { testTagsAsResourceId = true }) { Probe() }
+                Surface(Modifier.fillMaxSize().semantics { testTagsAsResourceId = true }) { Probe(start, busyMs) }
             }
         }
     }
 }
 
 @Composable
-private fun Probe() {
-    var screen by remember { mutableStateOf("fields") }
+private fun Probe(start: String, busyMs: Long) {
+    var screen by remember { mutableStateOf(start) }
     Column(Modifier.fillMaxSize().safeDrawingPadding().padding(8.dp), verticalArrangement = Arrangement.spacedBy(6.dp)) {
         Row(horizontalArrangement = Arrangement.spacedBy(6.dp)) {
             for (s in listOf("fields", "lists", "anim")) {
@@ -75,6 +81,8 @@ private fun Probe() {
         when (screen) {
             "fields" -> Fields()
             "lists" -> Lists()
+            "noid" -> NoId()
+            "slow" -> Slow(busyMs)
             else -> Anim()
         }
     }
@@ -160,4 +168,34 @@ private fun Anim() {
     Text("Count: $count", Modifier.testTag("anim.count"))
     Button(onClick = { spinning = !spinning }, Modifier.testTag("anim.spin")) { Text("Spinner") }
     if (spinning) CircularProgressIndicator(Modifier.testTag("anim.spinner"))
+}
+
+/** Opened with intent extra `screen` = `noid`: a Compose field with no test tag, so it has no resource id. */
+@Composable
+private fun NoId() {
+    var text by remember { mutableStateOf("") }
+    TextField(text, { text = it }, Modifier.fillMaxWidth(), label = { Text("No id") })
+    Text("[$text]", Modifier.testTag("echo.noid"))
+}
+
+/**
+ * Opened with intent extra `screen` = `slow`. The UI thread stays busy for `busyMs` of every cycle, and every
+ * accessibility query waits for it, so a page source read stays pending for seconds. Each cycle changes every
+ * row, so no two reads match. The 4.5 s limit stays under Android's 5 s input-dispatch ANR.
+ */
+@Composable
+private fun Slow(busyMs: Long) {
+    var tick by remember { mutableIntStateOf(0) }
+    LaunchedEffect(busyMs) {
+        while (true) {
+            val until = SystemClock.uptimeMillis() + busyMs
+            while (SystemClock.uptimeMillis() < until) { }
+            tick++
+            delay(100)
+        }
+    }
+    Text("Tick $tick", Modifier.testTag("slow.tick"))
+    Column(Modifier.fillMaxWidth().verticalScroll(rememberScrollState())) {
+        for (i in 0 until 40) Text("Row $i at tick $tick", Modifier.padding(4.dp))
+    }
 }

@@ -69,7 +69,7 @@ The run log stores decisive assertion observations and copied screenshots. Repor
 ## Validated limits
 
 - macOS on Apple silicon with Node 24 or later, the frozen Appium stack (`appium-mcp` 1.97.0, WebDriverAgent 16.14.2, the UiAutomator2 server APKs by SHA-256), Jev 1.13.0 and SDK 0.6.0.
-- iOS simulators on iOS 26.5 with Xcode 27.0, and Android 12 (API 31) or later on emulators and (untested) phones; another iOS or Xcode version warns and continues, and build/install/seed/reset are outside the bridge.
+- iOS simulators on iOS 26.5 with Xcode 27.0 or 27.1, and Android 12 (API 31) or later on emulators and (untested) phones; another iOS or Xcode version warns and continues, and build/install/seed/reset are outside the bridge.
 - At most 100 authored steps; default whole-run time 300 seconds, configurable up to one hour. Each wait is at most 60 seconds.
 - Fixed Noul yes/no bounds 0.9/0.1. Uncertainty is visible and never promoted to a pass.
 - Full observation cap 24,000 bytes; state plus longest question 28,000 bytes; total request 56,000 bytes. Overflow stops rather than silently removing evidence.
