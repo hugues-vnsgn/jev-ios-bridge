@@ -1,6 +1,6 @@
 # Phase 4 specification: corpus acceptance and Appium-only cutover
 
-Status: the agent-only kits are merged to main (PRs #86, #87, #88); the cutover is a draft PR (#89). Live runs and corpus judgments await owner steps ([ticket 06](../issues/06-acceptance-resource-readiness.md), [ticket 08](../issues/08-frozen-state-correspondence.md), activation of the real admission store, the Jev key). The text below is the specification as written on 2026-10-14
+Status: the agent-only kits are merged to main (PRs #86, #87, #88); the cutover is a draft PR (#89). Live rows ran on 2026-11-04, 2026-11-05 and 2026-11-10; each requirement's state is in [evidence-results.md](../phase4/evidence-results.md). The corpus judgment waits on three recaptures. The text below is the specification as written on 2026-10-14, with the readiness and correspondence records added on 2026-11-11
 Authority: [published spec](../spec.md), Decisions 27 through 30;
 Testing Decisions 20, 22 through 25
 Context: [master handoff](../handoff.md), [roadmap](../roadmap.md)
@@ -123,3 +123,68 @@ completion. Deliver a reviewable Appium-only artifact and truthful limits;
 release publication is a separate owner action.
 
 Open correspondence discussion: [Frozen-state correspondence](../issues/08-frozen-state-correspondence.md).
+
+## Readiness as the owner arranged it (ticket 06)
+
+This records what the owner did and decided. It is not a signed agreement on
+the ticket 06 proposal text.
+
+- 2026-11-04: the owner approved phone 2985e9c, one simulator and one emulator,
+  and had the coordinator write the assignment and store activation records in
+  the owner's name, mode 600. Each device had one worker at a time.
+- 2026-11-05: the owner wrote `history.json` and `upgrade.json`, asserted that
+  writers were stopped, ran the store upgrade from schema 2 to 3 and the import,
+  and signed the activation record again. Backups were verified at each step.
+- 2026-11-05: there is no other phone. Phone rows must pass on 2985e9c.
+- 2026-11-10: the owner extended the three assignments to 2026-11-12T11:00Z,
+  confirmed that other store writers were still stopped, and renewed the
+  activation window to the same time. The bridge may create up to 8
+  simulators. The spare simulator CD970E3D may replace 7B4D26E1.
+- Every live attempt records its tool and device versions, and the kit refuses
+  a passed row without an artifact (#95).
+
+Unresolved: exclusivity against other OS users, older bridge binaries and
+external tools stays an owner promise that nothing enforces.
+
+## Correspondence decisions (ticket 08), 2026-11-10
+
+The owner delegated all 38
+correspondence calls to the coordinator, with reasons kept for the owner's
+audit. Worker E made them by comparing, for each claim, the text the
+production pipeline renders from the fresh capture with the frozen render, and
+by viewing every screenshot pair. The coordinator accepted them the same day.
+Record: `overnight/night2/corpus/decisions.tsv` and `DECISIONS.md` in the
+Phase 4 reports folder.
+
+- G1 approve: iPhone 17 on iOS 26.5, apps built with Xcode 27.0, replaces the
+  deleted iOS 26.4 simulator. s08 and s09 keep their visible and hidden facts.
+- G2 approve: the background seed restored from the frozen snapshots (Iris Moss,
+  two Noah Reeds, Mira Stone, Market Errands with 2 reminders), imported by
+  vCard.
+- G3 approve: the cmp build from `~/Codes/cmp` as on disk, identity tree digest
+  af69171f17c17d4d and APK sha256 9c86a37c214b23e5.
+- G4 approve with one carve-out: `jev_p4_emulator` (720x1280, same
+  android-36.1 image) for 7 Android screens. settings-1-main, settings-3-search
+  and cmp-2-home go to `Medium_Phone_API_36.1`, the frozen AVD.
+- 35 screens approve, 3 recapture, 0 block. All 24 iOS screens approve. s08
+  approves because its email row is still off screen. s09 approves with the
+  setup as written, one swipe of 0.25 of the screen. settings-2-display
+  approves because Screen timeout reads `Not set`. cmp-1-launch approves.
+- s02 claim a and s17 claim b approve, although WDA reports the elements behind
+  a sheet as `visible="false"` and the renderer drops them. This is a pipeline
+  difference the gate measures, so the judge may answer uncertain there.
+- settings-1-main recapture: the Storage row must read exactly
+  `40% used - 19.15 GB free` with no Battery row in view. Fill the disk with a
+  file to reach it, never delete owner data, and block if less space is free.
+- settings-3-search recapture: clear the search index, type `bluetooth`, and
+  keep only a try with no result row. Block after 15 tries.
+- cmp-2-home recapture: keep only a try whose pass 2 reads
+  `heap 145MB -> 300MB`. Block after 30 tries. The claim does not change.
+- Judge once, on the release commit, only when the five pinned pipeline files
+  equal e9e9fd259 there. Never judge on main at 6ea7b5778, where
+  `manifest verify` refuses with PIPELINE_DIGEST_MISMATCH.
+
+Pending: `Medium_Phone_API_36.1` has no owner assignment, so the three
+recaptures have not run. The judging pass and its results are pending. The
+manifest can only record `correspondence: pending`, so these decisions live
+outside it.

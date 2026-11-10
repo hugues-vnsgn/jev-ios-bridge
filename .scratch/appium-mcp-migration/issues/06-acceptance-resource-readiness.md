@@ -31,3 +31,5 @@ Record the owner's agreement on the required readiness evidence, who supplies it
 Charted on 2026-10-14. Implementation remains paused.
 
 Review correction: classify this planning discussion as grilling. The owner has authorized this clarification, not resolved the readiness decision or authorized device work.
+
+2026-11-11, readiness recorded as practised. The owner signed device and store records, ran the store activation, and extended custody to 2026-11-12T11:00Z. The phase specification lists each step with its date ([readiness as the owner arranged it](../phases/phase-4-acceptance.md#readiness-as-the-owner-arranged-it-ticket-06)). The owner has not accepted the ticket 06 proposal text as such, so this ticket stays open.

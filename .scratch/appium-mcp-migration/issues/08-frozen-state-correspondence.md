@@ -27,3 +27,5 @@ Record the actual owner decision, enforceable constraints, unresolved limits and
 ## Comments
 
 Charted from research on 2026-10-14. Implementation remains paused.
+
+2026-11-11, decisions recorded. On 2026-11-10 the owner delegated all 38 correspondence calls to the coordinator, with reasons kept for the owner's audit. The result is 35 approve, 3 recapture and 0 block. The blanket calls G1 to G4 all approve, and G4 sends settings-1-main, settings-3-search and cmp-2-home to `Medium_Phone_API_36.1`. The phase specification records each call and its stop rules ([correspondence decisions](../phases/phase-4-acceptance.md#correspondence-decisions-ticket-08-2026-11-10)). This ticket stays open. The recaptures wait on an owner assignment for that AVD, and any recapture that hits its stop rule becomes a release blocker. The judging pass and its results are pending.
