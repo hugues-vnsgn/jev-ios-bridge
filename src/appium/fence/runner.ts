@@ -1,7 +1,7 @@
 import { z } from 'zod/v4';
 import type { AdbResult, AdbRunner } from '../../device/android/adb.js';
 import { androidStartTime, processGone, shellCommand } from '../../device/android/recovery.js';
-import { androidProcessSchema, forwardInventorySchema, hostInventorySchema, sameForward, settingKeySchema, settingsSchema, uiautomator2InventorySchema, wdaInventorySchema,
+import { androidProcessSchema, forwardInventorySchema, hostInventorySchema, sameForward, settingKeySchema, settingsSchema, wdaInventorySchema,
   type Executor, type FenceEffect, type HostIdentity } from './schema.js';
 import { sharedService } from './proof.js';
 import { hostFenceIo } from './host.js';
@@ -81,19 +81,6 @@ async function processState(effect: { serial: string; pid: number }, adb: Native
   if (!startTime || !result.stdout.startsWith(`${effect.pid} (`)) throw new Error('Malformed proc identity');
   return androidProcessSchema.parse({ kind: 'running', startTime });
 }
-async function uiautomator2Processes(serial: string, adb: NativeCall) {
-  const listed = resultSchema.parse(await adb(shellCommand(serial, ['pidof', ...UIAUTOMATOR2_PACKAGES])));
-  // pidof exits 1, with nothing on either stream, when no process has the name.
-  if (listed.exitCode === 1 && !listed.stdout.trim() && listed.stderr === '') return uiautomator2InventorySchema.parse([]);
-  const pids = checked(listed).stdout.trim().split(/\s+/).map(Number);
-  if (!pids.every(pid => Number.isSafeInteger(pid) && pid > 0)) throw new Error('Malformed process listing');
-  const rows = [];
-  for (const pid of pids) {
-    const state = await processState({ serial, pid }, adb);
-    if (state.kind === 'running') rows.push({ pid, startTime: state.startTime });
-  }
-  return uiautomator2InventorySchema.parse(rows);
-}
 export function createFenceRunner(io: { host?: HostFenceIo; adb: AdbRunner; simctl: SimctlRunner }): FenceRunner {
   const host = io.host ?? hostFenceIo();
   return async (effect: FenceEffect, signal, started) => {
@@ -125,7 +112,6 @@ export function createFenceRunner(io: { host?: HostFenceIo; adb: AdbRunner; simc
         return { ok: true };
       }
       case 'android-process': return processState(effect, adb);
-      case 'uiautomator2-inventory': return uiautomator2Processes(effect.serial, adb);
       case 'android-stop': {
         const current = await processState({ serial: effect.serial, pid: effect.process.pid }, adb);
         if (current.kind === 'running' && current.startTime === effect.process.startTime) {

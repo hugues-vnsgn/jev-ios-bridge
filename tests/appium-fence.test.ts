@@ -95,7 +95,6 @@ class FakeRunner {
       case 'wda-stop': this.wda = this.wda.filter(row => row.pid !== effect.pid); return settled({ ok: true });
       case 'android-process': { tick(); const startTime = this.processes.get(effect.pid); return startTime ? { kind: 'running', startTime } : { kind: 'absent' }; }
       case 'android-stop': exit([effect.process.pid]); return settled({ ok: true });
-      case 'uiautomator2-inventory': tick(); return [...this.processes].map(([pid, startTime]) => ({ pid, startTime }));
       case 'forward-inventory': return structuredClone(this.forwards);
       case 'forward-remove': this.forwards = this.forwards.filter(row => row.serial !== effect.serial || row.local !== effect.local); return settled({ ok: true });
       case 'settings-read': return structuredClone(this.values);
@@ -472,7 +471,7 @@ test('dead-owner sweep acquires only after all Appium receipts and preserves the
 
 /** A dead owner whose one command through its Appium stack was cut by its deadline: the frozen-app case (BUG-L3a-2). */
 async function cutCommand(t: TestContext, operation: string, selected: readonly unknown[] = androidTargets) {
-  const f = fixture(t, selected);
+  const f = fixture(t, androidTargets);
   for (const target of selected) f.claim.registerComponent(JSON.parse(JSON.stringify(target)));
   await assert.rejects(f.claim.bindDriver('fake').dispatch(operation, async () => { throw new Error('cut by its deadline'); }));
   f.claim.closeDispatch({ outcome: 'inconclusive', disposition: 'quarantined', payload: {}, evidenceRefs: [] });
@@ -496,6 +495,13 @@ for (const operation of ['appium-observe', 'appium-capture', 'appium-capture-pai
 
 test('a cut tap is never covered: the device stays quarantined though every Appium component is proven stopped', async t => {
   const f = await cutCommand(t, 'appium-tap');
+  assert.deepEqual(await f.next(), { kind: 'refused', reason: 'DEVICE_QUARANTINED' });
+  assert.equal(f.runner.processes.size + f.runner.forwards.filter(row => row.serial === 'serial-one').length, 0, 'the sweep still stopped the stack');
+  assert.equal(f.cut().state, 'uncertain');
+});
+
+test('a dead owner\'s cut session create is never covered: the device stays quarantined though every Appium component is proven stopped', async t => {
+  const f = await cutCommand(t, 'appium-session-create');
   assert.deepEqual(await f.next(), { kind: 'refused', reason: 'DEVICE_QUARANTINED' });
   assert.equal(f.runner.processes.size + f.runner.forwards.filter(row => row.serial === 'serial-one').length, 0, 'the sweep still stopped the stack');
   assert.equal(f.cut().state, 'uncertain');
@@ -540,68 +546,6 @@ test('a cut tap sent through a component declared as a screen read is never cove
     { runner: runner.run, revalidate: runner.revalidate, clock: runner.clock });
   assert.deepEqual(next, { kind: 'refused', reason: 'DEVICE_QUARANTINED' });
   assert.equal(f.admission.readGeneration(f.claim.identity).commands.find(command => command.operation === 'appium-tap')?.state, 'uncertain');
-});
-
-/** BUG-L4i-1: a dead owner whose session create was cut before any session id came back. */
-const cutCreate = (t: TestContext, selected: readonly unknown[] = androidTargets) => cutCommand(t, 'appium-session-create', selected);
-const iosStack = targets.filter(target => target.kind === 'appium-process-group' || target.kind === 'appium-native-helper');
-
-test('a dead owner\'s cut session create is covered once its Appium stack is stopped and no UiAutomator2 server runs, and the next run acquires', async t => {
-  const f = await cutCreate(t);
-  assert.equal((await f.next()).kind, 'acquired');
-  assert.equal(f.cut().state, 'uncertain', 'the cut create is fenced, never reported settled');
-  assert.equal(f.admission.readGeneration(f.claim.identity).recoveries[0]?.closure, 'accepted');
-  assert.ok(f.runner.events.some(event => 'kind' in event && event.kind === 'uiautomator2-inventory'), 'the sweep read the device for a server');
-});
-
-test('a dead owner\'s cut session create stays quarantined while a UiAutomator2 server it never recorded runs, and the sweep leaves that server alone', async t => {
-  const f = await cutCreate(t);
-  f.runner.processes.set(302, '99999');
-  assert.deepEqual(await f.next(), { kind: 'refused', reason: 'DEVICE_QUARANTINED' });
-  assert.equal(f.runner.processes.get(302), '99999');
-  assert.equal(f.runner.events.some(event => 'kind' in event && event.kind === 'android-stop' && event.process.pid === 302), false);
-});
-
-test('a dead owner\'s cut session create on a simulator is covered once its stack is stopped and no WDA runner is listed', async t => {
-  const f = await cutCreate(t, iosStack);
-  f.runner.wda = [];
-  assert.equal((await f.next()).kind, 'acquired');
-  assert.equal(f.cut().state, 'uncertain');
-});
-
-test('a dead owner\'s cut session create on a simulator stays quarantined while a WDA runner it never recorded is listed, and the sweep never stops it', async t => {
-  const f = await cutCreate(t, iosStack);
-  assert.deepEqual(await f.next(), { kind: 'refused', reason: 'DEVICE_QUARANTINED' });
-  assert.deepEqual(f.runner.wda.map(row => row.pid), [200]);
-  assert.equal(f.runner.events.some(event => 'kind' in event && event.kind === 'wda-stop'), false);
-});
-
-test('a cut session create with no recorded Appium stack to stop is not covered', async t => {
-  const f = await cutCreate(t, androidTargets.filter(target => target.kind !== 'appium-process-group'));
-  assert.deepEqual(await f.next(), { kind: 'refused', reason: 'DEVICE_QUARANTINED' });
-});
-
-test('the store refuses a fenced-create proof that names a read other than this recovery\'s empty agent listing', async t => {
-  const f = await cutCreate(t);
-  const recovery = f.admission.claimRecovery(f.claim.identity, 'forged'); if (recovery.kind === 'refused') assert.fail();
-  const { fenceAppium } = await fenceModule();
-  const proof = await fenceAppium({ admission: f.admission, claim: recovery.claim, runner: f.runner.run, revalidate: f.runner.revalidate, clock: f.runner.clock });
-  const forward = proof.components.find(row => row.proof.kind === 'appium-forward-removed')!.proof as { commandId: string };
-  const forged = { ...proof, components: proof.components.map(row => row.proof.kind === 'appium-create-fenced' ? { ...row, proof: { kind: 'appium-create-fenced' as const, commandId: forward.commandId } } : row) };
-  assert.throws(() => recovery.claim.submitFence(forged), { code: 'COVERAGE_INCOMPLETE' });
-  assert.equal(state(f.admission, f.claim.identity), 'quarantined');
-});
-
-test('a cut tap sent through a component declared as a session create is never covered', async t => {
-  const f = fixture(t, androidTargets);
-  for (const target of androidTargets) f.claim.registerComponent(JSON.parse(JSON.stringify(target)));
-  f.claim.registerComponent({ id: 'declared-create', kind: 'one-shot', operation: 'appium-session-create' });
-  await assert.rejects(f.claim.bindDriver('fake').dispatch({ requestId: 'tap', componentId: 'declared-create', operation: 'appium-tap', payload: {} }, async () => { throw new Error('cut by its deadline'); }));
-  f.claim.closeDispatch({ outcome: 'inconclusive', disposition: 'quarantined', payload: {}, evidenceRefs: [] });
-  const runner = new FakeRunner();
-  const next = await f.admission.acquireWithAppiumRecovery({ device: f.claim.identity.device, category: f.claim.identity.category, attempt: { kind: 'legacy', id: 'next' }, digest: 'next', intent: {} },
-    { runner: runner.run, revalidate: runner.revalidate, clock: runner.clock });
-  assert.deepEqual(next, { kind: 'refused', reason: 'DEVICE_QUARANTINED' });
 });
 
 test('owned automation inventory is available while each foreign automation kind is DEVICE_BUSY exit 3', async () => {

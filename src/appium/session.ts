@@ -20,13 +20,9 @@ const profileInputSchema = z.discriminatedUnion('platform', [
   ]), ports: z.strictObject({ systemPort: port }).optional() }),
 ]);
 /**
- * How long the bridge waits for Appium to answer a session create. It outlasts the stack's own agent start bounds, so
- * Appium's answer, a session or its own launch failure, normally arrives before the bridge stops listening:
- * - iOS: one WDA launch, bounded by `wdaLaunchTimeout` below (120 s), after the runner's reinstall.
- * - Android: both UiAutomator2 server APKs installed at once, bounded by `uiautomator2ServerInstallTimeout` (120 s), then
- *   the server launch, two tries of 30 s, 3 s apart (UiAutomator2 driver 8.7.0 defaults).
- * It stays under the scripted run's default 300 s wall limit, so a create that still never answers is cut, and fenced by
- * prepare's own close, while the run is live.
+ * Outlasts Appium's own agent start bounds (the WDA launch and UiAutomator2 server install timeouts below, plus the server's
+ * launch tries), so Appium's own answer arrives first. A create still unanswered is cut and keeps the device quarantined.
+ * A run's wall limit never cuts it: the run's close waits for it only within the cleanup budget.
  */
 export const SESSION_CREATE_TIMEOUT_MS = 240_000;
 export type SessionProfileInput = z.infer<typeof profileInputSchema>;

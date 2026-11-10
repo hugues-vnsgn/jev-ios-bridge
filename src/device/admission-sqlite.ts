@@ -10,8 +10,8 @@ import type { StagedArtifact } from '../observed/artifact.js';
 import type { CreationResult } from '../observed/create-source.js';
 import { recoveryViewSchema, componentSchema, componentObservationSchema, type ComponentObservation, commandRequestSchema, fenceRequestSchema } from './admission.js';
 import type { DeviceCategory, AdmissionDependencies, AdmissionRequest, AdmissionResult, AttemptIdentity, AttemptView, DeviceView, OwnerIdentity, OwnerProcess, TerminalCandidate, GenerationView, CommandRecord, ComponentInput, NativeComponent, CommandRequest, IssueResult, FenceRequest, FenceReceipt, RecoveryIdentity } from './admission.js';
-import { APPIUM_READS, SESSION_CREATE, appiumComponentSchema, appiumProofSchema, fenceCommandSchema, isAppiumRead, isSessionCreate, parseEffectResult, readOnly, type Transcript } from '../appium/fence/schema.js';
-import { noAgentListed, settles, verifyAppiumProof } from '../appium/fence/proof.js';
+import { APPIUM_READS, appiumComponentSchema, appiumProofSchema, fenceCommandSchema, isAppiumRead, parseEffectResult, readOnly, type Transcript } from '../appium/fence/schema.js';
+import { settles, verifyAppiumProof } from '../appium/fence/proof.js';
 import type { MarkerSource } from './admission.js';
 import { BRIDGE_VERSION } from '../version.js';
 import type { UpgradeDeclaration, UpgradeReceipt, UpgradeRecovery, UpgradeCheckpoint, PreservedRecords } from './admission-upgrade.js';
@@ -1554,15 +1554,6 @@ export class AdmissionSqlite {
         const stack=components.some(item=>appiumComponentSchema.safeParse(JSON.parse(String(item.declaration))).data?.kind==='appium-process-group');
         const onlyReads=commands.filter(command=>command.component_id===component.id).every(command=>z.enum(APPIUM_READS).safeParse(command.operation).success);
         if (!isAppiumRead(JSON.parse(String(component.declaration))) || !onlyReads || !stack) throw new AdmissionError('COVERAGE_INCOMPLETE','Only a read through a recorded Appium stack is fenced by stopping it');
-      } else if (evidence.kind==='appium-create-fenced') {
-        // A create that never answered reached the recorded stack, which this receipt proves stopped, and the device agent,
-        // which this receipt's own agent read, made on this generation's device, found not running.
-        const stack=components.some(item=>appiumComponentSchema.safeParse(JSON.parse(String(item.declaration))).data?.kind==='appium-process-group');
-        const onlyCreates=commands.filter(command=>command.component_id===component.id).every(command=>command.operation===SESSION_CREATE);
-        const read=transcripts.find(transcript=>transcript.id===evidence.commandId);
-        let absent=false;
-        try { absent=!!read&&noAgentListed(read); } catch { absent=false; }
-        if (!isSessionCreate(JSON.parse(String(component.declaration))) || !onlyCreates || !stack || !absent) throw new AdmissionError('COVERAGE_INCOMPLETE','Only a create through a recorded Appium stack, with no agent left running, is fenced by stopping it');
       } else if (evidence.kind==='fenced-write') {
         const answer=transcripts.find(transcript=>transcript.id===evidence.commandId);
         let proven=false;
