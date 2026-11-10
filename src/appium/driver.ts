@@ -116,7 +116,7 @@ function sourceOf(error: unknown, platform: AppiumTarget['platform']): VendorSou
 /** Maps an operation's failure to the bridge's vocabulary with its source, so `error.vendorSource` is truthful. */
 export function appiumFailure(error: unknown, platform: AppiumTarget['platform']): unknown {
   const vendorSource = sourceOf(error, platform);
-  if (error instanceof AppiumError) return new DeviceReasonError('DEVICE_ERROR', 'The Appium layer refused the command.', { vendorCode: error.code, vendorSource });
+  if (error instanceof AppiumError) return new DeviceReasonError('DEVICE_ERROR', error.detail ?? 'The Appium layer refused the command.', { vendorCode: error.code, vendorSource });
   if (error instanceof NativeHelperError) return new DeviceReasonError('DEVICE_ERROR', error.message, { vendorCode: error.code, vendorSource });
   if (error instanceof ObservationIncompleteError) return new DeviceReasonError('DEVICE_ERROR', 'The screen could not be observed.', { vendorCode: `OBSERVATION_${error.reason.toUpperCase().replace(/-/g, '_')}`, vendorSource });
   return error;

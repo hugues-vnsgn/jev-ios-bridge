@@ -1,7 +1,8 @@
 import assert from 'node:assert/strict';
 import { test, type TestContext } from 'node:test';
 import { createHash } from 'node:crypto';
-import { existsSync, lstatSync, mkdtempSync, readFileSync, readdirSync, rmSync, writeFileSync } from 'node:fs';
+import fs, { existsSync, lstatSync, mkdirSync, mkdtempSync, readFileSync, readdirSync, realpathSync, renameSync, rmSync, symlinkSync, writeFileSync } from 'node:fs';
+import { syncBuiltinESMExports } from 'node:module';
 import { tmpdir } from 'node:os';
 import { dirname, join, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -15,6 +16,8 @@ import { PrivateAppiumClient, type AppiumComponentRecord } from '../src/appium/c
 import { AppiumCommandSession, createSessionProfile } from '../src/appium/session.js';
 import { readRecording } from './fixtures/appium-wire/recording.js';
 import { TOOL_NAMES, toolDefinitions } from '../src/appium/wire-schemas.js';
+import { appiumFailure } from '../src/appium/driver.js';
+import { DeviceReasonError } from '../src/device/index.js';
 
 const sha = (bytes: Buffer | string) => createHash('sha256').update(bytes).digest('hex');
 const owner: OwnerIdentity = { category: 'ios-simulator', device: 'ios-test', attempt: { kind: 'legacy', id: 'run-1' },
@@ -74,7 +77,7 @@ test('private child receives only the restricted environment and a mode-700 HOME
   assert.deepEqual(Object.keys(env).filter(key => key !== '__CF_USER_TEXT_ENCODING').sort(),
     ['ALLOW_REMOTE_APP_URLS', 'APPIUM_HOME', 'APPIUM_MCP_ON_CLIENT_DISCONNECT', 'HOME', 'LANG', 'PATH', 'TMPDIR']);
   assert.equal(lstatSync(env.HOME).mode & 0o777, 0o700);
-  assert.equal(dirname(env.HOME), join(f.root, 'homes'));
+  assert.equal(dirname(env.HOME), join(realpathSync(f.root), 'homes'), 'HOME is a real path, so cfprefsd writes the file it names');
   assert.equal(f.records[0]?.kind, 'appium-child');
   assert.equal(client.components[0]?.owner.generation, 7);
   assert.equal(f.calls()[0].params.protocolVersion, '2025-11-25');
@@ -113,7 +116,76 @@ test('the child uses an explicitly selected Android SDK without inheriting envir
   const env = JSON.parse(readFileSync(environment, 'utf8'));
   assert.equal(env.ANDROID_HOME, '/verified/android-sdk');
   assert.equal(env.ANDROID_SDK_ROOT, '/verified/android-sdk');
-  assert.equal(env.HOME.startsWith(join(f.root, 'homes', 'command-')), true);
+  assert.equal(env.HOME.startsWith(join(realpathSync(f.root), 'homes', 'command-')), true);
+});
+
+function openWithHomes(f: ReturnType<typeof fixture>, homes: { homeRoot: string; accountHome: string; fallbackHomeRoot: string }) {
+  const opening = PrivateAppiumClient.open({ stack: f.stack, owner, ...homes, timeoutMs: 20000,
+    child: { entrypoint: resolve('tests/fixtures/appium-wire/fake-mcp.ts'), args: [f.recording, 'none', f.trace, f.environment], nodeArgs: ['--import', import.meta.resolve('tsx')] },
+    onComponent: () => {} });
+  opening.then(client => f.clients.push(client), () => {});
+  return opening;
+}
+const childHome = (f: ReturnType<typeof fixture>): string => JSON.parse(readFileSync(f.environment, 'utf8')).HOME;
+
+test('a temp folder inside the home folder falls back to the per-account folder outside it, on both platforms', async t => {
+  const f = fixture(t); const outside = mkdtempSync(join(tmpdir(), 'jev-fallback-'));
+  t.after(() => rmSync(outside, { recursive: true, force: true }));
+  const fallbackHomeRoot = join(outside, 'jev-ios-bridge-501');
+  await openWithHomes(f, { homeRoot: join(f.root, 'homes'), accountHome: f.root, fallbackHomeRoot });
+  assert.equal(childHome(f).startsWith(join(realpathSync(fallbackHomeRoot), 'command-')), true);
+  assert.equal(lstatSync(fallbackHomeRoot).mode & 0o777, 0o700);
+  assert.deepEqual(readdirSync(join(f.root, 'homes')), []);
+});
+
+test('letter case does not hide a temp folder inside the home folder on a case-insensitive disk', async t => {
+  const f = fixture(t); const otherCase = f.root.replace(/[a-z]/g, letter => letter.toUpperCase());
+  if (!existsSync(otherCase)) { t.skip('the disk is case-sensitive'); return; }
+  const outside = mkdtempSync(join(tmpdir(), 'jev-fallback-'));
+  t.after(() => rmSync(outside, { recursive: true, force: true }));
+  const fallbackHomeRoot = join(outside, 'fallback');
+  await openWithHomes(f, { homeRoot: join(otherCase, 'homes'), accountHome: f.root, fallbackHomeRoot });
+  assert.equal(childHome(f).startsWith(join(realpathSync(fallbackHomeRoot), 'command-')), true);
+});
+
+test('with no safe root outside the home folder the command is refused before the child starts, saying what to change', async t => {
+  const f = fixture(t);
+  const failure = await openWithHomes(f, { homeRoot: join(f.root, 'homes'), accountHome: f.root, fallbackHomeRoot: join(f.root, 'fallback') })
+    .then(() => undefined, error => appiumFailure(error, 'android'));
+  assert.ok(failure instanceof DeviceReasonError);
+  assert.deepEqual([failure.code, failure.vendorCode, /TMPDIR/.test(failure.message)], ['DEVICE_ERROR', 'NOT_ALLOWED', true]);
+  assert.equal(existsSync(f.environment), false);
+  assert.deepEqual(readdirSync(join(f.root, 'homes')), []);
+});
+
+test('a fallback folder that is a symlink is refused with a message that names it', async t => {
+  const f = fixture(t); const outside = mkdtempSync(join(tmpdir(), 'jev-fallback-'));
+  t.after(() => rmSync(outside, { recursive: true, force: true }));
+  const fallbackHomeRoot = join(outside, 'jev-ios-bridge-501');
+  symlinkSync(mkdtempSync(join(outside, 'planted-')), fallbackHomeRoot);
+  const failure = await openWithHomes(f, { homeRoot: join(f.root, 'homes'), accountHome: f.root, fallbackHomeRoot }).then(() => undefined, error => appiumFailure(error, 'ios'));
+  assert.ok(failure instanceof DeviceReasonError);
+  assert.deepEqual([failure.code, failure.vendorCode, failure.message.includes(fallbackHomeRoot)], ['DEVICE_ERROR', 'NOT_ALLOWED', true]);
+  assert.equal(existsSync(f.environment), false);
+});
+
+test('a HOME root swapped for a symlink right after its check is refused before the child starts', async t => {
+  const f = fixture(t); const homeRoot = join(f.root, 'homes'); const planted = mkdtempSync(join(f.root, 'planted-'));
+  mkdirSync(homeRoot, { mode: 0o700 });
+  const check = fs.lstatSync; let swapped = false;
+  t.mock.method(fs, 'lstatSync', (path: string, ...rest: []) => {
+    const stats = check(path, ...rest);
+    if (path === homeRoot && !swapped) { swapped = true; renameSync(homeRoot, join(f.root, 'checked')); symlinkSync(planted, homeRoot); }
+    return stats;
+  });
+  syncBuiltinESMExports();
+  t.after(() => { t.mock.restoreAll(); syncBuiltinESMExports(); });
+  const outside = mkdtempSync(join(tmpdir(), 'jev-fallback-'));
+  t.after(() => rmSync(outside, { recursive: true, force: true }));
+  await assert.rejects(openWithHomes(f, { homeRoot, accountHome: outside, fallbackHomeRoot: join(outside, 'fallback') }), { code: 'NOT_ALLOWED' });
+  assert.equal(swapped, true);
+  assert.equal(existsSync(f.environment), false);
+  assert.deepEqual(readdirSync(planted), []);
 });
 
 for (const fault of ['sdk-version', 'sdk-integrity', 'sdk-file']) test(`${fault} refuses before the child starts`, async t => {

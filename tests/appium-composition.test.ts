@@ -108,7 +108,8 @@ test('the production host gives an Android driver the found adb\'s SDK, the lega
   assert.deepEqual({ target: parts.target, backend: parts.backend, logFolder: parts.logFolder, homeRoot: parts.homeRoot, watch: parts.createExitWatch === createExitWatch,
     store: parts.admission === store, wda: parts.stack.manifest.wda.version },
   { target: { platform: 'android', device: SERIAL, serverInstallation: { kind: 'install' }, androidSdkRoot: sdk }, backend: 'real', logFolder: LOG_FOLDER,
-    homeRoot: join(userInfo().homedir, 'Library/Application Support/jev-ios-bridge/homes'), watch: true, store: true, wda: '16.14.2' });
+    homeRoot: join(tmpdir(), 'jev-ios-bridge-homes'), watch: true, store: true, wda: '16.14.2' });
+  assert.equal(parts.homeRoot.startsWith(userInfo().homedir + '/'), false, 'cfprefsd maps preference files under the real home folder to the real domain');
   const ios = await host({ target: { platform: 'ios', device: UDID } });
   assert.deepEqual([ios.target, ios.logFolder, ios.logcat, ios.createExitWatch], [{ platform: 'ios', device: UDID }, join(tmpdir(), 'jev-ios-logs'), undefined, undefined]);
 });

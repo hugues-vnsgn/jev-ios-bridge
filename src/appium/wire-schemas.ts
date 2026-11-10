@@ -124,5 +124,6 @@ export function checkedToolReply(name: string, args: unknown, input: unknown): T
 export type AppiumErrorCode = z.infer<typeof extensionErrorCodeSchema> | 'SDK_IDENTITY_MISMATCH' | 'PROTOCOL_VERSION_MISMATCH'
   | 'ACKNOWLEDGEMENT_LOST' | 'CONNECTION_LOST' | 'SETTINGS_READBACK_MISMATCH';
 export class AppiumError extends Error {
-  constructor(readonly code: AppiumErrorCode) { super(code); this.name = 'AppiumError'; }
+  /** `detail`, when given, replaces the generic refusal in the message the user sees. */
+  constructor(readonly code: AppiumErrorCode, readonly detail?: string) { super(detail ?? code); this.name = 'AppiumError'; }
 }

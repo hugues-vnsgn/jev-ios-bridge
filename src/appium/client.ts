@@ -1,7 +1,8 @@
 import { spawn, type ChildProcessWithoutNullStreams } from 'node:child_process';
 import { createHash } from 'node:crypto';
-import { lstatSync, mkdirSync, mkdtempSync, readFileSync, readdirSync, writeFileSync } from 'node:fs';
-import { dirname, isAbsolute, join, resolve } from 'node:path';
+import { lstatSync, mkdirSync, mkdtempSync, readFileSync, readdirSync, realpathSync, writeFileSync } from 'node:fs';
+import { userInfo } from 'node:os';
+import { dirname, isAbsolute, join, resolve, sep } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { once } from 'node:events';
 import { rm } from 'node:fs/promises';
@@ -23,10 +24,38 @@ export type AppiumComponentRecord =
 type Child = { entrypoint: string; args?: string[]; nodeArgs?: string[] };
 /** Puts the child in its own process group and marks it for the fence: the Phase 1 run marker and the bridge's launch ancestry. */
 export type ChildLaunch = { runMarker: string; ancestry: readonly { pid: number; startTime: string }[] };
-type OpenOptions = { stack: VerifiedStack; owner: OwnerIdentity; homeRoot: string; child?: Child; profile?: SessionProfile; timeoutMs?: number; androidSdkRoot?: string;
+type OpenOptions = { stack: VerifiedStack; owner: OwnerIdentity; homeRoot: string; fallbackHomeRoot?: string; accountHome?: string; child?: Child; profile?: SessionProfile; timeoutMs?: number; androidSdkRoot?: string;
   launch?: ChildLaunch; onComponent: (record: AppiumComponentRecord) => void | Promise<void> };
 type ChildOptions = OpenOptions & { child: Child };
 type ManagementResult = { kind: 'created'; sessionId: AppiumSessionId } | { kind: 'deleted' };
+
+/** The real path of `folder`, made if missing, when it is a folder owned by this account with mode 700 and no symlink took its place after the check. */
+function ownedRealFolder(folder: string): string | undefined {
+  try {
+    mkdirSync(folder, { recursive: true, mode: 0o700 });
+    const checked = lstatSync(folder);
+    const root = realpathSync.native(folder);
+    const resolved = lstatSync(root);
+    return checked.isDirectory() && checked.uid === process.getuid?.() && (checked.mode & 0o077) === 0
+      && resolved.dev === checked.dev && resolved.ino === checked.ino ? root : undefined;
+  } catch { return undefined; }
+}
+
+/**
+ * cfprefsd maps a preference file under the account's home folder, in any letter case, to the account's real domain,
+ * and drops writes through a symlinked path. So the command homes live under a real path outside the home folder.
+ */
+function privateHomeRoot(preferred: string, fallback: string, accountHome: string): string {
+  const home = realpathSync.native(accountHome);
+  for (const folder of [preferred, fallback]) {
+    const root = ownedRealFolder(folder);
+    if (root === undefined) throw new AppiumError('NOT_ALLOWED',
+      `The folder for the Appium child's private HOME, ${folder}, must be a folder owned by this account with mode 700, not a symlink. Remove it, or set TMPDIR to another folder outside your home folder.`);
+    if (!(root + sep).startsWith(home + sep)) return root;
+  }
+  throw new AppiumError('NOT_ALLOWED',
+    `The Appium child's private HOME must sit outside your home folder, and both ${preferred} and ${fallback} are inside it. Set TMPDIR to a folder outside your home folder.`);
+}
 
 function verifyClientSdk(stack: VerifiedStack): void {
   const sdkPath = 'node_modules/@modelcontextprotocol/sdk';
@@ -168,10 +197,8 @@ export class PrivateAppiumClient {
     verifyClientSdk(options.stack);
     if (!isAbsolute(options.homeRoot) || (options.child !== undefined && !isAbsolute(options.child.entrypoint)) || (!options.child && !options.profile)
       || (options.androidSdkRoot !== undefined && !isAbsolute(options.androidSdkRoot))) throw new AppiumError('NOT_ALLOWED');
-    mkdirSync(options.homeRoot, { recursive: true, mode: 0o700 });
-    const directory = lstatSync(options.homeRoot);
-    if (!directory.isDirectory() || directory.uid !== process.getuid?.() || (directory.mode & 0o077) !== 0) throw new AppiumError('NOT_ALLOWED');
-    const home = mkdtempSync(join(options.homeRoot, 'command-'));
+    const root = privateHomeRoot(options.homeRoot, options.fallbackHomeRoot ?? `/private/tmp/jev-ios-bridge-${userInfo().uid}`, options.accountHome ?? userInfo().homedir);
+    const home = mkdtempSync(join(root, 'command-'));
     let child = options.child;
     if (!child) {
       const profileFile = join(home, 'profile.json');
