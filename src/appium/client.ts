@@ -1,7 +1,8 @@
 import { spawn, type ChildProcessWithoutNullStreams } from 'node:child_process';
 import { createHash } from 'node:crypto';
-import { lstatSync, mkdirSync, mkdtempSync, readFileSync, readdirSync, writeFileSync } from 'node:fs';
-import { dirname, isAbsolute, join, resolve } from 'node:path';
+import { lstatSync, mkdirSync, mkdtempSync, readFileSync, readdirSync, realpathSync, writeFileSync } from 'node:fs';
+import { userInfo } from 'node:os';
+import { dirname, isAbsolute, join, resolve, sep } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { once } from 'node:events';
 import { rm } from 'node:fs/promises';
@@ -170,8 +171,11 @@ export class PrivateAppiumClient {
       || (options.androidSdkRoot !== undefined && !isAbsolute(options.androidSdkRoot))) throw new AppiumError('NOT_ALLOWED');
     mkdirSync(options.homeRoot, { recursive: true, mode: 0o700 });
     const directory = lstatSync(options.homeRoot);
-    if (!directory.isDirectory() || directory.uid !== process.getuid?.() || (directory.mode & 0o077) !== 0) throw new AppiumError('NOT_ALLOWED');
-    const home = mkdtempSync(join(options.homeRoot, 'command-'));
+    // cfprefsd maps a preference file under the account's home folder to the account's real domain, and drops writes through a symlinked path.
+    const root = realpathSync(options.homeRoot);
+    if (!directory.isDirectory() || directory.uid !== process.getuid?.() || (directory.mode & 0o077) !== 0
+      || (root + sep).startsWith(realpathSync(userInfo().homedir) + sep)) throw new AppiumError('NOT_ALLOWED');
+    const home = mkdtempSync(join(root, 'command-'));
     let child = options.child;
     if (!child) {
       const profileFile = join(home, 'profile.json');

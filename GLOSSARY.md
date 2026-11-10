@@ -20,7 +20,7 @@ _Avoid_: planner, agent
 The external capability that operates the device and captures its screen: the bridge's frozen Appium stack, reached through the private MCP child, with WebDriverAgent on iOS and the device agent on Android. Android's own debugging tools and `simctl` work beside it, for the steps Appium doesn't own. Earlier releases used MobileBuildMCP on iOS and mobilecli's device agent on Android.
 
 **Private MCP child**:
-The bridge's own Appium MCP server process, one per command. The bridge starts it with a restricted environment and a private HOME under its per-account folder, and reaches it only through its private MCP client. When that client disconnects, the child deletes its sessions and ends.
+The bridge's own Appium MCP server process, one per command. The bridge starts it with a restricted environment and a private HOME in the account's temporary folder, outside the user's home folder so Simulator preference writes stay private, and reaches it only through its private MCP client. When that client disconnects, the child deletes its sessions and ends.
 _Avoid_: MCP server (the bridge's public server)
 
 **Extension**:

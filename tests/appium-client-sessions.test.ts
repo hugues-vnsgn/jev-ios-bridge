@@ -1,8 +1,8 @@
 import assert from 'node:assert/strict';
 import { test, type TestContext } from 'node:test';
 import { createHash } from 'node:crypto';
-import { existsSync, lstatSync, mkdtempSync, readFileSync, readdirSync, rmSync, writeFileSync } from 'node:fs';
-import { tmpdir } from 'node:os';
+import { existsSync, lstatSync, mkdtempSync, readFileSync, readdirSync, realpathSync, rmSync, writeFileSync } from 'node:fs';
+import { tmpdir, userInfo } from 'node:os';
 import { dirname, join, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { spawnSync } from 'node:child_process';
@@ -74,7 +74,7 @@ test('private child receives only the restricted environment and a mode-700 HOME
   assert.deepEqual(Object.keys(env).filter(key => key !== '__CF_USER_TEXT_ENCODING').sort(),
     ['ALLOW_REMOTE_APP_URLS', 'APPIUM_HOME', 'APPIUM_MCP_ON_CLIENT_DISCONNECT', 'HOME', 'LANG', 'PATH', 'TMPDIR']);
   assert.equal(lstatSync(env.HOME).mode & 0o777, 0o700);
-  assert.equal(dirname(env.HOME), join(f.root, 'homes'));
+  assert.equal(dirname(env.HOME), join(realpathSync(f.root), 'homes'), 'HOME is a real path, so cfprefsd writes the file it names');
   assert.equal(f.records[0]?.kind, 'appium-child');
   assert.equal(client.components[0]?.owner.generation, 7);
   assert.equal(f.calls()[0].params.protocolVersion, '2025-11-25');
@@ -113,7 +113,20 @@ test('the child uses an explicitly selected Android SDK without inheriting envir
   const env = JSON.parse(readFileSync(environment, 'utf8'));
   assert.equal(env.ANDROID_HOME, '/verified/android-sdk');
   assert.equal(env.ANDROID_SDK_ROOT, '/verified/android-sdk');
-  assert.equal(env.HOME.startsWith(join(f.root, 'homes', 'command-')), true);
+  assert.equal(env.HOME.startsWith(join(realpathSync(f.root), 'homes', 'command-')), true);
+});
+
+test('a HOME root inside the account\'s real home folder is refused before the child starts', async t => {
+  const f = fixture(t);
+  const inside = mkdtempSync(join(userInfo().homedir, '.jev-home-guard-'));
+  t.after(() => rmSync(inside, { recursive: true, force: true }));
+  const opening = PrivateAppiumClient.open({ stack: f.stack, owner, homeRoot: join(inside, 'homes'), timeoutMs: 20000,
+    child: { entrypoint: resolve('tests/fixtures/appium-wire/fake-mcp.ts'), args: [f.recording, 'none', f.trace, f.environment], nodeArgs: ['--import', import.meta.resolve('tsx')] },
+    onComponent: () => {} });
+  opening.then(client => f.clients.push(client), () => {});
+  await assert.rejects(opening, { code: 'NOT_ALLOWED' });
+  assert.equal(existsSync(f.environment), false);
+  assert.deepEqual(readdirSync(join(inside, 'homes')), []);
 });
 
 for (const fault of ['sdk-version', 'sdk-integrity', 'sdk-file']) test(`${fault} refuses before the child starts`, async t => {
