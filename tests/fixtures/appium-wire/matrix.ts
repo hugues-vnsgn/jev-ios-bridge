@@ -19,6 +19,8 @@ export const IOS_DEVICE: DeviceIdentity = { category: 'ios-simulator', value: UD
 export const ANDROID_DEVICE: DeviceIdentity = { category: 'android-phone', value: SERIAL };
 export const iosTarget = { target: { platform: 'ios', device: UDID }, identityProbe: fakeSimulatorProbe(UDID) } satisfies Partial<AppiumDriverOptions>;
 
+/** What `dumpsys window InputMethod` prints when no window's title matches (AOSP WindowManagerService, API 31 to 36). */
+export const NO_KEYBOARD_WINDOW = 'Bad window command, or no windows match: InputMethod\nUse -h for help.\n';
 const keyguard = (showing: boolean) => `WINDOW MANAGER POLICY STATE\n    KeyguardServiceDelegate\n      showing=${String(showing)}\n      interactiveState=INTERACTIVE_STATE_AWAKE\n`;
 const procStat = (pid: number) => `${String(pid)} (app_process) S ${'0 '.repeat(18)}424242 0 0`;
 /** A USB phone whose transport the test can take away; the world fixture answers its UiAutomator2 `pidof`. */
@@ -29,7 +31,7 @@ export function androidTarget(device: { state: string } & AndroidPreflight = { s
     const line = args.at(-1) ?? '';
     const preflight = androidPreflightReply(line, device);
     if (preflight) return preflight;
-    if (line === "'dumpsys' 'window' 'InputMethod'") return { stdout: 'WINDOW MANAGER WINDOWS (dumpsys window windows)\n', stderr: '', exitCode: 0 };
+    if (line === "'dumpsys' 'window' 'InputMethod'") return { stdout: NO_KEYBOARD_WINDOW, stderr: '', exitCode: 0 };
     const pid = /\/proc\/(\d+)\/stat/.exec(line)?.[1];
     return pid ? { stdout: procStat(Number(pid)), stderr: '', exitCode: 0 } : { stdout: '', stderr: 'unexpected', exitCode: 1 };
   };
