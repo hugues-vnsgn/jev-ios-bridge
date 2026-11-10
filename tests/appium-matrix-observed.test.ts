@@ -43,7 +43,7 @@ async function observed(t: TestContext, action: ReturnType<typeof world>) {
   const f = worldFixture(t, world('ios', { go: screens.go }), iosTarget, command => ['ios-boot', 'ios-install', 'ios-launch'].includes(command.kind) ? '' : undefined);
   const { claim, allocationId } = await reserve(f.admission);
   await f.driver.attachPreparation(claim, context, live());
-  await f.driver.boot(live()); await f.driver.install('/isolated/Fixture.app', live()); await f.driver.launch(live()); await f.driver.readiness(live());
+  await f.driver.boot(live()); await f.driver.install('/isolated/Fixture.app', live()); await (await f.driver.launch(live()))(live()); await f.driver.readiness(live());
   assert.equal((await f.driver.park(['/isolated/evidence/readiness.json'], [], live())).authority, 'committed');
   const executors: ReturnType<typeof f.open>[] = [];
   const service = new ObservedActionService({ admission: f.admission, runsDir: join(f.root, 'evidence'), bridgeVersion: 'fixture', backend: 'fake', enabled: true,

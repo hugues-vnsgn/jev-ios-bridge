@@ -199,13 +199,15 @@ export function backButtonOf(snapshot: Snapshot): Element | undefined {
 
 export type AdmittedAppContext = { app: { bundleId: string; launchArgs?: string[] } };
 export type PreparationInventoryStatus = { state: string; isAvailable: boolean };
+export type SessionStart = (signal: AbortSignal) => Promise<void>;
 export interface IosPreparationDriver {
   attachPreparation(claim: PreparationClaim, context: AdmittedAppContext, signal: AbortSignal): Promise<void>;
   inventoryStatus(signal: AbortSignal, timeoutMs?: number): Promise<PreparationInventoryStatus | undefined>;
   boot(signal: AbortSignal, timeoutMs?: number): Promise<void>;
   bootState(signal: AbortSignal, timeoutMs?: number): Promise<string | undefined>;
   install(artifactPath: string, signal: AbortSignal, timeoutMs?: number): Promise<void>;
-  launch(signal: AbortSignal, timeoutMs?: number): Promise<void>;
+  /** Launches the app once. The returned step opens the preparation's Appium session, and the caller bounds it. */
+  launch(signal: AbortSignal, timeoutMs?: number): Promise<SessionStart>;
   readiness(signal: AbortSignal, timeoutMs?: number): Promise<Snapshot>;
   park(readinessEvidence: string[], evidenceRefs: string[], signal: AbortSignal): Promise<AllocationCommit>;
   revokeIssuance(): void;
