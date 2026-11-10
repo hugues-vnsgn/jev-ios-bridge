@@ -82,6 +82,15 @@ function assertHeld(f: Fixture, device = IOS_DEVICE, attempt = 'run-1') {
   assert.equal(f.admission.inspect(device)!.state, 'quarantined');
   assert.equal(recoveriesOf(f.admission, attempt).length, 1, 'the uncertain owner is fenced by one recovery claim');
 }
+/** Uncertain work closes the attempt quarantined; one recovery claim's receipt covers it once the whole stack is proven stopped. */
+function assertFencedRead(f: Fixture, device = IOS_DEVICE, attempt = 'run-1') {
+  assert.deepEqual(terminalOf(f.admission, attempt), { outcome: 'inconclusive', disposition: 'quarantined', payload: {}, evidenceRefs: [] });
+  assert.equal(f.admission.inspect(device)!.state, 'available');
+  assert.deepEqual(recoveriesOf(f.admission, attempt).map(recovery => recovery.closure), ['accepted']);
+  const owner = f.admission.readAttempt({ kind: 'legacy', id: attempt })!.owner;
+  assert.deepEqual(f.admission.readGeneration(owner).commands.filter(command => command.state !== 'settled').map(command => [command.operation, command.state]),
+    [['appium-observe', 'uncertain']], 'the cut read is fenced, never reported settled');
+}
 const errors = (events: RunEvent[]) => events.filter(event => event.type === 'error').map(event => [event.data.phase, event.data.code, event.data.vendorCode ?? null]);
 const pointOf = (call: { params?: { arguments?: Record<string, unknown> } }) => {
   const [move] = (call.params!.arguments!.actions as { actions: { type: string; x?: number; y?: number }[] }[])[0]!.actions;
@@ -131,7 +140,7 @@ test('scripted v1 on Android: activity and intent extras restart through the ext
   const f = worldFixture(t, world('android', androidScreens, flow), phone.options, phone.nativeReply);
   const { b, done, events, report, again } = await runTwice(t, f, androidScript, world('android', androidScreens, flow));
   assert.deepEqual([done.report.verdict, done.report.reason], ['passed', 'ALL_CHECKPOINTS_PASSED']);
-  assert.deepEqual(authorized(f.admission, 'run-1'), { 'android-preflight-api': 1, 'android-preflight-boot': 1, 'android-preflight-installed': 1, 'android-wake': 1, 'appium-observe': 3, 'appium-replace-text': 1, 'appium-restart': 1,
+  assert.deepEqual(authorized(f.admission, 'run-1'), { 'android-preflight-api': 1, 'android-preflight-boot': 1, 'android-keyboard': 2, 'android-preflight-installed': 1, 'android-wake': 1, 'appium-observe': 3, 'appium-replace-text': 1, 'appium-restart': 1,
     'appium-session-create': 1, 'appium-tap': 2, 'appium-terminate': 2 });
   const wire = f.toolCalls();
   assert.deepEqual(wire.find(call => call.params!.name === 'jev_start_activity')!.params!.arguments, { extensionVersion: 1, sessionId: 'android-session',
@@ -178,12 +187,12 @@ async function cancelOn(t: TestContext, tool: string) {
   return { f, done: await b.finished(runId), events: await readRunEvents(b.service.baseDir, runId) };
 }
 
-test('a run cancelled while an observation that never answers is in flight, before any input: no input is sent, and the device is held', async t => {
+test('a run cancelled while an observation that never answers is in flight, before any input: no input is sent, the cut read is fenced with the stack, and the device is released', async t => {
   const { f, done, events } = await cancelOn(t, 'appium_get_page_source');
-  assert.deepEqual([done.report.verdict, done.report.reason], ['inconclusive', 'CLEANUP_FAILED']);
+  assert.deepEqual([done.report.verdict, done.report.reason], ['inconclusive', 'CANCELLED']);
   assert.equal(f.tools().includes('appium_perform_actions'), false);
-  assert.deepEqual(errors(events), [['observe', 'CANCELLED', null], ['cleanup', 'CLEANUP_FAILED', null]]);
-  assertHeld(f);
+  assert.deepEqual(errors(events), [['observe', 'CANCELLED', null], ['cleanup', 'CANCELLED', null]]);
+  assertFencedRead(f);
 });
 
 test('a run cancelled while a dispatched tap never answers: the tap is sent once, never resent, and the device is held', async t => {
@@ -208,6 +217,26 @@ test('a run cancelled mid-wait, while an observation it then answers is in fligh
   assert.deepEqual(errors(await readRunEvents(b.service.baseDir, runId)), [['wait', 'CANCELLED', null], ['cleanup', 'CANCELLED', null]]);
   assertReleased(f);
   const next = await withRunLog('next', log => runScriptedScenario({ runId: 'next', scenario: iosScript as never, driver: second.driver, judge: passingJudge, log }));
+  assert.deepEqual([next.verdict, next.reason], ['passed', 'ALL_CHECKPOINTS_PASSED']);
+});
+
+const androidHold = { ...androidScript, steps: [{ id: 'hold', kind: 'wait', guard: { present: [{ label: 'Header' }] }, until: { present: [{ identifier: id('never') }] }, timeoutMs: 60_000 }, androidScript.steps[4]] };
+/** A frozen app: UiAutomator2 waits on its main thread, so the page source never answers and the session behind it can't be deleted. */
+const frozen: WorldRule[] = [{ tool: 'appium_get_page_source', nth: 3, fault: { kind: 'lost' } },
+  { tool: 'appium_session_management', match: { action: 'delete' }, fault: { kind: 'error', code: 'DRIVER_ERROR' } }];
+test('an app that freezes mid-wait: the observation times out, close fences the whole stack and covers the cut read, and the next run on the device starts', async t => {
+  const phone = androidTarget();
+  const f = worldFixture(t, world('android', androidScreens, frozen), phone.options, phone.nativeReply);
+  const second = f.open(world('android', androidScreens, flow));
+  const b = await bridge(t, [f.driver]);
+  const { runId } = await b.service.start(androidHold);
+  const { report } = await b.finished(runId);
+  assert.deepEqual([report.verdict, report.reason], ['inconclusive', 'DEVICE_ERROR']);
+  assert.deepEqual(errors(await readRunEvents(b.service.baseDir, runId)), [['wait', 'DEVICE_ERROR', 'OBSERVATION_TIMEOUT']], 'no cleanup failure');
+  assertFencedRead(f, ANDROID_DEVICE);
+  assert.equal(f.fence.processes.size, 0, 'both UiAutomator2 processes are stopped');
+  assert.deepEqual(f.fence.forwards, [], 'the owned forward is removed');
+  const next = await withRunLog('next', log => runScriptedScenario({ runId: 'next', scenario: androidScript as never, driver: second.driver, judge: passingJudge, log }));
   assert.deepEqual([next.verdict, next.reason], ['passed', 'ALL_CHECKPOINTS_PASSED']);
 });
 
@@ -284,13 +313,14 @@ test('a run that reports UI_ACTION_UNCONFIRMED keeps the device, as the legacy d
     assertHeld(f);
   });
 
-test('the private MCP child dying during an observation, before any input: no input is sent and the device is held for recovery', async t => {
+test('the private MCP child dying during an observation, before any input: no input is sent, the fence recovers its components, and the next run starts', async t => {
   const f = ios(t, [{ tool: 'appium_get_page_source', nth: 1, fault: { kind: 'exit', code: 9 } }], 8000);
-  const { done, events } = await runTwice(t, f, iosScript, iosWorld());
-  assert.deepEqual([done.report.verdict, done.report.reason], ['inconclusive', 'CLEANUP_FAILED']);
-  assert.equal(errors(events)[0]![0], 'observe');
+  const { done, events, again } = await runTwice(t, f, iosScript, iosWorld());
+  assert.deepEqual([done.report.verdict, done.report.reason], ['inconclusive', 'DEVICE_ERROR']);
+  assert.deepEqual(errors(events), [['observe', 'DEVICE_ERROR', 'OBSERVATION_DRIVER_ERROR']], 'no cleanup failure');
   assert.equal(f.tools().includes('appium_perform_actions'), false);
-  assertHeld(f);
+  assertFencedRead(f);
+  assert.equal((await again()).verdict, 'passed');
 });
 
 test('an Android phone that disconnects during a tap: the fence cannot revalidate the serial, so nothing is released and the next admission is refused', async t => {

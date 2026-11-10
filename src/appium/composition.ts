@@ -109,6 +109,7 @@ export class ComposedAppiumDriver implements Required<Omit<DeviceDriver, 'metric
   private driver: AppiumDriver | undefined;
   private stackWarnings: readonly string[] = [];
   private revoked = false;
+  private inputStopped = false;
   private closed = false;
 
   constructor(private readonly options: ComposedDriverOptions) {}
@@ -125,6 +126,7 @@ export class ComposedAppiumDriver implements Required<Omit<DeviceDriver, 'metric
       this.stackWarnings = parts.stack.warnings;
       this.driver = driver;
       if (this.revoked) driver.revokeIssuance();
+      if (this.inputStopped) driver.stopInput();
       return driver;
     })();
     return this.opening;
@@ -170,6 +172,7 @@ export class ComposedAppiumDriver implements Required<Omit<DeviceDriver, 'metric
   readiness(signal: AbortSignal, timeoutMs?: number): Promise<Snapshot> { return this.live().readiness(signal, timeoutMs); }
   park(readinessEvidence: string[], evidenceRefs: string[], signal: AbortSignal): Promise<AllocationCommit> { return this.live().park(readinessEvidence, evidenceRefs, signal); }
 
+  stopInput(): void { this.inputStopped = true; this.driver?.stopInput(); }
   actPath(): ActPath | undefined { return this.driver?.actPath(); }
   appRunning(): boolean | undefined { return this.driver?.appRunning(); }
   appProblem(): AppProblem | undefined { return this.driver?.appProblem(); }

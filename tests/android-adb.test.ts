@@ -49,8 +49,19 @@ test('an abort doesn\'t kill the child: the runner waits for it to exit, then th
   controller.abort(reason);
   for (let turn = 0; turn < 5; turn++) await new Promise(resolveTurn => setImmediate(resolveTurn));
   assert.equal(ended, false, 'still waiting for the child');
+  assert.deepEqual(fake.child().killedBy, []);
   fake.child().exit(0, 'Status: ok\n');
   await assert.rejects(pending, (error: unknown) => error === reason);
+});
+
+test('an aborted read is killed, and the runner throws the abort reason once it has exited', async () => {
+  const fake = fakeSpawn();
+  const controller = new AbortController();
+  const pending = adbRunner({ adb, environment: {}, spawn: fake.spawn })(['-s', 'emulator-5554', 'shell', 'dumpsys', 'window', 'InputMethod'], controller.signal, undefined, 'read');
+  const reason = new Error('deadline');
+  controller.abort(reason);
+  await assert.rejects(pending, (error: unknown) => error === reason);
+  assert.deepEqual(fake.child().killedBy, ['SIGKILL']);
 });
 
 test('a child killed from outside, with no exit status, has an unknown outcome', async () => {

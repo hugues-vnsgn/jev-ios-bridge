@@ -202,12 +202,9 @@ async function dispatchCli(args: string[], composition: CliComposition): Promise
       onNotice: (_runId, text) => { console.error(text); } },
   });
   const observed = command === 'mcp' ? composition.observed ?? productionObservedComposition({ enabled: process.env.JEV_EXPERIMENTAL_OBSERVED === '1', runsDir: runsDir, host }) : undefined;
-  let closing = false;
-  const close = async () => {
-    if (closing) return;
-    closing = true;
-    await Promise.allSettled([service.close(), observed?.close()]);
-  };
+  // stdin end, SIGTERM and SIGINT can each start the close; every caller waits for the same one.
+  let closing: Promise<unknown> | undefined;
+  const close = () => closing ??= Promise.allSettled([service.close(), observed?.close()]);
   process.once('SIGINT', () => { void close().then(() => process.exit(130)); });
   process.once('SIGTERM', () => { void close().then(() => process.exit(143)); });
   if (command === 'mcp') {
