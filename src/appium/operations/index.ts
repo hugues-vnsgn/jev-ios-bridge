@@ -5,8 +5,8 @@ import type { PrivateAppiumClient } from '../client.js';
 import type { AppiumObservedScreen } from '../observe/index.js';
 import { AppiumError, type AppiumErrorCode, type AppiumPlatform, type AppiumSessionId } from '../wire-schemas.js';
 import { textFieldOf, shownValueOf } from './field.js';
-import { DEFAULT_TAP_HOLD_MS, centreOf, edgeBack, screenMiddleScroll, scrollWithin, strokeSequence, swipeWithin, tapSequence,
-  type PointerActions, type Stroke } from './geometry.js';
+import { DEFAULT_TAP_HOLD_MS, centreOf, contains, edgeBack, screenMiddleScroll, scrollWithin, strokeSequence, swipeWithin, tapSequence,
+  type Frame, type Point, type PointerActions, type Stroke } from './geometry.js';
 
 export type OperationName = 'tap' | 'swipe' | 'scroll' | 'back' | 'tap-at' | 'replace-text' | 'restart' | 'terminate';
 
@@ -34,6 +34,9 @@ export interface AppiumOperationsOptions {
   dispatch?: OperationDispatcher;
   now?: () => number;
   timeoutMs?: number;
+  /** Android: the screen areas the soft keyboard takes touches in right now, empty when none is shown. Read just before a tap or
+   *  stroke, because the snapshot can predate a keyboard that opened since. */
+  keyboard?: (signal: AbortSignal) => Promise<readonly Frame[]>;
 }
 export interface Performed {
   result: Snapshot | ActOutcome;
@@ -54,10 +57,10 @@ export class UnconfirmedOperationError extends DeviceReasonError {
 const MAX_HOLD_MS = 10_000;
 const TAP_AT_ASPECT_TOLERANCE = 0.01;
 /** Codes the extension answers before any input reaches the device. */
-export const REFUSED_BEFORE_INPUT: ReadonlySet<string> = new Set(['SESSION_MISMATCH', 'VERSION_MISMATCH', 'NOT_ALLOWED', 'NOT_UNIQUE']);
+export const REFUSED_BEFORE_INPUT: ReadonlySet<string> = new Set(['SESSION_MISMATCH', 'VERSION_MISMATCH', 'NOT_ALLOWED', 'NOT_UNIQUE', 'NOT_FOUND']);
 const SOURCES: Record<AppiumErrorCode, VendorSource> = {
   DRIVER_ERROR: 'appium', TIMEOUT: 'bridge', ACKNOWLEDGEMENT_LOST: 'bridge', CONNECTION_LOST: 'bridge', SESSION_MISMATCH: 'bridge',
-  VERSION_MISMATCH: 'bridge', NOT_ALLOWED: 'bridge', NOT_UNIQUE: 'bridge', SDK_IDENTITY_MISMATCH: 'bridge', PROTOCOL_VERSION_MISMATCH: 'bridge',
+  VERSION_MISMATCH: 'bridge', NOT_ALLOWED: 'bridge', NOT_UNIQUE: 'bridge', NOT_FOUND: 'bridge', SDK_IDENTITY_MISMATCH: 'bridge', PROTOCOL_VERSION_MISMATCH: 'bridge',
   SETTINGS_READBACK_MISMATCH: 'bridge',
 };
 export const vendorSourceOf = (code: AppiumErrorCode): VendorSource => SOURCES[code];
@@ -195,11 +198,20 @@ export class AppiumOperations {
     actPath?: ActPath): Promise<Performed> {
     if (!Number.isInteger(holdMs) || holdMs < 0 || holdMs > MAX_HOLD_MS) throw unsupported('The hold is out of range.');
     const target = this.target(evidence, ref, 'tap');
-    return { ...await this.pointed(operation, tapSequence(centreOf(target.frame), holdMs), signal, actPath), holdMs };
+    const point = centreOf(target.frame);
+    await this.clearOfKeyboard(point, signal);
+    return { ...await this.pointed(operation, tapSequence(point, holdMs), signal, actPath), holdMs };
   }
 
-  private stroked(operation: 'swipe' | 'scroll' | 'back', stroke: Stroke, signal: AbortSignal, actPath?: ActPath): Promise<Performed> {
+  private async stroked(operation: 'swipe' | 'scroll' | 'back', stroke: Stroke, signal: AbortSignal, actPath?: ActPath): Promise<Performed> {
+    await this.clearOfKeyboard(stroke.from, signal);
     return this.pointed(operation, strokeSequence(stroke), signal, actPath);
+  }
+
+  /** A touch that lands on the soft keyboard would type, so it is refused before input. */
+  private async clearOfKeyboard(point: Point, signal: AbortSignal): Promise<void> {
+    if (this.options.keyboard && (await this.options.keyboard(signal)).some(area => contains(area, point)))
+      throw new DeviceReasonError('TARGET_UNAVAILABLE', 'The touch would land on the soft keyboard.');
   }
 
   private async pointed(operation: OperationName, actions: PointerActions, signal: AbortSignal, actPath?: ActPath): Promise<Performed> {
@@ -232,6 +244,7 @@ export class AppiumOperations {
   private refusal(error: unknown): DeviceReasonError {
     const code = error instanceof AppiumError ? error.code : undefined;
     if (code === 'NOT_UNIQUE') return new DeviceReasonError('TARGET_AMBIGUOUS', 'The target matched more than one element.');
+    if (code === 'NOT_FOUND') return new DeviceReasonError('TARGET_UNAVAILABLE', 'The target is no longer on the screen.');
     return new DeviceReasonError('DEVICE_ERROR', 'The Appium layer refused the operation.', code === undefined ? {} : { vendorCode: code, vendorSource: vendorSourceOf(code) });
   }
 }

@@ -32,6 +32,9 @@ export function strokeSequence({ from, to, durationMs }: Stroke): PointerActions
 export function centreOf(frame: Frame): Point {
   return { x: Math.round(frame.x + frame.width / 2), y: Math.round(frame.y + frame.height / 2) };
 }
+export function contains(frame: Frame, point: Point): boolean {
+  return point.x >= frame.x && point.x < frame.x + frame.width && point.y >= frame.y && point.y < frame.y + frame.height;
+}
 
 type Axis = { start: number; length: number };
 const fraction = ({ start, length }: Axis, from: number, to: number): [number, number] =>

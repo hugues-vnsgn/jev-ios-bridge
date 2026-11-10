@@ -226,12 +226,20 @@ export async function runScriptedScenario(options: ScriptedRunOptions): Promise<
   const started = performance.now();
   const controller = new AbortController();
   const signal = controller.signal;
-  const deviceOperation = async <T>(milliseconds: number | undefined, work: (issuedSignal: AbortSignal) => Promise<T>): Promise<T> => {
-    if (milliseconds === undefined) return abortableOperation(() => work(signal), signal);
-    const timer = setTimeout(() => controller.abort(new ScriptRunError('EXECUTION_ERROR')), milliseconds);
-    try { return await abortableOperation(() => work(signal), signal); }
-    finally { clearTimeout(timer); }
-  };
+  signal.addEventListener('abort', () => { options.driver.stopInput?.(); }, { once: true });
+  // A cancel or the wall limit stops the run at once but never cuts a command already sent: a cut command is unknown,
+  // and an unknown command quarantines the device. Only the command's own deadline cuts it; close waits for its answer.
+  const deviceOperation = <T>(milliseconds: number | undefined, work: (issuedSignal: AbortSignal) => Promise<T>): Promise<T> =>
+    abortableOperation(() => {
+      const issued = new AbortController();
+      const timer = milliseconds === undefined ? undefined : setTimeout(() => {
+        issued.abort(new ScriptRunError('EXECUTION_ERROR'));
+        controller.abort(new ScriptRunError('EXECUTION_ERROR'));
+      }, milliseconds);
+      const pending = (async () => work(issued.signal))();
+      void pending.finally(() => clearTimeout(timer)).catch(() => {});
+      return pending;
+    }, signal);
   const cancel = () => controller.abort(new ScriptRunError('CANCELLED'));
   const requireActive = () => { if (signal.aborted) throw signal.reason; };
   options.signal?.addEventListener('abort', cancel, { once: true });

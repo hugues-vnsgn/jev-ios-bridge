@@ -8,6 +8,8 @@ export interface TextField { locator: Locator; matches(element: Element): boolea
 
 const IOS_TEXT_TYPES = ['XCUIElementTypeTextField', 'XCUIElementTypeSecureTextField', 'XCUIElementTypeTextView'];
 const quote = (value: string) => `"${value.replaceAll('\\', '\\\\').replaceAll('"', '\\"')}"`;
+const xpathLiteral = (value: string) => !value.includes('"') ? `"${value}"` : !value.includes("'") ? `'${value}'`
+  : `concat(${value.split('"').map(part => `"${part}"`).join(`, '"', `)})`;
 const sameFrame = (a: Element['frame'], b: Element['frame']) =>
   a !== undefined && b !== undefined && a.x === b.x && a.y === b.y && a.width === b.width && a.height === b.height;
 
@@ -28,12 +30,12 @@ export function textFieldOf(platform: AppiumPlatform, snapshot: Snapshot, target
       matches: element => element.role === 'text-field' && (element.identifier ?? element.label) === name };
   } else if (target.identifier) {
     const id = target.identifier;
-    field = { locator: { using: 'id', value: id }, matches: element => element.identifier === id };
+    field = { locator: { using: 'xpath', value: `//*[@resource-id=${xpathLiteral(id)}]` }, matches: element => element.identifier === id };
   } else {
     const frame = target.frame;
     if (!frame) return ambiguous();
     const bounds = `[${String(frame.x)},${String(frame.y)}][${String(frame.x + frame.width)},${String(frame.y + frame.height)}]`;
-    field = { locator: { using: 'xpath', value: `//*[@bounds=${quote(bounds)} and (contains(@class,"EditText") or contains(@class,"AutoCompleteTextView"))]` },
+    field = { locator: { using: 'xpath', value: `//*[@bounds=${xpathLiteral(bounds)} and (contains(@class,"EditText") or contains(@class,"AutoCompleteTextView"))]` },
       matches: element => element.role === 'text-field' && sameFrame(element.frame, frame) };
   }
   if (snapshot.elements.filter(field.matches).length !== 1) return ambiguous();
