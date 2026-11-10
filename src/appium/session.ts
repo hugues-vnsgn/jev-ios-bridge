@@ -19,6 +19,12 @@ const profileInputSchema = z.discriminatedUnion('platform', [
     z.strictObject({ kind: z.literal('verified'), device: text, apks: z.array(apkSchema).length(2) }),
   ]), ports: z.strictObject({ systemPort: port }).optional() }),
 ]);
+/**
+ * Outlasts Appium's own agent start bounds (the WDA launch and UiAutomator2 server install timeouts below, plus the server's
+ * launch tries), so Appium's own answer arrives first. A create still unanswered is cut and keeps the device quarantined.
+ * A run's wall limit never cuts it: the run's close waits for it only within the cleanup budget.
+ */
+export const SESSION_CREATE_TIMEOUT_MS = 240_000;
 export type SessionProfileInput = z.infer<typeof profileInputSchema>;
 const profileSchema = z.strictObject({ platform: platformSchema, device: text, path, capabilities: capabilitiesSchema }).brand<'SessionProfile'>();
 export type SessionProfile = z.infer<typeof profileSchema>;
@@ -65,8 +71,8 @@ export class AppiumCommandSession {
   private phase: SessionState = 'ready';
   private finishing: Promise<void> | undefined;
   private constructor(readonly client: PrivateAppiumClient, readonly profile: SessionProfile, readonly sessionId: AppiumSessionId) {}
-  static async start({ client, profile, timeoutMs }: { client: PrivateAppiumClient; profile: SessionProfile; timeoutMs?: number }): Promise<AppiumCommandSession> {
-    const created = await client.manageSession({ action: 'create', platform: profile.platform, capabilities: JSON.stringify(profile.capabilities) }, profile, timeoutMs);
+  static async start({ client, profile, timeoutMs, createTimeoutMs }: { client: PrivateAppiumClient; profile: SessionProfile; timeoutMs?: number; createTimeoutMs?: number }): Promise<AppiumCommandSession> {
+    const created = await client.manageSession({ action: 'create', platform: profile.platform, capabilities: JSON.stringify(profile.capabilities) }, profile, createTimeoutMs ?? timeoutMs);
     if (created.kind !== 'created') throw new AppiumError('ACKNOWLEDGEMENT_LOST');
     await client.applySettings(profile, timeoutMs);
     return new AppiumCommandSession(client, profile, created.sessionId);

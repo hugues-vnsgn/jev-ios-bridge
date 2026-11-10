@@ -500,6 +500,13 @@ test('a cut tap is never covered: the device stays quarantined though every Appi
   assert.equal(f.cut().state, 'uncertain');
 });
 
+test('a dead owner\'s cut session create is never covered: the device stays quarantined though every Appium component is proven stopped', async t => {
+  const f = await cutCommand(t, 'appium-session-create');
+  assert.deepEqual(await f.next(), { kind: 'refused', reason: 'DEVICE_QUARANTINED' });
+  assert.equal(f.runner.processes.size + f.runner.forwards.filter(row => row.serial === 'serial-one').length, 0, 'the sweep still stopped the stack');
+  assert.equal(f.cut().state, 'uncertain');
+});
+
 test('a cut read with no recorded Appium stack to stop is not covered', async t => {
   const f = await cutCommand(t, 'appium-observe', androidTargets.filter(target => target.kind !== 'appium-process-group'));
   assert.deepEqual(await f.next(), { kind: 'refused', reason: 'DEVICE_QUARANTINED' });
