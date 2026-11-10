@@ -573,7 +573,8 @@ export class AppiumDriver implements DeviceDriver, IosPreparationDriver, Observe
       return;
     }
     if (!this.options.adb) { owner.claim.markInventoryUnknown('UIAUTOMATOR2_IDENTITY_UNAVAILABLE'); return; }
-    const processes = await this.uiautomator2Processes(owner, device, signal);
+    const processes = await this.uiautomator2Processes(owner, device, signal)
+      .catch((error: unknown) => { owner.claim.markInventoryUnknown('UIAUTOMATOR2_IDENTITY_UNAVAILABLE'); throw error; });
     const fresh = processes.filter(process => !before.uiautomator2.some(prior => prior.pid === process.pid && prior.startTime === process.startTime));
     if (fresh.length) this.register(owner, appiumComponentSchema.parse({ id: randomUUID(), kind: 'appium-uiautomator2', serial: device, processes: fresh }));
     if (!processes.length) owner.claim.markInventoryUnknown('UIAUTOMATOR2_IDENTITY_UNAVAILABLE');
