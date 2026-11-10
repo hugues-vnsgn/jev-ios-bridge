@@ -10,7 +10,7 @@ import { createExitWatch } from '../device/android/exit-watch.js';
 import { LOG_FOLDER, logcatStarter, privateLogFolder } from '../device/android/logcat.js';
 import { identityProbe } from '../device/android/probe.js';
 import { findAdb } from '../device/android/tools.js';
-import { DeviceReasonError, type AdmittedAppContext, type DeviceWindowOpener, type IosPreparationDriver, type ObservedActionDriver, type PreparationInventoryStatus } from '../device/index.js';
+import { DeviceReasonError, type AdmittedAppContext, type DeviceWindowOpener, type IosPreparationDriver, type ObservedActionDriver, type PreparationInventoryStatus, type SessionStart } from '../device/index.js';
 import type { ProfileBinding } from '../profiles.js';
 import { AppiumDriver, type AppiumDriverOptions, type AppiumTarget, type RawScreenPair } from './driver.js';
 import { CLEANUP_BUDGET_MS } from './fence/index.js';
@@ -166,7 +166,7 @@ export class ComposedAppiumDriver implements Required<Omit<DeviceDriver, 'metric
   boot(signal: AbortSignal, timeoutMs?: number): Promise<void> { return this.live().boot(signal, timeoutMs); }
   bootState(signal: AbortSignal, timeoutMs?: number): Promise<string | undefined> { return this.live().bootState(signal, timeoutMs); }
   install(artifactPath: string, signal: AbortSignal, timeoutMs?: number): Promise<void> { return this.live().install(artifactPath, signal, timeoutMs); }
-  launch(signal: AbortSignal, timeoutMs?: number): Promise<void> { return this.live().launch(signal, timeoutMs); }
+  launch(signal: AbortSignal, timeoutMs?: number): Promise<SessionStart> { return this.live().launch(signal, timeoutMs); }
   readiness(signal: AbortSignal, timeoutMs?: number): Promise<Snapshot> { return this.live().readiness(signal, timeoutMs); }
   park(readinessEvidence: string[], evidenceRefs: string[], signal: AbortSignal): Promise<AllocationCommit> { return this.live().park(readinessEvidence, evidenceRefs, signal); }
 

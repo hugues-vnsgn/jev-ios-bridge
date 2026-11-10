@@ -11,7 +11,7 @@ import { EVENT_FILTER, type AppExitWatch, type createExitWatch } from '../device
 import { deleteOldLogs, privateLogFolder, type LogcatOutput, type LogcatStarter, type LogcatStream } from '../device/android/logcat.js';
 import { androidStartTime, processGone, shellCommand } from '../device/android/recovery.js';
 import { DeviceReasonError, StaleSnapshotError, type AdmittedAppContext, type DeviceWindowOpener, type IosPreparationDriver, type ObservedActionDriver,
-  type PreparationInventoryStatus } from '../device/index.js';
+  type PreparationInventoryStatus, type SessionStart } from '../device/index.js';
 import { executorOf, type StartLookup } from '../device/host-start.js';
 import { IdentityResolutionError, resolveIdentity, revalidateIdentity, type IdentityProbe, type ResolvedIdentity } from '../device/identity.js';
 import { CompatibilityMarker, DeviceLeaseBusyError } from '../device/lease.js';
@@ -278,12 +278,15 @@ export class AppiumDriver implements DeviceDriver, IosPreparationDriver, Observe
     await this.dispatch(owner, 'install', signal, timeoutMs, issued => steps.install(artifactPath, issued));
   }
 
-  async launch(signal: AbortSignal, timeoutMs = this.timeoutMs): Promise<void> {
+  async launch(signal: AbortSignal, timeoutMs = this.timeoutMs): Promise<SessionStart> {
     const admitted = this.admitted();
     const steps = observedIosPreparation({ ...this.iosTarget(admitted.owner), role: 'observed-preparation', runner: this.options.nativeRunner, timeoutMs });
     await this.dispatch(admitted.owner, 'launch', signal, timeoutMs, issued => steps.launch(admitted.app.id, admitted.app.launchArgs ?? [], issued));
-    const command = await this.openSession(admitted.owner, admitted.role, signal);
-    this.phase = { ...admitted, kind: 'live', command: { ...command, launched: true } };
+    return async sessionSignal => {
+      const current = this.admitted();
+      const command = await this.openSession(current.owner, current.role, sessionSignal);
+      this.phase = { ...current, kind: 'live', command: { ...command, launched: true } };
+    };
   }
 
   async readiness(signal: AbortSignal, timeoutMs = this.timeoutMs): Promise<Snapshot> {
