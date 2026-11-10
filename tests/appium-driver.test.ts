@@ -240,7 +240,7 @@ test('observed preparation launches once without helpers, deletes its session an
   await f.driver.attachPreparation(p.claim, observedContext, live());
   await f.driver.boot(live());
   await f.driver.install('/isolated/Fixture.app', live());
-  await f.driver.launch(live());
+  await (await f.driver.launch(live()))(live());
   assert.deepEqual(f.native.calls.map(call => call.command.kind), ['ios-boot', 'ios-install', 'ios-launch'], 'no console and no log stream');
   assert.deepEqual(f.native.calls[2]!.command.args, ['simctl', 'launch', '--terminate-running-process', UDID, 'dev.fixture']);
   await f.driver.readiness(live());
@@ -257,7 +257,7 @@ test('park removes the screenshot folder the driver made, after the readiness sc
     command => ['ios-boot', 'ios-install', 'ios-launch'].includes(command.kind) ? '' : undefined);
   const p = await parkedAllocation(f.admission);
   await f.driver.attachPreparation(p.claim, observedContext, live());
-  await f.driver.boot(live()); await f.driver.install('/isolated/Fixture.app', live()); await f.driver.launch(live());
+  await f.driver.boot(live()); await f.driver.install('/isolated/Fixture.app', live()); await (await f.driver.launch(live()))(live());
   const readiness = await f.driver.readiness(live());
   const copy = join(f.root, 'readiness-1.jpg');
   writeFileSync(copy, readFileSync(readiness.screenshotPath!));
@@ -269,7 +269,7 @@ test('the observed action opens a fresh session with no launch, and fences its c
   const f = driverFixture(t, observeRecording, ios, 'none', command => ['ios-boot', 'ios-install', 'ios-launch'].includes(command.kind) ? '' : undefined);
   const p = await parkedAllocation(f.admission);
   await f.driver.attachPreparation(p.claim, observedContext, live());
-  await f.driver.boot(live()); await f.driver.install('/isolated/Fixture.app', live()); await f.driver.launch(live()); await f.driver.readiness(live());
+  await f.driver.boot(live()); await f.driver.install('/isolated/Fixture.app', live()); await (await f.driver.launch(live()))(live()); await f.driver.readiness(live());
   assert.equal((await f.driver.park(['/isolated/evidence/readiness.json'], [], live())).authority, 'committed');
   const consumed = f.admission.consumeAllocation({ allocationId: p.id, actionId: 'allocated', actionDigest: digest, request: {}, appBundleId: 'dev.fixture',
     evidence: { bridgeVersion: 'fixture', directory: '/isolated/action', request: '/isolated/action/request.json' } });

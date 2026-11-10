@@ -11,7 +11,7 @@ import type { SourceProcess } from '../src/observed/create-source.js';
 import { allocationSourceProcess, developerDirectory, verifyInstalledCompatibility } from '../src/observed/allocation-config.js';
 import { allocationFixture, typeId, runtimeId, runtimeBundle } from './fixtures/observed-allocation-backend.js';
 import { mapPublicFixturePath } from './fixtures/observed-cli-server.js';
-import { cryptexFixture, cryptexDirectory, cryptexMount, cryptexRuntimes, cryptexBundle, cryptexInfo,
+import { cryptexFixture, cryptexLayout, cryptexDirectory, cryptexMount, cryptexRuntimes, cryptexBundle, cryptexInfo,
   cryptexProfile, cryptexSystem, cryptexRuntimeRoot, readonlyMountXml } from './fixtures/observed-cryptex-runtime.js';
 
 const purePublicRoot = '/private/tmp/jev-public-pure-fixture';
@@ -92,6 +92,21 @@ test('production composition proves all three Cryptex runtime leaves without a n
       assert.equal(f.launches.filter(effect => effect.executable === '/usr/bin/plutil' && effect.args[5] === path).length, 1);
     assert.equal(f.launches.filter(effect => effect.executable === '/usr/sbin/diskutil').length, 14);
     assert.equal(f.launches.length, 22);
+  } finally { await f.cleanup(); }
+});
+
+// CoreSimulator named the re-personalized iOS 26.5 mount this way on the live host (BUG-LI-3, `simctl runtime list -j` mountPath).
+for (const mountName of ['iOS_23F77', 'iOS_24A434']) test(`a Cryptex runtime mounted as ${mountName} proves installed compatibility, also through production composition`, async () => {
+  const layout = cryptexLayout(mountName);
+  const f = await cryptexFixture({ mountName });
+  try {
+    const signal = new AbortController().signal;
+    assert.equal((await verifyInstalledCompatibility({ deviceTypeId: typeId, runtimeId }, f.host, f.source, signal)).runtimeBuild, '24A434');
+    const proof = await verifyInstalledCompatibility({ deviceTypeId: typeId, runtimeId }, f.host, allocationSourceProcess(f.host, [], f.launch), signal);
+    assert.equal(proof.runtimeBuild, '24A434');
+    for (const path of [layout.info, layout.profile, layout.system])
+      assert.ok(f.launches.some(effect => effect.executable === '/usr/bin/plutil' && effect.args[5] === path), path);
+    assert.ok(f.launches.every(effect => effect.executable !== '/usr/bin/xcrun'));
   } finally { await f.cleanup(); }
 });
 

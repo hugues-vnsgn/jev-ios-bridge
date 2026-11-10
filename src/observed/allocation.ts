@@ -11,7 +11,7 @@ import { inspectArtifact, stageArtifact, verifyStagedArtifact, ArtifactError, ty
 import { createSimulator, type SourceProcess } from './create-source.js';
 import { selectSuppliedSource } from './supplied-source.js';
 import { readAllocationConfig, installedHost, allocationSourceProcess, allocationStorage, verifyInstalledCompatibility, trackAllocationSourceProcess,
-  AllocationPrerequisiteError, stableFile, isProductionSourceProcess, type InstalledHost } from './allocation-config.js';
+  AllocationPrerequisiteError, hostPrerequisites, stableFile, isProductionSourceProcess, type InstalledHost } from './allocation-config.js';
 import { allocationSnapshot, importedAllocationSnapshot, allocationError, allocationIdSchema, allocationActionIdSchema, AllocationInputError, parsePrepareAllocation, preparationDigest,
   type PrepareAllocationRequest, type AllocationResult, type AllocationOperationCode } from './allocation-schema.js';
 export type { AllocationSnapshotV1, AllocationOperationError, AllocationResult } from './allocation-schema.js';
@@ -21,11 +21,15 @@ export type AllocatorOptions = {
   createDriver: () => IosPreparationDriver;
   fakeBackend?: { process: SourceProcess; host: InstalledHost };
 };
-type Job = { actionId: string; digest: string; controller: AbortController; deadline: number;
+type Job = { actionId: string; digest: string; controller: AbortController; deadline: number; timeoutMs: number;
   reservation?: AllocationReservation; reservationAttempted?: boolean; driver?: IosPreparationDriver; phase: AllocationRecord['phase']; evidence: string[]; diagnostics: string[]; diagnosticsClosed: boolean;
   promise?: Promise<AllocationResult> };
 const stageReasons: Partial<Record<AllocationRecord['phase'], AllocationReason>> = { booting: 'BOOT_FAILED', installing: 'INSTALL_FAILED', launching: 'LAUNCH_FAILED', readiness: 'READINESS_FAILED' };
 class PreparationFailure extends Error { constructor(readonly reason: AllocationReason) { super(reason); } }
+type Stage = 'host-prerequisites' | 'artifact-inspection' | 'artifact-staging' | 'inventory' | 'boot' | 'install' | 'launch' | 'session-start' | 'readiness';
+class DeadlineFailure extends PreparationFailure {
+  constructor(reason: AllocationReason, readonly deadline: { stage: Stage | 'preparation'; limitMs: number; elapsedMs: number }) { super(reason); }
+}
 function answeredRefusal(error: unknown): boolean {
   if (error instanceof NativeHelperError) return error.code === 'NATIVE_FAILED';
   if (error instanceof AppiumError) return !['TIMEOUT', 'ACKNOWLEDGEMENT_LOST', 'CONNECTION_LOST'].includes(error.code);
@@ -88,7 +92,7 @@ export class ObservedAllocator {
     const running = this.jobs.get(request.actionId);
     if (running) return running.digest === digest ? running.promise! : allocationError('ACTION_ID_CONFLICT', { actionId: request.actionId });
     const job: Job = { actionId: request.actionId, digest, controller: new AbortController(), deadline: Date.now() + request.timeoutMs,
-      phase: 'reserved', evidence: [], diagnostics: [], diagnosticsClosed: false };
+      timeoutMs: request.timeoutMs, phase: 'reserved', evidence: [], diagnostics: [], diagnosticsClosed: false };
     this.jobs.set(request.actionId, job);
     job.promise = this.execute(job, request).finally(() => { if (this.jobs.get(job.actionId) === job) this.jobs.delete(job.actionId); });
     return job.promise;
@@ -110,21 +114,31 @@ export class ObservedAllocator {
       return allocationError(reason, { ...identity, evidenceDirectory: blocker.evidenceDirectory });
     } catch { return allocationError('STORE_UNAVAILABLE', identity); }
   }
+  private expired(job: Job, stage: Stage | 'preparation', limitMs: number, startedAt: number): DeadlineFailure {
+    return new DeadlineFailure(job.phase === 'readiness' ? 'READINESS_FAILED' : 'PREPARATION_UNCONFIRMED', { stage, limitMs, elapsedMs: Date.now() - startedAt });
+  }
+  private overdue(job: Job): DeadlineFailure { return this.expired(job, 'preparation', job.timeoutMs, job.deadline - job.timeoutMs); }
   private check(job: Job): void {
     job.controller.signal.throwIfAborted();
-    if (Date.now() >= job.deadline) throw new PreparationFailure(job.phase === 'readiness' ? 'READINESS_FAILED' : 'PREPARATION_UNCONFIRMED');
+    if (Date.now() >= job.deadline) throw this.overdue(job);
     if (job.reservation) {
       const record = this.admission.readAllocation(job.reservation.identity.allocationId);
       if (!record || record.cancellationRequested || record.state !== 'preparing') throw new PreparationFailure('CANCELLED');
     }
   }
-  private async stage<T>(job: Job, limit: number, effect: (signal: AbortSignal, remaining: () => number) => Promise<T>): Promise<T> {
-    this.check(job); const deadline = Math.min(job.deadline, Date.now() + limit); const controller = new AbortController();
+  private async stage<T>(job: Job, name: Stage, limit: number, effect: (signal: AbortSignal, remaining: () => number) => Promise<T>): Promise<T> {
+    this.check(job); const startedAt = Date.now(); const deadline = Math.min(job.deadline, startedAt + limit); const controller = new AbortController();
+    const expired = () => deadline === job.deadline ? this.overdue(job) : this.expired(job, name, limit, startedAt);
     const signal = AbortSignal.any([controller.signal, job.controller.signal]);
     const remaining = () => { signal.throwIfAborted(); this.check(job); const left = deadline - Date.now();
-      if (left <= 0) throw new PreparationFailure(job.phase === 'readiness' ? 'READINESS_FAILED' : 'PREPARATION_UNCONFIRMED'); return left; };
-    const timer = setTimeout(() => controller.abort(new PreparationFailure(job.phase === 'readiness' ? 'READINESS_FAILED' : 'PREPARATION_UNCONFIRMED')), Math.max(1, deadline - Date.now()));
+      if (left <= 0) throw expired(); return left; };
+    const timer = setTimeout(() => controller.abort(expired()), Math.max(1, deadline - Date.now()));
     try { return await this.local(job, effect(signal, remaining), signal); }
+    catch (error) {
+      // A device call bounded by remaining() can time out a moment before this stage's own timer.
+      if (!(error instanceof PreparationFailure) && Date.now() >= deadline) this.diagnostic(job, 'preparation/' + job.phase, expired());
+      throw error;
+    }
     finally { clearTimeout(timer); }
   }
   private async directory(path: string): Promise<void> {
@@ -145,15 +159,21 @@ export class ObservedAllocator {
     finally { await file.close(); }
   }
   private diagnostic(job: Job, operation: string, outcome: unknown): void {
-    if (job.diagnosticsClosed || job.controller.signal.aborted) return;
+    if (job.diagnosticsClosed || (job.controller.signal.aborted && !(outcome instanceof DeadlineFailure))) return;
     try {
       const bounded = (value: string) => Buffer.from(value).subarray(0, 16384).toString('utf8');
-      const value = outcome instanceof Error ? { operation, error: bounded(outcome.message), ...(outcome instanceof DeviceCliError ? { code: bounded(outcome.code), terminalAcknowledged: outcome.terminalAcknowledged } : {}),
-        ...(outcome instanceof DeviceReasonError ? { code: outcome.code, ...(outcome.vendorCode !== undefined ? { vendorCode: bounded(outcome.vendorCode) } : {}) } : {}) }
+      const value = outcome instanceof Error ? { operation, error: bounded(outcome.message), ...(outcome instanceof DeadlineFailure ? { deadline: outcome.deadline } : {}),
+        ...(outcome instanceof DeviceCliError ? { code: bounded(outcome.code), terminalAcknowledged: outcome.terminalAcknowledged } : {}),
+        ...(outcome instanceof DeviceReasonError ? { code: outcome.code, ...(outcome.vendorCode !== undefined ? { vendorCode: bounded(outcome.vendorCode) } : {}) } : {}),
+        ...(outcome instanceof NativeHelperError ? { code: outcome.code, ...(outcome.stderr ? { stderr: bounded(outcome.stderr) } : {}) } : {}) }
         : { operation, exitCode: (outcome as { exitCode: number | null }).exitCode,
           stdout: bounded((outcome as { stdout: string }).stdout), stderr: bounded((outcome as { stderr: string }).stderr) };
       const entry = JSON.stringify(value);
-      if (Buffer.byteLength('[' + [...job.diagnostics, entry].join(',') + ']') <= 65536) job.diagnostics.push(entry);
+      // The newest entries win: the terminal failure explains the outcome, the oldest host-check receipts rarely do.
+      const size = (entries: string[]) => Buffer.byteLength('[' + entries.join(',') + ']');
+      if (size([entry]) > 65536) return;
+      job.diagnostics.push(entry);
+      while (size(job.diagnostics) > 65536) job.diagnostics.shift();
     } catch { /* Private diagnostics never authorize work or replace the original outcome. */ }
   }
   private async persistDiagnostics(job: Job, signal: AbortSignal): Promise<void> {
@@ -171,7 +191,7 @@ export class ObservedAllocator {
       || storage.stagingFreeBytes - capacity.reservedBytes - artifactBytes < b.minFreeBytes) throw new PreparationFailure('STORAGE_UNAVAILABLE');
   }
   private async execute(job: Job, request: PrepareAllocationRequest): Promise<AllocationResult> {
-    const overall = setTimeout(() => job.controller.abort(new PreparationFailure(job.phase === 'readiness' ? 'READINESS_FAILED' : 'PREPARATION_UNCONFIRMED')), request.timeoutMs);
+    const overall = setTimeout(() => job.controller.abort(this.overdue(job)), request.timeoutMs);
     const monitor = setInterval(() => { if (job.reservation) {
       try { const record = this.admission.readAllocation(job.reservation.identity.allocationId);
         if (!record || record.cancellationRequested) job.controller.abort(new PreparationFailure('CANCELLED')); }
@@ -188,9 +208,9 @@ export class ObservedAllocator {
       const process = this.options.fakeBackend?.process ?? allocationSourceProcess(this.host, [request.app.artifactPath, stagingRoot]);
       const trackedProcess = trackAllocationSourceProcess(process, (file, invoke) => this.track(Promise.resolve().then(invoke).then(
         receipt => { this.diagnostic(job, file, receipt); return receipt; }, error => { this.diagnostic(job, file, error); throw error; })));
-      const proof = await this.stage(job, 10000, signal => verifyInstalledCompatibility(source, this.host, trackedProcess, signal));
+      const proof = await this.stage(job, 'host-prerequisites', 10000, signal => verifyInstalledCompatibility(source, this.host, trackedProcess, signal));
       const artifactRequest: ArtifactRequest = { ...request.app, target: proof, maxBytes: config.budgets.maxArtifactBytes, stagingRoot };
-      const inspected = await this.stage(job, Math.max(1, job.deadline - Date.now()), signal => inspectArtifact(artifactRequest, { process: trackedProcess, signal }));
+      const inspected = await this.stage(job, 'artifact-inspection', Math.max(1, job.deadline - Date.now()), signal => inspectArtifact(artifactRequest, { process: trackedProcess, signal }));
       await this.local(job, this.directory(resolve(this.options.runsDir))); this.check(job);
       const storage = await this.local(job, allocationStorage(this.host, resolve(this.options.runsDir))); this.check(job);
       job.reservationAttempted = true;
@@ -204,7 +224,7 @@ export class ObservedAllocator {
       const proofPath = join(evidenceDirectory, 'host-prerequisites.json');
       await this.local(job, this.write(proofPath, JSON.stringify(proof), job.controller.signal)); job.evidence.push(proofPath);
       const requestPath = join(evidenceDirectory, 'preparation-request.json'); await this.local(job, this.write(requestPath, JSON.stringify(request), job.controller.signal)); job.evidence.push(requestPath);
-      const staged = await this.stage(job, Math.max(1, job.deadline - Date.now()), signal => stageArtifact(artifactRequest, { process: trackedProcess, signal }));
+      const staged = await this.stage(job, 'artifact-staging', Math.max(1, job.deadline - Date.now()), signal => stageArtifact(artifactRequest, { process: trackedProcess, signal }));
       if (staged.contentDigest !== inspected.contentDigest || staged.bytes !== inspected.bytes) throw new PreparationFailure('ARTIFACT_INVALID');
       job.reservation.stage(staged);
       await this.local(job, verifyStagedArtifact(staged, { signal: job.controller.signal })); await this.storage(job, stagingRoot, staged.bytes);
@@ -221,22 +241,23 @@ export class ObservedAllocator {
       await job.driver.attachPreparation(admitted.claim, { app: { bundleId: request.app.bundleId } }, job.controller.signal);
       // Supplied availability is verified through the admitted driver capability, never a bare runner.
       if (source.kind === 'supplied') {
-        const status = await this.stage(job, config.budgets.bootTimeoutMs, (signal, remaining) => job.driver!.inventoryStatus(signal, remaining()));
+        const status = await this.stage(job, 'inventory', config.budgets.bootTimeoutMs, (signal, remaining) => job.driver!.inventoryStatus(signal, remaining()));
         if (!status?.isAvailable) throw new PreparationFailure('INVENTORY_INELIGIBLE');
       }
       job.phase = 'booting';
-      await this.stage(job, config.budgets.bootTimeoutMs, async (signal, remaining) => {
+      await this.stage(job, 'boot', config.budgets.bootTimeoutMs, async (signal, remaining) => {
         await job.driver!.boot(signal, remaining());
         while (await job.driver!.bootState(signal, remaining()) !== 'Booted') await pause(1000, signal);
       });
       job.phase = 'installing';
-      await this.stage(job, config.budgets.installTimeoutMs, async (signal, remaining) => {
+      await this.stage(job, 'install', config.budgets.installTimeoutMs, async (signal, remaining) => {
         await this.local(job, verifyStagedArtifact(staged, { signal }), signal); await this.storage(job, stagingRoot, staged.bytes, signal);
         await job.driver!.install(staged.stagedPath, signal, remaining());
       });
-      job.phase = 'launching'; await this.stage(job, config.budgets.launchTimeoutMs, (signal, remaining) => job.driver!.launch(signal, remaining()));
+      job.phase = 'launching'; const startSession = await this.stage(job, 'launch', config.budgets.launchTimeoutMs, (signal, remaining) => job.driver!.launch(signal, remaining()));
+      await this.stage(job, 'session-start', Math.max(1, job.deadline - Date.now()), startSession);
       job.phase = 'readiness';
-      const refs = await this.stage(job, config.budgets.readinessTimeoutMs, async (signal, remaining) => {
+      const refs = await this.stage(job, 'readiness', config.budgets.readinessTimeoutMs, async (signal, remaining) => {
         let observation;
         while (true) {
           try { observation = await job.driver!.readiness(signal, remaining()); break; }
@@ -254,7 +275,8 @@ export class ObservedAllocator {
       if (commit.authority !== 'committed') throw new PreparationFailure('STATE_UNAVAILABLE');
       this.jobs.delete(job.actionId); return allocationSnapshot(commit.allocation);
     } catch (error) {
-      this.diagnostic(job, 'preparation/' + job.phase, error); job.diagnosticsClosed = true;
+      const cause = job.controller.signal.reason instanceof DeadlineFailure && !(error instanceof DeadlineFailure) ? job.controller.signal.reason : error;
+      this.diagnostic(job, 'preparation/' + job.phase, cause); job.diagnosticsClosed = true;
       const reason = error instanceof PreparationFailure ? error.reason : error instanceof AllocationPrerequisiteError ? error.reason
         : error instanceof ArtifactError ? error.reason : error instanceof StackRefusalError ? 'HOST_PREREQUISITE_MISSING'
         : error instanceof DeviceCliError && error.terminalAcknowledged
@@ -269,7 +291,9 @@ export class ObservedAllocator {
               : allocationError('ACTION_ID_CONFLICT', this.identity(accepted), 'yes');
           } catch { return allocationError('STORE_UNAVAILABLE', { actionId: request.actionId }, 'unknown'); }
         }
-        return allocationError(reason as AllocationOperationCode, { actionId: request.actionId });
+        const refusal = allocationError(reason as AllocationOperationCode, { actionId: request.actionId });
+        return error instanceof AllocationPrerequisiteError && error.missing
+          ? { ...refusal, message: `${refusal.message} Missing: ${hostPrerequisites[error.missing]}.` } : refusal;
       }
       job.driver?.revokeIssuance();
       const finalizationSignal = AbortSignal.timeout(5000);

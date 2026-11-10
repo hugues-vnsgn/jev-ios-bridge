@@ -9,24 +9,36 @@ import type { InstalledHost } from '../../src/observed/allocation-config.js';
 import { allocationFixture, runtimeBundle, runtimeId } from './observed-allocation-backend.js';
 
 export const cryptexDirectory = '/private/var/run/com.apple.security.cryptexd/mnt';
-export const cryptexMount = cryptexDirectory + '/com.apple.iPhoneOS.SimulatorRuntime-v24.1.434.0.iVUyCZ';
-export const cryptexRuntimes = cryptexMount + '/Library/Developer/CoreSimulator/Profiles/Runtimes';
-export const cryptexBundle = cryptexRuntimes + '/iOS 27.0.simruntime';
-export const cryptexInfo = cryptexBundle + '/Contents/Info.plist';
-export const cryptexProfile = cryptexBundle + '/Contents/Resources/profile.plist';
-export const cryptexRuntimeRoot = cryptexBundle + '/Contents/Resources/RuntimeRoot';
-export const cryptexSystem = cryptexRuntimeRoot + '/System/Library/CoreServices/SystemVersion.plist';
-export const readonlyMountXml = '<?xml version="1.0" encoding="UTF-8"?>\n'
-  + '<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">\n'
-  + '<plist version="1.0"><dict><key>MountPoint</key><string>' + cryptexMount + '</string>'
-  + '<key>Writable</key><false/><key>WritableMedia</key><false/><key>WritableVolume</key><false/>'
-  + '<key>Sealed</key><string>Yes</string></dict></plist>\n';
+/** One runtime mounted under the Cryptex namespace at `name`, the folder CoreSimulator chose for it. */
+export function cryptexLayout(name: string) {
+  const mount = cryptexDirectory + '/' + name;
+  const runtimes = mount + '/Library/Developer/CoreSimulator/Profiles/Runtimes';
+  const bundle = runtimes + '/iOS 27.0.simruntime';
+  const runtimeRoot = bundle + '/Contents/Resources/RuntimeRoot';
+  const mountXml = '<?xml version="1.0" encoding="UTF-8"?>\n'
+    + '<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">\n'
+    + '<plist version="1.0"><dict><key>MountPoint</key><string>' + mount + '</string>'
+    + '<key>Writable</key><false/><key>WritableMedia</key><false/><key>WritableVolume</key><false/>'
+    + '<key>Sealed</key><string>Yes</string></dict></plist>\n';
+  return { mount, runtimes, bundle, info: bundle + '/Contents/Info.plist', profile: bundle + '/Contents/Resources/profile.plist',
+    runtimeRoot, system: runtimeRoot + '/System/Library/CoreServices/SystemVersion.plist', mountXml };
+}
+const approved = cryptexLayout('com.apple.iPhoneOS.SimulatorRuntime-v24.1.434.0.iVUyCZ');
+export const cryptexMount = approved.mount;
+export const cryptexRuntimes = approved.runtimes;
+export const cryptexBundle = approved.bundle;
+export const cryptexInfo = approved.info;
+export const cryptexProfile = approved.profile;
+export const cryptexRuntimeRoot = approved.runtimeRoot;
+export const cryptexSystem = approved.system;
+export const readonlyMountXml = approved.mountXml;
 
 type Receipt = Awaited<ReturnType<SourceProcess>>;
 type Child = EventEmitter & { stdout: PassThrough; stderr: PassThrough; signals: string[]; kill(signal?: string): boolean };
 
 /** All installed paths resolve into this fixture's temporary trees; no native command is launched. */
-export async function cryptexFixture() {
+export async function cryptexFixture(options: { mountName?: string } = {}) {
+  const layout = options.mountName === undefined ? approved : cryptexLayout(options.mountName);
   const base = await allocationFixture();
   const tree = join(base.root, 'cryptex-host'); mkdirSync(tree, { mode: 0o700 });
   const namespacePath = (path: string) => path === '/' || path === cryptexDirectory
@@ -42,26 +54,26 @@ export async function cryptexFixture() {
     const target = map(path); mkdirSync(join(target, '..'), { recursive: true, mode: 0o700 });
     writeFileSync(target, typeof value === 'string' ? value : JSON.stringify(value), { mode: 0o600 });
   };
-  write(cryptexInfo, { CFBundleIdentifier: runtimeId, CFBundleShortVersionString: '392' });
-  write(cryptexProfile, { platformIdentifier: 'com.apple.platform.iphonesimulator', minHostVersion: '14.0.0',
+  write(layout.info, { CFBundleIdentifier: runtimeId, CFBundleShortVersionString: '392' });
+  write(layout.profile, { platformIdentifier: 'com.apple.platform.iphonesimulator', minHostVersion: '14.0.0',
     supportedArchs: ['arm64', 'x86_64'], supportedProductFamilyIDs: [2, 1], defaultVersionString: '27.0' });
-  write(cryptexSystem, { ProductVersion: '27.0', ProductBuildVersion: '24A434' });
+  write(layout.system, { ProductVersion: '27.0', ProductBuildVersion: '24A434' });
   base.write('/usr/sbin/diskutil', 'fake executable', 0o755);
-  const groupDirectories = new Set([cryptexMount + '/Library/Developer/CoreSimulator',
-    cryptexMount + '/Library/Developer/CoreSimulator/Profiles', cryptexRuntimes, cryptexBundle,
-    cryptexBundle + '/Contents', cryptexBundle + '/Contents/Resources', cryptexRuntimeRoot]);
+  const groupDirectories = new Set([layout.mount + '/Library/Developer/CoreSimulator',
+    layout.mount + '/Library/Developer/CoreSimulator/Profiles', layout.runtimes, layout.bundle,
+    layout.bundle + '/Contents', layout.bundle + '/Contents/Resources', layout.runtimeRoot]);
   const overrides = new Map<string, Partial<Stats>>();
   const view = (path: string, raw: Stats): Stats => {
     const fields: Partial<Stats> = {};
     if (namespacePath(path)) {
-      fields.uid = 0; fields.gid = 0; fields.dev = path === cryptexMount || path.startsWith(cryptexMount + '/') ? 16777243 : 16777231;
+      fields.uid = 0; fields.gid = 0; fields.dev = path === layout.mount || path.startsWith(layout.mount + '/') ? 16777243 : 16777231;
       let permissions = raw.isDirectory() ? 0o755 : 0o644;
       if (path === '/private/var/run') { fields.gid = 1; permissions = 0o775; }
       if (path === '/private/var/run/com.apple.security.cryptexd') { fields.gid = 1; permissions = 0o705; }
       if (path === cryptexDirectory) fields.gid = 1;
-      if (groupDirectories.has(path)) { fields.gid = 80; permissions = path === cryptexRuntimeRoot ? 0o1775 : 0o775; }
-      if (path === cryptexInfo || path === cryptexProfile) { fields.gid = 80; permissions = 0o664; }
-      if (path === cryptexSystem) permissions = 0o444;
+      if (groupDirectories.has(path)) { fields.gid = 80; permissions = path === layout.runtimeRoot ? 0o1775 : 0o775; }
+      if (path === layout.info || path === layout.profile) { fields.gid = 80; permissions = 0o664; }
+      if (path === layout.system) permissions = 0o444;
       fields.mode = (raw.mode & 0o170000) | permissions;
     } else if (path === '/Applications') {
       fields.uid = 0; fields.gid = 80; fields.mode = (raw.mode & 0o170000) | 0o775;
@@ -77,7 +89,7 @@ export async function cryptexFixture() {
   const reads: { operation: string; path: string }[] = [];
   const listings = new Map<string, string[]>();
   let before: ((operation: string, path: string) => void | Promise<void>) | undefined;
-  let mountResult: Receipt = { exitCode: 0, stdout: readonlyMountXml, stderr: '' };
+  let mountResult: Receipt = { exitCode: 0, stdout: layout.mountXml, stderr: '' };
   let convertedResult: Receipt | undefined;
   const fakeFs = { ...base.host.fs,
     lstat: (async (path: string) => { const target = map(path); reads.push({ operation: 'lstat', path });
@@ -96,16 +108,16 @@ export async function cryptexFixture() {
     }) as typeof fs.readdir,
   };
   const host: InstalledHost = { ...base.host, fs: fakeFs };
-  const metadataPaths = new Set([cryptexInfo, cryptexProfile, cryptexSystem]);
+  const metadataPaths = new Set([layout.info, layout.profile, layout.system]);
   const source: SourceProcess = async (executable, args, options) => {
     effects.push({ executable, args: [...args] });
     await before?.(executable === '/usr/sbin/diskutil' ? 'mount' : 'convert', args[5] ?? args[2] ?? '');
-    if (executable === '/usr/sbin/diskutil' || (executable === '/usr/bin/plutil' && args[5]?.startsWith(cryptexMount + '/'))) {
+    if (executable === '/usr/sbin/diskutil' || (executable === '/usr/bin/plutil' && args[5]?.startsWith(layout.mount + '/'))) {
       if (options.shell !== false || options.signal.aborted || !Number.isSafeInteger(options.timeoutMs)
         || options.timeoutMs < 1 || options.timeoutMs > 10000 || !Number.isSafeInteger(options.maxOutputBytes)
         || options.maxOutputBytes < 1 || options.maxOutputBytes > 65536) throw new Error('Unsafe Cryptex fixture options');
       if (executable === '/usr/sbin/diskutil') {
-        if (args.length !== 3 || args[0] !== 'info' || args[1] !== '-plist' || args[2] !== cryptexMount) throw new Error('Unexpected fixture mount command');
+        if (args.length !== 3 || args[0] !== 'info' || args[1] !== '-plist' || args[2] !== layout.mount) throw new Error('Unexpected fixture mount command');
         return mountResult;
       }
       if (args.length !== 6 || args.slice(0, 5).join('\0') !== '-convert\0json\0-o\0-\0--' || !metadataPaths.has(args[5]!)) throw new Error('Unexpected fixture Cryptex conversion');

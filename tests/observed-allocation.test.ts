@@ -9,6 +9,7 @@ import { fileURLToPath } from 'node:url';
 import { createHash } from 'node:crypto';
 import { ObservedAllocator } from '../src/observed/allocation.js';
 import { Admission } from '../src/device/admission.js';
+import { DeviceReasonError } from '../src/device/index.js';
 import { allocationSourceProcess } from '../src/observed/allocation-config.js';
 import { allocationSnapshot, canonicalJson } from '../src/observed/allocation-schema.js';
 import { migrateAdmissionForTesting, type ImportedObservedAction } from '../src/device/admission-migration.js';
@@ -334,6 +335,52 @@ test('one stage deadline bounds a late readiness read and its late reply cannot 
   assert.equal(x.f.admission.readAllocation(result.allocationId)?.state, 'quarantined');
 });
 
+type Deadline = { stage: string; limitMs: number; elapsedMs: number };
+async function firedDeadline(x: Allocation, allocationId: string): Promise<Deadline | undefined> {
+  const { entries } = await privateDiagnostics(x, allocationId);
+  return (entries as { deadline?: Deadline }[]).findLast(entry => entry.deadline)?.deadline;
+}
+const slowSessionStart = (ms: number) => [fixtureWorld([{ tool: 'appium_session_management', nth: 1, fault: { kind: 'late', ms } }, ...tapLeadsDone])];
+
+test('a first Appium session slower than the launch budget still parks, because the launch budget bounds only the app launch', async t => {
+  const x = await appiumAllocator(t, { budgets: { launchTimeoutMs: 250 }, worlds: slowSessionStart(750) });
+  const ready = snapshot(await x.allocator.prepare(x.f.request()));
+  assert.deepEqual([ready.state, ready.outcome, ready.reason], ['ready', 'prepared', null]);
+  assert.deepEqual(effects(x).natives, prepared);
+  assert.equal(effects(x).tools[0]?.[0], 'appium_session_management');
+});
+
+test('a launch stage deadline stays quarantined and the private diagnostics name the launch deadline and its limit', async t => {
+  const x = await appiumAllocator(t, { budgets: { launchTimeoutMs: 30 }, nativeHeld: command => command.kind === 'ios-launch' });
+  const result = snapshot(await x.allocator.prepare(x.f.request()));
+  assert.deepEqual([result.state, result.outcome, result.reason], ['quarantined', 'uncertain', 'PREPARATION_UNCONFIRMED']);
+  const deadline = await firedDeadline(x, result.allocationId);
+  assert.deepEqual([deadline?.stage, deadline?.limitMs], ['launch', 30]); assert.ok(deadline!.elapsedMs >= 20, JSON.stringify(deadline));
+  assert.deepEqual(effects(x).tools, [[]], 'no session starts after a launch that never answered');
+});
+
+test('a device call that times out on its own limit, a moment before the launch stage timer, still names the launch deadline', async t => {
+  const x = await appiumAllocator(t, { budgets: { launchTimeoutMs: 30 }, wrap: driver => {
+    driver.launch = (_signal, timeoutMs = 0) => {
+      const end = Date.now() + timeoutMs + 5; while (Date.now() < end);
+      return Promise.reject(new DeviceReasonError('TIMEOUT', 'launch did not finish'));
+    };
+    return driver;
+  } });
+  const result = snapshot(await x.allocator.prepare(x.f.request()));
+  assert.deepEqual([result.state, result.outcome, result.reason], ['quarantined', 'uncertain', 'PREPARATION_UNCONFIRMED']);
+  const deadline = await firedDeadline(x, result.allocationId);
+  assert.deepEqual([deadline?.stage, deadline?.limitMs], ['launch', 30]);
+});
+
+test('a first Appium session that answers after the preparation deadline ends there, quarantined, and the diagnostics name that deadline', async t => {
+  const x = await appiumAllocator(t, { worlds: slowSessionStart(3000) });
+  const result = snapshot(await x.allocator.prepare({ ...x.f.request(), timeoutMs: 1500 }));
+  assert.deepEqual([result.state, result.outcome, result.reason], ['quarantined', 'uncertain', 'PREPARATION_UNCONFIRMED']);
+  const deadline = await firedDeadline(x, result.allocationId);
+  assert.deepEqual([deadline?.stage, deadline?.limitMs], ['preparation', 1500]); assert.ok(deadline!.elapsedMs >= 1400, JSON.stringify(deadline));
+});
+
 test('lost creation reply times out with guard retained; eventual known UUID cannot bind or continue', async t => {
   const x = await appiumAllocator(t, { budgets: { createTimeoutMs: 30 } }); const { f, allocator } = x; const gate = hold();
   f.setBefore(async op => { if (op === 'create') await gate.pause(); });
@@ -437,6 +484,47 @@ for (const [kind, reason] of [['ios-boot', 'BOOT_FAILED'], ['ios-install', 'INST
     assert.ok(!JSON.stringify(result).includes('sk-private-fixture')); assert.equal(result.reservation.capacityHeld, true);
   });
 }
+
+const installStderr = 'copyfile of NavigationFixture.app failed: Permission denied';
+const failInstall: AllocatorWorld = { nativeExit: command => command.kind === 'ios-install' ? 13 : undefined, nativeStderr: () => installStderr };
+async function privateDiagnostics(x: Allocation, allocationId: string): Promise<{ text: string; entries: { operation: string }[] }> {
+  const text = await fs.readFile(join(x.f.admission.readAllocation(allocationId)!.evidenceDirectory, 'source-diagnostics.json'), 'utf8');
+  return { text, entries: JSON.parse(text) as { operation: string }[] };
+}
+test('a refused install keeps the install command stderr in the private diagnostics and out of the public reply', async t => {
+  const x = await appiumAllocator(t, failInstall);
+  const result = snapshot(await x.allocator.prepare(x.f.request())); assert.equal(result.reason, 'INSTALL_FAILED');
+  const { text, entries } = await privateDiagnostics(x, result.allocationId);
+  assert.equal(entries.at(-1)!.operation, 'preparation/installing');
+  assert.ok(text.includes(installStderr), text);
+  assert.ok(!JSON.stringify(result).includes('Permission denied'));
+});
+test('host-check receipts that fill the diagnostics budget leave room for the refused install and its stderr', async t => {
+  const x = await appiumAllocator(t, failInstall); const padding = 'p'.repeat(20000);
+  for (const path of ['/Applications/Xcode.app/Contents/version.plist', '/System/Library/CoreServices/SystemVersion.plist',
+    '/Library/Developer/CoreSimulator/Profiles/DeviceTypes/iPhone 17.simdevicetype/Contents/Info.plist']) {
+    x.f.write(path, { ...JSON.parse(await fs.readFile(x.f.map(path), 'utf8')), Padding: padding });
+  }
+  x.f.write('/Applications/Xcode.app/Contents/Info.plist', { CFBundleIdentifier: 'com.apple.dt.Xcode', CFBundleExecutable: 'Xcode', LSMinimumSystemVersion: '26.6', Padding: padding });
+  x.f.write('/Library/Developer/CoreSimulator/Profiles/DeviceTypes/iPhone 17.simdevicetype/Contents/Resources/profile.plist',
+    { supportedProductFamilyIDs: [1], minRuntimeVersion: '26.0', supportedArchs: ['arm64', 'x86_64'], Padding: padding });
+  const result = snapshot(await x.allocator.prepare(x.f.request())); assert.equal(result.reason, 'INSTALL_FAILED');
+  const { text, entries } = await privateDiagnostics(x, result.allocationId);
+  assert.ok(Buffer.byteLength(text) <= 65536);
+  assert.equal(entries.at(-1)!.operation, 'preparation/installing');
+  assert.ok(text.includes(installStderr));
+});
+for (const [label, absent, missing] of [
+  ['runtime', { runtimeId: 'com.apple.CoreSimulator.SimRuntime.iOS-26-5' }, 'the requested simulator runtime'],
+  ['device type', { deviceTypeId: 'com.apple.CoreSimulator.SimDeviceType.iPhone-Missing' }, 'the requested simulator device type'],
+] as const) test(`a host without the requested ${label} refuses HOST_PREREQUISITE_MISSING naming what is missing, not the submitted value`, async t => {
+  const x = await appiumAllocator(t); const request = x.f.request();
+  const result = refused(await x.allocator.prepare({ ...request, source: { ...request.source, ...absent } }), 'HOST_PREREQUISITE_MISSING');
+  assert.equal(result.acceptance, 'no');
+  assert.match(result.message, new RegExp(`^Allocation operation refused: HOST_PREREQUISITE_MISSING\\. Missing: ${missing}`));
+  assert.ok(!result.message.includes(Object.values(absent)[0]!.split('.').at(-1)!));
+  assert.deepEqual(effects(x), none);
+});
 
 for (const evidence of ['copy', 'missing', 'symlink', 'relative'] as const) test(`readiness screenshot ${evidence} is persisted privately or refuses without parking`, async t => {
   let path = '';
