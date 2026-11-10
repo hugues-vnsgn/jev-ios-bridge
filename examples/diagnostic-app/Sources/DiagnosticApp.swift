@@ -4,7 +4,11 @@ import SwiftUI
 struct DiagnosticApp: App {
     var body: some Scene {
         WindowGroup {
-            ChooseItemsView()
+            if UserDefaults.standard.string(forKey: "screen") == "fields" {
+                TextFieldsView()
+            } else {
+                ChooseItemsView()
+            }
         }
     }
 }
@@ -77,5 +81,40 @@ private struct ConfirmationView: View {
         }
         .padding()
         .navigationTitle("Confirmation")
+    }
+}
+
+/// Launched with `-screen fields`: text fields that carry no accessibility identifier.
+private struct TextFieldsView: View {
+    @State private var nickname = ""
+    @State private var unnamed = ""
+    @State private var firstNote = ""
+    @State private var secondNote = ""
+
+    var body: some View {
+        VStack(alignment: .leading, spacing: 12) {
+            Text("Text fields")
+                .font(.title.bold())
+
+            Text("Label only")
+            TextField("", text: $nickname)
+                .accessibilityLabel("Nickname")
+
+            Text("No name")
+            TextField("", text: $unnamed)
+
+            Text("Shared name")
+            TextField("", text: $firstNote)
+                .accessibilityLabel("Note")
+            TextField("", text: $secondNote)
+                .accessibilityLabel("Note")
+
+            Text("Shown: \(nickname) | \(unnamed) | \(firstNote) | \(secondNote)")
+                .accessibilityIdentifier("fields.echo")
+
+            Spacer()
+        }
+        .textFieldStyle(.roundedBorder)
+        .padding()
     }
 }
