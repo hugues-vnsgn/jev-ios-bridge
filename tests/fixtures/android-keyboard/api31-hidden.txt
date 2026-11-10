@@ -1,0 +1,48 @@
+WINDOW MANAGER WINDOWS (dumpsys window windows)
+  Window #0 Window{14c2270 u0 InputMethod}:
+    mDisplayId=0 rootTaskId=1 mSession=Session{4bfc5f8 4201:u0a10200} mClient=android.os.BinderProxy@60e0cb3
+    mOwnerUid=10200 showForAllUsers=false package=com.google.android.inputmethod.latin appop=NONE
+    mAttrs={(0,0)(fillxwrap) gr=BOTTOM CENTER_VERTICAL sim={adjust=pan forwardNavigation} ty=INPUT_METHOD fmt=TRANSPARENT wanim=0x1030056 receive insets ignoring z-order
+      fl=NOT_FOCUSABLE LAYOUT_IN_SCREEN SPLIT_TOUCH HARDWARE_ACCELERATED DRAWS_SYSTEM_BAR_BACKGROUNDS
+      pfl=USE_BLAST FIT_INSETS_CONTROLLED
+      bhv=DEFAULT
+      fitTypes=STATUS_BARS NAVIGATION_BARS
+      fitSides=LEFT TOP RIGHT}
+    Requested w=1080 h=130 mLayoutSeq=126
+    mIsImWindow=true mIsWallpaper=false mIsFloatingLayer=true
+    mBaseLayer=151000 mSubLayer=0    mToken=WindowToken{b7000fa android.os.Binder@1378725}
+    mViewVisibility=0x8 mHaveFrame=true mObscured=false
+    mGivenContentInsets=[0,130][0,0] mGivenVisibleInsets=[0,0][0,0]
+    mTouchableInsets=2 mGivenInsetsPending=false
+    touchable region=SkRegion((0,2270,1080,2400))
+    mFullConfiguration={1.0 452mcc4mnc [en_US,vi_VN] ldltr sw392dp w392dp h792dp 440dpi nrml long hdr widecg port finger -keyb/v/h -nav/h winConfig={ mBounds=Rect(0, 0 - 1080, 2400) mAppBounds=Rect(0, 91 - 1080, 2270) mMaxBounds=Rect(0, 0 - 1080, 2400) mWindowingMode=fullscreen mDisplayWindowingMode=fullscreen mActivityType=undefined mAlwaysOnTop=undefined mRotation=ROTATION_0} as.2 s.100 fontWeightAdjustment=0 themeChanged=0 themeChangedFlags=0 extraData = Bundle[{}] dt/?}
+    mLastReportedConfiguration={0.0 ?mcc?mnc ?localeList ?layoutDir ?swdp ?wdp ?hdp ?density ?lsize ?long ?ldr ?wideColorGamut ?orien ?uimode ?night ?touch ?keyb/?/? ?nav/? winConfig={ mBounds=Rect(0, 0 - 0, 0) mAppBounds=null mMaxBounds=Rect(0, 0 - 0, 0) mWindowingMode=undefined mDisplayWindowingMode=undefined mActivityType=undefined mAlwaysOnTop=undefined mRotation=undefined} ?fontWeightAdjustment themeChanged=0 themeChangedFlags=0 extraData = Bundle[{}] dt/?}
+    mHasSurface=false isReadyForDisplay()=false mWindowRemovalAllowed=false
+    Frames: containing=[0,91][1080,2400] parent=[0,91][1080,2400] display=[0,91][1080,2400]
+    mFrame=[0,2270][1080,2400] last=[0,2270][1080,2400]
+     surface=[0,0][0,0]
+    ContainerAnimator:
+      mLeash=Surface(name=Surface(name=14c2270 InputMethod)/@0xeee4ba5 - animation-leash of insets_animation)/@0x7a76b51 mAnimationType=insets_animation
+      Animation: com.android.server.wm.InsetsSourceProvider$ControlAdapter@6a18fb6
+        ControlAdapter mCapturedLeash=Surface(name=Surface(name=14c2270 InputMethod)/@0xeee4ba5 - animation-leash of insets_animation)/@0x7a76b51
+    WindowStateAnimator{957d4b7 InputMethod}:
+      mDrawState=NO_SURFACE       mLastHidden=false
+      mEnterAnimationPending=false      mSystemDecorRect=[0,0][0,0]
+      mShownAlpha=0.0 mAlpha=1.0 mLastAlpha=0.0
+    mForceSeamlesslyRotate=false seamlesslyRotate: pending=null finishedFrameNumber=0
+    isOnScreen=false
+    isVisible=false
+    shouldHideAfterAnimation=-1
+
+  mGlobalConfiguration={1.0 452mcc4mnc [en_US,vi_VN] ldltr sw392dp w392dp h792dp 440dpi nrml long hdr widecg port finger -keyb/v/h -nav/h winConfig={ mBounds=Rect(0, 0 - 1080, 2400) mAppBounds=Rect(0, 91 - 1080, 2270) mMaxBounds=Rect(0, 0 - 1080, 2400) mWindowingMode=fullscreen mDisplayWindowingMode=fullscreen mActivityType=undefined mAlwaysOnTop=undefined mRotation=ROTATION_0} as.2 s.100 fontWeightAdjustment=0 themeChanged=0 themeChangedFlags=0 extraData = Bundle[{}] dt/?}
+  mHasPermanentDpad=false
+  mTopFocusedDisplayId=0
+  imeLayeringTarget in display# 0 Window{96126c1 u0 com.mi.android.globallauncher/com.miui.home.launcher.Launcher}
+  imeInputTarget in display# 0 Window{96126c1 u0 com.mi.android.globallauncher/com.miui.home.launcher.Launcher}
+  imeControlTarget in display# 0 Window{96126c1 u0 com.mi.android.globallauncher/com.miui.home.launcher.Launcher}
+  mInTouchMode=true
+  mBlurEnabled=true
+  mLastDisplayFreezeDuration=0 due to Window{96efedf u0 NavigationBar0}
+  mLastWakeLockHoldingWindow=null mLastWakeLockObscuringWindow=null
+  mHighResTaskSnapshotScale=1.0
+  SnapshotCache

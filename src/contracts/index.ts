@@ -142,6 +142,8 @@ export interface DeviceDriver {
    *  observation; a replace-text action may instead return an `ActOutcome` to also report the shown value. */
   act(action: Action, snapshot: Snapshot, scenario: ActionScenarioContext, signal: AbortSignal): Promise<Snapshot | ActOutcome | undefined | void>;
   close(signal: AbortSignal): Promise<void>;
+  /** The run stopped: send no new input, and let commands already in flight finish so their outcome is known. */
+  stopInput?(): void;
   /** Which way the last `act` carried out a `back` or `scroll`; undefined after any other action. */
   actPath?(): ActPath | undefined;
   metrics?(): DeviceMetrics;

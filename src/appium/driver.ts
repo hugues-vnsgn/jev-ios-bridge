@@ -9,6 +9,7 @@ import type { AllocationCommit, ObservedClaim, PreparationClaim } from '../devic
 import type { AdbRunner } from '../device/android/adb.js';
 import { EVENT_FILTER, type AppExitWatch, type createExitWatch } from '../device/android/exit-watch.js';
 import { deleteOldLogs, privateLogFolder, type LogcatOutput, type LogcatStarter, type LogcatStream } from '../device/android/logcat.js';
+import { keyboardAreas } from '../device/android/keyboard.js';
 import { androidStartTime, processGone, shellCommand } from '../device/android/recovery.js';
 import { DeviceReasonError, StaleSnapshotError, type AdmittedAppContext, type DeviceWindowOpener, type IosPreparationDriver, type ObservedActionDriver,
   type PreparationInventoryStatus } from '../device/index.js';
@@ -28,6 +29,7 @@ import type { PresentationReader, SimulatorPresentation } from './native/present
 import { NativeHelperError, type NativeCommand, type NativeRunner } from './native/process.js';
 import { AppiumObservation, wallClock, type AppiumObservedScreen } from './observe/index.js';
 import { ObservationIncompleteError } from './observe/normalize.js';
+import type { Frame } from './operations/geometry.js';
 import { AppiumOperations, REFUSED_BEFORE_INPUT, UnconfirmedOperationError, vendorSourceOf, type OperationName } from './operations/index.js';
 import { allocateHostPorts, portComponents, type FreePort, type HostPorts } from './ports.js';
 import { AppiumCommandSession, SESSION_CREATE_TIMEOUT_MS, createSessionProfile, type SessionProfile, type SessionProfileInput } from './session.js';
@@ -133,6 +135,7 @@ export class AppiumDriver implements DeviceDriver, IosPreparationDriver, Observe
   private sequence = 0;
   private tapOnceIssued = false;
   private issuanceClosed = false;
+  private inputStopped = false;
   private screenshots: Promise<string> | undefined;
   private preparationClaim: PreparationClaim | undefined;
   private handback: Snapshot | undefined;
@@ -181,6 +184,9 @@ export class AppiumDriver implements DeviceDriver, IosPreparationDriver, Observe
   act(action: Action, snapshot: Snapshot, scenario: ActionScenarioContext, signal: AbortSignal): Promise<Snapshot | ActOutcome> {
     return this.operations.track(() => this.actIssued(action, snapshot, scenario, signal));
   }
+
+  /** The run stopped: no input is sent from now on, while commands already in flight, reads included, finish. */
+  stopInput(): void { this.inputStopped = true; }
 
   close(signal: AbortSignal): Promise<void> {
     if (this.closing) return this.closing;
@@ -509,9 +515,11 @@ export class AppiumDriver implements DeviceDriver, IosPreparationDriver, Observe
         () => AppiumCommandSession.start({ client, profile, timeoutMs: this.timeoutMs, createTimeoutMs }));
       await this.recordAutomation(owner, device, before, signal);
       const observation = new AppiumObservation(session, this.options.stack, { ...(this.options.clock ? { clock: this.options.clock } : {}) });
+      const serial = owner.identity.category === 'ios-simulator' ? undefined : owner.identity.transport.serial;
       const operations = new AppiumOperations(session, observation, { timeoutMs: this.timeoutMs,
         dispatch: (operation: OperationName, send: () => Promise<void>) => this.dispatch(owner, commandName(role, operation), signal, this.timeoutMs, send,
-          { input: INPUTS.has(operation) }) });
+          { input: INPUTS.has(operation) }),
+        ...(serial === undefined ? {} : { keyboard: (issued: AbortSignal) => this.keyboard(owner, serial, issued) }) });
       return { client, session, observation, operations, profile, ports, ...(helpers ? { helpers } : {}) };
     } catch (error) { await client.close(); throw error; }
   }
@@ -568,7 +576,8 @@ export class AppiumDriver implements DeviceDriver, IosPreparationDriver, Observe
       return;
     }
     if (!this.options.adb) { owner.claim.markInventoryUnknown('UIAUTOMATOR2_IDENTITY_UNAVAILABLE'); return; }
-    const processes = await this.uiautomator2Processes(owner, device, signal);
+    const processes = await this.uiautomator2Processes(owner, device, signal)
+      .catch((error: unknown) => { owner.claim.markInventoryUnknown('UIAUTOMATOR2_IDENTITY_UNAVAILABLE'); throw error; });
     const fresh = processes.filter(process => !before.uiautomator2.some(prior => prior.pid === process.pid && prior.startTime === process.startTime));
     if (fresh.length) this.register(owner, appiumComponentSchema.parse({ id: randomUUID(), kind: 'appium-uiautomator2', serial: device, processes: fresh }));
     if (!processes.length) owner.claim.markInventoryUnknown('UIAUTOMATOR2_IDENTITY_UNAVAILABLE');
@@ -578,17 +587,17 @@ export class AppiumDriver implements DeviceDriver, IosPreparationDriver, Observe
   private uiautomator2Processes(owner: Owner, serial: string, signal: AbortSignal, options: { cleanup?: boolean } = {}): Promise<{ pid: number; startTime: string }[]> {
     const adb = this.adbRunner();
     return this.dispatch(owner, 'uiautomator2-identity', signal, this.timeoutMs, async issued => {
-      const listed = await adb(shellCommand(serial, ['pidof', ...UIAUTOMATOR2_PACKAGES]), issued);
+      const listed = await adb(shellCommand(serial, ['pidof', ...UIAUTOMATOR2_PACKAGES]), issued, undefined, 'read');
       const pids = listed.exitCode === 0 ? listed.stdout.trim().split(/\s+/).filter(Boolean).map(Number).filter(pid => Number.isSafeInteger(pid) && pid > 0) : [];
       const found: { pid: number; startTime: string }[] = [];
       for (const pid of pids) {
-        const stat = await adb(shellCommand(serial, ['cat', `/proc/${String(pid)}/stat`]), issued);
+        const stat = await adb(shellCommand(serial, ['cat', `/proc/${String(pid)}/stat`]), issued, undefined, 'read');
         if (processGone(stat)) continue;
         const startTime = androidStartTime(stat.stdout);
         if (startTime) found.push({ pid, startTime });
       }
       return found;
-    }, options);
+    }, { ...options, read: true });
   }
 
   /** The legacy device checks, in their order, as recorded reads before any effect: API level, boot, then the app installed.
@@ -686,7 +695,15 @@ export class AppiumDriver implements DeviceDriver, IosPreparationDriver, Observe
 
   private androidShell(owner: Owner, operation: string, serial: string, words: string[], signal: AbortSignal) {
     const adb = this.adbRunner();
-    return this.dispatch(owner, operation, signal, this.timeoutMs, issued => adb(shellCommand(serial, words), issued));
+    return this.dispatch(owner, operation, signal, this.timeoutMs, issued => adb(shellCommand(serial, words), issued, undefined, 'read'), { read: true });
+  }
+
+  /** Where the soft keyboard takes touches, as the window manager dispatches them. An unreadable state refuses the tap before input. */
+  private async keyboard(owner: Owner, serial: string, signal: AbortSignal): Promise<readonly Frame[]> {
+    const read = await this.androidShell(owner, 'android-keyboard', serial, ['dumpsys', 'window', 'InputMethod'], signal);
+    const areas = read.exitCode === 0 ? keyboardAreas(read.stdout) : undefined;
+    if (!areas) throw refusal('DEVICE_ERROR', 'The soft keyboard\'s state could not be read, so the tap was not sent.', 'KEYBOARD_UNKNOWN');
+    return areas;
   }
 
   private adbRunner(): AdbRunner {
@@ -868,11 +885,14 @@ export class AppiumDriver implements DeviceDriver, IosPreparationDriver, Observe
 
   /** One recorded command in the owner's ledger, bounded by its own deadline and the caller's signal. */
   /** `input`: a device input whose failure after send is never an answer, unless the extension refused it before input.
-   *  `cleanup`: a read close makes after issuance has closed. */
+   *  `cleanup`: a read close makes after issuance has closed.
+   *  `read`: adb reads, which end only once their processes have exited, so any failure, a cut included, is an answer: nothing they
+   *  started can act on the device. */
   private async dispatch<T>(owner: Owner, operation: string, signal: AbortSignal, timeoutMs: number, effect: (signal: AbortSignal) => Promise<T>,
-    options: { input?: boolean; cleanup?: boolean } = {}): Promise<T> {
+    options: { input?: boolean; cleanup?: boolean; read?: boolean } = {}): Promise<T> {
     signal.throwIfAborted();
     if (this.issuanceClosed && !options.cleanup) throw new AdmissionError('DISPATCH_CLOSED', 'Device issuance is closed');
+    if (this.inputStopped && options.input) throw new AdmissionError('DISPATCH_CLOSED', 'The run has stopped, so no new input is sent');
     const controller = new AbortController();
     this.aborters.add(controller);
     const cancel = () => controller.abort(signal.reason);
@@ -882,7 +902,7 @@ export class AppiumDriver implements DeviceDriver, IosPreparationDriver, Observe
       const settled = await owner.dispatcher.dispatch(operation, async () => {
         try { return { kind: 'value' as const, value: await effect(controller.signal) }; }
         catch (error) {
-          if (controller.signal.aborted || outcomeUnknown(error) || (options.input && !refusedBeforeInput(error))) { this.firstFailure ??= error; throw error; }
+          if (!options.read && (controller.signal.aborted || outcomeUnknown(error) || (options.input && !refusedBeforeInput(error)))) { this.firstFailure ??= error; throw error; }
           return { kind: 'error' as const, error };
         }
       });

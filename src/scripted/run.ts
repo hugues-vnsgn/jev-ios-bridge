@@ -226,6 +226,7 @@ export async function runScriptedScenario(options: ScriptedRunOptions): Promise<
   const started = performance.now();
   const controller = new AbortController();
   const signal = controller.signal;
+  signal.addEventListener('abort', () => { options.driver.stopInput?.(); }, { once: true });
   // A cancel or the wall limit stops the run at once but never cuts a command already sent: a cut command is unknown,
   // and an unknown command quarantines the device. Only the command's own deadline cuts it; close waits for its answer.
   const deviceOperation = <T>(milliseconds: number | undefined, work: (issuedSignal: AbortSignal) => Promise<T>): Promise<T> =>

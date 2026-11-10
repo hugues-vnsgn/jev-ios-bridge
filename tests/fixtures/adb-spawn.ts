@@ -2,14 +2,20 @@ import { EventEmitter } from 'node:events';
 import { PassThrough } from 'node:stream';
 import type { AdbChild, AdbSpawn } from '../../src/device/android/adb.js';
 
-/** A fake `adb` child for the production runner: it exits when the test says. The runner can't kill it. */
+/** A fake `adb` child for the production runner: it exits when the test says, or at once when killed. */
 export class FakeChild extends EventEmitter implements AdbChild {
   readonly stdout = new PassThrough();
   readonly stderr = new PassThrough();
+  readonly killedBy: NodeJS.Signals[] = [];
   exit(code: number, stdout = '', stderr = ''): void {
     this.stdout.end(stdout);
     this.stderr.end(stderr);
     setImmediate(() => this.emit('close', code, null));
+  }
+  kill(signal: NodeJS.Signals): boolean {
+    this.killedBy.push(signal);
+    this.emit('close', null, signal);
+    return true;
   }
 }
 
@@ -34,14 +40,7 @@ export function fakeSpawn(onSpawn?: (child: FakeChild, args: readonly string[]) 
 
 import type { ProbeChild, ProbeSpawn } from '../../src/device/android/probe.js';
 
-export class FakeProbeChild extends FakeChild implements ProbeChild {
-  readonly killedBy: NodeJS.Signals[] = [];
-  kill(signal: NodeJS.Signals): boolean {
-    this.killedBy.push(signal);
-    this.emit('close', null, signal);
-    return true;
-  }
-}
+export class FakeProbeChild extends FakeChild implements ProbeChild {}
 
 export function fakeProbeSpawn(reply: (file: string, args: readonly string[], child: FakeProbeChild) => string | undefined): {
   spawn: ProbeSpawn; calls: { file: string; args: readonly string[]; options: Parameters<ProbeSpawn>[2] }[]; children: FakeProbeChild[];
