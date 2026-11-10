@@ -21,7 +21,7 @@ import type { Clock } from '../device/settle.js';
 import type { ProfileBinding } from '../profiles.js';
 import { PrivateAppiumClient, type AppiumComponentRecord } from './client.js';
 import { CLEANUP_BUDGET_MS, fenceAppium, type FenceClaim, type FenceEffect, type FenceOptions, type FenceRunner } from './fence/index.js';
-import { appiumComponentSchema, fenceEffectSchema, hostIdentitySchema, wdaInventorySchema, type AppiumComponent, type AppiumRead, type HostIdentity } from './fence/schema.js';
+import { SESSION_CREATE, appiumComponentSchema, fenceEffectSchema, hostIdentitySchema, wdaInventorySchema, type AppiumComponent, type AppiumRead, type HostIdentity } from './fence/schema.js';
 import { androidNativeHelpers } from './native/android.js';
 import { launchIosConsole, observeIosLogs, observedIosPreparation } from './native/ios.js';
 import type { PresentationReader, SimulatorPresentation } from './native/presentation.js';
@@ -30,7 +30,7 @@ import { AppiumObservation, wallClock, type AppiumObservedScreen } from './obser
 import { ObservationIncompleteError } from './observe/normalize.js';
 import { AppiumOperations, REFUSED_BEFORE_INPUT, UnconfirmedOperationError, vendorSourceOf, type OperationName } from './operations/index.js';
 import { allocateHostPorts, portComponents, type FreePort, type HostPorts } from './ports.js';
-import { AppiumCommandSession, createSessionProfile, type SessionProfile, type SessionProfileInput } from './session.js';
+import { AppiumCommandSession, SESSION_CREATE_TIMEOUT_MS, createSessionProfile, type SessionProfile, type SessionProfileInput } from './session.js';
 import { StackError, type VerifiedStack } from './stack.js';
 import { AppiumError, CLIENT_SDK, EXTENSION_VERSION, type AppiumSessionId } from './wire-schemas.js';
 
@@ -72,6 +72,8 @@ export interface AppiumDriverOptions {
   /** Test seam: the fence's clock for its TERM, wait and poll steps. */
   fenceClock?: FenceOptions['clock'];
   timeoutMs?: number;
+  /** Test seam: the wait for a session create, `SESSION_CREATE_TIMEOUT_MS` by default. */
+  sessionCreateTimeoutMs?: number;
   deviceWindow?: DeviceWindowOpener;
 }
 
@@ -503,7 +505,9 @@ export class AppiumDriver implements DeviceDriver, IosPreparationDriver, Observe
         this.register(owner, appiumComponentSchema.parse({ id: randomUUID(), kind: 'appium-process-group', leader, runMarker, pgid: record.pid, members: [], launcher: self }));
       } });
     try {
-      const session = await this.dispatch(owner, 'appium-session-create', signal, this.timeoutMs, () => AppiumCommandSession.start({ client, profile, timeoutMs: this.timeoutMs }));
+      const createTimeoutMs = this.options.sessionCreateTimeoutMs ?? SESSION_CREATE_TIMEOUT_MS;
+      const session = await this.dispatch(owner, SESSION_CREATE, signal, createTimeoutMs + this.timeoutMs,
+        () => AppiumCommandSession.start({ client, profile, timeoutMs: this.timeoutMs, createTimeoutMs }));
       await this.recordAutomation(owner, device, before, signal);
       const observation = new AppiumObservation(session, this.options.stack, { ...(this.options.clock ? { clock: this.options.clock } : {}) });
       const operations = new AppiumOperations(session, observation, { timeoutMs: this.timeoutMs,
@@ -1026,7 +1030,8 @@ export class AppiumDriver implements DeviceDriver, IosPreparationDriver, Observe
     if (recovery.kind === 'refused') throw new DeviceReasonError('CLEANUP_FAILED', 'The cleanup claim was refused');
     try {
       const proof = await fenceAppium({ admission: this.options.admission, claim: recovery.claim, runner: this.options.fence,
-        revalidate: serial => this.revalidate(owner.identity, serial, signal), signal, ...this.fenceClock() });
+        revalidate: serial => this.revalidate(owner.identity, serial, signal), signal, ...this.fenceClock(),
+        adopt: component => { recovery.claim.registerComponent(component); } });
       recovery.claim.submitFence(proof);
     } catch (error) {
       try { recovery.claim.close(); } catch { /* the quarantine stands */ }

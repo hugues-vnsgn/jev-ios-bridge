@@ -51,6 +51,7 @@ export const fenceEffectSchema = z.discriminatedUnion('kind', [
   z.strictObject({ kind: z.literal('wda-stop'), udid, bundleId: text, pid: hostPid }),
   z.strictObject({ kind: z.literal('android-process'), serial, pid: androidPid }),
   z.strictObject({ kind: z.literal('android-stop'), serial, process: androidIdentitySchema }),
+  z.strictObject({ kind: z.literal('uiautomator2-inventory'), serial }),
   z.strictObject({ kind: z.literal('forward-inventory') }),
   z.strictObject({ kind: z.literal('forward-remove'), serial, local: port, remote: port }),
   z.strictObject({ kind: z.literal('settings-read'), serial }),
@@ -58,7 +59,7 @@ export const fenceEffectSchema = z.discriminatedUnion('kind', [
 ]);
 export type FenceEffect = z.infer<typeof fenceEffectSchema>;
 const effectAccess = { 'host-inventory': 'read', 'host-signal-group': 'write', 'host-signal': 'write', 'wda-inventory': 'read', 'wda-stop': 'write',
-  'android-process': 'read', 'android-stop': 'write', 'forward-inventory': 'read', 'forward-remove': 'write', 'settings-read': 'read', 'settings-write': 'write' } as const satisfies Record<FenceEffect['kind'], 'read' | 'write'>;
+  'android-process': 'read', 'android-stop': 'write', 'uiautomator2-inventory': 'read', 'forward-inventory': 'read', 'forward-remove': 'write', 'settings-read': 'read', 'settings-write': 'write' } as const satisfies Record<FenceEffect['kind'], 'read' | 'write'>;
 type WriteKind = { [K in FenceEffect['kind']]: (typeof effectAccess)[K] extends 'write' ? K : never }[FenceEffect['kind']];
 export type WriteEffect = Extract<FenceEffect, { kind: WriteKind }>;
 export type ReadEffect = Exclude<FenceEffect, WriteEffect>;
@@ -69,6 +70,13 @@ export const APPIUM_READS = ['appium-observe', 'appium-capture', 'appium-capture
 export type AppiumRead = typeof APPIUM_READS[number];
 export const isAppiumRead = (declaration: unknown): boolean =>
   z.object({ kind: z.literal('one-shot'), operation: z.enum(APPIUM_READS) }).safeParse(declaration).success;
+/** The bridge's own session create. Cut before a session id came back, it can have started only the Appium stack and
+ *  the device agent (WDA, or the UiAutomator2 server): once both are proven stopped, it can no longer take effect. */
+export const SESSION_CREATE = 'appium-session-create';
+export const isSessionCreate = (declaration: unknown): boolean =>
+  z.object({ kind: z.literal('one-shot'), operation: z.literal(SESSION_CREATE) }).safeParse(declaration).success;
+/** The UiAutomator2 server and instrumentation processes running on one Android device, by /proc identity. */
+export const uiautomator2InventorySchema = z.array(androidIdentitySchema).max(4096);
 export const fenceCommandSchema = z.strictObject({ id: text, kind: z.literal('appium-fence-command'), effect: fenceEffectSchema });
 export const executorSchema = z.strictObject({ pid: z.number().int().positive(), incarnation: z.string().min(1).max(500).refine(value => !!value.trim() && !value.includes('\0')) });
 export type Executor = z.infer<typeof executorSchema>;
@@ -92,6 +100,7 @@ export function parseEffectResult(effect: FenceEffect, raw: unknown) {
     case 'host-inventory': return hostInventorySchema.parse(raw);
     case 'wda-inventory': return wdaInventorySchema.parse(raw);
     case 'android-process': return androidProcessSchema.parse(raw);
+    case 'uiautomator2-inventory': return uiautomator2InventorySchema.parse(raw);
     case 'forward-inventory': return forwardInventorySchema.parse(raw);
     case 'settings-read': return settingsSchema.parse(raw);
     case 'host-signal': case 'host-signal-group': case 'wda-stop': case 'android-stop': case 'forward-remove': case 'settings-write': return successSchema.parse(raw);

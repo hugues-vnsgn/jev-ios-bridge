@@ -1,5 +1,5 @@
 import { isDeepStrictEqual } from 'node:util';
-import { androidProcessSchema, forwardInventorySchema, hostInventorySchema, sameForward, settingsSchema, wdaInventorySchema,
+import { androidProcessSchema, forwardInventorySchema, hostInventorySchema, sameForward, settingsSchema, uiautomator2InventorySchema, wdaInventorySchema,
   type AppiumComponent, type AppiumProof, type FenceEffect, type HostIdentity, type HostRow, type ReadEffect, type Transcript, type WriteEffect } from './schema.js';
 
 export const sameIdentity = (row: HostIdentity, expected: HostIdentity) => row.pid === expected.pid && row.startTime === expected.startTime;
@@ -49,6 +49,12 @@ export function settles(write: WriteEffect, answer: Transcript): boolean {
     case 'settings-write': return settingsSchema.parse(answer.result)[write.key] === write.value;
     default: return false;
   }
+}
+/** A read of the device's automation agents that found none: no WDA runner on the simulator, no UiAutomator2 server on the phone. */
+export function noAgentListed(read: Transcript): boolean {
+  if (read.effect.kind === 'wda-inventory') return wdaInventorySchema.parse(read.result).length === 0;
+  if (read.effect.kind === 'uiautomator2-inventory') return uiautomator2InventorySchema.parse(read.result).length === 0;
+  return false;
 }
 const reused = (rows: HostRow[], identity: HostIdentity) => rows.some(row => row.pid === identity.pid && row.startTime !== identity.startTime);
 export function sharedService(row: HostRow): boolean {

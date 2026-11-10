@@ -3,9 +3,9 @@ import { performance } from 'node:perf_hooks';
 import { isDeepStrictEqual } from 'node:util';
 import type { Admission, AdmissionClaim, AdmittedSession, FenceRequest, NativeComponent, OwnerIdentity } from '../../device/admission.js';
 import { z } from 'zod/v4';
-import { active, groupHeld, ownedGroup, readbackOf, recordedRows, sameIdentity, settles, sharedService, verifyAppiumProof } from './proof.js';
-import { androidProcessSchema, appiumComponentSchema, automationForward, fenceCommandSchema, fenceExecutorsSchema, forwardInventorySchema, hostInventorySchema,
-  isAppiumRead, parseEffectResult, readOnly, sameForward, settingKeySchema, settingsSchema, wdaInventorySchema, type AppiumComponent, type AppiumProof,
+import { active, groupHeld, noAgentListed, ownedGroup, readbackOf, recordedRows, sameIdentity, settles, sharedService, verifyAppiumProof } from './proof.js';
+import { androidProcessSchema, appiumComponentSchema, automationForward, fenceCommandSchema, fenceEffectSchema, fenceExecutorsSchema, forwardInventorySchema, hostInventorySchema,
+  isAppiumRead, isSessionCreate, parseEffectResult, readOnly, sameForward, settingKeySchema, settingsSchema, uiautomator2InventorySchema, wdaInventorySchema, type AppiumComponent, type AppiumProof,
   androidIdentitySchema, type Executor, type FenceEffect, type HostIdentity, type HostRow, type Transcript } from './schema.js';
 export type { FenceEffect } from './schema.js';
 export type FenceRunner = (effect: FenceEffect, signal: AbortSignal, started?: (host: Executor) => void) => Promise<unknown>;
@@ -75,7 +75,13 @@ export function recordAppiumComponents(claim: AdmissionClaim, declarations: read
   for (const component of components) claim.registerComponent(component);
   return components;
 }
-export async function fenceAppium(input: FenceOptions & { admission: Admission; claim: FenceClaim }): Promise<FenceRequest> {
+/**
+ * `adopt` is for the live owner's own close only: it records, before stopping them, the device agents its cut session create
+ * started. Any agent the generation did not record was unlisted when the owner checked before that create, so it appeared
+ * while the owner held the device. A later sweep passes no `adopt`: it stops only what was recorded, and an agent it finds
+ * unrecorded keeps the device quarantined.
+ */
+export async function fenceAppium(input: FenceOptions & { admission: Admission; claim: FenceClaim; adopt?: (component: AppiumComponent) => void }): Promise<FenceRequest> {
   const { admission, claim } = input;
   const original = admission.readGeneration(claim.owner);
   if (original.inventoryUnknownReason !== null) throw new Error('Unknown component inventory remains quarantined');
@@ -141,46 +147,64 @@ export async function fenceAppium(input: FenceOptions & { admission: Admission; 
   const order = { 'appium-process-group': 0, 'appium-wda': 1, 'appium-uiautomator2': 1, 'appium-native-helper': 2, 'appium-settings': 3, 'appium-forward': 4 };
   targets.sort((a, b) => order[a.kind] - order[b.kind]);
   const proofs: FenceRequest['components'] = [];
-  try {
-    for (const target of targets) {
-      let proof: AppiumProof;
-      switch (target.kind) {
-        case 'appium-process-group': case 'appium-native-helper': proof = await stopHost(target); break;
-        case 'appium-wda': {
-          const matching = (result: unknown) => wdaInventorySchema.parse(result).filter(row => row.udid === target.udid && (row.bundleId === target.bundleId || row.pid === target.pid));
-          let command = await query({ kind: 'wda-inventory', udid: target.udid });
-          const rows = matching(command.result);
-          if (rows.some(row => row.pid !== target.pid || row.bundleId !== target.bundleId)) throw new Error('WDA identity differs');
-          if (rows.length) { await query({ kind: 'wda-stop', udid: target.udid, bundleId: target.bundleId, pid: target.pid }); command = await poll({ kind: 'wda-inventory', udid: target.udid }, result => !matching(result).length); }
-          proof = { kind: 'appium-wda-stopped', commandId: command.id }; break;
-        }
-        case 'appium-uiautomator2': {
-          const commandIds: string[] = [];
-          for (const process of target.processes) {
-            const read = { kind: 'android-process', serial: target.serial, pid: process.pid } as const;
-            const gone = (result: unknown) => { const state = androidProcessSchema.parse(result); return state.kind === 'absent' || state.startTime !== process.startTime; };
-            let command = await query(read);
-            if (!gone(command.result)) {
-              await query({ kind: 'android-stop', serial: target.serial, process });
-              command = await poll(read, gone);
-            }
-            commandIds.push(command.id);
-          }
-          proof = { kind: 'appium-uiautomator2-stopped', commandIds }; break;
-        }
-        case 'appium-forward': proof = await removeOwnedForward(target, query); break;
-        case 'appium-settings': {
-          const before = await query({ kind: 'settings-read', serial: target.serial });
-          const values = settingsSchema.parse(before.result);
-          for (const key of settingKeySchema.options) if (values[key] !== target.values[key]) await query({ kind: 'settings-write', serial: target.serial, key, value: target.values[key] });
-          const command = await query({ kind: 'settings-read', serial: target.serial });
-          proof = { kind: 'appium-settings-restored', commandId: command.id }; break;
-        }
-        default: { const exhaustive: never = target; throw new Error(String(exhaustive)); }
+  const stop = async (target: AppiumComponent) => {
+    let proof: AppiumProof;
+    switch (target.kind) {
+      case 'appium-process-group': case 'appium-native-helper': proof = await stopHost(target); break;
+      case 'appium-wda': {
+        const matching = (result: unknown) => wdaInventorySchema.parse(result).filter(row => row.udid === target.udid && (row.bundleId === target.bundleId || row.pid === target.pid));
+        let command = await query({ kind: 'wda-inventory', udid: target.udid });
+        const rows = matching(command.result);
+        if (rows.some(row => row.pid !== target.pid || row.bundleId !== target.bundleId)) throw new Error('WDA identity differs');
+        if (rows.length) { await query({ kind: 'wda-stop', udid: target.udid, bundleId: target.bundleId, pid: target.pid }); command = await poll({ kind: 'wda-inventory', udid: target.udid }, result => !matching(result).length); }
+        proof = { kind: 'appium-wda-stopped', commandId: command.id }; break;
       }
-      if (!verifyAppiumProof(target, proof, transcripts)) throw new Error(`Missing stop evidence for ${target.id}`);
-      proofs.push({ componentId: target.id, proof });
+      case 'appium-uiautomator2': {
+        const commandIds: string[] = [];
+        for (const process of target.processes) {
+          const read = { kind: 'android-process', serial: target.serial, pid: process.pid } as const;
+          const gone = (result: unknown) => { const state = androidProcessSchema.parse(result); return state.kind === 'absent' || state.startTime !== process.startTime; };
+          let command = await query(read);
+          if (!gone(command.result)) {
+            await query({ kind: 'android-stop', serial: target.serial, process });
+            command = await poll(read, gone);
+          }
+          commandIds.push(command.id);
+        }
+        proof = { kind: 'appium-uiautomator2-stopped', commandIds }; break;
+      }
+      case 'appium-forward': proof = await removeOwnedForward(target, query); break;
+      case 'appium-settings': {
+        const before = await query({ kind: 'settings-read', serial: target.serial });
+        const values = settingsSchema.parse(before.result);
+        for (const key of settingKeySchema.options) if (values[key] !== target.values[key]) await query({ kind: 'settings-write', serial: target.serial, key, value: target.values[key] });
+        const command = await query({ kind: 'settings-read', serial: target.serial });
+        proof = { kind: 'appium-settings-restored', commandId: command.id }; break;
+      }
+      default: { const exhaustive: never = target; throw new Error(String(exhaustive)); }
     }
+    if (!verifyAppiumProof(target, proof, transcripts)) throw new Error(`Missing stop evidence for ${target.id}`);
+    proofs.push({ componentId: target.id, proof });
+  };
+  const creates = original.components.filter(component => isSessionCreate(component.declaration)
+    && original.commands.some(command => command.componentId === component.id && command.state !== 'settled'));
+  // Once the stack is stopped nothing can start an agent, so the agent read follows it, and Android settings and forwards
+  // are restored only after every agent has stopped.
+  const fenceCreates = async () => {
+    if (!creates.length || !targets.some(target => target.kind === 'appium-process-group')) return;
+    const read = agentRead(claim.owner, targets);
+    if (!read) return;
+    let answer = await query(read);
+    if (input.adopt && !noAgentListed(answer)) {
+      for (const agent of agentsOf(read, answer)) { input.adopt(agent); await stop(agent); }
+      answer = await query(read);
+    }
+    if (noAgentListed(answer)) for (const component of creates) proofs.push({ componentId: component.id, proof: { kind: 'appium-create-fenced', commandId: answer.id } });
+  };
+  try {
+    for (const target of targets.filter(target => order[target.kind] < 2)) await stop(target);
+    await fenceCreates();
+    for (const target of targets.filter(target => order[target.kind] >= 2)) await stop(target);
     for (const component of original.components) {
       const invocation = fenceCommandSchema.safeParse(component.declaration);
       if (!invocation.success || original.commands.filter(command => command.componentId === component.id).every(command => command.state === 'settled')) continue;
@@ -210,6 +234,17 @@ export async function fenceAppium(input: FenceOptions & { admission: Admission; 
     check();
     return { requestId: randomUUID(), kind: 'stop', components: proofs, commands: view.commands.filter(command => command.state !== 'settled').map(command => command.id) };
   } finally { budget.close(); }
+}
+
+function agentRead(owner: OwnerIdentity, targets: AppiumComponent[]): FenceEffect | undefined {
+  if (owner.category === 'ios-simulator') return fenceEffectSchema.parse({ kind: 'wda-inventory', udid: owner.device });
+  const serial = targets.flatMap(target => 'serial' in target ? [target.serial] : [])[0];
+  return serial === undefined ? undefined : { kind: 'uiautomator2-inventory', serial };
+}
+function agentsOf(read: FenceEffect, answer: Transcript): AppiumComponent[] {
+  if (read.kind === 'wda-inventory') return wdaInventorySchema.parse(answer.result).map(row => appiumComponentSchema.parse({ id: randomUUID(), kind: 'appium-wda', ...row }));
+  if (read.kind !== 'uiautomator2-inventory') return [];
+  return [appiumComponentSchema.parse({ id: randomUUID(), kind: 'appium-uiautomator2', serial: read.serial, processes: uiautomator2InventorySchema.parse(answer.result) })];
 }
 
 export type AutomationScope = { udid: string } | { serial: string };

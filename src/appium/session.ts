@@ -19,6 +19,16 @@ const profileInputSchema = z.discriminatedUnion('platform', [
     z.strictObject({ kind: z.literal('verified'), device: text, apks: z.array(apkSchema).length(2) }),
   ]), ports: z.strictObject({ systemPort: port }).optional() }),
 ]);
+/**
+ * How long the bridge waits for Appium to answer a session create. It outlasts the stack's own agent start bounds, so
+ * Appium's answer, a session or its own launch failure, normally arrives before the bridge stops listening:
+ * - iOS: one WDA launch, bounded by `wdaLaunchTimeout` below (120 s), after the runner's reinstall.
+ * - Android: both UiAutomator2 server APKs installed at once, bounded by `uiautomator2ServerInstallTimeout` (120 s), then
+ *   the server launch, two tries of 30 s, 3 s apart (UiAutomator2 driver 8.7.0 defaults).
+ * It stays under the scripted run's default 300 s wall limit, so a create that still never answers is cut, and fenced by
+ * prepare's own close, while the run is live.
+ */
+export const SESSION_CREATE_TIMEOUT_MS = 240_000;
 export type SessionProfileInput = z.infer<typeof profileInputSchema>;
 const profileSchema = z.strictObject({ platform: platformSchema, device: text, path, capabilities: capabilitiesSchema }).brand<'SessionProfile'>();
 export type SessionProfile = z.infer<typeof profileSchema>;
@@ -65,8 +75,8 @@ export class AppiumCommandSession {
   private phase: SessionState = 'ready';
   private finishing: Promise<void> | undefined;
   private constructor(readonly client: PrivateAppiumClient, readonly profile: SessionProfile, readonly sessionId: AppiumSessionId) {}
-  static async start({ client, profile, timeoutMs }: { client: PrivateAppiumClient; profile: SessionProfile; timeoutMs?: number }): Promise<AppiumCommandSession> {
-    const created = await client.manageSession({ action: 'create', platform: profile.platform, capabilities: JSON.stringify(profile.capabilities) }, profile, timeoutMs);
+  static async start({ client, profile, timeoutMs, createTimeoutMs }: { client: PrivateAppiumClient; profile: SessionProfile; timeoutMs?: number; createTimeoutMs?: number }): Promise<AppiumCommandSession> {
+    const created = await client.manageSession({ action: 'create', platform: profile.platform, capabilities: JSON.stringify(profile.capabilities) }, profile, createTimeoutMs ?? timeoutMs);
     if (created.kind !== 'created') throw new AppiumError('ACKNOWLEDGEMENT_LOST');
     await client.applySettings(profile, timeoutMs);
     return new AppiumCommandSession(client, profile, created.sessionId);
