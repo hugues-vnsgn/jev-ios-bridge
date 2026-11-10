@@ -431,7 +431,7 @@
         "Build and install examples/diagnostic-app-android on the assigned Android emulator.",
         "Run .scratch/android-support/findings/06-assets/logprobe with a supplied value through CLI `run`, once with the log pane and once with `--no-log-pane`, then follow it with CLI `logs`.",
         "Send `adb shell am crash dev.jevbridge.diagnostic` partway through a run of examples/diagnostic-app-android.",
-        "Run .scratch/android-support/findings/06-assets/logprobe with intent extra `mode` set to `anr`.",
+        "Run .scratch/android-support/findings/06-assets/logprobe with intent extra `mode` set to `anr`, and send one key event (`adb shell input keyevent KEYCODE_DPAD_DOWN`) during the freeze. Android declares an ANR only while input waits, so expect APP_NOT_RESPONDING.",
         "Kill the run's owned logcat process partway through another run."
       ],
       "expected": "System.out, System.err and logcat lines for the app's uid reach the log pane, `logs` and step tails, with supplied values masked as [value:<key>]. Empty output differs from an unavailable source. The crash ends the run APP_EXITED and the ANR ends it APP_NOT_RESPONDING, each named in the pane. The normal stop at the end of a run and the lost logcat stream produce no app diagnosis.",
@@ -464,7 +464,7 @@
         "Build and install examples/diagnostic-app-android on the assigned Android phone.",
         "Run .scratch/android-support/findings/06-assets/logprobe with a supplied value through CLI `run`, once with the log pane and once with `--no-log-pane`, then follow it with CLI `logs`.",
         "Send `adb shell am crash dev.jevbridge.diagnostic` partway through a run of examples/diagnostic-app-android.",
-        "Run .scratch/android-support/findings/06-assets/logprobe with intent extra `mode` set to `anr`.",
+        "Run .scratch/android-support/findings/06-assets/logprobe with intent extra `mode` set to `anr`, and send one key event (`adb shell input keyevent KEYCODE_DPAD_DOWN`) during the freeze. Android declares an ANR only while input waits, so expect APP_NOT_RESPONDING.",
         "Kill the run's owned logcat process partway through another run."
       ],
       "expected": "System.out, System.err and logcat lines for the app's uid reach the log pane, `logs` and step tails, with supplied values masked as [value:<key>]. Empty output differs from an unavailable source. The crash ends the run APP_EXITED and the ANR ends it APP_NOT_RESPONDING, each named in the pane. The normal stop at the end of a run and the lost logcat stream produce no app diagnosis.",

@@ -117,6 +117,15 @@ test('the five unfinished v1.4.0 simulator cases are mapped as their own iOS-sim
   }
 });
 
+test('the Android ANR step sends one key event during the freeze, since Android declares an ANR only while input waits', () => {
+  for (const id of ['B5-logs-health-android-emulator', 'B5-logs-health-android-phone']) {
+    const anr = rows.find(row => row.id === id)!.steps.filter(step => step.includes('`anr`'));
+    assert.equal(anr.length, 1, `${id} has one ANR step`);
+    assert.match(anr[0]!, /one key event \(`adb shell input keyevent KEYCODE_DPAD_DOWN`\) during the freeze/, `${id} pends input`);
+    assert.match(anr[0]!, /APP_NOT_RESPONDING/, `${id} names the expected end`);
+  }
+});
+
 test('the phone is required exactly by the rows that run on the phone alone', () => {
   const phoneOnly = (row: typeof rows[number]) => row.devices.length === 1 && row.devices[0] === 'android-phone';
   assert.ok(rows.some(phoneOnly), 'some rows run on the phone alone');

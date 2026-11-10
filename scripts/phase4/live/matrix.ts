@@ -100,7 +100,7 @@ const CATEGORIES: Category[] = [
     android: { jevKey: true, evidence: [...RUN, E.logs],
       steps: [`Run ${LOG_PROBE} with a supplied value through CLI \`run\`, once with the log pane and once with \`--no-log-pane\`, then follow it with CLI \`logs\`.`,
         `Send \`adb shell am crash dev.jevbridge.diagnostic\` partway through a run of ${ANDROID_APP}.`,
-        `Run ${LOG_PROBE} with intent extra \`mode\` set to \`anr\`.`, 'Kill the run\'s owned logcat process partway through another run.'],
+        `Run ${LOG_PROBE} with intent extra \`mode\` set to \`anr\`, and send one key event (\`adb shell input keyevent KEYCODE_DPAD_DOWN\`) during the freeze. Android declares an ANR only while input waits, so expect APP_NOT_RESPONDING.`, 'Kill the run\'s owned logcat process partway through another run.'],
       expected: 'System.out, System.err and logcat lines for the app\'s uid reach the log pane, `logs` and step tails, with supplied values masked as [value:<key>]. Empty output differs from an unavailable source. The crash ends the run APP_EXITED and the ANR ends it APP_NOT_RESPONDING, each named in the pane. The normal stop at the end of a run and the lost logcat stream produce no app diagnosis.' } },
   { slug: 'capture', title: 'Capture', line: 74, executor: 'operator',
     ios: { jevKey: false, storeActivation: false, evidence: [E.commands, 'Simulator screenshots before and after'],
