@@ -9,6 +9,7 @@ import { fileURLToPath } from 'node:url';
 import { createHash } from 'node:crypto';
 import { ObservedAllocator } from '../src/observed/allocation.js';
 import { Admission } from '../src/device/admission.js';
+import { DeviceReasonError } from '../src/device/index.js';
 import { allocationSourceProcess } from '../src/observed/allocation-config.js';
 import { allocationSnapshot, canonicalJson } from '../src/observed/allocation-schema.js';
 import { migrateAdmissionForTesting, type ImportedObservedAction } from '../src/device/admission-migration.js';
@@ -337,7 +338,7 @@ test('one stage deadline bounds a late readiness read and its late reply cannot 
 type Deadline = { stage: string; limitMs: number; elapsedMs: number };
 async function firedDeadline(x: Allocation, allocationId: string): Promise<Deadline | undefined> {
   const { entries } = await privateDiagnostics(x, allocationId);
-  return (entries.at(-1) as { deadline?: Deadline }).deadline;
+  return (entries as { deadline?: Deadline }[]).findLast(entry => entry.deadline)?.deadline;
 }
 const slowSessionStart = (ms: number) => [fixtureWorld([{ tool: 'appium_session_management', nth: 1, fault: { kind: 'late', ms } }, ...tapLeadsDone])];
 
@@ -356,6 +357,20 @@ test('a launch stage deadline stays quarantined and the private diagnostics name
   const deadline = await firedDeadline(x, result.allocationId);
   assert.deepEqual([deadline?.stage, deadline?.limitMs], ['launch', 30]); assert.ok(deadline!.elapsedMs >= 20, JSON.stringify(deadline));
   assert.deepEqual(effects(x).tools, [[]], 'no session starts after a launch that never answered');
+});
+
+test('a device call that times out on its own limit, a moment before the launch stage timer, still names the launch deadline', async t => {
+  const x = await appiumAllocator(t, { budgets: { launchTimeoutMs: 30 }, wrap: driver => {
+    driver.launch = (_signal, timeoutMs = 0) => {
+      const end = Date.now() + timeoutMs + 5; while (Date.now() < end);
+      return Promise.reject(new DeviceReasonError('TIMEOUT', 'launch did not finish'));
+    };
+    return driver;
+  } });
+  const result = snapshot(await x.allocator.prepare(x.f.request()));
+  assert.deepEqual([result.state, result.outcome, result.reason], ['quarantined', 'uncertain', 'PREPARATION_UNCONFIRMED']);
+  const deadline = await firedDeadline(x, result.allocationId);
+  assert.deepEqual([deadline?.stage, deadline?.limitMs], ['launch', 30]);
 });
 
 test('a first Appium session that answers after the preparation deadline ends there, quarantined, and the diagnostics name that deadline', async t => {

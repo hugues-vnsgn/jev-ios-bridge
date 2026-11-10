@@ -134,6 +134,11 @@ export class ObservedAllocator {
       if (left <= 0) throw expired(); return left; };
     const timer = setTimeout(() => controller.abort(expired()), Math.max(1, deadline - Date.now()));
     try { return await this.local(job, effect(signal, remaining), signal); }
+    catch (error) {
+      // A device call bounded by remaining() can time out a moment before this stage's own timer.
+      if (!(error instanceof PreparationFailure) && Date.now() >= deadline) this.diagnostic(job, 'preparation/' + job.phase, expired());
+      throw error;
+    }
     finally { clearTimeout(timer); }
   }
   private async directory(path: string): Promise<void> {
