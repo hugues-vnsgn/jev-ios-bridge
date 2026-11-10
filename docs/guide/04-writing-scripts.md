@@ -65,7 +65,7 @@ Put every literal you type into `values`, and refer to it by key:
 ```
 
 - **Allowed:** any text except control characters, up to 2048 characters per value and 32 values per script. A leading hyphen and non-ASCII text are fine on both platforms.
-- **On Android,** non-ASCII text goes through the device clipboard ([how typed values reach a field](09-data-handling.md#how-typed-values-reach-a-field)).
+- **No clipboard.** Neither platform puts a typed value on the device clipboard ([how typed values reach a field](09-data-handling.md#how-typed-values-reach-a-field)).
 - **Masked in the evidence.** Values are masked in the run log and the log pane. They can still show up in screenshots, and in the screen text sent to Jev.
 - **Check the result in the next guard,** for example `{ "identifier": "search.field", "value": "London" }`. Keyboard state can change casing or how replace-all behaves.
 

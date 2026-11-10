@@ -1,23 +1,29 @@
 # Changelog
 
-## 1.5.0 — unreleased
+## 1.5.0 - UNRELEASED
 
-Both platforms now run on one Appium stack that ships inside the package. Scripts, verdicts, reports, reason codes, exit codes and the evidence folder are as in 1.4.0. Live acceptance on real devices is pending, and the release notes will say what was checked live. See the [release notes](https://github.com/hugues-vnsgn/jev-ios-bridge/blob/v1.5.0/docs/releases/v1.5.0.md).
+Both platforms now run on one Appium stack that ships inside the package. Scripts, verdicts, reports, reason codes, exit codes and the evidence folder are as in 1.4.0. The [release notes](https://github.com/hugues-vnsgn/jev-ios-bridge/blob/v1.5.0/docs/releases/v1.5.0.md) list what passed live, what failed, what was not tested, and the known limits.
 
 ### For users
 
 - **MobileBuildMCP, mobilecli and AXe are gone.** The package no longer installs or runs them, and you don't need them. WebDriverAgent drives iOS simulators, and UiAutomator2 with `adb` drives Android emulators and phones.
 - **The Appium stack travels in the package and the plugin.** On first use the bridge checks the archives' hashes and unpacks them under `~/Library/Application Support/jev-ios-bridge/`, with no network access. Nothing is installed, built or downloaded when a run starts.
 - **Apple silicon Macs and Node 24 or later only.** On any other host the bridge refuses before it touches a device.
-- **iOS 26.5 with Xcode 27.0 is the qualified pair.** Other iOS or Xcode versions print a warning and the run continues.
-- **Tested device categories only.** iOS simulators and Android emulators are the supported targets. Android phones are supported in code but untested. Real iPhones are not supported.
-- **Typing.** A value that starts with a hyphen now types on both platforms, and non-ASCII values on Android no longer go through the device clipboard.
+- **iOS 26.5 with Xcode 27.0 or 27.1 is the qualified pair.** Other iOS or Xcode versions write a warning to `run.jsonl` and the run continues.
+- **Tested device categories.** iOS simulators and Android emulators are the supported targets. Android phones are supported and were tested on one phone, with ownership and faults still open there. PENDING-GATE: B7-phone cable pull. Real iPhones are not supported.
+- **Typing.** A value that starts with a hyphen now types on both platforms. Non-ASCII values type on both platforms, and on Android they no longer go through the device clipboard.
+- **A frozen app no longer costs you the device.** When a screen read times out because the app stopped answering, the bridge proves every Appium process it started is stopped, then releases the device. The run reports the read's own reason, or `APP_NOT_RESPONDING` on Android once Android declares an ANR.
+- **Android input on the soft keyboard is refused.** A tap, swipe or scroll that starts on the shown keyboard ends `TARGET_UNAVAILABLE` and sends nothing. Dismiss the keyboard first.
+- **Slow session starts.** The bridge waits up to 240 s for Appium to create a session, so a slow first WebDriverAgent start on a busy Mac gets Appium's own answer.
+- **Private home for the Appium child.** Appium runs with `HOME` under the temp folder, so its Simulator preference writes stay out of your real `~/Library/Preferences`. If `TMPDIR` is inside your home folder, the bridge uses `/private/tmp/jev-ios-bridge-<uid>`.
 - **Profiles.** `.jev/profiles.json` names a device, and `run`, `capture` and `start_scenario` accept `--profile` or `profile`. A `.mobilebuildmcp/config.yaml` from an older setup is still read for the simulator UUID, with a warning that suggests a profile.
 - **Crashed runs.** The next run stops what the crashed run recorded, matched by process identity, and refuses with `DEVICE_QUARANTINED` when it can't prove a stop.
 - **Admission.** One per-user admission store is the device authority for every entry point, Android included. The upgrade from the 1.4.0 store is offline; see the [admission activation runbook](docs/guide/admission-activation.md). A compatibility marker file still tells an older binary that a device is busy.
 - **Slow iOS screens.** When no screen capture finishes within the 3 s settle limit, as on screens whose page source is slow to build, the bridge now waits for the capture already in progress (up to its own 10 s limit) and returns it marked unsettled, instead of refusing with `OBSERVATION_TIMEOUT`.
 - **Store refusals.** A `capture` or `run` stopped by the admission store now reports the store's own reason code, such as `STATE_UNAVAILABLE`, instead of `EXECUTION_ERROR`, and `capture` prints the store's message.
 - **Docs.** The guide no longer sends you to MobileBuildMCP. On iOS the bridge has no capture command of its own yet, so the guide points to Xcode's Accessibility Inspector for seeing identifiers.
+- **Observed actions (experimental).** The 30 s launch budget covers only the app launch. The first Appium session gets its own stage, and a deadline names the stage in the private diagnostics. A `HOST_PREREQUISITE_MISSING` message now ends with `Missing:` and a fixed description of what is missing.
+- **Known limits.** The [release notes](https://github.com/hugues-vnsgn/jev-ios-bridge/blob/v1.5.0/docs/releases/v1.5.0.md#known-limits) list them: cut commands that still quarantine a device, the MCP client's 4 s kill, the Xcode warning that only `run.jsonl` shows, and two changed cleanup outcomes.
 
 ### For maintainers
 
