@@ -553,11 +553,11 @@ test('a failure names its true source: the bridge for its own client and extensi
     const mapped = appiumFailure(error, platform);
     return mapped instanceof DeviceReasonError ? [mapped.vendorCode, mapped.vendorSource] : mapped;
   };
-  const codes = ['TIMEOUT', 'ACKNOWLEDGEMENT_LOST', 'CONNECTION_LOST', 'SESSION_MISMATCH', 'VERSION_MISMATCH', 'NOT_ALLOWED', 'NOT_UNIQUE',
+  const codes = ['TIMEOUT', 'ACKNOWLEDGEMENT_LOST', 'CONNECTION_LOST', 'SESSION_MISMATCH', 'VERSION_MISMATCH', 'NOT_ALLOWED', 'NOT_UNIQUE', 'NOT_FOUND',
     'SDK_IDENTITY_MISMATCH', 'PROTOCOL_VERSION_MISMATCH', 'SETTINGS_READBACK_MISMATCH', 'DRIVER_ERROR'] as const;
   assert.deepEqual(codes.map(code => source(new AppiumError(code), 'ios')),
     [['TIMEOUT', 'bridge'], ['ACKNOWLEDGEMENT_LOST', 'bridge'], ['CONNECTION_LOST', 'bridge'], ['SESSION_MISMATCH', 'bridge'], ['VERSION_MISMATCH', 'bridge'],
-      ['NOT_ALLOWED', 'bridge'], ['NOT_UNIQUE', 'bridge'], ['SDK_IDENTITY_MISMATCH', 'bridge'], ['PROTOCOL_VERSION_MISMATCH', 'bridge'],
+      ['NOT_ALLOWED', 'bridge'], ['NOT_UNIQUE', 'bridge'], ['NOT_FOUND', 'bridge'], ['SDK_IDENTITY_MISMATCH', 'bridge'], ['PROTOCOL_VERSION_MISMATCH', 'bridge'],
       ['SETTINGS_READBACK_MISMATCH', 'bridge'], ['DRIVER_ERROR', 'appium']]);
   assert.deepEqual([source(new NativeHelperError('NATIVE_FAILED', 'adb failed'), 'android'), source(new NativeHelperError('NATIVE_FAILED', 'simctl failed'), 'ios')],
     [['NATIVE_FAILED', 'adb'], ['NATIVE_FAILED', 'bridge']]);

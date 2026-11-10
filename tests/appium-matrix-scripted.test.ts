@@ -137,7 +137,7 @@ test('scripted v1 on Android: activity and intent extras restart through the ext
   assert.deepEqual(wire.find(call => call.params!.name === 'jev_start_activity')!.params!.arguments, { extensionVersion: 1, sessionId: 'android-session',
     package: 'example.app', activity: '.Main', intentExtras: { route: 'search' } });
   assert.deepEqual(wire.filter(call => call.params!.name === 'appium_perform_actions').map(pointOf), [[120, 222], [70, 322]]);
-  assert.deepEqual(wire.find(call => call.params!.name === 'jev_replace_text')!.params!.arguments!.locator, { using: 'id', value: id('query') });
+  assert.deepEqual(wire.find(call => call.params!.name === 'jev_replace_text')!.params!.arguments!.locator, { using: 'xpath', value: `//*[@resource-id="${id('query')}"]` });
   assert.deepEqual(report.typedFields, [{ stepId: 'type', shownValue: '[REDACTED]' }]);
   assert.deepEqual([report.platform, report.package, report.activity, report.intentExtras], ['android', 'example.app', '.Main', { route: 'search' }]);
   assert.equal(events.find(event => event.type === 'prepared')!.data.serial, SERIAL);
@@ -216,6 +216,16 @@ test('the extension refusing a replacement before input (NOT_UNIQUE) is TARGET_A
   const { done, events, again } = await runTwice(t, f, iosScript, iosWorld());
   assert.deepEqual([done.report.verdict, done.report.reason], ['inconclusive', 'TARGET_AMBIGUOUS']);
   assert.deepEqual(errors(events), [['act', 'TARGET_AMBIGUOUS', null]]);
+  assert.equal(f.tools().filter(name => name === 'jev_replace_text').length, 1);
+  assertReleased(f);
+  assert.equal((await again()).verdict, 'passed');
+});
+
+test('the extension finding no field for a replacement before input (NOT_FOUND) is TARGET_UNAVAILABLE, and the answered command releases the device', async t => {
+  const f = ios(t, [{ tool: 'jev_replace_text', fault: { kind: 'error', code: 'NOT_FOUND' } }]);
+  const { done, events, again } = await runTwice(t, f, iosScript, iosWorld());
+  assert.deepEqual([done.report.verdict, done.report.reason], ['inconclusive', 'TARGET_UNAVAILABLE']);
+  assert.deepEqual(errors(events), [['act', 'TARGET_UNAVAILABLE', null]]);
   assert.equal(f.tools().filter(name => name === 'jev_replace_text').length, 1);
   assertReleased(f);
   assert.equal((await again()).verdict, 'passed');
