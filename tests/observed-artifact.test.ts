@@ -30,7 +30,8 @@ test('staging binds unchanged bytes to a private immutable simulator artifact', 
     const receipt = await stageArtifact(f.request, f.dependencies);
     assert.notEqual(receipt.stagedPath, f.app); assert.equal(receipt.metadata.bundleId, plist.CFBundleIdentifier);
     assert.equal(receipt.metadata.architecture, 'arm64'); assert.match(receipt.contentDigest, /^[a-f0-9]{64}$/);
-    assert.equal((await fs.stat(receipt.stagedPath)).mode & 0o777, 0o500);
+    assert.equal((await fs.stat(receipt.stagedPath)).mode & 0o777, 0o700);
+    assert.equal((await fs.stat(join(receipt.stagedPath, 'Info.plist'))).mode & 0o777, 0o400);
     await verifyStagedArtifact(receipt);
     await fs.writeFile(join(f.app, 'Info.plist'), 'changed source');
     await verifyStagedArtifact(receipt);
@@ -125,8 +126,8 @@ test('universal executable accepts the declared host slice and simulator minimum
 test('verification catches added files', async () => {
   const f = await fixture();
   try {
-    const receipt = await stageArtifact(f.request, f.dependencies); await fs.chmod(receipt.stagedPath, 0o700);
-    await fs.writeFile(join(receipt.stagedPath, 'added'), 'changed', { mode: 0o400 }); await fs.chmod(receipt.stagedPath, 0o500);
+    const receipt = await stageArtifact(f.request, f.dependencies);
+    await fs.writeFile(join(receipt.stagedPath, 'added'), 'changed', { mode: 0o400 });
     await assert.rejects(verifyStagedArtifact(receipt), { reason: 'ARTIFACT_INVALID' });
   } finally { await cleanup(f.root); }
 });
@@ -196,4 +197,29 @@ test('staging attempts the output close even when the source close rejects', asy
     await assert.rejects(stageArtifact(f.request, { ...f.dependencies, fs: interceptedFs }), { reason: 'ARTIFACT_INVALID' });
     assert.ok(outputForCopy); assert.equal(outputForCopy.fd, -1, 'source close rejection must not skip closing the output');
   } finally { await Promise.allSettled(handles.map(handle => handle.close())); await cleanup(f.root); }
+});
+/** Rebuilds a tree the way the simulator's install copies a bundle (BUG-LI-2): each folder is created with its source mode before its children. */
+async function modeKeepingCopy(source: string, destination: string): Promise<void> {
+  const stat = await fs.lstat(source);
+  if (stat.isSymbolicLink()) { await fs.symlink(await fs.readlink(source), destination); return; }
+  if (stat.isFile()) { await fs.copyFile(source, destination); await fs.chmod(destination, stat.mode & 0o777); return; }
+  await fs.mkdir(destination); await fs.chmod(destination, stat.mode & 0o777);
+  for (const child of await fs.readdir(source)) await modeKeepingCopy(join(source, child), join(destination, child));
+}
+test('a staged bundle survives a copy that keeps each folder mode, as the simulator install does, and stays verifiable', async () => {
+  const f = await fixture();
+  try {
+    await fs.mkdir(join(f.app, 'Base.lproj')); await fs.writeFile(join(f.app, 'Base.lproj', 'Main.strings'), 'strings');
+    const receipt = await stageArtifact(f.request, f.dependencies);
+    const installed = join(f.root, 'installed.app');
+    await modeKeepingCopy(receipt.stagedPath, installed);
+    assert.equal(await fs.readFile(join(installed, 'Base.lproj', 'Main.strings'), 'utf8'), 'strings');
+    await verifyStagedArtifact(receipt);
+  } finally { await cleanup(f.root); }
+});
+test('verification refuses a staged folder opened to other users', async () => {
+  const f = await fixture();
+  try { const receipt = await stageArtifact(f.request, f.dependencies); await fs.chmod(receipt.stagedPath, 0o750);
+    await assert.rejects(verifyStagedArtifact(receipt), { reason: 'ARTIFACT_INVALID' });
+  } finally { await cleanup(f.root); }
 });

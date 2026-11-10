@@ -11,8 +11,17 @@ import { canonicalJson } from './allocation-schema.js';
 import { simulatorUuid, validSimulatorIdentifiers } from './create-source.js';
 import { parseReadonlyMountMetadata } from './installed-plist.js';
 
+/** What a HOST_PREREQUISITE_MISSING refusal names, in fixed words that never carry a submitted value. */
+export const hostPrerequisites = {
+  host: 'a macOS host on arm64 or x86_64',
+  xcode: 'Xcode at /Applications/Xcode.app with its simulator tools',
+  deviceType: 'the requested simulator device type',
+  runtime: 'the requested simulator runtime, mounted where the bridge can verify it',
+  compatibility: 'a runtime that supports the requested device type on this host',
+} as const;
+export type HostPrerequisite = keyof typeof hostPrerequisites;
 export class AllocationPrerequisiteError extends Error {
-  constructor(readonly reason: 'CONFIG_INVALID' | 'HOST_PREREQUISITE_MISSING' | 'STORAGE_UNAVAILABLE') { super(reason); }
+  constructor(readonly reason: 'CONFIG_INVALID' | 'HOST_PREREQUISITE_MISSING' | 'STORAGE_UNAVAILABLE', readonly missing?: HostPrerequisite) { super(reason); }
 }
 export type AllocationAccount = { homedir: string; uid: number };
 export const allocationDefaults: AllocationBudgets = Object.freeze({ maxRetainedAllocations: 8, maxConcurrentPreparations: 1,
@@ -82,9 +91,10 @@ export function installedHost(): InstalledHost {
 export const developerDirectory = '/Applications/Xcode.app/Contents/Developer';
 const installedPlistOutputLimit = (path: string) => path === '/Applications/Xcode.app/Contents/Info.plist' ? 131072 : 65536;
 const cryptexDirectory = '/private/var/run/com.apple.security.cryptexd/mnt';
-const cryptexMountName = /^com\.apple\.iPhoneOS\.SimulatorRuntime-v[0-9]{1,3}(?:\.[0-9]{1,5}){2,3}\.[A-Za-z0-9]{1,64}$/;
 const legacyDirectory = '/Library/Developer/CoreSimulator/Volumes';
 const legacyMountName = /^iOS_[0-9]{1,3}[A-Z]{1,3}[0-9]{1,6}[a-z]?$/;
+// CoreSimulator also mounts a re-personalized runtime under the Cryptex namespace with the legacy build name (iOS_23F77).
+const cryptexMountName = new RegExp(`^com\\.apple\\.iPhoneOS\\.SimulatorRuntime-v[0-9]{1,3}(?:\\.[0-9]{1,5}){2,3}\\.[A-Za-z0-9]{1,64}$|${legacyMountName.source}`);
 const runtimeSuffix = '/Library/Developer/CoreSimulator/Profiles/Runtimes';
 const childLimit = 8192;
 const canonicalInstalledPath = (path: string) => isAbsolute(path) && resolve(path) === path && !path.includes('\0')
@@ -419,6 +429,7 @@ export type InstalledCompatibility = { architecture: 'arm64' | 'x86_64'; runtime
 /** Bounded immediate bundle enumeration; never chooses a newer runtime or uses vendor listing as installed proof. */
 export async function verifyInstalledCompatibility(source: { deviceTypeId: string; runtimeId: string }, host: InstalledHost,
   process: SourceProcess, signal: AbortSignal): Promise<InstalledCompatibility> {
+  let missing: HostPrerequisite = 'host';
   try {
     let dispatches = 0;
     const originalProcess: InstalledProcess = productionInvokers.get(process)
@@ -431,6 +442,7 @@ export async function verifyInstalledCompatibility(source: { deviceTypeId: strin
     signal.throwIfAborted();
     if (host.platform !== 'darwin' || !['arm64', 'x86_64'].includes(host.architecture)
       || !validSimulatorIdentifiers(source.deviceTypeId, source.runtimeId)) throw new Error();
+    missing = 'xcode';
     const info = await installedPlist('/Applications/Xcode.app/Contents/Info.plist', host, boundedProcess, signal);
     const xcode = await installedPlist('/Applications/Xcode.app/Contents/version.plist', host, boundedProcess, signal);
     const system = await installedPlist('/System/Library/CoreServices/SystemVersion.plist', host, boundedProcess, signal);
@@ -443,7 +455,7 @@ export async function verifyInstalledCompatibility(source: { deviceTypeId: strin
       if (!((await trustedPath(path, host)).mode & 0o111)) throw new Error();
     }
     await trustedPath(developerDirectory + '/Platforms/iPhoneSimulator.platform', host, true);
-    const matching: string[] = [];
+    missing = 'deviceType'; const matching: string[] = [];
     for (const bundle of await bundles('/Library/Developer/CoreSimulator/Profiles/DeviceTypes', '.simdevicetype', host, signal)) {
       if ((await installedPlist(join(bundle, 'Contents/Info.plist'), host, boundedProcess, signal)).CFBundleIdentifier === source.deviceTypeId) matching.push(bundle);
     }
@@ -451,7 +463,7 @@ export async function verifyInstalledCompatibility(source: { deviceTypeId: strin
     const device = await installedPlist(join(matching[0]!, 'Contents/Resources/profile.plist'), host, boundedProcess, signal);
     if (!architectures(device.supportedArchs, host.architecture)) throw new Error();
     const deviceFamilies = families(device.supportedProductFamilyIDs);
-    const legacy = await enumerateMountedNamespace('legacy', host, signal);
+    missing = 'runtime'; const legacy = await enumerateMountedNamespace('legacy', host, signal);
     const cryptex = await enumerateMountedNamespace('cryptex', host, signal);
     const candidates = new Map([...legacy.candidates, ...cryptex.candidates]);
     const capturedCandidate = (bundle: string) => {
@@ -475,7 +487,7 @@ export async function verifyInstalledCompatibility(source: { deviceTypeId: strin
       if ((await installedPlist(join(bundle, 'Contents/Info.plist'), host, boundedProcess, signal, capturedCandidate(bundle))).CFBundleIdentifier === source.runtimeId) runtimes.push(bundle);
     }
     if (runtimes.length !== 1) throw new Error();
-    const candidate = capturedCandidate(runtimes[0]!);
+    missing = 'compatibility'; const candidate = capturedCandidate(runtimes[0]!);
     const runtime = await installedPlist(join(runtimes[0]!, 'Contents/Resources/profile.plist'), host, boundedProcess, signal, candidate);
     const actual = await installedPlist(join(runtimes[0]!, 'Contents/Resources/RuntimeRoot/System/Library/CoreServices/SystemVersion.plist'), host, boundedProcess, signal, candidate);
     const runtimeVersion = osVersion(actual.ProductVersion); const declared = osVersion(runtime.defaultVersionString);
@@ -487,11 +499,11 @@ export async function verifyInstalledCompatibility(source: { deviceTypeId: strin
       || (device.maxRuntimeVersion !== undefined && compareVersions(osVersion(device.maxRuntimeVersion), runtimeVersion) < 0)
       || declared[0] !== runtimeVersion[0] || declared[1] !== runtimeVersion[1]
       || identifier.some((v, i) => v !== declared[i]) || !named(actual.ProductBuildVersion)) throw new Error();
-    await confirmMountedEnumeration(legacy, host, signal); await confirmMountedEnumeration(cryptex, host, signal);
+    missing = 'runtime'; await confirmMountedEnumeration(legacy, host, signal); await confirmMountedEnumeration(cryptex, host, signal);
     signal.throwIfAborted();
     return { architecture: host.architecture, runtimeVersion: actual.ProductVersion as string, hostVersion: system.ProductVersion as string,
       xcodeVersion: xcode.CFBundleShortVersionString as string, xcodeBuild: xcode.ProductBuildVersion, runtimeBuild: actual.ProductBuildVersion };
-  } catch { throw new AllocationPrerequisiteError('HOST_PREREQUISITE_MISSING'); }
+  } catch { throw new AllocationPrerequisiteError('HOST_PREREQUISITE_MISSING', signal.aborted ? undefined : missing); }
 }
 export async function allocationStorage(host: InstalledHost, stagingVolume: string): Promise<{ simulatorFreeBytes: number; stagingFreeBytes: number }> {
   try {

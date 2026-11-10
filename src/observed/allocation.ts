@@ -11,7 +11,7 @@ import { inspectArtifact, stageArtifact, verifyStagedArtifact, ArtifactError, ty
 import { createSimulator, type SourceProcess } from './create-source.js';
 import { selectSuppliedSource } from './supplied-source.js';
 import { readAllocationConfig, installedHost, allocationSourceProcess, allocationStorage, verifyInstalledCompatibility, trackAllocationSourceProcess,
-  AllocationPrerequisiteError, stableFile, isProductionSourceProcess, type InstalledHost } from './allocation-config.js';
+  AllocationPrerequisiteError, hostPrerequisites, stableFile, isProductionSourceProcess, type InstalledHost } from './allocation-config.js';
 import { allocationSnapshot, importedAllocationSnapshot, allocationError, allocationIdSchema, allocationActionIdSchema, AllocationInputError, parsePrepareAllocation, preparationDigest,
   type PrepareAllocationRequest, type AllocationResult, type AllocationOperationCode } from './allocation-schema.js';
 export type { AllocationSnapshotV1, AllocationOperationError, AllocationResult } from './allocation-schema.js';
@@ -149,11 +149,16 @@ export class ObservedAllocator {
     try {
       const bounded = (value: string) => Buffer.from(value).subarray(0, 16384).toString('utf8');
       const value = outcome instanceof Error ? { operation, error: bounded(outcome.message), ...(outcome instanceof DeviceCliError ? { code: bounded(outcome.code), terminalAcknowledged: outcome.terminalAcknowledged } : {}),
-        ...(outcome instanceof DeviceReasonError ? { code: outcome.code, ...(outcome.vendorCode !== undefined ? { vendorCode: bounded(outcome.vendorCode) } : {}) } : {}) }
+        ...(outcome instanceof DeviceReasonError ? { code: outcome.code, ...(outcome.vendorCode !== undefined ? { vendorCode: bounded(outcome.vendorCode) } : {}) } : {}),
+        ...(outcome instanceof NativeHelperError ? { code: outcome.code, ...(outcome.stderr ? { stderr: bounded(outcome.stderr) } : {}) } : {}) }
         : { operation, exitCode: (outcome as { exitCode: number | null }).exitCode,
           stdout: bounded((outcome as { stdout: string }).stdout), stderr: bounded((outcome as { stderr: string }).stderr) };
       const entry = JSON.stringify(value);
-      if (Buffer.byteLength('[' + [...job.diagnostics, entry].join(',') + ']') <= 65536) job.diagnostics.push(entry);
+      // The newest entries win: the terminal failure explains the outcome, the oldest host-check receipts rarely do.
+      const size = (entries: string[]) => Buffer.byteLength('[' + entries.join(',') + ']');
+      if (size([entry]) > 65536) return;
+      job.diagnostics.push(entry);
+      while (size(job.diagnostics) > 65536) job.diagnostics.shift();
     } catch { /* Private diagnostics never authorize work or replace the original outcome. */ }
   }
   private async persistDiagnostics(job: Job, signal: AbortSignal): Promise<void> {
@@ -269,7 +274,9 @@ export class ObservedAllocator {
               : allocationError('ACTION_ID_CONFLICT', this.identity(accepted), 'yes');
           } catch { return allocationError('STORE_UNAVAILABLE', { actionId: request.actionId }, 'unknown'); }
         }
-        return allocationError(reason as AllocationOperationCode, { actionId: request.actionId });
+        const refusal = allocationError(reason as AllocationOperationCode, { actionId: request.actionId });
+        return error instanceof AllocationPrerequisiteError && error.missing
+          ? { ...refusal, message: `${refusal.message} Missing: ${hostPrerequisites[error.missing]}.` } : refusal;
       }
       job.driver?.revokeIssuance();
       const finalizationSignal = AbortSignal.timeout(5000);

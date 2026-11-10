@@ -14,8 +14,10 @@ export interface NativeProcess {
 }
 export type NativeRunner = (command: NativeCommand, output: NativeOutput, signal: AbortSignal) => Promise<NativeProcess>;
 export class NativeHelperError extends Error {
-  constructor(readonly code: 'NATIVE_UNAVAILABLE' | 'NATIVE_FAILED' | 'NATIVE_OUTCOME_UNKNOWN' | 'ROLE_REFUSED', message: string) {
-    super(message); this.name = 'NativeHelperError';
+  /** A failed command's own stderr, for private diagnostics only. */
+  readonly stderr: string | undefined;
+  constructor(readonly code: 'NATIVE_UNAVAILABLE' | 'NATIVE_FAILED' | 'NATIVE_OUTCOME_UNKNOWN' | 'ROLE_REFUSED', message: string, stderr?: string) {
+    super(message); this.name = 'NativeHelperError'; this.stderr = stderr;
   }
 }
 export interface NativeChild {
@@ -120,7 +122,7 @@ export async function runNativeCommand(options: {
     const result = await Promise.race([child.exited, interrupted]);
     signal.throwIfAborted();
     if (result.kind === 'lost' || lost) throw new NativeHelperError('NATIVE_OUTCOME_UNKNOWN', 'Native command result is unavailable');
-    if (result.code !== 0) throw new NativeHelperError('NATIVE_FAILED', `Native command ${options.command.kind} failed with exit ${String(result.code)}`);
+    if (result.code !== 0) throw new NativeHelperError('NATIVE_FAILED', `Native command ${options.command.kind} failed with exit ${String(result.code)}`, stderr);
     return { exitCode: result.code, stdout, stderr };
   } catch (error) {
     if (child) await child.stop();

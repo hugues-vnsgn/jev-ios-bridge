@@ -31,8 +31,10 @@ const version = (value: unknown): number[] => typeof value === 'string' && /^\d{
   ? value.split('.').map(Number) : invalid('Missing or invalid OS version');
 const newer = (a: number[], b: number[]) => { for (let i = 0; i < 3; i++) { if ((a[i] ?? 0) !== (b[i] ?? 0)) return (a[i] ?? 0) > (b[i] ?? 0); } return false; };
 const stamp = (s: import('node:fs').Stats) => `${s.dev}:${s.ino}:${s.size}:${s.mtimeMs}:${s.ctimeMs}:${s.mode}:${s.uid}:${s.gid}:${s.nlink}`;
+/** Files stay read-only. Folders stay owner-writable because the simulator install copies each folder's mode before its children. */
 function checkImmutable(s: import('node:fs').Stats): void {
-  if (s.uid !== process.getuid?.() || (!s.isSymbolicLink() && ((s.mode & 0o222) !== 0 || (s.mode & 0o077) !== 0)) || (s.isFile() && s.nlink !== 1)) invalid('Staged artifact is no longer immutable and private');
+  if (s.uid !== process.getuid?.() || (!s.isSymbolicLink() && (s.mode & 0o077) !== 0)
+    || (s.isFile() && ((s.mode & 0o222) !== 0 || s.nlink !== 1))) invalid('Staged artifact is no longer immutable and private');
 }
 
 async function fileDigest(path: string, fs: typeof nativeFs, maxBytes: number, expected: import('node:fs').Stats, signal?: AbortSignal, immutable = false): Promise<{ digest: string; bytes: number; stamp: string }> {
@@ -187,7 +189,6 @@ export async function inspectArtifact(request: ArtifactRequest, deps: ArtifactDe
 /** Call only after reservation. Source mutation refuses preparation; no device operation occurs here. */
 export async function stageArtifact(request: ArtifactRequest, deps: ArtifactDependencies): Promise<StagedArtifact> {
   let container: string | undefined;
-  const stagedDirectories: string[] = [];
   const fs = deps.fs ?? nativeFs;
   try {
     validate(request);
@@ -200,7 +201,7 @@ export async function stageArtifact(request: ArtifactRequest, deps: ArtifactDepe
     const stagedPath = join(container, basename(request.artifactPath));
     for (const entry of before.entries) {
       deps.signal?.throwIfAborted(); const destination = join(stagedPath, entry.path); const source = join(request.artifactPath, entry.path);
-      if (entry.kind === 'directory') { await fs.mkdir(destination, { mode: 0o700 }); stagedDirectories.push(destination); }
+      if (entry.kind === 'directory') await fs.mkdir(destination, { mode: 0o700 });
       else if (entry.kind === 'link') await fs.symlink(entry.digest, destination);
       else {
         const input = await fs.open(source, constants.O_RDONLY | constants.O_NOFOLLOW);
@@ -225,15 +226,12 @@ export async function stageArtifact(request: ArtifactRequest, deps: ArtifactDepe
     if (!sameSource(before, await tree(request.artifactPath, fs, request.maxBytes, deps.signal))) invalid('Artifact changed during staging');
     const inspected = await metadata(stagedPath, request, deps, fs);
     if (!sameSource(before, await tree(request.artifactPath, fs, request.maxBytes, deps.signal))) invalid('Artifact changed before staging completion');
-    for (const entry of [...before.entries].reverse()) if (entry.kind === 'directory') await fs.chmod(join(stagedPath, entry.path), 0o500);
     const staged = await tree(stagedPath, fs, request.maxBytes, deps.signal, true);
     if (staged.digest !== before.digest) invalid('Staged artifact differs from source');
     return Object.freeze({ stagedPath, contentDigest: staged.digest, bytes: staged.bytes, maxBytes: request.maxBytes, metadata: inspected });
   } catch (error) {
     // Failed staging is local cleanup only. Never touch the submitted artifact or any device.
-    if (container) { try {
-      for (const directory of stagedDirectories) { const s = await fs.lstat(directory); if (s.isDirectory() && !s.isSymbolicLink()) await fs.chmod(directory, 0o700); }
-      await fs.rm(container, { recursive: true, force: true }); } catch { /* Retain inaccessible diagnostics for the owner. */ } }
+    if (container) { try { await fs.rm(container, { recursive: true, force: true }); } catch { /* Retain inaccessible diagnostics for the owner. */ } }
     if (error instanceof ArtifactError) throw error;
     throw new ArtifactError('ARTIFACT_INVALID', 'Artifact staging failed');
   }

@@ -438,6 +438,47 @@ for (const [kind, reason] of [['ios-boot', 'BOOT_FAILED'], ['ios-install', 'INST
   });
 }
 
+const installStderr = 'copyfile of NavigationFixture.app failed: Permission denied';
+const failInstall: AllocatorWorld = { nativeExit: command => command.kind === 'ios-install' ? 13 : undefined, nativeStderr: () => installStderr };
+async function privateDiagnostics(x: Allocation, allocationId: string): Promise<{ text: string; entries: { operation: string }[] }> {
+  const text = await fs.readFile(join(x.f.admission.readAllocation(allocationId)!.evidenceDirectory, 'source-diagnostics.json'), 'utf8');
+  return { text, entries: JSON.parse(text) as { operation: string }[] };
+}
+test('a refused install keeps the install command stderr in the private diagnostics and out of the public reply', async t => {
+  const x = await appiumAllocator(t, failInstall);
+  const result = snapshot(await x.allocator.prepare(x.f.request())); assert.equal(result.reason, 'INSTALL_FAILED');
+  const { text, entries } = await privateDiagnostics(x, result.allocationId);
+  assert.equal(entries.at(-1)!.operation, 'preparation/installing');
+  assert.ok(text.includes(installStderr), text);
+  assert.ok(!JSON.stringify(result).includes('Permission denied'));
+});
+test('host-check receipts that fill the diagnostics budget leave room for the refused install and its stderr', async t => {
+  const x = await appiumAllocator(t, failInstall); const padding = 'p'.repeat(20000);
+  for (const path of ['/Applications/Xcode.app/Contents/version.plist', '/System/Library/CoreServices/SystemVersion.plist',
+    '/Library/Developer/CoreSimulator/Profiles/DeviceTypes/iPhone 17.simdevicetype/Contents/Info.plist']) {
+    x.f.write(path, { ...JSON.parse(await fs.readFile(x.f.map(path), 'utf8')), Padding: padding });
+  }
+  x.f.write('/Applications/Xcode.app/Contents/Info.plist', { CFBundleIdentifier: 'com.apple.dt.Xcode', CFBundleExecutable: 'Xcode', LSMinimumSystemVersion: '26.6', Padding: padding });
+  x.f.write('/Library/Developer/CoreSimulator/Profiles/DeviceTypes/iPhone 17.simdevicetype/Contents/Resources/profile.plist',
+    { supportedProductFamilyIDs: [1], minRuntimeVersion: '26.0', supportedArchs: ['arm64', 'x86_64'], Padding: padding });
+  const result = snapshot(await x.allocator.prepare(x.f.request())); assert.equal(result.reason, 'INSTALL_FAILED');
+  const { text, entries } = await privateDiagnostics(x, result.allocationId);
+  assert.ok(Buffer.byteLength(text) <= 65536);
+  assert.equal(entries.at(-1)!.operation, 'preparation/installing');
+  assert.ok(text.includes(installStderr));
+});
+for (const [label, absent, missing] of [
+  ['runtime', { runtimeId: 'com.apple.CoreSimulator.SimRuntime.iOS-26-5' }, 'the requested simulator runtime'],
+  ['device type', { deviceTypeId: 'com.apple.CoreSimulator.SimDeviceType.iPhone-Missing' }, 'the requested simulator device type'],
+] as const) test(`a host without the requested ${label} refuses HOST_PREREQUISITE_MISSING naming what is missing, not the submitted value`, async t => {
+  const x = await appiumAllocator(t); const request = x.f.request();
+  const result = refused(await x.allocator.prepare({ ...request, source: { ...request.source, ...absent } }), 'HOST_PREREQUISITE_MISSING');
+  assert.equal(result.acceptance, 'no');
+  assert.match(result.message, new RegExp(`^Allocation operation refused: HOST_PREREQUISITE_MISSING\\. Missing: ${missing}`));
+  assert.ok(!result.message.includes(Object.values(absent)[0]!.split('.').at(-1)!));
+  assert.deepEqual(effects(x), none);
+});
+
 for (const evidence of ['copy', 'missing', 'symlink', 'relative'] as const) test(`readiness screenshot ${evidence} is persisted privately or refuses without parking`, async t => {
   let path = '';
   const x = await appiumAllocator(t, { wrap: driver => {
